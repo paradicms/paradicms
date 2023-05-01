@@ -2,14 +2,15 @@ import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   Image,
-  Text,
   imagePlaceholderSrc,
   selectThumbnail,
+  Text,
 } from "@paradicms/models";
 import {
-  ImagesCarousel,
-  RightsParagraph,
   galleryThumbnailSelector,
+  ImagesCarousel,
+  imagesCarouselThumbnailSelector,
+  RightsParagraph,
 } from "@paradicms/react-dom-components";
 import {Literal} from "@rdfjs/types";
 import classnames from "classnames";
@@ -61,7 +62,8 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div
           className="ms-2"
           style={{
-            maxWidth: galleryThumbnailSelector.targetDimensions.width + 100,
+            maxWidth:
+              imagesCarouselThumbnailSelector.targetDimensions.width + 100,
           }}
         >
           <ItemDetailCard
@@ -220,11 +222,16 @@ const ItemsGallery: React.FunctionComponent<{
               "me-4": true,
             })}
             key={itemI}
-            style={{borderWidth: "8px", width: "240px"}}
+            style={{
+              borderWidth: "8px",
+              maxWidth: galleryThumbnailSelector.targetDimensions.width + 40,
+              minHeight: galleryThumbnailSelector.targetDimensions.height,
+            }}
           >
             <CardHeader className="px-0 mt-2 text-center w-100">
               <Button
                 active={!!selected}
+                className="w-50"
                 color="primary"
                 onClick={onToggleSelected}
                 style={{cursor: "pointer", textDecoration: "none"}}
@@ -232,27 +239,31 @@ const ItemsGallery: React.FunctionComponent<{
                 {label}
               </Button>
             </CardHeader>
-            <CardBody
-              className="pb-0 px-0 text-center w-100"
-              style={{cursor: "pointer"}}
-            >
-              <a onClick={onToggleSelected}>
-                <img
-                  className="figure-img rounded"
-                  src={thumbnailSrc}
-                  style={{
-                    height: galleryThumbnailSelector.targetDimensions.height,
-                    width: galleryThumbnailSelector.targetDimensions.width,
-                  }}
-                />
-              </a>
-              <div className="mb-2">
-                <a onClick={() => setDetailItem(item)}>
-                  <FontAwesomeIcon
-                    icon={faInfoCircle}
-                    style={{height: "16px", width: "16px"}}
+            <CardBody className="pb-0 px-0 text-center w-100">
+              <div className="d-flex flex-column h-100 justify-content-center">
+                <a onClick={onToggleSelected}>
+                  <img
+                    className="rounded"
+                    src={thumbnailSrc}
+                    style={{
+                      cursor: "pointer",
+                      maxHeight:
+                        galleryThumbnailSelector.targetDimensions.height,
+                      maxWidth: galleryThumbnailSelector.targetDimensions.width,
+                    }}
                   />
                 </a>
+                <div className="mb-2">
+                  <a
+                    onClick={() => setDetailItem(item)}
+                    style={{cursor: "pointer"}}
+                  >
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      style={{height: "16px", width: "16px"}}
+                    />
+                  </a>
+                </div>
               </div>
             </CardBody>
           </Card>

@@ -1,6 +1,7 @@
 import {AuthorizationException} from "~/services/AuthorizationException";
 import {Hrefs} from "~/Hrefs";
 import * as React from "react";
+import {useCallback} from "react";
 import {
   Button,
   Col,
@@ -11,7 +12,6 @@ import {
   Row,
 } from "reactstrap";
 import {useNavigate} from "react-router-dom";
-import {useCallback} from "react";
 import {useCurrentUserService} from "~/hooks/useCurrentUserService";
 
 export const AuthorizationExceptionModal: React.FunctionComponent<{
@@ -45,9 +45,13 @@ export const AuthorizationExceptionModal: React.FunctionComponent<{
             </Row>
             <Row>
               <Col xs="12">
-                <a className="btn btn-primary w-100" href={Hrefs.login}>
+                <Button
+                  className=""
+                  color="primary"
+                  onClick={() => navigate(Hrefs.login)}
+                >
                   Login
-                </a>
+                </Button>
               </Col>
             </Row>
             <Row className="mt-4">

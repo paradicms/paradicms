@@ -1,6 +1,6 @@
 import {Hrefs} from "~/Hrefs";
 import * as React from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {
   Collapse,
   DropdownItem,
@@ -19,6 +19,7 @@ import {Environment} from "~/Environment";
 
 export const Navbar: React.FunctionComponent = () => {
   const currentUser = useCurrentUser();
+  const navigate = useNavigate();
 
   let currentUserJsx: React.ReactNode;
   if (Environment.supportsLogin) {
@@ -41,7 +42,7 @@ export const Navbar: React.FunctionComponent = () => {
     } else {
       currentUserJsx = (
         <NavItem>
-          <NavLink href={Hrefs.login}>Login</NavLink>
+          <NavLink onClick={() => navigate(Hrefs.login)}>Login</NavLink>
         </NavItem>
       );
     }

@@ -1,14 +1,9 @@
 import {ModelSet, ModelSetFactory} from "@paradicms/models";
 import {anyRdfStringToDataset} from "@paradicms/rdf";
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router";
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {QueryParamProvider} from "use-query-params";
+import {ReactRouter6Adapter} from "use-query-params/adapters/react-router-6";
 import {Exception} from "~/Exception";
 import {Hrefs} from "~/Hrefs";
 import {FatalErrorModal} from "~/components/FatalErrorModal";
@@ -26,26 +21,6 @@ import {WorksheetFeatureSetEditPage} from "~/pages/WorksheetFeatureSetEditPage";
 import {WorksheetReviewPage} from "~/pages/WorksheetReviewPage";
 import {WorksheetStartPage} from "~/pages/WorksheetStartPage";
 import React = require("react");
-
-const RouteAdapter: React.FunctionComponent<{children?: any}> = ({
-  children,
-}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const adaptedHistory = React.useMemo(
-    () => ({
-      replace(location: any) {
-        navigate(location, {replace: true, state: location.state});
-      },
-      push(location: any) {
-        navigate(location, {replace: false, state: location.state});
-      },
-    }),
-    [navigate]
-  );
-  return children({history: adaptedHistory, location});
-};
 
 export const Application: React.FunctionComponent = () => {
   const [error, setError] = useState<any>(null);
@@ -102,7 +77,7 @@ export const Application: React.FunctionComponent = () => {
     <WorksheetDefinitionContext.Provider value={worksheetDefinition}>
       <Router>
         <QueryParamProvider
-          adapter={RouteAdapter}
+          adapter={ReactRouter6Adapter}
           options={{enableBatching: true}}
         >
           <Routes>

@@ -1,8 +1,8 @@
-import hashlib
 import logging
 import os.path
 from pathlib import Path
 from typing import Generator, Optional, Tuple
+from urllib.parse import quote
 
 from pathvalidate import sanitize_filename
 from rdflib import URIRef
@@ -116,15 +116,8 @@ class ImagesLoader:
             # The archiver may return a relative path rather than a full URI, so we have to synthesize a URI.
             # We could use the UUID URI scheme as an easy out, but it wouldn't be deterministic.
             # Tacking on a fragment or similar to an arbitrary original_image.uri is also dicey.
-            # Instead construct a URI from a hash.
-            archived_thumbnail_hash = hashlib.sha256()
-            # Prepend the original image's URI, since thumbnails of different original image URIs could have conceivably have the same contents.
-            archived_thumbnail_hash.update(str(original_image.uri).encode("utf-8"))
-            with open(thumbnail_file_path, "rb") as thumbnail_file:
-                for byte_block in iter(lambda: thumbnail_file.read(4096), b""):
-                    archived_thumbnail_hash.update(byte_block)
             archived_thumbnail_uri = URIRef(
-                "urn:paradicms_etl:thumbnail:" + archived_thumbnail_hash.hexdigest()
+                f"urn:paradicms_etl:thumbnail:{quote(str(original_image.uri))}:{thumbnail_max_dimensions.width}x{thumbnail_max_dimensions.height}"
             )
 
             archived_thumbnail_images.append(
