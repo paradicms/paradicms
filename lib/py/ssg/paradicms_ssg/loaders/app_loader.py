@@ -52,7 +52,7 @@ class AppLoader(BufferingLoader):
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
         :param pipeline_id: pipeline identifier
         :param sleep_s_after_image_download: sleep this number of seconds after downloading each image, to avoid triggering denial of service mechanisms
-        :param thumbnail_max_dimensions: maximum dimensions of amage thumbnails to use
+        :param thumbnail_max_dimensions: maximum dimensions of image thumbnails to use
         """
 
         BufferingLoader.__init__(self)
