@@ -180,7 +180,8 @@ export class ModelSetBuilder {
   }
 
   private static modelToQuads(model: Model): Quad[] {
-    const modelGraph = DataFactory.blankNode();
+    // const modelGraph = DataFactory.blankNode();
+    const modelGraph = model.identifier;
     return model
       .toRdf()
       .map(triple =>

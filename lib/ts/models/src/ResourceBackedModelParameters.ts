@@ -3,7 +3,7 @@ import {ModelSet} from "./ModelSet";
 
 export interface ResourceBackedModelParameters {
   dataset: Dataset;
-  graphNode: BlankNode | DefaultGraph | NamedNode;
+  graph: BlankNode | DefaultGraph | NamedNode;
+  identifier: BlankNode | NamedNode;
   modelSet: ModelSet;
-  node: BlankNode | NamedNode;
 }

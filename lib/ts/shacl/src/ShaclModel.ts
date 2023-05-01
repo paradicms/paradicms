@@ -6,7 +6,7 @@ export abstract class ShaclModel extends Resource {
   readonly shapesGraph: ShapesGraph;
 
   constructor(kwds: {node: BlankNode | NamedNode; shapesGraph: ShapesGraph}) {
-    super({node: kwds.node});
+    super({identifier: kwds.node});
     this.shapesGraph = kwds.shapesGraph;
   }
 
@@ -14,7 +14,15 @@ export abstract class ShaclModel extends Resource {
     return this.shapesGraph.dataset;
   }
 
+  get graph() {
+    return this.graphNode;
+  }
+
   get graphNode() {
     return this.shapesGraph.graphNode;
+  }
+
+  get node() {
+    return this.identifier;
   }
 }

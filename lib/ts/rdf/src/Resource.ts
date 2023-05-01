@@ -3,11 +3,11 @@ import {xsd} from "@tpluscode/rdf-ns-builders";
 
 export abstract class Resource {
   abstract readonly dataset: Dataset;
-  abstract readonly graphNode: BlankNode | DefaultGraph | NamedNode;
-  protected readonly _node: BlankNode | NamedNode;
+  abstract readonly graph: BlankNode | DefaultGraph | NamedNode;
+  protected readonly _identifier: BlankNode | NamedNode;
 
-  constructor(kwds: {node: BlankNode | NamedNode}) {
-    this._node = kwds.node;
+  constructor(kwds: {identifier: BlankNode | NamedNode}) {
+    this._identifier = kwds.identifier;
   }
 
   protected findAndMapObject<T>(
@@ -15,10 +15,10 @@ export abstract class Resource {
     callback: (value: Term) => NonNullable<T> | null
   ): NonNullable<T> | null {
     for (const quad of this.dataset.match(
-      this.node,
+      this.identifier,
       property,
       null,
-      this.graphNode
+      this.graph
     )) {
       const mappedObject: T | null = callback(quad.object);
       if (mappedObject !== null) {
@@ -34,10 +34,10 @@ export abstract class Resource {
   ): readonly NonNullable<T>[] {
     const mappedObjects: NonNullable<T>[] = [];
     for (const quad of this.dataset.match(
-      this.node,
+      this.identifier,
       property,
       null,
-      this.graphNode
+      this.graph
     )) {
       const mappedObject: T | null = callback(quad.object);
       if (mappedObject !== null) {
@@ -49,8 +49,12 @@ export abstract class Resource {
 
   protected hasObject(property: NamedNode): boolean {
     return (
-      this.dataset.match(this.node, property, null, this.graphNode).size > 0
+      this.dataset.match(this.identifier, property, null, this.graph).size > 0
     );
+  }
+
+  get identifier(): BlankNode | NamedNode {
+    return this._identifier;
   }
 
   protected mapBooleanObject(term: Term): boolean | null {
@@ -102,9 +106,5 @@ export abstract class Resource {
       return null;
     }
     return term.value;
-  }
-
-  get node(): BlankNode | NamedNode {
-    return this._node;
   }
 }

@@ -4,11 +4,11 @@ import {License} from "../License";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 
 export class CmsLicense extends ResourceBackedNamedModel implements License {
-  get identifier(): string {
-    return requireNonNull(
-      this.findAndMapObject(dc11.identifier, this.mapStringObject)
-    );
-  }
+  // get identifier(): string {
+  //   return requireNonNull(
+  //     this.findAndMapObject(dc11.identifier, this.mapStringObject)
+  //   );
+  // }
 
   get label(): string {
     return this.title;

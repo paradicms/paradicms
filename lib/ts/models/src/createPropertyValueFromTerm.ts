@@ -32,9 +32,9 @@ export const createPropertyValueFromTerm = (kwds: {
       return new TextPropertyValue(
         new CmsText({
           dataset,
-          graphNode: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
+          graph: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
+          identifier: term,
           modelSet,
-          node: term,
         })
       );
     }
