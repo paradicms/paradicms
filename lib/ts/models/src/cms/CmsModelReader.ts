@@ -50,11 +50,15 @@ export class CmsModelReader extends DatasetModelReader {
       class_: configuration.AppConfiguration,
       dataset: this.dataset,
     }).values()) {
+      this.checkModelGraph({
+        modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
+        modelNode: quad.subject as BlankNode | NamedNode,
+      });
       return new AppConfiguration({
         dataset: this.dataset,
         modelSet: kwds.modelSet,
-        graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
-        node: quad.subject as BlankNode | NamedNode,
+        graph: quad.graph as BlankNode | DefaultGraph | NamedNode,
+        identifier: quad.subject as BlankNode | NamedNode,
       });
     }
     return null;
@@ -161,15 +165,19 @@ export class CmsModelReader extends DatasetModelReader {
         ) {
           continue;
         }
+        this.checkModelGraph({
+          modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
+          modelNode: quad.subject as BlankNode | NamedNode,
+        });
         const workEventClass =
           workEventClassesByRdfType[rdfTypeQuad.object.value];
         if (workEventClass) {
           workEvents.push(
             new workEventClass({
               dataset: this.dataset,
-              graphNode: quad.graph as BlankNode | DefaultGraph | NamedNode,
+              graph: quad.graph as BlankNode | DefaultGraph | NamedNode,
               modelSet: kwds.modelSet,
-              node: quad.subject as BlankNode | NamedNode,
+              identifier: quad.subject as BlankNode | NamedNode,
             })
           );
           break;

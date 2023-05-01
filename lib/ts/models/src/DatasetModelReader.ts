@@ -17,9 +17,31 @@ import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
 import {WorkEventUnion} from "./WorkEventUnion";
+import * as RdfString from "rdf-string";
+import invariant from "ts-invariant"; // ts-ignore
 
 export abstract class DatasetModelReader implements ModelReader {
   constructor(protected readonly dataset: Dataset) {}
+
+  protected checkModelGraph(kwds: {
+    modelGraph: BlankNode | DefaultGraph | NamedNode;
+    modelNode: BlankNode | NamedNode;
+  }): void {
+    const {modelGraph, modelNode} = kwds;
+    if (!modelGraph.equals(modelNode)) {
+      const message = `expected graph (${RdfString.termToString(
+        modelGraph
+      )}) to equal subject (${RdfString.termToString(modelNode)})`;
+      invariant(false, message);
+      // console.warn(message);
+    } else {
+      console.info(
+        `graph (${RdfString.termToString(
+          modelGraph
+        )}) equals subject (${RdfString.termToString(modelNode)})`
+      );
+    }
+  }
 
   abstract readAppConfiguration(kwds: {
     modelSet: ModelSet;
@@ -61,12 +83,16 @@ export abstract class DatasetModelReader implements ModelReader {
         //   !namedModelUris.has(quad.subject.value),
         //   "duplicate named model instance: " + quad.subject.value
         // );
+        this.checkModelGraph({
+          modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
+          modelNode: quad.subject,
+        });
         namedModels.push(
           new kwds.factory({
             dataset: this.dataset,
-            graphNode: quad.graph as DefaultGraph | BlankNode | NamedNode,
+            graph: quad.graph as DefaultGraph | BlankNode | NamedNode,
+            identifier: quad.subject as NamedNode,
             modelSet: kwds.modelSet,
-            node: quad.subject as NamedNode,
           })
         );
         // namedModelUris.add(quad.subject.value);
