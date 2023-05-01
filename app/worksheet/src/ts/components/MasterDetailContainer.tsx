@@ -9,6 +9,7 @@ import {
 import {
   galleryThumbnailSelector,
   ImagesCarousel,
+  imagesCarouselThumbnailSelector,
   RightsParagraph,
 } from "@paradicms/react-dom-components";
 import {Literal} from "@rdfjs/types";
@@ -61,7 +62,8 @@ export const MasterDetailContainer: React.FunctionComponent<{
         <div
           className="ms-2"
           style={{
-            maxWidth: galleryThumbnailSelector.targetDimensions.width + 100,
+            maxWidth:
+              imagesCarouselThumbnailSelector.targetDimensions.width + 100,
           }}
         >
           <ItemDetailCard
