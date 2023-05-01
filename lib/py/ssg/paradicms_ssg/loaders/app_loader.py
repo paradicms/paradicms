@@ -160,7 +160,7 @@ class AppLoader(BufferingLoader):
             deployer = self.__deployer
             if deployer is None:
                 deployer = FsDeployer(
-                    deploy_dir_path=self.__cache_dir_path / "deployed"
+                    deploy_dir_path=self.__cache_dir_path / "deployment"
                 )
 
             deployer(app_out_dir_path=app_out_dir_path)
