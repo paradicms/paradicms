@@ -100,4 +100,11 @@ export abstract class Resource {
     }
     return term.value;
   }
+
+  protected mapUriObject(term: Term): string | null {
+    if (term.termType !== "NamedNode") {
+      return null;
+    }
+    return term.value;
+  }
 }

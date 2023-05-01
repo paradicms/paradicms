@@ -44,7 +44,7 @@ export class CmsConcept
           default:
             return null;
         }
-      }) ?? this.node
+      }) ?? this.identifier
     );
   }
 }

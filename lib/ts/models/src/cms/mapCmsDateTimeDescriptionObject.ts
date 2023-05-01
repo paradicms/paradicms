@@ -8,7 +8,7 @@ import {CmsDateTimeDescription} from "../cms/CmsDateTimeDescription";
  * Map a term in a modelSet to a PartialDateTime.
  */
 export const mapCmsDateTimeDescriptionObject = (
-  modelParameters: Omit<ResourceBackedModelParameters, "node">,
+  modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): DateTimeDescription | null => {
   switch (term.termType) {

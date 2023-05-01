@@ -1,13 +1,12 @@
-import {BlankNode, NamedNode, Term} from "@rdfjs/types";
+import {BlankNode, Dataset, NamedNode, Term} from "@rdfjs/types";
 import {NonNullable} from "@paradicms/utilities";
 import {ModelSet} from "./ModelSet";
-import {Dataset} from "@rdfjs/types";
 
 export abstract class ResourceBackedModelMixin {
   abstract readonly dataset: Dataset;
+  abstract readonly graph: NamedNode;
+  protected abstract readonly _identifier: BlankNode | NamedNode;
   abstract readonly modelSet: ModelSet;
-  abstract readonly graphNode: NamedNode;
-  protected abstract readonly _node: BlankNode | NamedNode;
   protected abstract filterAndMapObjects<T>(
     property: NamedNode,
     callback: (value: Term) => NonNullable<T> | null

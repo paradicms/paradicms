@@ -96,7 +96,7 @@ export class PropertyShape extends Shape {
   get or(): readonly PropertyShape[] {
     const propertyShapes: PropertyShape[] = [];
     for (const orQuad of this.dataset.match(
-      this.node,
+      this.identifier,
       sh.or,
       null,
       this.shapesGraph.graphNode

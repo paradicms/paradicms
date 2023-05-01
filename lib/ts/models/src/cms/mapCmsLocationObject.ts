@@ -8,7 +8,7 @@ import {CmsLocation} from "./CmsLocation";
  * Map a term in a modelSet to a Location.
  */
 export const mapCmsLocationObject = (
-  modelParameters: Omit<ResourceBackedModelParameters, "node">,
+  modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): Location | null => {
   switch (term.termType) {

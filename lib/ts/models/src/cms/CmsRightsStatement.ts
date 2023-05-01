@@ -13,11 +13,11 @@ export class CmsRightsStatement extends ResourceBackedNamedModel
     return this.findAndMapObject(dcterms.description, this.mapStringObject);
   }
 
-  get identifier(): string {
-    return requireNonNull(
-      this.findAndMapObject(dcterms.identifier, this.mapStringObject)
-    );
-  }
+  // get identifier(): string {
+  //   return requireNonNull(
+  //     this.findAndMapObject(dcterms.identifier, this.mapStringObject)
+  //   );
+  // }
 
   get label(): string {
     return this.prefLabel;

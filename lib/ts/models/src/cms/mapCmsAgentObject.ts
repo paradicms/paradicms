@@ -10,7 +10,7 @@ import {CmsOrganization} from "./CmsOrganization";
  * Map a term in a modelSet to an Agent.
  */
 export const mapCmsAgentObject = (
-  modelParameters: Omit<ResourceBackedModelParameters, "node">,
+  modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): AgentUnion | null => {
   switch (term.termType) {
@@ -21,9 +21,9 @@ export const mapCmsAgentObject = (
         null
       )) {
         if (rdfTypeQuad.object.equals(cms.Organization)) {
-          return new CmsOrganization({...modelParameters, node: term});
+          return new CmsOrganization({...modelParameters, identifier: term});
         } else if (rdfTypeQuad.object.equals(cms.Person)) {
-          return new CmsPerson({...modelParameters, node: term});
+          return new CmsPerson({...modelParameters, identifier: term});
         }
       }
       throw new RangeError("unable to determine agent type from blank node");
