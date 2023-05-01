@@ -229,6 +229,7 @@ const ItemsGallery: React.FunctionComponent<{
             <CardHeader className="px-0 mt-2 text-center w-100">
               <Button
                 active={!!selected}
+                className="w-50"
                 color="primary"
                 onClick={onToggleSelected}
                 style={{cursor: "pointer", textDecoration: "none"}}
@@ -236,27 +237,31 @@ const ItemsGallery: React.FunctionComponent<{
                 {label}
               </Button>
             </CardHeader>
-            <CardBody
-              className="pb-0 px-0 text-center w-100"
-              style={{cursor: "pointer"}}
-            >
-              <a onClick={onToggleSelected}>
-                <img
-                  className="rounded"
-                  src={thumbnailSrc}
-                  style={{
-                    maxHeight: galleryThumbnailSelector.targetDimensions.height,
-                    maxWidth: galleryThumbnailSelector.targetDimensions.width,
-                  }}
-                />
-              </a>
-              <div className="mb-2">
-                <a onClick={() => setDetailItem(item)}>
-                  <FontAwesomeIcon
-                    icon={faInfoCircle}
-                    style={{height: "16px", width: "16px"}}
+            <CardBody className="pb-0 px-0 text-center w-100">
+              <div className="d-flex flex-column h-100 justify-content-center">
+                <a onClick={onToggleSelected}>
+                  <img
+                    className="rounded"
+                    src={thumbnailSrc}
+                    style={{
+                      cursor: "pointer",
+                      maxHeight:
+                        galleryThumbnailSelector.targetDimensions.height,
+                      maxWidth: galleryThumbnailSelector.targetDimensions.width,
+                    }}
                   />
                 </a>
+                <div className="mb-2">
+                  <a
+                    onClick={() => setDetailItem(item)}
+                    style={{cursor: "pointer"}}
+                  >
+                    <FontAwesomeIcon
+                      icon={faInfoCircle}
+                      style={{height: "16px", width: "16px"}}
+                    />
+                  </a>
+                </div>
               </div>
             </CardBody>
           </Card>
