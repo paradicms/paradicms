@@ -15,7 +15,7 @@ export const mapCmsLocationObject = (
     case "BlankNode":
       return new CmsLocation({
         ...modelParameters,
-        node: term,
+        identifier: term,
       });
     case "NamedNode":
       return modelParameters.modelSet.locationByUri(term.value);

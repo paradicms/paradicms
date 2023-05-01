@@ -16,7 +16,7 @@ export const mapCmsDateTimeDescriptionObject = (
     case "NamedNode":
       return new CmsDateTimeDescription({
         ...modelParameters,
-        node: term,
+        identifier: term,
       });
     case "Literal": {
       const parsed = anyDateParser.attempt(term.value);

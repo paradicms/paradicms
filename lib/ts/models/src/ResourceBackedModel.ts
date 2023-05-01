@@ -7,19 +7,19 @@ import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: Dataset;
+  readonly graph: BlankNode | DefaultGraph | NamedNode;
   readonly modelSet: ModelSet;
-  readonly graphNode: BlankNode | DefaultGraph | NamedNode;
 
   constructor(kwds: ResourceBackedModelParameters) {
-    super({node: kwds.node});
+    super({identifier: kwds.identifier});
     this.dataset = kwds.dataset;
     this.modelSet = kwds.modelSet;
-    this.graphNode = kwds.graphNode;
+    this.graph = kwds.graph;
   }
 
   toRdf(): readonly ModelToRdfTriple[] {
     const triples: ModelToRdfTriple[] = [];
-    for (const quad of this.dataset.match(null, null, null, this.graphNode)) {
+    for (const quad of this.dataset.match(null, null, null, this.graph)) {
       switch (quad.subject.termType) {
         case "BlankNode":
         case "NamedNode":
@@ -52,6 +52,6 @@ export abstract class ResourceBackedModel extends Resource implements Model {
   }
 
   get uri(): string | null {
-    return this.node.termType === "NamedNode" ? this.node.value : null;
+    return this.identifier.termType === "NamedNode" ? this.identifier.value : null;
   }
 }

@@ -17,7 +17,7 @@ export class Shape extends ShaclModel {
       term.termType === "NamedNode" &&
       hasRdfSuperClass({
         dataset: this.dataset,
-        graph: this.graphNode,
+        graph: this.graph,
         subClass: term,
         superClass: rdfs.Class,
       })

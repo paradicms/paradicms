@@ -5,8 +5,11 @@ import {Resource} from "@paradicms/rdf";
 export abstract class ShaclModel extends Resource {
   readonly shapesGraph: ShapesGraph;
 
-  constructor(kwds: {node: BlankNode | NamedNode; shapesGraph: ShapesGraph}) {
-    super({node: kwds.node});
+  constructor(kwds: {
+    identifier: BlankNode | NamedNode;
+    shapesGraph: ShapesGraph;
+  }) {
+    super({identifier: kwds.identifier});
     this.shapesGraph = kwds.shapesGraph;
   }
 
@@ -14,7 +17,7 @@ export abstract class ShaclModel extends Resource {
     return this.shapesGraph.dataset;
   }
 
-  get graphNode() {
+  get graph() {
     return this.shapesGraph.graphNode;
   }
 }
