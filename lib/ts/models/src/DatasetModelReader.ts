@@ -34,13 +34,14 @@ export abstract class DatasetModelReader implements ModelReader {
       )}) to equal subject (${RdfString.termToString(modelNode)})`;
       invariant(false, message);
       // console.warn(message);
-    } else {
-      console.info(
-        `graph (${RdfString.termToString(
-          modelGraph
-        )}) equals subject (${RdfString.termToString(modelNode)})`
-      );
     }
+    // else {
+    //   console.info(
+    //     `graph (${RdfString.termToString(
+    //       modelGraph
+    //     )}) equals subject (${RdfString.termToString(modelNode)})`
+    //   );
+    // }
   }
 
   abstract readAppConfiguration(kwds: {
