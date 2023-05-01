@@ -11,7 +11,6 @@ from typing import (
     Optional,
     Any,
     TypeVar,
-    Type,
 )
 from urllib.parse import quote_plus
 
@@ -32,7 +31,6 @@ from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
-from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -70,12 +68,8 @@ class CostumeCoreOntologyAirtableTransformer:
     def __init__(
         self,
         *,
-        image_data_class: Optional[Type[ImageData]] = None,
         ontology_version: Optional[str] = None,
     ):
-        if image_data_class is None:
-            image_data_class = CmsImageData
-        self.__image_data_class = image_data_class
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
@@ -635,7 +629,7 @@ class CostumeCoreOntologyAirtableTransformer:
                     continue
 
                 with PIL.Image.open(image_field_value["cached_file_path"]) as pil_image:
-                    image_data = self.__image_data_class.from_pil_image(
+                    image_data = CmsImageData.from_pil_image(
                         pil_image.copy().convert("RGB")
                     )
 
