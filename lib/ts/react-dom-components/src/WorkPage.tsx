@@ -1,4 +1,10 @@
-import {Image, Work, WorkAgent} from "@paradicms/models";
+import {
+  Image,
+  Property,
+  PropertyGroup,
+  Work,
+  WorkAgent,
+} from "@paradicms/models";
 import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
 import * as React from "react";
 import {useState} from "react";
@@ -19,6 +25,8 @@ import {ImagesCarousel} from "./ImagesCarousel";
 import {RightsParagraph} from "./RightsParagraph";
 import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
+import {getVisibleWorkProperties} from "./getVisibleWorkProperties";
+import {WorkPropertiesContainer} from "./WorkPropertiesContainer";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -27,11 +35,19 @@ const RIGHTS_STYLE: React.CSSProperties = {
 
 export const WorkPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
+  properties: readonly Property[];
+  propertyGroups: readonly PropertyGroup[];
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]
   ) => React.ReactElement;
   work: Work;
-}> = ({getAbsoluteImageSrc, renderWorkLocationsMap, work}) => {
+}> = ({
+  getAbsoluteImageSrc,
+  properties,
+  propertyGroups,
+  renderWorkLocationsMap,
+  work,
+}) => {
   const workAgents: WorkAgent[] = [];
   for (const workAgent of work.agents) {
     if (
@@ -78,6 +94,19 @@ export const WorkPage: React.FunctionComponent<{
       ),
     });
   }
+  const workProperties = getVisibleWorkProperties({properties, work});
+  if (workProperties.length > 0) {
+    leftColTabs.push({
+      title: "Details",
+      content: (
+        <WorkPropertiesContainer
+          propertyGroups={propertyGroups}
+          workProperties={workProperties}
+        />
+      ),
+    });
+  }
+
   if (renderWorkLocationsMap) {
     const workLocations = [];
     if (work.location) {
