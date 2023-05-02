@@ -32,6 +32,17 @@ export class CmsProperty
     );
   }
 
+  get hidden(): boolean {
+    const hidden = this.findAndMapObject(
+      cms.propertyHidden,
+      this.mapBooleanObject
+    );
+    if (hidden !== null) {
+      return hidden;
+    }
+    return !this.filterable && !this.searchable;
+  }
+
   get order(): number {
     return this.findAndMapObject(cms.propertyOrder, this.mapIntObject) ?? 0;
   }

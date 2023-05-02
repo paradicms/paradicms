@@ -7,6 +7,7 @@ import {Text} from "./Text";
 export interface Property extends NamedModel, ImagesMixin {
   readonly comment: Text | null;
   readonly filterable: boolean;
+  readonly hidden: boolean;
   readonly label: string;
   readonly groupUris: readonly string[];
   readonly order: number;
