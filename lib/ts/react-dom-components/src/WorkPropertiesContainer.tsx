@@ -1,14 +1,6 @@
 import {WorkProperty} from "./WorkProperty";
 import React from "react";
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Col,
-  Container,
-  Row,
-  Table,
-} from "reactstrap";
+import {Col, Container, Row, Table} from "reactstrap";
 import {PropertyGroup} from "@paradicms/models";
 import {requireDefined} from "@paradicms/utilities";
 
@@ -31,19 +23,37 @@ const groupWorkProperties = (workProperties: readonly WorkProperty[]) => {
 };
 
 const WorkPropertiesTable: React.FunctionComponent<{
+  propertyGroupLabel?: string;
   workProperties: readonly WorkProperty[];
-}> = ({workProperties}) => {
+}> = ({propertyGroupLabel, workProperties}) => {
   return (
-    <Table bordered>
+    <Table striped>
+      {propertyGroupLabel ? (
+        <thead>
+          <tr>
+            <th className="text-center" colSpan={2}>
+              {propertyGroupLabel}
+            </th>
+          </tr>
+        </thead>
+      ) : null}
       <tbody>
-        {workProperties.flatMap((workProperty, workPropertyI) =>
-          workProperty.values.map((value, valueI) => (
-            <tr key={`${workPropertyI}-${valueI}`}>
-              <td>{workProperty.property.label}</td>
-              <td>{value.label}</td>
-            </tr>
-          ))
-        )}
+        {workProperties
+          .concat()
+          .sort((left, right) =>
+            left.property.label.localeCompare(right.property.label)
+          )
+          .flatMap((workProperty, workPropertyI) =>
+            workProperty.values
+              .concat()
+              .sort((left, right) => left.label.localeCompare(right.label))
+              .map((value, valueI) => (
+                <tr key={`${workPropertyI}-${valueI}`}>
+                  <td>{workProperty.property.label}</td>
+                  <td>{value.label}</td>
+                </tr>
+              ))
+          )}
       </tbody>
     </Table>
   );
@@ -64,29 +74,29 @@ export const WorkPropertiesContainer: React.FunctionComponent<{
   }, {} as {[index: string]: PropertyGroup});
 
   return (
-    <Container>
-      {Object.keys(workPropertiesByGroupUri).map(propertyGroupUri => (
-        <Row key={propertyGroupUri}>
-          <Col xs={12}>
-            <Card>
-              <CardHeader>
-                {requireDefined(propertyGroupsByUri[propertyGroupUri]).label}
-              </CardHeader>
-              <CardBody>
-                <WorkPropertiesTable workProperties={workProperties} />
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      ))}
+    <Container className="px-2" fluid>
+      {Object.keys(workPropertiesByGroupUri)
+        .sort((left, right) =>
+          requireDefined(propertyGroupsByUri[left]).label.localeCompare(
+            requireDefined(propertyGroupsByUri[right]).label
+          )
+        )
+        .map(propertyGroupUri => (
+          <Row key={propertyGroupUri}>
+            <Col className="px-0" xs={12}>
+              <WorkPropertiesTable
+                propertyGroupLabel={
+                  requireDefined(propertyGroupsByUri[propertyGroupUri]).label
+                }
+                workProperties={workProperties}
+              />
+            </Col>
+          </Row>
+        ))}
       {ungroupedWorkProperties ? (
         <Row>
-          <Col xs={12}>
-            <Card>
-              <CardBody>
-                <WorkPropertiesTable workProperties={ungroupedWorkProperties} />
-              </CardBody>
-            </Card>
+          <Col className="px-0" xs={12}>
+            <WorkPropertiesTable workProperties={ungroupedWorkProperties} />
           </Col>
         </Row>
       ) : null}

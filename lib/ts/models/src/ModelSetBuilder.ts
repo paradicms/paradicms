@@ -17,6 +17,7 @@ import {Work} from "./Work";
 import {Quad} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
 import {ModelSetFactory} from "./ModelSetFactory";
+import {PropertyGroup} from "./PropertyGroup";
 
 export class ModelSetBuilder {
   private addedAppConfiguration: boolean = false;
@@ -155,6 +156,10 @@ export class ModelSetBuilder {
 
   addProperty(property: Property): ModelSetBuilder {
     return this.addNamedModel(property);
+  }
+
+  addPropertyGroups(propertyGroups: readonly PropertyGroup[]): ModelSetBuilder {
+    return this.addNamedModels(propertyGroups);
   }
 
   addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {

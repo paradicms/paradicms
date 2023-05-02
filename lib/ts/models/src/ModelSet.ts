@@ -35,6 +35,7 @@ export interface ModelSet {
   personByUriOptional(personUri: string): Person | null;
   readonly properties: readonly Property[];
   propertiesByGroupUri(propertyGroupUri: string): readonly Property[];
+  propertyGroupByUri(propertyGroupUri: string): PropertyGroup;
   propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null;
   readonly propertyGroups: readonly PropertyGroup[];
   rightsStatementByUri(rightsStatementUri: string): RightsStatement;

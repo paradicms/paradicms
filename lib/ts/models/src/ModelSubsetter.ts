@@ -15,6 +15,8 @@ import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {WorkEventUnion} from "./WorkEventUnion";
 import {WorkJoinSelector} from "./WorkJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
+import {Property} from "./Property";
+import {PropertyJoinSelector} from "./PropertyJoinSelector";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -127,6 +129,17 @@ export class ModelSubsetter {
     this.modelSetBuilder.addLocation(location);
   }
 
+  private addPropertyModelSet(
+    property: Property,
+    propertyJoinSelector: PropertyJoinSelector
+  ) {
+    this.modelSetBuilder.addProperty(property);
+
+    if (propertyJoinSelector.groups) {
+      this.modelSetBuilder.addPropertyGroups(property.groups);
+    }
+  }
+
   private addRightsModelSet(
     agentJoinSelector: AgentJoinSelector,
     rights: RightsMixin | null
@@ -207,8 +220,9 @@ export class ModelSubsetter {
       }
 
       if (joinSelector.properties) {
-        // Add all properties
-        this.modelSetBuilder.addProperties(this.completeModelSet.properties);
+        for (const property of this.completeModelSet.properties) {
+          this.addPropertyModelSet(property, joinSelector.properties);
+        }
       }
 
       if (joinSelector.propertyValues) {

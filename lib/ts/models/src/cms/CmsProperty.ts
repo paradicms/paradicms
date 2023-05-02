@@ -10,6 +10,7 @@ import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQ
 import {CmsCommentMixin} from "./CmsCommentMixin";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsLabelMixin} from "./CmsLabelMixin";
+import {PropertyGroup} from "../PropertyGroup";
 
 export class CmsProperty
   extends Mixin(
@@ -23,6 +24,12 @@ export class CmsProperty
     return (
       this.findAndMapObject(cms.propertyFilterable, this.mapBooleanObject) ??
       false
+    );
+  }
+
+  get groups(): readonly PropertyGroup[] {
+    return this.groupUris.map(groupUri =>
+      this.modelSet.propertyGroupByUri(groupUri)
     );
   }
 

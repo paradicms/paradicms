@@ -11,4 +11,8 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
   events: {
     location: true,
   },
+  properties: {
+    groups: true,
+  },
+  propertyValues: {},
 };
