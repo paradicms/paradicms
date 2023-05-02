@@ -382,6 +382,10 @@ export class CachingModelSet implements ModelSet {
     return this._propertiesByGroupUriIndex!;
   }
 
+  propertyGroupByUri(propertyGroupUri: string): PropertyGroup {
+    return this.modelByUri(this.propertyGroupsByUriIndex, propertyGroupUri);
+  }
+
   propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null {
     return this.modelByUriOptional(
       this.propertyGroupsByUriIndex,

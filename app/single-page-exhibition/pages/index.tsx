@@ -1,9 +1,9 @@
 import {ModelSetFactory} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
+  defaultBootstrapStylesheetHref,
   RightsParagraph,
   WorkPage,
-  defaultBootstrapStylesheetHref,
 } from "@paradicms/react-dom-components";
 import {WorkLocationSummary} from "@paradicms/services";
 import fs from "fs";
@@ -103,6 +103,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                 getAbsoluteImageSrc={relativeImageSrc =>
                   getAbsoluteImageSrc(relativeImageSrc, router)
                 }
+                properties={modelSet.properties}
+                propertyGroups={modelSet.propertyGroups}
                 renderWorkLocationsMap={workLocations => (
                   <WorkLocationsMap workLocations={workLocations} />
                 )}

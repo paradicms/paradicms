@@ -60,6 +60,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
+        properties={modelSet.properties}
+        propertyGroups={modelSet.propertyGroups}
         renderWorkLocationsMap={workLocations => (
           <WorkLocationsMap workLocations={workLocations} />
         )}

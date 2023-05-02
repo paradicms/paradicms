@@ -10,6 +10,7 @@ import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQ
 import {CmsCommentMixin} from "./CmsCommentMixin";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsLabelMixin} from "./CmsLabelMixin";
+import {PropertyGroup} from "../PropertyGroup";
 
 export class CmsProperty
   extends Mixin(
@@ -26,10 +27,27 @@ export class CmsProperty
     );
   }
 
+  get groups(): readonly PropertyGroup[] {
+    return this.groupUris.map(groupUri =>
+      this.modelSet.propertyGroupByUri(groupUri)
+    );
+  }
+
   get groupUris(): readonly string[] {
     return this.filterAndMapObjects(cms.propertyGroup, term =>
       term.termType === "NamedNode" ? term.value : null
     );
+  }
+
+  get hidden(): boolean {
+    const hidden = this.findAndMapObject(
+      cms.propertyHidden,
+      this.mapBooleanObject
+    );
+    if (hidden !== null) {
+      return hidden;
+    }
+    return !this.filterable && !this.searchable;
   }
 
   get order(): number {
