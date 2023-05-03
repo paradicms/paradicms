@@ -51,7 +51,7 @@ class _AmbientModelReferenceTracker(Generic[_AmbientModelT]):
                 self.__referenced_ambient_model_uris.add(o)
 
 
-def ambient_reference_transformer(models: Iterable[Model]) -> Iterable[Model]:
+def ambient_reference_enricher(models: Iterable[Model]) -> Iterable[Model]:
     trackers = (
         _AmbientModelReferenceTracker(
             ambient_model_class=License,
