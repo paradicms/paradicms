@@ -6,6 +6,7 @@ from configargparse import ArgParser
 from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
 )
+from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.pipeline import Pipeline
@@ -22,20 +23,40 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
         *,
         airtable_access_token: str,
         cache_dir_path: Optional[Path] = None,
+        loader: Optional[Loader] = None,
         paradicms_rdf_file_path: Optional[Path] = None,
     ):
-        if cache_dir_path is None or paradicms_rdf_file_path is None:
+        if cache_dir_path is None:
             data_dir_path = self.__find_data_dir_path()
             if cache_dir_path is None:
                 cache_dir_path = self._cache_dir_path(
                     data_dir_path=data_dir_path, pipeline_id=self.ID
                 )
+
+        if loader is None:
             if paradicms_rdf_file_path is None:
                 paradicms_rdf_file_path = (
                     data_dir_path
                     / self.ID
                     / "loaded"
                     / "costume_core_ontology_paradicms.trig"
+                )
+                loader = lambda *, models, **kwds: RdfFileLoader(
+                    rdf_file_path=paradicms_rdf_file_path
+                )(
+                    models=(
+                        model
+                        for model in models
+                        if not isinstance(
+                            model,
+                            (
+                                CostumeCoreOntology,
+                                CostumeCoreOntology.Predicate,
+                                CostumeCoreOntology.Term,
+                            ),
+                        )
+                    ),
+                    **kwds,
                 )
 
         Pipeline.__init__(
@@ -45,23 +66,7 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
                 cache_dir_path=cache_dir_path / "airtable",
             ),
             id=self.ID,
-            loader=lambda *, models, **kwds: RdfFileLoader(
-                rdf_file_path=paradicms_rdf_file_path
-            )(
-                models=(
-                    model
-                    for model in models
-                    if not isinstance(
-                        model,
-                        (
-                            CostumeCoreOntology,
-                            CostumeCoreOntology.Predicate,
-                            CostumeCoreOntology.Term,
-                        ),
-                    )
-                ),
-                **kwds,
-            ),
+            loader=loader,
             transformer=CostumeCoreOntologyAirtableTransformer(),
         )
 

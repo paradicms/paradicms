@@ -3,6 +3,7 @@ from typing import Tuple
 
 import pytest
 
+from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
@@ -22,7 +23,7 @@ def excel_2010_test_data_file_path(data_dir_path: Path) -> Path:
 
 @pytest.fixture
 def synthetic_data_models() -> Tuple[Model, ...]:
-    return tuple(SyntheticDataPipeline().extract_transform())
+    return tuple(SyntheticDataPipeline(loader=nop_loader)())
 
 
 @pytest.fixture

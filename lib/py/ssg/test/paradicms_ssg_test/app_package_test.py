@@ -1,5 +1,7 @@
 from typing import Tuple
 
+from more_itertools import consume
+
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_ssg.app_package import AppPackage
@@ -23,7 +25,7 @@ def test_build(synthetic_data_models: Tuple[Model, ...], tmp_path):
 
     pipeline_id = "test"
     gui_data_loader = RdfFileLoader(rdf_file_path=tmp_path / (pipeline_id + ".trig"))
-    gui_data_loader(flush=True, models=synthetic_data_models)
+    consume(gui_data_loader(flush=True, models=synthetic_data_models))
 
     app_out_dir_path = app_package.build(
         data_file_paths=(tmp_path / (pipeline_id + ".trig"),)

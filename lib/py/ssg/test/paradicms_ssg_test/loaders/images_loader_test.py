@@ -16,7 +16,7 @@ def test_load(synthetic_data_original_images: Tuple[Image, ...], tmp_path):
             models=synthetic_data_original_images,
         )
     )
-    assert len(loaded_images) == len(synthetic_data_original_images) * 5
+    assert len(loaded_images) == len(synthetic_data_original_images) * 6
     assert all(isinstance(loaded_image, Image) for loaded_image in loaded_images)
     assert len(set(loaded_image.uri for loaded_image in loaded_images)) == len(
         loaded_images

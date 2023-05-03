@@ -39,7 +39,7 @@ class CostumeCoreDataAirtableTransformer:
         properties_by_label: Dict[str, CmsProperty] = {}
 
         for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
-            airtable_access_token="neverused"
+            airtable_access_token="neverused",
         )(force_extract=False):
             if isinstance(ontology_model, CmsConcept):
                 concept = ontology_model

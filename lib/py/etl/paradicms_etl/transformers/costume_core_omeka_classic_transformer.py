@@ -4,6 +4,7 @@ from typing import Tuple, Set, List, Dict
 from rdflib import URIRef, DCTERMS
 from rdflib.term import Node, Literal
 
+from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.property import Property
@@ -27,8 +28,8 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
 
     def __call__(self, **kwds):
         for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
-            airtable_access_token="neverused"
-        ).extract_transform(force_extract=False):
+            airtable_access_token="neverused", loader=nop_loader
+        )(force_extract=False):
             if isinstance(ontology_model, Concept):
                 for type_uri in ontology_model.type_uris:
                     self.__costume_core_concepts.setdefault(type_uri, {})[
