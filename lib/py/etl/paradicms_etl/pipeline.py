@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Dict, Optional, Any, Iterable, Tuple
 
 from configargparse import ArgParser
+from more_itertools import consume
 
 from paradicms_etl.enricher import Enricher
 from paradicms_etl.enrichers.ambient_reference_enricher import (
@@ -154,8 +155,7 @@ class Pipeline(ABC):
         force = bool(args.get("force", False))
         force_extract = force or bool(args.get("force_extract", False))
 
-        for _ in pipeline(force_extract=force_extract):
-            pass
+        consume(pipeline(force_extract=force_extract))
 
     def __transform(self, extract_kwds: Optional[Dict[str, Any]]) -> Iterable[Model]:
         if extract_kwds is None:
