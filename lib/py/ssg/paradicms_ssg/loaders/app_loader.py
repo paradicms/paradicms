@@ -1,10 +1,10 @@
 import logging
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Iterable, List
 
 import paradicms_ssg.namespaces
-from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_ssg.app_package import AppPackage
@@ -16,7 +16,7 @@ from paradicms_ssg.loaders.images_loader import ImagesLoader
 from paradicms_ssg.models.app_configuration import AppConfiguration
 
 
-class AppLoader(BufferingLoader):
+class AppLoader:
     """
     Loader that statically generates a website using one of the app implementations in app/.
 
@@ -55,7 +55,10 @@ class AppLoader(BufferingLoader):
         :param thumbnail_max_dimensions: maximum dimensions of image thumbnails to use
         """
 
-        BufferingLoader.__init__(self)
+        self.__buffered_app_configuration: Optional[AppConfiguration] = None
+        self.__buffered_copyable_original_images: List[Image] = []
+        self.__buffered_non_copyable_images: List[Image] = []
+        self.__buffered_other_models: List[Model] = []
         self.__cache_dir_path = cache_dir_path
         self.__deployer = deployer
         self.__dev = dev
@@ -65,16 +68,32 @@ class AppLoader(BufferingLoader):
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
 
-    def _flush(self, models):
-        app_configuration: Optional[AppConfiguration] = None
+    def __call__(self, *, flush: bool, models: Iterable[Model]):
+        # Iterate over models once, buffering into different lists
         for model in models:
             if isinstance(model, AppConfiguration):
-                app_configuration = model
-                break
-        if app_configuration is None:
-            self.__logger.warning("no %s in models", AppConfiguration.__name__)
+                self.__buffered_app_configuration = model
+            elif isinstance(model, Image):
+                image = model
+                if image.copyable:
+                    if image.original_image_uri is None:
+                        self.__buffered_copyable_original_images.append(image)
+                else:
+                    self.__buffered_non_copyable_images.append(image)
+            else:
+                self.__buffered_other_models.append(model)
 
-        app = app_configuration.app if app_configuration is not None else None
+        if flush:
+            self.__flush()
+
+    def __flush(self):
+        if self.__buffered_app_configuration is not None:
+            self.__logger.info("%s found in models", AppConfiguration.__name__)
+            app = self.__buffered_app_configuration.app
+        else:
+            self.__logger.warning("no %s in models", AppConfiguration.__name__)
+            app = None
+
         if app is None:
             app = self._APP_DEFAULT
             self.__logger.info(
@@ -96,43 +115,33 @@ class AppLoader(BufferingLoader):
                 / "archive",
             )
 
-        copyable_original_images = []
-        non_copyable_images = []
-        other_models = []
-        for model in models:
-            if isinstance(model, Image):
-                image = model
-                if image.copyable:
-                    if image.original_image_uri is None:
-                        copyable_original_images.append(image)
-                else:
-                    non_copyable_images.append(image)
-            else:
-                other_models.append(model)
+        models = []
 
-        gui_images = []
+        if self.__buffered_app_configuration is not None:
+            models.append(self.__buffered_app_configuration)
 
-        if non_copyable_images:
-            self.__logger.info(
-                "using %d non-copyable images as-is", len(non_copyable_images)
-            )
-            gui_images.extend(non_copyable_images)
-
-        if copyable_original_images:
+        if self.__buffered_copyable_original_images:
             self.__logger.info(
                 "thumbnailing and archiving %d copyable original images",
-                len(copyable_original_images),
+                len(self.__buffered_copyable_original_images),
             )
-            gui_images.extend(
+            models.extend(
                 ImagesLoader(
                     image_archiver=image_archiver,
                     loaded_data_dir_path=self.__cache_dir_path / "images",
                     sleep_s_after_image_download=self.__sleep_s_after_image_download,
                     thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
-                )(flush=True, models=copyable_original_images)
+                )(flush=True, models=self.__buffered_copyable_original_images)
             )
 
-            models = tuple(gui_images + other_models)
+        if self.__buffered_non_copyable_images:
+            self.__logger.info(
+                "using %d non-copyable images as-is",
+                len(self.__buffered_non_copyable_images),
+            )
+            models.extend(self.__buffered_non_copyable_images)
+
+        models.extend(self.__buffered_other_models)
 
         data_file_paths = []
 

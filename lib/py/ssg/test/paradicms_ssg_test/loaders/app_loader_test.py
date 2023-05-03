@@ -39,11 +39,11 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
     if app_configuration is None:
         return
 
-    loaded_data_dir_path = tmp_path
+    cache_dir_path = tmp_path
 
     app_loader = AppLoader(
         image_archiver=NopImageArchiver(),
-        loaded_data_dir_path=loaded_data_dir_path,
+        cache_dir_path=cache_dir_path,
         pipeline_id=SyntheticDataPipeline.ID,
     )
 
@@ -60,7 +60,7 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
     # Only pass in one original image so the test doesn't take too long
     app_loader(flush=True, models=[original_images[0]] + other_models)
 
-    assert (loaded_data_dir_path / "deployed" / "index.html").is_file()
+    assert (cache_dir_path / "deployment" / "index.html").is_file()
 
 
 # @pytest.mark.parametrize(
@@ -71,13 +71,13 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
 #     SyntheticDataPipeline(
 #         loader=AppLoader(
 #             app=app,
-#             loaded_data_dir_path=tmp_path,
+#             cache_dir_path=tmp_path,
 #             pipeline_id=SyntheticDataPipeline.ID,
 #         ),
 #     ).extract_transform_load()
 #     img_file_path = (
 #         tmp_path
-#         / "deployed"
+#         / "deployment"
 #         / "current"
 #         / "img"
 #         / "archive"
@@ -94,7 +94,7 @@ def test_load_excel_2010_test_data(
     if app_configuration is None:
         return
 
-    loaded_data_dir_path = tmp_path
+    cache_dir_path = tmp_path
 
     pipeline_id = "test"
     Pipeline(
@@ -104,7 +104,7 @@ def test_load_excel_2010_test_data(
         id=pipeline_id,
         loader=AppLoader(
             image_archiver=NopImageArchiver(),
-            loaded_data_dir_path=loaded_data_dir_path,
+            cache_dir_path=cache_dir_path,
             pipeline_id=SyntheticDataPipeline.ID,
         ),
         transformer=SpreadsheetTransformer(pipeline_id=pipeline_id),
