@@ -97,7 +97,7 @@ def test_load_excel_2010_test_data(
     cache_dir_path = tmp_path
 
     pipeline_id = "test"
-    Pipeline(
+    for _ in Pipeline(
         extractor=Excel2010Extractor(
             xlsx_file_path=excel_2010_test_data_file_path,
         ),
@@ -108,4 +108,5 @@ def test_load_excel_2010_test_data(
             pipeline_id=SyntheticDataPipeline.ID,
         ),
         transformer=SpreadsheetTransformer(pipeline_id=pipeline_id),
-    ).extract_transform_load()
+    )():
+        pass

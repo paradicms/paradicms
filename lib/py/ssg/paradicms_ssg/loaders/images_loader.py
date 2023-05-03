@@ -146,6 +146,8 @@ class ImagesLoader:
             if not isinstance(model, Image):
                 raise TypeError("model is not an Image: " + type(model))
 
+            yield model
+
             original_image = model
 
             if original_image.original_image_uri is not None:

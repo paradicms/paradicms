@@ -83,6 +83,8 @@ class AppLoader:
             else:
                 self.__buffered_other_models.append(model)
 
+            yield model
+
         if flush:
             self.__flush()
 
@@ -151,7 +153,8 @@ class AppLoader:
                 additional_namespace_modules=(paradicms_ssg.namespaces,),
                 rdf_file_path=loaded_data_file_path,
             )
-            data_loader(flush=True, models=models)
+            for _ in data_loader(flush=True, models=models):
+                pass
             self.__logger.info("loaded data to %s", loaded_data_file_path)
             data_file_paths.append(loaded_data_file_path)
 

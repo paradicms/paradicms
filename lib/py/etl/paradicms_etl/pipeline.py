@@ -154,7 +154,8 @@ class Pipeline(ABC):
         force = bool(args.get("force", False))
         force_extract = force or bool(args.get("force_extract", False))
 
-        pipeline(force_extract=force_extract)
+        for _ in pipeline(force_extract=force_extract):
+            pass
 
     def __transform(self, extract_kwds: Optional[Dict[str, Any]]) -> Iterable[Model]:
         if extract_kwds is None:
