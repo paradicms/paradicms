@@ -41,23 +41,23 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(Pipeline):
                     / "loaded"
                     / "costume_core_ontology_paradicms.trig"
                 )
-                loader = lambda *, models, **kwds: RdfFileLoader(
-                    rdf_file_path=paradicms_rdf_file_path
-                )(
-                    models=(
-                        model
-                        for model in models
-                        if not isinstance(
-                            model,
-                            (
-                                CostumeCoreOntology,
-                                CostumeCoreOntology.Predicate,
-                                CostumeCoreOntology.Term,
-                            ),
-                        )
-                    ),
-                    **kwds,
-                )
+            loader = lambda *, models, **kwds: RdfFileLoader(
+                rdf_file_path=paradicms_rdf_file_path
+            )(
+                models=(
+                    model
+                    for model in models
+                    if not isinstance(
+                        model,
+                        (
+                            CostumeCoreOntology,
+                            CostumeCoreOntology.Predicate,
+                            CostumeCoreOntology.Term,
+                        ),
+                    )
+                ),
+                **kwds,
+            )
 
         Pipeline.__init__(
             self,
