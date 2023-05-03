@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from types import ModuleType
-from typing import Tuple, Type, Dict, List, Optional, Any, Iterable
+from typing import Tuple, List, Optional, Any, Iterable
 
 from openpyxl import Workbook
 from rdflib import Graph
@@ -45,58 +45,56 @@ class Excel2010Loader:
         self.__xlsx_file_path = xlsx_file_path
         self.__workbook = Workbook()
 
-    def __call__(self, *, flush: bool, models: Iterable[Model]):
-        models_by_class: Dict[Type[Model], List[Model]] = {}
+    def __call__(self, *, flush: bool, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
-            models_by_class.setdefault(model.__class__, []).append(model)
+            assert issubclass(model.__class__, ResourceBackedModel)
 
-        for model_class, model_class_models in models_by_class.items():
             try:
-                sheet = self.__workbook.get_sheet_by_name(model_class.__name__)
+                sheet = self.__workbook.get_sheet_by_name(model.__class__.__name__)
                 new_sheet = False
             except KeyError:
-                sheet = self.__workbook.create_sheet(model_class.__name__)
+                sheet = self.__workbook.create_sheet(model.__class__.__name__)
                 new_sheet = True
             sheet_header: Optional[List[str]] = None
 
-            for model in model_class_models:
-                graph = Graph()
-                bind_namespaces(
-                    graph.namespace_manager,
-                    additional_namespace_modules=self.__additional_namespace_modules,
+            model_graph = Graph()
+            bind_namespaces(
+                model_graph.namespace_manager,
+                additional_namespace_modules=self.__additional_namespace_modules,
+            )
+            model.to_rdf(graph=model_graph)
+            model_json_ld_object = json.loads(
+                model_graph.serialize(
+                    context=model.__class__.json_ld_context(), format="json-ld"
                 )
-                model.to_rdf(graph=graph)
-                assert issubclass(model_class, ResourceBackedModel)
-                json_ld_object = json.loads(
-                    graph.serialize(
-                        context=model_class.json_ld_context(), format="json-ld"
-                    )
+            )
+            model_json_ld_object.pop("@context")
+            model_json_ld_object.pop("@type", None)
+
+            if sheet_header is None:
+                sheet_header = []
+                for key in model_json_ld_object.keys():
+                    if key.startswith("http://") or key.startswith("https://"):
+                        continue
+                    sheet_header.append(key)
+                if new_sheet:
+                    sheet.append(sheet_header)
+
+            model_row = []
+            model_row_non_empty = False
+            for key in sheet_header:
+                value = _get_excel_2010_compatible_json_ld_object_value(
+                    model_json_ld_object.get(key, None)
                 )
-                json_ld_object.pop("@context")
-                json_ld_object.pop("@type", None)
+                if value is not None:
+                    model_row.append(value)
+                    model_row_non_empty = True
+                else:
+                    model_row.append("")
+            if model_row_non_empty:
+                sheet.append(model_row)
 
-                if sheet_header is None:
-                    sheet_header = []
-                    for key in json_ld_object.keys():
-                        if key.startswith("http://") or key.startswith("https://"):
-                            continue
-                        sheet_header.append(key)
-                    if new_sheet:
-                        sheet.append(sheet_header)
-
-                row = []
-                row_non_empty = False
-                for key in sheet_header:
-                    value = _get_excel_2010_compatible_json_ld_object_value(
-                        json_ld_object.get(key, None)
-                    )
-                    if value is not None:
-                        row.append(value)
-                        row_non_empty = True
-                    else:
-                        row.append("")
-                if row_non_empty:
-                    sheet.append(row)
+            yield model
 
         if flush:
             self.__workbook.save(str(self.__xlsx_file_path))

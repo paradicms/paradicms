@@ -37,9 +37,10 @@ class CostumeCoreDataAirtableTransformer:
     def __call__(self, *, base: Dict[str, Any], records_by_table, **kwds):
         concepts_by_uri: Dict[URIRef, CmsConcept] = {}
         properties_by_label: Dict[str, CmsProperty] = {}
+
         for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
-            airtable_access_token="neverused"
-        ).extract_transform(force_extract=False):
+            airtable_access_token="neverused",
+        )(force_extract=False):
             if isinstance(ontology_model, CmsConcept):
                 concept = ontology_model
                 concepts_by_uri[concept.uri] = concept

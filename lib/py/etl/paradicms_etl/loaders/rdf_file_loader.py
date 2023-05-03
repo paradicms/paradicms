@@ -33,7 +33,7 @@ class RdfFileLoader:
                 raise ValueError("unable to guess format from file path")
         self.__format = format
 
-    def __call__(self, *, flush: bool, models: Iterable[Model]):
+    def __call__(self, *, flush: bool, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
             model_graph = Graph()
             model_resource = model.to_rdf(graph=model_graph)
@@ -55,6 +55,8 @@ class RdfFileLoader:
             self.__conjunctive_graph_context_identifiers.add(
                 conjunctive_graph_context.identifier
             )
+
+            yield model
 
         if flush:
             self.__rdf_file_path.parent.mkdir(parents=True, exist_ok=True)

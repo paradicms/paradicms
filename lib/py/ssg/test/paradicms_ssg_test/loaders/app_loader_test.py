@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Tuple
 
 import pytest
+from more_itertools import consume
 from rdflib import Graph, BNode, RDF, Literal
 
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
@@ -58,7 +59,7 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
             other_models.append(model)
 
     # Only pass in one original image so the test doesn't take too long
-    app_loader(flush=True, models=[original_images[0]] + other_models)
+    consume(app_loader(flush=True, models=[original_images[0]] + other_models))
 
     assert (cache_dir_path / "deployment" / "index.html").is_file()
 
@@ -97,15 +98,17 @@ def test_load_excel_2010_test_data(
     cache_dir_path = tmp_path
 
     pipeline_id = "test"
-    Pipeline(
-        extractor=Excel2010Extractor(
-            xlsx_file_path=excel_2010_test_data_file_path,
-        ),
-        id=pipeline_id,
-        loader=AppLoader(
-            image_archiver=NopImageArchiver(),
-            cache_dir_path=cache_dir_path,
-            pipeline_id=SyntheticDataPipeline.ID,
-        ),
-        transformer=SpreadsheetTransformer(pipeline_id=pipeline_id),
-    ).extract_transform_load()
+    consume(
+        Pipeline(
+            extractor=Excel2010Extractor(
+                xlsx_file_path=excel_2010_test_data_file_path,
+            ),
+            id=pipeline_id,
+            loader=AppLoader(
+                image_archiver=NopImageArchiver(),
+                cache_dir_path=cache_dir_path,
+                pipeline_id=SyntheticDataPipeline.ID,
+            ),
+            transformer=SpreadsheetTransformer(pipeline_id=pipeline_id),
+        )()
+    )

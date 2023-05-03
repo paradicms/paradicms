@@ -44,18 +44,24 @@ class RightsStatementsDotOrgPipeline(Pipeline):
 
     @staticmethod
     def __load(*, models: Iterable[Model], **kwds):
-        rights_statements_py_file_path = (
-            Path(__file__).parent.parent
-            / "models"
-            / "rights_statements_dot_org_rights_statements.py"
-        )
-        rights_statement_reprs = "\n\n".join(
-            f"    {rights_statement.identifier.replace('-', '_')} = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"
-            for rights_statement in models
-            if isinstance(rights_statement, RightsStatement)
-        )
+        rights_statement_reprs = []
+        for model in models:
+            if isinstance(model, RightsStatement):
+                rights_statement = model
+                rights_statement_reprs.append(
+                    f"    {rights_statement.identifier.replace('-', '_')} = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"
+                )
+            yield model
+        rights_statement_reprs_str = "\n\n".join(rights_statement_reprs)
+
         with open(
-            rights_statements_py_file_path, "w+", encoding="utf-8"
+            (
+                Path(__file__).parent.parent
+                / "models"
+                / "rights_statements_dot_org_rights_statements.py"
+            ),
+            "w+",
+            encoding="utf-8",
         ) as rights_statements_py_file:
             rights_statements_py_file.write(
                 f"""\
@@ -69,7 +75,7 @@ from paradicms_etl.models.model_singletons import ModelSingletons
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):
     _MODEL_CLASS = CmsRightsStatement
 
-{rights_statement_reprs}
+{rights_statement_reprs_str}
 """
             )
 

@@ -2,6 +2,8 @@ import logging
 from pathlib import Path
 from typing import Optional, Tuple, Iterable, List
 
+from more_itertools import consume
+
 import paradicms_ssg.namespaces
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
@@ -83,6 +85,8 @@ class AppLoader:
             else:
                 self.__buffered_other_models.append(model)
 
+            yield model
+
         if flush:
             self.__flush()
 
@@ -151,7 +155,7 @@ class AppLoader:
                 additional_namespace_modules=(paradicms_ssg.namespaces,),
                 rdf_file_path=loaded_data_file_path,
             )
-            data_loader(flush=True, models=models)
+            consume(data_loader(flush=True, models=models))
             self.__logger.info("loaded data to %s", loaded_data_file_path)
             data_file_paths.append(loaded_data_file_path)
 

@@ -54,7 +54,7 @@ class CreativeCommonsPipeline(Pipeline):
             return {"rdf_file_contents": rdf_file_contents}
 
     @staticmethod
-    def __load(*, models: Iterable[Model], **kwds):
+    def __load(*, models: Iterable[Model], **kwds) -> Iterable[Model]:
         creative_commons_licenses_py_file_path = (
             Path(__file__).parent.parent / "models" / "creative_commons_licenses.py"
         )
@@ -83,6 +83,9 @@ class CreativeCommonsPipeline(Pipeline):
             py_license_reprs.append(
                 f"    {py_license_identifier} = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''{en_license_graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{license.uri}')))"  # type: ignore
             )
+
+            yield license
+
         py_license_reprs_joined = "\n".join(py_license_reprs)
 
         with open(
