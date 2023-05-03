@@ -5,13 +5,14 @@ from typing import Dict, Optional, Any, Iterable, Tuple
 
 from configargparse import ArgParser
 
+from paradicms_etl.enricher import Enricher
+from paradicms_etl.enrichers.ambient_reference_enricher import (
+    ambient_reference_enricher,
+)
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.model import Model
 from paradicms_etl.transformer import Transformer
-from paradicms_etl.transformers.ambient_reference_transformer import (
-    ambient_reference_transformer,
-)
 from paradicms_etl.utils.existing_directory_argument_type import (
     existing_directory_argument_type,
 )
@@ -28,10 +29,12 @@ class Pipeline(ABC):
         id: str,
         loader: Loader,
         transformer: Transformer,
+        enrichers: Optional[Tuple[Enricher, ...]] = None,
         validators: Optional[Tuple[Validator, ...]] = None
     ):
         """
         Construct an extract-transform-load pipeline.
+        :param validators: zero or more enrichers to apply to the transformed models; if None, use the default set
         :param extractor: extractor implementation
         :param id: unique identifier for this pipeline instance, may be adapted from arguments
         :param loader: optional loader; if not specified, a default loader will be used
@@ -39,6 +42,9 @@ class Pipeline(ABC):
         :param validators: zero or more validators to apply to the transformed models; if None, use the default set
         """
 
+        if enrichers is None:
+            enrichers = (ambient_reference_enricher,)
+        self.__enrichers = enrichers
         self.__extractor = extractor
         self.__id = id
         self.__loader = loader
@@ -90,18 +96,21 @@ class Pipeline(ABC):
     def _cache_dir_path(*, data_dir_path: Path, pipeline_id: str):
         return data_dir_path / pipeline_id / "cache"
 
-    def extract_transform(self, *, force_extract: bool = False) -> Iterable[Model]:
-        return self.__transform(self.__extract(force=force_extract))
+    def __call__(self, *, force_extract: bool = False) -> Iterable[Model]:
+        return self.__load(
+            self.__validate(
+                self.__enrich(self.__transform(self.__extract(force=force_extract)))
+            )
+        )
 
-    def __extract(self, *, force: bool = False) -> Optional[Dict[str, object]]:
+    def __enrich(self, models: Iterable[Model]) -> Iterable[Model]:
+        enriched_models = models
+        for enricher in self.__enrichers:
+            enriched_models = enricher(enriched_models)
+        return enriched_models
+
+    def __extract(self, *, force: bool) -> Optional[Dict[str, object]]:
         return self.__extractor(force=force)
-
-    def extract_transform_load(self, *, force_extract: bool = False):
-        return self.__load(self.extract_transform(force_extract=force_extract))
-
-    @property
-    def extractor(self):
-        return self.__extractor
 
     @property
     def id(self):
@@ -111,16 +120,12 @@ class Pipeline(ABC):
     def _logger(self):
         return self.__logger
 
-    def __load(self, models: Iterable[Model]) -> Any:
+    def __load(self, models: Iterable[Model]) -> Iterable[Model]:
         return self.__loader(flush=True, models=models)
 
     @staticmethod
     def _loaded_data_dir_path(*, data_dir_path: Path, pipeline_id: str):
         return data_dir_path / pipeline_id / "loaded"
-
-    @property
-    def loader(self):
-        return self.__loader
 
     @classmethod
     def main(cls, args: Optional[Dict[str, object]] = None):
@@ -149,19 +154,12 @@ class Pipeline(ABC):
         force = bool(args.get("force", False))
         force_extract = force or bool(args.get("force_extract", False))
 
-        pipeline.extract_transform_load(force_extract=force_extract)
+        pipeline(force_extract=force_extract)
 
     def __transform(self, extract_kwds: Optional[Dict[str, Any]]) -> Iterable[Model]:
         if extract_kwds is None:
             extract_kwds = {}
-        models = self.transformer(**extract_kwds)
-        models_with_ambient_referees = ambient_reference_transformer(models)
-        validated_models = self.__validate(models_with_ambient_referees)
-        return validated_models
-
-    @property
-    def transformer(self):
-        return self.__transformer
+        return self.__transformer(**extract_kwds)
 
     def __validate(self, models: Iterable[Model]) -> Iterable[Model]:
         validated_models = models
