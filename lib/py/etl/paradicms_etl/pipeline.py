@@ -1,7 +1,7 @@
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import Dict, Optional, Any, Iterable
+from typing import Dict, Optional, Any, Iterable, Tuple
 
 from configargparse import ArgParser
 
@@ -12,10 +12,12 @@ from paradicms_etl.transformer import Transformer
 from paradicms_etl.transformers.ambient_reference_transformer import (
     ambient_reference_transformer,
 )
-from paradicms_etl.transformers.validation_transformer import validation_transformer
 from paradicms_etl.utils.existing_directory_argument_type import (
     existing_directory_argument_type,
 )
+from paradicms_etl.validation_result import ValidationResult
+from paradicms_etl.validator import Validator
+from paradicms_etl.validators.reference_validator import ReferenceValidator
 
 
 class Pipeline(ABC):
@@ -26,6 +28,7 @@ class Pipeline(ABC):
         id: str,
         loader: Loader,
         transformer: Transformer,
+        validators: Optional[Tuple[Validator, ...]] = None
     ):
         """
         Construct an extract-transform-load pipeline.
@@ -33,6 +36,7 @@ class Pipeline(ABC):
         :param id: unique identifier for this pipeline instance, may be adapted from arguments
         :param loader: optional loader; if not specified, a default loader will be used
         :param transformer: transformer implementation
+        :param validators: zero or more validators to apply to the transformed models; if None, use the default set
         """
 
         self.__extractor = extractor
@@ -40,6 +44,9 @@ class Pipeline(ABC):
         self.__loader = loader
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
+        if validators is None:
+            validators = (ReferenceValidator(),)
+        self.__validators = validators
 
     @classmethod
     def add_arguments(cls, arg_parser: ArgParser) -> None:
@@ -149,9 +156,35 @@ class Pipeline(ABC):
             extract_kwds = {}
         models = self.transformer(**extract_kwds)
         models_with_ambient_referees = ambient_reference_transformer(models)
-        validated_models = validation_transformer(models_with_ambient_referees)
+        validated_models = self.__validate(models_with_ambient_referees)
         return validated_models
 
     @property
     def transformer(self):
         return self.__transformer
+
+    def __validate(self, models: Iterable[Model]) -> Iterable[Model]:
+        validated_models = models
+        for validator in self.__validators:
+            validated_models = self.__validate_with_validator(
+                validated_models, validator
+            )
+        return validated_models
+
+    def __validate_with_validator(
+        self, models: Iterable[Model], validator: Validator
+    ) -> Iterable[Model]:
+        for output in validator(models):
+            if isinstance(output, ValidationResult):
+                if output.severity == ValidationResult.Severity.INFO:
+                    log_level = logging.INFO
+                elif output.severity == ValidationResult.Severity.WARNING:
+                    log_level = logging.WARNING
+                elif output.severity == ValidationResult.Severity.VIOLATION:
+                    log_level = logging.ERROR
+                else:
+                    raise NotImplementedError(output.severity)
+
+                self.__logger.log(log_level, output.message)
+            else:
+                yield output

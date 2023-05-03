@@ -1,12 +1,11 @@
 import json
 from pathlib import Path
 from types import ModuleType
-from typing import Tuple, Type, Dict, List, Optional, Any
+from typing import Tuple, Type, Dict, List, Optional, Any, Iterable
 
 from openpyxl import Workbook
 from rdflib import Graph
 
-from paradicms_etl.loaders.buffering_loader import BufferingLoader
 from paradicms_etl.model import Model
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import bind_namespaces
@@ -35,26 +34,31 @@ def _get_excel_2010_compatible_json_ld_object_value(
         return json_ld_object_value
 
 
-class Excel2010Loader(BufferingLoader):
+class Excel2010Loader:
     def __init__(
         self,
         *,
         xlsx_file_path: Path,
         additional_namespace_modules: Tuple[ModuleType, ...] = ()
     ):
-        BufferingLoader.__init__(self)
         self.__additional_namespace_modules = additional_namespace_modules
         self.__xlsx_file_path = xlsx_file_path
+        self.__workbook = Workbook()
 
-    def _flush(self, *, models: Tuple[Model, ...]):
+    def __call__(self, *, flush: bool, models: Iterable[Model]):
         models_by_class: Dict[Type[Model], List[Model]] = {}
         for model in models:
             models_by_class.setdefault(model.__class__, []).append(model)
 
-        workbook = Workbook()
         for model_class, model_class_models in models_by_class.items():
-            sheet = workbook.create_sheet(model_class.__name__)
+            try:
+                sheet = self.__workbook.get_sheet_by_name(model_class.__name__)
+                new_sheet = False
+            except KeyError:
+                sheet = self.__workbook.create_sheet(model_class.__name__)
+                new_sheet = True
             sheet_header: Optional[List[str]] = None
+
             for model in model_class_models:
                 graph = Graph()
                 bind_namespaces(
@@ -77,7 +81,8 @@ class Excel2010Loader(BufferingLoader):
                         if key.startswith("http://") or key.startswith("https://"):
                             continue
                         sheet_header.append(key)
-                    sheet.append(sheet_header)
+                    if new_sheet:
+                        sheet.append(sheet_header)
 
                 row = []
                 row_non_empty = False
@@ -93,4 +98,5 @@ class Excel2010Loader(BufferingLoader):
                 if row_non_empty:
                     sheet.append(row)
 
-        workbook.save(str(self.__xlsx_file_path))
+        if flush:
+            self.__workbook.save(str(self.__xlsx_file_path))
