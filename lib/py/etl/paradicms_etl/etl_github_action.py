@@ -76,7 +76,7 @@ class EtlGitHubAction(GitHubAction, ABC):
         if enrichers is None:
             enrichers = (
                 ambient_reference_enricher,
-                WikidataEnricher(cache_dir_path=self._cache_dir_path),
+                WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
             )
 
         if loader is None:
