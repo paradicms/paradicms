@@ -2,7 +2,7 @@ import ssl
 from pathlib import Path
 from typing import Tuple, List
 
-from rdflib import Graph
+from rdflib import Graph, URIRef
 
 from paradicms_etl.utils.file_cache import FileCache
 
@@ -28,7 +28,8 @@ class WikidataQidExtractor:
         for qid in self.__qids:
             rdf_file_paths.append(
                 self.__file_cache.get_file(
-                    f"https://www.wikidata.org/entity/{qid}.ttl", force_download=force
+                    URIRef(f"https://www.wikidata.org/entity/{qid}.ttl"),
+                    force_download=force,
                 )
             )
 

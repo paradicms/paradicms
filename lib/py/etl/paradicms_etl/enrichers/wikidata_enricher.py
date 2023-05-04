@@ -17,15 +17,15 @@ class WikidataEnricher:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
-        yielded_wikidata_item_uris: Set[URIRef] = set()
+        yielded_wikidata_item_qids: Set[str] = set()
         for model in models:
             model_graph = Graph()
             model_resource = model.to_rdf(model_graph)
             wikidata_item_qids = self.__get_wikidata_item_references(model_resource)
             for wikidata_item_qid in wikidata_item_qids:
-                if wikidata_item_qid not in yielded_wikidata_item_uris:
+                if wikidata_item_qid not in yielded_wikidata_item_qids:
                     yield self.__get_wikidata_item(wikidata_item_qid)
-                    yielded_wikidata_item_uris.add(wikidata_item_qid)
+                    yielded_wikidata_item_qids.add(wikidata_item_qid)
 
             yield model
 
