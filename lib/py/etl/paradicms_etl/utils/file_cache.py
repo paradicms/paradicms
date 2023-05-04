@@ -3,6 +3,8 @@ import logging
 import mimetypes
 import os
 from pathlib import Path
+from shutil import copyfileobj
+from ssl import SSLContext
 from time import sleep
 from typing import Optional, Dict, Any
 from urllib.request import urlopen
@@ -17,19 +19,18 @@ class FileCache:
         *,
         # atomic_download: bool = False,
         cache_dir_path: Path,
-        force_download: bool = False,
         sleep_s_after_download: Optional[float] = None,
+        ssl_context: Optional[SSLContext] = None,
     ):
         """
         :param cache_dir_path: directory where files from URLs can be cached
-        :param force_download: always download files, never use cached versions
         """
         # self.__atomic_download = atomic_download
         self.__cache_dir_path = cache_dir_path
         self.__cache_dir_path.mkdir(exist_ok=True, parents=True)
-        self.__force_download = force_download
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__sleep_s_after_download = sleep_s_after_download
+        self.__ssl_context = ssl_context
 
     def __cached_file_ext(self, *, file_url: str, file_mime_type: Optional[str]) -> str:
         if file_mime_type is not None:
@@ -61,7 +62,7 @@ class FileCache:
     def __file_cache_dir_path(self, *, file_url: str) -> Path:
         return self.__cache_dir_path / sanitize_filename(str(file_url))
 
-    def get_file(self, file_url: URIRef) -> Path:
+    def get_file(self, file_url: URIRef, *, force_download=False) -> Path:
         """
         Get file from the cache, downloading if necessary.
         :return path to the file in the cache directory
@@ -75,7 +76,7 @@ class FileCache:
 
         file_cache_dir_path = self.__file_cache_dir_path(file_url=file_url)
 
-        if not self.__force_download and file_cache_dir_path.is_dir():
+        if not force_download and file_cache_dir_path.is_dir():
             for file_name in os.listdir(file_cache_dir_path):
                 cached_file_path = file_cache_dir_path / file_name
                 if not cached_file_path.is_file():
@@ -109,13 +110,13 @@ class FileCache:
         #         "moved %s (from %s) to %s", temp_file_path, file_url, cached_file_path
         #     )
         # else:
-        with urlopen(str(file_url)) as open_file_url:
+        with urlopen(str(file_url), context=self.__ssl_context) as open_file_url:
             headers_dict = {key: value for key, value in open_file_url.headers.items()}
             cached_file_path = get_cached_file_path(headers_dict)
             cached_file_path.unlink(missing_ok=True)
             file_cache_dir_path.mkdir(exist_ok=True, parents=True)
             with open(cached_file_path, "w+b") as cached_file:
-                cached_file.write(open_file_url.read())
+                copyfileobj(open_file_url, cached_file)
                 self.__logger.debug("downloaded %s to %s", file_url, cached_file_path)
 
         headers_json_file_path = file_cache_dir_path / "headers.json"

@@ -6,16 +6,14 @@ from urllib.parse import urlparse
 from rdflib import Graph, URIRef, DCTERMS
 from rdflib.resource import Resource
 
+from paradicms_etl.extractors.wikidata_qid_extractor import WikidataQidExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
-from paradicms_etl.utils.file_cache import FileCache
 
 
 class WikidataEnricher:
-    def __init__(self, *, cache_dir_path: Path, force_download: bool = False):
-        self.__file_cache = FileCache(
-            cache_dir_path=cache_dir_path, force_download=force_download
-        )
+    def __init__(self, *, cache_dir_path: Path):
+        self.__cache_dir_path = cache_dir_path
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
@@ -33,11 +31,11 @@ class WikidataEnricher:
 
     def __get_wikidata_item(self, qid: str) -> WikidataItem:
         qid_uri = URIRef(f"http://www.wikidata.org/entity/{qid}")
-        ttl_file_path = self.__file_cache.get_file(str(qid_uri) + ".ttl")
-        ttl_graph = Graph()
-        ttl_graph.parse(str(ttl_file_path))
+        graph = WikidataQidExtractor(cache_dir_path=self.__cache_dir_path, qids=(qid,))(
+            force=False
+        )["graph"]
         wikidata_items = WikidataItem.from_wikidata_rdf(
-            graph=ttl_graph, logger=self.__logger
+            graph=graph, logger=self.__logger
         )
         assert len(wikidata_items)
         for wikidata_item in wikidata_items:
