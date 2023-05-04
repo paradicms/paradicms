@@ -23,7 +23,7 @@ class WikidataEnricher:
             model_resource = model.to_rdf(model_graph)
             wikidata_item_qids = self.__get_wikidata_item_references(model_resource)
             for wikidata_item_qid in wikidata_item_qids:
-                if not wikidata_item_qid in yielded_wikidata_item_uris:
+                if wikidata_item_qid not in yielded_wikidata_item_uris:
                     yield self.__get_wikidata_item(wikidata_item_qid)
                     yielded_wikidata_item_uris.add(wikidata_item_qid)
 
