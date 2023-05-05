@@ -1,12 +1,22 @@
 import dataclasses
 from abc import ABC
 from pathlib import Path
-from typing import Type, Optional
+from typing import Type, Optional, Tuple
 
 from configargparse import ArgParser
+from more_itertools import consume
 
+from paradicms_etl.enricher import Enricher
+from paradicms_etl.enrichers.ambient_reference_enricher import (
+    ambient_reference_enricher,
+)
+from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
+from paradicms_etl.extractor import Extractor
 from paradicms_etl.github_action import GitHubAction
+from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.transformer import Transformer
 
 
 class EtlGitHubAction(GitHubAction, ABC):
@@ -39,12 +49,9 @@ class EtlGitHubAction(GitHubAction, ABC):
         **kwds
     ):
         GitHubAction.__init__(self, **kwds)
-        self._force_extract = force_extract
-        self._loader = RdfFileLoader(
-            rdf_file_path=Path(loaded_data_file_path)
-            if loaded_data_file_path
-            else Path(loaded_data_directory_path) / (self._pipeline_id + ".trig")
-        )
+        self.__force_extract = force_extract
+        self.__loaded_data_directory_path = loaded_data_directory_path
+        self.__loaded_data_file_path = loaded_data_file_path
 
     @classmethod
     def _add_arguments(
@@ -56,4 +63,36 @@ class EtlGitHubAction(GitHubAction, ABC):
             "--force-extract",
             action="store_true",
             help="force extraction, ignoring any cached files",
+        )
+
+    def _run_pipeline(
+        self,
+        *,
+        extractor: Extractor,
+        transformer: Transformer,
+        enrichers: Optional[Tuple[Enricher, ...]] = None,
+        loader: Optional[Loader] = None
+    ):
+        if enrichers is None:
+            enrichers = (
+                ambient_reference_enricher,
+                WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
+            )
+
+        if loader is None:
+            loader = RdfFileLoader(
+                rdf_file_path=Path(self.__loaded_data_file_path)
+                if self.__loaded_data_file_path
+                else Path(self.__loaded_data_directory_path)
+                / (self._pipeline_id + ".trig")
+            )
+
+        consume(
+            Pipeline(
+                enrichers=enrichers,
+                extractor=extractor,
+                id=self._pipeline_id,
+                loader=loader,
+                transformer=transformer,
+            )(force_extract=self.__force_extract)
         )

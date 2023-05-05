@@ -1,3 +1,4 @@
+import logging
 from logging import Logger
 from typing import Dict, List, Optional, Tuple
 
@@ -190,7 +191,10 @@ class WikidataItem(ResourceBackedNamedModel):
                     added_property = True
                     break
             if not added_property:
-                logger.warning(
+                logger.log(
+                    logging.DEBUG
+                    if str(predicate).startswith("http://schema.org")
+                    else logging.WARNING,
                     "item parser: unknown triple (%s, %s, %s)",
                     resource.identifier,
                     predicate,
@@ -275,6 +279,3 @@ class WikidataItem(ResourceBackedNamedModel):
         for statement in self.statements:
             result.setdefault(statement.property_definition.label, []).append(statement)
         return result
-
-    def to_rdf(self, graph: Graph) -> Resource:
-        raise NotImplementedError
