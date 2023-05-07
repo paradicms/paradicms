@@ -150,7 +150,9 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
 
     class Builder(ResourceBackedNamedModel.Builder):
         def __init__(self):
-            ResourceBackedNamedModel.Builder.__init__(self, uri=URIRef(str(COCO)[:-1]))
+            ResourceBackedNamedModel.Builder.__init__(
+                self, Graph().resource(URIRef(str(COCO)[:-1]))
+            )
             self.add(DCTERMS.title, Literal("Costume Core Ontology"))
             self.add(DCTERMS.creator, Literal("Arden Kirkland"))
             self.add(DCTERMS.contributor, Literal("Minor Gordon"))

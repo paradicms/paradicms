@@ -1,6 +1,6 @@
 import datetime
 
-from rdflib import Literal, XSD
+from rdflib import Literal, XSD, BNode, Graph
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.date_time_description import DateTimeDescription
@@ -67,7 +67,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
 
     @classmethod
     def builder(cls):
-        return cls.Builder()
+        return cls.Builder(Graph().resource(BNode()))
 
     @classmethod
     def from_date(cls, date: datetime.date) -> "CmsDateTimeDescription":

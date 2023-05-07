@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import URIRef
+from rdflib import URIRef, Graph, BNode
 from rdflib.namespace import FOAF
 
 from paradicms_etl.models.cms.cms_agent import CmsAgent
@@ -23,7 +23,9 @@ class CmsPerson(CmsAgent, Person):
 
     @classmethod
     def builder(cls, *, name: str, uri: Optional[URIRef] = None) -> Builder:
-        return cls.Builder(name=name, uri=uri)
+        builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
+        builder.set(FOAF.name, name)
+        return builder
 
     @classmethod
     def json_ld_context(cls):

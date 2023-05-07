@@ -1,6 +1,6 @@
 from typing import Tuple, Union
 
-from rdflib import URIRef
+from rdflib import URIRef, Graph
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -15,10 +15,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
     class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
-        def __init__(self, *, title: str, uri: URIRef):
-            CmsNamedModel.Builder.__init__(self, uri=uri)
-            self.set(DCTERMS.title, title)
-
         def add_collection_uri(self, collection_uri: URIRef) -> "CmsWork.Builder":
             self.add(CMS.collection, collection_uri)
             return self
@@ -44,7 +40,9 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
 
     @classmethod
     def builder(cls, *, title: str, uri: URIRef) -> Builder:
-        return cls.Builder(title=title, uri=uri)
+        builder = cls.Builder(Graph().resource(uri))
+        builder.set(DCTERMS.title, title)
+        return builder
 
     @property
     def description(self) -> Union[str, Text, None]:

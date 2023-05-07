@@ -1,6 +1,6 @@
 from typing import Union, Text
 
-from rdflib import URIRef, RDFS
+from rdflib import URIRef, RDFS, Graph
 
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.property_group import PropertyGroup
@@ -9,10 +9,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsPropertyGroup(CmsNamedModel, PropertyGroup):
     class Builder(CmsNamedModel.Builder):
-        def __init__(self, *, label: str, uri: URIRef):
-            CmsNamedModel.Builder.__init__(self, uri=uri)
-            self.add(RDFS.label, label)
-
         def build(self) -> "CmsPropertyGroup":
             return CmsPropertyGroup(self._resource)
 
@@ -26,7 +22,9 @@ class CmsPropertyGroup(CmsNamedModel, PropertyGroup):
 
     @classmethod
     def builder(cls, *, label: str, uri: URIRef):
-        return cls.Builder(label=label, uri=uri)
+        builder = cls.Builder(Graph().resource(uri))
+        builder.add(RDFS.label, label)
+        return builder
 
     @classmethod
     def json_ld_context(cls):

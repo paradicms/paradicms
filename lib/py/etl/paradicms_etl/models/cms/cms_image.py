@@ -18,10 +18,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
-        def __init__(self, *, depicts_uri: URIRef, uri: URIRef):
-            CmsNamedModel.Builder.__init__(self, uri=uri)
-            self.set(FOAF.depicts, depicts_uri)
-
         def build(self) -> "CmsImage":
             return CmsImage(self._resource)
 
@@ -93,7 +89,9 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
 
     @classmethod
     def builder(cls, *, depicts_uri: URIRef, uri: URIRef) -> Builder:
-        return cls.Builder(depicts_uri=depicts_uri, uri=uri)
+        builder = cls.Builder(Graph().resource(uri))
+        builder.set(FOAF.depicts, depicts_uri)
+        return builder
 
     @property
     def copyable(self) -> bool:
