@@ -24,12 +24,6 @@ class Image(NamedModel, RightsMixin):
     def original_image_uri(self) -> Optional[URIRef]:
         raise NotImplementedError
 
-    @abstractmethod
-    def replace(
-        self, *, copyable: Optional[bool] = None, src: Optional[str] = None
-    ) -> "Image":
-        raise NotImplementedError
-
     @property
     @abstractmethod
     def src(self) -> Union[ImageData, str, None]:
