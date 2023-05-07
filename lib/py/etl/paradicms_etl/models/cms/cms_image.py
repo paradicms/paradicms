@@ -163,6 +163,16 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     def label_property_uri(cls):
         return DCTERMS.title
 
+    def replace(
+        self, *, copyable: Optional[bool] = None, src: Optional[str] = None
+    ) -> "Image":
+        replacer = self.replacer()
+        if copyable is not None:
+            replacer.set_copyable(copyable)
+        if src is not None:
+            replacer.set_src(src)
+        return replacer.build()
+
     def replacer(self) -> Builder:
         return self.Builder(
             clone_graph(self._resource.graph).resource(self._resource.identifier)

@@ -329,11 +329,7 @@ class DirectoryTransformer:
                         assert isinstance(
                             image_file_entry, DirectoryExtractor.ImageFileEntry
                         )
-                        image = (
-                            image.replacer()
-                            .set_src(image_file_entry.path.as_uri())
-                            .build()
-                        )
+                        image = image.replace(src=image_file_entry.path.as_uri())
 
                 self.__buffer_transformed_model(
                     model_id=metadata_file_entry.model_id,

@@ -30,7 +30,7 @@ class VcccTransformer(CostumeCoreOmekaClassicTransformer):
 
     def _transform_file(self, **kwds):
         return tuple(
-            image.replacer().set_copyable(False).build()
+            image.replace(copyable=False)
             for image in CostumeCoreOmekaClassicTransformer._transform_file(
                 self, **kwds
             )
