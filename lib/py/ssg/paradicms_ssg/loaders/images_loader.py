@@ -69,7 +69,12 @@ class ImagesLoader:
         )
         assert archived_original_image_url
         # The original image retains its URI but gets a new src
-        return original_image.replacer().set_src(archived_original_image_url).build()
+        if isinstance(original_image, CmsImage):
+            return (
+                original_image.replacer().set_src(archived_original_image_url).build()
+            )
+        else:
+            raise NotImplementedError(type(original_image))
 
     def __archive_thumbnail_images(
         self,
