@@ -8,6 +8,5 @@ def clone_graph(graph: Graph) -> Graph:
     """
 
     new_graph = Graph()
-    for triple in graph:
-        new_graph.add(triple)
+    new_graph += graph
     return new_graph

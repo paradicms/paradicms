@@ -13,4 +13,5 @@ def test_clone_graph(synthetic_data_models: Tuple[Model, ...]):
 
     cloned_graph = clone_graph(graph)
     assert len(cloned_graph) == len(graph)
+    assert id(cloned_graph) != id(graph)
     assert graph.isomorphic(cloned_graph)
