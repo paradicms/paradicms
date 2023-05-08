@@ -32,5 +32,5 @@ class RightsMixin(ABC):
 
     @property
     @abstractmethod
-    def statement(self) -> Union[str, URIRef, None]:
+    def rights_statement(self) -> Union[str, URIRef, None]:
         raise NotImplementedError
