@@ -14,8 +14,14 @@ from paradicms_etl.utils.file_cache import FileCache
 
 class WikimediaCommonsEnricher:
     __LICENSE_URIS_BY_ID = {
-        "CC-BY-SA": CreativeCommonsLicenses.BY_SA_4_0.uri,
+        "Attribution": CreativeCommonsLicenses.BY_4_0,
+        "CC0": CreativeCommonsLicenses.CC0_1_0.uri,
+        "CC BY 3.0": CreativeCommonsLicenses.BY_3_0.uri,
+        "CC BY-SA 2.5": CreativeCommonsLicenses.BY_SA_2_5.uri,
+        "CC BY-SA 3.0": CreativeCommonsLicenses.BY_SA_3_0.uri,
+        "CC BY-SA 4.0": CreativeCommonsLicenses.BY_SA_4_0.uri,
         "GFDL": None,
+        "Public domain": CreativeCommonsLicenses.MARK_1_0.uri,
     }
 
     def __init__(self, *, cache_dir_path: Path):
@@ -63,10 +69,12 @@ class WikimediaCommonsEnricher:
         wikimedia_commons_file_url: URIRef,
     ) -> Image:
         image_replacer = image.replacer()
-        soup = BeautifulSoup(wikimedia_commons_file_html)
+
+        soup = BeautifulSoup(wikimedia_commons_file_html, features="html.parser")
         commons_file_information_table = soup.find(
             class_="commons-file-information-table"
         )
+
         for (
             commons_file_information_table_row
         ) in commons_file_information_table.find_all(name="tr"):
@@ -75,7 +83,9 @@ class WikimediaCommonsEnricher:
             )
             if len(commons_file_information_table_cells) != 2:
                 continue
-            key = commons_file_information_table_cells[0].text
+            key = commons_file_information_table_cells[0].text.strip()
+            if not key:
+                continue
             value_element = commons_file_information_table_cells[1]
             value_text = value_element.text.strip()
             if key == "Author":
@@ -100,7 +110,7 @@ class WikimediaCommonsEnricher:
                 datetime_attr = time_value_element.get("datetime")
                 if not datetime_attr:
                     continue
-                self.__logger.info(
+                self.__logger.debug(
                     "image %s: Wikimedia Commons file HTML (%s) datetime: %s",
                     image.uri,
                     wikimedia_commons_file_url,
@@ -109,35 +119,15 @@ class WikimediaCommonsEnricher:
             elif key.startswith("Description"):
                 pass
             elif key == "Permission(Reusing this file)":
-                if image.license:
-                    self.__logger.info(
-                        "image %s: already has a license(s), ignoring information from Wikimedia Commons file HTML (%s)",
-                        image.uri,
-                        wikimedia_commons_file_url,
-                    )
-                    continue
-
-                for license_id in value_text.split():
-                    try:
-                        license_uri = self.__LICENSE_URIS_BY_ID[license_id]
-                    except KeyError:
-                        self.__logger.warning(
-                            "image %s: Wikimedia Commons file HTML (%s) has unknown license: %s",
-                            image.uri,
-                            wikimedia_commons_file_url,
-                            license_id,
-                        )
-                        continue
-                    self.__logger.debug(
-                        "image %s: Wikimedia Commons file HTML (%s) license: %s -> %s",
-                        image.uri,
-                        wikimedia_commons_file_url,
-                        license_id,
-                        license_uri,
-                    )
-                    if license_uri is not None:
-                        image_replacer.add_license(license_uri)
-            elif key == "Source":
+                continue
+            elif key in {
+                "Flickr setsInfoField",
+                "Other versions",
+                "Photographer",
+                "Source",
+                "SVG developmentInfoField",
+                "Title",
+            }:
                 pass
             else:
                 self.__logger.warning(
@@ -147,4 +137,45 @@ class WikimediaCommonsEnricher:
                     key,
                     value_text,
                 )
+
+        if image.license:
+            self.__logger.info(
+                "image %s: already has a license(s), ignoring information from Wikimedia Commons file HTML (%s)",
+                image.uri,
+                wikimedia_commons_file_url,
+            )
+        else:
+            added_license = False
+            for license_id_element in soup.find_all(class_="licensetpl_short"):
+                license_id = license_id_element.text.strip()
+                if not license_id:
+                    continue
+
+                try:
+                    license_uri = self.__LICENSE_URIS_BY_ID[license_id]
+                except KeyError:
+                    self.__logger.warning(
+                        "image %s: Wikimedia Commons file HTML (%s) has unknown license: %s",
+                        image.uri,
+                        wikimedia_commons_file_url,
+                        license_id,
+                    )
+                    continue
+                self.__logger.debug(
+                    "image %s: Wikimedia Commons file HTML (%s) license: %s -> %s",
+                    image.uri,
+                    wikimedia_commons_file_url,
+                    license_id,
+                    license_uri,
+                )
+                if license_uri is not None:
+                    image_replacer.add_license(license_uri)
+                    added_license = True
+            if not added_license:
+                self.__logger.warning(
+                    "image %s: could not parse a license from Wikimedia Commons file HTML (%s)",
+                    image.uri,
+                    wikimedia_commons_file_url,
+                )
+
         return image_replacer.build()
