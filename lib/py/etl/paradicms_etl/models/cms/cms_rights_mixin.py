@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Union, Tuple, Any
+from typing import Union, Tuple, Any, Optional
 
 from rdflib import URIRef, DCTERMS, Literal
 from rdflib.resource import Resource
@@ -118,3 +118,7 @@ class CmsRightsMixin(RightsMixin):
     @property
     def rights_statement(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.rights)
+
+    @property
+    def source(self) -> Optional[URIRef]:
+        return self.__singular_value(DCTERMS.source)

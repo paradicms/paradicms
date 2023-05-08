@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-from typing import Union, Tuple, Any
+from typing import Union, Tuple, Any, Optional
 
 from rdflib import URIRef
 
@@ -54,4 +54,9 @@ class RightsMixin(ABC):
     @property
     @abstractmethod
     def rights_statement(self) -> Union[str, URIRef, None]:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def source(self) -> Optional[URIRef]:
         raise NotImplementedError
