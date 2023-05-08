@@ -3,7 +3,7 @@ from typing import Optional, Tuple, Dict, Union
 
 from rdflib import Graph, Literal, RDF, RDFS, URIRef
 
-from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
+from paradicms_etl.namespaces import WIKIBASE
 
 
 @dataclass(frozen=True)

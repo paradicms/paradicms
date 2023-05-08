@@ -12,7 +12,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 
 
 @pytest.fixture
-def test_builder() -> CmsImage:
+def test_image() -> CmsImage:
     return (
         CmsImage.builder(
             depicts_uri=URIRef("http://example.com/work"),
@@ -32,20 +32,20 @@ def test_builder() -> CmsImage:
     )
 
 
-def test_replace_copyable(test_builder):
-    assert test_builder.copyable
-    actual = test_builder.replace(copyable=False)
+def test_replace_copyable(test_image):
+    assert test_image.copyable
+    actual = test_image.replacer().set_copyable(False).build()
     assert not actual.copyable
 
 
-def test_replace_src(test_builder):
-    assert test_builder.src == "http://example.com/imagesrc"
-    actual = test_builder.replace(src="http://example.com/newsrc")
+def test_replace_src(test_image):
+    assert test_image.src == "http://example.com/imagesrc"
+    actual = test_image.replacer().set_src("http://example.com/newsrc").build()
     assert actual.src == "http://example.com/newsrc"
 
 
-def test_to_rdf(test_builder):
-    expected = test_builder
+def test_to_rdf(test_image):
+    expected = test_image
 
     actual = CmsImage.from_rdf(resource=expected.to_rdf(Graph()))
 

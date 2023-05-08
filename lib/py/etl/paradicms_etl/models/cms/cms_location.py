@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import RDFS, XSD, URIRef
+from rdflib import RDFS, XSD, URIRef, Graph, BNode
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.location import Location
@@ -27,7 +27,7 @@ class CmsLocation(CmsModel, Location):
 
     @classmethod
     def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
-        return cls.Builder(uri=uri)
+        return cls.Builder(Graph().resource(uri if uri is not None else BNode()))
 
     @staticmethod
     def json_ld_context():

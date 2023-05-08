@@ -1,4 +1,4 @@
-from rdflib import DCTERMS, SKOS, URIRef
+from rdflib import DCTERMS, SKOS, URIRef, Graph
 from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_model import CmsModel
@@ -12,11 +12,6 @@ class CmsRightsStatement(CmsModel, RightsStatement):
     """
 
     class Builder(CmsModel.Builder):
-        def __init__(self, *, identifier: str, pref_label: str, uri: URIRef):
-            CmsModel.Builder.__init__(self, uri=uri)
-            self.set(DCTERMS.identifier, identifier)
-            self.set(SKOS.prefLabel, pref_label)
-
         def add_note(self, note: str) -> "CmsRightsStatement.Builder":
             self.add(SKOS.note, note)
             return self
@@ -43,7 +38,10 @@ class CmsRightsStatement(CmsModel, RightsStatement):
 
     @classmethod
     def builder(cls, *, identifier: str, pref_label: str, uri: URIRef) -> Builder:
-        return cls.Builder(identifier=identifier, pref_label=pref_label, uri=uri)
+        builder = cls.Builder(Graph().resource(uri))
+        builder.set(DCTERMS.identifier, identifier)
+        builder.set(SKOS.prefLabel, pref_label)
+        return builder
 
     @property
     def identifier(self) -> str:

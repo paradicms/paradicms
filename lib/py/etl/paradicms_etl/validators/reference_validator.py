@@ -200,8 +200,8 @@ class ReferenceValidator:
                     self.__referenced_agent_uris.add(agent)
         if isinstance(rights.license, URIRef):
             self.__referenced_license_uris.add(rights.license)
-        if isinstance(rights.statement, URIRef):
-            self.__referenced_rights_statement_uris.add(rights.statement)
+        if isinstance(rights.rights_statement, URIRef):
+            self.__referenced_rights_statement_uris.add(rights.rights_statement)
         return ()
 
     def _validate_rights_statement(

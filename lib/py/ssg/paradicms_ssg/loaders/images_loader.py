@@ -69,7 +69,7 @@ class ImagesLoader:
         )
         assert archived_original_image_url
         # The original image retains its URI but gets a new src
-        return original_image.replace(src=archived_original_image_url)
+        return original_image.replacer().set_src(archived_original_image_url).build()
 
     def __archive_thumbnail_images(
         self,

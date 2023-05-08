@@ -1,5 +1,3 @@
-from typing import Optional
-
 from rdflib import RDF, URIRef
 from rdflib.resource import Resource
 
@@ -10,11 +8,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsWorkEvent(CmsEvent, WorkEvent):
-    class Builder(CmsEvent.Builder):
-        def __init__(self, *, work_uri: URIRef, uri: Optional[URIRef] = None):
-            CmsEvent.Builder.__init__(self, uri=uri)
-            self.set(CMS.work, work_uri)
-
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS.WorkEvent)
         CmsEvent.__init__(self, resource)

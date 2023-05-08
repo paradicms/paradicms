@@ -13,15 +13,12 @@ from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.namespaces import CMS, EXIF
+from paradicms_etl.utils.clone_graph import clone_graph
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
-    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
-        def __init__(self, *, depicts_uri: URIRef, uri: URIRef):
-            CmsNamedModel.Builder.__init__(self, uri=uri)
-            self.set(FOAF.depicts, depicts_uri)
-
+    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder, Image.Builder):
         def build(self) -> "CmsImage":
             return CmsImage(self._resource)
 
@@ -74,6 +71,10 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
             self.add(CMS.thumbnailOf, original_image_uri)
             return self
 
+        def set_source(self, source: URIRef) -> "CmsImage.Builder":
+            self.set(DCTERMS.source, source)
+            return self
+
         def set_src(
             self, src: Union[str, CmsImageData, Literal, URIRef]
         ) -> "CmsImage.Builder":
@@ -93,7 +94,9 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
 
     @classmethod
     def builder(cls, *, depicts_uri: URIRef, uri: URIRef) -> Builder:
-        return cls.Builder(depicts_uri=depicts_uri, uri=uri)
+        builder = cls.Builder(Graph().resource(uri))
+        builder.set(FOAF.depicts, depicts_uri)
+        return builder
 
     @property
     def copyable(self) -> bool:
@@ -164,17 +167,10 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     def label_property_uri(cls):
         return DCTERMS.title
 
-    def replace(self, *, copyable: Optional[bool] = None, src: Optional[str] = None):
-        graph = Graph()
-        graph += self._resource.graph
-        resource = graph.resource(self._resource.identifier)
-        if copyable is not None:
-            resource.remove(CMS.imageCopyable)
-            resource.add(CMS.imageCopyable, Literal(copyable))
-        if src is not None:
-            resource.remove(CMS.imageSrc)
-            resource.add(CMS.imageSrc, Literal(src))
-        return self.__class__(resource)
+    def replacer(self) -> Builder:
+        return self.Builder(
+            clone_graph(self._resource.graph).resource(self._resource.identifier)
+        )
 
     @property
     def src(self) -> Union[ImageData, str, None]:

@@ -10,11 +10,11 @@ from paradicms_etl.models.wikidata.wikidata_article import WikidataArticle
 from paradicms_etl.models.wikidata.wikidata_direct_claim import WikidataDirectClaim
 from paradicms_etl.models.wikidata.wikidata_full_statement import WikidataFullStatement
 from paradicms_etl.models.wikidata.wikidata_item_labels import WikidataItemLabels
-from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
 from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.namespaces import WIKIBASE
 
 
 class WikidataItem(ResourceBackedNamedModel):

@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Union, Tuple, Any
+from typing import Union, Tuple, Any, Optional
 
 from rdflib import URIRef, DCTERMS, Literal
 from rdflib.resource import Resource
@@ -21,7 +21,7 @@ class CmsRightsMixin(RightsMixin):
         DCTERMS.rightsHolder,
     }
 
-    class Builder:
+    class Builder(RightsMixin.Builder):
         @abstractmethod
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError
@@ -55,8 +55,8 @@ class CmsRightsMixin(RightsMixin):
                 self.add_rights_holder(holder)
             if other.license:
                 self.add_license(other.license)
-            if other.statement:
-                self.add_rights_statement(other.statement)
+            if other.rights_statement:
+                self.add_rights_statement(other.rights_statement)
             return self
 
     @property
@@ -66,10 +66,6 @@ class CmsRightsMixin(RightsMixin):
     @property
     def creators(self) -> Tuple[Any, ...]:
         return self.__plural_values(DCTERMS.creator)
-
-    @property
-    def rights_holders(self) -> Tuple[Any, ...]:
-        return self.__plural_values(DCTERMS.rightsHolder)
 
     @classmethod
     def json_ld_context(cls):
@@ -111,10 +107,20 @@ class CmsRightsMixin(RightsMixin):
     def _resource(self) -> Resource:
         raise NotImplementedError
 
+    @property
+    def rights_holders(self) -> Tuple[Any, ...]:
+        return self.__plural_values(DCTERMS.rightsHolder)
+
+    @property
+    def rights_statement(self) -> Union[str, URIRef, None]:
+        return self.__singular_value(DCTERMS.rights)
+
     def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
         values = self.__plural_values(p)
         return values[0] if values else None
 
     @property
-    def statement(self) -> Union[str, URIRef, None]:
-        return self.__singular_value(DCTERMS.rights)
+    def source(self) -> Optional[URIRef]:
+        value = self.__singular_value(DCTERMS.source)
+        assert value is None or isinstance(value, URIRef)
+        return value

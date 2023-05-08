@@ -3,7 +3,7 @@ from io import BytesIO
 from typing import Dict, Any
 
 from PIL import Image
-from rdflib import DCTERMS, RDF, Literal, XSD
+from rdflib import DCTERMS, RDF, Literal, XSD, BNode, Graph
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.image_data import ImageData
@@ -11,6 +11,9 @@ from paradicms_etl.models.image_data import ImageData
 
 class CmsImageData(CmsModel, ImageData):
     class __Builder(CmsModel.Builder):
+        def __init__(self):
+            CmsModel.Builder.__init__(self, Graph().resource(BNode()))
+
         def add(self, *args, **kwds):
             CmsModel.Builder.add(self, *args, **kwds)
             return self

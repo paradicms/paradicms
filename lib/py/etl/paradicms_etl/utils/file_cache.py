@@ -92,8 +92,16 @@ class FileCache:
                     return cached_file_path
 
         def get_cached_file_path(headers_dict: Dict[str, Any]) -> Path:
+            headers_dict_lower = {
+                key.lower(): value for key, value in headers_dict.items()
+            }
+            content_type_header_value = headers_dict_lower.get("content-type")
+            if content_type_header_value:
+                file_mime_type = content_type_header_value.split(";", 1)[0]
+            else:
+                file_mime_type = None
             cached_file_ext = self.__cached_file_ext(
-                file_mime_type=headers_dict.get("Content-Type"), file_url=file_url
+                file_mime_type=file_mime_type, file_url=file_url
             )
             return file_cache_dir_path / ("file" + cached_file_ext)
 

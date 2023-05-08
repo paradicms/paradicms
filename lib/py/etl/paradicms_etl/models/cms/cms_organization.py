@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import URIRef
+from rdflib import URIRef, Graph, BNode, FOAF
 
 from paradicms_etl.models.cms.cms_agent import CmsAgent
 from paradicms_etl.models.organization import Organization
@@ -13,4 +13,6 @@ class CmsOrganization(CmsAgent, Organization):
 
     @classmethod
     def builder(cls, *, name: str, uri: Optional[URIRef] = None) -> Builder:
-        return cls.Builder(name=name, uri=uri)
+        builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
+        builder.set(FOAF.name, name)
+        return builder

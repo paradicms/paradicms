@@ -11,6 +11,7 @@ from paradicms_etl.enrichers.ambient_reference_enricher import (
     ambient_reference_enricher,
 )
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
+from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.github_action import GitHubAction
 from paradicms_etl.loader import Loader
@@ -75,8 +76,11 @@ class EtlGitHubAction(GitHubAction, ABC):
     ):
         if enrichers is None:
             enrichers = (
-                ambient_reference_enricher,
                 WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
+                WikimediaCommonsEnricher(
+                    cache_dir_path=self._cache_dir_path / "wikimedia_commons"
+                ),
+                ambient_reference_enricher,  # Should be last
             )
 
         if loader is None:

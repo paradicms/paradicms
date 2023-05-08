@@ -1,6 +1,6 @@
 from typing import Union
 
-from rdflib import URIRef, FOAF
+from rdflib import URIRef, FOAF, Graph
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
@@ -11,10 +11,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsCollection(CmsNamedModel, Collection):
     class Builder(CmsNamedModel.Builder):
-        def __init__(self, *, title: str, uri: URIRef):
-            CmsNamedModel.Builder.__init__(self, uri=uri)
-            self.set(DCTERMS.title, title)
-
         def build(self) -> "CmsCollection":
             return CmsCollection(self._resource)
 
@@ -30,7 +26,9 @@ class CmsCollection(CmsNamedModel, Collection):
 
     @classmethod
     def builder(cls, *, title: str, uri: URIRef) -> Builder:
-        return cls.Builder(title=title, uri=uri)
+        builder = cls.Builder(Graph().resource(uri))
+        builder.set(DCTERMS.title, title)
+        return builder
 
     @classmethod
     def json_ld_context(cls):

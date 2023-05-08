@@ -1,5 +1,3 @@
-from typing import Optional
-
 from rdflib import FOAF, RDF, DCTERMS, URIRef
 from rdflib.resource import Resource
 
@@ -11,10 +9,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsAgent(CmsModel, Agent):
     class Builder(CmsModel.Builder):
-        def __init__(self, *, name: str, uri: Optional[URIRef] = None):
-            CmsModel.Builder.__init__(self, uri=uri)
-            self.set(FOAF.name, name)
-
         def add_page(self, page: URIRef) -> "CmsAgent.Builder":
             self.add(FOAF.page, page)
             return self

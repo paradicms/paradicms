@@ -7,11 +7,11 @@ from rdflib import Graph, Literal, PROV, RDF, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_date_time_description import CmsDateTimeDescription
-from paradicms_etl.models.wikidata.wikidata_namespace import WIKIBASE
 from paradicms_etl.models.wikidata.wikidata_property_definition import (
     WikidataPropertyDefinition,
 )
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.namespaces import WIKIBASE
 
 
 @dataclass

@@ -1,6 +1,6 @@
 from typing import Union, Tuple
 
-from rdflib import SKOS
+from rdflib import SKOS, Graph
 from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
@@ -46,7 +46,7 @@ class CmsConcept(CmsNamedModel, Concept):
 
     @classmethod
     def builder(cls, *, uri: URIRef):
-        return cls.Builder(uri=uri)
+        return cls.Builder(Graph().resource(uri))
 
     @classmethod
     def json_ld_context(cls):
