@@ -67,10 +67,6 @@ class CmsRightsMixin(RightsMixin):
     def creators(self) -> Tuple[Any, ...]:
         return self.__plural_values(DCTERMS.creator)
 
-    @property
-    def rights_holders(self) -> Tuple[Any, ...]:
-        return self.__plural_values(DCTERMS.rightsHolder)
-
     @classmethod
     def json_ld_context(cls):
         context = (
@@ -111,14 +107,20 @@ class CmsRightsMixin(RightsMixin):
     def _resource(self) -> Resource:
         raise NotImplementedError
 
-    def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
-        values = self.__plural_values(p)
-        return values[0] if values else None
+    @property
+    def rights_holders(self) -> Tuple[Any, ...]:
+        return self.__plural_values(DCTERMS.rightsHolder)
 
     @property
     def rights_statement(self) -> Union[str, URIRef, None]:
         return self.__singular_value(DCTERMS.rights)
 
+    def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
+        values = self.__plural_values(p)
+        return values[0] if values else None
+
     @property
     def source(self) -> Optional[URIRef]:
-        return self.__singular_value(DCTERMS.source)
+        value = self.__singular_value(DCTERMS.source)
+        assert value is None or isinstance(value, URIRef)
+        return value
