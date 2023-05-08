@@ -21,7 +21,7 @@ class CmsRightsMixin(RightsMixin):
         DCTERMS.rightsHolder,
     }
 
-    class Builder:
+    class Builder(RightsMixin.Builder):
         @abstractmethod
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError

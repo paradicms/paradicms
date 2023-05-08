@@ -18,7 +18,7 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
-    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
+    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder, Image.Builder):
         def build(self) -> "CmsImage":
             return CmsImage(self._resource)
 
@@ -166,16 +166,6 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     @classmethod
     def label_property_uri(cls):
         return DCTERMS.title
-
-    def replace(
-        self, *, copyable: Optional[bool] = None, src: Optional[str] = None
-    ) -> "Image":
-        replacer = self.replacer()
-        if copyable is not None:
-            replacer.set_copyable(copyable)
-        if src is not None:
-            replacer.set_src(src)
-        return replacer.build()
 
     def replacer(self) -> Builder:
         return self.Builder(
