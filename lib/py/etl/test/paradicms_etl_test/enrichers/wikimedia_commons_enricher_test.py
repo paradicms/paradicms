@@ -5,40 +5,46 @@ from rdflib import URIRef
 
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 
 
-@pytest.fixture
-def test_image() -> Image:
-    return (
+@pytest.mark.parametrize(
+    "source",
+    [
+        "http://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine.jpg",
+        "http://commons.wikimedia.org/wiki/File:KnuthAtOpenContentAlliance.jpg",
+        "http://commons.wikimedia.org/wiki/File:Lc3_2018_(263682303)_(cropped).jpeg",
+        "http://commons.wikimedia.org/wiki/File:SRI_Douglas_Engelbart_1968.jpg",
+        "http://commons.wikimedia.org/wiki/File:Sir_Tim_Berners-Lee_(cropped).jpg",
+        "https://commons.wikimedia.org/wiki/File:TeX_logo.svg",
+        "http://commons.wikimedia.org/wiki/File:Tux.svg",
+        "http://commons.wikimedia.org/wiki/File:Visionary_Doug_Engelbart_did_quite_a_bit_more_than_invent_the_mouse,_but_also_pioneered_the_Graphics_User_Interface._His_Stanford_demo_in_1968_%E2%80%9CThe_Mother_of_all_Demos%E2%80%9D_was_groundbreaking_vision_for_(1805321166).jpg",
+        "http://commons.wikimedia.org/wiki/File:WWW_logo_by_Robert_Cailliau.svg",
+    ],
+)
+def test_enrich(data_dir_path: Path, source: str):
+    unenriched_image = (
         CmsImage.builder(
             depicts_uri=URIRef("http://example.com/Work"),
             uri=URIRef("http://example.com/Image"),
         )
-        .set_source(
-            URIRef(
-                "http://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine.jpg"
-            )
-        )
+        .set_source(URIRef(source))
         .build()
     )
-
-
-def test_enrich(data_dir_path: Path, test_image: Image):
-    assert test_image.license is None
-    assert test_image.rights_statement is None
+    assert unenriched_image.license is None
+    assert unenriched_image.rights_statement is None
     enriched_models = tuple(
         WikimediaCommonsEnricher(
             cache_dir_path=data_dir_path / "test" / "wikimedia_commons"
-        )((test_image,))
+        )((unenriched_image,))
     )
     assert len(enriched_models) == 1
     enriched_image = enriched_models[0]
     assert isinstance(enriched_image, Image)
-    assert enriched_image.uri == test_image.uri
-    assert enriched_image.depicts_uri == test_image.depicts_uri
-    assert enriched_image.license == CreativeCommonsLicenses.BY_SA_4_0.uri
+    assert enriched_image.uri == unenriched_image.uri
+    assert enriched_image.depicts_uri == unenriched_image.depicts_uri
+    assert enriched_image.creators
+    assert enriched_image.license
     # assert (
     #     enriched_image.rights_statement
     #     == RightsStatementsDotOrgRightsStatements.InC.uri

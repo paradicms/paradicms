@@ -71,15 +71,17 @@ class WikimediaCommonsEnricher:
         image_replacer = image.replacer()
 
         soup = BeautifulSoup(wikimedia_commons_file_html, features="html.parser")
-        commons_file_information_table = soup.find(
-            class_="commons-file-information-table"
+        commons_file_information_table = (
+            soup.find(class_="commons-file-information-table")
+            .find(name="table", recursive=False)
+            .find(name="tbody", recursive=False)
         )
 
         for (
             commons_file_information_table_row
-        ) in commons_file_information_table.find_all(name="tr"):
+        ) in commons_file_information_table.find_all(name="tr", recursive=False):
             commons_file_information_table_cells = tuple(
-                commons_file_information_table_row.find_all(name="td")
+                commons_file_information_table_row.find_all(name="td", recursive=False)
             )
             if len(commons_file_information_table_cells) != 2:
                 continue
@@ -88,7 +90,7 @@ class WikimediaCommonsEnricher:
                 continue
             value_element = commons_file_information_table_cells[1]
             value_text = value_element.text.strip()
-            if key == "Author":
+            if key in {"Author", "Photographer"}:
                 if image.creators:
                     self.__logger.info(
                         "image %s: already has a creator(s), ignoring information from Wikimedia Commons file HTML (%s)",
@@ -96,13 +98,33 @@ class WikimediaCommonsEnricher:
                         wikimedia_commons_file_url,
                     )
                     continue
-                self.__logger.debug(
-                    "image %s: adding creator %s from Wikimedia Commons file HTML (%s)",
-                    image.uri,
-                    value_text,
-                    wikimedia_commons_file_url,
+
+                added_creator = False
+                commons_creator_table = value_element.find(
+                    class_="commons-creator-table"
                 )
-                image_replacer.add_creator(value_text)
+                if commons_creator_table:
+                    creator_span = commons_creator_table.find(attrs={"id": "creator"})
+                    if creator_span:
+                        # Could get Wikidata QID and construct an agent here, but we're not that interested in image agents at the moment.
+                        creator_text = creator_span.text
+                        self.__logger.debug(
+                            "image %s: adding text creator %s from Wikimedia Commons file HTML (%s)",
+                            image.uri,
+                            creator_text,
+                            wikimedia_commons_file_url,
+                        )
+                        image_replacer.add_creator(creator_text)
+                        added_creator = True
+
+                if not added_creator:
+                    self.__logger.debug(
+                        "image %s: adding text creator %s from Wikimedia Commons file HTML (%s)",
+                        image.uri,
+                        value_text,
+                        wikimedia_commons_file_url,
+                    )
+                    image_replacer.add_creator(value_text)
             elif key == "Date":
                 time_value_element = value_element.find("time")
                 if not time_value_element:
@@ -123,7 +145,6 @@ class WikimediaCommonsEnricher:
             elif key in {
                 "Flickr setsInfoField",
                 "Other versions",
-                "Photographer",
                 "Source",
                 "SVG developmentInfoField",
                 "Title",
