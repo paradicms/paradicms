@@ -13,6 +13,9 @@ export class LiteralText extends LiteralModel implements Text {
   }
   readonly rightsHolders: readonly AgentUnion[] = [];
   readonly rightsStatement: RightsStatement | null = null;
+  override toString(): string {
+    return this.value;
+  }
   get value(): string {
     return this.literal.value;
   }
