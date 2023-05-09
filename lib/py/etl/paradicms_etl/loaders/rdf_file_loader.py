@@ -41,10 +41,21 @@ class RdfFileLoader:
                 model_resource.identifier
                 in self.__conjunctive_graph_context_identifiers
             ):
-                self.__logger.warning(
-                    "duplicate model identifier %s",
-                    model_resource.identifier,
+                existing_model_graph = self.__conjunctive_graph.get_context(
+                    model_resource.identifier
                 )
+                if existing_model_graph.isomorphic(model_graph):
+                    self.__logger.warning(
+                        "model graphs with same identifier (%s) that are not isomorphic:\nexisting graph:\n%s\nnew graph:\n%s",
+                        model_resource.identifier,
+                        existing_model_graph.serialize("ttl"),
+                        model.serialize("ttl"),
+                    )
+                else:
+                    self.__logger.info(
+                        "model graphs with same identifier (%s) that are isomorphic",
+                        model_resource.identifier,
+                    )
 
             # Use the model's BNode or URIRef as the graph identifier, too
             conjunctive_graph_context: Graph = self.__conjunctive_graph.get_context(
