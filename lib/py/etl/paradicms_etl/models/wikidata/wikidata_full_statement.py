@@ -167,7 +167,9 @@ class WikidataFullStatement(WikidataStatement):
             )[0]
             assert isinstance(time_value_literal, Literal)
             time_value = time_value_literal.toPython()
-            assert isinstance(time_value, datetime)
+            if not isinstance(time_value, datetime):
+                logger.info("ignoring malformed time value: %s", time_value)
+                return None
 
             time_precision_literal = tuple(
                 graph.objects(subject=value_uri, predicate=WIKIBASE.timePrecision)
