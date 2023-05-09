@@ -49,7 +49,7 @@ class RdfFileLoader:
                         "model graphs with same identifier (%s) that are not isomorphic:\nexisting graph:\n%s\nnew graph:\n%s",
                         model_resource.identifier,
                         existing_model_graph.serialize("ttl"),
-                        model.serialize("ttl"),
+                        model_graph.serialize("ttl"),
                     )
                 else:
                     self.__logger.info(
