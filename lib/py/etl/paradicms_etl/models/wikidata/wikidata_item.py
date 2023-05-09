@@ -1,5 +1,4 @@
 import logging
-from logging import Logger
 from typing import Dict, List, Optional, Tuple
 
 from rdflib import Graph, Literal, RDF, RDFS, SKOS, SDO
@@ -15,6 +14,8 @@ from paradicms_etl.models.wikidata.wikidata_property_definition import (
 )
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 from paradicms_etl.namespaces import WIKIBASE
+
+logger = logging.getLogger(__name__)
 
 
 class WikidataItem(ResourceBackedNamedModel):
@@ -51,7 +52,6 @@ class WikidataItem(ResourceBackedNamedModel):
         cls,
         *,
         graph: Graph,
-        logger: Logger,
         property_definitions: Optional[Tuple[WikidataPropertyDefinition, ...]] = None,
     ) -> Tuple["WikidataItem", ...]:
         """
@@ -64,7 +64,6 @@ class WikidataItem(ResourceBackedNamedModel):
         items = []
         for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
             item = cls.__from_wikidata_rdf(
-                logger=logger,
                 property_definitions=property_definitions,
                 resource=graph.resource(item_subject),
             )
@@ -111,7 +110,6 @@ class WikidataItem(ResourceBackedNamedModel):
     def __from_wikidata_rdf(
         cls,
         *,
-        logger: Logger,
         property_definitions: Tuple[WikidataPropertyDefinition, ...],
         resource: Resource,
     ):
@@ -165,7 +163,6 @@ class WikidataItem(ResourceBackedNamedModel):
                     try:
                         full_statements.append(
                             WikidataFullStatement.from_rdf(
-                                logger=logger,
                                 property_definitions=property_definitions,
                                 resource=resource.graph.resource(object_),
                             )
@@ -241,9 +238,7 @@ class WikidataItem(ResourceBackedNamedModel):
 
         return cls(
             articles=tuple(
-                WikidataArticle.from_rdf(
-                    logger=logger, resource=resource.graph.resource(article_uri)
-                )
+                WikidataArticle.from_rdf(resource=resource.graph.resource(article_uri))
                 for article_uri in resource.graph.subjects(
                     predicate=SDO.about, object=resource.identifier
                 )

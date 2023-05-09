@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from logging import Logger
 
 from rdflib import URIRef, Literal, SDO
 from rdflib.resource import Resource
@@ -12,7 +11,7 @@ class WikidataArticle:
     uri: URIRef
 
     @classmethod
-    def from_rdf(cls, *, logger: Logger, resource: Resource) -> "WikidataArticle":
+    def from_rdf(cls, *, resource: Resource) -> "WikidataArticle":
         in_language = resource.value(SDO.inLanguage)
         assert isinstance(in_language, Literal)
 

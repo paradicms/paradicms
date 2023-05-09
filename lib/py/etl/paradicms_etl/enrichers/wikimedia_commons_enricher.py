@@ -92,7 +92,7 @@ class WikimediaCommonsEnricher:
             value_text = value_element.text.strip()
             if key in {"Author", "Photographer"}:
                 if image.creators:
-                    self.__logger.info(
+                    self.__logger.debug(
                         "image %s: already has a creator(s), ignoring information from Wikimedia Commons file HTML (%s)",
                         image.uri,
                         wikimedia_commons_file_url,
@@ -143,9 +143,18 @@ class WikimediaCommonsEnricher:
             elif key == "Permission(Reusing this file)":
                 continue
             elif key in {
+                "Accession number",
+                "Collection",
+                "Depicted people",
+                "Dimensions",
                 "Flickr setsInfoField",
+                "Genre",
+                "Medium",
+                "Object type",
                 "Other versions",
+                "References",
                 "Source",
+                "Source/Photographer",
                 "SVG developmentInfoField",
                 "Title",
             }:
@@ -160,7 +169,7 @@ class WikimediaCommonsEnricher:
                 )
 
         if image.license:
-            self.__logger.info(
+            self.__logger.debug(
                 "image %s: already has a license(s), ignoring information from Wikimedia Commons file HTML (%s)",
                 image.uri,
                 wikimedia_commons_file_url,

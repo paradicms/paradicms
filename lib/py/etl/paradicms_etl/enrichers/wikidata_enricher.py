@@ -35,7 +35,7 @@ class WikidataEnricher:
             force=False
         )["graph"]
         wikidata_items = WikidataItem.from_wikidata_rdf(
-            graph=graph, logger=self.__logger
+            graph=graph,
         )
         assert len(wikidata_items)
         for wikidata_item in wikidata_items:

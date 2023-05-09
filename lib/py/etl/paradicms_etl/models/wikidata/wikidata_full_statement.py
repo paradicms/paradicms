@@ -1,6 +1,6 @@
+import logging
 from dataclasses import dataclass
 from datetime import datetime
-from logging import Logger
 from typing import Optional, Tuple
 
 from rdflib import Graph, Literal, PROV, RDF, URIRef
@@ -13,6 +13,8 @@ from paradicms_etl.models.wikidata.wikidata_property_definition import (
 from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
 from paradicms_etl.namespaces import WIKIBASE
 
+logger = logging.getLogger(__name__)
+
 
 @dataclass
 class WikidataFullStatement(WikidataStatement):
@@ -23,7 +25,6 @@ class WikidataFullStatement(WikidataStatement):
     def from_rdf(
         cls,
         *,
-        logger: Logger,
         property_definitions: Tuple[WikidataPropertyDefinition, ...],
         resource: Resource
     ) -> "WikidataFullStatement":
@@ -57,7 +58,6 @@ class WikidataFullStatement(WikidataStatement):
             assert isinstance(value_object, URIRef)
             return cls.__parse_value(
                 graph=resource.graph,
-                logger=logger,
                 value_uri=value_object,
             )
 
@@ -151,7 +151,7 @@ class WikidataFullStatement(WikidataStatement):
         )
 
     @classmethod
-    def __parse_value(cls, *, graph: Graph, logger: Logger, value_uri: URIRef):
+    def __parse_value(cls, *, graph: Graph, value_uri: URIRef):
         # Parse a TimeValue or other value object
         value_types = tuple(graph.objects(subject=value_uri, predicate=RDF.type))
         if not value_types:
