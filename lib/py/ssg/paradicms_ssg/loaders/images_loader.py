@@ -185,7 +185,8 @@ class ImagesLoader:
             #     )
             #     continue
             assert archived_original_image
-            yield archived_original_image
+
+            archived_images.append(archived_original_image)
 
             try:
                 archived_thumbnail_images = self.__archive_thumbnail_images(
@@ -199,6 +200,15 @@ class ImagesLoader:
                     exc_info=True,
                 )
                 continue
-            yield from archived_thumbnail_images
+            archived_images.extend(archived_thumbnail_images)
+
+            self.__logger.debug(
+                "archived %d images (1 original, %d thumbnails) from %s",
+                len(archived_images),
+                len(archived_images) - 1,
+                original_image.uri,
+            )
+
+            yield from archived_images
 
         self.__logger.info("loaded GUI images")
