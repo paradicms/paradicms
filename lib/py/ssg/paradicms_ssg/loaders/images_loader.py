@@ -146,8 +146,6 @@ class ImagesLoader:
             if not isinstance(model, Image):
                 raise TypeError("model is not an Image: " + type(model))
 
-            yield model
-
             original_image = model
 
             if original_image.original_image_uri is not None:
@@ -187,8 +185,7 @@ class ImagesLoader:
             #     )
             #     continue
             assert archived_original_image
-
-            archived_images.append(archived_original_image)
+            yield archived_original_image
 
             try:
                 archived_thumbnail_images = self.__archive_thumbnail_images(
@@ -202,15 +199,6 @@ class ImagesLoader:
                     exc_info=True,
                 )
                 continue
-            archived_images.extend(archived_thumbnail_images)
-
-            self.__logger.debug(
-                "archived %d images (1 original, %d thumbnails) from %s",
-                len(archived_images),
-                len(archived_images) - 1,
-                original_image.uri,
-            )
-
-            yield from archived_images
+            yield from archived_thumbnail_images
 
         self.__logger.info("loaded GUI images")
