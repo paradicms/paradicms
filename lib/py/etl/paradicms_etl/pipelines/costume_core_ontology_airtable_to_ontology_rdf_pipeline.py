@@ -1,18 +1,13 @@
-from pathlib import Path
-
 from configargparse import ArgParser
 
-from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
-    CostumeCoreOntologyAirtableExtractor,
-)
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.namespaces import COCO
 from paradicms_etl.pipeline import Pipeline
-from paradicms_etl.transformers.costume_core_ontology_airtable_transformer import (
-    CostumeCoreOntologyAirtableTransformer,
+from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
+    CostumeCoreOntologyAirtablePipeline,
 )
 
 
@@ -23,29 +18,19 @@ def is_costume_core_ontology_model(model: Model):
     ) and str(model.uri).startswith(str(COCO)[:-1])
 
 
-class CostumeCoreOntologyAirtableToOntologyRdfPipeline(Pipeline):
-    ID = "costume_core_ontology"
-
+class CostumeCoreOntologyAirtableToOntologyRdfPipeline(
+    CostumeCoreOntologyAirtablePipeline
+):
     def __init__(
         self,
         *,
         airtable_access_token: str,
         ontology_version: str,
     ):
-        data_dir_path = (
-            Path(__file__).parent.parent.parent.parent.parent.parent / "data"
-        )
-        assert data_dir_path.is_dir()
-        Pipeline.__init__(
+        data_dir_path = self._find_data_dir_path()
+        CostumeCoreOntologyAirtablePipeline.__init__(
             self,
-            extractor=CostumeCoreOntologyAirtableExtractor(
-                access_token=airtable_access_token,
-                cache_dir_path=self._cache_dir_path(
-                    data_dir_path=data_dir_path, pipeline_id=self.ID
-                )
-                / "airtable",
-            ),
-            id=self.ID,
+            airtable_access_token=airtable_access_token,
             loader=CompositeLoader(
                 loaders=(
                     lambda *, models, **kwds: RdfFileLoader(
@@ -78,9 +63,7 @@ class CostumeCoreOntologyAirtableToOntologyRdfPipeline(Pipeline):
                     ),
                 ),
             ),
-            transformer=CostumeCoreOntologyAirtableTransformer(
-                ontology_version=ontology_version
-            ),
+            ontology_version=ontology_version,
         )
 
     @classmethod

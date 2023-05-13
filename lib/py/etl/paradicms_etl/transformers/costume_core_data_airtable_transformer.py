@@ -40,6 +40,7 @@ class CostumeCoreDataAirtableTransformer:
 
         for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
             airtable_access_token="neverused",
+            loader=nop_loader,
         )(force_extract=False):
             if isinstance(ontology_model, CmsConcept):
                 concept = ontology_model

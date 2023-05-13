@@ -150,7 +150,7 @@ class ReferenceValidator:
         else:
             yield ValidationResult(
                 message=f"duplicate model URI: {model.uri}",
-                severity=ValidationResult.Severity.WARNING,
+                severity=ValidationResult.Severity.INFO,
             )
 
     def _validate_concept(self, concept: Concept) -> Iterable[ValidationResult]:

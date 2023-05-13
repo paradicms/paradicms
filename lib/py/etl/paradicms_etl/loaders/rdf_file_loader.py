@@ -52,7 +52,7 @@ class RdfFileLoader:
                         model_graph.serialize("ttl"),
                     )
                 else:
-                    self.__logger.info(
+                    self.__logger.debug(
                         "model graphs with same identifier (%s) that are isomorphic",
                         model_resource.identifier,
                     )
