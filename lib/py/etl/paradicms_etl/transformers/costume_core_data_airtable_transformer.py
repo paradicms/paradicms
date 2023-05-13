@@ -4,6 +4,7 @@ from typing import Dict, Any
 from rdflib import URIRef
 
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
+from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
@@ -11,8 +12,8 @@ from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.namespaces import COCO
-from paradicms_etl.pipelines.costume_core_ontology_airtable_to_paradicms_rdf_pipeline import (
-    CostumeCoreOntologyAirtableToParadicmsRdfPipeline,
+from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
+    CostumeCoreOntologyAirtablePipeline,
 )
 
 
@@ -38,7 +39,7 @@ class CostumeCoreDataAirtableTransformer:
         concepts_by_uri: Dict[URIRef, CmsConcept] = {}
         properties_by_label: Dict[str, CmsProperty] = {}
 
-        for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
+        for ontology_model in CostumeCoreOntologyAirtablePipeline(
             airtable_access_token="neverused",
             loader=nop_loader,
         )(force_extract=False):

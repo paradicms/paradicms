@@ -9,8 +9,8 @@ from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import VRA
-from paradicms_etl.pipelines.costume_core_ontology_airtable_to_paradicms_rdf_pipeline import (
-    CostumeCoreOntologyAirtableToParadicmsRdfPipeline,
+from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
+    CostumeCoreOntologyAirtablePipeline,
 )
 from paradicms_etl.transformers.omeka_classic_transformer import OmekaClassicTransformer
 
@@ -27,7 +27,7 @@ class CostumeCoreOmekaClassicTransformer(OmekaClassicTransformer):
         self.__costume_core_properties: List[Property] = []
 
     def __call__(self, **kwds):
-        for ontology_model in CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
+        for ontology_model in CostumeCoreOntologyAirtablePipeline(
             airtable_access_token="neverused", loader=nop_loader
         )(force_extract=False):
             if isinstance(ontology_model, Concept):
