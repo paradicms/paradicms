@@ -23,7 +23,6 @@ import {useUserSettingsService} from "~/hooks/useUserSettingsService";
 import {UserSettings} from "~/models/UserSettings";
 import {defaultWorksheetConfiguration} from "~/models/defaultWorksheetConfiguration";
 import {Hrefs} from "~/Hrefs";
-import {Link, useNavigate} from "react-router-dom";
 import {Spinner} from "~/components/Spinner";
 import {Headline} from "~/components/Headline";
 import {defaultUserSettings} from "~/models/defaultUserSettings";
@@ -35,6 +34,9 @@ import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
 import {ModelSetFactory} from "@paradicms/models";
+import Link from "next/link";
+import {useRouter} from "next/router";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 
 const ExistingWorksheetStatesCard: React.FunctionComponent<{
   existingWorksheetStateIds: readonly string[];
@@ -184,7 +186,7 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
       <tr>
         <td className="align-middle text-left w-90">
           <Link
-            to={Hrefs.worksheetMark({
+            href={Hrefs.worksheetMark({
               featureSetUri: null,
               featureUri: null,
               mode: WorksheetMode.BEGINNER,
@@ -336,7 +338,7 @@ const WorksheetStateConfigurationHeadline: React.FunctionComponent = () => {
 
   return (
     <>
-      {text} (<Link to={Hrefs.userSettings}>Change</Link>)
+      {text} (<Link href={Hrefs.userSettings}>Change</Link>)
     </>
   );
 };
@@ -357,8 +359,11 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
   const [existingWorksheetStateIds, setExistingWorksheetStateIds] = useState<
     string[] | null
   >(null);
-  const navigate = useNavigate();
-  const worksheetStateService = useWorksheetStateService();
+  const router = useRouter();
+  const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
+    modelSet,
+  ]);
+  const worksheetStateService = useWorksheetStateService({worksheetDefinition});
 
   useEffect(() => {
     if (!worksheetStateService) {
@@ -415,7 +420,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
           text: undefined,
         })
         .then(() => {
-          navigate(
+          router.push(
             Hrefs.worksheetMark({
               featureSetUri: null,
               featureUri: null,
@@ -426,7 +431,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
           );
         }, setException);
     },
-    [navigate, worksheetStateService]
+    [router, worksheetStateService]
   );
 
   if (exception) {

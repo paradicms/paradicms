@@ -4821,13 +4821,6 @@ react-fast-compare@^3.0.1:
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.1.tgz#53933d9e14f364281d6cba24bfed7a4afb808b5f"
   integrity sha512-xTYf9zFim2pEif/Fw16dBiXpe0hoy5PxcD8+OwBnTtNLfIm3g6WxhKNurY+6OmdH1u6Ta/W/Vl6vjbYP1MFnDg==
 
-react-gapi@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-gapi/-/react-gapi-1.0.2.tgz#83b998a2e232403c22e64f4eaff2fd24e96b8245"
-  integrity sha512-MGP7Rlbwz1X5/GvcDWpys+pLzKhnkeFW0ydTwGFihy7XqKz6Ojm5XzAT84QhgywgKg5JdvEd4Wxdgc1y4rWB7Q==
-  dependencies:
-    react-weblibrary "^1.0.1"
-
 react-hammerjs@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-hammerjs/-/react-hammerjs-1.0.1.tgz#bc1ed9e9ef7da057163fb169ce12917b6d6ca7d8"
@@ -4938,13 +4931,6 @@ react-vertical-timeline-component@3.5.2:
     classnames "^2.2.6"
     prop-types "^15.7.2"
     react-intersection-observer "^8.26.2"
-
-react-weblibrary@^1.0.1:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/react-weblibrary/-/react-weblibrary-1.0.4.tgz#6f0f0e1a1d62a1979496bfdc455dcf66fb4e2dc4"
-  integrity sha512-0JSVH4jFLqxeVjkIBHtD+wO9h0IRxQa2kt4sFAu5L1K2j6rt4M2NKWZqt8tXcfPIBLE8DksN6MH4O2liKI/KoQ==
-  dependencies:
-    ts-essentials "^9.1.2"
 
 react@18.0.0:
   version "18.0.0"
@@ -5840,11 +5826,6 @@ tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
   integrity sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==
-
-ts-essentials@^9.1.2:
-  version "9.3.2"
-  resolved "https://registry.yarnpkg.com/ts-essentials/-/ts-essentials-9.3.2.tgz#5f4ae6d24e20d042a033316c0592dbb51d1b273f"
-  integrity sha512-JxKJzuWqH1MmH4ZFHtJzGEhkfN3QvVR3C3w+4BIoWeoY68UVVoA2Np/Bca9z0IPSErVCWhv439aT0We4Dks8kQ==
 
 ts-invariant@0.9.0:
   version "0.9.0"

@@ -3,8 +3,8 @@ import Head from "next/head";
 import React from "react";
 import {NextAdapter} from "next-query-params";
 import {QueryParamProvider} from "use-query-params";
-import {Secrets} from "~/Secrets";
-import {GoogleApiProvider} from "react-gapi";
+import Script from "next/script";
+import {loadGapiClient} from "~/loadGapiClient";
 
 const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
   return (
@@ -15,14 +15,21 @@ const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
       </Head>
-      <GoogleApiProvider clientId={Secrets.GOOGLE_CLIENT_ID}>
-        <QueryParamProvider
-          adapter={NextAdapter}
-          options={{enableBatching: true}}
-        >
-          <Component {...pageProps} />
-        </QueryParamProvider>
-      </GoogleApiProvider>
+      <QueryParamProvider
+        adapter={NextAdapter}
+        options={{enableBatching: true}}
+      >
+        <Component {...pageProps} />
+        <Script
+          onLoad={() =>
+            loadGapiClient().then(
+              () => console.debug("loaded GAPI client"),
+              error => console.error("error loading GAPI client: ", error)
+            )
+          }
+          src="https://apis.google.com/js/api.js"
+        />
+      </QueryParamProvider>
     </>
   );
 };

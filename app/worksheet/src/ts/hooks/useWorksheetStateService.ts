@@ -3,10 +3,10 @@ import {useCurrentUser} from "~/hooks/useCurrentUser";
 import {useEffect, useReducer} from "react";
 import {WorksheetStateService} from "~/services/WorksheetStateService";
 import {GoogleSheetsWorksheetStateService} from "~/services/GoogleSheetsWorksheetStateService";
-import {useWorksheetDefinition} from "~/hooks/useWorksheetDefinition";
 import {LocalStorageWorksheetStateService} from "~/services/LocalStorageWorksheetStateService";
 import {UserSettings} from "~/models/UserSettings";
 import {defaultUserSettings} from "~/models/defaultUserSettings";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 
 interface WorksheetStateServiceReducerAction {
   payload: WorksheetStateService;
@@ -23,10 +23,12 @@ const worksheetStateServiceReducer = (
   return {worksheetStateService: action.payload!};
 };
 
-export const useWorksheetStateService = (): WorksheetStateService | null => {
+export const useWorksheetStateService = (kwds: {
+  worksheetDefinition: WorksheetDefinition;
+}): WorksheetStateService | null => {
+  const {worksheetDefinition} = kwds;
   const currentUser = useCurrentUser();
   const userSettingsService = useUserSettingsService();
-  const worksheetDefinition = useWorksheetDefinition();
   const [state, dispatch] = useReducer(worksheetStateServiceReducer, {
     worksheetStateService: null,
   });

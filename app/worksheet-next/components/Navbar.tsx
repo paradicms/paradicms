@@ -1,6 +1,5 @@
 import {Hrefs} from "~/Hrefs";
 import * as React from "react";
-import {Link, useNavigate} from "react-router-dom";
 import {
   Collapse,
   DropdownItem,
@@ -13,12 +12,14 @@ import {
   NavLink,
   UncontrolledDropdown,
 } from "reactstrap";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 import {useCurrentUser} from "~/hooks/useCurrentUser";
 
 export const Navbar: React.FunctionComponent = () => {
   const currentUser = useCurrentUser();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   let currentUserJsx: React.ReactNode;
   if (currentUser && currentUser.session.isValid()) {
@@ -40,7 +41,7 @@ export const Navbar: React.FunctionComponent = () => {
   } else {
     currentUserJsx = (
       <NavItem>
-        <NavLink onClick={() => navigate(Hrefs.login)}>Login</NavLink>
+        <NavLink onClick={() => router.push(Hrefs.login)}>Login</NavLink>
       </NavItem>
     );
   }

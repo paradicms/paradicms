@@ -14,12 +14,17 @@ export class LocalStorageCurrentUserService implements CurrentUserService {
   }
 
   getCurrentUser(): CurrentUser | null {
+    if (typeof window === "undefined") {
+      return null;
+    }
+
     const currentUserJsonString = localStorage.getItem("currentUser");
     if (!currentUserJsonString) {
       return null;
     }
-    let currentUser =
-      this.cachedCurrentUsersByJsonString[currentUserJsonString];
+    let currentUser = this.cachedCurrentUsersByJsonString[
+      currentUserJsonString
+    ];
     if (currentUser) {
       return currentUser;
     }

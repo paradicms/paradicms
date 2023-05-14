@@ -1,9 +1,9 @@
-import {useWorksheetDefinition} from "~/hooks/useWorksheetDefinition";
 import {useWorksheetStateService} from "~/hooks/useWorksheetStateService";
 import {useEffect, useReducer, useState} from "react";
 import {Worksheet} from "~/models/Worksheet";
-import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {Exception} from "~/Exception";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
+import {WorksheetMark} from "~/models/WorksheetMark";
 
 export interface WorksheetReducerAction {
   payload: Worksheet;
@@ -20,14 +20,16 @@ const worksheetReducer = (
   return {worksheet: action.payload!};
 };
 
-export const useWorksheet = (): {
+export const useWorksheet = (kwds: {
+  routeWorksheetMark: WorksheetMark;
+  worksheetDefinition: WorksheetDefinition;
+}): {
   exception: Exception | null;
   dispatchWorksheet: React.Dispatch<WorksheetReducerAction>;
   worksheet: Worksheet | null;
 } => {
-  const routeWorksheetMark = useRouteWorksheetMark();
-  const worksheetDefinition = useWorksheetDefinition();
-  const worksheetStateService = useWorksheetStateService();
+  const {routeWorksheetMark, worksheetDefinition} = kwds;
+  const worksheetStateService = useWorksheetStateService(kwds);
   const [state, dispatchWorksheet] = useReducer(worksheetReducer, {
     worksheet: null,
   });
@@ -47,7 +49,7 @@ export const useWorksheet = (): {
     worksheetStateService
       .getWorksheetState(routeWorksheetMark.worksheetStateId)
       .then(
-        (worksheetState) =>
+        worksheetState =>
           dispatchWorksheet({
             payload: new Worksheet({
               currentMark: routeWorksheetMark,
