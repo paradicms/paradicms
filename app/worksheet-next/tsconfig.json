@@ -1,1 +1,26 @@
-../work-search/tsconfig.json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "lib": [
+      "dom",
+      "dom.iterable"
+    ],
+    "moduleResolution": "node",
+    "paths": {
+      "~/*": "./*"
+    },
+    "skipLibCheck": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ],
+  "extends": "../../tsconfig.base.json"
+}
