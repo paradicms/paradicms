@@ -15,47 +15,42 @@ import {
 } from "reactstrap";
 
 import {useCurrentUser} from "~/hooks/useCurrentUser";
-import {Environment} from "~/Environment";
 
 export const Navbar: React.FunctionComponent = () => {
   const currentUser = useCurrentUser();
   const navigate = useNavigate();
 
   let currentUserJsx: React.ReactNode;
-  if (Environment.supportsLogin) {
-    if (currentUser && currentUser.session.isValid()) {
-      currentUserJsx = (
-        <UncontrolledDropdown nav inNavbar>
-          <DropdownToggle nav caret>
-            {currentUser.name}
-          </DropdownToggle>
-          <DropdownMenu end>
-            <DropdownItem>
-              <Link to={Hrefs.userSettings}>Settings</Link>
-            </DropdownItem>
-            <DropdownItem>
-              <Link to={Hrefs.logout}>Logout</Link>
-            </DropdownItem>
-          </DropdownMenu>
-        </UncontrolledDropdown>
-      );
-    } else {
-      currentUserJsx = (
-        <NavItem>
-          <NavLink onClick={() => navigate(Hrefs.login)}>Login</NavLink>
-        </NavItem>
-      );
-    }
+  if (currentUser && currentUser.session.isValid()) {
     currentUserJsx = (
-      <Collapse navbar>
-        <Nav className="ms-auto" navbar>
-          {currentUserJsx}
-        </Nav>
-      </Collapse>
+      <UncontrolledDropdown nav inNavbar>
+        <DropdownToggle nav caret>
+          {currentUser.name}
+        </DropdownToggle>
+        <DropdownMenu end>
+          <DropdownItem>
+            <Link to={Hrefs.userSettings}>Settings</Link>
+          </DropdownItem>
+          <DropdownItem>
+            <Link to={Hrefs.logout}>Logout</Link>
+          </DropdownItem>
+        </DropdownMenu>
+      </UncontrolledDropdown>
     );
   } else {
-    currentUserJsx = null;
+    currentUserJsx = (
+      <NavItem>
+        <NavLink onClick={() => navigate(Hrefs.login)}>Login</NavLink>
+      </NavItem>
+    );
   }
+  currentUserJsx = (
+    <Collapse navbar>
+      <Nav className="ms-auto" navbar>
+        {currentUserJsx}
+      </Nav>
+    </Collapse>
+  );
 
   return (
     <div>
