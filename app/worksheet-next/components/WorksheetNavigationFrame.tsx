@@ -2,7 +2,6 @@ import classnames from "classnames";
 import * as React from "react";
 import {Dispatch, ReactNode, useCallback, useState} from "react";
 import Hammer from "react-hammerjs";
-import {Link, useNavigate} from "react-router-dom";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,8 +21,12 @@ import {Headline} from "~/components/Headline";
 import {WorksheetReducerAction} from "~/hooks/useWorksheet";
 import {Worksheet} from "~/models/Worksheet";
 import {WorksheetMode} from "~/models/WorksheetMode";
+import {AppConfiguration} from "@paradicms/models";
+import {useRouter} from "next/router";
+import Link from "next/link";
 
 export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithChildren<{
+  configuration: AppConfiguration | null;
   dispatchWorksheet: Dispatch<WorksheetReducerAction>;
   finishButtonEnabled: boolean;
   headline: string;
@@ -32,14 +35,14 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
   worksheet: Worksheet;
 }>> = ({
   children,
+  configuration,
   finishButtonEnabled,
   headline,
   nextButtonEnabled,
   previousButtonEnabled,
   worksheet,
 }) => {
-  const navigate = useNavigate();
-
+  const router = useRouter();
   const [_, setMode] = useQueryParam<string>("mode");
   const [exception, setException] = useState<Exception | null>(null);
 
@@ -47,29 +50,29 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
     worksheet
       .save()
       .then(
-        () => navigate(Hrefs.worksheetMark(worksheet.lastMark)),
+        () => router.push(Hrefs.worksheetMark(worksheet.lastMark)),
         setException
       );
-  }, [navigate, worksheet]);
+  }, [router, worksheet]);
 
   const onClickNextButton = useCallback(() => {
     worksheet
       .save()
       .then(
-        () => navigate(Hrefs.worksheetMark(worksheet.nextMark)),
+        () => router.push(Hrefs.worksheetMark(worksheet.nextMark)),
         setException
       );
-  }, [navigate, worksheet]);
+  }, [router, worksheet]);
 
   const onClickPreviousButton = useCallback(() => {
     worksheet.save().then(() => {
       if (worksheet.currentMarkIndex > 0) {
-        navigate(Hrefs.worksheetMark(worksheet.previousMark));
+        router.push(Hrefs.worksheetMark(worksheet.previousMark));
       } else {
-        navigate(Hrefs.index);
+        router.push(Hrefs.index);
       }
     }, setException);
-  }, [navigate, worksheet]);
+  }, [router, worksheet]);
 
   if (exception) {
     return <GenericErrorHandler exception={exception} />;
@@ -78,7 +81,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
   const breadcrumbItems: ReactNode[] = [];
   breadcrumbItems.push(
     <BreadcrumbItem active={!worksheet.currentFeatureSet} key="worksheet-mark">
-      <Link to={Hrefs.worksheetMark(worksheet.firstMark)}>
+      <Link href={Hrefs.worksheetMark(worksheet.firstMark)}>
         Worksheet: {worksheet.stateId}
       </Link>
     </BreadcrumbItem>
@@ -87,7 +90,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
     breadcrumbItems.push(
       <BreadcrumbItem active={!worksheet.currentFeature} key="feature-set-mark">
         <Link
-          to={Hrefs.worksheetMark({
+          href={Hrefs.worksheetMark({
             featureSetUri: worksheet.currentFeatureSet.uri,
             featureUri: null,
             mode: worksheet.currentMark.mode,
@@ -104,7 +107,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
     breadcrumbItems.push(
       <BreadcrumbItem active={true} key="feature-mark">
         <Link
-          to={Hrefs.worksheetMark({
+          href={Hrefs.worksheetMark({
             featureSetUri: worksheet.currentFeatureSet!.uri,
             featureUri: worksheet.currentFeature.uri,
             mode: worksheet.currentMark.mode,
@@ -179,7 +182,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
       }}
     >
       <div>
-        <Frame>
+        <Frame configuration={configuration}>
           <Container fluid>
             <Row>
               <Col className="d-flex" xs="12">

@@ -15,9 +15,9 @@ import {
 import {Literal} from "@rdfjs/types";
 import classnames from "classnames";
 import ISO6391 from "iso-639-1";
+import {useRouter} from "next/router";
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {useLocation} from "react-router";
 import {
   Button,
   Card,
@@ -44,9 +44,9 @@ export const MasterDetailContainer: React.FunctionComponent<{
   items: readonly Item[];
 }> = ({items, mode}) => {
   const [detailItem, setDetailItem] = useState<Item | null>(null);
-  const location = useLocation();
+  const router = useRouter();
   // Reset the detail whenever the location changes
-  useEffect(() => setDetailItem(null), [location]);
+  useEffect(() => setDetailItem(null), [router]);
 
   return (
     <div className="d-flex mt-2">

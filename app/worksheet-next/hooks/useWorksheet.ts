@@ -21,7 +21,7 @@ const worksheetReducer = (
 };
 
 export const useWorksheet = (kwds: {
-  routeWorksheetMark: WorksheetMark;
+  routeWorksheetMark: WorksheetMark | null;
   worksheetDefinition: WorksheetDefinition;
 }): {
   exception: Exception | null;
@@ -36,7 +36,7 @@ export const useWorksheet = (kwds: {
   const [exception, setException] = useState<Exception | null>(null);
 
   useEffect(() => {
-    if (!worksheetStateService) {
+    if (!routeWorksheetMark || !worksheetStateService) {
       return;
     }
     if (

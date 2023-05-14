@@ -20,16 +20,16 @@ const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
         options={{enableBatching: true}}
       >
         <Component {...pageProps} />
-        <Script
-          onLoad={() =>
-            loadGapiClient().then(
-              () => console.debug("loaded GAPI client"),
-              error => console.error("error loading GAPI client: ", error)
-            )
-          }
-          src="https://apis.google.com/js/api.js"
-        />
       </QueryParamProvider>
+      <Script
+        onLoad={() =>
+          loadGapiClient().then(
+            () => console.debug("loaded GAPI client"),
+            error => console.error("error loading GAPI client: ", error)
+          )
+        }
+        src="https://apis.google.com/js/api.js"
+      />
     </>
   );
 };
