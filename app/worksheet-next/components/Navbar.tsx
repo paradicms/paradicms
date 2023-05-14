@@ -30,10 +30,10 @@ export const Navbar: React.FunctionComponent = () => {
         </DropdownToggle>
         <DropdownMenu end>
           <DropdownItem>
-            <Link to={Hrefs.userSettings}>Settings</Link>
+            <Link href={Hrefs.userSettings}>Settings</Link>
           </DropdownItem>
           <DropdownItem>
-            <Link to={Hrefs.logout}>Logout</Link>
+            <Link href={Hrefs.logout}>Logout</Link>
           </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>

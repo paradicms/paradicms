@@ -73,6 +73,7 @@ interface StaticProps {
 }
 
 const WorksheetFeatureSetEditPage: React.FunctionComponent<StaticProps> = ({
+  featureSetUri,
   modelSetString,
 }) => {
   const modelSet = useMemo(
@@ -81,7 +82,10 @@ const WorksheetFeatureSetEditPage: React.FunctionComponent<StaticProps> = ({
   );
   const configuration = modelSet.appConfiguration;
   const router = useRouter();
-  const routeWorksheetMark = useRouteWorksheetMark({review: false});
+  const routeWorksheetMark = useRouteWorksheetMark({
+    featureSetUri,
+    review: false,
+  });
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
     modelSet,
   ]);

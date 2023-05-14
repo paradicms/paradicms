@@ -82,7 +82,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
   breadcrumbItems.push(
     <BreadcrumbItem active={!worksheet.currentFeatureSet} key="worksheet-mark">
       <Link href={Hrefs.worksheetMark(worksheet.firstMark)}>
-        Worksheet: {worksheet.stateId}
+        <>Worksheet: {worksheet.stateId}</>
       </Link>
     </BreadcrumbItem>
   );
@@ -98,7 +98,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
             worksheetStateId: worksheet.stateId,
           })}
         >
-          Feature Set: {worksheet.currentFeatureSet.definition.label}
+          <>Feature Set: {worksheet.currentFeatureSet.definition.label}</>
         </Link>
       </BreadcrumbItem>
     );
@@ -115,7 +115,7 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
             worksheetStateId: worksheet.stateId,
           })}
         >
-          Feature: {worksheet.currentFeature.definition.label}
+          <>Feature: {worksheet.currentFeature.definition.label}</>
         </Link>
       </BreadcrumbItem>
     );
