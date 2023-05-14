@@ -27,10 +27,10 @@ const WorksheetEditPage: React.FunctionComponent<StaticProps> = ({
     [modelSetString]
   );
   const configuration = modelSet.appConfiguration;
+  const routeWorksheetMark = useRouteWorksheetMark({review: false});
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
     modelSet,
   ]);
-  const routeWorksheetMark = useRouteWorksheetMark({review: false});
 
   const {
     dispatchWorksheet,
