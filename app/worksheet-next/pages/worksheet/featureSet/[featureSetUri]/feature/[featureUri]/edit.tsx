@@ -12,9 +12,10 @@ import {decodeFileName, encodeFileName, readModelSet} from "@paradicms/next";
 import path from "path";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ModelSetFactory} from "@paradicms/models";
+import {ModelSetFactory, ModelSubsetter} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {useRouter} from "next/router";
+import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
 
 interface StaticProps {
   readonly featureSetUri: string;
@@ -147,7 +148,7 @@ export const getStaticProps: GetStaticProps = async ({
   const featureSetUri = decodeFileName(params!.featureSetUri as string);
   const featureUri = decodeFileName(params!.featureUri as string);
 
-  const modelSet = await readModelSet({
+  const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
     readFile,
   });
@@ -156,7 +157,16 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       featureSetUri,
       featureUri,
-      modelSetString: modelSet.toFastRdfString(),
+      modelSetString: new ModelSubsetter({completeModelSet})
+        .propertyModelSet(completeModelSet.propertyByUri(featureUri), {
+          groups: {},
+          rangeValues: {
+            thumbnail: galleryThumbnailSelector,
+          },
+        })
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .build()
+        .toFastRdfString(),
     },
   };
 };

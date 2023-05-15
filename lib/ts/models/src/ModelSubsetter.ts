@@ -364,6 +364,14 @@ export class ModelSubsetter {
     return this.modelSetBuilder;
   }
 
+  propertyModelSet(
+    property: Property,
+    joinSelector?: PropertyJoinSelector
+  ): ModelSetBuilder {
+    this.addPropertyModelSet(property, joinSelector ?? {});
+    return this.modelSetBuilder;
+  }
+
   workModelSet(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
     this.addWorkModelSets([work], joinSelector ?? {});
     return this.modelSetBuilder;

@@ -3,7 +3,7 @@ import {License} from "../src/License";
 import {RightsStatement} from "../src/RightsStatement";
 import {testModelSet} from "./testModelSet";
 
-describe("ModelSet", () => {
+describe("CachingModelSet", () => {
   const sut = testModelSet;
 
   it("should exercise all indices", () => {
@@ -36,11 +36,13 @@ describe("ModelSet", () => {
       sut.conceptByUriOptional(concept.uri)!.value.value
     );
 
+    expect(sut.properties).to.not.be.empty;
     for (const property of sut.properties) {
       expect(property.groupUris).to.not.be.empty;
       if (property.filterable) {
         expect(property.rangeValues).to.not.be.empty;
       }
+      expect(sut.propertyByUri(property.uri).label).to.eq(property.label);
     }
 
     expect(sut.propertyGroups).to.not.be.empty;

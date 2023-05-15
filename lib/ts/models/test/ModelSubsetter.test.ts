@@ -90,28 +90,22 @@ describe("ModelSubsetter", () => {
   });
 
   it("should get a property group subset (worksheet feature set edit)", () => {
-    for (const property of completeModelSet.properties) {
-      if (property.rangeValues.length === 0) {
-        continue;
-      }
-      expect(property.groups).to.have.length(1);
-      const propertyGroup = property.groups[0];
-      const propertyGroupModelSet = sut
-        .propertyGroupModelSet(propertyGroup, {
-          properties: {
-            thumbnail: THUMBNAIL_SELECTOR,
-          },
-        })
-        .build();
-      expectModelsDeepEq(
-        propertyGroupModelSet.properties,
-        propertyGroup.properties
-      );
-      expect(countModelSetImages(propertyGroupModelSet)).to.eq(
-        propertyGroup.properties.length
-      );
-      return;
-    }
+    const propertyGroup = completeModelSet.propertyGroups[0];
+    expect(propertyGroup.properties).to.not.be.empty;
+    const propertyGroupModelSet = sut
+      .propertyGroupModelSet(propertyGroup, {
+        properties: {
+          thumbnail: THUMBNAIL_SELECTOR,
+        },
+      })
+      .build();
+    expectModelsDeepEq(
+      propertyGroupModelSet.properties,
+      propertyGroup.properties
+    );
+    expect(countModelSetImages(propertyGroupModelSet)).to.eq(
+      propertyGroup.properties.length
+    );
   });
 
   it("should get a property groups subset (worksheet edit)", () => {
@@ -152,6 +146,25 @@ describe("ModelSubsetter", () => {
         property => property.rangeValues.length > 0
       )
     ).to.be.true;
+  });
+
+  it("should get a property subset (worksheet feature edit)", () => {
+    for (const property of completeModelSet.properties) {
+      if (property.rangeValues.length === 0) {
+        continue;
+      }
+      const propertyModelSet = sut
+        .propertyModelSet(property, {
+          rangeValues: {
+            thumbnail: THUMBNAIL_SELECTOR,
+          },
+        })
+        .build();
+      expect(countModelSetImages(propertyModelSet)).to.eq(
+        property.rangeValues.length
+      );
+      return;
+    }
   });
 
   it("should get a work subset (work page)", () => {
