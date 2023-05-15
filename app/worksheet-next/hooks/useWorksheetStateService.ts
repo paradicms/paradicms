@@ -71,7 +71,7 @@ export const useWorksheetStateService = (kwds: {
       console.info("no current user, using default user settings");
       setWorksheetStateServiceFromUserSettings(defaultUserSettings);
     }
-  }, [currentUser, userSettingsService, worksheetDefinition]);
+  }, [currentUser, userSettingsService]);
 
   return state.worksheetStateService;
 };

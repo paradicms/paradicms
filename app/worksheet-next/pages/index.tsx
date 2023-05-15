@@ -33,7 +33,7 @@ import {readModelSet} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
-import {ModelSetFactory} from "@paradicms/models";
+import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
@@ -521,7 +521,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSet({
+  const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
@@ -529,7 +529,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: modelSet.toFastRdfString(),
+      modelSetString: new ModelSetBuilder()
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .build()
+        .toFastRdfString(),
     },
   };
 };
