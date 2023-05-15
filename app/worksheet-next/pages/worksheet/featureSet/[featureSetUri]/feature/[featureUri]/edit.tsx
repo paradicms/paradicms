@@ -1,6 +1,5 @@
 import * as React from "react";
 import {useMemo} from "react";
-import {Navigate} from "react-router-dom";
 import {Hrefs} from "~/Hrefs";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
@@ -15,6 +14,7 @@ import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {ModelSetFactory} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
+import {useRouter} from "next/router";
 
 interface StaticProps {
   readonly featureSetUri: string;
@@ -37,6 +37,7 @@ const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
     featureUri,
     review: false,
   });
+  const router = useRouter();
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
     modelSet,
   ]);
@@ -57,14 +58,13 @@ const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
     // Advanced mode has pages per feature set but not pages per feature.
     // The user likely switched to advanced mode will on a feature page.
     // Redirect to the "parent" feature set page.
-    return (
-      <Navigate
-        to={Hrefs.worksheetMark({
-          ...worksheet.currentMark,
-          featureUri: null,
-        })}
-      />
+    router.push(
+      Hrefs.worksheetMark({
+        ...worksheet.currentMark,
+        featureUri: null,
+      })
     );
+    return null;
   }
 
   const feature = worksheet.currentFeature;

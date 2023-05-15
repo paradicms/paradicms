@@ -11,21 +11,21 @@ import {
   ModalHeader,
   Row,
 } from "reactstrap";
-import {useNavigate} from "react-router-dom";
 import {useCurrentUserService} from "~/hooks/useCurrentUserService";
+import {useRouter} from "next/router";
 
 export const AuthorizationExceptionModal: React.FunctionComponent<{
   exception: AuthorizationException;
 }> = ({exception}) => {
   const currentUserService = useCurrentUserService();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const onClickAnonymous = useCallback(
     () => () => {
       currentUserService.deleteCurrentUser();
-      navigate(Hrefs.index);
+      router.push(Hrefs.index);
     },
-    [currentUserService, navigate]
+    [currentUserService, router]
   );
 
   return (
