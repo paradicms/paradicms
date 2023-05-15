@@ -293,7 +293,9 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       modelSetString: new ModelSubsetter({completeModelSet})
         .propertyGroupsModelSet(completeModelSet.propertyGroups, {
-          properties: {},
+          properties: {
+            rangeValues: {},
+          },
         })
         .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
