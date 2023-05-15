@@ -58,6 +58,27 @@ describe("ModelSubsetter", () => {
     completeModelSet: completeModelSet,
   });
 
+  it("should get an agents subset (agents gallery)", () => {
+    const work = completeModelSet.works[0];
+    const agents = work.agents.map(agent => agent.agent);
+    const namedAgents = agents.filter(agent => agent.uri);
+    expect(namedAgents.length).to.be.lt(agents.length);
+    const namedAgentsModelSet = sut
+      .agentsModelSet(agents, {
+        thumbnail: THUMBNAIL_SELECTOR,
+      })
+      .build();
+    expect(countModelSetNamedAgents(namedAgentsModelSet)).to.eq(
+      namedAgents.length
+    );
+    expect(countModelSetImages(namedAgentsModelSet)).to.eq(namedAgents.length);
+    for (const namedAgent of namedAgents) {
+      expect(
+        namedAgentsModelSet.imagesByDepictsUri(namedAgent.uri!).length
+      ).to.eq(1);
+    }
+  });
+
   it("should get a work subset (work page)", () => {
     const work = completeModelSet.works[0];
     const workModelSet = sut
@@ -109,7 +130,7 @@ describe("ModelSubsetter", () => {
     expect(work.events).to.have.length(3);
   });
 
-  it("should get a work event subset", () => {
+  it("should get a work events subset (work events timeline)", () => {
     const work = completeModelSet.works[0];
     let workClosing: WorkClosing | undefined;
     let workCreation: WorkCreation | undefined;
