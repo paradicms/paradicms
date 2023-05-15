@@ -19,6 +19,7 @@ import {Property} from "./Property";
 import {PropertyJoinSelector} from "./PropertyJoinSelector";
 import {PropertyGroupJoinSelector} from "./PropertyGroupJoinSelector";
 import {PropertyGroup} from "./PropertyGroup";
+import {PropertyValue} from "./PropertyValue";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -98,20 +99,18 @@ export class ModelSubsetter {
     }
   }
 
-  private addConceptsModelSet(
-    concepts: readonly Concept[],
+  private addConceptModelSet(
+    concept: Concept,
     joinSelector: PropertyValueJoinSelector
   ): void {
-    this.modelSetBuilder.addConcepts(concepts);
+    this.modelSetBuilder.addConcept(concept);
     if (joinSelector.thumbnail) {
-      for (const concept of concepts) {
-        const thumbnail = selectThumbnail(
-          this.completeModelSet.imagesByDepictsUri(concept.uri),
-          joinSelector.thumbnail
-        );
-        if (thumbnail) {
-          this.addImageModelSet({}, thumbnail);
-        }
+      const thumbnail = selectThumbnail(
+        this.completeModelSet.imagesByDepictsUri(concept.uri),
+        joinSelector.thumbnail
+      );
+      if (thumbnail) {
+        this.addImageModelSet({}, thumbnail);
       }
     }
   }
@@ -137,6 +136,15 @@ export class ModelSubsetter {
   ) {
     this.modelSetBuilder.addPropertyGroup(propertyGroup);
 
+    if (propertyGroupJoinSelector.properties) {
+      for (const property of propertyGroup.properties) {
+        this.addPropertyModelSet(
+          property,
+          propertyGroupJoinSelector.properties
+        );
+      }
+    }
+
     if (propertyGroupJoinSelector.thumbnail) {
       const thumbnailImage = propertyGroup.thumbnail(
         propertyGroupJoinSelector.thumbnail
@@ -160,6 +168,21 @@ export class ModelSubsetter {
           propertyJoinSelector.groups
         );
       }
+    }
+
+    if (propertyJoinSelector.rangeValues) {
+      for (const value of property.rangeValues) {
+        this.addPropertyValueModelSet(value, propertyJoinSelector.rangeValues);
+      }
+    }
+  }
+
+  private addPropertyValueModelSet(
+    propertyValue: PropertyValue,
+    propertyValueJoinSelector: PropertyValueJoinSelector
+  ) {
+    if (propertyValue instanceof ConceptPropertyValue) {
+      this.addConceptModelSet(propertyValue.concept, propertyValueJoinSelector);
     }
   }
 
@@ -272,10 +295,12 @@ export class ModelSubsetter {
     }
 
     if (joinSelector.propertyValues) {
-      this.addConceptsModelSet(
-        Object.keys(conceptsByUri).map(uri => conceptsByUri[uri]),
-        joinSelector.propertyValues
-      );
+      for (const conceptUri in conceptsByUri) {
+        this.addConceptModelSet(
+          conceptsByUri[conceptUri],
+          joinSelector.propertyValues
+        );
+      }
     }
   }
 

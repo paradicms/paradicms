@@ -1,4 +1,4 @@
-import {datasetToFastRdfString, getRdfInstanceQuads} from "@paradicms/rdf";
+import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cms} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
@@ -89,7 +89,7 @@ describe("ModelSubsetter", () => {
     }
   });
 
-  it("should get a property groups subset (worksheet review/edit)", () => {
+  it("should get a property groups subset (worksheet edit)", () => {
     const propertyGroups = completeModelSet.propertyGroups;
     expect(propertyGroups).to.not.be.empty;
     const propertyGroupsModelSet = sut
@@ -98,12 +98,35 @@ describe("ModelSubsetter", () => {
       })
       .build();
     expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
-    // @ts-ignore
-    const imagesCount = countModelSetImages(propertyGroupsModelSet);
-    console.log(datasetToFastRdfString(propertyGroupsModelSet.toRdf()));
+    expect(propertyGroupsModelSet.properties).to.be.empty;
     expect(countModelSetImages(propertyGroupsModelSet)).to.eq(
       propertyGroups.length
     );
+  });
+
+  it("should get a property groups subset (worksheet review)", () => {
+    const propertyGroups = completeModelSet.propertyGroups;
+    expect(propertyGroups).to.not.be.empty;
+    expect(propertyGroups.length).to.eq(1);
+    const propertyGroupsModelSet = sut
+      .propertyGroupsModelSet(propertyGroups, {
+        properties: {
+          rangeValues: {},
+        },
+      })
+      .build();
+    expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
+    expect(propertyGroups[0].properties).not.to.be.empty;
+    expectModelsDeepEq(
+      propertyGroups[0].properties,
+      propertyGroupsModelSet.properties
+    );
+    expect(countModelSetImages(propertyGroupsModelSet)).to.eq(0);
+    expect(
+      propertyGroupsModelSet.properties.some(
+        property => property.rangeValues.length > 0
+      )
+    ).to.be.true;
   });
 
   it("should get a work subset (work page)", () => {
