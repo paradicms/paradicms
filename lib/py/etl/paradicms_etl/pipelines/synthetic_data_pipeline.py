@@ -399,6 +399,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 ).set_searchable(
                     property_.searchable
                 ).build()
+                yield from self.__generate_images(
+                    depicts_uri=property_.uri, text_prefix=property_.label
+                )
 
         def __generate_work(
             self,
