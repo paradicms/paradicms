@@ -1,3 +1,5 @@
+import {PropertyGroupJoinSelector} from "./PropertyGroupJoinSelector";
+
 export interface PropertyJoinSelector {
-  groups?: boolean;
+  groups?: PropertyGroupJoinSelector;
 }

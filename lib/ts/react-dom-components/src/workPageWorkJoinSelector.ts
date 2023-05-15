@@ -12,7 +12,7 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
     location: true,
   },
   properties: {
-    groups: true,
+    groups: {},
   },
   propertyValues: {},
 };

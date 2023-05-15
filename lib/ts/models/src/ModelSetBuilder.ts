@@ -158,8 +158,8 @@ export class ModelSetBuilder {
     return this.addNamedModel(property);
   }
 
-  addPropertyGroups(propertyGroups: readonly PropertyGroup[]): ModelSetBuilder {
-    return this.addNamedModels(propertyGroups);
+  addPropertyGroup(propertyGroup: PropertyGroup): ModelSetBuilder {
+    return this.addNamedModel(propertyGroup);
   }
 
   addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {

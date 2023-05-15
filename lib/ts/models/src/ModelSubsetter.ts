@@ -17,6 +17,8 @@ import {WorkJoinSelector} from "./WorkJoinSelector";
 import {selectThumbnail} from "./selectThumbnail";
 import {Property} from "./Property";
 import {PropertyJoinSelector} from "./PropertyJoinSelector";
+import {PropertyGroupJoinSelector} from "./PropertyGroupJoinSelector";
+import {PropertyGroup} from "./PropertyGroup";
 
 /**
  * Subset a ModelSet to reduce the amount of data passed between getStaticProps and the component.
@@ -129,6 +131,22 @@ export class ModelSubsetter {
     this.modelSetBuilder.addLocation(location);
   }
 
+  private addPropertyGroupModelSet(
+    propertyGroup: PropertyGroup,
+    propertyGroupJoinSelector: PropertyGroupJoinSelector
+  ) {
+    this.modelSetBuilder.addPropertyGroup(propertyGroup);
+
+    if (propertyGroupJoinSelector.thumbnail) {
+      const thumbnailImage = propertyGroup.thumbnail(
+        propertyGroupJoinSelector.thumbnail
+      );
+      if (thumbnailImage) {
+        this.addImageModelSet({}, thumbnailImage);
+      }
+    }
+  }
+
   private addPropertyModelSet(
     property: Property,
     propertyJoinSelector: PropertyJoinSelector
@@ -136,7 +154,12 @@ export class ModelSubsetter {
     this.modelSetBuilder.addProperty(property);
 
     if (propertyJoinSelector.groups) {
-      this.modelSetBuilder.addPropertyGroups(property.groups);
+      for (const propertyGroup of property.groups) {
+        this.addPropertyGroupModelSet(
+          propertyGroup,
+          propertyJoinSelector.groups
+        );
+      }
     }
   }
 
@@ -287,6 +310,16 @@ export class ModelSubsetter {
   ): ModelSetBuilder {
     for (const agent of agents) {
       this.addAgentModelSet(agent, joinSelector ?? {});
+    }
+    return this.modelSetBuilder;
+  }
+
+  propertyGroupsModelSet(
+    propertyGroups: readonly PropertyGroup[],
+    joinSelector?: PropertyGroupJoinSelector
+  ): ModelSetBuilder {
+    for (const propertyGroup of propertyGroups) {
+      this.addPropertyGroupModelSet(propertyGroup, joinSelector ?? {});
     }
     return this.modelSetBuilder;
   }
