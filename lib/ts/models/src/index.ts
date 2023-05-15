@@ -25,6 +25,8 @@ export * from "./Organization";
 export * from "./Person";
 export * from "./Property";
 export * from "./PropertyGroup";
+export * from "./PropertyGroupJoinSelector";
+export * from "./PropertyJoinSelector";
 export * from "./PropertyValue";
 export * from "./PropertyValueJoinSelector";
 export * from "./ResourceBackedModelParameters";
