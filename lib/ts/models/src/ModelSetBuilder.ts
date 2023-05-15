@@ -54,16 +54,8 @@ export class ModelSetBuilder {
     return this.addNamedModel(collection);
   }
 
-  addCollections(collections: readonly Collection[]): ModelSetBuilder {
-    return this.addNamedModels(collections);
-  }
-
   addConcept(concept: Concept): ModelSetBuilder {
     return this.addNamedModel(concept);
-  }
-
-  addConcepts(concepts: readonly Concept[]): ModelSetBuilder {
-    return this.addNamedModels(concepts);
   }
 
   addEvent(event: Event): ModelSetBuilder {
@@ -74,16 +66,8 @@ export class ModelSetBuilder {
     return this.addNamedModel(image);
   }
 
-  addImages(images: readonly Image[]): ModelSetBuilder {
-    return this.addNamedModels(images);
-  }
-
   addLicense(license: License): ModelSetBuilder {
     return this.addNamedModel(license);
-  }
-
-  addLicenses(licenses: readonly License[]): ModelSetBuilder {
-    return this.addNamedModels(licenses);
   }
 
   addLocation(location: Location): ModelSetBuilder {
@@ -133,25 +117,12 @@ export class ModelSetBuilder {
     return this;
   }
 
-  private addNamedModels<ModelT extends Model>(
-    models: readonly ModelT[]
-  ): ModelSetBuilder {
-    for (const model of models) {
-      this.addNamedModel(model);
-    }
-    return this;
-  }
-
   addOrganization(organization: Organization): ModelSetBuilder {
     return this.addModel(organization);
   }
 
   addPerson(person: Person): ModelSetBuilder {
     return this.addModel(person);
-  }
-
-  addProperties(properties: readonly Property[]): ModelSetBuilder {
-    return this.addNamedModels(properties);
   }
 
   addProperty(property: Property): ModelSetBuilder {
@@ -166,18 +137,8 @@ export class ModelSetBuilder {
     return this.addNamedModel(rightsStatement);
   }
 
-  addRightsStatements(
-    rightsStatements: readonly RightsStatement[]
-  ): ModelSetBuilder {
-    return this.addNamedModels(rightsStatements);
-  }
-
   addWork(work: Work): ModelSetBuilder {
     return this.addNamedModel(work);
-  }
-
-  addWorks(works: readonly Work[]): ModelSetBuilder {
-    return this.addNamedModels(works);
   }
 
   build(): ModelSet {
