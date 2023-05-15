@@ -1,7 +1,7 @@
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {AgentJoinSelector} from "./AgentJoinSelector";
-import {ConceptJoinSelector} from "./ConceptJoinSelector";
+import {PropertyValueJoinSelector} from "./PropertyValueJoinSelector";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {PropertyJoinSelector} from "./PropertyJoinSelector";
 
@@ -21,7 +21,7 @@ export interface WorkJoinSelector {
   // Return any Property's that apply to this Work.
   properties?: PropertyJoinSelector;
   // Return any Concepts referred to by this Work.
-  propertyValues?: ConceptJoinSelector;
+  propertyValues?: PropertyValueJoinSelector;
   // Return a single thumbnail Image for this Work.
   thumbnail?: ThumbnailSelector;
 }

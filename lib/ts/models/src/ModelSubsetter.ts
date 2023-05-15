@@ -3,7 +3,7 @@ import {AgentUnion} from "./AgentUnion";
 import {Collection} from "./Collection";
 import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {Concept} from "./Concept";
-import {ConceptJoinSelector} from "./ConceptJoinSelector";
+import {PropertyValueJoinSelector} from "./PropertyValueJoinSelector";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {Image} from "./Image";
 import {Location} from "./Location";
@@ -98,7 +98,7 @@ export class ModelSubsetter {
 
   private addConceptsModelSet(
     concepts: readonly Concept[],
-    joinSelector: ConceptJoinSelector
+    joinSelector: PropertyValueJoinSelector
   ): void {
     this.modelSetBuilder.addConcepts(concepts);
     if (joinSelector.thumbnail) {
