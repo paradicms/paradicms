@@ -33,7 +33,7 @@ export class Hrefs {
   }
 
   static worksheetMark(mark: WorksheetMark) {
-    let href = "/";
+    let href = "/worksheet/";
     if (mark.featureSetUri) {
       href += "featureSet/" + encodeFileName(mark.featureSetUri) + "/";
       if (mark.featureUri) {

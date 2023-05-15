@@ -11,9 +11,10 @@ import {readModelSet} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
-import {ModelSetFactory} from "@paradicms/models";
+import {ModelSetFactory, ModelSubsetter} from "@paradicms/models";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
+import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
 
 interface StaticProps {
   readonly modelSetString: string;
@@ -106,7 +107,7 @@ export default WorksheetEditPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSet({
+  const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
@@ -114,7 +115,13 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: modelSet.toFastRdfString(),
+      modelSetString: new ModelSubsetter({completeModelSet})
+        .propertyGroupsModelSet(completeModelSet.propertyGroups, {
+          thumbnail: galleryThumbnailSelector,
+        })
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .build()
+        .toFastRdfString(),
     },
   };
 };
