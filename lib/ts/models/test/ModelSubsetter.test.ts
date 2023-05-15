@@ -89,6 +89,31 @@ describe("ModelSubsetter", () => {
     }
   });
 
+  it("should get a property group subset (worksheet feature set edit)", () => {
+    for (const property of completeModelSet.properties) {
+      if (property.rangeValues.length === 0) {
+        continue;
+      }
+      expect(property.groups).to.have.length(1);
+      const propertyGroup = property.groups[0];
+      const propertyGroupModelSet = sut
+        .propertyGroupModelSet(propertyGroup, {
+          properties: {
+            thumbnail: THUMBNAIL_SELECTOR,
+          },
+        })
+        .build();
+      expectModelsDeepEq(
+        propertyGroupModelSet.properties,
+        propertyGroup.properties
+      );
+      expect(countModelSetImages(propertyGroupModelSet)).to.eq(
+        propertyGroup.properties.length
+      );
+      return;
+    }
+  });
+
   it("should get a property groups subset (worksheet edit)", () => {
     const propertyGroups = completeModelSet.propertyGroups;
     expect(propertyGroups).to.not.be.empty;

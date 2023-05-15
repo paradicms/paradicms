@@ -17,7 +17,8 @@ import fs from "fs";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
-import {ModelSetFactory} from "@paradicms/models";
+import {ModelSetFactory, ModelSubsetter} from "@paradicms/models";
+import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
 
 const WorksheetFeatureSelectsTable: React.FunctionComponent<{
   dispatchFeatureSet: () => void;
@@ -194,7 +195,7 @@ export const getStaticProps: GetStaticProps = async ({
 }> => {
   const featureSetUri = decodeFileName(params!.featureSetUri as string);
 
-  const modelSet = await readModelSet({
+  const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
     readFile,
   });
@@ -202,7 +203,18 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       featureSetUri,
-      modelSetString: modelSet.toFastRdfString(),
+      modelSetString: new ModelSubsetter({completeModelSet})
+        .propertyGroupModelSet(
+          completeModelSet.propertyGroupByUri(featureSetUri),
+          {
+            properties: {
+              thumbnail: galleryThumbnailSelector,
+            },
+          }
+        )
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .build()
+        .toFastRdfString(),
     },
   };
 };

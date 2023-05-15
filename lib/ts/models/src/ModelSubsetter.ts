@@ -175,6 +175,13 @@ export class ModelSubsetter {
         this.addPropertyValueModelSet(value, propertyJoinSelector.rangeValues);
       }
     }
+
+    if (propertyJoinSelector.thumbnail) {
+      const thumbnailImage = property.thumbnail(propertyJoinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImageModelSet({}, thumbnailImage);
+      }
+    }
   }
 
   private addPropertyValueModelSet(
@@ -336,6 +343,14 @@ export class ModelSubsetter {
     for (const agent of agents) {
       this.addAgentModelSet(agent, joinSelector ?? {});
     }
+    return this.modelSetBuilder;
+  }
+
+  propertyGroupModelSet(
+    propertyGroup: PropertyGroup,
+    joinSelector?: PropertyGroupJoinSelector
+  ): ModelSetBuilder {
+    this.addPropertyGroupModelSet(propertyGroup, joinSelector ?? {});
     return this.modelSetBuilder;
   }
 
