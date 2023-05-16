@@ -10,7 +10,6 @@ export class LocalStorageCurrentUserService implements CurrentUserService {
     localStorage.removeItem(
       LocalStorageCurrentUserService.CURRENT_USER_ITEM_KEY
     );
-    gapi.client.setToken(null);
   }
 
   getCurrentUser(): CurrentUser | null {
@@ -38,6 +37,5 @@ export class LocalStorageCurrentUserService implements CurrentUserService {
       LocalStorageCurrentUserService.CURRENT_USER_ITEM_KEY,
       JSON.stringify(currentUser.toJsonObject())
     );
-    gapi.client.setToken({access_token: currentUser.session.accessToken});
   }
 }

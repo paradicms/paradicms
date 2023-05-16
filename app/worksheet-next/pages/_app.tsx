@@ -4,7 +4,6 @@ import React from "react";
 import {NextAdapter} from "next-query-params";
 import {QueryParamProvider} from "use-query-params";
 import Script from "next/script";
-import {loadGapiClient} from "~/loadGapiClient";
 
 const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
   return (
@@ -22,13 +21,8 @@ const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
         <Component {...pageProps} />
       </QueryParamProvider>
       <Script
-        onLoad={() =>
-          loadGapiClient().then(
-            () => console.debug("loaded GAPI client"),
-            error => console.error("error loading GAPI client: ", error)
-          )
-        }
         src="https://apis.google.com/js/api.js"
+        strategy="beforeInteractive"
       />
     </>
   );
