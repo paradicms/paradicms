@@ -13,13 +13,11 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 import Link from "next/link";
-import {useRouter} from "next/router";
 
 import {useCurrentUser} from "~/hooks/useCurrentUser";
 
 export const Navbar: React.FunctionComponent = () => {
   const currentUser = useCurrentUser();
-  const router = useRouter();
 
   let currentUserJsx: React.ReactNode;
   if (currentUser && currentUser.session.isValid()) {
@@ -41,7 +39,9 @@ export const Navbar: React.FunctionComponent = () => {
   } else {
     currentUserJsx = (
       <NavItem>
-        <NavLink onClick={() => router.push(Hrefs.login)}>Login</NavLink>
+        <Link className="nav-link" href={Hrefs.login}>
+          Login
+        </Link>
       </NavItem>
     );
   }
