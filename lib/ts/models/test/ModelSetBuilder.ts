@@ -2,8 +2,13 @@ import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cms} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {Location, ModelSet, WorkClosing, WorkOpening} from "../src";
-import {ModelSubsetter} from "../src/ModelSubsetter";
+import {
+  Location,
+  ModelSet,
+  ModelSetBuilder,
+  WorkClosing,
+  WorkOpening,
+} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
@@ -52,15 +57,13 @@ const countModelSetNamedRdfInstances = (
 const countModelSetRightsStatements = (modelSet: ModelSet): number =>
   countModelSetNamedRdfInstances(cms.RightsStatement, modelSet);
 
-describe("ModelSubsetter", () => {
+describe("ModelSetBuilder", () => {
   const completeModelSet = testModelSet;
   const completeModelSetSize = completeModelSet.toRdf().size;
-  let sut: ModelSubsetter;
+  let sut: ModelSetBuilder;
 
   beforeEach(() => {
-    sut = new ModelSubsetter({
-      completeModelSet,
-    });
+    sut = new ModelSetBuilder();
   });
 
   afterEach(() => {
@@ -73,19 +76,18 @@ describe("ModelSubsetter", () => {
     const agents = work.agents.map(agent => agent.agent);
     const namedAgents = agents.filter(agent => agent.uri);
     expect(namedAgents.length).to.be.lt(agents.length);
-    const namedAgentsModelSet = sut
-      .agentsModelSet(agents, {
+    for (const agent of agents) {
+      sut.addAgent(agent, {
         thumbnail: THUMBNAIL_SELECTOR,
-      })
-      .build();
-    expect(countModelSetNamedAgents(namedAgentsModelSet)).to.eq(
-      namedAgents.length
-    );
-    expect(countModelSetImages(namedAgentsModelSet)).to.eq(namedAgents.length);
+      });
+    }
+    const agentsModelSet = sut.build();
+    expect(countModelSetNamedAgents(agentsModelSet)).to.eq(namedAgents.length);
+    expect(countModelSetImages(agentsModelSet)).to.eq(namedAgents.length);
     for (const namedAgent of namedAgents) {
-      expect(
-        namedAgentsModelSet.imagesByDepictsUri(namedAgent.uri!).length
-      ).to.eq(1);
+      expect(agentsModelSet.imagesByDepictsUri(namedAgent.uri!).length).to.eq(
+        1
+      );
     }
   });
 
@@ -93,7 +95,7 @@ describe("ModelSubsetter", () => {
     const propertyGroup = completeModelSet.propertyGroups[0];
     expect(propertyGroup.properties).to.not.be.empty;
     const propertyGroupModelSet = sut
-      .propertyGroupModelSet(propertyGroup, {
+      .addPropertyGroup(propertyGroup, {
         properties: {
           thumbnail: THUMBNAIL_SELECTOR,
         },
@@ -111,11 +113,12 @@ describe("ModelSubsetter", () => {
   it("should get a property groups subset (worksheet edit)", () => {
     const propertyGroups = completeModelSet.propertyGroups;
     expect(propertyGroups).to.not.be.empty;
-    const propertyGroupsModelSet = sut
-      .propertyGroupsModelSet(propertyGroups, {
+    for (const propertyGroup of propertyGroups) {
+      sut.addPropertyGroup(propertyGroup, {
         thumbnail: THUMBNAIL_SELECTOR,
-      })
-      .build();
+      });
+    }
+    const propertyGroupsModelSet = sut.build();
     expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
     expect(propertyGroupsModelSet.properties).to.be.empty;
     expect(countModelSetImages(propertyGroupsModelSet)).to.eq(
@@ -128,7 +131,7 @@ describe("ModelSubsetter", () => {
     expect(propertyGroups).to.not.be.empty;
     expect(propertyGroups.length).to.eq(1);
     const propertyGroupsModelSet = sut
-      .propertyGroupsModelSet(propertyGroups, {
+      .addPropertyGroup(propertyGroups[0], {
         properties: {
           rangeValues: {},
         },
@@ -154,7 +157,7 @@ describe("ModelSubsetter", () => {
         continue;
       }
       const propertyModelSet = sut
-        .propertyModelSet(property, {
+        .addProperty(property, {
           rangeValues: {
             thumbnail: THUMBNAIL_SELECTOR,
           },
@@ -170,14 +173,16 @@ describe("ModelSubsetter", () => {
   it("should get a work subset (work page)", () => {
     const work = completeModelSet.works[0];
     const workModelSet = sut
-      .workModelSet(work, {
+      .addWork(work, {
         agents: {
           thumbnail: THUMBNAIL_SELECTOR,
         },
-        images: true,
+        events: {},
+        images: {},
         collections: {},
         location: true,
-        events: {},
+        license: true,
+        rightsStatement: true,
       })
       .build();
     expectModelsDeepEq(
@@ -240,7 +245,7 @@ describe("ModelSubsetter", () => {
     }
 
     const workEventsModelSet = sut
-      .workEventsModelSet([workCreation!], {
+      .addWorkEvent(workCreation!, {
         agents: {},
         location: true,
         work: {},

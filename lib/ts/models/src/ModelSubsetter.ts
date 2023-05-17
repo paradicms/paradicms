@@ -273,7 +273,7 @@ export class ModelSubsetter {
     joinSelector: WorkEventJoinSelector,
     workEvent: WorkEventUnion
   ): void {
-    this.modelSetBuilder.addEvent(workEvent);
+    this.modelSetBuilder.addWorkEvent(workEvent);
 
     if (joinSelector.location && workEvent.location) {
       this.addLocationModelSet(workEvent.location);
