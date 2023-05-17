@@ -2,6 +2,7 @@ import {Image} from "../Image";
 import {OtherAgent} from "../OtherAgent";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {LiteralModel} from "./LiteralModel";
+import {Work} from "../Work";
 
 export class LiteralAgent extends LiteralModel implements OtherAgent {
   images: readonly Image[] = [];
@@ -13,4 +14,5 @@ export class LiteralAgent extends LiteralModel implements OtherAgent {
   type: "OtherAgent" = "OtherAgent";
   wikipediaUrl: string | null = null;
   wikidataConceptUri: string | null = null;
+  readonly works: readonly Work[] = [];
 }
