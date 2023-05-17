@@ -221,7 +221,7 @@ export class ModelSubsetter {
       this.addRightsModelSet(joinSelector.agents ?? {}, work.description);
     }
 
-    if (joinSelector.allImages) {
+    if (joinSelector.images) {
       for (const image of work.images) {
         this.addImageModelSet(joinSelector.agents ?? {}, image);
       }

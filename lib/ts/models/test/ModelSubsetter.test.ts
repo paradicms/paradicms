@@ -174,7 +174,7 @@ describe("ModelSubsetter", () => {
         agents: {
           thumbnail: THUMBNAIL_SELECTOR,
         },
-        allImages: true,
+        images: true,
         collections: {},
         location: true,
         events: {},

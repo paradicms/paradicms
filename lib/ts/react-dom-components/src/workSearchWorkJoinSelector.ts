@@ -4,7 +4,12 @@ import {valueThumbnailSelector} from "./valueThumbnailSelector";
 
 export const workSearchWorkJoinSelector: WorkJoinSelector = {
   agents: {
-    thumbnail: galleryThumbnailSelector,
+    thumbnail: {
+      agents: {},
+      license: true,
+      rightsStatement: true,
+      ...galleryThumbnailSelector,
+    },
   },
   collections: {},
   events: {
@@ -19,5 +24,10 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
     property: {},
     thumbnail: valueThumbnailSelector,
   },
-  thumbnail: galleryThumbnailSelector,
+  thumbnail: {
+    agents: {},
+    license: true,
+    rightsStatement: true,
+    ...galleryThumbnailSelector,
+  },
 };
