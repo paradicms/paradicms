@@ -6,7 +6,7 @@ import {ImageJoinSelector} from "./ImageJoinSelector";
 import {RightsJoinSelector} from "./RightsJoinSelector";
 
 /**
- * See note in ModelSubsetter re: the use of this interface.
+ * See note in ModelSetBuilder re: the use of this interface.
  */
 export interface WorkJoinSelector extends RightsJoinSelector {
   // Return all collections referred to by this Work's collectionUris.

@@ -11,7 +11,7 @@ import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetS
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
 import {useWorksheet} from "~/hooks/useWorksheet";
-import {ModelSetFactory, ModelSubsetter} from "@paradicms/models";
+import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {readModelSet} from "@paradicms/next";
@@ -291,13 +291,13 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: new ModelSubsetter({completeModelSet})
-        .propertyGroupsModelSet(completeModelSet.propertyGroups, {
+      modelSetString: new ModelSetBuilder()
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .addPropertyGroups(completeModelSet.propertyGroups, {
           properties: {
             rangeValues: {},
           },
         })
-        .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
         .toFastRdfString(),
     },

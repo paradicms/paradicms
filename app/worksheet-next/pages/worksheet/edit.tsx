@@ -11,7 +11,7 @@ import {readModelSet} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
-import {ModelSetFactory, ModelSubsetter} from "@paradicms/models";
+import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
@@ -115,11 +115,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: new ModelSubsetter({completeModelSet})
-        .propertyGroupsModelSet(completeModelSet.propertyGroups, {
+      modelSetString: new ModelSetBuilder()
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .addPropertyGroups(completeModelSet.propertyGroups, {
           thumbnail: galleryThumbnailSelector,
         })
-        .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
         .toFastRdfString(),
     },

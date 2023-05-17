@@ -19,11 +19,13 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
       location: true,
     },
   },
+  license: true,
   location: true,
   propertyValues: {
     property: {},
     thumbnail: valueThumbnailSelector,
   },
+  rightsStatement: true,
   thumbnail: {
     agents: {},
     license: true,

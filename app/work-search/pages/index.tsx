@@ -1,5 +1,5 @@
 import {MemWorkQueryService} from "@paradicms/mem-services";
-import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
   WorkSearchPage,
@@ -100,11 +100,9 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].label
           : null,
-      modelSetString: new ModelSubsetter({
-        completeModelSet,
-      })
-        .worksModelSet(completeModelSet.works, workSearchWorkJoinSelector)
+      modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
+        .addWorks(completeModelSet.works, workSearchWorkJoinSelector)
         .build()
         .toFastRdfString(),
     },

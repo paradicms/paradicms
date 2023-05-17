@@ -10,19 +10,21 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
       ...imagesCarouselThumbnailSelector,
     },
   },
+  events: {
+    location: true,
+  },
   images: {
     agents: {},
     license: true,
     rightsStatement: true,
   },
   collections: {},
+  license: true,
   location: true,
-  events: {
-    location: true,
-  },
   propertyValues: {
     property: {
       groups: {},
     },
   },
+  rightsStatement: true,
 };

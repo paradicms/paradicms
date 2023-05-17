@@ -3,7 +3,7 @@ import {WorkJoinSelector} from "./WorkJoinSelector";
 import {ImageJoinSelector} from "./ImageJoinSelector";
 
 /**
- * See note in ModelSubsetter re: the use of this interface.
+ * See note in ModelSetBuilder re: the use of this interface.
  */
 export interface CollectionJoinSelector {
   // Return a single thumbnail Image for this Collection.

@@ -30,6 +30,16 @@ import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {WorkEventUnion} from "./WorkEventUnion";
 
+/**
+ * Build a ModelSet by adding models to it.
+ *
+ * Re: join selectors. A caller can select which connected models to include in a ModelSet.
+ * For example, return a collection's thumbnail along with the collection.
+ * An undefined joinSelector means don't return any connected models.
+ * An empty joinSelector ({}) means return the connected models themselves but none of their connected models (i.e., no recursion).
+ * For example, a joinSelector on Collection with works: {} will return all of the Work instances associated with that collection,
+ * but no models connected to the Works (i.e., their Agents).
+ */
 export class ModelSetBuilder {
   private addedAppConfiguration: boolean = false;
   // private readonly addedModelDefaultGraphQuads: Quad[][] = [];
@@ -67,6 +77,16 @@ export class ModelSetBuilder {
       }
     }
 
+    return this;
+  }
+
+  addAgents(
+    agents: readonly AgentUnion[],
+    joinSelector?: AgentJoinSelector
+  ): ModelSetBuilder {
+    for (const agent of agents) {
+      this.addAgent(agent, joinSelector);
+    }
     return this;
   }
 
@@ -273,6 +293,16 @@ export class ModelSetBuilder {
     return this;
   }
 
+  addPropertyGroups(
+    propertyGroups: readonly PropertyGroup[],
+    joinSelector?: PropertyGroupJoinSelector
+  ): ModelSetBuilder {
+    for (const propertyGroup of propertyGroups) {
+      this.addPropertyGroup(propertyGroup, joinSelector);
+    }
+    return this;
+  }
+
   addPropertyValue(
     propertyValue: PropertyValue,
     joinSelector?: PropertyValueJoinSelector
@@ -369,6 +399,16 @@ export class ModelSetBuilder {
     return this;
   }
 
+  addWorks(
+    works: readonly Work[],
+    joinSelector?: WorkJoinSelector
+  ): ModelSetBuilder {
+    for (const work of works) {
+      this.addWork(work, joinSelector);
+    }
+    return this;
+  }
+
   addWorkEvent(
     workEvent: WorkEventUnion,
     joinSelector?: WorkEventJoinSelector
@@ -399,6 +439,16 @@ export class ModelSetBuilder {
     }
 
     return this;
+  }
+
+  addWorkEvents(
+    workEvents: readonly WorkEventUnion[],
+    joinSelector?: WorkEventJoinSelector
+  ): ModelSetBuilder {
+    for (const workEvent of workEvents) {
+      this.addWorkEvent(workEvent, joinSelector);
+    }
+    return nthis;
   }
 
   build(): ModelSet {

@@ -76,12 +76,11 @@ describe("ModelSetBuilder", () => {
     const agents = work.agents.map(agent => agent.agent);
     const namedAgents = agents.filter(agent => agent.uri);
     expect(namedAgents.length).to.be.lt(agents.length);
-    for (const agent of agents) {
-      sut.addAgent(agent, {
+    const agentsModelSet = sut
+      .addAgents(agents, {
         thumbnail: THUMBNAIL_SELECTOR,
-      });
-    }
-    const agentsModelSet = sut.build();
+      })
+      .build();
     expect(countModelSetNamedAgents(agentsModelSet)).to.eq(namedAgents.length);
     expect(countModelSetImages(agentsModelSet)).to.eq(namedAgents.length);
     for (const namedAgent of namedAgents) {
@@ -113,12 +112,11 @@ describe("ModelSetBuilder", () => {
   it("should get a property groups subset (worksheet edit)", () => {
     const propertyGroups = completeModelSet.propertyGroups;
     expect(propertyGroups).to.not.be.empty;
-    for (const propertyGroup of propertyGroups) {
-      sut.addPropertyGroup(propertyGroup, {
+    const propertyGroupsModelSet = sut
+      .addPropertyGroups(propertyGroups, {
         thumbnail: THUMBNAIL_SELECTOR,
-      });
-    }
-    const propertyGroupsModelSet = sut.build();
+      })
+      .build();
     expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
     expect(propertyGroupsModelSet.properties).to.be.empty;
     expect(countModelSetImages(propertyGroupsModelSet)).to.eq(

@@ -12,7 +12,7 @@ import {decodeFileName, encodeFileName, readModelSet} from "@paradicms/next";
 import path from "path";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ModelSetFactory, ModelSubsetter} from "@paradicms/models";
+import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {useRouter} from "next/router";
 import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
@@ -157,14 +157,14 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       featureSetUri,
       featureUri,
-      modelSetString: new ModelSubsetter({completeModelSet})
-        .propertyModelSet(completeModelSet.propertyByUri(featureUri), {
+      modelSetString: new ModelSetBuilder()
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .addProperty(completeModelSet.propertyByUri(featureUri), {
           groups: {},
           rangeValues: {
             thumbnail: galleryThumbnailSelector,
           },
         })
-        .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
         .toFastRdfString(),
     },
