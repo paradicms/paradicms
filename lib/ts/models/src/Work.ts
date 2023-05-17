@@ -21,5 +21,6 @@ export interface Work
   readonly events: readonly WorkEventUnion[];
   readonly label: string;
   readonly location: WorkLocation | null;
+  get propertyValues(): readonly PropertyValue[];
   propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[];
 }

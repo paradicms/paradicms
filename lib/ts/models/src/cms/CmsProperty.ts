@@ -71,6 +71,7 @@ export class CmsProperty
     return createPropertyValuesFromQuadSubjects({
       dataset: this.dataset,
       modelSet: this.modelSet,
+      property: this,
       quads: [
         ...getRdfInstanceQuads({
           class_: range,
