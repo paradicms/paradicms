@@ -14,7 +14,6 @@ import {Work} from "./Work";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {WorkEventUnion} from "./WorkEventUnion";
 import {WorkJoinSelector} from "./WorkJoinSelector";
-import {selectThumbnail} from "./selectThumbnail";
 import {Property} from "./Property";
 import {PropertyJoinSelector} from "./PropertyJoinSelector";
 import {PropertyGroupJoinSelector} from "./PropertyGroupJoinSelector";
@@ -53,19 +52,16 @@ export class ModelSubsetter {
     }
 
     if (joinSelector.thumbnail) {
-      const thumbnailImage = this.completeModelSet
-        .agentByUri(agent.uri)
-        .thumbnail(joinSelector.thumbnail);
+      const thumbnailImage = agent.thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         this.addImageModelSet({}, thumbnailImage);
       }
     }
 
     if (joinSelector.works) {
-      this.addWorkModelSets(
-        this.completeModelSet.agentWorks(agent.uri),
-        joinSelector.works
-      );
+      for (const work of agent.works) {
+        this.addWorkModelSet(joinSelector.works, work);
+      }
     }
   }
 
@@ -76,26 +72,26 @@ export class ModelSubsetter {
     this.modelSetBuilder.addCollection(collection);
 
     if (joinSelector.thumbnail) {
-      const thumbnailImage = this.completeModelSet
-        .collectionByUri(collection.uri)
-        .thumbnail(joinSelector.thumbnail);
+      const thumbnailImage = collection.thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         this.addImageModelSet({}, thumbnailImage);
         if (thumbnailImage.depictsUri !== collection.uri) {
           // The thumbnail either depicts the collection or one of the collection's works.
           // If the latter case we need to include the work in the modelSet.
-          this.modelSetBuilder.addWork(
-            this.completeModelSet.workByUri(thumbnailImage.depictsUri)
-          );
+          for (const work of collection.works) {
+            if (thumbnailImage.depictsUri === work.uri) {
+              this.modelSetBuilder.addWork(work);
+              break;
+            }
+          }
         }
       }
     }
 
     if (joinSelector.works) {
-      this.addWorkModelSets(
-        this.completeModelSet.collectionWorks(collection.uri),
-        joinSelector.works
-      );
+      for (const work of collection.works) {
+        this.addWorkModelSet(joinSelector.works, work);
+      }
     }
   }
 
@@ -105,10 +101,7 @@ export class ModelSubsetter {
   ): void {
     this.modelSetBuilder.addConcept(concept);
     if (joinSelector.thumbnail) {
-      const thumbnail = selectThumbnail(
-        this.completeModelSet.imagesByDepictsUri(concept.uri),
-        joinSelector.thumbnail
-      );
+      const thumbnail = concept.thumbnail(joinSelector.thumbnail);
       if (thumbnail) {
         this.addImageModelSet({}, thumbnail);
       }
@@ -220,93 +213,61 @@ export class ModelSubsetter {
     }
   }
 
-  private addWorkModelSets(
-    works: readonly Work[],
-    joinSelector: WorkJoinSelector
-  ): void {
-    const collectionUris = joinSelector.collections
-      ? new Set<string>()
-      : undefined;
-    const conceptsByUri: {[index: string]: Concept} = {};
+  private addWorkModelSet(joinSelector: WorkJoinSelector, work: Work): void {
+    this.modelSetBuilder.addWork(work);
 
-    for (const work of works) {
-      this.modelSetBuilder.addWork(work);
+    // Work ModelSets always include rights
+    this.addRightsModelSet(joinSelector.agents ?? {}, work);
 
-      // Work ModelSets always include rights
-      this.addRightsModelSet(joinSelector.agents ?? {}, work);
+    if (work.description) {
+      this.addRightsModelSet(joinSelector.agents ?? {}, work.description);
+    }
 
-      if (work.description) {
-        this.addRightsModelSet(joinSelector.agents ?? {}, work.description);
+    if (joinSelector.allImages) {
+      for (const image of work.images) {
+        this.addImageModelSet(joinSelector.agents ?? {}, image);
       }
-
-      if (joinSelector.allImages) {
-        for (const image of this.completeModelSet.imagesByDepictsUri(
-          work.uri
-        )) {
-          this.addImageModelSet(joinSelector.agents ?? {}, image);
-        }
-      } else if (joinSelector.thumbnail) {
-        const thumbnailImage = this.completeModelSet
-          .workByUri(work.uri)
-          .thumbnail(joinSelector.thumbnail);
-        if (thumbnailImage) {
-          this.addImageModelSet(joinSelector.agents ?? {}, thumbnailImage);
-        }
-      }
-
-      if (collectionUris) {
-        for (const collection of work.collections) {
-          collectionUris.add(collection.uri);
-        }
-      }
-
-      if (joinSelector.events) {
-        for (const event of work.events) {
-          this.addWorkEventModelSet(joinSelector.events, event);
-        }
-      }
-
-      if (joinSelector.location) {
-        if (work.location) {
-          this.addLocationModelSet(work.location.location);
-        }
-      }
-
-      if (joinSelector.properties) {
-        for (const property of this.completeModelSet.properties) {
-          this.addPropertyModelSet(property, joinSelector.properties);
-        }
-      }
-
-      if (joinSelector.propertyValues) {
-        for (const property of this.completeModelSet.properties) {
-          for (const propertyValue of work.propertyValues(property.uri)) {
-            if (propertyValue instanceof ConceptPropertyValue) {
-              if (!conceptsByUri[propertyValue.concept.uri]) {
-                conceptsByUri[propertyValue.concept.uri] =
-                  propertyValue.concept;
-              }
-            }
-          }
-        }
+    } else if (joinSelector.thumbnail) {
+      const thumbnailImage = work.thumbnail(joinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImageModelSet(joinSelector.agents ?? {}, thumbnailImage);
       }
     }
 
-    if (collectionUris) {
-      for (const collectionUri of collectionUris) {
-        this.addCollectionModelSet(
-          this.completeModelSet.collectionByUri(collectionUri),
-          joinSelector.collections ?? {}
-        );
+    if (joinSelector.collections) {
+      for (const collection of work.collections) {
+        this.addCollectionModelSet(collection, joinSelector.collections);
+      }
+    }
+
+    if (joinSelector.events) {
+      for (const event of work.events) {
+        this.addWorkEventModelSet(joinSelector.events, event);
+      }
+    }
+
+    if (joinSelector.location) {
+      if (work.location) {
+        this.addLocationModelSet(work.location.location);
+      }
+    }
+
+    if (joinSelector.properties) {
+      for (const property of this.completeModelSet.properties) {
+        this.addPropertyModelSet(property, joinSelector.properties);
       }
     }
 
     if (joinSelector.propertyValues) {
-      for (const conceptUri in conceptsByUri) {
-        this.addConceptModelSet(
-          conceptsByUri[conceptUri],
-          joinSelector.propertyValues
-        );
+      for (const property of this.completeModelSet.properties) {
+        for (const propertyValue of work.propertyValues(property.uri)) {
+          if (propertyValue instanceof ConceptPropertyValue) {
+            this.addConceptModelSet(
+              propertyValue.concept,
+              joinSelector.propertyValues
+            );
+          }
+        }
       }
     }
   }
@@ -321,7 +282,7 @@ export class ModelSubsetter {
       this.addLocationModelSet(workEvent.location);
     }
     if (joinSelector.work) {
-      this.addWorkModelSets([workEvent.work], joinSelector.work);
+      this.addWorkModelSet(joinSelector.work, workEvent.work);
     }
 
     switch (workEvent.type) {
@@ -373,7 +334,7 @@ export class ModelSubsetter {
   }
 
   workModelSet(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
-    this.addWorkModelSets([work], joinSelector ?? {});
+    this.addWorkModelSet(joinSelector ?? {}, work);
     return this.modelSetBuilder;
   }
 
@@ -391,7 +352,9 @@ export class ModelSubsetter {
     works: readonly Work[],
     joinSelector?: WorkJoinSelector
   ): ModelSetBuilder {
-    this.addWorkModelSets(works, joinSelector ?? {});
+    for (const work of works) {
+      this.addWorkModelSet(joinSelector ?? {}, work);
+    }
     return this.modelSetBuilder;
   }
 }
