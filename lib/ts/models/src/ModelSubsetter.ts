@@ -31,11 +31,9 @@ import {PropertyValue} from "./PropertyValue";
  * but no models connected to the Works (i.e., their Agents).
  */
 export class ModelSubsetter {
-  private readonly completeModelSet: ModelSet;
   private readonly modelSetBuilder: ModelSetBuilder;
 
   constructor(kwds: {completeModelSet: ModelSet}) {
-    this.completeModelSet = kwds.completeModelSet;
     this.modelSetBuilder = new ModelSetBuilder();
   }
 
@@ -252,23 +250,20 @@ export class ModelSubsetter {
       }
     }
 
-    if (joinSelector.properties) {
-      for (const property of this.completeModelSet.properties) {
-        this.addPropertyModelSet(property, joinSelector.properties);
-      }
-    }
-
     if (joinSelector.propertyValues) {
-      for (const property of this.completeModelSet.properties) {
-        for (const propertyValue of work.propertyValuesByPropertyUri(
-          property.uri
-        )) {
-          if (propertyValue instanceof ConceptPropertyValue) {
-            this.addConceptModelSet(
-              propertyValue.concept,
-              joinSelector.propertyValues
-            );
-          }
+      for (const propertyValue of work.propertyValues) {
+        if (joinSelector.propertyValues.property) {
+          this.addPropertyModelSet(
+            propertyValue.property,
+            joinSelector.propertyValues.property
+          );
+        }
+
+        if (propertyValue instanceof ConceptPropertyValue) {
+          this.addConceptModelSet(
+            propertyValue.concept,
+            joinSelector.propertyValues
+          );
         }
       }
     }

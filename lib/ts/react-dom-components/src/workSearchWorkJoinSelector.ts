@@ -15,8 +15,8 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
     },
   },
   location: true,
-  properties: {},
   propertyValues: {
+    property: {},
     thumbnail: valueThumbnailSelector,
   },
   thumbnail: galleryThumbnailSelector,
