@@ -6,10 +6,10 @@ import {GoogleSheetsWorksheetStateExporter} from "~/exporters/GoogleSheetsWorksh
 import {convertGapiErrorToException} from "~/services/GapiException";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GoogleSheetsWorksheetStateImporter} from "~/importers/GoogleSheetsWorksheetStateImporter";
+import {Secrets} from "~/Secrets";
 
 export class GoogleSheetsWorksheetStateService
-  implements WorksheetStateService
-{
+  implements WorksheetStateService {
   private readonly accessToken: string;
   private readonly configuration: GoogleSheetsWorksheetStateConfiguration;
   private readonly worksheetDefinition: WorksheetDefinition;
@@ -25,48 +25,37 @@ export class GoogleSheetsWorksheetStateService
   }
 
   deleteWorksheetState(id: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.getWorksheetStates().then(
-        (worksheetStates) => {
-          this.replaceWorksheetStates(
-            worksheetStates.filter((worksheetState) => worksheetState.id !== id)
-          ).then(
-            () => resolve(),
-            (reason) => reject(reason)
-          );
-        },
-        (reason) => reject(reason)
-      );
-    });
+    return this.getWorksheetStates().then(worksheetStates =>
+      this.replaceWorksheetStates(
+        worksheetStates.filter(worksheetState => worksheetState.id !== id)
+      )
+    );
   }
 
   private getFirstSheetData(): Promise<string[][]> {
-    return new Promise((resolve, reject) => {
-      this.getSpreadsheetsResource()
+    return this.getSpreadsheetsResource().then(spreadsheets =>
+      spreadsheets
         .get({
           includeGridData: true,
           spreadsheetId: this.configuration.spreadsheetId,
         })
         .then(
-          (response) => {
+          response => {
             const sheets = response.result.sheets;
             if (!sheets || !sheets.length) {
-              resolve([]);
-              return;
+              return [];
             }
 
             const firstSheet = sheets[0];
             if (!firstSheet.data) {
-              resolve([]);
-              return;
+              return [];
             }
 
             const firstSheetData = firstSheet.data[0];
 
             const rowData = firstSheetData.rowData;
             if (!rowData) {
-              resolve([]);
-              return;
+              return [];
             }
 
             const stringRows: string[][] = [];
@@ -97,107 +86,102 @@ export class GoogleSheetsWorksheetStateService
               }
               stringRows.push(stringRow);
             }
-            resolve(stringRows);
-          },
-          (reason: any) => {
-            reject(convertGapiErrorToException(reason));
+            return stringRows;
           }
-        );
-    });
+          // (reason: any) => convertGapiErrorToException(reason)
+        )
+    );
   }
 
-  private getSpreadsheetsResource(): gapi.client.sheets.SpreadsheetsResource {
-    gapi.client.setToken({access_token: this.accessToken});
-    return (gapi.client as any).sheets.spreadsheets;
+  private getSpreadsheetsResource(): Promise<
+    gapi.client.sheets.SpreadsheetsResource
+  > {
+    return this.loadGapiClient().then(
+      () => (gapi.client as any).sheets.spreadsheets
+    );
   }
 
   getWorksheetState(id: string): Promise<WorksheetState> {
-    return new Promise((resolve, reject) => {
-      this.getWorksheetStates().then((worksheetStates) => {
-        for (const worksheetState of worksheetStates) {
-          if (worksheetState.id === id) {
-            resolve(worksheetState);
-            return;
-          }
+    return this.getWorksheetStates().then(worksheetStates => {
+      for (const worksheetState of worksheetStates) {
+        if (worksheetState.id === id) {
+          return worksheetState;
         }
-        reject(new NoSuchWorksheetStateException(id));
-      }, reject);
+      }
+      throw new NoSuchWorksheetStateException(id);
     });
   }
 
   getWorksheetStateIds(): Promise<string[]> {
-    return new Promise((resolve, reject) => {
-      this.getWorksheetStates().then(
-        (worksheetStates) =>
-          resolve(worksheetStates.map((worksheetState) => worksheetState.id)),
-        reject
-      );
-    });
+    return this.getWorksheetStates().then(worksheetStates =>
+      worksheetStates.map(worksheetState => worksheetState.id)
+    );
   }
 
   private getWorksheetStates(): Promise<WorksheetState[]> {
-    return new Promise((resolve, reject) => {
-      this.getFirstSheetData().then((stringRows) => {
-        resolve(
-          new GoogleSheetsWorksheetStateImporter().importCsvRows(stringRows)
-        );
-      }, reject);
-    });
+    return this.getFirstSheetData().then(stringRows =>
+      new GoogleSheetsWorksheetStateImporter().importCsvRows(stringRows)
+    );
+  }
+
+  private loadGapiClient(): Promise<void> {
+    return new Promise<void>(resolve => {
+      gapi.load("client", () => {
+        gapi.client.load("sheets", "v4", () => {
+          resolve();
+        });
+      });
+    })
+      .then(
+        () =>
+          gapi.client.init({
+            apiKey: Secrets.GOOGLE_API_KEY,
+          }),
+        reason => convertGapiErrorToException(reason)
+      )
+      .then(() => {
+        gapi.client.setToken({
+          access_token: this.accessToken,
+        });
+      });
   }
 
   putWorksheetState(state: WorksheetState): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.getWorksheetStates().then(
-        (oldWorksheetStates) => {
-          const newWorksheetStates: WorksheetState[] = [];
-          let replaced: boolean = false;
-          for (const oldWorksheetState of oldWorksheetStates) {
-            if (!replaced && oldWorksheetState.id === state.id) {
-              newWorksheetStates.push(state);
-              replaced = true;
-            } else {
-              newWorksheetStates.push(oldWorksheetState);
-            }
-          }
-          if (!replaced) {
-            newWorksheetStates.push(state);
-          }
+    return this.getWorksheetStates().then(oldWorksheetStates => {
+      const newWorksheetStates: WorksheetState[] = [];
+      let replaced: boolean = false;
+      for (const oldWorksheetState of oldWorksheetStates) {
+        if (!replaced && oldWorksheetState.id === state.id) {
+          newWorksheetStates.push(state);
+          replaced = true;
+        } else {
+          newWorksheetStates.push(oldWorksheetState);
+        }
+      }
+      if (!replaced) {
+        newWorksheetStates.push(state);
+      }
 
-          this.replaceWorksheetStates(newWorksheetStates).then(
-            () => resolve(),
-            (reason) => reject(reason)
-          );
-        },
-        (reason) => reject(reason)
-      );
+      return this.replaceWorksheetStates(newWorksheetStates);
     });
   }
 
   renameWorksheetState(kwds: {newId: string; oldId: string}): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.getWorksheetStates().then(
-        (worksheetStates) => {
-          const newWorksheetStates: WorksheetState[] = [];
-          let renamed: boolean = false;
-          for (const worksheetState of worksheetStates) {
-            if (!renamed && worksheetState.id === kwds.oldId) {
-              worksheetState.id = kwds.newId;
-              renamed = true;
-            }
-            newWorksheetStates.push(worksheetState);
-          }
-          if (!renamed) {
-            reject(new NoSuchWorksheetStateException(kwds.oldId));
-            return;
-          }
+    return this.getWorksheetStates().then(worksheetStates => {
+      const newWorksheetStates: WorksheetState[] = [];
+      let renamed: boolean = false;
+      for (const worksheetState of worksheetStates) {
+        if (!renamed && worksheetState.id === kwds.oldId) {
+          worksheetState.id = kwds.newId;
+          renamed = true;
+        }
+        newWorksheetStates.push(worksheetState);
+      }
+      if (!renamed) {
+        throw new NoSuchWorksheetStateException(kwds.oldId);
+      }
 
-          this.replaceWorksheetStates(newWorksheetStates).then(
-            () => resolve(),
-            (reason) => reject(reason)
-          );
-        },
-        (reason) => reject(reason)
-      );
+      return this.replaceWorksheetStates(newWorksheetStates);
     });
   }
 
@@ -240,16 +224,12 @@ export class GoogleSheetsWorksheetStateService
 
     requests.push({appendCells: {fields: "*", rows}});
 
-    return new Promise((resolve, reject) => {
-      (this.getSpreadsheetsResource() as any)
-        .batchUpdate({spreadsheetId}, {requests})
-        .then(
-          (response: any) => resolve(),
-          (reason: any) => {
-            reject(convertGapiErrorToException(reason));
-          }
-        );
-    });
+    return this.getSpreadsheetsResource().then(spreadsheets =>
+      (spreadsheets as any).batchUpdate({spreadsheetId}, {requests}).then(
+        () => {},
+        (reason: any) => convertGapiErrorToException(reason)
+      )
+    );
   }
 
   private replaceWorksheetStates(

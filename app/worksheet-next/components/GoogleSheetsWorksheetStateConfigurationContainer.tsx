@@ -6,7 +6,6 @@ import {
   GapiException,
 } from "~/services/GapiException";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
-import React = require("react");
 import {Spinner} from "~/components/Spinner";
 import {
   Button,
@@ -27,6 +26,8 @@ import {
 import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {Secrets} from "~/Secrets";
+import React = require("react");
 
 export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionComponent<{
   currentUser: CurrentUser;
@@ -36,20 +37,47 @@ export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionCom
   worksheetStateConfiguration: GoogleSheetsWorksheetStateConfiguration | null;
 }> = ({currentUser, onChange, worksheetStateConfiguration}) => {
   const [exception, setException] = useState<GapiException | null>(null);
-  const [deletingExistingFile, setDeletingExistingFile] =
-    useState<gapi.client.drive.File | null>(null);
+  const [
+    deletingExistingFile,
+    setDeletingExistingFile,
+  ] = useState<gapi.client.drive.File | null>(null);
   const [existingFiles, setExistingFiles] = useState<
     gapi.client.drive.File[] | null
   >(null);
   const [newSheetName, setNewSheetName] = useState<string>("");
 
+  const loadGapiClient = useCallback(
+    () =>
+      new Promise<void>(resolve => {
+        gapi.load("client", () => {
+          gapi.client.load("drive", "v3", () => {
+            resolve();
+          });
+        });
+      })
+        .then(
+          () =>
+            gapi.client.init({
+              apiKey: Secrets.GOOGLE_API_KEY,
+            }),
+          reason => convertGapiErrorToException(reason)
+        )
+        .then(() => {
+          gapi.client.setToken({
+            access_token: currentUser.session.accessToken,
+          });
+        }),
+    [currentUser]
+  );
+
   const refreshExistingFiles = useCallback(() => {
-    gapi.client.setToken({access_token: currentUser.session.accessToken});
-    gapi.client.drive.files.list({}).then(
-      (response) => setExistingFiles(response.result.files ?? []),
-      (reason) => setException(convertGapiErrorToException(reason))
+    loadGapiClient().then(() =>
+      gapi.client.drive.files.list({}).then(
+        response => setExistingFiles(response.result.files ?? []),
+        reason => setException(convertGapiErrorToException(reason))
+      )
     );
-  }, [currentUser]);
+  }, [loadGapiClient]);
 
   useEffect(() => {
     refreshExistingFiles();
@@ -59,41 +87,48 @@ export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionCom
     if (!deletingExistingFile) {
       return;
     }
-    gapi.client.setToken({access_token: currentUser.session.accessToken});
-    gapi.client.drive.files
-      .delete({fileId: deletingExistingFile.id as string})
-      .then(
-        () => {
-          setDeletingExistingFile(null);
-          refreshExistingFiles();
-        },
-        (reason) => {
-          setDeletingExistingFile(null);
-          setException(convertGapiErrorToException(reason));
-        }
-      );
-  }, [currentUser, deletingExistingFile, refreshExistingFiles]);
+    loadGapiClient().then(
+      () =>
+        gapi.client.drive.files
+          .delete({fileId: deletingExistingFile.id as string})
+          .then(
+            () => {
+              setDeletingExistingFile(null);
+              refreshExistingFiles();
+            },
+            reason => {
+              setDeletingExistingFile(null);
+              setException(convertGapiErrorToException(reason));
+            }
+          ),
+      setException
+    );
+  }, [deletingExistingFile, refreshExistingFiles]);
 
   const onClickNewSheetButton = useCallback(() => {
     if (newSheetName.length === 0) {
       return;
     }
-    gapi.client.drive.files
-      .create({
-        resource: {
-          mimeType: "application/vnd.google-apps.spreadsheet",
-          name: newSheetName,
-        },
-      })
-      .then(
-        () => {
-          setExistingFiles(null);
-          setNewSheetName("");
-          refreshExistingFiles();
-        },
-        (reason) => setException(convertGapiErrorToException(reason))
-      );
-  }, [currentUser, newSheetName, refreshExistingFiles]);
+    loadGapiClient().then(
+      () =>
+        gapi.client.drive.files
+          .create({
+            resource: {
+              mimeType: "application/vnd.google-apps.spreadsheet",
+              name: newSheetName,
+            },
+          })
+          .then(
+            () => {
+              setExistingFiles(null);
+              setNewSheetName("");
+              refreshExistingFiles();
+            },
+            reason => setException(convertGapiErrorToException(reason))
+          ),
+      setException
+    );
+  }, [newSheetName, refreshExistingFiles]);
 
   if (exception) {
     return <GenericErrorHandler exception={exception} />;
@@ -152,13 +187,16 @@ export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionCom
                 <CardBody>
                   <Table className="table table-bordered w-100">
                     <tbody>
-                      {existingFiles.map((existingFile) => {
+                      {existingFiles.map(existingFile => {
                         const selected: boolean =
                           !!worksheetStateConfiguration &&
                           worksheetStateConfiguration.spreadsheetId ===
                             existingFile.id;
-                        const tdStyle: React.CSSProperties | undefined =
-                          selected ? {borderWidth: "4px"} : undefined;
+                        const tdStyle:
+                          | React.CSSProperties
+                          | undefined = selected
+                          ? {borderWidth: "4px"}
+                          : undefined;
                         return (
                           <tr key={existingFile.id}>
                             <td
@@ -204,14 +242,14 @@ export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionCom
       <Row>
         <Col xs="6">
           <Form
-            onSubmit={(event) => {
+            onSubmit={event => {
               onClickNewSheetButton();
               event.preventDefault();
             }}
           >
             <Input
               type="text"
-              onChange={(event) => setNewSheetName(event.target.value)}
+              onChange={event => setNewSheetName(event.target.value)}
               placeholder="New sheet name"
               style={{width: "32em"}}
               value={newSheetName}
