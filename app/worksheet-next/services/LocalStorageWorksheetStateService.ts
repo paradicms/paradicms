@@ -4,13 +4,13 @@ import {NoSuchWorksheetStateException} from "~/services/NoSuchWorksheetStateExce
 import {WorksheetStateService} from "~/services/WorksheetStateService";
 
 export class LocalStorageWorksheetStateService
-  implements WorksheetStateService
-{
+  implements WorksheetStateService {
   deleteWorksheetState(id: string): Promise<void> {
     localStorage.removeItem(
       LocalStorageWorksheetStateService.getWorksheetStateItemKey(id)
     );
-    return new Promise((resolve, reject) => resolve());
+    console.debug("deleted worksheet state", id, "from local storage");
+    return new Promise(resolve => resolve());
   }
 
   getWorksheetState(id: string): Promise<WorksheetState> {
@@ -19,9 +19,11 @@ export class LocalStorageWorksheetStateService
         LocalStorageWorksheetStateService.getWorksheetStateItemKey(id)
       );
       if (jsonString == null) {
+        console.debug("worksheet state", id, "does not exist in local storage");
         reject(new NoSuchWorksheetStateException(id));
         return;
       }
+      console.debug("worksheet state", id, "from local storage:", jsonString);
       resolve(JSON.parse(jsonString));
     });
   }
@@ -51,7 +53,11 @@ export class LocalStorageWorksheetStateService
         )
       );
     }
-    return new Promise((resolve, reject) => resolve(result));
+    console.debug(
+      "worksheet state id's in local storage:",
+      JSON.stringify(result)
+    );
+    return new Promise(resolve => resolve(result));
   }
 
   private static getWorksheetStateItemKey(id: string): string {
@@ -68,7 +74,12 @@ export class LocalStorageWorksheetStateService
       LocalStorageWorksheetStateService.getWorksheetStateItemKey(state.id),
       JSON.stringify(state)
     );
-    return new Promise((resolve, reject) => resolve());
+    console.debug(
+      "put worksheet state",
+      JSON.stringify(state),
+      "to local storage"
+    );
+    return new Promise(resolve => resolve());
   }
 
   renameWorksheetState(kwds: {newId: string; oldId: string}): Promise<void> {
@@ -97,6 +108,13 @@ export class LocalStorageWorksheetStateService
 
       localStorage.removeItem(oldKey);
       localStorage.setItem(newKey, JSON.stringify(value));
+      console.debug(
+        "renamed worksheet state from",
+        oldKey,
+        "to",
+        newKey,
+        "in local storage"
+      );
       resolve();
     });
   }
