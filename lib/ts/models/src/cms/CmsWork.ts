@@ -148,7 +148,7 @@ export class CmsWork extends Mixin(
   }
 
   @Memoize()
-  propertyValues(propertyUri: string): readonly PropertyValue[] {
+  propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
     return createPropertyValuesFromQuadObjects({
       dataset: this.dataset, 
       modelSet: this.modelSet,

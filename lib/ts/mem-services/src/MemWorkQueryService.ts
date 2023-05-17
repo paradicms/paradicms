@@ -98,7 +98,9 @@ export class MemWorkQueryService implements WorkQueryService {
           if (!fieldName) {
             continue;
           }
-          for (const propertyValue of work.propertyValues(propertyUri)) {
+          for (const propertyValue of work.propertyValuesByPropertyUri(
+            propertyUri
+          )) {
             doc[fieldName] = propertyValue.value;
           }
         }
@@ -128,7 +130,7 @@ export class MemWorkQueryService implements WorkQueryService {
           } = {};
           for (const work of works) {
             let workHasProperty = false;
-            for (const propertyValue of work.propertyValues(
+            for (const propertyValue of work.propertyValuesByPropertyUri(
               concreteFilter.propertyUri
             )) {
               const propertyValueString: string = propertyValue.value;
@@ -182,7 +184,7 @@ export class MemWorkQueryService implements WorkQueryService {
             MemWorkQueryService.testValueFilter(
               filter as StringPropertyValueFilter,
               work
-                .propertyValues(
+                .propertyValuesByPropertyUri(
                   (filter as StringPropertyValueFilter).propertyUri
                 )
                 .map(propertyValue => propertyValue.value)

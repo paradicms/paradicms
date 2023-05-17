@@ -260,7 +260,9 @@ export class ModelSubsetter {
 
     if (joinSelector.propertyValues) {
       for (const property of this.completeModelSet.properties) {
-        for (const propertyValue of work.propertyValues(property.uri)) {
+        for (const propertyValue of work.propertyValuesByPropertyUri(
+          property.uri
+        )) {
           if (propertyValue instanceof ConceptPropertyValue) {
             this.addConceptModelSet(
               propertyValue.concept,
