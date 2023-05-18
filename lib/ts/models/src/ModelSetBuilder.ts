@@ -448,7 +448,7 @@ export class ModelSetBuilder {
     for (const workEvent of workEvents) {
       this.addWorkEvent(workEvent, joinSelector);
     }
-    return nthis;
+    return this;
   }
 
   build(): ModelSet {
