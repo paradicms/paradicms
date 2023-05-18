@@ -210,6 +210,15 @@ export const getStaticProps: GetStaticProps = async ({
             thumbnail: galleryThumbnailSelector,
           },
         })
+        // Add other property groups in order to determine where this page is in the workflow and how many more pages there ares
+        .addPropertyGroups(
+          completeModelSet.propertyGroups.filter(
+            propertyGroup => propertyGroup.uri !== featureSetUri
+          ),
+          {
+            properties: {},
+          }
+        )
         .build()
         .toFastRdfString(),
     },

@@ -160,10 +160,12 @@ export const getStaticProps: GetStaticProps = async ({
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addProperty(completeModelSet.propertyByUri(featureUri), {
-          groups: {},
           rangeValues: {
             thumbnail: galleryThumbnailSelector,
           },
+        })
+        .addPropertyGroups(completeModelSet.propertyGroups, {
+          properties: {},
         })
         .build()
         .toFastRdfString(),

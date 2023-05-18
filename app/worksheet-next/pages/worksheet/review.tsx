@@ -40,7 +40,7 @@ const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
     [modelSetString]
   );
   const configuration = modelSet.appConfiguration;
-  const routeWorksheetMark = useRouteWorksheetMark({review: false});
+  const routeWorksheetMark = useRouteWorksheetMark({review: true});
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
     modelSet,
   ]);
