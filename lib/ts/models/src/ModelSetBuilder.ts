@@ -245,6 +245,12 @@ export class ModelSetBuilder {
       return this;
     }
 
+    if (joinSelector.groups) {
+      for (const propertyGroup of property.groups) {
+        this.addPropertyGroup(propertyGroup, joinSelector.groups);
+      }
+    }
+
     if (joinSelector.rangeValues) {
       for (const value of property.rangeValues) {
         this.addPropertyValue(value, joinSelector.rangeValues);
