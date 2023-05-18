@@ -174,11 +174,11 @@ export class ModelSetBuilder {
   }
 
   addLicense(license: License): ModelSetBuilder {
-    return this.addNamedModel(license);
+    return this.addModel(license);
   }
 
   addLocation(location: Location): ModelSetBuilder {
-    return this.addNamedModel(location);
+    return this.addModel(location);
   }
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
