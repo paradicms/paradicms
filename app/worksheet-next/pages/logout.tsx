@@ -1,7 +1,6 @@
-import React = require("react");
+import React, {useEffect} from "react";
 import {Hrefs} from "~/Hrefs";
 import {useCurrentUserService} from "~/hooks/useCurrentUserService";
-import {useEffect} from "react";
 import {useRouter} from "next/router";
 
 const LogoutPage: React.FunctionComponent = () => {

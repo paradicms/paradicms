@@ -48,7 +48,7 @@ export const AuthorizationExceptionModal: React.FunctionComponent<{
                 <Button
                   className=""
                   color="primary"
-                  onClick={() => navigate(Hrefs.login)}
+                  onClick={() => router.push(Hrefs.login)}
                 >
                   Login
                 </Button>

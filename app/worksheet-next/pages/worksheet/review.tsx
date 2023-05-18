@@ -19,7 +19,7 @@ import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
 import Link from "next/link";
-import CopyToClipboard = require("react-copy-to-clipboard");
+import CopyToClipboard from "react-copy-to-clipboard";
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),

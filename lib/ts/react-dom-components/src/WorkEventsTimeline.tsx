@@ -7,7 +7,7 @@ import {
 } from "react-vertical-timeline-component";
 import {RightsParagraph} from "./RightsParagraph";
 import {getWorkEventIcon} from "./getWorkEventIcon";
-import React = require("react");
+import React from "react";
 
 export const WorkEventsTimeline: React.FunctionComponent<{
   readonly page: number; // 0-based

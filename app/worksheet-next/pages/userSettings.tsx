@@ -1,8 +1,7 @@
-import React = require("react");
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {useCurrentUser} from "~/hooks/useCurrentUser";
 import {Hrefs} from "~/Hrefs";
 import {WorksheetConfiguration} from "~/models/WorksheetConfiguration";
-import {useCallback, useEffect, useMemo, useState} from "react";
 import {useUserSettingsService} from "~/hooks/useUserSettingsService";
 import {Spinner} from "~/components/Spinner";
 import {UserSettings} from "~/models/UserSettings";

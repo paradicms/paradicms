@@ -1,6 +1,6 @@
 import {CurrentUser} from "~/models/CurrentUser";
 import {GoogleSheetsWorksheetStateConfiguration} from "~/models/GoogleSheetsWorksheetStateConfiguration";
-import {useCallback, useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
   convertGapiErrorToException,
   GapiException,
@@ -27,7 +27,6 @@ import classnames from "classnames";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {Secrets} from "~/Secrets";
-import React = require("react");
 
 export const GoogleSheetsWorksheetStateConfigurationContainer: React.FunctionComponent<{
   currentUser: CurrentUser;
