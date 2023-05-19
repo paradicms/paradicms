@@ -28,7 +28,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
             <>
               <div
                 dangerouslySetInnerHTML={{
-                  __html: workEvent.description.toString(),
+                  __html: workEvent.description.value,
                 }}
               ></div>
               {workEvent.description.requiresAttribution ? (

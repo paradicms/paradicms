@@ -61,10 +61,7 @@ export class LocalStorageWorksheetStateService
   }
 
   private static getWorksheetStateItemKey(id: string): string {
-    return (
-      LocalStorageWorksheetStateService._WORKSHEET_ITEM_KEY_PREFIX +
-      id.toString()
-    );
+    return LocalStorageWorksheetStateService._WORKSHEET_ITEM_KEY_PREFIX + id;
   }
 
   private static readonly _WORKSHEET_ITEM_KEY_PREFIX = "worksheet/state/";

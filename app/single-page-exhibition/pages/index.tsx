@@ -63,7 +63,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                 lg={4}
                 xs={12}
                 dangerouslySetInnerHTML={{
-                  __html: collection.description.toString(),
+                  __html: collection.description.value,
                 }}
               ></Col>
             </Row>

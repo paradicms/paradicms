@@ -3,11 +3,12 @@ import {WorksheetState} from "~/models/WorksheetState";
 import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 
 export class GoogleSheetsWorksheetStateExporter
-  implements WorksheetStateExporter<string[][]>
-{
+  implements WorksheetStateExporter<string[][]> {
   static readonly FIRST_FEATURE_COLUMN_INDEX = 4;
 
-  static parseHeader(header: string): {
+  static parseHeader(
+    header: string
+  ): {
     featureSetUri: string;
     featureUri?: string;
   } {
@@ -48,7 +49,7 @@ export class GoogleSheetsWorksheetStateExporter
 
     for (const worksheetState of worksheetStates) {
       const dataRow = [
-        worksheetState.id.toString(),
+        worksheetState.id,
         new Date(worksheetState.ctime).toISOString(),
         new Date(worksheetState.mtime).toISOString(),
       ];
@@ -62,10 +63,12 @@ export class GoogleSheetsWorksheetStateExporter
       for (const header of headerRow.slice(
         GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX
       )) {
-        const {featureSetUri, featureUri} =
-          GoogleSheetsWorksheetStateExporter.parseHeader(header);
+        const {
+          featureSetUri,
+          featureUri,
+        } = GoogleSheetsWorksheetStateExporter.parseHeader(header);
         const featureSetState = worksheetState.featureSets?.find(
-          (existingFeatureSetState) =>
+          existingFeatureSetState =>
             existingFeatureSetState.uri === featureSetUri
         );
         if (!featureSetState) {
@@ -78,15 +81,15 @@ export class GoogleSheetsWorksheetStateExporter
           continue;
         }
         const featureState = featureSetState.features?.find(
-          (existingFeatureState) => existingFeatureState.uri === featureUri
+          existingFeatureState => existingFeatureState.uri === featureUri
         );
         if (!featureState) {
           dataRow.push("");
           continue;
         }
         const selectedFeatureValueUris = (featureState.values ?? [])
-          .filter((value) => value.selected)
-          .map((value) => value.uri);
+          .filter(value => value.selected)
+          .map(value => value.uri);
         if (selectedFeatureValueUris.length === 0) {
           dataRow.push("");
           continue;
