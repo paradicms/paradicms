@@ -165,7 +165,9 @@ export const getStaticProps: GetStaticProps = async ({
           },
         })
         .addPropertyGroups(completeModelSet.propertyGroups, {
-          properties: {},
+          properties: {
+            rangeValues: {},
+          },
         })
         .build()
         .toFastRdfString(),

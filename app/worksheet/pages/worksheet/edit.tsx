@@ -118,6 +118,9 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addPropertyGroups(completeModelSet.propertyGroups, {
+          properties: {
+            rangeValues: {},
+          },
           thumbnail: galleryThumbnailSelector,
         })
         .build()

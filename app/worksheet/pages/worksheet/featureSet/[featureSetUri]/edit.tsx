@@ -207,6 +207,7 @@ export const getStaticProps: GetStaticProps = async ({
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addPropertyGroup(completeModelSet.propertyGroupByUri(featureSetUri), {
           properties: {
+            rangeValues: {},
             thumbnail: galleryThumbnailSelector,
           },
         })
@@ -216,7 +217,9 @@ export const getStaticProps: GetStaticProps = async ({
             propertyGroup => propertyGroup.uri !== featureSetUri
           ),
           {
-            properties: {},
+            properties: {
+              rangeValues: {},
+            },
           }
         )
         .build()
