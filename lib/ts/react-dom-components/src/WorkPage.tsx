@@ -189,7 +189,7 @@ export const WorkPage: React.FunctionComponent<{
           className="text-wrap"
           xs={12}
           dangerouslySetInnerHTML={{
-            __html: work.description.toString(),
+            __html: work.description.value,
           }}
         ></Col>
       </Row>

@@ -99,7 +99,7 @@ const ItemDetailCard: React.FunctionComponent<{
     rows.push(
       <Row key={"row" + rows.length.toString()}>
         <Col className="p-0 text-center" xs={12}>
-          <p>{item.description.toString()}</p>
+          <p>{item.description.value}</p>
           {item.description?.requiresAttribution ? (
             <RightsParagraph
               material="Text"

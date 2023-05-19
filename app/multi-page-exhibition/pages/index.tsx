@@ -53,7 +53,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
             className="text-wrap"
             xs={12}
             dangerouslySetInnerHTML={{
-              __html: collection.description.toString(),
+              __html: collection.description.value,
             }}
           ></Col>
         </Row>

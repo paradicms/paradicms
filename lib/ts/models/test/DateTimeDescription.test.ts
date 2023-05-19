@@ -44,8 +44,8 @@ describe("DateTimeDescription", () => {
     expect(sut.year).to.be.lte(2022);
   });
 
-  it("should convert to a string", () => {
-    const str = sut.toString();
-    expect(str).to.not.be.empty;
-  });
+  // it("should convert to a string", () => {
+  //   const str = sut.toString();
+  //   expect(str).to.not.be.empty;
+  // });
 });

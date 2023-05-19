@@ -47,7 +47,7 @@ export class CsvWorksheetStateExporter
 
     for (const worksheetState of worksheetStates) {
       const dataRow = new Array(headerRow.length).fill("");
-      dataRow[0] = worksheetState.id.toString();
+      dataRow[0] = worksheetState.id;
       dataRow[1] = new Date(worksheetState.ctime).toISOString();
       dataRow[2] = new Date(worksheetState.mtime).toISOString();
 
@@ -86,9 +86,9 @@ export class CsvWorksheetStateExporter
           if (!header) {
             console.warn(
               "feature set + feature not present in definition? skipping: " +
-                featureSetState.uri.toString() +
+                featureSetState.uri +
                 "|" +
-                featureState.uri.toString()
+                featureState.uri
             );
             continue;
           }
@@ -97,9 +97,9 @@ export class CsvWorksheetStateExporter
           if (dataRowIndex < 0) {
             console.warn(
               "feature set + feature not present in definition? skipping: " +
-                featureSetState.uri.toString() +
+                featureSetState.uri +
                 "|" +
-                featureState.uri.toString()
+                featureState.uri
             );
             continue;
           }
