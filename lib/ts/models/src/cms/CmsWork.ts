@@ -19,6 +19,7 @@ import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
 import {mapCmsLocationObject} from "./mapCmsLocationObject";
 import {mapCmsTextObject} from "./mapCmsTextObject";
+import {Property} from "../Property";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -148,18 +149,28 @@ export class CmsWork extends Mixin(
   }
 
   @Memoize()
-  propertyValues(propertyUri: string): readonly PropertyValue[] {
+  get propertyValues(): readonly PropertyValue[] {
+    return this.modelSet.properties.flatMap(property => this.propertyValuesByProperty(property));
+  }
+
+  private propertyValuesByProperty(property: Property): readonly PropertyValue[] {
     return createPropertyValuesFromQuadObjects({
-      dataset: this.dataset, 
+      dataset: this.dataset,
       modelSet: this.modelSet,
+      property,
       quads: this.dataset
-        .match(
-          this.identifier,
-          DataFactory.namedNode(propertyUri),
-          null,
-          this.graph
-        )
-        .toArray()
-        });
+          .match(
+              this.identifier,
+              DataFactory.namedNode(property.uri),
+              null,
+              this.graph
+          )
+          .toArray()
+    });
+  }
+
+  @Memoize()
+  propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
+    return this.propertyValuesByProperty(this.modelSet.propertyByUri(propertyUri));
   }
 }

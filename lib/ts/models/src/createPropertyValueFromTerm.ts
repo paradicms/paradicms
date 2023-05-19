@@ -15,14 +15,16 @@ import {ModelSet} from "./ModelSet";
 import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
 import {CmsText} from "./cms/CmsText";
+import {Property} from "./Property";
 
 export const createPropertyValueFromTerm = (kwds: {
   dataset: Dataset;
   modelSet: ModelSet;
+  property: Property;
   term: Term;
   termGraph: Quad_Graph;
 }): PropertyValue | null => {
-  const {dataset, modelSet, term, termGraph} = kwds;
+  const {dataset, modelSet, property, term, termGraph} = kwds;
 
   switch (term.termType) {
     case "BlankNode": {
@@ -30,6 +32,7 @@ export const createPropertyValueFromTerm = (kwds: {
         return null;
       }
       return new TextPropertyValue(
+        property,
         new CmsText({
           dataset,
           graph: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
@@ -44,30 +47,30 @@ export const createPropertyValueFromTerm = (kwds: {
       {
         const concept = modelSet.conceptByUriOptional(term.value);
         if (concept) {
-          return new ConceptPropertyValue(concept);
+          return new ConceptPropertyValue(concept, property);
         }
       }
       {
         const organization = modelSet.organizationByUriOptional(term.value);
         if (organization) {
-          return new AgentPropertyValue(organization);
+          return new AgentPropertyValue(organization, property);
         }
       }
       {
         const person = modelSet.personByUriOptional(term.value);
         if (person) {
-          return new AgentPropertyValue(person);
+          return new AgentPropertyValue(person, property);
         }
       }
       {
         if (term.value.startsWith(dcmitype[""].value)) {
-          return new DcmiTypePropertyValue(term);
+          return new DcmiTypePropertyValue(term, property);
         }
       }
       return null;
     }
     case "Literal":
-      return new LiteralPropertyValue(term);
+      return new LiteralPropertyValue(term, property);
     default:
       return null;
   }

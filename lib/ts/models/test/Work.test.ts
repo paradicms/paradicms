@@ -33,14 +33,16 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (literal)", () => {
-    const propertyValues = sut.propertyValues(dcterms.title.value);
+    const propertyValues = sut.propertyValuesByPropertyUri(dcterms.title.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq(sut.label);
   });
 
   it("should get the work's property values (named)", () => {
-    const propertyValues = sut.propertyValues(dcterms.subject.value);
+    const propertyValues = sut.propertyValuesByPropertyUri(
+      dcterms.subject.value
+    );
     expect(propertyValues).to.have.length(2);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.satisfy((text: string) =>
@@ -49,7 +51,9 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (Text)", () => {
-    const propertyValues = sut.propertyValues(dcterms.description.value);
+    const propertyValues = sut.propertyValuesByPropertyUri(
+      dcterms.description.value
+    );
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq((sut.description as Text).value);

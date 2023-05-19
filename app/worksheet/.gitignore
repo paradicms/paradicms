@@ -1,2 +1,0 @@
-src/ts/**/*.d.ts*
-!src/ts/global.d.ts

@@ -11,7 +11,7 @@ export const getVisibleWorkProperties = (kwds: {
     if (property.hidden) {
       continue;
     }
-    const values = work.propertyValues(property.uri);
+    const values = work.propertyValuesByPropertyUri(property.uri);
     if (values.length === 0) {
       continue;
     }

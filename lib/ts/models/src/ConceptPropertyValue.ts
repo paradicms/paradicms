@@ -1,10 +1,11 @@
-import { Concept } from "./Concept";
-import { PropertyValue } from "./PropertyValue";
-import { ThumbnailSelector } from "./ThumbnailSelector";
+import {Concept} from "./Concept";
+import {PropertyValue} from "./PropertyValue";
+import {ThumbnailSelector} from "./ThumbnailSelector";
+import {Property} from "./Property";
 
 export class ConceptPropertyValue extends PropertyValue {
-    constructor(readonly concept: Concept) {
-        super();
+    constructor(readonly concept: Concept, property: Property) {
+        super(property);
     }
 
     get label() {

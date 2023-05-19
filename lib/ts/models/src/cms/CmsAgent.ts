@@ -16,4 +16,8 @@ export class CmsAgent
   get label(): string {
     return this.name;
   }
+
+  get works() {
+    return this.uri ? this.modelSet.agentWorks(this.uri) : [];
+  }
 }

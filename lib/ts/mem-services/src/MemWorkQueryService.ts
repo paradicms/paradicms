@@ -3,7 +3,7 @@ import {
   defaultProperties,
   Image,
   ModelSet,
-  ModelSubsetter,
+  ModelSetBuilder,
   ThumbnailSelector,
   Work,
   WorkEventUnion,
@@ -98,7 +98,9 @@ export class MemWorkQueryService implements WorkQueryService {
           if (!fieldName) {
             continue;
           }
-          for (const propertyValue of work.propertyValues(propertyUri)) {
+          for (const propertyValue of work.propertyValuesByPropertyUri(
+            propertyUri
+          )) {
             doc[fieldName] = propertyValue.value;
           }
         }
@@ -128,7 +130,7 @@ export class MemWorkQueryService implements WorkQueryService {
           } = {};
           for (const work of works) {
             let workHasProperty = false;
-            for (const propertyValue of work.propertyValues(
+            for (const propertyValue of work.propertyValuesByPropertyUri(
               concreteFilter.propertyUri
             )) {
               const propertyValueString: string = propertyValue.value;
@@ -182,7 +184,7 @@ export class MemWorkQueryService implements WorkQueryService {
             MemWorkQueryService.testValueFilter(
               filter as StringPropertyValueFilter,
               work
-                .propertyValues(
+                .propertyValuesByPropertyUri(
                   (filter as StringPropertyValueFilter).propertyUri
                 )
                 .map(propertyValue => propertyValue.value)
@@ -234,10 +236,8 @@ export class MemWorkQueryService implements WorkQueryService {
 
       const slicedAgents = sortedAgents.slice(offset, offset + limit);
 
-      const slicedAgentsModelSet = new ModelSubsetter({
-        completeModelSet: this.modelSet,
-      })
-        .agentsModelSet(slicedAgents, agentJoinSelector)
+      const slicedAgentsModelSet = new ModelSetBuilder()
+        .addAgents(slicedAgents, agentJoinSelector)
         .build();
 
       resolve({
@@ -294,10 +294,8 @@ export class MemWorkQueryService implements WorkQueryService {
 
       // console.debug("Search sliced works count:", slicedWorks.length);
 
-      const slicedWorksModelSet = new ModelSubsetter({
-        completeModelSet: this.modelSet,
-      })
-        .worksModelSet(slicedWorks, workJoinSelector)
+      const slicedWorksModelSet = new ModelSetBuilder()
+        .addWorks(slicedWorks, workJoinSelector)
         .build();
 
       // console.debug(
@@ -499,10 +497,8 @@ export class MemWorkQueryService implements WorkQueryService {
 
       const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
 
-      const slicedWorkEventsModelSet = new ModelSubsetter({
-        completeModelSet: this.modelSet,
-      })
-        .workEventsModelSet(slicedWorkEvents, workEventJoinSelector)
+      const slicedWorkEventsModelSet = new ModelSetBuilder()
+        .addWorkEvents(slicedWorkEvents, workEventJoinSelector)
         .build();
 
       resolve({

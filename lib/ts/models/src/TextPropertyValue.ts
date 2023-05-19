@@ -1,9 +1,10 @@
 import {Text} from "./Text";
 import {PropertyValue} from "./PropertyValue";
+import {Property} from "./Property";
 
 export class TextPropertyValue extends PropertyValue {
-  constructor(readonly text: Text) {
-    super();
+  constructor(property: Property, readonly text: Text) {
+    super(property);
   }
 
   get label() {

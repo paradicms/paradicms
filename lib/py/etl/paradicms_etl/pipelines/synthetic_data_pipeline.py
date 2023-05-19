@@ -385,6 +385,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 ),
             ).build()
             yield property_group
+            yield from self.__generate_images(
+                depicts_uri=property_group.uri, text_prefix=property_group.label
+            )
 
             for property_ in self.__PROPERTIES:
                 yield CmsProperty.builder(
@@ -396,6 +399,9 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 ).set_searchable(
                     property_.searchable
                 ).build()
+                yield from self.__generate_images(
+                    depicts_uri=property_.uri, text_prefix=property_.label
+                )
 
         def __generate_work(
             self,

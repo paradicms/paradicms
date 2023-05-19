@@ -6,6 +6,7 @@ cd "$(dirname "$0")/../.."
 
 export DATA_FILE_PATHS=`realpath $PWD/data/synthetic/synthetic_data.trig`
 export PATH=$PATH:$PWD/node_modules/.bin
+yarn clean
 yarn build
 
 export JEST_CLI_OPTIONS="--updateSnapshot"

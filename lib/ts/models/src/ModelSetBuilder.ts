@@ -4,7 +4,6 @@ import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
-import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
@@ -18,22 +17,77 @@ import {Quad} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
 import {ModelSetFactory} from "./ModelSetFactory";
 import {PropertyGroup} from "./PropertyGroup";
+import {AgentJoinSelector} from "./AgentJoinSelector";
+import {CollectionJoinSelector} from "./CollectionJoinSelector";
+import {PropertyValueJoinSelector} from "./PropertyValueJoinSelector";
+import {PropertyJoinSelector} from "./PropertyJoinSelector";
+import {PropertyGroupJoinSelector} from "./PropertyGroupJoinSelector";
+import {WorkJoinSelector} from "./WorkJoinSelector";
+import {RightsMixin} from "./RightsMixin";
+import {RightsJoinSelector} from "./RightsJoinSelector";
+import {PropertyValue} from "./PropertyValue";
+import {ConceptPropertyValue} from "./ConceptPropertyValue";
+import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
+import {WorkEventUnion} from "./WorkEventUnion";
 
+/**
+ * Build a ModelSet by adding models to it.
+ *
+ * Re: join selectors. A caller can select which connected models to include in a ModelSet.
+ * For example, return a collection's thumbnail along with the collection.
+ * An undefined joinSelector means don't return any connected models.
+ * An empty joinSelector ({}) means return the connected models themselves but none of their connected models (i.e., no recursion).
+ * For example, a joinSelector on Collection with works: {} will return all of the Work instances associated with that collection,
+ * but no models connected to the Works (i.e., their Agents).
+ */
 export class ModelSetBuilder {
   private addedAppConfiguration: boolean = false;
   // private readonly addedModelDefaultGraphQuads: Quad[][] = [];
   private readonly addedModelUris: Set<string> = new Set<string>();
   private readonly store: Store = new Store();
 
-  addAgent(agent: AgentUnion): ModelSetBuilder {
-    switch (agent.type) {
-      case "Organization":
-        return this.addOrganization(agent);
-      case "OtherAgent":
-        return this;
-      case "Person":
-        return this.addPerson(agent);
+  addAgent(
+    agent: AgentUnion,
+    joinSelector?: AgentJoinSelector
+  ): ModelSetBuilder {
+    if (agent.type === "OtherAgent") {
+      return this;
     }
+
+    this.addModel(agent);
+
+    if (!agent.uri) {
+      return this;
+    }
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    if (joinSelector.thumbnail) {
+      const thumbnailImage = agent.thumbnail(joinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImage(thumbnailImage);
+      }
+    }
+
+    if (joinSelector.works) {
+      for (const work of agent.works) {
+        this.addWork(work, joinSelector.works);
+      }
+    }
+
+    return this;
+  }
+
+  addAgents(
+    agents: readonly AgentUnion[],
+    joinSelector?: AgentJoinSelector
+  ): ModelSetBuilder {
+    for (const agent of agents) {
+      this.addAgent(agent, joinSelector);
+    }
+    return this;
   }
 
   addAppConfiguration(
@@ -50,44 +104,81 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addCollection(collection: Collection): ModelSetBuilder {
-    return this.addNamedModel(collection);
+  addCollection(
+    collection: Collection,
+    joinSelector?: CollectionJoinSelector
+  ): ModelSetBuilder {
+    this.addNamedModel(collection);
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    if (joinSelector.thumbnail) {
+      const thumbnailImage = collection.thumbnail(joinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImage(thumbnailImage, joinSelector.thumbnail);
+        if (thumbnailImage.depictsUri !== collection.uri) {
+          // The thumbnail either depicts the collection or one of the collection's works.
+          // If the latter case we need to include the work in the modelSet.
+          for (const work of collection.works) {
+            if (thumbnailImage.depictsUri === work.uri) {
+              this.addWork(work);
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    if (joinSelector.works) {
+      for (const work of collection.works) {
+        this.addWork(work, joinSelector.works);
+      }
+    }
+
+    return this;
   }
 
-  addCollections(collections: readonly Collection[]): ModelSetBuilder {
-    return this.addNamedModels(collections);
+  addConcept(
+    concept: Concept,
+    joinSelector?: PropertyValueJoinSelector
+  ): ModelSetBuilder {
+    this.addNamedModel(concept);
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    if (joinSelector.thumbnail) {
+      const thumbnail = concept.thumbnail(joinSelector.thumbnail);
+      if (thumbnail) {
+        this.addImage(thumbnail, joinSelector.thumbnail);
+      }
+    }
+
+    return this;
   }
 
-  addConcept(concept: Concept): ModelSetBuilder {
-    return this.addNamedModel(concept);
-  }
-
-  addConcepts(concepts: readonly Concept[]): ModelSetBuilder {
-    return this.addNamedModels(concepts);
-  }
-
-  addEvent(event: Event): ModelSetBuilder {
-    return this.addModel(event);
-  }
-
-  addImage(image: Image): ModelSetBuilder {
-    return this.addNamedModel(image);
-  }
-
-  addImages(images: readonly Image[]): ModelSetBuilder {
-    return this.addNamedModels(images);
+  addImage(
+    image: Image,
+    joinSelector?: {
+      agents?: AgentJoinSelector;
+    }
+  ): ModelSetBuilder {
+    this.addNamedModel(image);
+    if (joinSelector) {
+      this.addRights(joinSelector, image);
+    }
+    return this;
   }
 
   addLicense(license: License): ModelSetBuilder {
-    return this.addNamedModel(license);
-  }
-
-  addLicenses(licenses: readonly License[]): ModelSetBuilder {
-    return this.addNamedModels(licenses);
+    return this.addModel(license);
   }
 
   addLocation(location: Location): ModelSetBuilder {
-    return this.addNamedModel(location);
+    return this.addModel(location);
   }
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
@@ -133,51 +224,231 @@ export class ModelSetBuilder {
     return this;
   }
 
-  private addNamedModels<ModelT extends Model>(
-    models: readonly ModelT[]
+  addOrganization(
+    organization: Organization,
+    joinSelector?: AgentJoinSelector
   ): ModelSetBuilder {
-    for (const model of models) {
-      this.addNamedModel(model);
+    return this.addAgent(organization, joinSelector);
+  }
+
+  addPerson(person: Person, joinSelector?: AgentJoinSelector): ModelSetBuilder {
+    return this.addAgent(person, joinSelector);
+  }
+
+  addProperty(
+    property: Property,
+    joinSelector?: PropertyJoinSelector
+  ): ModelSetBuilder {
+    this.addNamedModel(property);
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    if (joinSelector.groups) {
+      for (const propertyGroup of property.groups) {
+        this.addPropertyGroup(propertyGroup, joinSelector.groups);
+      }
+    }
+
+    if (joinSelector.rangeValues) {
+      for (const value of property.rangeValues) {
+        this.addPropertyValue(value, joinSelector.rangeValues);
+      }
+    }
+
+    if (joinSelector.thumbnail) {
+      const thumbnailImage = property.thumbnail(joinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImage(thumbnailImage, joinSelector.thumbnail);
+      }
+    }
+
+    return this;
+  }
+
+  addPropertyGroup(
+    propertyGroup: PropertyGroup,
+    joinSelector?: PropertyGroupJoinSelector
+  ): ModelSetBuilder {
+    this.addNamedModel(propertyGroup);
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    if (joinSelector.properties) {
+      for (const property of propertyGroup.properties) {
+        this.addProperty(property, joinSelector.properties);
+      }
+    }
+
+    if (joinSelector.thumbnail) {
+      const thumbnailImage = propertyGroup.thumbnail(joinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImage(thumbnailImage, joinSelector.thumbnail);
+      }
+    }
+
+    return this;
+  }
+
+  addPropertyGroups(
+    propertyGroups: readonly PropertyGroup[],
+    joinSelector?: PropertyGroupJoinSelector
+  ): ModelSetBuilder {
+    for (const propertyGroup of propertyGroups) {
+      this.addPropertyGroup(propertyGroup, joinSelector);
     }
     return this;
   }
 
-  addOrganization(organization: Organization): ModelSetBuilder {
-    return this.addModel(organization);
+  addPropertyValue(
+    propertyValue: PropertyValue,
+    joinSelector?: PropertyValueJoinSelector
+  ): ModelSetBuilder {
+    if (propertyValue instanceof ConceptPropertyValue) {
+      this.addConcept(propertyValue.concept, joinSelector);
+    }
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    if (joinSelector.property) {
+      this.addProperty(propertyValue.property, joinSelector.property);
+    }
+
+    return this;
   }
 
-  addPerson(person: Person): ModelSetBuilder {
-    return this.addModel(person);
-  }
+  private addRights(joinSelector: RightsJoinSelector, rights: RightsMixin) {
+    if (joinSelector.agents) {
+      for (const agents of [
+        rights.contributors,
+        rights.creators,
+        rights.rightsHolders,
+      ]) {
+        for (const agent of agents) {
+          this.addAgent(agent, joinSelector.agents);
+        }
+      }
+    }
 
-  addProperties(properties: readonly Property[]): ModelSetBuilder {
-    return this.addNamedModels(properties);
-  }
+    if (joinSelector.license && rights.license) {
+      this.addLicense(rights.license);
+    }
 
-  addProperty(property: Property): ModelSetBuilder {
-    return this.addNamedModel(property);
-  }
-
-  addPropertyGroups(propertyGroups: readonly PropertyGroup[]): ModelSetBuilder {
-    return this.addNamedModels(propertyGroups);
+    if (joinSelector.rightsStatement && rights.rightsStatement) {
+      this.addRightsStatement(rights.rightsStatement);
+    }
   }
 
   addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {
     return this.addNamedModel(rightsStatement);
   }
 
-  addRightsStatements(
-    rightsStatements: readonly RightsStatement[]
+  addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
+    this.addNamedModel(work);
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    this.addRights(joinSelector, work);
+
+    if (work.description) {
+      this.addRights(joinSelector, work.description);
+    }
+
+    if (joinSelector.images) {
+      for (const image of work.images) {
+        this.addImage(image, joinSelector.images);
+      }
+    } else if (joinSelector.thumbnail) {
+      const thumbnailImage = work.thumbnail(joinSelector.thumbnail);
+      if (thumbnailImage) {
+        this.addImage(thumbnailImage, joinSelector.images);
+      }
+    }
+
+    if (joinSelector.collections) {
+      for (const collection of work.collections) {
+        this.addCollection(collection, joinSelector.collections);
+      }
+    }
+
+    if (joinSelector.events) {
+      for (const event of work.events) {
+        this.addWorkEvent(event, joinSelector.events);
+      }
+    }
+
+    if (joinSelector.location) {
+      if (work.location) {
+        this.addLocation(work.location.location);
+      }
+    }
+
+    if (joinSelector.propertyValues) {
+      for (const propertyValue of work.propertyValues) {
+        this.addPropertyValue(propertyValue, joinSelector.propertyValues);
+      }
+    }
+
+    return this;
+  }
+
+  addWorks(
+    works: readonly Work[],
+    joinSelector?: WorkJoinSelector
   ): ModelSetBuilder {
-    return this.addNamedModels(rightsStatements);
+    for (const work of works) {
+      this.addWork(work, joinSelector);
+    }
+    return this;
   }
 
-  addWork(work: Work): ModelSetBuilder {
-    return this.addNamedModel(work);
+  addWorkEvent(
+    workEvent: WorkEventUnion,
+    joinSelector?: WorkEventJoinSelector
+  ): ModelSetBuilder {
+    this.addModel(workEvent);
+
+    if (!joinSelector) {
+      return this;
+    }
+
+    if (joinSelector.location && workEvent.location) {
+      this.addLocation(workEvent.location);
+    }
+
+    if (joinSelector.work) {
+      this.addWork(workEvent.work, joinSelector.work);
+    }
+
+    switch (workEvent.type) {
+      case "WorkCreation": {
+        if (joinSelector.agents) {
+          for (const agent of workEvent.agents) {
+            this.addAgent(agent, joinSelector.agents);
+          }
+        }
+        break;
+      }
+    }
+
+    return this;
   }
 
-  addWorks(works: readonly Work[]): ModelSetBuilder {
-    return this.addNamedModels(works);
+  addWorkEvents(
+    workEvents: readonly WorkEventUnion[],
+    joinSelector?: WorkEventJoinSelector
+  ): ModelSetBuilder {
+    for (const workEvent of workEvents) {
+      this.addWorkEvent(workEvent, joinSelector);
+    }
+    return this;
   }
 
   build(): ModelSet {

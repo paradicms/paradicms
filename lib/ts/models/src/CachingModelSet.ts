@@ -116,6 +116,7 @@ export class CachingModelSet implements ModelSet {
   private _peopleByUriIndex?: {[index: string]: Person};
   private _properties?: readonly Property[];
   private _propertiesByGroupUriIndex?: {[index: string]: readonly Property[]};
+  private _propertiesByUriIndex?: {[index: string]: Property};
   private _propertyGroups?: readonly PropertyGroup[];
   private _propertyGroupsByUriIndex?: {[index: string]: PropertyGroup};
   private _rightsStatementsByUriIndex?: {[index: string]: RightsStatement};
@@ -380,6 +381,17 @@ export class CachingModelSet implements ModelSet {
       );
     }
     return this._propertiesByGroupUriIndex!;
+  }
+
+  private get propertiesByUriIndex(): {[index: string]: Property} {
+    if (!this._propertiesByUriIndex) {
+      this._propertiesByUriIndex = indexModelsByUri(this.properties);
+    }
+    return requireDefined(this._propertiesByUriIndex);
+  }
+
+  propertyByUri(propertyUri: string): Property {
+    return this.modelByUri(this.propertiesByUriIndex, propertyUri);
   }
 
   propertyGroupByUri(propertyGroupUri: string): PropertyGroup {

@@ -1,4 +1,4 @@
-import {ModelSet, ModelSetFactory, ModelSubsetter} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
@@ -194,14 +194,12 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionUri,
       currentWorkUri: workUri,
-      modelSetString: new ModelSubsetter({
-        completeModelSet,
-      })
-        .worksModelSet(
+      modelSetString: new ModelSetBuilder()
+        .addAppConfiguration(completeModelSet.appConfiguration)
+        .addWorks(
           workUris.map(workUri => completeModelSet.workByUri(workUri)),
           workPageWorkJoinSelector
         )
-        .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
         .toFastRdfString(),
       nextWorkUri,
