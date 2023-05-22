@@ -6,6 +6,11 @@ from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
 
+from paradicms_etl.enrichers.ambient_reference_enricher import (
+    ambient_reference_enricher,
+)
+from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
+from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
@@ -546,19 +551,19 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             ).build()
 
     def __init__(self, loader: Optional[Loader] = None):
+        root_dir_path = (
+            Path(__file__).absolute().parent.parent.parent.parent.parent.parent
+        )
+        data_dir_path = root_dir_path / "data" / "synthetic"
+        cache_dir_path = data_dir_path / ".cache"
+
         if loader is None:
-            root_dir_path = (
-                Path(__file__).absolute().parent.parent.parent.parent.parent.parent
-            )
-            data_dir_path = root_dir_path / "data"
-            rdf_file_path = data_dir_path / "synthetic" / "synthetic_data.trig"
+            rdf_file_path = data_dir_path / "synthetic_data.trig"
 
             loader = CompositeLoader(
                 loaders=(
                     Excel2010Loader(
-                        xlsx_file_path=data_dir_path
-                        / "synthetic"
-                        / "synthetic_data.xlsx"
+                        xlsx_file_path=data_dir_path / "synthetic_data.xlsx"
                     ),
                     RdfFileLoader(
                         rdf_file_path=rdf_file_path,
@@ -577,6 +582,13 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 
         Pipeline.__init__(
             self,
+            enrichers=(
+                WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
+                WikimediaCommonsEnricher(
+                    cache_dir_path=cache_dir_path / "wikimedia_commons"
+                ),
+                ambient_reference_enricher,  # Should be last
+            ),
             extractor=nop_extractor,
             id=self.ID,
             loader=loader,
