@@ -159,7 +159,7 @@ class WikidataFullStatement(WikidataStatement):
         assert len(value_types) == 1
         value_type = value_types[0]
         if value_type in cls.__IGNORE_VALUE_TYPES:
-            logger.info("ignoring %s %s", value_types, value_uri)
+            logger.debug("ignoring %s %s", value_types, value_uri)
             return None
         elif value_type == WIKIBASE.TimeValue:
             time_value_literal = tuple(
