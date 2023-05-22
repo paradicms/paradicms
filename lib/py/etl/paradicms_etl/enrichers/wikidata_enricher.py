@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Iterable, Set, Tuple, List
 from urllib.parse import urlparse
 
-from rdflib import Graph, URIRef, DCTERMS
+from rdflib import Graph, URIRef, DCTERMS, OWL
 from rdflib.resource import Resource
 
 from paradicms_etl.extractors.wikidata_qid_extractor import WikidataQidExtractor
@@ -50,7 +50,7 @@ class WikidataEnricher:
         Get a list of Wikidata QIDs referenced by the given model.
         """
         wikidata_qids: List[str] = []
-        for predicate in (DCTERMS.relation,):
+        for predicate in (DCTERMS.relation, OWL.sameAs):
             for object_ in model_resource.objects(predicate):
                 if not isinstance(object_, Resource):
                     continue

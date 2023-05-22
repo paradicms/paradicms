@@ -218,13 +218,10 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     person_builder.add_page(
                         URIRef(f"http://example.com/person{person_i}page")
                     )
-                person_builder.add(
-                    # dcterms:relation
+                person_builder.add_same_as(
                     # Wikidata concept for Alan Turing
-                    DCTERMS.relation,
                     URIRef("http://www.wikidata.org/entity/Q7251"),
-                ).add(
-                    DCTERMS.relation,
+                ).add_relation(
                     URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
                 )
                 agents.append(person_builder.build())
@@ -427,12 +424,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 
             # Properties that depend on the work title
             for i in range(2):
-                work_builder.add(
-                    DCTERMS.alternative,
+                work_builder.add_alternative_title(
                     f"{title} alternative title {i}",
                 )
-                work_builder.add(DCTERMS.identifier, f"{title}Id{i}")
-                work_builder.add(DCTERMS.provenance, f"{title} provenance {i}")
+                work_builder.add_identifier(f"{title}Id{i}")
+                work_builder.add_provenance(f"{title} provenance {i}")
 
                 work_builder.add_rights_holder(f"{title} rights holder").add_license(
                     CreativeCommonsLicenses.NC_1_0.uri
@@ -464,23 +460,20 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 for contributor_i in range(2)
             ]
             for contributor in contributors:
-                work_builder.add(DCTERMS.contributor, contributor)
+                work_builder.add_contributor(contributor)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
             for creator_uri in creator_uris:
-                work_builder.add(DCTERMS.creator, creator_uri)
+                work_builder.add_creator(creator_uri)
 
-            # dcterms:relation
             # Wikidata concept for the Pilot ACE
-            work_builder.add(
-                DCTERMS.relation,
+            work_builder.add_same_as(
                 URIRef("http://www.wikidata.org/entity/Q937690"),
             )
 
             # Wikipedia
-            work_builder.add(
-                DCTERMS.relation,
+            work_builder.add_relation(
                 URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
             )
 
