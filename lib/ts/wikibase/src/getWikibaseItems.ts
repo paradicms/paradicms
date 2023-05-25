@@ -9,20 +9,37 @@ import {WikibaseStatementQualifier} from "./WikibaseStatementQualifier";
 import invariant from "ts-invariant";
 import {WikibaseArticle} from "./WikibaseArticle";
 
-const ignoreItemPredicateUris: Set<string> = new Set([schema.description.value, schema.name.value, rdf.type.value, rdfs.label.value]);
-const ignoreStatementPredicateUris: Set<string> = new Set([prov.wasDerivedFrom.value, rdf.type.value, wikibase.rank.value])
+const ignoreItemPredicateUris: Set<string> = new Set([
+  schema.description.value,
+  schema.name.value,
+  rdf.type.value,
+  rdfs.label.value,
+]);
+const ignoreStatementPredicateUris: Set<string> = new Set([
+  prov.wasDerivedFrom.value,
+  rdf.type.value,
+  wikibase.rank.value,
+]);
 
 const getDirectClaimWikibaseStatement = (kwds: {
-  dataset: DatasetCore,
-  statementObject: Term
-  statementPropertyDefinition: WikibasePropertyDefinition,
-  statementSubject: NamedNode,
+  dataset: DatasetCore;
+  statementObject: Term;
+  statementPropertyDefinition: WikibasePropertyDefinition;
+  statementSubject: NamedNode;
 }): WikibaseStatement => {
-  const {dataset, statementPropertyDefinition, statementSubject, statementObject} = kwds;
+  const {
+    dataset,
+    statementPropertyDefinition,
+    statementSubject,
+    statementObject,
+  } = kwds;
 
   let normalizedValue: WikibaseValue | null = null;
   if (statementPropertyDefinition.directClaimNormalized !== null) {
-    for (const valueQuad of dataset.match(statementSubject, statementPropertyDefinition.directClaimNormalized)) {
+    for (const valueQuad of dataset.match(
+      statementSubject,
+      statementPropertyDefinition.directClaimNormalized
+    )) {
       normalizedValue = termToWikibaseValue(valueQuad.object);
       break;
     }
@@ -32,14 +49,14 @@ const getDirectClaimWikibaseStatement = (kwds: {
     propertyDefinition: statementPropertyDefinition,
     qualifiers: [],
     type: "Direct",
-    value: termToWikibaseValue(statementObject)
+    value: termToWikibaseValue(statementObject),
   };
-}
+};
 
 const getFullWikibaseStatement = (kwds: {
-  propertyDefinitions: readonly WikibasePropertyDefinition[],
-  dataset: DatasetCore,
-  statementNode: NamedNode
+  propertyDefinitions: readonly WikibasePropertyDefinition[];
+  dataset: DatasetCore;
+  statementNode: NamedNode;
 }): WikibaseStatement | null => {
   const {dataset, propertyDefinitions, statementNode} = kwds;
 
@@ -51,7 +68,7 @@ const getFullWikibaseStatement = (kwds: {
       return termToWikibaseValue(valueQuad.object);
     }
     return null;
-  }
+  };
 
   let normalizedValue: WikibaseValue | null = null;
   const qualifiers: WikibaseStatementQualifier[] = [];
@@ -64,7 +81,9 @@ const getFullWikibaseStatement = (kwds: {
     }
 
     for (const propertyDefinition of propertyDefinitions) {
-      if (statementQuad.predicate.equals(propertyDefinition.statementProperty)) {
+      if (
+        statementQuad.predicate.equals(propertyDefinition.statementProperty)
+      ) {
         invariant(value === null);
         value = termToWikibaseValue(statementQuad.object);
         valuePropertyDefinition = propertyDefinition;
@@ -74,16 +93,22 @@ const getFullWikibaseStatement = (kwds: {
           value = statementValue;
         }
 
-        const statementValueNormalized = getValue(propertyDefinition.statementValueNormalized);
+        const statementValueNormalized = getValue(
+          propertyDefinition.statementValueNormalized
+        );
         if (statementValueNormalized) {
           normalizedValue = statementValueNormalized;
         }
         break;
       } else if (statementQuad.predicate.equals(propertyDefinition.qualifier)) {
         qualifiers.push({
-          normalizedValue: getValue(propertyDefinition.qualifierValueNormalized),
+          normalizedValue: getValue(
+            propertyDefinition.qualifierValueNormalized
+          ),
           propertyDefinition,
-          value: getValue(propertyDefinition.qualifierValue) ?? termToWikibaseValue(statementQuad.object)
+          value:
+            getValue(propertyDefinition.qualifierValue) ??
+            termToWikibaseValue(statementQuad.object),
         });
         break;
       }
@@ -93,15 +118,18 @@ const getFullWikibaseStatement = (kwds: {
   if (!value) {
     return null;
   }
-  invariant(valuePropertyDefinition, "value property definition must be set if value is");
+  invariant(
+    valuePropertyDefinition,
+    "value property definition must be set if value is"
+  );
   return {
     normalizedValue,
     propertyDefinition: valuePropertyDefinition!,
     qualifiers,
     type: "Full",
-    value
-  }
-}
+    value,
+  };
+};
 
 const getWikibaseItem = (kwds: {
   dataset: DatasetCore;
@@ -132,7 +160,7 @@ const getWikibaseItem = (kwds: {
       articles.push({
         inLanguage,
         name,
-        node: aboutQuad.subject
+        node: aboutQuad.subject,
       });
     }
   }
@@ -140,7 +168,9 @@ const getWikibaseItem = (kwds: {
   const altLabels: string[] = [];
   let description: string | null = null;
   let prefLabel: string | null = null;
-  const statementsByPropertyUri: {[index: string]: {[index: string]: WikibaseStatement[]}} = {};
+  const statementsByPropertyUri: {
+    [index: string]: {[index: string]: WikibaseStatement[]};
+  } = {};
   for (const propertyQuad of dataset.match(node)) {
     if (propertyQuad.object.termType === "Literal") {
       if (propertyQuad.object.language !== "en") {
@@ -181,19 +211,32 @@ const getWikibaseItem = (kwds: {
         } else {
           continue;
         }
-      } else if (propertyQuad.predicate.equals(propertyDefinition.directClaim)) {
+      } else if (
+        propertyQuad.predicate.equals(propertyDefinition.directClaim)
+      ) {
         // Direct claim
-        statement = getDirectClaimWikibaseStatement({dataset, statementObject: propertyQuad.object, statementPropertyDefinition: propertyDefinition, statementSubject: node});
+        statement = getDirectClaimWikibaseStatement({
+          dataset,
+          statementObject: propertyQuad.object,
+          statementPropertyDefinition: propertyDefinition,
+          statementSubject: node,
+        });
       } else {
         continue;
       }
       if (!statementsByPropertyUri[propertyDefinition.node.value]) {
         statementsByPropertyUri[propertyDefinition.node.value] = {};
       }
-      if (!statementsByPropertyUri[propertyDefinition.node.value][statement.type]) {
-        statementsByPropertyUri[propertyDefinition.node.value][statement.type] = [];
+      if (
+        !statementsByPropertyUri[propertyDefinition.node.value][statement.type]
+      ) {
+        statementsByPropertyUri[propertyDefinition.node.value][
+          statement.type
+        ] = [];
       }
-      statementsByPropertyUri[propertyDefinition.node.value][statement.type].push(statement);
+      statementsByPropertyUri[propertyDefinition.node.value][
+        statement.type
+      ].push(statement);
     }
   }
 
@@ -215,15 +258,13 @@ const getWikibaseItem = (kwds: {
   }
 
   return {
+    altLabels,
     articles,
     description,
-    labels: {
-      altLabels,
-      prefLabel,
-    },
+    prefLabel,
     node,
-    statements
-  }
+    statements,
+  };
 };
 
 export const getWikibaseItems = (kwds: {
@@ -233,7 +274,7 @@ export const getWikibaseItems = (kwds: {
   const {dataset, includeRedundantStatements} = kwds;
   const propertyDefinitions = getWikibasePropertyDefinitions(dataset);
 
-  const itemsByUri: { [index: string]: WikibaseItem } = {};
+  const itemsByUri: {[index: string]: WikibaseItem} = {};
   for (const quad of dataset.match(null, rdf.type, wikibase.Item)) {
     if (quad.subject.termType !== "NamedNode") {
       continue;
@@ -245,7 +286,7 @@ export const getWikibaseItems = (kwds: {
       dataset,
       includeRedundantStatements,
       node: quad.subject,
-      propertyDefinitions
+      propertyDefinitions,
     });
     if (item !== null) {
       itemsByUri[item.node.value] = item;
@@ -261,12 +302,12 @@ export const getWikibaseItems = (kwds: {
     if (resolvedItem) {
       return {
         type: "WikibaseItem",
-        value: resolvedItem
-      }
+        value: resolvedItem,
+      };
     } else {
       return value;
     }
-  }
+  };
 
   for (const item of Object.values(itemsByUri)) {
     for (const statement of item.statements) {
@@ -287,11 +328,11 @@ export const getWikibaseItems = (kwds: {
 };
 
 const getWikibasePropertyDefinition = (
-    dataset: DatasetCore,
-    node: NamedNode
+  dataset: DatasetCore,
+  node: NamedNode
 ): WikibasePropertyDefinition => {
   const getWikibasePropertyLabels = (
-      predicate: NamedNode
+    predicate: NamedNode
   ): readonly Literal[] => {
     const labels: Literal[] = [];
     for (const quad of dataset.match(node, predicate)) {
@@ -315,27 +356,29 @@ const getWikibasePropertyDefinition = (
     claim: getWikibasePropertyUri(wikibase.claim),
     directClaim: getWikibasePropertyUri(wikibase.directClaim),
     directClaimNormalized: getWikibasePropertyUri(
-        wikibase.directClaimNormalized
+      wikibase.directClaimNormalized
     ),
     labels: getWikibasePropertyLabels(rdfs.label),
     node,
     qualifier: getWikibasePropertyUri(wikibase.qualifier),
     qualifierValue: getWikibasePropertyUri(wikibase.qualifierValue),
     qualifierValueNormalized: getWikibasePropertyUri(
-        wikibase.qualifierValueNormalized
+      wikibase.qualifierValueNormalized
     ),
     statementProperty: getWikibasePropertyUri(wikibase.statementProperty),
     statementValue: getWikibasePropertyUri(wikibase.statementValue),
     statementValueNormalized: getWikibasePropertyUri(
-        wikibase.statementValueNormalized
+      wikibase.statementValueNormalized
     ),
   };
 };
 
 const getWikibasePropertyDefinitions = (
-    dataset: DatasetCore
+  dataset: DatasetCore
 ): readonly WikibasePropertyDefinition[] => {
-  const propertyDefinitionsByUri: {[index: string]: WikibasePropertyDefinition} = {};
+  const propertyDefinitionsByUri: {
+    [index: string]: WikibasePropertyDefinition;
+  } = {};
   for (const quad of dataset.match(null, rdf.type, wikibase.Property)) {
     if (quad.subject.termType !== "NamedNode") {
       continue;
@@ -344,8 +387,8 @@ const getWikibasePropertyDefinitions = (
       continue;
     }
     propertyDefinitionsByUri[
-        quad.subject.value] =
-        getWikibasePropertyDefinition(dataset, quad.subject);
+      quad.subject.value
+    ] = getWikibasePropertyDefinition(dataset, quad.subject);
   }
   return Object.values(propertyDefinitionsByUri);
 };
@@ -355,14 +398,14 @@ const termToWikibaseValue = (term: Term): WikibaseValue => {
     case "Literal":
       return {
         type: "Literal",
-        value: term
+        value: term,
       };
     case "NamedNode":
       return {
         type: "NamedNode",
-        value: term
+        value: term,
       };
     default:
       throw new RangeError(term.termType);
   }
-}
+};
