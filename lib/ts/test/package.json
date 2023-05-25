@@ -13,6 +13,7 @@
     "source-map-support": "0.5.21"
   },
   "devDependencies": {
+    "copyfiles": "2.4.1",
     "rimraf": "3.0.2",
     "ts-node": "^10.9.1",
     "typescript": "^4.5.4"
@@ -23,10 +24,10 @@
   "license": "GPL-3.0-only",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -b",
+    "build": "copyfiles --error -u 1 src/synthetic_data.trig dist && tsc -b",
     "clean": "rimraf dist",
-    "rebuild": "rimraf dist && tsc -b",
-    "watch": "tsc -w --preserveWatchOutput"
+    "rebuild": "rimraf dist && copyfiles --error -u 1 src/synthetic_data.trig dist && tsc -b",
+    "watch": "copyfiles --error -u 1 src/synthetic_data.trig dist && tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"
