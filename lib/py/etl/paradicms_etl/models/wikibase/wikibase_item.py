@@ -72,40 +72,6 @@ class WikibaseItem(ResourceBackedNamedModel):
             if item is not None:
                 items.append(item)
 
-        # Make another pass on items, substituting a WikibaseItem instance for an (internal) URIRef to it
-        items_by_uri = {item.uri: item for item in items}
-
-        for item in items:
-            for statement in item.statements:
-                try:
-                    statement.normalized_value = items_by_uri[
-                        statement.normalized_value
-                    ]
-                except KeyError:
-                    pass
-
-                try:
-                    statement.value = items_by_uri[statement.value]
-                except KeyError:
-                    pass
-
-                for qualifier in statement.qualifiers:
-                    try:
-                        qualifier.normalized_value = items_by_uri[
-                            qualifier.normalized_value
-                        ]
-                    except KeyError:
-                        pass
-
-                    try:
-                        qualifier.value = items_by_uri[qualifier.value]
-                    except KeyError:
-                        pass
-
-        # for item in items:
-        #     if item.uri not in accounted_for_item_uris:
-        #         print("Unaccounted item URI", item.uri)
-
         return tuple(items)
 
     @classmethod
@@ -181,7 +147,6 @@ class WikibaseItem(ResourceBackedNamedModel):
                         WikibaseDirectClaim.from_rdf(
                             graph=resource.graph,
                             object_=object_,
-                            predicate=predicate,
                             property_definition=property_definition,
                             subject=resource.identifier,
                         )
@@ -203,10 +168,11 @@ class WikibaseItem(ResourceBackedNamedModel):
                     object_,
                 )
 
+        statements: List[WikibaseStatement]
         if exclude_redundant_statements:
             # Direct claims often duplicate full statements
             # Only retain the full statement
-            statements: List[WikibaseStatement] = []
+            statements = []
             full_statements_by_property_definition: Dict[
                 int, List[WikibaseFullStatement]
             ] = {}
@@ -238,7 +204,7 @@ class WikibaseItem(ResourceBackedNamedModel):
                     )
                     statements.append(direct_claim)
         else:
-            statements = direct_claims + full_statements
+            statements = direct_claims + full_statements  # type: ignore
 
         if pref_label is None:
             logger.warning("item %s: no pref_label detected", resource.identifier)

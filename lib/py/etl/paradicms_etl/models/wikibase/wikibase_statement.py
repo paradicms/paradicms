@@ -13,15 +13,15 @@ class WikibaseStatement:
     @dataclass
     class Qualifier:
         property_definition: WikibasePropertyDefinition
-        normalized_value: Union[Literal, URIRef, "WikibaseItem"]  # type: ignore # noqa
-        value: Union[Literal, URIRef, "WikibaseItem"]  # type: ignore # noqa
+        normalized_value: Union[Literal, URIRef]
+        value: Union[Literal, URIRef]
 
     property_definition: WikibasePropertyDefinition
-    normalized_value: Union[Literal, None, URIRef, "WikibaseItem"]  # type: ignore # noqa
+    normalized_value: Union[Literal, URIRef, None]  # type: ignore # noqa
     qualifiers: Tuple[
         Qualifier, ...
     ]  # Only full statements have qualifiers, but having this on all statements simplifies other code
-    value: Union[Literal, URIRef, "WikibaseItem"]  # type: ignore # noqa
+    value: Union[Literal, URIRef]  # type: ignore # noqa
 
     def qualifiers_by_property_label(self) -> Dict[str, Qualifier]:
         result = {}

@@ -1,6 +1,7 @@
 from dataclasses import dataclass
+from typing import Union
 
-from rdflib import Graph, URIRef
+from rdflib import Graph, URIRef, Literal
 
 from paradicms_etl.models.wikibase.wikibase_property_definition import (
     WikibasePropertyDefinition,
@@ -15,11 +16,11 @@ class WikibaseDirectClaim(WikibaseStatement):
         cls,
         *,
         graph: Graph,
-        object_: URIRef,
-        predicate: URIRef,
+        object_: Union[Literal, URIRef],
         property_definition: WikibasePropertyDefinition,
         subject: URIRef
     ) -> "WikibaseDirectClaim":
+        normalized_value: Union[Literal, URIRef, None]
         if property_definition.direct_claim_normalized_uri is not None:
             normalized_objects = tuple(
                 graph.objects(
@@ -31,6 +32,7 @@ class WikibaseDirectClaim(WikibaseStatement):
                 assert (
                     len(normalized_objects) == 1
                 ), property_definition.direct_claim_normalized_uri
+                assert isinstance(normalized_objects[0], (Literal, URIRef))
                 normalized_value = normalized_objects[0]
                 print("Value", object_, "normalized value", normalized_value)
             else:
