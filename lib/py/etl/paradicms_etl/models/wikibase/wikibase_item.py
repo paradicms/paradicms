@@ -137,33 +137,29 @@ class WikibaseItem(ResourceBackedNamedModel):
         for predicate, object_ in resource.graph.predicate_objects(
             subject=resource.identifier
         ):
+            if isinstance(object_, Literal):
+                if object_.language != "en":
+                    logger.debug(
+                        "item %s: ignoring non-English literal: %s",
+                        resource.identifier,
+                        object_,
+                    )
+                    continue
+
+                if predicate == SKOS.altLabel:
+                    alt_labels.append(object_.value)
+                    continue
+                elif predicate == SKOS.prefLabel:
+                    pref_label = object_.value
+                    continue
+                elif str(predicate) == "http://schema.org/description":
+                    description = object_.value
+                    continue
+
             if predicate in IGNORE_PREDICATES:
                 logger.debug(
                     "item %s: ignoring predicate %s", resource.identifier, predicate
                 )
-                continue
-
-            if isinstance(object_, Literal) and object_.language != "en":
-                logger.debug(
-                    "item %s: ignoring non-English literal: %s",
-                    resource.identifier,
-                    object_,
-                )
-                continue
-
-            if predicate == SKOS.altLabel:
-                assert isinstance(object_, Literal)
-                alt_labels.append(object_.value)
-                continue
-
-            if predicate == SKOS.prefLabel:
-                assert isinstance(object_, Literal)
-                pref_label = object_.value
-                continue
-
-            if str(predicate) == "http://schema.org/description":
-                assert isinstance(object_, Literal)
-                description = object_.value
                 continue
 
             added_property = False
