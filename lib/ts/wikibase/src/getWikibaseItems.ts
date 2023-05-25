@@ -12,10 +12,10 @@ export const getWikibaseItem = (kwds: {
   node: NamedNode;
   propertyDefinitions: readonly WikibasePropertyDefinition[];
 }): WikibaseItem | null => {
-  return null;
   // const propertyDefinitions =
   //
   // return [];
+  return null;
 };
 
 export const getWikibaseItems = (kwds: {
