@@ -4,6 +4,7 @@ import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
 import {ModelToRdfTriple} from "./ModelToRdfTriple";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {getGraphTriples} from "./getGraphTriples";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: Dataset;
@@ -18,33 +19,7 @@ export abstract class ResourceBackedModel extends Resource implements Model {
   }
 
   toRdf(): readonly ModelToRdfTriple[] {
-    const triples: ModelToRdfTriple[] = [];
-    for (const quad of this.dataset.match(null, null, null, this.graph)) {
-      switch (quad.subject.termType) {
-        case "BlankNode":
-        case "NamedNode":
-          break;
-        default:
-          continue;
-      }
-      if (quad.predicate.termType !== "NamedNode") {
-        continue;
-      }
-      switch (quad.object.termType) {
-        case "BlankNode":
-        case "Literal":
-        case "NamedNode":
-          break;
-        default:
-          continue;
-      }
-      triples.push({
-        subject: quad.subject,
-        predicate: quad.predicate,
-        object: quad.object,
-      });
-    }
-    return triples;
+    return getGraphTriples({dataset: this.dataset, graph: this.graph});
   }
 
   override toString(): string {
