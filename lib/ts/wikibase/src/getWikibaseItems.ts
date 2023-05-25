@@ -8,6 +8,7 @@ import {WikibaseStatement} from "./WikibaseStatement";
 import {WikibaseStatementQualifier} from "./WikibaseStatementQualifier";
 import invariant from "ts-invariant";
 import {WikibaseArticle} from "./WikibaseArticle";
+import {BlankNode, DefaultGraph} from "n3";
 
 const ignoreItemPredicateUris: Set<string> = new Set([
   schema.description.value,
@@ -133,14 +134,21 @@ const getFullWikibaseStatement = (kwds: {
 
 const getWikibaseItem = (kwds: {
   dataset: DatasetCore;
+  graph: BlankNode | DefaultGraph | NamedNode;
+  identifier: NamedNode;
   includeRedundantStatements?: boolean;
-  node: NamedNode;
   propertyDefinitions: readonly WikibasePropertyDefinition[];
 }): WikibaseItem | null => {
-  const {dataset, includeRedundantStatements, node, propertyDefinitions} = kwds;
+  const {
+    dataset,
+    graph,
+    includeRedundantStatements,
+    identifier,
+    propertyDefinitions,
+  } = kwds;
 
   const articles: WikibaseArticle[] = [];
-  for (const aboutQuad of dataset.match(null, schema.about, node)) {
+  for (const aboutQuad of dataset.match(null, schema.about, identifier)) {
     if (aboutQuad.subject.termType !== "NamedNode") {
       continue;
     }
@@ -171,7 +179,7 @@ const getWikibaseItem = (kwds: {
   const statementsByPropertyUri: {
     [index: string]: {[index: string]: WikibaseStatement[]};
   } = {};
-  for (const propertyQuad of dataset.match(node)) {
+  for (const propertyQuad of dataset.match(identifier)) {
     if (propertyQuad.object.termType === "Literal") {
       if (propertyQuad.object.language !== "en") {
         // Ignore non-English literals
@@ -219,7 +227,7 @@ const getWikibaseItem = (kwds: {
           dataset,
           statementObject: propertyQuad.object,
           statementPropertyDefinition: propertyDefinition,
-          statementSubject: node,
+          statementSubject: identifier,
         });
       } else {
         continue;
@@ -261,8 +269,9 @@ const getWikibaseItem = (kwds: {
     altLabels,
     articles,
     description,
+    graph,
+    identifier,
     prefLabel,
-    node,
     statements,
   };
 };
@@ -284,12 +293,13 @@ export const getWikibaseItems = (kwds: {
 
     const item = getWikibaseItem({
       dataset,
+      graph: quad.graph as BlankNode | DefaultGraph | NamedNode,
       includeRedundantStatements,
-      node: quad.subject,
+      identifier: quad.subject,
       propertyDefinitions,
     });
     if (item !== null) {
-      itemsByUri[item.node.value] = item;
+      itemsByUri[item.identifier.value] = item;
     }
   }
 

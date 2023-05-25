@@ -47,7 +47,7 @@ describe("getWikibaseItems", () => {
       expect(items).to.have.length(testWikidataItemFile.itemsCount);
       const fileItem = items.find(
         item =>
-          item.node.value ===
+          item.identifier.value ===
           `http://www.wikidata.org/entity/Q${testWikidataItemFile.qid}`
       );
       expect(fileItem).to.not.be.undefined;
