@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from rdflib import URIRef, Literal, SDO
+from rdflib import URIRef, Literal
 from rdflib.resource import Resource
 
 
@@ -12,10 +12,11 @@ class WikibaseArticle:
 
     @classmethod
     def from_rdf(cls, *, resource: Resource) -> "WikibaseArticle":
-        in_language = resource.value(SDO.inLanguage)
+        # SDO namespace uses https://
+        in_language = resource.value(URIRef("http://schema.org/inLanguage"))
         assert isinstance(in_language, Literal)
 
-        name = resource.value(SDO.name)
+        name = resource.value(URIRef("http://schema.org/name"))
         assert isinstance(name, Literal)
 
         assert isinstance(resource.identifier, URIRef)

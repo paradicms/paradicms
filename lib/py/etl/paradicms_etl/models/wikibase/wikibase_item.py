@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List, Optional, Tuple
 
-from rdflib import Graph, Literal, RDF, RDFS, SKOS, SDO
+from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -52,6 +52,7 @@ class WikibaseItem(ResourceBackedNamedModel):
         cls,
         *,
         graph: Graph,
+        exclude_redundant_statements: bool = True,
         property_definitions: Optional[Tuple[WikibasePropertyDefinition, ...]] = None,
     ) -> Tuple["WikibaseItem", ...]:
         """
@@ -64,6 +65,7 @@ class WikibaseItem(ResourceBackedNamedModel):
         items = []
         for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
             item = cls.__from_wikidata_rdf(
+                exclude_redundant_statements=exclude_redundant_statements,
                 property_definitions=property_definitions,
                 resource=graph.resource(item_subject),
             )
@@ -110,6 +112,7 @@ class WikibaseItem(ResourceBackedNamedModel):
     def __from_wikidata_rdf(
         cls,
         *,
+        exclude_redundant_statements: bool,
         property_definitions: Tuple[WikibasePropertyDefinition, ...],
         resource: Resource,
     ):
@@ -117,7 +120,13 @@ class WikibaseItem(ResourceBackedNamedModel):
         Read the item corresponding to the given URI.
         """
 
-        IGNORE_PREDICATES = {SDO.description, SDO.name, RDF.type, RDFS.label}
+        IGNORE_PREDICATES = {
+            # SDO namespace uses https://
+            URIRef("http://schema.org/description"),
+            URIRef("http://schema.org/name"),
+            RDF.type,
+            RDFS.label,
+        }
 
         alt_labels = []
         description = None
@@ -152,7 +161,7 @@ class WikibaseItem(ResourceBackedNamedModel):
                 pref_label = object_.value
                 continue
 
-            if predicate == SDO.description:
+            if str(predicate) == "http://schema.org/description":
                 assert isinstance(object_, Literal)
                 description = object_.value
                 continue
@@ -198,39 +207,42 @@ class WikibaseItem(ResourceBackedNamedModel):
                     object_,
                 )
 
-        # Direct claims often duplicate full statements
-        # Only retain the full statement
-        statements: List[WikibaseStatement] = []
-        full_statements_by_property_definition: Dict[
-            int, List[WikibaseFullStatement]
-        ] = {}
-        for full_statement in full_statements:
-            full_statements_by_property_definition.setdefault(
-                id(full_statement.property_definition), []
-            ).append(full_statement)
-            # Assume full statements don't duplicate each other
-            statements.append(full_statement)
-        for direct_claim in direct_claims:
-            duplicate = False
-            for full_statement in full_statements_by_property_definition.get(
-                id(direct_claim.property_definition), []
-            ):
-                if full_statement.value == direct_claim.value:
-                    duplicate = True
-                    break
-            if duplicate:
-                logger.debug(
-                    "item %s: direct claim %s has a corresponding full statement, eliding",
-                    resource.identifier,
-                    direct_claim.property_definition.direct_claim_uri,
-                )
-            else:
-                logger.debug(
-                    "item %s: direct claim %s has no corresponding full statement",
-                    resource.identifier,
-                    direct_claim.property_definition.direct_claim_uri,
-                )
-                statements.append(direct_claim)
+        if exclude_redundant_statements:
+            # Direct claims often duplicate full statements
+            # Only retain the full statement
+            statements: List[WikibaseStatement] = []
+            full_statements_by_property_definition: Dict[
+                int, List[WikibaseFullStatement]
+            ] = {}
+            for full_statement in full_statements:
+                full_statements_by_property_definition.setdefault(
+                    id(full_statement.property_definition), []
+                ).append(full_statement)
+                # Assume full statements don't duplicate each other
+                statements.append(full_statement)
+            for direct_claim in direct_claims:
+                duplicate = False
+                for full_statement in full_statements_by_property_definition.get(
+                    id(direct_claim.property_definition), []
+                ):
+                    if full_statement.value == direct_claim.value:
+                        duplicate = True
+                        break
+                if duplicate:
+                    logger.debug(
+                        "item %s: direct claim %s has a corresponding full statement, eliding",
+                        resource.identifier,
+                        direct_claim.property_definition.direct_claim_uri,
+                    )
+                else:
+                    logger.debug(
+                        "item %s: direct claim %s has no corresponding full statement",
+                        resource.identifier,
+                        direct_claim.property_definition.direct_claim_uri,
+                    )
+                    statements.append(direct_claim)
+        else:
+            statements = direct_claims + full_statements
 
         if pref_label is None:
             logger.warning("item %s: no pref_label detected", resource.identifier)
@@ -240,9 +252,15 @@ class WikibaseItem(ResourceBackedNamedModel):
             articles=tuple(
                 WikibaseArticle.from_rdf(resource=resource.graph.resource(article_uri))
                 for article_uri in resource.graph.subjects(
-                    predicate=SDO.about, object=resource.identifier
+                    # SDO namespace uses https://
+                    predicate=URIRef("http://schema.org/about"),
+                    object=resource.identifier,
                 )
-                if tuple(resource.graph.triples((article_uri, RDF.type, SDO.Article)))
+                if tuple(
+                    resource.graph.triples(
+                        (article_uri, RDF.type, URIRef("http://schema.org/Article"))
+                    )
+                )
             ),
             description=description,
             labels=WikibaseItemLabels(
