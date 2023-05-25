@@ -8,7 +8,7 @@ from rdflib.resource import Resource
 
 from paradicms_etl.extractors.wikidata_qid_extractor import WikidataQidExtractor
 from paradicms_etl.model import Model
-from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
+from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 
 class WikidataEnricher:
@@ -29,12 +29,12 @@ class WikidataEnricher:
 
             yield model
 
-    def __get_wikidata_item(self, qid: str) -> WikidataItem:
+    def __get_wikidata_item(self, qid: str) -> WikibaseItem:
         qid_uri = URIRef(f"http://www.wikidata.org/entity/{qid}")
         graph = WikidataQidExtractor(cache_dir_path=self.__cache_dir_path, qids=(qid,))(
             force=False
         )["graph"]
-        wikidata_items = WikidataItem.from_wikidata_rdf(
+        wikidata_items = WikibaseItem.from_wikidata_rdf(
             graph=graph,
         )
         assert len(wikidata_items)

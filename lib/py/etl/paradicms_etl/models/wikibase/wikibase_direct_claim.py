@@ -2,14 +2,14 @@ from dataclasses import dataclass
 
 from rdflib import Graph, URIRef
 
-from paradicms_etl.models.wikidata.wikidata_property_definition import (
-    WikidataPropertyDefinition,
+from paradicms_etl.models.wikibase.wikibase_property_definition import (
+    WikibasePropertyDefinition,
 )
-from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
 
 
 @dataclass
-class WikidataDirectClaim(WikidataStatement):
+class WikibaseDirectClaim(WikibaseStatement):
     @classmethod
     def from_rdf(
         cls,
@@ -17,9 +17,9 @@ class WikidataDirectClaim(WikidataStatement):
         graph: Graph,
         object_: URIRef,
         predicate: URIRef,
-        property_definition: WikidataPropertyDefinition,
+        property_definition: WikibasePropertyDefinition,
         subject: URIRef
-    ) -> "WikidataDirectClaim":
+    ) -> "WikibaseDirectClaim":
         if property_definition.direct_claim_normalized_uri is not None:
             normalized_objects = tuple(
                 graph.objects(

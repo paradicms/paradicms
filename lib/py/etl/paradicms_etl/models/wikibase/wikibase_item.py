@@ -5,27 +5,27 @@ from rdflib import Graph, Literal, RDF, RDFS, SKOS, SDO
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
-from paradicms_etl.models.wikidata.wikidata_article import WikidataArticle
-from paradicms_etl.models.wikidata.wikidata_direct_claim import WikidataDirectClaim
-from paradicms_etl.models.wikidata.wikidata_full_statement import WikidataFullStatement
-from paradicms_etl.models.wikidata.wikidata_item_labels import WikidataItemLabels
-from paradicms_etl.models.wikidata.wikidata_property_definition import (
-    WikidataPropertyDefinition,
+from paradicms_etl.models.wikibase.wikibase_article import WikibaseArticle
+from paradicms_etl.models.wikibase.wikibase_direct_claim import WikibaseDirectClaim
+from paradicms_etl.models.wikibase.wikibase_full_statement import WikibaseFullStatement
+from paradicms_etl.models.wikibase.wikibase_item_labels import WikibaseItemLabels
+from paradicms_etl.models.wikibase.wikibase_property_definition import (
+    WikibasePropertyDefinition,
 )
-from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
 from paradicms_etl.namespaces import WIKIBASE
 
 logger = logging.getLogger(__name__)
 
 
-class WikidataItem(ResourceBackedNamedModel):
+class WikibaseItem(ResourceBackedNamedModel):
     def __init__(
         self,
         *,
-        articles: Tuple[WikidataArticle, ...],
+        articles: Tuple[WikibaseArticle, ...],
         description: Optional[str],
-        labels: WikidataItemLabels,
-        statements: Tuple[WikidataStatement, ...],
+        labels: WikibaseItemLabels,
+        statements: Tuple[WikibaseStatement, ...],
         resource: Resource,
     ):
         ResourceBackedNamedModel.__init__(self, resource)
@@ -35,12 +35,12 @@ class WikidataItem(ResourceBackedNamedModel):
         self.__statements = statements
 
     def __eq__(self, other):
-        if not isinstance(other, WikidataItem):
+        if not isinstance(other, WikibaseItem):
             return False
         return self.uri == other.uri
 
     @property
-    def articles(self) -> Tuple[WikidataArticle, ...]:
+    def articles(self) -> Tuple[WikibaseArticle, ...]:
         return self.__articles
 
     @property
@@ -52,14 +52,14 @@ class WikidataItem(ResourceBackedNamedModel):
         cls,
         *,
         graph: Graph,
-        property_definitions: Optional[Tuple[WikidataPropertyDefinition, ...]] = None,
-    ) -> Tuple["WikidataItem", ...]:
+        property_definitions: Optional[Tuple[WikibasePropertyDefinition, ...]] = None,
+    ) -> Tuple["WikibaseItem", ...]:
         """
         Read all items from the graph and return a tuple of them.
         """
 
         if property_definitions is None:
-            property_definitions = WikidataPropertyDefinition.from_rdf(graph=graph)
+            property_definitions = WikibasePropertyDefinition.from_rdf(graph=graph)
 
         items = []
         for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
@@ -70,7 +70,7 @@ class WikidataItem(ResourceBackedNamedModel):
             if item is not None:
                 items.append(item)
 
-        # Make another pass on items, substituting a WikidataItem instance for an (internal) URIRef to it
+        # Make another pass on items, substituting a WikibaseItem instance for an (internal) URIRef to it
         items_by_uri = {item.uri: item for item in items}
 
         for item in items:
@@ -110,7 +110,7 @@ class WikidataItem(ResourceBackedNamedModel):
     def __from_wikidata_rdf(
         cls,
         *,
-        property_definitions: Tuple[WikidataPropertyDefinition, ...],
+        property_definitions: Tuple[WikibasePropertyDefinition, ...],
         resource: Resource,
     ):
         """
@@ -162,7 +162,7 @@ class WikidataItem(ResourceBackedNamedModel):
                 if predicate == property_definition.claim_uri:
                     try:
                         full_statements.append(
-                            WikidataFullStatement.from_rdf(
+                            WikibaseFullStatement.from_rdf(
                                 property_definitions=property_definitions,
                                 resource=resource.graph.resource(object_),
                             )
@@ -173,7 +173,7 @@ class WikidataItem(ResourceBackedNamedModel):
                         pass
                 elif predicate == property_definition.direct_claim_uri:
                     direct_claims.append(
-                        WikidataDirectClaim.from_rdf(
+                        WikibaseDirectClaim.from_rdf(
                             graph=resource.graph,
                             object_=object_,
                             predicate=predicate,
@@ -200,9 +200,9 @@ class WikidataItem(ResourceBackedNamedModel):
 
         # Direct claims often duplicate full statements
         # Only retain the full statement
-        statements: List[WikidataStatement] = []
+        statements: List[WikibaseStatement] = []
         full_statements_by_property_definition: Dict[
-            int, List[WikidataFullStatement]
+            int, List[WikibaseFullStatement]
         ] = {}
         for full_statement in full_statements:
             full_statements_by_property_definition.setdefault(
@@ -238,14 +238,14 @@ class WikidataItem(ResourceBackedNamedModel):
 
         return cls(
             articles=tuple(
-                WikidataArticle.from_rdf(resource=resource.graph.resource(article_uri))
+                WikibaseArticle.from_rdf(resource=resource.graph.resource(article_uri))
                 for article_uri in resource.graph.subjects(
                     predicate=SDO.about, object=resource.identifier
                 )
                 if tuple(resource.graph.triples((article_uri, RDF.type, SDO.Article)))
             ),
             description=description,
-            labels=WikidataItemLabels(
+            labels=WikibaseItemLabels(
                 alt_labels=tuple(sorted(alt_labels)) if alt_labels else None,
                 pref_label=pref_label,
             ),
@@ -258,7 +258,7 @@ class WikidataItem(ResourceBackedNamedModel):
         return self.labels.pref_label
 
     @property
-    def labels(self) -> WikidataItemLabels:
+    def labels(self) -> WikibaseItemLabels:
         return self.__labels
 
     @classmethod
@@ -266,11 +266,11 @@ class WikidataItem(ResourceBackedNamedModel):
         return WIKIBASE.Item
 
     @property
-    def statements(self) -> Tuple[WikidataStatement, ...]:
+    def statements(self) -> Tuple[WikibaseStatement, ...]:
         return self.__statements
 
-    def statements_by_property_label(self) -> Dict[str, List[WikidataStatement]]:
-        result: Dict[str, List[WikidataStatement]] = {}
+    def statements_by_property_label(self) -> Dict[str, List[WikibaseStatement]]:
+        result: Dict[str, List[WikibaseStatement]] = {}
         for statement in self.statements:
             result.setdefault(statement.property_definition.label, []).append(statement)
         return result

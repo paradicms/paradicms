@@ -9,7 +9,7 @@ from paradicms_etl.namespaces import CMS
 
 
 @dataclass(frozen=True)
-class WikidataItemLabels:
+class WikibaseItemLabels:
     pref_label: str
     acronym: Optional[str] = None
     alt_labels: Optional[Tuple[str, ...]] = None

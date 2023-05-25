@@ -7,17 +7,17 @@ from rdflib import Graph, Literal, PROV, RDF, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_date_time_description import CmsDateTimeDescription
-from paradicms_etl.models.wikidata.wikidata_property_definition import (
-    WikidataPropertyDefinition,
+from paradicms_etl.models.wikibase.wikibase_property_definition import (
+    WikibasePropertyDefinition,
 )
-from paradicms_etl.models.wikidata.wikidata_statement import WikidataStatement
+from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
 from paradicms_etl.namespaces import WIKIBASE
 
 logger = logging.getLogger(__name__)
 
 
 @dataclass
-class WikidataFullStatement(WikidataStatement):
+class WikibaseFullStatement(WikibaseStatement):
     __IGNORE_PREDICATES = {PROV.wasDerivedFrom, WIKIBASE.rank}
     __IGNORE_VALUE_TYPES = {WIKIBASE.GlobecoordinateValue, WIKIBASE.QuantityValue}
 
@@ -25,9 +25,9 @@ class WikidataFullStatement(WikidataStatement):
     def from_rdf(
         cls,
         *,
-        property_definitions: Tuple[WikidataPropertyDefinition, ...],
+        property_definitions: Tuple[WikibasePropertyDefinition, ...],
         resource: Resource
-    ) -> "WikidataFullStatement":
+    ) -> "WikibaseFullStatement":
         normalized_value = None
         qualifiers = []
         value = None

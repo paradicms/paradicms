@@ -5,13 +5,13 @@ from rdflib.resource import Resource
 
 
 @dataclass(frozen=True)
-class WikidataArticle:
+class WikibaseArticle:
     in_language: str
     name: str
     uri: URIRef
 
     @classmethod
-    def from_rdf(cls, *, resource: Resource) -> "WikidataArticle":
+    def from_rdf(cls, *, resource: Resource) -> "WikibaseArticle":
         in_language = resource.value(SDO.inLanguage)
         assert isinstance(in_language, Literal)
 

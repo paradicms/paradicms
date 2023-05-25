@@ -37,7 +37,7 @@ class CMS(DefinedNamespace):
     PropertyGroup: URIRef
     RightsStatement: URIRef
     Text: URIRef
-    WikidataItem: URIRef
+    WikibaseItem: URIRef
     Work: URIRef
     WorkClosing: URIRef
     WorkCreation: URIRef

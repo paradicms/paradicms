@@ -4,7 +4,7 @@ from rdflib import URIRef
 
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.wikidata.wikidata_item import WikidataItem
+from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 
 def test_enrich(synthetic_data_models, tmp_path: Path):
@@ -16,7 +16,7 @@ def test_enrich(synthetic_data_models, tmp_path: Path):
         for model in enriched_models
     )
     assert any(
-        isinstance(model, WikidataItem)
+        isinstance(model, WikibaseItem)
         and model.uri == URIRef("http://www.wikidata.org/entity/Q7251")
         for model in enriched_models
     )

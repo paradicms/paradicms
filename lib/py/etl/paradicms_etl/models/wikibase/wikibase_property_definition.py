@@ -7,7 +7,7 @@ from paradicms_etl.namespaces import WIKIBASE
 
 
 @dataclass(frozen=True)
-class WikidataPropertyDefinition:
+class WikibasePropertyDefinition:
     entity_uri: URIRef
     label: str
     claim_uri: Optional[URIRef] = None
@@ -21,7 +21,7 @@ class WikidataPropertyDefinition:
     statement_value_uri: Optional[URIRef] = None
 
     @classmethod
-    def from_rdf(cls, *, graph: Graph) -> Tuple["WikidataPropertyDefinition", ...]:
+    def from_rdf(cls, *, graph: Graph) -> Tuple["WikibasePropertyDefinition", ...]:
         """
         Return property definitions from the graph and return a tuple of them.
         """
