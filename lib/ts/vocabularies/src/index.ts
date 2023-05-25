@@ -3,3 +3,5 @@ export {strict as cms} from "./cms";
 export {strict as configuration} from "./configuration";
 export {strict as contact} from "./contact";
 export {strict as vra} from "./vra";
+export {loose as wd} from "./wd";
+export {strict as wikibase} from "./wikibase";

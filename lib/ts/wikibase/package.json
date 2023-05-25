@@ -1,7 +1,7 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/wikidata",
-  "description": "Paradicms Wikidata library",
+  "name": "@paradicms/wikibase",
+  "description": "Paradicms library for parsing Wikibase RDF",
   "dependencies": {
     "@rdfjs/data-model": "^1.2",
     "@rdfjs/types": "1.1.0",

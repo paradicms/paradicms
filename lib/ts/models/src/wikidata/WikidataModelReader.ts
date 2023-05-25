@@ -13,6 +13,10 @@ import {PropertyGroup} from "../PropertyGroup";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {Work} from "../Work";
 import {DatasetModelReader} from "../DatasetModelReader";
+import {getWikibaseItems, WikibaseItem} from "@paradicms/wikibase";
+import {wd} from "@paradicms/vocabularies";
+import {Memoize} from "typescript-memoize";
+import {WikidataPerson} from "./WikidataPerson";
 
 export class WikidataModelReader extends DatasetModelReader {
   readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null {
@@ -44,7 +48,14 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
-    return [];
+    return (this.wikibaseItemsByInstanceOfUri[wd["Q5"].value] ?? []).map(
+      wikibaseItem =>
+        new WikidataPerson({
+          dataset: this.dataset,
+          modelSet: kwds.modelSet,
+          wikibaseItem,
+        })
+    );
   }
 
   readNamedRightsStatements(kwds: {
@@ -67,5 +78,35 @@ export class WikidataModelReader extends DatasetModelReader {
 
   readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
     return [];
+  }
+
+  @Memoize()
+  private get wikibaseItems(): readonly WikibaseItem[] {
+    return getWikibaseItems({dataset: this.dataset});
+  }
+
+  @Memoize()
+  private get wikibaseItemsByInstanceOfUri(): {
+    [index: string]: readonly WikibaseItem[];
+  } {
+    const result: {[index: string]: WikibaseItem[]} = {};
+    const instanceOfProperty = wd["P31"];
+    for (const wikibaseItem of this.wikibaseItems) {
+      for (const statement of wikibaseItem.statements) {
+        if (
+          statement.propertyDefinition.node.value !== instanceOfProperty.value
+        ) {
+          continue;
+        }
+        if (statement.value.type !== "NamedNode") {
+          continue;
+        }
+        if (!result[statement.value.value.value]) {
+          result[statement.value.value.value] = [];
+        }
+        result[statement.value.value.value].push(wikibaseItem);
+      }
+    }
+    return result;
   }
 }

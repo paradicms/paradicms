@@ -1,7 +1,6 @@
 import {WikibaseArticle} from "./WikibaseArticle";
 import {WikibaseStatement} from "./WikibaseStatement";
-import {NamedNode} from "@rdfjs/types";
-import {BlankNode, DefaultGraph} from "n3";
+import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 
 export interface WikibaseItem {
   readonly altLabels: readonly string[];

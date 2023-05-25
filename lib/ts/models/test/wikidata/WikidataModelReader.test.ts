@@ -8,6 +8,13 @@ describe("WikidataModelReader", () => {
   const sut = new WikidataModelReader(datasetCoreToDataset(syntheticData));
 
   it("should read at least one named Person", () => {
-    expect(sut.readNamedPeople({modelSet: dummyModelSet})).not.to.be.empty;
+    const people = sut.readNamedPeople({modelSet: dummyModelSet});
+    expect(people).not.to.be.empty;
+    for (const person of people) {
+      expect(person.familyName).not.to.be.null;
+      expect(person.familyName).not.to.be.empty;
+      expect(person.givenName).not.to.be.null;
+      expect(person.givenName).not.to.be.empty;
+    }
   });
 });

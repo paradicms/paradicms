@@ -5,6 +5,7 @@
   "dependencies": {
     "@paradicms/rdf": "1.0.5",
     "@paradicms/vocabularies": "1.0.5",
+    "@paradicms/wikibase": "1.0.5",
     "any-date-parser": "1.5.4",
     "dayjs": "1.10.7",
     "ts-mixer": "6.0.0",
