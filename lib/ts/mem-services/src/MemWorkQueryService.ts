@@ -161,7 +161,7 @@ export class MemWorkQueryService implements WorkQueryService {
             propertyUri: concreteFilter.propertyUri,
             type: "StringPropertyValue",
             unknownCount,
-            values: Object.keys(facetValues).map(value => facetValues[value]),
+            values: Object.values(facetValues),
           };
           facets.push(facet);
           break;
@@ -224,9 +224,7 @@ export class MemWorkQueryService implements WorkQueryService {
           agentsByUri[agent.agent.uri] = agent.agent;
         }
       }
-      const agents = Object.keys(agentsByUri).map(
-        agentUri => agentsByUri[agentUri]
-      );
+      const agents = Object.values(agentsByUri);
 
       const sortedAgents = agents;
       MemWorkQueryService.sortWorkAgentsInPlace(
