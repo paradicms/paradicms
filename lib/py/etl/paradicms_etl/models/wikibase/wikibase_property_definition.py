@@ -14,8 +14,8 @@ class WikibasePropertyDefinition:
     direct_claim_normalized_uri: Optional[URIRef] = None
     direct_claim_uri: Optional[URIRef] = None
     qualifier_uri: Optional[URIRef] = None
-    qualifier_value_uri: Optional[URIRef] = None
     qualifier_value_normalized_uri: Optional[URIRef] = None
+    qualifier_value_uri: Optional[URIRef] = None
     statement_property_uri: Optional[URIRef] = None
     statement_value_normalized_uri: Optional[URIRef] = None
     statement_value_uri: Optional[URIRef] = None
