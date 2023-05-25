@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple, Dict, Iterable
+from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
@@ -16,7 +16,6 @@ from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_agent import CmsAgent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
@@ -43,30 +42,6 @@ from paradicms_etl.pipeline import Pipeline
 
 class SyntheticDataPipeline(Pipeline):
     ID = "synthetic_data"
-
-    class __SyntheticDataTsLoader:
-        def __init__(self, *, rdf_file_path: Path, ts_file_path: Path):
-            self.__rdf_file_path = rdf_file_path
-            self.__ts_file_path = ts_file_path
-
-        def __call__(self, *, models: Iterable[Model], **kwds) -> Iterable[Model]:
-            with open(self.__rdf_file_path) as rdf_file:
-                rdf = rdf_file.read().rstrip()
-
-            with open(self.__ts_file_path, "w+") as ts_file:
-                ts_file.write(
-                    """\
-import {trigStringToDatasetCore} from "./trigStringToDatasetCore";
-import {DatasetCore} from "@rdfjs/types";
-
-export const syntheticData: DatasetCore = trigStringToDatasetCore(`
-%s
-`);
-"""
-                    % rdf
-                )
-
-            yield from models
 
     class __SyntheticDataTransformer:
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
@@ -567,15 +542,6 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     ),
                     RdfFileLoader(
                         rdf_file_path=rdf_file_path,
-                    ),
-                    self.__SyntheticDataTsLoader(
-                        rdf_file_path=rdf_file_path,
-                        ts_file_path=root_dir_path
-                        / "lib"
-                        / "ts"
-                        / "test"
-                        / "src"
-                        / "syntheticData.ts",
                     ),
                 )
             )
