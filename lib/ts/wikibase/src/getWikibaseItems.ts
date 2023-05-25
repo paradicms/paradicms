@@ -1,4 +1,4 @@
-import {Dataset, Literal, NamedNode, Term} from "@rdfjs/types";
+import {DatasetCore, Literal, NamedNode, Term} from "@rdfjs/types";
 import {WikibaseItem} from "./WikibaseItem";
 import {WikibasePropertyDefinition} from "./WikibasePropertyDefinition";
 import {prov, rdf, rdfs, schema, skos} from "@tpluscode/rdf-ns-builders";
@@ -13,7 +13,7 @@ const ignoreItemPredicateUris: Set<string> = new Set([schema.description.value, 
 const ignoreStatementPredicateUris: Set<string> = new Set([prov.wasDerivedFrom.value, rdf.type.value, wikibase.rank.value])
 
 const getDirectClaimWikibaseStatement = (kwds: {
-  dataset: Dataset,
+  dataset: DatasetCore,
   statementObject: Term
   statementPropertyDefinition: WikibasePropertyDefinition,
   statementSubject: NamedNode,
@@ -38,7 +38,7 @@ const getDirectClaimWikibaseStatement = (kwds: {
 
 const getFullWikibaseStatement = (kwds: {
   propertyDefinitions: readonly WikibasePropertyDefinition[],
-  dataset: Dataset,
+  dataset: DatasetCore,
   statementNode: NamedNode
 }): WikibaseStatement | null => {
   const {dataset, propertyDefinitions, statementNode} = kwds;
@@ -104,7 +104,7 @@ const getFullWikibaseStatement = (kwds: {
 }
 
 const getWikibaseItem = (kwds: {
-  dataset: Dataset;
+  dataset: DatasetCore;
   includeRedundantStatements?: boolean;
   node: NamedNode;
   propertyDefinitions: readonly WikibasePropertyDefinition[];
@@ -227,7 +227,7 @@ const getWikibaseItem = (kwds: {
 };
 
 export const getWikibaseItems = (kwds: {
-  dataset: Dataset;
+  dataset: DatasetCore;
   includeRedundantStatements?: boolean;
 }): readonly WikibaseItem[] => {
   const {dataset, includeRedundantStatements} = kwds;
@@ -287,7 +287,7 @@ export const getWikibaseItems = (kwds: {
 };
 
 const getWikibasePropertyDefinition = (
-    dataset: Dataset,
+    dataset: DatasetCore,
     node: NamedNode
 ): WikibasePropertyDefinition => {
   const getWikibasePropertyLabels = (
@@ -333,7 +333,7 @@ const getWikibasePropertyDefinition = (
 };
 
 const getWikibasePropertyDefinitions = (
-    dataset: Dataset
+    dataset: DatasetCore
 ): readonly WikibasePropertyDefinition[] => {
   const propertyDefinitionsByUri: {[index: string]: WikibasePropertyDefinition} = {};
   for (const quad of dataset.match(null, rdf.type, wikibase.Property)) {
