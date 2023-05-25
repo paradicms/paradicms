@@ -6,5 +6,6 @@ export interface WikibaseStatement {
   readonly propertyDefinition: WikibasePropertyDefinition;
   normalizedValue: WikibaseValue | null;
   readonly qualifiers: readonly WikibaseStatementQualifier[];
+  readonly type: "Direct" | "Full";
   value: WikibaseValue;
 }

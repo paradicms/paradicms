@@ -151,25 +151,28 @@ const datasetCoreToDataset = (datasetCore: DatasetCore): Dataset => {
 
 interface TestWikidataItemFile {
     articlesCount: number;
+    directClaimsCount: number;
+    fullStatementsCount: number;
     itemsCount: number;
     qid: number,
-    statementsCount: number;
     ttl: string;
 }
 
 const testWikidataItemFiles: TestWikidataItemFile[] = [
     {
         articlesCount: 173,
+        directClaimsCount: 77,
+        fullStatementsCount: 223,
         itemsCount: 122,
         qid: 7251,
-        statementsCount: 300,
         ttl: require("./data/Q7251.ttl")
     },
     {
         articlesCount: 71,
+        directClaimsCount: 62,
+        fullStatementsCount: 105,
         itemsCount: 81,
         qid: 92614,
-        statementsCount: 167,
         ttl: require("./data/Q92614.ttl")
     }
 ];
@@ -182,14 +185,16 @@ describe("getWikibaseItems", () => {
            const dataset = datasetCoreToDataset(store);
            const items = getWikibaseItems({
                dataset,
-               excludeRedundantStatements: true
+               includeRedundantStatements: true
            });
            expect(items).to.have.length(testWikidataItemFile.itemsCount);
-           const fileItem = items.find(item => item.node.value === `http://www.wikidata.org/entity/${testWikidataItemFile.qid}`);
+           const fileItem = items.find(item => item.node.value === `http://www.wikidata.org/entity/Q${testWikidataItemFile.qid}`);
            expect(fileItem).to.not.be.undefined;
            expect(fileItem!.articles).to.have.length(testWikidataItemFile.articlesCount);
            expect(fileItem!.labels).to.not.be.empty;
-           expect(fileItem!.statements).to.have.length(testWikidataItemFile.statementsCount);
+           expect(fileItem!.statements).to.have.length(testWikidataItemFile.directClaimsCount + testWikidataItemFile.fullStatementsCount);
+           expect(fileItem!.statements.filter(statement => statement.type === "Direct")).to.have.length(testWikidataItemFile.directClaimsCount);
+           expect(fileItem!.statements.filter(statement => statement.type === "Full")).to.have.length(testWikidataItemFile.fullStatementsCount);
        })
     });
 });

@@ -15,6 +15,7 @@ interface Wikibase {
   qualifierValueNormalized: NamedNode<
     "http://wikiba.se/ontology#qualifierValueNormalized"
   >;
+  rank: NamedNode<"http://wikiba.se/ontology#rank">;
   statementProperty: NamedNode<"http://wikiba.se/ontology#statementProperty">;
   statementValue: NamedNode<"http://wikiba.se/ontology#statementValue">;
   statementValueNormalized: NamedNode<
