@@ -35,11 +35,11 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
             self.add(DCTERMS.provenance, provenance)
             return self
 
-        def add_relation(self, relation: URIRef) -> "CmsAgent.Builder":
+        def add_relation(self, relation: URIRef) -> "CmsWork.Builder":
             self.add(DCTERMS.relation, relation)
             return self
 
-        def add_same_as(self, same_as: URIRef) -> "CmsAgent.Builder":
+        def add_same_as(self, same_as: URIRef) -> "CmsWork.Builder":
             self.add(OWL.sameAs, same_as)
             return self
 
