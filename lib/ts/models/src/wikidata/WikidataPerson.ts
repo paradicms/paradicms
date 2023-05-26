@@ -5,17 +5,11 @@ import {wd} from "@paradicms/vocabularies";
 
 export class WikidataPerson extends WikidataModel implements Person {
   get familyName(): string | null {
-    return this.findAndMapStatementValue(
-      wd["P734"],
-      this.mapStringStatementValue
-    );
+    return this.findAndMapStatementValue(wd["P734"], this.mapStringObject);
   }
 
   get givenName(): string | null {
-    return this.findAndMapStatementValue(
-      wd["P735"],
-      this.mapStringStatementValue
-    );
+    return this.findAndMapStatementValue(wd["P735"], this.mapStringObject);
   }
 
   readonly sortName = null;

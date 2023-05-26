@@ -2,9 +2,8 @@ import {
   WikibaseArticle,
   WikibaseItem,
   WikibaseStatement,
-  WikibaseValue,
 } from "@paradicms/wikibase";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {Dataset, Literal, NamedNode} from "@rdfjs/types";
 import {ModelSet} from "../ModelSet";
 import {RelationsMixin} from "../RelationsMixin";
 import {ImagesMixin} from "../ImagesMixin";
@@ -12,12 +11,10 @@ import {Image} from "../Image";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import {NamedModel} from "../NamedModel";
-import {ModelToRdfTriple} from "../ModelToRdfTriple";
-import {getGraphTriples} from "../getGraphTriples";
+import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 
-export abstract class WikidataModel
+export abstract class WikidataModel extends ResourceBackedNamedModel
   implements ImagesMixin, RelationsMixin, NamedModel, WikibaseItem {
-  private readonly dataset: Dataset;
   private readonly wikibaseItem: WikibaseItem;
 
   constructor(kwds: {
@@ -25,7 +22,12 @@ export abstract class WikidataModel
     modelSet: ModelSet;
     wikibaseItem: WikibaseItem;
   }) {
-    this.dataset = kwds.dataset;
+    super({
+      dataset: kwds.dataset,
+      graph: kwds.wikibaseItem.graph,
+      identifier: kwds.wikibaseItem.identifier,
+      modelSet: kwds.modelSet,
+    });
     this.wikibaseItem = kwds.wikibaseItem;
   }
 
@@ -56,7 +58,7 @@ export abstract class WikidataModel
 
   protected findAndMapStatementValue<T>(
     property: NamedNode,
-    callback: (value: WikibaseValue) => NonNullable<T> | null
+    callback: (value: Literal | NamedNode) => NonNullable<T> | null
   ): NonNullable<T> | null {
     return this.findAndMapStatement(property, statement =>
       callback(statement.value)
@@ -79,34 +81,19 @@ export abstract class WikidataModel
 
   protected filterAndMapStatementValues<T>(
     property: NamedNode,
-    callback: (value: WikibaseValue) => NonNullable<T> | null
+    callback: (value: Literal | NamedNode) => NonNullable<T> | null
   ): readonly NonNullable<T>[] {
     return this.filterAndMapStatements(property, statement =>
       callback(statement.value)
     );
   }
 
-  get graph(): BlankNode | DefaultGraph | NamedNode {
-    return this.wikibaseItem.graph;
-  }
-
   get images(): readonly Image[] {
     return [];
   }
 
-  get identifier(): NamedNode {
-    return this.wikibaseItem.identifier;
-  }
-
   get label(): string {
     return this.prefLabel ?? this.identifier.value;
-  }
-
-  protected mapStringStatementValue(value: WikibaseValue): string | null {
-    if (value.type !== "Literal") {
-      return null;
-    }
-    return value.value.value;
   }
 
   get originalImages(): readonly Image[] {
@@ -125,28 +112,8 @@ export abstract class WikidataModel
     return this.wikibaseItem.statements;
   }
 
-  // @Memoize()
-  // statementValues(property: NamedNode): readonly WikibaseValue[] {
-  //   return this.wikibaseItem.statements
-  //     .filter(
-  //       statement => statement.propertyDefinition.node.value === property.value
-  //     )
-  //     .map(statement => statement.value);
-  // }
-
   thumbnail(selector: ThumbnailSelector): Image | null {
     return selectThumbnail(this.images, selector);
-  }
-
-  toRdf(): readonly ModelToRdfTriple[] {
-    return getGraphTriples({
-      dataset: this.dataset,
-      graph: this.wikibaseItem.graph,
-    });
-  }
-
-  get uri(): string {
-    return this.identifier.value;
   }
 
   get wikidataConceptUri(): string | null {
