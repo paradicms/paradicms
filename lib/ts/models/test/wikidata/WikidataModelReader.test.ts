@@ -17,4 +17,12 @@ describe("WikidataModelReader", () => {
       expect(person.givenName).not.to.be.empty;
     }
   });
+
+  it("should read at least one Work", () => {
+    const works = sut.readWorks({modelSet: dummyModelSet});
+    expect(works).not.to.be.empty;
+    for (const work of works) {
+      expect(work.label).not.to.be.empty;
+    }
+  });
 });

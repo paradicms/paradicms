@@ -17,6 +17,12 @@ import {getWikibaseItems, WikibaseItem} from "@paradicms/wikibase";
 import {wd} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WikidataPerson} from "./WikidataPerson";
+import {WikidataWork} from "./WikidataWork";
+
+class WikidataEntities {
+  static readonly HUMAN = wd["Q5"];
+  static readonly NON_WORK = [WikidataEntities.HUMAN];
+}
 
 export class WikidataModelReader extends DatasetModelReader {
   readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null {
@@ -48,7 +54,10 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
-    return (this.wikibaseItemsByInstanceOfUri[wd["Q5"].value] ?? []).map(
+    return (
+      this.wikibaseItemsByInstanceOfEntityUri[WikidataEntities.HUMAN.value] ??
+      []
+    ).map(
       wikibaseItem =>
         new WikidataPerson({
           dataset: this.dataset,
@@ -77,7 +86,22 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
-    return [];
+    const works: Work[] = [];
+    for (const instanceOfEntityEntry of Object.entries(
+      this.wikibaseItemsByInstanceOfEntityUri
+    )) {
+      if (
+        WikidataEntities.NON_WORK.some(
+          nonWorkEntityUri => nonWorkEntityUri.value === instanceOfEntityEntry[0]
+        )
+      ) {
+        continue;
+      }
+      for (const wikibaseItem of instanceOfEntityEntry[1]) {
+        works.push(new WikidataWork({dataset: this.dataset, modelSet: kwds.modelSet, wikibaseItem})
+      }
+    }
+    return works;
   }
 
   @Memoize()
@@ -86,7 +110,7 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   @Memoize()
-  private get wikibaseItemsByInstanceOfUri(): {
+  private get wikibaseItemsByInstanceOfEntityUri(): {
     [index: string]: readonly WikibaseItem[];
   } {
     const result: {[index: string]: WikibaseItem[]} = {};
@@ -100,11 +124,11 @@ export class WikidataModelReader extends DatasetModelReader {
         } else if (statement.value.termType !== "NamedNode") {
           continue;
         }
-        const instanceOfUri = statement.value;
-        if (!result[instanceOfUri.value]) {
-          result[instanceOfUri.value] = [];
+        const instanceOfEntityUri = statement.value;
+        if (!result[instanceOfEntityUri.value]) {
+          result[instanceOfEntityUri.value] = [];
         }
-        result[instanceOfUri.value].push(wikibaseItem);
+        result[instanceOfEntityUri.value].push(wikibaseItem);
       }
     }
     return result;

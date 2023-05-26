@@ -12,9 +12,18 @@ import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import {NamedModel} from "../NamedModel";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {RightsMixin} from "../RightsMixin";
+import {License} from "../License";
+import {RightsStatement} from "../RightsStatement";
+import {AgentUnion} from "../AgentUnion";
 
 export abstract class WikidataModel extends ResourceBackedNamedModel
-  implements ImagesMixin, RelationsMixin, NamedModel, WikibaseItem {
+  implements
+    ImagesMixin,
+    RelationsMixin,
+    RightsMixin,
+    NamedModel,
+    WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
 
   constructor(kwds: {
@@ -37,6 +46,14 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
 
   get articles(): readonly WikibaseArticle[] {
     return this.wikibaseItem.articles;
+  }
+
+  get contributors(): readonly AgentUnion[] {
+    return [];
+  }
+
+  get creators(): readonly AgentUnion[] {
+    return [];
   }
 
   get description(): string | null {
@@ -96,6 +113,13 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
     return this.prefLabel ?? this.identifier.value;
   }
 
+  get license(): License {
+    // All structured data from the main, Property, Lexeme, and EntitySchema namespaces is available under the Creative Commons CC0 License; text in the other namespaces is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.
+    return this.modelSet.licenseByUri(
+      "http://creativecommons.org/licenses/by-sa/3.0/"
+    );
+  }
+
   get originalImages(): readonly Image[] {
     return this.images.filter(image => image.originalImageUri === null);
   }
@@ -106,6 +130,20 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
 
   get prefLabel(): string | null {
     return this.prefLabel;
+  }
+
+  get requiresAttribution(): boolean {
+    return this.license.requiresAttribution;
+  }
+
+  get rightsHolders(): readonly AgentUnion[] {
+    return [];
+  }
+
+  get rightsStatement(): RightsStatement {
+    return this.modelSet.rightsStatementByUri(
+      "http://rightsstatements.org/vocab/InC/1.0/"
+    );
   }
 
   get statements(): readonly WikibaseStatement[] {
