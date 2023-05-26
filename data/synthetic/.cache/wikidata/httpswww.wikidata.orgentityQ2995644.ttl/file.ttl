@@ -1,0 +1,1243 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q2995644 a schema:Dataset ;
+	schema:about wd:Q2995644 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1892170909"^^xsd:integer ;
+	schema:dateModified "2023-05-08T14:22:10Z"^^xsd:dateTime ;
+	wikibase:statements "14"^^xsd:integer ;
+	wikibase:sitelinks "21"^^xsd:integer ;
+	wikibase:identifiers "3"^^xsd:integer .
+
+wd:Q2995644 a wikibase:Item .
+
+<https://it.wikiquote.org/wiki/Risultato> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikiquote.org/> ;
+	schema:name "Risultato"@it .
+
+<https://it.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://en.wikiquote.org/wiki/Results> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikiquote.org/> ;
+	schema:name "Results"@en .
+
+<https://en.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://nn.wikiquote.org/wiki/Resultat> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "nn" ;
+	schema:isPartOf <https://nn.wikiquote.org/> ;
+	schema:name "Resultat"@nn .
+
+<https://nn.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://de.wikiquote.org/wiki/Resultat> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikiquote.org/> ;
+	schema:name "Resultat"@de .
+
+<https://de.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://uk.wikiquote.org/wiki/%D0%A0%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikiquote.org/> ;
+	schema:name "Результат"@uk .
+
+<https://uk.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://lt.wikiquote.org/wiki/Rezultatas> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "lt" ;
+	schema:isPartOf <https://lt.wikiquote.org/> ;
+	schema:name "Rezultatas"@lt .
+
+<https://lt.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://eo.wikiquote.org/wiki/Rezulto> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "eo" ;
+	schema:isPartOf <https://eo.wikiquote.org/> ;
+	schema:name "Rezulto"@eo .
+
+<https://eo.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://cs.wikiquote.org/wiki/V%C3%BDsledek> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikiquote.org/> ;
+	schema:name "Výsledek"@cs .
+
+<https://cs.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://en.wikipedia.org/wiki/Result> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Result"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Risultato> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Risultato"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E7%B5%90%E6%9E%9C> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "結果"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D8%A8%D8%B1%D8%A2%DB%8C%D9%87> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "برآیه"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Sonu%C3%A7> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Sonuç"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D9%86%D8%AA%D9%8A%D8%AC%D8%A9> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "نتيجة"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://no.wikipedia.org/wiki/Resultat> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "nb" ;
+	schema:isPartOf <https://no.wikipedia.org/> ;
+	schema:name "Resultat"@nb .
+
+<https://no.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%A0%D0%B5%D0%B7%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%82> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Результат"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EA%B2%B0%EA%B3%BC> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "결과"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ckb.wikipedia.org/wiki/%D8%A6%DB%95%D9%86%D8%AC%D8%A7%D9%85> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "ckb" ;
+	schema:isPartOf <https://ckb.wikipedia.org/> ;
+	schema:name "ئەنجام"@ckb .
+
+<https://ckb.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eo.wikipedia.org/wiki/Rezulto> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "eo" ;
+	schema:isPartOf <https://eo.wikipedia.org/> ;
+	schema:name "Rezulto"@eo .
+
+<https://eo.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://et.wikipedia.org/wiki/Tulemus> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikipedia.org/> ;
+	schema:name "Tulemus"@et .
+
+<https://et.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://et.wikiquote.org/wiki/Tulemus> a schema:Article ;
+	schema:about wd:Q2995644 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikiquote.org/> ;
+	schema:name "Tulemus"@et .
+
+<https://et.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+wd:Q2995644 wdt:P2888 <https://schema.org/result> ;
+	wdt:P646 "/m/0687b1" ;
+	wdt:P828 wd:Q3249551,
+		wd:Q4026292,
+		wd:Q1190554 ;
+	wdt:P1269 wd:Q179289 ;
+	wdt:P2581 "00021961n" ;
+	wdtn:P2581 <http://babelnet.org/rdf/s00021961n> ;
+	wdt:P6363 <http://data.thenextweb.com/tnw/entity/result> ;
+	wdt:P1296 "0100319" ;
+	wdt:P279 wd:Q35120 ;
+	wdt:P1382 wd:Q1150771 ;
+	wdt:P1889 wd:Q733541,
+		wd:Q4503831 ;
+	wdt:P460 wd:Q926230 ;
+	p:P2888 s:Q2995644-e93eb75a-4667-e439-9095-ceabc992811e .
+
+s:Q2995644-e93eb75a-4667-e439-9095-ceabc992811e a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2888 <https://schema.org/result> .
+
+wd:Q2995644 p:P646 s:Q2995644-9AAF5BF6-7B04-4F0E-A1A2-ACDDA0EB542C .
+
+s:Q2995644-9AAF5BF6-7B04-4F0E-A1A2-ACDDA0EB542C a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/0687b1" .
+
+wd:Q2995644 p:P828 s:Q2995644-313e0da3-4bc3-8b3f-a24a-682c39684846 .
+
+s:Q2995644-313e0da3-4bc3-8b3f-a24a-682c39684846 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P828 wd:Q3249551 .
+
+wd:Q2995644 p:P828 s:Q2995644-f5f6ea32-40ec-dbb4-0f86-c62823124fbd .
+
+s:Q2995644-f5f6ea32-40ec-dbb4-0f86-c62823124fbd a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P828 wd:Q4026292 .
+
+wd:Q2995644 p:P828 s:Q2995644-1645107a-4b11-a42c-45a0-01545f9486ba .
+
+s:Q2995644-1645107a-4b11-a42c-45a0-01545f9486ba a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P828 wd:Q1190554 .
+
+wd:Q2995644 p:P1269 s:Q2995644-fd40c784-42f9-94b2-2ba3-d94c25d8e250 .
+
+s:Q2995644-fd40c784-42f9-94b2-2ba3-d94c25d8e250 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1269 wd:Q179289 .
+
+wd:Q2995644 p:P2581 s:Q2995644-C7C6AA40-AD97-4F99-AC5F-6AED3177EE97 .
+
+s:Q2995644-C7C6AA40-AD97-4F99-AC5F-6AED3177EE97 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2581 "00021961n" ;
+	psn:P2581 <http://babelnet.org/rdf/s00021961n> ;
+	prov:wasDerivedFrom ref:248ac337a217a5f5eed7139a82a4e60931611af0 .
+
+wd:Q2995644 p:P6363 s:Q2995644-B6D0CE63-2CD7-49FC-9DC7-EB2E8E0EC54F .
+
+s:Q2995644-B6D0CE63-2CD7-49FC-9DC7-EB2E8E0EC54F a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6363 <http://data.thenextweb.com/tnw/entity/result> ;
+	prov:wasDerivedFrom ref:10ab1cff36f9f45c2b02229d61b664a92e07ef92 .
+
+wd:Q2995644 p:P1296 s:Q2995644-C46CDBFF-76CD-4174-8C34-55C3006CEB24 .
+
+s:Q2995644-C46CDBFF-76CD-4174-8C34-55C3006CEB24 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1296 "0100319" .
+
+wd:Q2995644 p:P279 s:Q2995644-b5e509f5-449c-a408-07be-6025a9014211 .
+
+s:Q2995644-b5e509f5-449c-a408-07be-6025a9014211 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q35120 .
+
+wd:Q2995644 p:P1382 s:Q2995644-ebdac22e-42ea-5079-7c72-0b2ff3e32796 .
+
+s:Q2995644-ebdac22e-42ea-5079-7c72-0b2ff3e32796 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1382 wd:Q1150771 .
+
+wd:Q2995644 p:P1889 s:Q2995644-a427b2e2-476d-e2d1-e222-05ab21aad37a .
+
+s:Q2995644-a427b2e2-476d-e2d1-e222-05ab21aad37a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q733541 .
+
+wd:Q2995644 p:P1889 s:Q2995644-4568af69-4bbe-49cc-fee3-a18438fd0363 .
+
+s:Q2995644-4568af69-4bbe-49cc-fee3-a18438fd0363 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q4503831 .
+
+wd:Q2995644 p:P460 s:Q2995644-dd09bf05-4e34-a98b-673b-b79e543e228e .
+
+s:Q2995644-dd09bf05-4e34-a98b-673b-b79e543e228e a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q926230 .
+
+wd:Q2995644 rdfs:label "rezulto"@eo ;
+	skos:prefLabel "rezulto"@eo ;
+	schema:name "rezulto"@eo ;
+	rdfs:label "výsledek"@cs ;
+	skos:prefLabel "výsledek"@cs ;
+	schema:name "výsledek"@cs ;
+	rdfs:label "результат"@ru ;
+	skos:prefLabel "результат"@ru ;
+	schema:name "результат"@ru ;
+	rdfs:label "result"@en ;
+	skos:prefLabel "result"@en ;
+	schema:name "result"@en ;
+	rdfs:label "nəticə"@az ;
+	skos:prefLabel "nəticə"@az ;
+	schema:name "nəticə"@az ;
+	rdfs:label "ئەنجام"@ckb ;
+	skos:prefLabel "ئەنجام"@ckb ;
+	schema:name "ئەنجام"@ckb ;
+	rdfs:label "نتيجة"@ar ;
+	skos:prefLabel "نتيجة"@ar ;
+	schema:name "نتيجة"@ar ;
+	rdfs:label "결과"@ko ;
+	skos:prefLabel "결과"@ko ;
+	schema:name "결과"@ko ;
+	rdfs:label "処理結果"@ja ;
+	skos:prefLabel "処理結果"@ja ;
+	schema:name "処理結果"@ja ;
+	rdfs:label "sonuç"@tr ;
+	skos:prefLabel "sonuç"@tr ;
+	schema:name "sonuç"@tr ;
+	rdfs:label "risultato"@it ;
+	skos:prefLabel "risultato"@it ;
+	schema:name "risultato"@it ;
+	rdfs:label "dôsledok"@sk ;
+	skos:prefLabel "dôsledok"@sk ;
+	schema:name "dôsledok"@sk ;
+	rdfs:label "Resultat"@de ;
+	skos:prefLabel "Resultat"@de ;
+	schema:name "Resultat"@de ;
+	rdfs:label "resultat"@nn ;
+	skos:prefLabel "resultat"@nn ;
+	schema:name "resultat"@nn ;
+	rdfs:label "результат"@uk ;
+	skos:prefLabel "результат"@uk ;
+	schema:name "результат"@uk ;
+	rdfs:label "resultado"@pt ;
+	skos:prefLabel "resultado"@pt ;
+	schema:name "resultado"@pt ;
+	rdfs:label "резултат"@sr ;
+	skos:prefLabel "резултат"@sr ;
+	schema:name "резултат"@sr ;
+	rdfs:label "resultado"@es ;
+	skos:prefLabel "resultado"@es ;
+	schema:name "resultado"@es ;
+	rdfs:label "résultat"@fr ;
+	skos:prefLabel "résultat"@fr ;
+	schema:name "résultat"@fr ;
+	rdfs:label "resultat"@oc ;
+	skos:prefLabel "resultat"@oc ;
+	schema:name "resultat"@oc ;
+	rdfs:label "emaitza"@eu ;
+	skos:prefLabel "emaitza"@eu ;
+	schema:name "emaitza"@eu ;
+	rdfs:label "eredmény"@hu ;
+	skos:prefLabel "eredmény"@hu ;
+	schema:name "eredmény"@hu ;
+	rdfs:label "resultat"@ca ;
+	skos:prefLabel "resultat"@ca ;
+	schema:name "resultat"@ca ;
+	rdfs:label "resultato"@ia ;
+	skos:prefLabel "resultato"@ia ;
+	schema:name "resultato"@ia ;
+	rdfs:label "resultaat"@nl ;
+	skos:prefLabel "resultaat"@nl ;
+	schema:name "resultaat"@nl ;
+	rdfs:label "resultat"@da ;
+	skos:prefLabel "resultat"@da ;
+	schema:name "resultat"@da ;
+	rdfs:label "натиҷа"@tg ;
+	skos:prefLabel "натиҷа"@tg ;
+	schema:name "натиҷа"@tg ;
+	rdfs:label "èsì"@yo ;
+	skos:prefLabel "èsì"@yo ;
+	schema:name "èsì"@yo ;
+	rdfs:label "wynik"@pl ;
+	skos:prefLabel "wynik"@pl ;
+	schema:name "wynik"@pl ;
+	rdfs:label "натиҷа"@tg-cyrl ;
+	skos:prefLabel "натиҷа"@tg-cyrl ;
+	schema:name "натиҷа"@tg-cyrl ;
+	rdfs:label "αποτέλεσμα"@el ;
+	skos:prefLabel "αποτέλεσμα"@el ;
+	schema:name "αποτέλεσμα"@el ;
+	rdfs:label "kết quả"@vi ;
+	skos:prefLabel "kết quả"@vi ;
+	schema:name "kết quả"@vi ;
+	rdfs:label "исход"@mk ;
+	skos:prefLabel "исход"@mk ;
+	schema:name "исход"@mk ;
+	rdfs:label "结果"@zh-hans ;
+	skos:prefLabel "结果"@zh-hans ;
+	schema:name "结果"@zh-hans ;
+	rdfs:label "resultat"@sv ;
+	skos:prefLabel "resultat"@sv ;
+	schema:name "resultat"@sv ;
+	rdfs:label "resultado"@gl ;
+	skos:prefLabel "resultado"@gl ;
+	schema:name "resultado"@gl ;
+	rdfs:label "һөҙөмтә"@ba ;
+	skos:prefLabel "һөҙөмтә"@ba ;
+	schema:name "һөҙөмтә"@ba ;
+	rdfs:label "wuslědk"@hsb ;
+	skos:prefLabel "wuslědk"@hsb ;
+	schema:name "wuslědk"@hsb ;
+	rdfs:label "ഫലം"@ml ;
+	skos:prefLabel "ഫലം"@ml ;
+	schema:name "ഫലം"@ml ;
+	rdfs:label "нәтиҗә"@tt ;
+	skos:prefLabel "нәтиҗә"@tt ;
+	schema:name "нәтиҗә"@tt ;
+	rdfs:label "нәтиҗә"@tt-cyrl ;
+	skos:prefLabel "нәтиҗә"@tt-cyrl ;
+	schema:name "нәтиҗә"@tt-cyrl ;
+	rdfs:label "result"@en-gb ;
+	skos:prefLabel "result"@en-gb ;
+	schema:name "result"@en-gb ;
+	rdfs:label "Rezultatas"@lt ;
+	skos:prefLabel "Rezultatas"@lt ;
+	schema:name "Rezultatas"@lt ;
+	rdfs:label "tulemus"@et ;
+	skos:prefLabel "tulemus"@et ;
+	schema:name "tulemus"@et ;
+	rdfs:label "ผลลัพธ์"@th ;
+	skos:prefLabel "ผลลัพธ์"@th ;
+	schema:name "ผลลัพธ์"@th ;
+	rdfs:label "вынік"@be-tarask ;
+	skos:prefLabel "вынік"@be-tarask ;
+	schema:name "вынік"@be-tarask ;
+	rdfs:label "вынік"@be ;
+	skos:prefLabel "вынік"@be ;
+	schema:name "вынік"@be ;
+	rdfs:label "rezultat"@ro ;
+	skos:prefLabel "rezultat"@ro ;
+	schema:name "rezultat"@ro ;
+	rdfs:label "resultáu"@ast ;
+	skos:prefLabel "resultáu"@ast ;
+	schema:name "resultáu"@ast ;
+	rdfs:label "hasil"@id ;
+	skos:prefLabel "hasil"@id ;
+	schema:name "hasil"@id ;
+	rdfs:label "արդյունք"@hy ;
+	skos:prefLabel "արդյունք"@hy ;
+	schema:name "արդյունք"@hy ;
+	rdfs:label "結果"@zh-hant ;
+	skos:prefLabel "結果"@zh-hant ;
+	schema:name "結果"@zh-hant ;
+	rdfs:label "結果"@zh ;
+	skos:prefLabel "結果"@zh ;
+	schema:name "結果"@zh ;
+	rdfs:label "結果"@zh-tw ;
+	skos:prefLabel "結果"@zh-tw ;
+	schema:name "結果"@zh-tw ;
+	rdfs:label "lopputulos"@fi ;
+	skos:prefLabel "lopputulos"@fi ;
+	schema:name "lopputulos"@fi ;
+	rdfs:label "resultat"@nb ;
+	skos:prefLabel "resultat"@nb ;
+	schema:name "resultat"@nb ;
+	rdfs:label "canlyniad"@cy ;
+	skos:prefLabel "canlyniad"@cy ;
+	schema:name "canlyniad"@cy ;
+	rdfs:label "hasil"@ms ;
+	skos:prefLabel "hasil"@ms ;
+	schema:name "hasil"@ms ;
+	rdfs:label "toradh"@ga ;
+	skos:prefLabel "toradh"@ga ;
+	schema:name "toradh"@ga ;
+	rdfs:label "rezultat"@sq ;
+	skos:prefLabel "rezultat"@sq ;
+	schema:name "rezultat"@sq ;
+	rdfs:label "iznākums"@lv ;
+	skos:prefLabel "iznākums"@lv ;
+	schema:name "iznākums"@lv ;
+	rdfs:label "encam"@ku-latn ;
+	skos:prefLabel "encam"@ku-latn ;
+	schema:name "encam"@ku-latn ;
+	rdfs:label "úrslit"@fo ;
+	skos:prefLabel "úrslit"@fo ;
+	schema:name "úrslit"@fo ;
+	rdfs:label "ফলাফল"@bn ;
+	skos:prefLabel "ফলাফল"@bn ;
+	schema:name "ফলাফল"@bn ;
+	rdfs:label "disoc'h"@br ;
+	skos:prefLabel "disoc'h"@br ;
+	schema:name "disoc'h"@br ;
+	rdfs:label "תוצאה"@he ;
+	skos:prefLabel "תוצאה"@he ;
+	schema:name "תוצאה"@he ;
+	rdfs:label "loahppaboađus"@se ;
+	skos:prefLabel "loahppaboađus"@se ;
+	schema:name "loahppaboađus"@se ;
+	rdfs:label "loppâpuáđus"@smn ;
+	skos:prefLabel "loppâpuáđus"@smn ;
+	schema:name "loppâpuáđus"@smn ;
+	rdfs:label "lopp-puäđõs"@sms ;
+	skos:prefLabel "lopp-puäđõs"@sms ;
+	schema:name "lopp-puäđõs"@sms ;
+	rdfs:label "resultado"@pt-br ;
+	skos:prefLabel "resultado"@pt-br ;
+	schema:name "resultado"@pt-br ;
+	rdfs:label "برآیه"@fa ;
+	skos:prefLabel "برآیه"@fa ;
+	schema:name "برآیه"@fa ;
+	rdfs:label "rezultà"@vec ;
+	skos:prefLabel "rezultà"@vec ;
+	schema:name "rezultà"@vec ;
+	rdfs:label "حاصيل"@ms-arab ;
+	skos:prefLabel "حاصيل"@ms-arab ;
+	schema:name "حاصيل"@ms-arab ;
+	rdfs:label "نتیجہ"@ur ;
+	skos:prefLabel "نتیجہ"@ur ;
+	schema:name "نتیجہ"@ur ;
+	rdfs:label "rezultat"@sl ;
+	skos:prefLabel "rezultat"@sl ;
+	schema:name "rezultat"@sl ;
+	rdfs:label "rezultat"@hr ;
+	skos:prefLabel "rezultat"@hr ;
+	schema:name "rezultat"@hr ;
+	schema:description "final consequence or product of a sequence of actions or events"@en,
+		"кінцевий наслідок послідовності дій"@uk,
+		"consecuencia final de una secuencia de acciones o eventos"@es,
+		"konečný stav procesu"@cs,
+		"итог какого-либо действия либо события"@ru,
+		"一連の動作や出来事の最終結果"@ja,
+		"consequentia final de un sequentia de actiones o eventos"@ia,
+		"einduitkomst van een opeenvolging van handelingen of gebeurtenissen"@nl,
+		"ostateczny wynik sekwencji działań lub zdarzeń"@pl,
+		"consecuencia final dunha secuencia de accións ou eventos"@gl,
+		"konsekwenca jednoho procesa"@hsb,
+		"Ergebnis einer Folge von Aktionen, Handlungen oder Ereignissen"@de,
+		"ceea ce rezultă dintr-o acțiune, dintr-un fapt, dintr-un calcul"@ro,
+		"consecuencia final d'una secuencia d'aiciones o actividaes"@ast,
+		"canlyniad terfynol cyfres o weithredoedd neu ddigwyddiadau"@cy,
+		"conséquence d'une séquence d'actions, d'actions ou d'événements"@fr,
+		"conseguenza di una sequenza di azioni, azioni o eventi"@it,
+		"תוצאה סופית של סדרת פעולות או אירועים"@he,
+		"bir dizi eylemin, eylemin veya olayın sonucu"@tr,
+		"a consequência final de uma sequência de ações ou eventos"@pt-br,
+		"a consequência final de uma sequência de ações ou eventos"@pt,
+		"연속적인 일이나 사건의 마지막 상태"@ko ;
+	skos:altLabel "итог"@ru,
+		"ئاکام"@ckb,
+		"نتيجه"@ar,
+		"conclusione"@it,
+		"conclusión"@es,
+		"conclusion"@es,
+		"resulta"@oc,
+		"důsledek"@cs,
+		"process result"@en,
+		"result of the process"@en,
+		"effect"@en,
+		"outcome"@en,
+		"upshot"@en,
+		"results"@en,
+		"結果"@ja,
+		"gevolg"@nl,
+		"uitslag"@nl,
+		"uitkomst"@nl,
+		"uitvloeisel"@nl,
+		"резултат"@mk,
+		"slutresultat"@sv,
+		"нәтижә"@ba,
+		"йомғаҡ"@ba,
+		"rezultat"@pl,
+		"rezultat"@hsb,
+		"йомгак"@tt,
+		"сөземтә"@tt,
+		"йомгак"@tt-cyrl,
+		"сөземтә"@tt-cyrl,
+		"consecință"@ro,
+		"urmare"@ro,
+		"efect"@ro,
+		"resultáu del procesu"@ast,
+		"efeutu"@ast,
+		"consecuencia"@ast,
+		"conclusión"@ast,
+		"підсумок"@uk,
+		"ефект"@uk,
+		"keputusan"@ms,
+		"kesan"@ms,
+		"utfall"@nb,
+		"produkt"@nb,
+		"utfall"@nn,
+		"rezultāts"@lv,
+		"sekas"@lv,
+		"Ergebnis"@de,
+		"işlem sonucu"@tr,
+		"sürecin sonucu"@tr,
+		"etki"@tr,
+		"efeito"@pt-br,
+		"efeito"@pt,
+		"výsledok"@sk,
+		"izid"@sl .
+
+wd:P2888 a wikibase:Property ;
+	rdfs:label "exact match"@en ;
+	skos:prefLabel "exact match"@en ;
+	schema:name "exact match"@en ;
+	schema:description "URL used to link two items or properties, indicating a high degree of confidence that the concepts can be used interchangeably"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P2888 ;
+	wikibase:claim p:P2888 ;
+	wikibase:statementProperty ps:P2888 ;
+	wikibase:statementValue psv:P2888 ;
+	wikibase:qualifier pq:P2888 ;
+	wikibase:qualifierValue pqv:P2888 ;
+	wikibase:reference pr:P2888 ;
+	wikibase:referenceValue prv:P2888 ;
+	wikibase:novalue wdno:P2888 .
+
+p:P2888 a owl:ObjectProperty .
+
+psv:P2888 a owl:ObjectProperty .
+
+pqv:P2888 a owl:ObjectProperty .
+
+prv:P2888 a owl:ObjectProperty .
+
+wdt:P2888 a owl:ObjectProperty .
+
+ps:P2888 a owl:ObjectProperty .
+
+pq:P2888 a owl:ObjectProperty .
+
+pr:P2888 a owl:ObjectProperty .
+
+wdno:P2888 a owl:Class ;
+	owl:complementOf _:a4dbe61111cb4e29590ce2c451f10e15 .
+
+_:a4dbe61111cb4e29590ce2c451f10e15 a owl:Restriction ;
+	owl:onProperty wdt:P2888 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q3249551 a wikibase:Item ;
+	rdfs:label "process"@en ;
+	skos:prefLabel "process"@en ;
+	schema:name "process"@en ;
+	schema:description "series of events which occur over an extended period of time"@en .
+
+wd:P828 a wikibase:Property ;
+	rdfs:label "has cause"@en ;
+	skos:prefLabel "has cause"@en ;
+	schema:name "has cause"@en ;
+	schema:description "underlying cause, thing that ultimately resulted in this effect"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P828 ;
+	wikibase:claim p:P828 ;
+	wikibase:statementProperty ps:P828 ;
+	wikibase:statementValue psv:P828 ;
+	wikibase:qualifier pq:P828 ;
+	wikibase:qualifierValue pqv:P828 ;
+	wikibase:reference pr:P828 ;
+	wikibase:referenceValue prv:P828 ;
+	wikibase:novalue wdno:P828 .
+
+p:P828 a owl:ObjectProperty .
+
+psv:P828 a owl:ObjectProperty .
+
+pqv:P828 a owl:ObjectProperty .
+
+prv:P828 a owl:ObjectProperty .
+
+wdt:P828 a owl:ObjectProperty .
+
+ps:P828 a owl:ObjectProperty .
+
+pq:P828 a owl:ObjectProperty .
+
+pr:P828 a owl:ObjectProperty .
+
+wdno:P828 a owl:Class ;
+	owl:complementOf _:d5c04d284ed06e97d905f88f3040f07f .
+
+_:d5c04d284ed06e97d905f88f3040f07f a owl:Restriction ;
+	owl:onProperty wdt:P828 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4026292 a wikibase:Item ;
+	rdfs:label "action"@en ;
+	skos:prefLabel "action"@en ;
+	schema:name "action"@en ;
+	schema:description "something an agent can do or perform"@en .
+
+wd:Q1190554 a wikibase:Item ;
+	rdfs:label "occurrence"@en ;
+	skos:prefLabel "occurrence"@en ;
+	schema:name "occurrence"@en ;
+	schema:description "occurrence of a fact or object in space-time; instantiation of a property in an object"@en .
+
+wd:Q179289 a wikibase:Item ;
+	rdfs:label "causality"@en ;
+	skos:prefLabel "causality"@en ;
+	schema:name "causality"@en ;
+	schema:description "how one process influences another"@en .
+
+wd:P1269 a wikibase:Property ;
+	rdfs:label "facet of"@en ;
+	skos:prefLabel "facet of"@en ;
+	schema:name "facet of"@en ;
+	schema:description "topic of which this item is an aspect, item that offers a broader perspective on the same topic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1269 ;
+	wikibase:claim p:P1269 ;
+	wikibase:statementProperty ps:P1269 ;
+	wikibase:statementValue psv:P1269 ;
+	wikibase:qualifier pq:P1269 ;
+	wikibase:qualifierValue pqv:P1269 ;
+	wikibase:reference pr:P1269 ;
+	wikibase:referenceValue prv:P1269 ;
+	wikibase:novalue wdno:P1269 .
+
+p:P1269 a owl:ObjectProperty .
+
+psv:P1269 a owl:ObjectProperty .
+
+pqv:P1269 a owl:ObjectProperty .
+
+prv:P1269 a owl:ObjectProperty .
+
+wdt:P1269 a owl:ObjectProperty .
+
+ps:P1269 a owl:ObjectProperty .
+
+pq:P1269 a owl:ObjectProperty .
+
+pr:P1269 a owl:ObjectProperty .
+
+wdno:P1269 a owl:Class ;
+	owl:complementOf _:a498557c9680bd52a026c4a3e1e3a863 .
+
+_:a498557c9680bd52a026c4a3e1e3a863 a owl:Restriction ;
+	owl:onProperty wdt:P1269 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2581 a wikibase:Property ;
+	rdfs:label "BabelNet ID"@en ;
+	skos:prefLabel "BabelNet ID"@en ;
+	schema:name "BabelNet ID"@en ;
+	schema:description "ID in BabelNet encyclopedic dictionary"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2581 ;
+	wikibase:claim p:P2581 ;
+	wikibase:statementProperty ps:P2581 ;
+	wikibase:statementValue psv:P2581 ;
+	wikibase:qualifier pq:P2581 ;
+	wikibase:qualifierValue pqv:P2581 ;
+	wikibase:reference pr:P2581 ;
+	wikibase:referenceValue prv:P2581 ;
+	wikibase:novalue wdno:P2581 ;
+	wikibase:directClaimNormalized wdtn:P2581 ;
+	wikibase:statementValueNormalized psn:P2581 ;
+	wikibase:qualifierValueNormalized pqn:P2581 ;
+	wikibase:referenceValueNormalized prn:P2581 .
+
+p:P2581 a owl:ObjectProperty .
+
+psv:P2581 a owl:ObjectProperty .
+
+pqv:P2581 a owl:ObjectProperty .
+
+prv:P2581 a owl:ObjectProperty .
+
+wdt:P2581 a owl:DatatypeProperty .
+
+ps:P2581 a owl:DatatypeProperty .
+
+pq:P2581 a owl:DatatypeProperty .
+
+pr:P2581 a owl:DatatypeProperty .
+
+psn:P2581 a owl:ObjectProperty .
+
+pqn:P2581 a owl:ObjectProperty .
+
+prn:P2581 a owl:ObjectProperty .
+
+wdtn:P2581 a owl:ObjectProperty .
+
+wdno:P2581 a owl:Class ;
+	owl:complementOf _:bdd44b035df3e72593f3ac1acbd85353 .
+
+_:bdd44b035df3e72593f3ac1acbd85353 a owl:Restriction ;
+	owl:onProperty wdt:P2581 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6363 a wikibase:Property ;
+	rdfs:label "WordLift URL"@en ;
+	skos:prefLabel "WordLift URL"@en ;
+	schema:name "WordLift URL"@en ;
+	schema:description "a Linked Open Data permanent ID of publicly available entities curated by online publishers and distributed in various formats"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P6363 ;
+	wikibase:claim p:P6363 ;
+	wikibase:statementProperty ps:P6363 ;
+	wikibase:statementValue psv:P6363 ;
+	wikibase:qualifier pq:P6363 ;
+	wikibase:qualifierValue pqv:P6363 ;
+	wikibase:reference pr:P6363 ;
+	wikibase:referenceValue prv:P6363 ;
+	wikibase:novalue wdno:P6363 .
+
+p:P6363 a owl:ObjectProperty .
+
+psv:P6363 a owl:ObjectProperty .
+
+pqv:P6363 a owl:ObjectProperty .
+
+prv:P6363 a owl:ObjectProperty .
+
+wdt:P6363 a owl:ObjectProperty .
+
+ps:P6363 a owl:ObjectProperty .
+
+pq:P6363 a owl:ObjectProperty .
+
+pr:P6363 a owl:ObjectProperty .
+
+wdno:P6363 a owl:Class ;
+	owl:complementOf _:c383996644a0cd7842ecaa99485955df .
+
+_:c383996644a0cd7842ecaa99485955df a owl:Restriction ;
+	owl:onProperty wdt:P6363 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1296 a wikibase:Property ;
+	rdfs:label "Gran Enciclopèdia Catalana ID"@en ;
+	skos:prefLabel "Gran Enciclopèdia Catalana ID"@en ;
+	schema:name "Gran Enciclopèdia Catalana ID"@en ;
+	schema:description "identifier for an item in the Gran Enciclopèdia Catalana"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1296 ;
+	wikibase:claim p:P1296 ;
+	wikibase:statementProperty ps:P1296 ;
+	wikibase:statementValue psv:P1296 ;
+	wikibase:qualifier pq:P1296 ;
+	wikibase:qualifierValue pqv:P1296 ;
+	wikibase:reference pr:P1296 ;
+	wikibase:referenceValue prv:P1296 ;
+	wikibase:novalue wdno:P1296 ;
+	wikibase:directClaimNormalized wdtn:P1296 ;
+	wikibase:statementValueNormalized psn:P1296 ;
+	wikibase:qualifierValueNormalized pqn:P1296 ;
+	wikibase:referenceValueNormalized prn:P1296 .
+
+p:P1296 a owl:ObjectProperty .
+
+psv:P1296 a owl:ObjectProperty .
+
+pqv:P1296 a owl:ObjectProperty .
+
+prv:P1296 a owl:ObjectProperty .
+
+wdt:P1296 a owl:DatatypeProperty .
+
+ps:P1296 a owl:DatatypeProperty .
+
+pq:P1296 a owl:DatatypeProperty .
+
+pr:P1296 a owl:DatatypeProperty .
+
+psn:P1296 a owl:ObjectProperty .
+
+pqn:P1296 a owl:ObjectProperty .
+
+prn:P1296 a owl:ObjectProperty .
+
+wdtn:P1296 a owl:ObjectProperty .
+
+wdno:P1296 a owl:Class ;
+	owl:complementOf _:2b4e9773af61d716df50661bea8bd3b2 .
+
+_:2b4e9773af61d716df50661bea8bd3b2 a owl:Restriction ;
+	owl:onProperty wdt:P1296 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q35120 a wikibase:Item ;
+	rdfs:label "entity"@en ;
+	skos:prefLabel "entity"@en ;
+	schema:name "entity"@en ;
+	schema:description "anything that can be considered, discussed, or observed"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1150771 a wikibase:Item ;
+	rdfs:label "output"@en ;
+	skos:prefLabel "output"@en ;
+	schema:name "output"@en ;
+	schema:description "what comes out of something (input)"@en .
+
+wd:P1382 a wikibase:Property ;
+	rdfs:label "partially coincident with"@en ;
+	skos:prefLabel "partially coincident with"@en ;
+	schema:name "partially coincident with"@en ;
+	schema:description "object that partially overlaps with the subject in its instances, parts, or members"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1382 ;
+	wikibase:claim p:P1382 ;
+	wikibase:statementProperty ps:P1382 ;
+	wikibase:statementValue psv:P1382 ;
+	wikibase:qualifier pq:P1382 ;
+	wikibase:qualifierValue pqv:P1382 ;
+	wikibase:reference pr:P1382 ;
+	wikibase:referenceValue prv:P1382 ;
+	wikibase:novalue wdno:P1382 .
+
+p:P1382 a owl:ObjectProperty .
+
+psv:P1382 a owl:ObjectProperty .
+
+pqv:P1382 a owl:ObjectProperty .
+
+prv:P1382 a owl:ObjectProperty .
+
+wdt:P1382 a owl:ObjectProperty .
+
+ps:P1382 a owl:ObjectProperty .
+
+pq:P1382 a owl:ObjectProperty .
+
+pr:P1382 a owl:ObjectProperty .
+
+wdno:P1382 a owl:Class ;
+	owl:complementOf _:330b6bb28dcfa3c625950ac043246d1d .
+
+_:330b6bb28dcfa3c625950ac043246d1d a owl:Restriction ;
+	owl:onProperty wdt:P1382 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q733541 a wikibase:Item ;
+	rdfs:label "consequence"@en ;
+	skos:prefLabel "consequence"@en ;
+	schema:name "consequence"@en ;
+	schema:description "imperative or possible inference"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4503831 a wikibase:Item ;
+	rdfs:label "goal"@en ;
+	skos:prefLabel "goal"@en ;
+	schema:name "goal"@en ;
+	schema:description "idea of the future or result that a person or group wants to achieve"@en .
+
+wd:Q926230 a wikibase:Item ;
+	rdfs:label "effect"@en ;
+	skos:prefLabel "effect"@en ;
+	schema:name "effect"@en ;
+	schema:description "phenomenon which results from a cause"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4837690 a wikibase:Item ;
+	rdfs:label "BabelNet"@en ;
+	skos:prefLabel "BabelNet"@en ;
+	schema:name "BabelNet"@en ;
+	schema:description "multilingual semantic network and encyclopedic dictionary"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P854 a wikibase:Property ;
+	rdfs:label "reference URL"@en ;
+	skos:prefLabel "reference URL"@en ;
+	schema:name "reference URL"@en ;
+	schema:description "should be used for Internet URLs as references. Use \"Wikimedia import URL\" (P4656) for imports from WMF sites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P854 ;
+	wikibase:claim p:P854 ;
+	wikibase:statementProperty ps:P854 ;
+	wikibase:statementValue psv:P854 ;
+	wikibase:qualifier pq:P854 ;
+	wikibase:qualifierValue pqv:P854 ;
+	wikibase:reference pr:P854 ;
+	wikibase:referenceValue prv:P854 ;
+	wikibase:novalue wdno:P854 .
+
+p:P854 a owl:ObjectProperty .
+
+psv:P854 a owl:ObjectProperty .
+
+pqv:P854 a owl:ObjectProperty .
+
+prv:P854 a owl:ObjectProperty .
+
+wdt:P854 a owl:ObjectProperty .
+
+ps:P854 a owl:ObjectProperty .
+
+pq:P854 a owl:ObjectProperty .
+
+pr:P854 a owl:ObjectProperty .
+
+wdno:P854 a owl:Class ;
+	owl:complementOf _:7317e7e5a3edc1980ecfe7616bb5fa1d .
+
+_:7317e7e5a3edc1980ecfe7616bb5fa1d a owl:Restriction ;
+	owl:onProperty wdt:P854 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q3937190 owl:sameAs wd:Q2995644 .
+
+wd:Q13407338 owl:sameAs wd:Q2995644 .
+
+ref:248ac337a217a5f5eed7139a82a4e60931611af0 a wikibase:Reference ;
+	pr:P248 wd:Q4837690 .
+
+ref:10ab1cff36f9f45c2b02229d61b664a92e07ef92 a wikibase:Reference ;
+	pr:P854 <https://thenextweb.com/vocabulary/result/> .

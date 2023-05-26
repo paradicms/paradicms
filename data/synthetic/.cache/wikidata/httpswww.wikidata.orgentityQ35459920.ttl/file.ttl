@@ -1,0 +1,552 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q35459920 a schema:Dataset ;
+	schema:about wd:Q35459920 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1862664301"^^xsd:integer ;
+	schema:dateModified "2023-03-27T16:16:07Z"^^xsd:dateTime ;
+	wikibase:statements "9"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "1"^^xsd:integer .
+
+wd:Q35459920 a wikibase:Item ;
+	wdt:P279 wd:Q488383 ;
+	wdt:P527 wd:Q2998430,
+		wd:Q1385033,
+		wd:Q3783831 ;
+	wdt:P1552 wd:Q39297 ;
+	wdt:P460 wd:Q937946 ;
+	wdt:P5398 "000000931" ;
+	wdt:P361 wd:Q34929 ;
+	wdt:P276 wd:Q34929 ;
+	p:P279 s:Q35459920-cdabbf5f-4e39-52ad-d773-efc132efe9a0 .
+
+s:Q35459920-cdabbf5f-4e39-52ad-d773-efc132efe9a0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q488383 .
+
+wd:Q35459920 p:P527 s:Q35459920-9d2ce932-4549-e578-d491-0b2e38ebf79d .
+
+s:Q35459920-9d2ce932-4549-e578-d491-0b2e38ebf79d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P527 wd:Q2998430 .
+
+wd:Q35459920 p:P527 s:Q35459920-85581bc8-40fe-0aa6-6532-4d0d63306d94 .
+
+s:Q35459920-85581bc8-40fe-0aa6-6532-4d0d63306d94 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P527 wd:Q1385033 .
+
+wd:Q35459920 p:P527 s:Q35459920-feea5a14-43d6-63bd-0775-7dabf9cb469d .
+
+s:Q35459920-feea5a14-43d6-63bd-0775-7dabf9cb469d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P527 wd:Q3783831 .
+
+wd:Q35459920 p:P1552 s:Q35459920-8da2e50c-4358-c9c3-df7d-92714428041b .
+
+s:Q35459920-8da2e50c-4358-c9c3-df7d-92714428041b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q39297 .
+
+wd:Q35459920 p:P460 s:Q35459920-c1b7736d-4494-e597-927e-dfd4c728707a .
+
+s:Q35459920-c1b7736d-4494-e597-927e-dfd4c728707a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q937946 .
+
+wd:Q35459920 p:P5398 s:Q35459920-1f326e4a-49bf-049b-22eb-70739742fba0 .
+
+s:Q35459920-1f326e4a-49bf-049b-22eb-70739742fba0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P5398 "000000931" .
+
+wd:Q35459920 p:P361 s:Q35459920-d6567a3f-4d02-a9f2-d98e-5f0951e420e4 .
+
+s:Q35459920-d6567a3f-4d02-a9f2-d98e-5f0951e420e4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q34929 .
+
+wd:Q35459920 p:P276 s:Q35459920-cc422f36-4989-bcb3-b29b-245a34538459 .
+
+s:Q35459920-cc422f36-4989-bcb3-b29b-245a34538459 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P276 wd:Q34929 .
+
+wd:Q35459920 rdfs:label "three-dimensional object"@en ;
+	skos:prefLabel "three-dimensional object"@en ;
+	schema:name "three-dimensional object"@en ;
+	rdfs:label "objecte 3D"@ca ;
+	skos:prefLabel "objecte 3D"@ca ;
+	schema:name "objecte 3D"@ca ;
+	rdfs:label "трёхмерный объект"@ru ;
+	skos:prefLabel "трёхмерный объект"@ru ;
+	schema:name "трёхмерный объект"@ru ;
+	rdfs:label "objeto tridimensional"@es ;
+	skos:prefLabel "objeto tridimensional"@es ;
+	schema:name "objeto tridimensional"@es ;
+	rdfs:label "trojrozměrný objekt"@cs ;
+	skos:prefLabel "trojrozměrný objekt"@cs ;
+	schema:name "trojrozměrný objekt"@cs ;
+	rdfs:label "oggetto tridimensionale"@it ;
+	skos:prefLabel "oggetto tridimensionale"@it ;
+	schema:name "oggetto tridimensionale"@it ;
+	rdfs:label "трохвымерны аб’ект"@be-tarask ;
+	skos:prefLabel "трохвымерны аб’ект"@be-tarask ;
+	schema:name "трохвымерны аб’ект"@be-tarask ;
+	rdfs:label "tridimezionalno telo"@sl ;
+	skos:prefLabel "tridimezionalno telo"@sl ;
+	schema:name "tridimezionalno telo"@sl ;
+	rdfs:label "dreidimensionales Objekt"@de ;
+	skos:prefLabel "dreidimensionales Objekt"@de ;
+	schema:name "dreidimensionales Objekt"@de ;
+	rdfs:label "objeto tridimensional"@pt ;
+	skos:prefLabel "objeto tridimensional"@pt ;
+	schema:name "objeto tridimensional"@pt ;
+	rdfs:label "3次元客体"@ja ;
+	skos:prefLabel "3次元客体"@ja ;
+	schema:name "3次元客体"@ja ;
+	rdfs:label "objet tri-dimensionnel"@fr ;
+	skos:prefLabel "objet tri-dimensionnel"@fr ;
+	schema:name "objet tri-dimensionnel"@fr ;
+	rdfs:label "עצם תלת-ממדי"@he ;
+	skos:prefLabel "עצם תלת-ממדי"@he ;
+	schema:name "עצם תלת-ממדי"@he ;
+	rdfs:label "obiekt trójwymiarowy"@pl ;
+	skos:prefLabel "obiekt trójwymiarowy"@pl ;
+	schema:name "obiekt trójwymiarowy"@pl ;
+	rdfs:label "objek tiga dimensi"@ms ;
+	skos:prefLabel "objek tiga dimensi"@ms ;
+	schema:name "objek tiga dimensi"@ms ;
+	rdfs:label "τρισδιάστατο αντικείμενο"@el ;
+	skos:prefLabel "τρισδιάστατο αντικείμενο"@el ;
+	schema:name "τρισδιάστατο αντικείμενο"@el ;
+	rdfs:label "тривимірний об'єкт"@uk ;
+	skos:prefLabel "тривимірний об'єкт"@uk ;
+	schema:name "тривимірний об'єкт"@uk ;
+	rdfs:label "tredimensionellt objekt"@sv ;
+	skos:prefLabel "tredimensionellt objekt"@sv ;
+	schema:name "tredimensionellt objekt"@sv ;
+	rdfs:label "ojeto 3D"@vec ;
+	skos:prefLabel "ojeto 3D"@vec ;
+	schema:name "ojeto 3D"@vec ;
+	rdfs:label "driedimensionaal object"@nl ;
+	skos:prefLabel "driedimensionaal object"@nl ;
+	schema:name "driedimensionaal object"@nl ;
+	rdfs:label "gwrthrych 3-dimensiwn"@cy ;
+	skos:prefLabel "gwrthrych 3-dimensiwn"@cy ;
+	schema:name "gwrthrych 3-dimensiwn"@cy ;
+	rdfs:label "tredimensjonalt objekt"@nb ;
+	skos:prefLabel "tredimensjonalt objekt"@nb ;
+	schema:name "tredimensjonalt objekt"@nb ;
+	rdfs:label "háromdimenziós tárgy"@hu ;
+	skos:prefLabel "háromdimenziós tárgy"@hu ;
+	schema:name "háromdimenziós tárgy"@hu ;
+	rdfs:label "اوبجيک تيݢ ديمينسي"@ms-arab ;
+	skos:prefLabel "اوبجيک تيݢ ديمينسي"@ms-arab ;
+	schema:name "اوبجيک تيݢ ديمينسي"@ms-arab ;
+	rdfs:label "өч үлчәмле объект"@tt ;
+	skos:prefLabel "өч үлчәмле объект"@tt ;
+	schema:name "өч үлчәмле объект"@tt ;
+	rdfs:label "trīsdimensiju objekts"@lv ;
+	skos:prefLabel "trīsdimensiju objekts"@lv ;
+	schema:name "trīsdimensiju objekts"@lv ;
+	schema:description "type of object"@en,
+		"tipus d'objecte"@ca,
+		"tipo de objeto"@es,
+		"тып аб’екту"@be-tarask,
+		"vrsta telesa"@sl,
+		"objekt ve 3D prostoru, mající vlastní objem"@cs,
+		"tipo de objeto"@pt,
+		"type d'objet"@fr,
+		"jenis objek"@ms,
+		"τύπος αντικειμένου"@el,
+		"тип об'єкту"@uk,
+		"objekt med höjd, bredd och djup"@sv,
+		"type object"@nl ;
+	skos:altLabel "3D object"@en,
+		"3D-object"@en,
+		"objecte tridimensional"@ca,
+		"3D-объект"@ru,
+		"objeto en 3D"@es,
+		"oggetto 3D"@it,
+		"3D-аб’ект"@be-tarask,
+		"3D telo"@sl,
+		"3D-telo"@sl,
+		"trojrozměrný dokument"@cs,
+		"3D objekt"@cs,
+		"3D-Objekt"@de,
+		"三次元客体"@ja,
+		"三次元物体"@ja,
+		"עצם תלת-מימדי"@he,
+		"objek 3D"@ms,
+		"3Д-об'єкт"@uk,
+		"3D-об'єкт"@uk,
+		"3D-объект"@tt,
+		"3D объект"@tt .
+
+wd:Q488383 a wikibase:Item ;
+	rdfs:label "object"@en ;
+	skos:prefLabel "object"@en ;
+	schema:name "object"@en ;
+	schema:description "anything that may be acted upon by a subject"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q2998430 a wikibase:Item ;
+	rdfs:label "interior"@en ;
+	skos:prefLabel "interior"@en ;
+	schema:name "interior"@en ;
+	schema:description "inside part of a three-dimensional object"@en .
+
+wd:P527 a wikibase:Property ;
+	rdfs:label "has part(s)"@en ;
+	skos:prefLabel "has part(s)"@en ;
+	schema:name "has part(s)"@en ;
+	schema:description "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P527 ;
+	wikibase:claim p:P527 ;
+	wikibase:statementProperty ps:P527 ;
+	wikibase:statementValue psv:P527 ;
+	wikibase:qualifier pq:P527 ;
+	wikibase:qualifierValue pqv:P527 ;
+	wikibase:reference pr:P527 ;
+	wikibase:referenceValue prv:P527 ;
+	wikibase:novalue wdno:P527 .
+
+p:P527 a owl:ObjectProperty .
+
+psv:P527 a owl:ObjectProperty .
+
+pqv:P527 a owl:ObjectProperty .
+
+prv:P527 a owl:ObjectProperty .
+
+wdt:P527 a owl:ObjectProperty .
+
+ps:P527 a owl:ObjectProperty .
+
+pq:P527 a owl:ObjectProperty .
+
+pr:P527 a owl:ObjectProperty .
+
+wdno:P527 a owl:Class ;
+	owl:complementOf _:c508fd90817ec28651ec025cc3117403 .
+
+_:c508fd90817ec28651ec025cc3117403 a owl:Restriction ;
+	owl:onProperty wdt:P527 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1385033 a wikibase:Item ;
+	rdfs:label "exterior"@en ;
+	skos:prefLabel "exterior"@en ;
+	schema:name "exterior"@en ;
+	schema:description "exterior part of a three-dimensional object"@en .
+
+wd:Q3783831 a wikibase:Item ;
+	rdfs:label "surface"@en ;
+	skos:prefLabel "surface"@en ;
+	schema:name "surface"@en ;
+	schema:description "2D-boundary of 3D-object"@en .
+
+wd:Q39297 a wikibase:Item ;
+	rdfs:label "volume"@en ;
+	skos:prefLabel "volume"@en ;
+	schema:name "volume"@en ;
+	schema:description "quantity of three-dimensional space"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q937946 a wikibase:Item ;
+	rdfs:label "solid figure"@en ;
+	skos:prefLabel "solid figure"@en ;
+	schema:name "solid figure"@en ;
+	schema:description "three-dimensional geometric body"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P5398 a wikibase:Property ;
+	rdfs:label "TDKIV term ID"@en ;
+	skos:prefLabel "TDKIV term ID"@en ;
+	schema:name "TDKIV term ID"@en ;
+	schema:description "identifier for a term used by the Czech Terminology Database of Library and Information Science (TDKIV) produced by the National Library of the Czech Republic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P5398 ;
+	wikibase:claim p:P5398 ;
+	wikibase:statementProperty ps:P5398 ;
+	wikibase:statementValue psv:P5398 ;
+	wikibase:qualifier pq:P5398 ;
+	wikibase:qualifierValue pqv:P5398 ;
+	wikibase:reference pr:P5398 ;
+	wikibase:referenceValue prv:P5398 ;
+	wikibase:novalue wdno:P5398 ;
+	wikibase:directClaimNormalized wdtn:P5398 ;
+	wikibase:statementValueNormalized psn:P5398 ;
+	wikibase:qualifierValueNormalized pqn:P5398 ;
+	wikibase:referenceValueNormalized prn:P5398 .
+
+p:P5398 a owl:ObjectProperty .
+
+psv:P5398 a owl:ObjectProperty .
+
+pqv:P5398 a owl:ObjectProperty .
+
+prv:P5398 a owl:ObjectProperty .
+
+wdt:P5398 a owl:DatatypeProperty .
+
+ps:P5398 a owl:DatatypeProperty .
+
+pq:P5398 a owl:DatatypeProperty .
+
+pr:P5398 a owl:DatatypeProperty .
+
+psn:P5398 a owl:ObjectProperty .
+
+pqn:P5398 a owl:ObjectProperty .
+
+prn:P5398 a owl:ObjectProperty .
+
+wdtn:P5398 a owl:ObjectProperty .
+
+wdno:P5398 a owl:Class ;
+	owl:complementOf _:1b5f02cd026e25300db47f144957f61e .
+
+_:1b5f02cd026e25300db47f144957f61e a owl:Restriction ;
+	owl:onProperty wdt:P5398 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q34929 a wikibase:Item ;
+	rdfs:label "three-dimensional space"@en ;
+	skos:prefLabel "three-dimensional space"@en ;
+	schema:name "three-dimensional space"@en ;
+	schema:description "geometric model in which a point is specified by three parameters"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P276 a wikibase:Property ;
+	rdfs:label "location"@en ;
+	skos:prefLabel "location"@en ;
+	schema:name "location"@en ;
+	schema:description "location of the object, structure or event. In the case of an administrative entity as containing item use P131. For statistical entities use P8138. In the case of a geographic entity use P706. Use P7153 for locations associated with the object."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P276 ;
+	wikibase:claim p:P276 ;
+	wikibase:statementProperty ps:P276 ;
+	wikibase:statementValue psv:P276 ;
+	wikibase:qualifier pq:P276 ;
+	wikibase:qualifierValue pqv:P276 ;
+	wikibase:reference pr:P276 ;
+	wikibase:referenceValue prv:P276 ;
+	wikibase:novalue wdno:P276 .
+
+p:P276 a owl:ObjectProperty .
+
+psv:P276 a owl:ObjectProperty .
+
+pqv:P276 a owl:ObjectProperty .
+
+prv:P276 a owl:ObjectProperty .
+
+wdt:P276 a owl:ObjectProperty .
+
+ps:P276 a owl:ObjectProperty .
+
+pq:P276 a owl:ObjectProperty .
+
+pr:P276 a owl:ObjectProperty .
+
+wdno:P276 a owl:Class ;
+	owl:complementOf _:0424b97657ca4d399eff1b8cb4828569 .
+
+_:0424b97657ca4d399eff1b8cb4828569 a owl:Restriction ;
+	owl:onProperty wdt:P276 ;
+	owl:someValuesFrom owl:Thing .

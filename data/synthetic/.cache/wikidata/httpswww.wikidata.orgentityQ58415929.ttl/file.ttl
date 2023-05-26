@@ -1,0 +1,356 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q58415929 a schema:Dataset ;
+	schema:about wd:Q58415929 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1901427409"^^xsd:integer ;
+	schema:dateModified "2023-05-23T11:48:30Z"^^xsd:dateTime ;
+	wikibase:statements "4"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q58415929 a wikibase:Item ;
+	wdt:P279 wd:Q35120 ;
+	wdt:P1552 wd:Q186408,
+		wd:Q17334923 ;
+	wdt:P361 wd:Q133327 ;
+	p:P279 s:Q58415929-d0e7588d-4a09-e335-a385-31db8089a6de .
+
+s:Q58415929-d0e7588d-4a09-e335-a385-31db8089a6de a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q35120 .
+
+wd:Q58415929 p:P1552 s:Q58415929-caf22f94-420d-2f46-8f88-895ceef4f813 .
+
+s:Q58415929-caf22f94-420d-2f46-8f88-895ceef4f813 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q186408 .
+
+wd:Q58415929 p:P1552 s:Q58415929-c622deba-480b-dcd3-6fb5-9b9426056a86 .
+
+s:Q58415929-c622deba-480b-dcd3-6fb5-9b9426056a86 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q17334923 .
+
+wd:Q58415929 p:P361 s:Q58415929-118c652c-42b7-fa78-4183-473f2496d9be .
+
+s:Q58415929-118c652c-42b7-fa78-4183-473f2496d9be a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q133327 .
+
+wd:Q58415929 rdfs:label "entité spatio-temporelle"@fr ;
+	skos:prefLabel "entité spatio-temporelle"@fr ;
+	schema:name "entité spatio-temporelle"@fr ;
+	rdfs:label "spatio-temporal entity"@en ;
+	skos:prefLabel "spatio-temporal entity"@en ;
+	schema:name "spatio-temporal entity"@en ;
+	rdfs:label "пространственно-временная сущность"@ru ;
+	skos:prefLabel "пространственно-временная сущность"@ru ;
+	schema:name "пространственно-временная сущность"@ru ;
+	rdfs:label "räumlich-zeitliche Entität"@de ;
+	skos:prefLabel "räumlich-zeitliche Entität"@de ;
+	schema:name "räumlich-zeitliche Entität"@de ;
+	rdfs:label "χωροχρονική οντότητα"@el ;
+	skos:prefLabel "χωροχρονική οντότητα"@el ;
+	schema:name "χωροχρονική οντότητα"@el ;
+	rdfs:label "ajallispaikallinen entiteetti"@fi ;
+	skos:prefLabel "ajallispaikallinen entiteetti"@fi ;
+	schema:name "ajallispaikallinen entiteetti"@fi ;
+	rdfs:label "spacio-temporele entiteit"@nl ;
+	skos:prefLabel "spacio-temporele entiteit"@nl ;
+	schema:name "spacio-temporele entiteit"@nl ;
+	rdfs:label "entidad espacio-temporal"@es ;
+	skos:prefLabel "entidad espacio-temporal"@es ;
+	schema:name "entidad espacio-temporal"@es ;
+	rdfs:label "romleg-temporal eining"@nn ;
+	skos:prefLabel "romleg-temporal eining"@nn ;
+	schema:name "romleg-temporal eining"@nn ;
+	rdfs:label "entitet i rumtiden"@sv ;
+	skos:prefLabel "entitet i rumtiden"@sv ;
+	schema:name "entitet i rumtiden"@sv ;
+	rdfs:label "entitas spasio-temporal"@id ;
+	skos:prefLabel "entitas spasio-temporal"@id ;
+	schema:name "entitas spasio-temporal"@id ;
+	rdfs:label "просторно-временски ентитет"@sr ;
+	skos:prefLabel "просторно-временски ентитет"@sr ;
+	schema:name "просторно-временски ентитет"@sr ;
+	rdfs:label "прасторава-часавая сутнасьць"@be-tarask ;
+	skos:prefLabel "прасторава-часавая сутнасьць"@be-tarask ;
+	schema:name "прасторава-часавая сутнасьць"@be-tarask ;
+	rdfs:label "romlig-temporal entitet"@nb ;
+	skos:prefLabel "romlig-temporal entitet"@nb ;
+	schema:name "romlig-temporal entitet"@nb ;
+	rdfs:label "spacio-temporal entity"@en-gb ;
+	skos:prefLabel "spacio-temporal entity"@en-gb ;
+	schema:name "spacio-temporal entity"@en-gb ;
+	rdfs:label "müvəqqəti məkan varlığı"@az ;
+	skos:prefLabel "müvəqqəti məkan varlığı"@az ;
+	schema:name "müvəqqəti məkan varlığı"@az ;
+	rdfs:label "entità spaziotemporale"@it ;
+	skos:prefLabel "entità spaziotemporale"@it ;
+	schema:name "entità spaziotemporale"@it ;
+	rdfs:label "прасторава-часавая сутнасць"@be ;
+	skos:prefLabel "прасторава-часавая сутнасць"@be ;
+	schema:name "прасторава-часавая сутнасць"@be ;
+	rdfs:label "ישות מרחב-זמן"@he ;
+	skos:prefLabel "ישות מרחב-זמן"@he ;
+	schema:name "ישות מרחב-זמן"@he ;
+	rdfs:label "entitat espaciotemporal"@ca ;
+	skos:prefLabel "entitat espaciotemporal"@ca ;
+	schema:name "entitat espaciotemporal"@ca ;
+	rdfs:label "entitate spațio-temporală"@ro ;
+	skos:prefLabel "entitate spațio-temporală"@ro ;
+	schema:name "entitate spațio-temporală"@ro ;
+	rdfs:label "時空實體"@zh-hant ;
+	skos:prefLabel "時空實體"@zh-hant ;
+	schema:name "時空實體"@zh-hant ;
+	rdfs:label "时空实体"@zh ;
+	skos:prefLabel "时空实体"@zh ;
+	schema:name "时空实体"@zh ;
+	rdfs:label "encja czasoprzestrzenna"@pl ;
+	skos:prefLabel "encja czasoprzestrzenna"@pl ;
+	schema:name "encja czasoprzestrzenna"@pl ;
+	rdfs:label "كيان زماني مكاني"@ar ;
+	skos:prefLabel "كيان زماني مكاني"@ar ;
+	schema:name "كيان زماني مكاني"@ar ;
+	rdfs:label "entità spàsio-tenporałe"@vec ;
+	skos:prefLabel "entità spàsio-tenporałe"@vec ;
+	schema:name "entità spàsio-tenporałe"@vec ;
+	rdfs:label "時空間実体"@ja ;
+	skos:prefLabel "時空間実体"@ja ;
+	schema:name "時空間実体"@ja ;
+	rdfs:label "entidade espaço-temporal"@pt ;
+	skos:prefLabel "entidade espaço-temporal"@pt ;
+	schema:name "entidade espaço-temporal"@pt ;
+	rdfs:label "entidade espaço-temporal"@pt-br ;
+	skos:prefLabel "entidade espaço-temporal"@pt-br ;
+	schema:name "entidade espaço-temporal"@pt-br ;
+	rdfs:label "entiti ruang-masa"@ms ;
+	skos:prefLabel "entiti ruang-masa"@ms ;
+	schema:name "entiti ruang-masa"@ms ;
+	rdfs:label "spactempa ento"@eo ;
+	skos:prefLabel "spactempa ento"@eo ;
+	schema:name "spactempa ento"@eo ;
+	rdfs:label "просторово-часова сутність"@uk ;
+	skos:prefLabel "просторово-часова сутність"@uk ;
+	schema:name "просторово-часова сутність"@uk ;
+	rdfs:label "اينتيتي رواڠ-ماس"@ms-arab ;
+	skos:prefLabel "اينتيتي رواڠ-ماس"@ms-arab ;
+	schema:name "اينتيتي رواڠ-ماس"@ms-arab ;
+	rdfs:label "prostorno-vremenski entitet"@bs ;
+	skos:prefLabel "prostorno-vremenski entitet"@bs ;
+	schema:name "prostorno-vremenski entitet"@bs ;
+	rdfs:label "térben és időben létező entitás"@hu ;
+	skos:prefLabel "térben és időben létező entitás"@hu ;
+	schema:name "térben és időben létező entitás"@hu ;
+	rdfs:label "просторо-временска сушнсот"@mk ;
+	skos:prefLabel "просторо-временска сушнсот"@mk ;
+	schema:name "просторо-временска сушнсот"@mk ;
+	rdfs:label "uzay-zamansal varlık"@tr ;
+	skos:prefLabel "uzay-zamansal varlık"@tr ;
+	schema:name "uzay-zamansal varlık"@tr ;
+	rdfs:label "räumlich-zeitliche Entität"@gsw ;
+	skos:prefLabel "räumlich-zeitliche Entität"@gsw ;
+	schema:name "räumlich-zeitliche Entität"@gsw ;
+	schema:description "objet contenu dans une région spatio-temporelle ou variation de l'état d'un objet dans l'espace ou le temps"@fr,
+		"thing that can exist or occur within a region of space-time, or variation of its state in space or time"@en,
+		"etwas, das in einem Raum-Zeit-Bereich enthalten sein kann, oder eine Veränderung seines Zustands in Raum oder Zeit"@de,
+		"oggetto che può essere contenuto in una regione dello spaziotempo, o variazione dello stato di un oggetto nello spazio o nel tempo"@it,
+		"lucru care poate fi plasat într-o regiune din spațiu-timp sau variație a stării sale în spațiu sau în timp"@ro,
+		"те, що може міститися в ділянці простору-часу, або різновид його стану у просторі чи часі"@uk,
+		"cosa que puede existir u ocurrir en una región del espacio-tiempo"@es,
+		"uzay-zamanın bir bölgesinde var olabilen şey veya bunun uzay ya da zamandaki durumunun değişimi"@tr,
+		"etwas, das in einem Raum-Zeit-Bereich enthalten sein kann, oder eine Veränderung seines Zustands in Raum oder Zeit"@gsw ;
+	skos:altLabel "spatiotemporaalinen entiteetti"@fi,
+		"romleg-temporal ting"@nn,
+		"romleg-temporalt objekt"@nn,
+		"romlig-temporal enhet"@nb,
+		"romlig-temporal ting"@nb,
+		"romlig-temporalt objekt"@nb,
+		"كيان زمكاني"@ar,
+		"時空間実在体"@ja,
+		"時空間的実体"@ja,
+		"encja przestrzennoczasowa"@pl,
+		"tér- és időbeli entitás"@hu,
+		"idő- és térbeli entitás"@hu,
+		"időben és térben létező entitás"@hu,
+		"téridő-entitás"@hu,
+		"téridőbeli entitás"@hu,
+		"просторно-временски ентитет"@mk,
+		"mekansal-zamansal varlık"@tr,
+		"zamansal mekansal varoluş"@tr .
+
+wd:Q35120 a wikibase:Item ;
+	rdfs:label "entity"@en ;
+	skos:prefLabel "entity"@en ;
+	schema:name "entity"@en ;
+	schema:description "anything that can be considered, discussed, or observed"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q186408 a wikibase:Item ;
+	rdfs:label "point in time"@en ;
+	skos:prefLabel "point in time"@en ;
+	schema:name "point in time"@en ;
+	schema:description "position of a particular instant in time"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q17334923 a wikibase:Item ;
+	rdfs:label "physical location"@en ;
+	skos:prefLabel "physical location"@en ;
+	schema:name "physical location"@en ;
+	schema:description "position of something in space"@en .
+
+wd:Q133327 a wikibase:Item ;
+	rdfs:label "spacetime"@en ;
+	skos:prefLabel "spacetime"@en ;
+	schema:name "spacetime"@en ;
+	schema:description "mathematical model combining space and time"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .

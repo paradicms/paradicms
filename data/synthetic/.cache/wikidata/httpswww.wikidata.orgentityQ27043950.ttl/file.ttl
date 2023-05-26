@@ -1,0 +1,698 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q27043950 a schema:Dataset ;
+	schema:about wd:Q27043950 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1863240744"^^xsd:integer ;
+	schema:dateModified "2023-03-28T12:57:54Z"^^xsd:dateTime ;
+	wikibase:statements "9"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "3"^^xsd:integer .
+
+wd:Q27043950 a wikibase:Item ;
+	wdt:P1554 "0001062" ;
+	wdt:P279 wd:Q53617489,
+		wd:Q29651224 ;
+	wdt:P4495 "XAO_0000000" ;
+	wdtn:P4495 <http://purl.obolibrary.org/obo/XAO_0000000> ;
+	wdt:P1402 "62955" ;
+	wdt:P1269 wd:Q514 ;
+	wdt:P31 wd:Q104054982,
+		wd:Q103812671,
+		wd:Q112826905 ;
+	p:P1554 s:Q27043950-2e103f8c-4873-8f74-d92f-6aadc33db12c .
+
+s:Q27043950-2e103f8c-4873-8f74-d92f-6aadc33db12c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1554 "0001062" .
+
+wd:Q27043950 p:P279 s:Q27043950-70fac378-489a-25c0-a9a8-ed938328a842 .
+
+s:Q27043950-70fac378-489a-25c0-a9a8-ed938328a842 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q53617489 .
+
+wd:Q27043950 p:P279 s:Q27043950-671e5396-43dd-2312-dfc4-ac86bb02b3e9 .
+
+s:Q27043950-671e5396-43dd-2312-dfc4-ac86bb02b3e9 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q29651224 .
+
+wd:Q27043950 p:P4495 s:Q27043950-D44A5696-F824-491D-90EA-70AEBECAEF37 .
+
+s:Q27043950-D44A5696-F824-491D-90EA-70AEBECAEF37 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4495 "XAO_0000000" ;
+	psn:P4495 <http://purl.obolibrary.org/obo/XAO_0000000> .
+
+wd:Q27043950 p:P1402 s:Q27043950-546f61b4-4150-1ea1-37ae-0a40f9aea848 .
+
+s:Q27043950-546f61b4-4150-1ea1-37ae-0a40f9aea848 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1402 "62955" ;
+	pq:P1810 "Anatomical entity" ;
+	prov:wasDerivedFrom ref:3deb5336f981936e88d7ecccdfbb3519c4e7e149 .
+
+wd:Q27043950 p:P1269 s:Q27043950-8f309c5d-4812-8661-ce6f-f20320834c35 .
+
+s:Q27043950-8f309c5d-4812-8661-ce6f-f20320834c35 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1269 wd:Q514 .
+
+wd:Q27043950 p:P31 s:Q27043950-f1a63f95-4ad2-65cd-5054-fc602137aaaa .
+
+s:Q27043950-f1a63f95-4ad2-65cd-5054-fc602137aaaa a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q104054982 ;
+	pq:P642 wd:Q7876491 .
+
+wd:Q27043950 p:P31 s:Q27043950-8eedee55-4efe-b869-e953-d2600d0ff34e .
+
+s:Q27043950-8eedee55-4efe-b869-e953-d2600d0ff34e a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q103812671 .
+
+wd:Q27043950 p:P31 s:Q27043950-5228AEA2-B394-4F1C-9F81-EAD19A47E66C .
+
+s:Q27043950-5228AEA2-B394-4F1C-9F81-EAD19A47E66C a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q112826905 .
+
+wd:Q27043950 rdfs:label "anatomical entity"@en ;
+	skos:prefLabel "anatomical entity"@en ;
+	schema:name "anatomical entity"@en ;
+	rdfs:label "anatomische Entität"@de ;
+	skos:prefLabel "anatomische Entität"@de ;
+	schema:name "anatomische Entität"@de ;
+	rdfs:label "解剖学的実体"@ja ;
+	skos:prefLabel "解剖学的実体"@ja ;
+	schema:name "解剖学的実体"@ja ;
+	rdfs:label "анатомическая сущность"@ru ;
+	skos:prefLabel "анатомическая сущность"@ru ;
+	schema:name "анатомическая сущность"@ru ;
+	rdfs:label "anatomische entiteit"@nl ;
+	skos:prefLabel "anatomische entiteit"@nl ;
+	schema:name "anatomische entiteit"@nl ;
+	rdfs:label "entidad anatómica"@es ;
+	skos:prefLabel "entidad anatómica"@es ;
+	schema:name "entidad anatómica"@es ;
+	rdfs:label "entité anatomique"@fr ;
+	skos:prefLabel "entité anatomique"@fr ;
+	schema:name "entité anatomique"@fr ;
+	rdfs:label "anatomisk eining"@nn ;
+	skos:prefLabel "anatomisk eining"@nn ;
+	schema:name "anatomisk eining"@nn ;
+	rdfs:label "entidade anatómica"@gl ;
+	skos:prefLabel "entidade anatómica"@gl ;
+	schema:name "entidade anatómica"@gl ;
+	rdfs:label "anatomisk enhet"@nb ;
+	skos:prefLabel "anatomisk enhet"@nb ;
+	schema:name "anatomisk enhet"@nb ;
+	rdfs:label "entità anatomica"@it ;
+	skos:prefLabel "entità anatomica"@it ;
+	schema:name "entità anatomica"@it ;
+	rdfs:label "anatomia ento"@eo ;
+	skos:prefLabel "anatomia ento"@eo ;
+	schema:name "anatomia ento"@eo ;
+	rdfs:label "анатомска сушност"@mk ;
+	skos:prefLabel "анатомска сушност"@mk ;
+	schema:name "анатомска сушност"@mk ;
+	rdfs:label "анатамічная існасьць"@be-tarask ;
+	skos:prefLabel "анатамічная існасьць"@be-tarask ;
+	schema:name "анатамічная існасьць"@be-tarask ;
+	rdfs:label "anatomická entita"@cs ;
+	skos:prefLabel "anatomická entita"@cs ;
+	schema:name "anatomická entita"@cs ;
+	rdfs:label "ישות אנטומית"@he ;
+	skos:prefLabel "ישות אנטומית"@he ;
+	schema:name "ישות אנטומית"@he ;
+	rdfs:label "анатомічна сутність"@uk ;
+	skos:prefLabel "анатомічна сутність"@uk ;
+	schema:name "анатомічна сутність"@uk ;
+	rdfs:label "entitat anatòmica"@ca ;
+	skos:prefLabel "entitat anatòmica"@ca ;
+	schema:name "entitat anatòmica"@ca ;
+	rdfs:label "entiti anatomi"@ms ;
+	skos:prefLabel "entiti anatomi"@ms ;
+	schema:name "entiti anatomi"@ms ;
+	rdfs:label "entitate anatomică"@ro ;
+	skos:prefLabel "entitate anatomică"@ro ;
+	schema:name "entitate anatomică"@ro ;
+	rdfs:label "анатомски ентитет"@sr ;
+	skos:prefLabel "анатомски ентитет"@sr ;
+	schema:name "анатомски ентитет"@sr ;
+	rdfs:label "اينتيتي اناتومي"@ms-arab ;
+	skos:prefLabel "اينتيتي اناتومي"@ms-arab ;
+	schema:name "اينتيتي اناتومي"@ms-arab ;
+	rdfs:label "解剖实体"@zh ;
+	skos:prefLabel "解剖实体"@zh ;
+	schema:name "解剖实体"@zh ;
+	rdfs:label "endid mewn anatomeg"@cy ;
+	skos:prefLabel "endid mewn anatomeg"@cy ;
+	schema:name "endid mewn anatomeg"@cy ;
+	rdfs:label "anatómiai entitás"@hu ;
+	skos:prefLabel "anatómiai entitás"@hu ;
+	schema:name "anatómiai entitás"@hu ;
+	rdfs:label "anatomiskā vienība"@lv ;
+	skos:prefLabel "anatomiskā vienība"@lv ;
+	schema:name "anatomiskā vienība"@lv ;
+	rdfs:label "byt anatomiczny"@pl ;
+	skos:prefLabel "byt anatomiczny"@pl ;
+	schema:name "byt anatomiczny"@pl ;
+	rdfs:label "anatomik varlık"@tr ;
+	skos:prefLabel "anatomik varlık"@tr ;
+	schema:name "anatomik varlık"@tr ;
+	schema:description "biological entity that is either member of a species or a unit of its structural organization"@en,
+		"endid mewn bywydeg ee rhywogaeth"@cy,
+		"bioloģiskā daļa, kas pieder sugas loceklim vai tā strukturālās organizācijas kopumam"@lv,
+		"bir türün üyesi veya yapısal organizasyonunun bir birimi olan biyolojik varlık"@tr ;
+	skos:altLabel "entidad anatomica"@es,
+		"anatomisk entitet"@nn,
+		"endid anatomegol"@cy,
+		"anatomijas vienība"@lv,
+		"anatomik oluşum"@tr .
+
+wd:P1554 a wikibase:Property ;
+	rdfs:label "UBERON ID"@en ;
+	skos:prefLabel "UBERON ID"@en ;
+	schema:name "UBERON ID"@en ;
+	schema:description "identifier from UBERON ontology (without prefix)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1554 ;
+	wikibase:claim p:P1554 ;
+	wikibase:statementProperty ps:P1554 ;
+	wikibase:statementValue psv:P1554 ;
+	wikibase:qualifier pq:P1554 ;
+	wikibase:qualifierValue pqv:P1554 ;
+	wikibase:reference pr:P1554 ;
+	wikibase:referenceValue prv:P1554 ;
+	wikibase:novalue wdno:P1554 ;
+	wikibase:directClaimNormalized wdtn:P1554 ;
+	wikibase:statementValueNormalized psn:P1554 ;
+	wikibase:qualifierValueNormalized pqn:P1554 ;
+	wikibase:referenceValueNormalized prn:P1554 .
+
+p:P1554 a owl:ObjectProperty .
+
+psv:P1554 a owl:ObjectProperty .
+
+pqv:P1554 a owl:ObjectProperty .
+
+prv:P1554 a owl:ObjectProperty .
+
+wdt:P1554 a owl:DatatypeProperty .
+
+ps:P1554 a owl:DatatypeProperty .
+
+pq:P1554 a owl:DatatypeProperty .
+
+pr:P1554 a owl:DatatypeProperty .
+
+psn:P1554 a owl:ObjectProperty .
+
+pqn:P1554 a owl:ObjectProperty .
+
+prn:P1554 a owl:ObjectProperty .
+
+wdtn:P1554 a owl:ObjectProperty .
+
+wdno:P1554 a owl:Class ;
+	owl:complementOf _:4905add7a57df721870ef40d09771c62 .
+
+_:4905add7a57df721870ef40d09771c62 a owl:Restriction ;
+	owl:onProperty wdt:P1554 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q53617489 a wikibase:Item ;
+	rdfs:label "independent continuant"@en ;
+	skos:prefLabel "independent continuant"@en ;
+	schema:name "independent continuant"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q29651224 a wikibase:Item ;
+	rdfs:label "natural object"@en ;
+	skos:prefLabel "natural object"@en ;
+	schema:name "natural object"@en ;
+	schema:description "naturally occurring object in a natural state, without modification by human effort"@en .
+
+wd:P4495 a wikibase:Property ;
+	rdfs:label "Xenopus Anatomical Ontology ID"@en ;
+	skos:prefLabel "Xenopus Anatomical Ontology ID"@en ;
+	schema:name "Xenopus Anatomical Ontology ID"@en ;
+	schema:description "identifier for an anatomical structure in the Xenopus Anatomical Ontology, a controlled vocubulary for describing Xenopus anatomy and embryological development"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4495 ;
+	wikibase:claim p:P4495 ;
+	wikibase:statementProperty ps:P4495 ;
+	wikibase:statementValue psv:P4495 ;
+	wikibase:qualifier pq:P4495 ;
+	wikibase:qualifierValue pqv:P4495 ;
+	wikibase:reference pr:P4495 ;
+	wikibase:referenceValue prv:P4495 ;
+	wikibase:novalue wdno:P4495 ;
+	wikibase:directClaimNormalized wdtn:P4495 ;
+	wikibase:statementValueNormalized psn:P4495 ;
+	wikibase:qualifierValueNormalized pqn:P4495 ;
+	wikibase:referenceValueNormalized prn:P4495 .
+
+p:P4495 a owl:ObjectProperty .
+
+psv:P4495 a owl:ObjectProperty .
+
+pqv:P4495 a owl:ObjectProperty .
+
+prv:P4495 a owl:ObjectProperty .
+
+wdt:P4495 a owl:DatatypeProperty .
+
+ps:P4495 a owl:DatatypeProperty .
+
+pq:P4495 a owl:DatatypeProperty .
+
+pr:P4495 a owl:DatatypeProperty .
+
+psn:P4495 a owl:ObjectProperty .
+
+pqn:P4495 a owl:ObjectProperty .
+
+prn:P4495 a owl:ObjectProperty .
+
+wdtn:P4495 a owl:ObjectProperty .
+
+wdno:P4495 a owl:Class ;
+	owl:complementOf _:8d70282d65dcfa86fa41fa975333c55d .
+
+_:8d70282d65dcfa86fa41fa975333c55d a owl:Restriction ;
+	owl:onProperty wdt:P4495 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1402 a wikibase:Property ;
+	rdfs:label "Foundational Model of Anatomy ID"@en ;
+	skos:prefLabel "Foundational Model of Anatomy ID"@en ;
+	schema:name "Foundational Model of Anatomy ID"@en ;
+	schema:description "identifier for human anatomical terminology"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1402 ;
+	wikibase:claim p:P1402 ;
+	wikibase:statementProperty ps:P1402 ;
+	wikibase:statementValue psv:P1402 ;
+	wikibase:qualifier pq:P1402 ;
+	wikibase:qualifierValue pqv:P1402 ;
+	wikibase:reference pr:P1402 ;
+	wikibase:referenceValue prv:P1402 ;
+	wikibase:novalue wdno:P1402 ;
+	wikibase:directClaimNormalized wdtn:P1402 ;
+	wikibase:statementValueNormalized psn:P1402 ;
+	wikibase:qualifierValueNormalized pqn:P1402 ;
+	wikibase:referenceValueNormalized prn:P1402 .
+
+p:P1402 a owl:ObjectProperty .
+
+psv:P1402 a owl:ObjectProperty .
+
+pqv:P1402 a owl:ObjectProperty .
+
+prv:P1402 a owl:ObjectProperty .
+
+wdt:P1402 a owl:DatatypeProperty .
+
+ps:P1402 a owl:DatatypeProperty .
+
+pq:P1402 a owl:DatatypeProperty .
+
+pr:P1402 a owl:DatatypeProperty .
+
+psn:P1402 a owl:ObjectProperty .
+
+pqn:P1402 a owl:ObjectProperty .
+
+prn:P1402 a owl:ObjectProperty .
+
+wdtn:P1402 a owl:ObjectProperty .
+
+wdno:P1402 a owl:Class ;
+	owl:complementOf _:5404339a1da3e905250cadeb2ba096f8 .
+
+_:5404339a1da3e905250cadeb2ba096f8 a owl:Restriction ;
+	owl:onProperty wdt:P1402 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q514 a wikibase:Item ;
+	rdfs:label "anatomy"@en ;
+	skos:prefLabel "anatomy"@en ;
+	schema:name "anatomy"@en ;
+	schema:description "study of the structure and parts of organisms"@en .
+
+wd:P1269 a wikibase:Property ;
+	rdfs:label "facet of"@en ;
+	skos:prefLabel "facet of"@en ;
+	schema:name "facet of"@en ;
+	schema:description "topic of which this item is an aspect, item that offers a broader perspective on the same topic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1269 ;
+	wikibase:claim p:P1269 ;
+	wikibase:statementProperty ps:P1269 ;
+	wikibase:statementValue psv:P1269 ;
+	wikibase:qualifier pq:P1269 ;
+	wikibase:qualifierValue pqv:P1269 ;
+	wikibase:reference pr:P1269 ;
+	wikibase:referenceValue prv:P1269 ;
+	wikibase:novalue wdno:P1269 .
+
+p:P1269 a owl:ObjectProperty .
+
+psv:P1269 a owl:ObjectProperty .
+
+pqv:P1269 a owl:ObjectProperty .
+
+prv:P1269 a owl:ObjectProperty .
+
+wdt:P1269 a owl:ObjectProperty .
+
+ps:P1269 a owl:ObjectProperty .
+
+pq:P1269 a owl:ObjectProperty .
+
+pr:P1269 a owl:ObjectProperty .
+
+wdno:P1269 a owl:Class ;
+	owl:complementOf _:a498557c9680bd52a026c4a3e1e3a863 .
+
+_:a498557c9680bd52a026c4a3e1e3a863 a owl:Restriction ;
+	owl:onProperty wdt:P1269 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q104054982 a wikibase:Item ;
+	rdfs:label "ontological root"@en ;
+	skos:prefLabel "ontological root"@en ;
+	schema:name "ontological root"@en ;
+	schema:description "entity of an controlled vocabulary where all other enities of the ontology subclass it"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q103812671 a wikibase:Item ;
+	rdfs:label "anatomical entity type"@en ;
+	skos:prefLabel "anatomical entity type"@en ;
+	schema:name "anatomical entity type"@en ;
+	schema:description "metaclass for biological entities that are either member of a species or a unit of its structural organization"@en .
+
+wd:Q112826905 a wikibase:Item ;
+	rdfs:label "class of anatomical entity"@en ;
+	skos:prefLabel "class of anatomical entity"@en ;
+	schema:name "class of anatomical entity"@en ;
+	schema:description "anatomical entity as a first-order metaclass. To be used as P31 values for all anatomical structure classes. Its instances are classes (e.g. heart)"@en .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1406710 a wikibase:Item ;
+	rdfs:label "Foundational Model of Anatomy"@en ;
+	skos:prefLabel "Foundational Model of Anatomy"@en ;
+	schema:name "Foundational Model of Anatomy"@en ;
+	schema:description "ontology for the domain of human anatomy"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q7876491 a wikibase:Item ;
+	rdfs:label "Uberon"@en ;
+	skos:prefLabel "Uberon"@en ;
+	schema:name "Uberon"@en ;
+	schema:description "ontology"@en .
+
+wd:P642 a wikibase:Property ;
+	rdfs:label "of"@en ;
+	skos:prefLabel "of"@en ;
+	schema:name "of"@en ;
+	schema:description "qualifier stating that a statement applies within the scope of a particular item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P642 ;
+	wikibase:claim p:P642 ;
+	wikibase:statementProperty ps:P642 ;
+	wikibase:statementValue psv:P642 ;
+	wikibase:qualifier pq:P642 ;
+	wikibase:qualifierValue pqv:P642 ;
+	wikibase:reference pr:P642 ;
+	wikibase:referenceValue prv:P642 ;
+	wikibase:novalue wdno:P642 .
+
+p:P642 a owl:ObjectProperty .
+
+psv:P642 a owl:ObjectProperty .
+
+pqv:P642 a owl:ObjectProperty .
+
+prv:P642 a owl:ObjectProperty .
+
+wdt:P642 a owl:ObjectProperty .
+
+ps:P642 a owl:ObjectProperty .
+
+pq:P642 a owl:ObjectProperty .
+
+pr:P642 a owl:ObjectProperty .
+
+wdno:P642 a owl:Class ;
+	owl:complementOf _:2a127b1015667b59aad92244e4ebb227 .
+
+_:2a127b1015667b59aad92244e4ebb227 a owl:Restriction ;
+	owl:onProperty wdt:P642 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q114654923 owl:sameAs wd:Q27043950 .
+
+v:24f028790abf714c3cbae99dcdf78e25 a wikibase:TimeValue ;
+	wikibase:timeValue "2019-08-01T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:3deb5336f981936e88d7ecccdfbb3519c4e7e149 a wikibase:Reference ;
+	pr:P248 wd:Q1406710 ;
+	pr:P813 "2019-08-01T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:24f028790abf714c3cbae99dcdf78e25 .

@@ -1,0 +1,648 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q876367 a schema:Dataset ;
+	schema:about wd:Q876367 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1810087191"^^xsd:integer ;
+	schema:dateModified "2023-01-12T15:23:18Z"^^xsd:dateTime ;
+	wikibase:statements "9"^^xsd:integer ;
+	wikibase:sitelinks "3"^^xsd:integer ;
+	wikibase:identifiers "4"^^xsd:integer .
+
+wd:Q876367 a wikibase:Item .
+
+<https://pt.wikipedia.org/wiki/Instrumento_eletr%C3%B4nico> a schema:Article ;
+	schema:about wd:Q876367 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Instrumento eletrônico"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Instrumento_electr%C3%B3nico> a schema:Article ;
+	schema:about wd:Q876367 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Instrumento electrónico"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/Thi%E1%BA%BFt_b%E1%BB%8B_%C4%91i%E1%BB%87n_t%E1%BB%AD> a schema:Article ;
+	schema:about wd:Q876367 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Thiết bị điện tử"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q876367 wdt:P2283 wd:Q11650 ;
+	wdt:P1889 wd:Q105738 ;
+	wdt:P279 wd:Q1183543 ;
+	wdt:P508 "1393" ;
+	wdtn:P508 <http://purl.org/bncf/tid/1393> ;
+	wdt:P31 wd:Q21286738 ;
+	wdt:P2959 wd:Q2858615 ;
+	wdt:P2671 "/g/121_42dc" ;
+	wdtn:P2671 <http://g.co/kg/g/121_42dc> ;
+	wdt:P2671 "/g/1222cqg0" ;
+	wdtn:P2671 <http://g.co/kg/g/1222cqg0> ;
+	wdt:P691 "ph814411" ;
+	p:P2283 s:Q876367-9aabba6d-4577-0eb4-c482-655bcba11f48 .
+
+s:Q876367-9aabba6d-4577-0eb4-c482-655bcba11f48 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2283 wd:Q11650 .
+
+wd:Q876367 p:P1889 s:Q876367-b8936eac-4c43-5054-93f1-1294f2839255 .
+
+s:Q876367-b8936eac-4c43-5054-93f1-1294f2839255 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q105738 .
+
+wd:Q876367 p:P279 s:Q876367-52387fa9-49dd-81df-c0b0-fe19f3809f45 .
+
+s:Q876367-52387fa9-49dd-81df-c0b0-fe19f3809f45 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1183543 .
+
+wd:Q876367 p:P508 s:Q876367-660e97f6-41a6-0ad0-622b-708762de9289 .
+
+s:Q876367-660e97f6-41a6-0ad0-622b-708762de9289 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P508 "1393" ;
+	psn:P508 <http://purl.org/bncf/tid/1393> .
+
+wd:Q876367 p:P31 s:Q876367-c1ce86ef-495f-aebb-c995-db31f8990653 .
+
+s:Q876367-c1ce86ef-495f-aebb-c995-db31f8990653 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q21286738 ;
+	pq:P642 wd:Q2858615 .
+
+wd:Q876367 p:P2959 s:Q876367-0FF3C48F-8B15-4664-93FC-E60C7456C4D1 .
+
+s:Q876367-0FF3C48F-8B15-4664-93FC-E60C7456C4D1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2959 wd:Q2858615 .
+
+wd:Q876367 p:P2671 s:Q876367-DBF630E0-0456-4C2B-BCAD-1D5C093DEC23 .
+
+s:Q876367-DBF630E0-0456-4C2B-BCAD-1D5C093DEC23 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2671 "/g/121_42dc" ;
+	psn:P2671 <http://g.co/kg/g/121_42dc> .
+
+wd:Q876367 p:P2671 s:Q876367-84f64f41-408e-94c2-977b-b062b5088910 .
+
+s:Q876367-84f64f41-408e-94c2-977b-b062b5088910 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2671 "/g/1222cqg0" ;
+	psn:P2671 <http://g.co/kg/g/1222cqg0> .
+
+wd:Q876367 p:P691 s:Q876367-D0305AF7-D726-4F34-9F1B-0FD24B94E1F7 .
+
+s:Q876367-D0305AF7-D726-4F34-9F1B-0FD24B94E1F7 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P691 "ph814411" ;
+	pq:P1810 "elektronické přístroje" .
+
+wd:Q876367 rdfs:label "instrumento eletrônico"@pt ;
+	skos:prefLabel "instrumento eletrônico"@pt ;
+	schema:name "instrumento eletrônico"@pt ;
+	rdfs:label "Elektrofony"@pl ;
+	skos:prefLabel "Elektrofony"@pl ;
+	schema:name "Elektrofony"@pl ;
+	rdfs:label "instrumento electrónico"@es ;
+	skos:prefLabel "instrumento electrónico"@es ;
+	schema:name "instrumento electrónico"@es ;
+	rdfs:label "електроні інструменти"@uk ;
+	skos:prefLabel "електроні інструменти"@uk ;
+	schema:name "електроні інструменти"@uk ;
+	rdfs:label "электронный инструмент"@ru ;
+	skos:prefLabel "электронный инструмент"@ru ;
+	schema:name "электронный инструмент"@ru ;
+	rdfs:label "strumento elettronico"@it ;
+	skos:prefLabel "strumento elettronico"@it ;
+	schema:name "strumento elettronico"@it ;
+	rdfs:label "electronic instrument"@en ;
+	skos:prefLabel "electronic instrument"@en ;
+	schema:name "electronic instrument"@en ;
+	rdfs:label "электронны інструмэнт"@be-tarask ;
+	skos:prefLabel "электронны інструмэнт"@be-tarask ;
+	schema:name "электронны інструмэнт"@be-tarask ;
+	rdfs:label "instrument électronique"@fr ;
+	skos:prefLabel "instrument électronique"@fr ;
+	schema:name "instrument électronique"@fr ;
+	rdfs:label "Thiết bị điện tử"@vi ;
+	skos:prefLabel "Thiết bị điện tử"@vi ;
+	schema:name "Thiết bị điện tử"@vi ;
+	rdfs:label "elektronický přístroj"@cs ;
+	skos:prefLabel "elektronický přístroj"@cs ;
+	schema:name "elektronický přístroj"@cs ;
+	skos:altLabel "Instrumento electrónico"@pt,
+		"Instrumento eletrónico"@pt,
+		"Elektryczne instrumenty muzyczne"@pl,
+		"Instrument elektryczny"@pl,
+		"instrumentos electrónicos"@es,
+		"instrumentos electronicos"@es,
+		"instrumento electronico"@es,
+		"apparecchio elettronico"@it,
+		"electronic device"@en,
+		"elektronické přístroje"@cs .
+
+wd:Q11650 a wikibase:Item ;
+	rdfs:label "electronics"@en ;
+	skos:prefLabel "electronics"@en ;
+	schema:name "electronics"@en ;
+	schema:description "physics, engineering, technology and applications that deal with the emission, flow and control of electrons in vacuum and matter"@en .
+
+wd:P2283 a wikibase:Property ;
+	rdfs:label "uses"@en ;
+	skos:prefLabel "uses"@en ;
+	schema:name "uses"@en ;
+	schema:description "item or concept used by the subject or in the operation (see also instrument [P1303] and armament [P520])"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2283 ;
+	wikibase:claim p:P2283 ;
+	wikibase:statementProperty ps:P2283 ;
+	wikibase:statementValue psv:P2283 ;
+	wikibase:qualifier pq:P2283 ;
+	wikibase:qualifierValue pqv:P2283 ;
+	wikibase:reference pr:P2283 ;
+	wikibase:referenceValue prv:P2283 ;
+	wikibase:novalue wdno:P2283 .
+
+p:P2283 a owl:ObjectProperty .
+
+psv:P2283 a owl:ObjectProperty .
+
+pqv:P2283 a owl:ObjectProperty .
+
+prv:P2283 a owl:ObjectProperty .
+
+wdt:P2283 a owl:ObjectProperty .
+
+ps:P2283 a owl:ObjectProperty .
+
+pq:P2283 a owl:ObjectProperty .
+
+pr:P2283 a owl:ObjectProperty .
+
+wdno:P2283 a owl:Class ;
+	owl:complementOf _:44b76bf20cf7a758150a833ef3056d89 .
+
+_:44b76bf20cf7a758150a833ef3056d89 a owl:Restriction ;
+	owl:onProperty wdt:P2283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q105738 a wikibase:Item ;
+	rdfs:label "electrophone"@en ;
+	skos:prefLabel "electrophone"@en ;
+	schema:name "electrophone"@en ;
+	schema:description "class of musical instruments"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1183543 a wikibase:Item ;
+	rdfs:label "appliance"@en ;
+	skos:prefLabel "appliance"@en ;
+	schema:name "appliance"@en ;
+	schema:description "object with which something can be worked on, manufactured or effected"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P508 a wikibase:Property ;
+	rdfs:label "BNCF Thesaurus ID"@en ;
+	skos:prefLabel "BNCF Thesaurus ID"@en ;
+	schema:name "BNCF Thesaurus ID"@en ;
+	schema:description "identifier in the subject indexing tool of the National Central Library of Florence"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P508 ;
+	wikibase:claim p:P508 ;
+	wikibase:statementProperty ps:P508 ;
+	wikibase:statementValue psv:P508 ;
+	wikibase:qualifier pq:P508 ;
+	wikibase:qualifierValue pqv:P508 ;
+	wikibase:reference pr:P508 ;
+	wikibase:referenceValue prv:P508 ;
+	wikibase:novalue wdno:P508 ;
+	wikibase:directClaimNormalized wdtn:P508 ;
+	wikibase:statementValueNormalized psn:P508 ;
+	wikibase:qualifierValueNormalized pqn:P508 ;
+	wikibase:referenceValueNormalized prn:P508 .
+
+p:P508 a owl:ObjectProperty .
+
+psv:P508 a owl:ObjectProperty .
+
+pqv:P508 a owl:ObjectProperty .
+
+prv:P508 a owl:ObjectProperty .
+
+wdt:P508 a owl:DatatypeProperty .
+
+ps:P508 a owl:DatatypeProperty .
+
+pq:P508 a owl:DatatypeProperty .
+
+pr:P508 a owl:DatatypeProperty .
+
+psn:P508 a owl:ObjectProperty .
+
+pqn:P508 a owl:ObjectProperty .
+
+prn:P508 a owl:ObjectProperty .
+
+wdtn:P508 a owl:ObjectProperty .
+
+wdno:P508 a owl:Class ;
+	owl:complementOf _:5fd266465d236ed65347f82b760ee461 .
+
+_:5fd266465d236ed65347f82b760ee461 a owl:Restriction ;
+	owl:onProperty wdt:P508 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q21286738 a wikibase:Item ;
+	rdfs:label "Wikimedia permanent duplicate item"@en ;
+	skos:prefLabel "Wikimedia permanent duplicate item"@en ;
+	schema:name "Wikimedia permanent duplicate item"@en ;
+	schema:description "this item duplicates another item, the two can't be merged, as one Wikimedia project includes 2 pages, e.g. in different scripts or languages. Add properties other than P2959 (permanent duplicated item) and sitelinks for other wikis to the other item"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q2858615 a wikibase:Item ;
+	rdfs:label "electronic machine"@en ;
+	skos:prefLabel "electronic machine"@en ;
+	schema:name "electronic machine"@en ;
+	schema:description "electric device where the main functionality is provided by electronic circuits"@en .
+
+wd:P2959 a wikibase:Property ;
+	rdfs:label "permanent duplicated item"@en ;
+	skos:prefLabel "permanent duplicated item"@en ;
+	schema:name "permanent duplicated item"@en ;
+	schema:description "this item duplicates another item and the two can't be merged, as one Wikimedia project includes two pages, e.g. in different scripts or languages (only applies to some wikis, e.g.: cdowiki, gomwiki, nanwiki).  Use P31=Q17362920 for other wikis."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2959 ;
+	wikibase:claim p:P2959 ;
+	wikibase:statementProperty ps:P2959 ;
+	wikibase:statementValue psv:P2959 ;
+	wikibase:qualifier pq:P2959 ;
+	wikibase:qualifierValue pqv:P2959 ;
+	wikibase:reference pr:P2959 ;
+	wikibase:referenceValue prv:P2959 ;
+	wikibase:novalue wdno:P2959 .
+
+p:P2959 a owl:ObjectProperty .
+
+psv:P2959 a owl:ObjectProperty .
+
+pqv:P2959 a owl:ObjectProperty .
+
+prv:P2959 a owl:ObjectProperty .
+
+wdt:P2959 a owl:ObjectProperty .
+
+ps:P2959 a owl:ObjectProperty .
+
+pq:P2959 a owl:ObjectProperty .
+
+pr:P2959 a owl:ObjectProperty .
+
+wdno:P2959 a owl:Class ;
+	owl:complementOf _:802d6ea8b9887224288c307dfccd3bb4 .
+
+_:802d6ea8b9887224288c307dfccd3bb4 a owl:Restriction ;
+	owl:onProperty wdt:P2959 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2671 a wikibase:Property ;
+	rdfs:label "Google Knowledge Graph ID"@en ;
+	skos:prefLabel "Google Knowledge Graph ID"@en ;
+	schema:name "Google Knowledge Graph ID"@en ;
+	schema:description "identifier for Google Knowledge Graph API (application programming interface), starting with \"/g/\". For IDs starting with \"/m/\", use Freebase ID (P646)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2671 ;
+	wikibase:claim p:P2671 ;
+	wikibase:statementProperty ps:P2671 ;
+	wikibase:statementValue psv:P2671 ;
+	wikibase:qualifier pq:P2671 ;
+	wikibase:qualifierValue pqv:P2671 ;
+	wikibase:reference pr:P2671 ;
+	wikibase:referenceValue prv:P2671 ;
+	wikibase:novalue wdno:P2671 ;
+	wikibase:directClaimNormalized wdtn:P2671 ;
+	wikibase:statementValueNormalized psn:P2671 ;
+	wikibase:qualifierValueNormalized pqn:P2671 ;
+	wikibase:referenceValueNormalized prn:P2671 .
+
+p:P2671 a owl:ObjectProperty .
+
+psv:P2671 a owl:ObjectProperty .
+
+pqv:P2671 a owl:ObjectProperty .
+
+prv:P2671 a owl:ObjectProperty .
+
+wdt:P2671 a owl:DatatypeProperty .
+
+ps:P2671 a owl:DatatypeProperty .
+
+pq:P2671 a owl:DatatypeProperty .
+
+pr:P2671 a owl:DatatypeProperty .
+
+psn:P2671 a owl:ObjectProperty .
+
+pqn:P2671 a owl:ObjectProperty .
+
+prn:P2671 a owl:ObjectProperty .
+
+wdtn:P2671 a owl:ObjectProperty .
+
+wdno:P2671 a owl:Class ;
+	owl:complementOf _:65accf8c5265233a873cf53510c73fa5 .
+
+_:65accf8c5265233a873cf53510c73fa5 a owl:Restriction ;
+	owl:onProperty wdt:P2671 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P691 a wikibase:Property ;
+	rdfs:label "NL CR AUT ID"@en ;
+	skos:prefLabel "NL CR AUT ID"@en ;
+	schema:name "NL CR AUT ID"@en ;
+	schema:description "identifier in the Czech National Authority Database of National Library of the Czech Republic (NL CR)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P691 ;
+	wikibase:claim p:P691 ;
+	wikibase:statementProperty ps:P691 ;
+	wikibase:statementValue psv:P691 ;
+	wikibase:qualifier pq:P691 ;
+	wikibase:qualifierValue pqv:P691 ;
+	wikibase:reference pr:P691 ;
+	wikibase:referenceValue prv:P691 ;
+	wikibase:novalue wdno:P691 ;
+	wikibase:directClaimNormalized wdtn:P691 ;
+	wikibase:statementValueNormalized psn:P691 ;
+	wikibase:qualifierValueNormalized pqn:P691 ;
+	wikibase:referenceValueNormalized prn:P691 .
+
+p:P691 a owl:ObjectProperty .
+
+psv:P691 a owl:ObjectProperty .
+
+pqv:P691 a owl:ObjectProperty .
+
+prv:P691 a owl:ObjectProperty .
+
+wdt:P691 a owl:DatatypeProperty .
+
+ps:P691 a owl:DatatypeProperty .
+
+pq:P691 a owl:DatatypeProperty .
+
+pr:P691 a owl:DatatypeProperty .
+
+psn:P691 a owl:ObjectProperty .
+
+pqn:P691 a owl:ObjectProperty .
+
+prn:P691 a owl:ObjectProperty .
+
+wdtn:P691 a owl:ObjectProperty .
+
+wdno:P691 a owl:Class ;
+	owl:complementOf _:eee17ba34d3dca4b3bf5b23f68ca71b1 .
+
+_:eee17ba34d3dca4b3bf5b23f68ca71b1 a owl:Restriction ;
+	owl:onProperty wdt:P691 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P642 a wikibase:Property ;
+	rdfs:label "of"@en ;
+	skos:prefLabel "of"@en ;
+	schema:name "of"@en ;
+	schema:description "qualifier stating that a statement applies within the scope of a particular item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P642 ;
+	wikibase:claim p:P642 ;
+	wikibase:statementProperty ps:P642 ;
+	wikibase:statementValue psv:P642 ;
+	wikibase:qualifier pq:P642 ;
+	wikibase:qualifierValue pqv:P642 ;
+	wikibase:reference pr:P642 ;
+	wikibase:referenceValue prv:P642 ;
+	wikibase:novalue wdno:P642 .
+
+p:P642 a owl:ObjectProperty .
+
+psv:P642 a owl:ObjectProperty .
+
+pqv:P642 a owl:ObjectProperty .
+
+prv:P642 a owl:ObjectProperty .
+
+wdt:P642 a owl:ObjectProperty .
+
+ps:P642 a owl:ObjectProperty .
+
+pq:P642 a owl:ObjectProperty .
+
+pr:P642 a owl:ObjectProperty .
+
+wdno:P642 a owl:Class ;
+	owl:complementOf _:2a127b1015667b59aad92244e4ebb227 .
+
+_:2a127b1015667b59aad92244e4ebb227 a owl:Restriction ;
+	owl:onProperty wdt:P642 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q10825183 owl:sameAs wd:Q876367 .

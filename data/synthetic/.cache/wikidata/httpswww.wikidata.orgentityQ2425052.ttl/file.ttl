@@ -1,0 +1,1567 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q2425052 a schema:Dataset ;
+	schema:about wd:Q2425052 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1902039648"^^xsd:integer ;
+	schema:dateModified "2023-05-24T15:27:24Z"^^xsd:dateTime ;
+	wikibase:statements "18"^^xsd:integer ;
+	wikibase:sitelinks "20"^^xsd:integer ;
+	wikibase:identifiers "5"^^xsd:integer .
+
+wd:Q2425052 a wikibase:Item .
+
+<https://et.wikipedia.org/wiki/Elektriaparaat> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikipedia.org/> ;
+	schema:name "Elektriaparaat"@et .
+
+<https://et.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/Elektrick%C3%BD_p%C5%99%C3%ADstroj> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Elektrický přístroj"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Aparato_el%C3%A9ctrico> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Aparato eléctrico"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Aparell_el%C3%A8ctric> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Aparell elèctric"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Aparaty_elektryczne> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Aparaty elektryczne"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Elektroger%C3%A4t> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Elektrogerät"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh-yue.wikipedia.org/wiki/%E9%9B%BB%E5%99%A8> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "yue" ;
+	schema:isPartOf <https://zh-yue.wikipedia.org/> ;
+	schema:name "電器"@yue .
+
+<https://zh-yue.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://lb.wikipedia.org/wiki/Elektreschen_Apparat> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "lb" ;
+	schema:isPartOf <https://lb.wikipedia.org/> ;
+	schema:name "Elektreschen Apparat"@lb .
+
+<https://lb.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eu.wikipedia.org/wiki/Gailu_elektriko> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "eu" ;
+	schema:isPartOf <https://eu.wikipedia.org/> ;
+	schema:name "Gailu elektriko"@eu .
+
+<https://eu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh-min-nan.wikipedia.org/wiki/Ti%C4%81n-kh%C3%AC_chong-t%C3%AC> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "nan" ;
+	schema:isPartOf <https://zh-min-nan.wikipedia.org/> ;
+	schema:name "Tiān-khì chong-tì"@nan .
+
+<https://zh-min-nan.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uz.wikipedia.org/wiki/Elektr_apparatlar> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "uz" ;
+	schema:isPartOf <https://uz.wikipedia.org/> ;
+	schema:name "Elektr apparatlar"@uz .
+
+<https://uz.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://kaa.wikipedia.org/wiki/Elektr_apparatlar> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "kaa" ;
+	schema:isPartOf <https://kaa.wikipedia.org/> ;
+	schema:name "Elektr apparatlar"@kaa .
+
+<https://kaa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E9%9B%BB%E6%A9%9F%E6%A9%9F%E6%A2%B0> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "電機機械"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tg.wikipedia.org/wiki/%D0%90%D1%84%D0%B7%D0%BE%D1%80%D0%B8_%D0%B1%D0%B0%D1%80%D2%9B%D3%A3> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "tg" ;
+	schema:isPartOf <https://tg.wikipedia.org/> ;
+	schema:name "Афзори барқӣ"@tg .
+
+<https://tg.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BF%D1%80%D0%B8%D0%B1%D0%BE%D1%80> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Электроприбор"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%95%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%B8%D1%87%D0%BD%D0%B8%D0%B9_%D0%BF%D1%80%D0%B8%D1%81%D1%82%D1%80%D1%96%D0%B9> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Електричний пристрій"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Elektrisch_apparaat> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Elektrisch apparaat"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D8%AC%D9%87%D8%A7%D8%B2_%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "جهاز كهربائي"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/Electrical_appliance> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Electrical appliance"@en ;
+	wikibase:badge wd:Q70894304 .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://commons.wikimedia.org/wiki/Category:Electrical_appliances> a schema:Article ;
+	schema:about wd:Q2425052 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://commons.wikimedia.org/> ;
+	schema:name "Category:Electrical appliances"@en .
+
+<https://commons.wikimedia.org/> wikibase:wikiGroup "commons" .
+
+wd:Q2425052 wdt:P1051 "2587" ;
+	wdt:P279 wd:Q1183543 ;
+	wdt:P646 "/m/019dx1" ;
+	wdt:P910 wd:Q8946856,
+		wd:Q16761645,
+		wd:Q9412449 ;
+	wdt:P460 wd:Q3749263 ;
+	wdt:P1889 wd:Q831990,
+		wd:Q951504,
+		wd:Q3819757,
+		wd:Q212920 ;
+	wdt:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Bollitore%20elettrico%201.JPG> ;
+	wdt:P8408 "ElectricalDevice" ;
+	wdtn:P8408 <http://kbpedia.org/kko/rc/ElectricalDevice> ;
+	wdt:P618 wd:Q12725 ;
+	wdt:P7818 "Four_à_micro-ondes" ;
+	wdt:P691 "ph119856" ;
+	wdt:P527 wd:Q931447 ;
+	p:P1051 s:Q2425052-CEAFC4BC-AA40-427A-B8F2-0E8C2A881780 .
+
+s:Q2425052-CEAFC4BC-AA40-427A-B8F2-0E8C2A881780 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1051 "2587" .
+
+wd:Q2425052 p:P279 s:Q2425052-C500F078-1355-49F4-88C4-4DED946E94C0 .
+
+s:Q2425052-C500F078-1355-49F4-88C4-4DED946E94C0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1183543 .
+
+wd:Q2425052 p:P279 s:Q2425052-737399B1-60FE-4B3B-B39A-036B6081E0B3 .
+
+s:Q2425052-737399B1-60FE-4B3B-B39A-036B6081E0B3 a wikibase:Statement ;
+	wikibase:rank wikibase:DeprecatedRank ;
+	ps:P279 wd:Q931447 ;
+	pq:P2241 wd:Q110646418 .
+
+wd:Q2425052 p:P646 s:Q2425052-3B1EED27-B21D-454A-AA3B-904029D345B4 .
+
+s:Q2425052-3B1EED27-B21D-454A-AA3B-904029D345B4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/019dx1" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q2425052 p:P910 s:Q2425052-BD6F104D-7189-4D60-9E2D-8E87D8150299 .
+
+s:Q2425052-BD6F104D-7189-4D60-9E2D-8E87D8150299 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q8946856 ;
+	prov:wasDerivedFrom ref:9a24f7c0208b05d6be97077d855671d1dfdbc0dd .
+
+wd:Q2425052 p:P910 s:Q2425052-A1744542-9D54-45FF-9BF9-A13423589C37 .
+
+s:Q2425052-A1744542-9D54-45FF-9BF9-A13423589C37 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q16761645 .
+
+wd:Q2425052 p:P910 s:Q2425052-ed040116-d508-4938-8e69-0d22a5edcdd5 .
+
+s:Q2425052-ed040116-d508-4938-8e69-0d22a5edcdd5 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q9412449 ;
+	prov:wasDerivedFrom ref:90eebdfa37426a8dafc82c176e3b956682be1f6c .
+
+wd:Q2425052 p:P460 s:Q2425052-32a2dde7-4a32-2347-eb5f-d114871c0d75 .
+
+s:Q2425052-32a2dde7-4a32-2347-eb5f-d114871c0d75 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q3749263 .
+
+wd:Q2425052 p:P1889 s:Q2425052-e87302f4-4496-12e1-7a3e-d54b706a2249 .
+
+s:Q2425052-e87302f4-4496-12e1-7a3e-d54b706a2249 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q831990 .
+
+wd:Q2425052 p:P1889 s:Q2425052-b14e3ee0-4af1-59ca-edac-a6b8c23cb9c1 .
+
+s:Q2425052-b14e3ee0-4af1-59ca-edac-a6b8c23cb9c1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q951504 .
+
+wd:Q2425052 p:P1889 s:Q2425052-BB796A26-D67A-4BC6-B1CB-07BBCC8B9B80 .
+
+s:Q2425052-BB796A26-D67A-4BC6-B1CB-07BBCC8B9B80 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q3819757 .
+
+wd:Q2425052 p:P1889 s:Q2425052-454E0AA3-C05A-45C0-83DF-7A3177C6CB9A .
+
+s:Q2425052-454E0AA3-C05A-45C0-83DF-7A3177C6CB9A a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q212920 .
+
+wd:Q2425052 p:P18 s:Q2425052-7a1ea752-4e6a-f828-0d86-f2ca7734a963 .
+
+s:Q2425052-7a1ea752-4e6a-f828-0d86-f2ca7734a963 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Bollitore%20elettrico%201.JPG> .
+
+wd:Q2425052 p:P8408 s:Q2425052-2C5557C9-3845-4365-A048-B1DAFC50F750 .
+
+s:Q2425052-2C5557C9-3845-4365-A048-B1DAFC50F750 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8408 "ElectricalDevice" ;
+	psn:P8408 <http://kbpedia.org/kko/rc/ElectricalDevice> ;
+	prov:wasDerivedFrom ref:9a681f9dd95c90224547c404e11295f4f7dcf54e .
+
+wd:Q2425052 p:P618 s:Q2425052-BE9AA0B5-7055-4181-9C7B-030393B58B61 .
+
+s:Q2425052-BE9AA0B5-7055-4181-9C7B-030393B58B61 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P618 wd:Q12725 .
+
+wd:Q2425052 p:P7818 s:Q2425052-5626E103-3EF9-4B73-BAA8-60641905FFAB .
+
+s:Q2425052-5626E103-3EF9-4B73-BAA8-60641905FFAB a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7818 "Four_à_micro-ondes" .
+
+wd:Q2425052 p:P691 s:Q2425052-2BD64725-66ED-485E-B776-E64ACA453333 .
+
+s:Q2425052-2BD64725-66ED-485E-B776-E64ACA453333 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P691 "ph119856" ;
+	pq:P1810 "elektrické přístroje" .
+
+wd:Q2425052 p:P527 s:Q2425052-0c0733b9-4f76-71f2-7ecc-04a2ac41e5b6 .
+
+s:Q2425052-0c0733b9-4f76-71f2-7ecc-04a2ac41e5b6 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P527 wd:Q931447 ;
+	pq:P3831 wd:Q29954 .
+
+wd:Q2425052 rdfs:label "elektriaparaat"@et ;
+	skos:prefLabel "elektriaparaat"@et ;
+	schema:name "elektriaparaat"@et ;
+	rdfs:label "elektrický přístroj"@cs ;
+	skos:prefLabel "elektrický přístroj"@cs ;
+	schema:name "elektrický přístroj"@cs ;
+	rdfs:label "электрический аппарат"@ru ;
+	skos:prefLabel "электрический аппарат"@ru ;
+	schema:name "электрический аппарат"@ru ;
+	rdfs:label "aparato eléctrico"@es ;
+	skos:prefLabel "aparato eléctrico"@es ;
+	schema:name "aparato eléctrico"@es ;
+	rdfs:label "aparell elèctric"@ca ;
+	skos:prefLabel "aparell elèctric"@ca ;
+	schema:name "aparell elèctric"@ca ;
+	rdfs:label "electrical appliance"@en ;
+	skos:prefLabel "electrical appliance"@en ;
+	schema:name "electrical appliance"@en ;
+	rdfs:label "aparat elektryczny"@pl ;
+	skos:prefLabel "aparat elektryczny"@pl ;
+	schema:name "aparat elektryczny"@pl ;
+	rdfs:label "електричний апарат"@uk ;
+	skos:prefLabel "електричний апарат"@uk ;
+	schema:name "електричний апарат"@uk ;
+	rdfs:label "Elektrogerät"@de ;
+	skos:prefLabel "Elektrogerät"@de ;
+	schema:name "Elektrogerät"@de ;
+	rdfs:label "appareil électrique"@fr ;
+	skos:prefLabel "appareil électrique"@fr ;
+	schema:name "appareil électrique"@fr ;
+	rdfs:label "aparelho elétrico"@pt ;
+	skos:prefLabel "aparelho elétrico"@pt ;
+	schema:name "aparelho elétrico"@pt ;
+	rdfs:label "електрични апарат"@sr ;
+	skos:prefLabel "електрични апарат"@sr ;
+	schema:name "електрични апарат"@sr ;
+	rdfs:label "електрични апарат"@sr-ec ;
+	skos:prefLabel "електрични апарат"@sr-ec ;
+	schema:name "електрични апарат"@sr-ec ;
+	rdfs:label "električni aparat"@sr-el ;
+	skos:prefLabel "električni aparat"@sr-el ;
+	schema:name "električni aparat"@sr-el ;
+	rdfs:label "elektrický spotrebič"@sk ;
+	skos:prefLabel "elektrický spotrebič"@sk ;
+	schema:name "elektrický spotrebič"@sk ;
+	rdfs:label "电器"@zh ;
+	skos:prefLabel "电器"@zh ;
+	schema:name "电器"@zh ;
+	rdfs:label "電器"@yue ;
+	skos:prefLabel "電器"@yue ;
+	schema:name "電器"@yue ;
+	rdfs:label "electrical appliance"@sco ;
+	skos:prefLabel "electrical appliance"@sco ;
+	schema:name "electrical appliance"@sco ;
+	rdfs:label "електричен уред"@mk ;
+	skos:prefLabel "електричен уред"@mk ;
+	schema:name "електричен уред"@mk ;
+	rdfs:label "apparecchiu elettricu"@scn ;
+	skos:prefLabel "apparecchiu elettricu"@scn ;
+	schema:name "apparecchiu elettricu"@scn ;
+	rdfs:label "elektrisk apparat"@da ;
+	skos:prefLabel "elektrisk apparat"@da ;
+	schema:name "elektrisk apparat"@da ;
+	rdfs:label "elektreschen Apparat"@lb ;
+	skos:prefLabel "elektreschen Apparat"@lb ;
+	schema:name "elektreschen Apparat"@lb ;
+	rdfs:label "equipamento eletrônico"@pt-br ;
+	skos:prefLabel "equipamento eletrônico"@pt-br ;
+	schema:name "equipamento eletrônico"@pt-br ;
+	rdfs:label "aparat electric"@ro ;
+	skos:prefLabel "aparat electric"@ro ;
+	schema:name "aparat electric"@ro ;
+	rdfs:label "električni uređaj"@bs ;
+	skos:prefLabel "električni uređaj"@bs ;
+	schema:name "električni uređaj"@bs ;
+	rdfs:label "電気装置"@ja ;
+	skos:prefLabel "電気装置"@ja ;
+	schema:name "電気装置"@ja ;
+	rdfs:label "Gailu elektriko"@eu ;
+	skos:prefLabel "Gailu elektriko"@eu ;
+	schema:name "Gailu elektriko"@eu ;
+	rdfs:label "elektra aparato"@eo ;
+	skos:prefLabel "elektra aparato"@eo ;
+	schema:name "elektra aparato"@eo ;
+	rdfs:label "aparato elektrala"@io ;
+	skos:prefLabel "aparato elektrala"@io ;
+	schema:name "aparato elektrala"@io ;
+	rdfs:label "جهاز كهربائي"@ar ;
+	skos:prefLabel "جهاز كهربائي"@ar ;
+	schema:name "جهاز كهربائي"@ar ;
+	rdfs:label "מכשיר אלקטרוני"@he ;
+	skos:prefLabel "מכשיר אלקטרוני"@he ;
+	schema:name "מכשיר אלקטרוני"@he ;
+	rdfs:label "dispositivo elettrico"@it ;
+	skos:prefLabel "dispositivo elettrico"@it ;
+	schema:name "dispositivo elettrico"@it ;
+	rdfs:label "электр җиһаз"@tt-cyrl ;
+	skos:prefLabel "электр җиһаз"@tt-cyrl ;
+	schema:name "электр җиһаз"@tt-cyrl ;
+	rdfs:label "elektr caylanma"@tt-latn ;
+	skos:prefLabel "elektr caylanma"@tt-latn ;
+	schema:name "elektr caylanma"@tt-latn ;
+	rdfs:label "электр җиһаз"@tt ;
+	skos:prefLabel "электр җиһаз"@tt ;
+	schema:name "электр җиһаз"@tt ;
+	rdfs:label "elektrisch apparaat"@nl ;
+	skos:prefLabel "elektrisch apparaat"@nl ;
+	schema:name "elektrisch apparaat"@nl ;
+	rdfs:label "Tiān-khì chong-tì"@nan ;
+	skos:prefLabel "Tiān-khì chong-tì"@nan ;
+	schema:name "Tiān-khì chong-tì"@nan ;
+	rdfs:label "elektrisk apparat"@nn ;
+	skos:prefLabel "elektrisk apparat"@nn ;
+	schema:name "elektrisk apparat"@nn ;
+	rdfs:label "электрычны апарат"@be-tarask ;
+	skos:prefLabel "электрычны апарат"@be-tarask ;
+	schema:name "электрычны апарат"@be-tarask ;
+	rdfs:label "электрычны апарат"@be ;
+	skos:prefLabel "электрычны апарат"@be ;
+	schema:name "электрычны апарат"@be ;
+	rdfs:label "elektrisk apparat"@sv ;
+	skos:prefLabel "elektrisk apparat"@sv ;
+	schema:name "elektrisk apparat"@sv ;
+	rdfs:label "elektr apparatlar"@uz ;
+	skos:prefLabel "elektr apparatlar"@uz ;
+	schema:name "elektr apparatlar"@uz ;
+	rdfs:label "elektr apparatlar"@kaa ;
+	skos:prefLabel "elektr apparatlar"@kaa ;
+	schema:name "elektr apparatlar"@kaa ;
+	rdfs:label "ელექტრონული აპარატი"@ka ;
+	skos:prefLabel "ელექტრონული აპარატი"@ka ;
+	schema:name "ელექტრონული აპარატი"@ka ;
+	rdfs:label "perangkat elektronik"@id ;
+	skos:prefLabel "perangkat elektronik"@id ;
+	schema:name "perangkat elektronik"@id ;
+	rdfs:label "cyfarpar trydanol"@cy ;
+	skos:prefLabel "cyfarpar trydanol"@cy ;
+	schema:name "cyfarpar trydanol"@cy ;
+	rdfs:label "električni uređaj"@hr ;
+	skos:prefLabel "električni uređaj"@hr ;
+	schema:name "električni uređaj"@hr ;
+	rdfs:label "sähkölaite"@fi ;
+	skos:prefLabel "sähkölaite"@fi ;
+	schema:name "sähkölaite"@fi ;
+	rdfs:label "電器設備"@zh-hant ;
+	skos:prefLabel "電器設備"@zh-hant ;
+	schema:name "電器設備"@zh-hant ;
+	rdfs:label "電器設備"@zh-tw ;
+	skos:prefLabel "電器設備"@zh-tw ;
+	schema:name "電器設備"@zh-tw ;
+	rdfs:label "aparátu llétricu"@ast ;
+	skos:prefLabel "aparátu llétricu"@ast ;
+	schema:name "aparátu llétricu"@ast ;
+	rdfs:label "elektriske apparater"@nb ;
+	skos:prefLabel "elektriske apparater"@nb ;
+	schema:name "elektriske apparater"@nb ;
+	rdfs:label "เครื่องใช้ไฟฟ้า"@th ;
+	skos:prefLabel "เครื่องใช้ไฟฟ้า"@th ;
+	schema:name "เครื่องใช้ไฟฟ้า"@th ;
+	rdfs:label "विद्युत मशीन"@hi ;
+	skos:prefLabel "विद्युत मशीन"@hi ;
+	schema:name "विद्युत मशीन"@hi ;
+	rdfs:label "Афзори барқӣ"@tg ;
+	skos:prefLabel "Афзори барқӣ"@tg ;
+	schema:name "Афзори барқӣ"@tg ;
+	rdfs:label "تجهیزات برق"@fa ;
+	skos:prefLabel "تجهیزات برق"@fa ;
+	schema:name "تجهیزات برق"@fa ;
+	rdfs:label "gléas leictreach"@ga ;
+	skos:prefLabel "gléas leictreach"@ga ;
+	schema:name "gléas leictreach"@ga ;
+	rdfs:label "elektriskais aparāts"@lv ;
+	skos:prefLabel "elektriskais aparāts"@lv ;
+	schema:name "elektriskais aparāts"@lv ;
+	rdfs:label "pareciadura ełètrega"@vec ;
+	skos:prefLabel "pareciadura ełètrega"@vec ;
+	schema:name "pareciadura ełètrega"@vec ;
+	rdfs:label "elektromos készülék"@hu ;
+	skos:prefLabel "elektromos készülék"@hu ;
+	schema:name "elektromos készülék"@hu ;
+	rdfs:label "elektrikli araç gereç"@tr ;
+	skos:prefLabel "elektrikli araç gereç"@tr ;
+	schema:name "elektrikli araç gereç"@tr ;
+	schema:description "durch elektrische Energie betriebenes Gerät"@de,
+		"an appliance where the main functionality is provided by electricity"@en,
+		"apparecchiu di casa chi' funziona câ currenti elettrica"@scn,
+		"equipamentos eletrônicos para uso no lar e suas informações"@pt-br,
+		"dispositivo que utiliza energía eléctrica para realizar alguna tarea"@es,
+		"aparat electric pentru necesități domestice"@ro,
+		"управляющее электротехническое устройство"@ru,
+		"per elektro funkcianta aparato"@eo,
+		"cyfarpar lle darperir y prif swyddogaeth gan drydan"@cy,
+		"uređaj pogonjen električnom energijom"@hr,
+		"apparater der hovedfunksjonaliteten leveres av elektrisitet"@nb,
+		"прылада, якая сілкуецца ад электрычнасьці"@be-tarask,
+		"apparaat dat werkt door middel van elektriciteit"@nl,
+		"ana işlevselliğin elektrikle sağlandığı bir cihaz"@tr ;
+	skos:altLabel "elektrické přístroje"@cs,
+		"dispositivo eléctrico"@es,
+		"Dispositivo electromecánico"@es,
+		"Electrodoméstico"@es,
+		"электрический прибор"@ru,
+		"электрическое устройство"@ru,
+		"Электроприбор"@ru,
+		"Электрическое устройство"@ru,
+		"Электроустройство"@ru,
+		"Электрический прибор"@ru,
+		"eletroeletrônicos"@pt-br,
+		"מכשיר חשמלי"@he,
+		"electric device"@en,
+		"electric apparatus"@en,
+		"electric appliance"@en,
+		"appliance"@en,
+		"электр җайланма"@tt-cyrl,
+		"электроник җиһаз"@tt-cyrl,
+		"электроник аппарат"@tt-cyrl,
+		"elektr cihaz"@tt-latn,
+		"электр җайланма"@tt,
+		"электроник җиһаз"@tt,
+		"электроник аппарат"@tt,
+		"električni aparat"@hr,
+		"aparátu eléctricu"@ast,
+		"電機機械"@zh,
+		"Машина постійного струму"@uk,
+		"elektrisk apparat"@nb,
+		"электрапрыбор"@be-tarask,
+		"электрычны прыбор"@be-tarask,
+		"электрычная прылада"@be-tarask,
+		"elektrisks aparāts"@lv,
+		"家用电器"@zh-hant,
+		"家用电器"@zh-tw,
+		"elektriseade"@et,
+		"Kodinkone"@fi,
+		"ホーム・アプライアンス"@ja,
+		"لوازم برق"@fa,
+		"تجهیزات الکتریکی"@fa,
+		"لوازم الکتریکی"@fa,
+		"elektromos berendezés"@hu,
+		"elektromos eszköz"@hu,
+		"készülék"@hu,
+		"berendezés"@hu,
+		"elektrikli cihaz"@tr,
+		"elektrikli aparat"@tr,
+		"elektrikli araç"@tr,
+		"elektrikli gereç"@tr,
+		"cihaz"@tr .
+
+wd:P1051 a wikibase:Property ;
+	rdfs:label "PSH ID"@en ;
+	skos:prefLabel "PSH ID"@en ;
+	schema:name "PSH ID"@en ;
+	schema:description "identifier in the authority database of the Czech Technical Library"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1051 ;
+	wikibase:claim p:P1051 ;
+	wikibase:statementProperty ps:P1051 ;
+	wikibase:statementValue psv:P1051 ;
+	wikibase:qualifier pq:P1051 ;
+	wikibase:qualifierValue pqv:P1051 ;
+	wikibase:reference pr:P1051 ;
+	wikibase:referenceValue prv:P1051 ;
+	wikibase:novalue wdno:P1051 ;
+	wikibase:directClaimNormalized wdtn:P1051 ;
+	wikibase:statementValueNormalized psn:P1051 ;
+	wikibase:qualifierValueNormalized pqn:P1051 ;
+	wikibase:referenceValueNormalized prn:P1051 .
+
+p:P1051 a owl:ObjectProperty .
+
+psv:P1051 a owl:ObjectProperty .
+
+pqv:P1051 a owl:ObjectProperty .
+
+prv:P1051 a owl:ObjectProperty .
+
+wdt:P1051 a owl:DatatypeProperty .
+
+ps:P1051 a owl:DatatypeProperty .
+
+pq:P1051 a owl:DatatypeProperty .
+
+pr:P1051 a owl:DatatypeProperty .
+
+psn:P1051 a owl:ObjectProperty .
+
+pqn:P1051 a owl:ObjectProperty .
+
+prn:P1051 a owl:ObjectProperty .
+
+wdtn:P1051 a owl:ObjectProperty .
+
+wdno:P1051 a owl:Class ;
+	owl:complementOf _:7aae51e6fdbcd835bc972ed14a284928 .
+
+_:7aae51e6fdbcd835bc972ed14a284928 a owl:Restriction ;
+	owl:onProperty wdt:P1051 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1183543 a wikibase:Item ;
+	rdfs:label "appliance"@en ;
+	skos:prefLabel "appliance"@en ;
+	schema:name "appliance"@en ;
+	schema:description "object with which something can be worked on, manufactured or effected"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q8946856 a wikibase:Item ;
+	rdfs:label "Category:Electrical apparatus"@en ;
+	skos:prefLabel "Category:Electrical apparatus"@en ;
+	schema:name "Category:Electrical apparatus"@en ;
+	schema:description "Wikimedia category"@en .
+
+wd:P910 a wikibase:Property ;
+	rdfs:label "topic's main category"@en ;
+	skos:prefLabel "topic's main category"@en ;
+	schema:name "topic's main category"@en ;
+	schema:description "main Wikimedia category"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P910 ;
+	wikibase:claim p:P910 ;
+	wikibase:statementProperty ps:P910 ;
+	wikibase:statementValue psv:P910 ;
+	wikibase:qualifier pq:P910 ;
+	wikibase:qualifierValue pqv:P910 ;
+	wikibase:reference pr:P910 ;
+	wikibase:referenceValue prv:P910 ;
+	wikibase:novalue wdno:P910 .
+
+p:P910 a owl:ObjectProperty .
+
+psv:P910 a owl:ObjectProperty .
+
+pqv:P910 a owl:ObjectProperty .
+
+prv:P910 a owl:ObjectProperty .
+
+wdt:P910 a owl:ObjectProperty .
+
+ps:P910 a owl:ObjectProperty .
+
+pq:P910 a owl:ObjectProperty .
+
+pr:P910 a owl:ObjectProperty .
+
+wdno:P910 a owl:Class ;
+	owl:complementOf _:06be9361e78d041ce01df69013cf6906 .
+
+_:06be9361e78d041ce01df69013cf6906 a owl:Restriction ;
+	owl:onProperty wdt:P910 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q16761645 a wikibase:Item ;
+	schema:description "Wikimedia category"@en .
+
+wd:Q9412449 a wikibase:Item ;
+	schema:description "Wikimedia category"@en .
+
+wd:Q3749263 a wikibase:Item ;
+	rdfs:label "electrical device"@en ;
+	skos:prefLabel "electrical device"@en ;
+	schema:name "electrical device"@en ;
+	schema:description "machine powered by electricity"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q831990 a wikibase:Item ;
+	rdfs:label "electrical part"@en ;
+	skos:prefLabel "electrical part"@en ;
+	schema:name "electrical part"@en ;
+	schema:description "electrical component, a module or a unit of an electrical system"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q951504 a wikibase:Item ;
+	rdfs:label "electric machine"@en ;
+	skos:prefLabel "electric machine"@en ;
+	schema:name "electric machine"@en ;
+	schema:description "apparatus that converts energy through means of magnetic induction"@en .
+
+wd:Q3819757 a wikibase:Item ;
+	rdfs:label "gas appliance"@en ;
+	skos:prefLabel "gas appliance"@en ;
+	schema:name "gas appliance"@en ;
+	schema:description "appliance that consumes a type of gas as fuel"@en .
+
+wd:Q212920 a wikibase:Item ;
+	rdfs:label "home appliance"@en ;
+	skos:prefLabel "home appliance"@en ;
+	schema:name "home appliance"@en ;
+	schema:description "machine for household uses"@en .
+
+wd:P18 a wikibase:Property ;
+	rdfs:label "image"@en ;
+	skos:prefLabel "image"@en ;
+	schema:name "image"@en ;
+	schema:description "image of relevant illustration of the subject; if available, also use more specific properties (sample: coat of arms image, locator map, flag image, signature image, logo image, collage image)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#CommonsMedia> ;
+	wikibase:directClaim wdt:P18 ;
+	wikibase:claim p:P18 ;
+	wikibase:statementProperty ps:P18 ;
+	wikibase:statementValue psv:P18 ;
+	wikibase:qualifier pq:P18 ;
+	wikibase:qualifierValue pqv:P18 ;
+	wikibase:reference pr:P18 ;
+	wikibase:referenceValue prv:P18 ;
+	wikibase:novalue wdno:P18 .
+
+p:P18 a owl:ObjectProperty .
+
+psv:P18 a owl:ObjectProperty .
+
+pqv:P18 a owl:ObjectProperty .
+
+prv:P18 a owl:ObjectProperty .
+
+wdt:P18 a owl:ObjectProperty .
+
+ps:P18 a owl:ObjectProperty .
+
+pq:P18 a owl:ObjectProperty .
+
+pr:P18 a owl:ObjectProperty .
+
+wdno:P18 a owl:Class ;
+	owl:complementOf _:90353c5ec33a5dc569985590a17a3551 .
+
+_:90353c5ec33a5dc569985590a17a3551 a owl:Restriction ;
+	owl:onProperty wdt:P18 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8408 a wikibase:Property ;
+	rdfs:label "KBpedia ID"@en ;
+	skos:prefLabel "KBpedia ID"@en ;
+	schema:name "KBpedia ID"@en ;
+	schema:description "identifier for the KBpedia knowledge graph, which provides consistent mappings across seven large-scale public knowledge bases including Wikidata, and is used to promote data interoperability and extraction of training sets for machine learning"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8408 ;
+	wikibase:claim p:P8408 ;
+	wikibase:statementProperty ps:P8408 ;
+	wikibase:statementValue psv:P8408 ;
+	wikibase:qualifier pq:P8408 ;
+	wikibase:qualifierValue pqv:P8408 ;
+	wikibase:reference pr:P8408 ;
+	wikibase:referenceValue prv:P8408 ;
+	wikibase:novalue wdno:P8408 ;
+	wikibase:directClaimNormalized wdtn:P8408 ;
+	wikibase:statementValueNormalized psn:P8408 ;
+	wikibase:qualifierValueNormalized pqn:P8408 ;
+	wikibase:referenceValueNormalized prn:P8408 .
+
+p:P8408 a owl:ObjectProperty .
+
+psv:P8408 a owl:ObjectProperty .
+
+pqv:P8408 a owl:ObjectProperty .
+
+prv:P8408 a owl:ObjectProperty .
+
+wdt:P8408 a owl:DatatypeProperty .
+
+ps:P8408 a owl:DatatypeProperty .
+
+pq:P8408 a owl:DatatypeProperty .
+
+pr:P8408 a owl:DatatypeProperty .
+
+psn:P8408 a owl:ObjectProperty .
+
+pqn:P8408 a owl:ObjectProperty .
+
+prn:P8408 a owl:ObjectProperty .
+
+wdtn:P8408 a owl:ObjectProperty .
+
+wdno:P8408 a owl:Class ;
+	owl:complementOf _:a5c6b2a39aa8787e5b2a55612fc3d63e .
+
+_:a5c6b2a39aa8787e5b2a55612fc3d63e a owl:Restriction ;
+	owl:onProperty wdt:P8408 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q12725 a wikibase:Item ;
+	rdfs:label "electricity"@en ;
+	skos:prefLabel "electricity"@en ;
+	schema:name "electricity"@en ;
+	schema:description "physical phenomena associated with the presence and flow of electric charge"@en .
+
+wd:P618 a wikibase:Property ;
+	rdfs:label "source of energy"@en ;
+	skos:prefLabel "source of energy"@en ;
+	schema:name "source of energy"@en ;
+	schema:description "describes the source of energy an animated object (machine or animal) uses"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P618 ;
+	wikibase:claim p:P618 ;
+	wikibase:statementProperty ps:P618 ;
+	wikibase:statementValue psv:P618 ;
+	wikibase:qualifier pq:P618 ;
+	wikibase:qualifierValue pqv:P618 ;
+	wikibase:reference pr:P618 ;
+	wikibase:referenceValue prv:P618 ;
+	wikibase:novalue wdno:P618 .
+
+p:P618 a owl:ObjectProperty .
+
+psv:P618 a owl:ObjectProperty .
+
+pqv:P618 a owl:ObjectProperty .
+
+prv:P618 a owl:ObjectProperty .
+
+wdt:P618 a owl:ObjectProperty .
+
+ps:P618 a owl:ObjectProperty .
+
+pq:P618 a owl:ObjectProperty .
+
+pr:P618 a owl:ObjectProperty .
+
+wdno:P618 a owl:Class ;
+	owl:complementOf _:a6091ffca15331ebe35fa7563fb40652 .
+
+_:a6091ffca15331ebe35fa7563fb40652 a owl:Restriction ;
+	owl:onProperty wdt:P618 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7818 a wikibase:Property ;
+	rdfs:label "French Vikidia ID"@en ;
+	skos:prefLabel "French Vikidia ID"@en ;
+	schema:name "French Vikidia ID"@en ;
+	schema:description "ID of the article in French Vikidia"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7818 ;
+	wikibase:claim p:P7818 ;
+	wikibase:statementProperty ps:P7818 ;
+	wikibase:statementValue psv:P7818 ;
+	wikibase:qualifier pq:P7818 ;
+	wikibase:qualifierValue pqv:P7818 ;
+	wikibase:reference pr:P7818 ;
+	wikibase:referenceValue prv:P7818 ;
+	wikibase:novalue wdno:P7818 ;
+	wikibase:directClaimNormalized wdtn:P7818 ;
+	wikibase:statementValueNormalized psn:P7818 ;
+	wikibase:qualifierValueNormalized pqn:P7818 ;
+	wikibase:referenceValueNormalized prn:P7818 .
+
+p:P7818 a owl:ObjectProperty .
+
+psv:P7818 a owl:ObjectProperty .
+
+pqv:P7818 a owl:ObjectProperty .
+
+prv:P7818 a owl:ObjectProperty .
+
+wdt:P7818 a owl:DatatypeProperty .
+
+ps:P7818 a owl:DatatypeProperty .
+
+pq:P7818 a owl:DatatypeProperty .
+
+pr:P7818 a owl:DatatypeProperty .
+
+psn:P7818 a owl:ObjectProperty .
+
+pqn:P7818 a owl:ObjectProperty .
+
+prn:P7818 a owl:ObjectProperty .
+
+wdtn:P7818 a owl:ObjectProperty .
+
+wdno:P7818 a owl:Class ;
+	owl:complementOf _:e5c0122052dd88d24773d9b09332f4e1 .
+
+_:e5c0122052dd88d24773d9b09332f4e1 a owl:Restriction ;
+	owl:onProperty wdt:P7818 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P691 a wikibase:Property ;
+	rdfs:label "NL CR AUT ID"@en ;
+	skos:prefLabel "NL CR AUT ID"@en ;
+	schema:name "NL CR AUT ID"@en ;
+	schema:description "identifier in the Czech National Authority Database of National Library of the Czech Republic (NL CR)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P691 ;
+	wikibase:claim p:P691 ;
+	wikibase:statementProperty ps:P691 ;
+	wikibase:statementValue psv:P691 ;
+	wikibase:qualifier pq:P691 ;
+	wikibase:qualifierValue pqv:P691 ;
+	wikibase:reference pr:P691 ;
+	wikibase:referenceValue prv:P691 ;
+	wikibase:novalue wdno:P691 ;
+	wikibase:directClaimNormalized wdtn:P691 ;
+	wikibase:statementValueNormalized psn:P691 ;
+	wikibase:qualifierValueNormalized pqn:P691 ;
+	wikibase:referenceValueNormalized prn:P691 .
+
+p:P691 a owl:ObjectProperty .
+
+psv:P691 a owl:ObjectProperty .
+
+pqv:P691 a owl:ObjectProperty .
+
+prv:P691 a owl:ObjectProperty .
+
+wdt:P691 a owl:DatatypeProperty .
+
+ps:P691 a owl:DatatypeProperty .
+
+pq:P691 a owl:DatatypeProperty .
+
+pr:P691 a owl:DatatypeProperty .
+
+psn:P691 a owl:ObjectProperty .
+
+pqn:P691 a owl:ObjectProperty .
+
+prn:P691 a owl:ObjectProperty .
+
+wdtn:P691 a owl:ObjectProperty .
+
+wdno:P691 a owl:Class ;
+	owl:complementOf _:eee17ba34d3dca4b3bf5b23f68ca71b1 .
+
+_:eee17ba34d3dca4b3bf5b23f68ca71b1 a owl:Restriction ;
+	owl:onProperty wdt:P691 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q931447 a wikibase:Item ;
+	rdfs:label "electrical load"@en ;
+	skos:prefLabel "electrical load"@en ;
+	schema:name "electrical load"@en ;
+	schema:description "electrical component or portion of a circuit that consumes electric power"@en .
+
+wd:P527 a wikibase:Property ;
+	rdfs:label "has part(s)"@en ;
+	skos:prefLabel "has part(s)"@en ;
+	schema:name "has part(s)"@en ;
+	schema:description "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P527 ;
+	wikibase:claim p:P527 ;
+	wikibase:statementProperty ps:P527 ;
+	wikibase:statementValue psv:P527 ;
+	wikibase:qualifier pq:P527 ;
+	wikibase:qualifierValue pqv:P527 ;
+	wikibase:reference pr:P527 ;
+	wikibase:referenceValue prv:P527 ;
+	wikibase:novalue wdno:P527 .
+
+p:P527 a owl:ObjectProperty .
+
+psv:P527 a owl:ObjectProperty .
+
+pqv:P527 a owl:ObjectProperty .
+
+prv:P527 a owl:ObjectProperty .
+
+wdt:P527 a owl:ObjectProperty .
+
+ps:P527 a owl:ObjectProperty .
+
+pq:P527 a owl:ObjectProperty .
+
+pr:P527 a owl:ObjectProperty .
+
+wdno:P527 a owl:Class ;
+	owl:complementOf _:c508fd90817ec28651ec025cc3117403 .
+
+_:c508fd90817ec28651ec025cc3117403 a owl:Restriction ;
+	owl:onProperty wdt:P527 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q110646418 a wikibase:Item ;
+	rdfs:label "wrong property"@en ;
+	skos:prefLabel "wrong property"@en ;
+	schema:name "wrong property"@en ;
+	schema:description "the statement uses an inappropriate property for the information it was supposed to convey"@en .
+
+wd:P2241 a wikibase:Property ;
+	rdfs:label "reason for deprecated rank"@en ;
+	skos:prefLabel "reason for deprecated rank"@en ;
+	schema:name "reason for deprecated rank"@en ;
+	schema:description "qualifier to indicate why a particular statement should have deprecated rank"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2241 ;
+	wikibase:claim p:P2241 ;
+	wikibase:statementProperty ps:P2241 ;
+	wikibase:statementValue psv:P2241 ;
+	wikibase:qualifier pq:P2241 ;
+	wikibase:qualifierValue pqv:P2241 ;
+	wikibase:reference pr:P2241 ;
+	wikibase:referenceValue prv:P2241 ;
+	wikibase:novalue wdno:P2241 .
+
+p:P2241 a owl:ObjectProperty .
+
+psv:P2241 a owl:ObjectProperty .
+
+pqv:P2241 a owl:ObjectProperty .
+
+prv:P2241 a owl:ObjectProperty .
+
+wdt:P2241 a owl:ObjectProperty .
+
+ps:P2241 a owl:ObjectProperty .
+
+pq:P2241 a owl:ObjectProperty .
+
+pr:P2241 a owl:ObjectProperty .
+
+wdno:P2241 a owl:Class ;
+	owl:complementOf _:fcd7b2b5fef47b34b991f1fe543dfcb2 .
+
+_:fcd7b2b5fef47b34b991f1fe543dfcb2 a owl:Restriction ;
+	owl:onProperty wdt:P2241 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q48183 a wikibase:Item ;
+	rdfs:label "German Wikipedia"@en ;
+	skos:prefLabel "German Wikipedia"@en ;
+	schema:name "German Wikipedia"@en ;
+	schema:description "German-language edition of Wikipedia"@en .
+
+wd:P143 a wikibase:Property ;
+	rdfs:label "imported from Wikimedia project"@en ;
+	skos:prefLabel "imported from Wikimedia project"@en ;
+	schema:name "imported from Wikimedia project"@en ;
+	schema:description "source of this claim's value; used in references section by bots or humans importing data from Wikimedia projects"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P143 ;
+	wikibase:claim p:P143 ;
+	wikibase:statementProperty ps:P143 ;
+	wikibase:statementValue psv:P143 ;
+	wikibase:qualifier pq:P143 ;
+	wikibase:qualifierValue pqv:P143 ;
+	wikibase:reference pr:P143 ;
+	wikibase:referenceValue prv:P143 ;
+	wikibase:novalue wdno:P143 .
+
+p:P143 a owl:ObjectProperty .
+
+psv:P143 a owl:ObjectProperty .
+
+pqv:P143 a owl:ObjectProperty .
+
+prv:P143 a owl:ObjectProperty .
+
+wdt:P143 a owl:ObjectProperty .
+
+ps:P143 a owl:ObjectProperty .
+
+pq:P143 a owl:ObjectProperty .
+
+pr:P143 a owl:ObjectProperty .
+
+wdno:P143 a owl:Class ;
+	owl:complementOf _:66a2156e9cbfe8d655274b862fca1b59 .
+
+_:66a2156e9cbfe8d655274b862fca1b59 a owl:Restriction ;
+	owl:onProperty wdt:P143 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3452 a wikibase:Property ;
+	rdfs:label "inferred from"@en ;
+	skos:prefLabel "inferred from"@en ;
+	schema:name "inferred from"@en ;
+	schema:description "statement added based on related statement found on the following item, not the entity described by the item (to be used in a reference field)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P3452 ;
+	wikibase:claim p:P3452 ;
+	wikibase:statementProperty ps:P3452 ;
+	wikibase:statementValue psv:P3452 ;
+	wikibase:qualifier pq:P3452 ;
+	wikibase:qualifierValue pqv:P3452 ;
+	wikibase:reference pr:P3452 ;
+	wikibase:referenceValue prv:P3452 ;
+	wikibase:novalue wdno:P3452 .
+
+p:P3452 a owl:ObjectProperty .
+
+psv:P3452 a owl:ObjectProperty .
+
+pqv:P3452 a owl:ObjectProperty .
+
+prv:P3452 a owl:ObjectProperty .
+
+wdt:P3452 a owl:ObjectProperty .
+
+ps:P3452 a owl:ObjectProperty .
+
+pq:P3452 a owl:ObjectProperty .
+
+pr:P3452 a owl:ObjectProperty .
+
+wdno:P3452 a owl:Class ;
+	owl:complementOf _:5839b6febac847e3b7df51938b87824d .
+
+_:5839b6febac847e3b7df51938b87824d a owl:Restriction ;
+	owl:onProperty wdt:P3452 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q64139102 a wikibase:Item ;
+	rdfs:label "KBpedia"@en ;
+	skos:prefLabel "KBpedia"@en ;
+	schema:name "KBpedia"@en ;
+	schema:description "free ontology aimed at making data and knowledge interoperable for machine learning"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q29954 a wikibase:Item ;
+	rdfs:label "electric energy consumption"@en ;
+	skos:prefLabel "electric energy consumption"@en ;
+	schema:name "electric energy consumption"@en ;
+	schema:description "form of energy consumption that uses electric energy"@en .
+
+wd:P3831 a wikibase:Property ;
+	rdfs:label "object has role"@en ;
+	skos:prefLabel "object has role"@en ;
+	schema:name "object has role"@en ;
+	schema:description "(qualifier) role or generic identity of the value of a statement (\"object\") in the context of that statement; for the role of the item the statement is on (\"subject\"), use P2868"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P3831 ;
+	wikibase:claim p:P3831 ;
+	wikibase:statementProperty ps:P3831 ;
+	wikibase:statementValue psv:P3831 ;
+	wikibase:qualifier pq:P3831 ;
+	wikibase:qualifierValue pqv:P3831 ;
+	wikibase:reference pr:P3831 ;
+	wikibase:referenceValue prv:P3831 ;
+	wikibase:novalue wdno:P3831 .
+
+p:P3831 a owl:ObjectProperty .
+
+psv:P3831 a owl:ObjectProperty .
+
+pqv:P3831 a owl:ObjectProperty .
+
+prv:P3831 a owl:ObjectProperty .
+
+wdt:P3831 a owl:ObjectProperty .
+
+ps:P3831 a owl:ObjectProperty .
+
+pq:P3831 a owl:ObjectProperty .
+
+pr:P3831 a owl:ObjectProperty .
+
+wdno:P3831 a owl:Class ;
+	owl:complementOf _:4941dbdb9a38c5a500b05366e45fe45d .
+
+_:4941dbdb9a38c5a500b05366e45fe45d a owl:Restriction ;
+	owl:onProperty wdt:P3831 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1091923 owl:sameAs wd:Q2425052 .
+
+wd:Q12468333 owl:sameAs wd:Q2425052 .
+
+wd:Q19698180 owl:sameAs wd:Q2425052 .
+
+wd:Q25527258 owl:sameAs wd:Q2425052 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:664bae4effccc18fd4ad1ae188fab025 a wikibase:TimeValue ;
+	wikibase:timeValue "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:9a24f7c0208b05d6be97077d855671d1dfdbc0dd a wikibase:Reference ;
+	pr:P143 wd:Q48183 .
+
+ref:90eebdfa37426a8dafc82c176e3b956682be1f6c a wikibase:Reference ;
+	pr:P3452 wd:Q9412449 .
+
+ref:9a681f9dd95c90224547c404e11295f4f7dcf54e a wikibase:Reference ;
+	pr:P248 wd:Q64139102 ;
+	pr:P813 "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:664bae4effccc18fd4ad1ae188fab025 .
