@@ -1,4 +1,4 @@
-import {DatasetCore, Literal, NamedNode} from "@rdfjs/types";
+import {DatasetCore, Literal, NamedNode, Quad_Graph} from "@rdfjs/types";
 import {WikibaseItem} from "./WikibaseItem";
 import {WikibasePropertyDefinition} from "./WikibasePropertyDefinition";
 import {prov, rdf, rdfs, schema, skos} from "@tpluscode/rdf-ns-builders";
@@ -23,12 +23,14 @@ const ignoreStatementPredicateUris: Set<string> = new Set([
 
 const getDirectClaimWikibaseStatement = (kwds: {
   dataset: DatasetCore;
+  statementGraph: Quad_Graph;
   statementObject: Literal | NamedNode;
   statementPropertyDefinition: WikibasePropertyDefinition;
   statementSubject: NamedNode;
 }): WikibaseStatement => {
   const {
     dataset,
+    statementGraph,
     statementPropertyDefinition,
     statementSubject,
     statementObject,
@@ -38,7 +40,9 @@ const getDirectClaimWikibaseStatement = (kwds: {
   if (statementPropertyDefinition.directClaimNormalized !== null) {
     for (const valueQuad of dataset.match(
       statementSubject,
-      statementPropertyDefinition.directClaimNormalized
+      statementPropertyDefinition.directClaimNormalized,
+      null,
+      statementGraph
     )) {
       switch (valueQuad.object.termType) {
         case "Literal":
@@ -61,9 +65,10 @@ const getDirectClaimWikibaseStatement = (kwds: {
 const getFullWikibaseStatement = (kwds: {
   propertyDefinitions: readonly WikibasePropertyDefinition[];
   dataset: DatasetCore;
+  statementGraph: Quad_Graph;
   statementNode: NamedNode;
 }): WikibaseStatement | null => {
-  const {dataset, propertyDefinitions, statementNode} = kwds;
+  const {dataset, propertyDefinitions, statementGraph, statementNode} = kwds;
 
   const getValue = (
     predicate: NamedNode | null
@@ -71,7 +76,12 @@ const getFullWikibaseStatement = (kwds: {
     if (predicate === null) {
       return null;
     }
-    for (const valueQuad of dataset.match(statementNode, predicate)) {
+    for (const valueQuad of dataset.match(
+      statementNode,
+      predicate,
+      null,
+      statementGraph
+    )) {
       switch (valueQuad.object.termType) {
         case "Literal":
         case "NamedNode":
@@ -86,7 +96,12 @@ const getFullWikibaseStatement = (kwds: {
   let value: Literal | NamedNode | null = null;
   let valuePropertyDefinition: WikibasePropertyDefinition | null = null;
 
-  for (const statementQuad of dataset.match(statementNode)) {
+  for (const statementQuad of dataset.match(
+    statementNode,
+    null,
+    null,
+    statementGraph
+  )) {
     if (ignoreStatementPredicateUris.has(statementQuad.predicate.value)) {
       continue;
     }
@@ -165,13 +180,23 @@ const getWikibaseItem = (kwds: {
   } = kwds;
 
   const articles: WikibaseArticle[] = [];
-  for (const aboutQuad of dataset.match(null, schema.about, identifier)) {
+  for (const aboutQuad of dataset.match(
+    null,
+    schema.about,
+    identifier,
+    graph
+  )) {
     if (aboutQuad.subject.termType !== "NamedNode") {
       continue;
     }
     let inLanguage: string | undefined;
     let name: string | undefined;
-    for (const articleQuad of dataset.match(aboutQuad.subject)) {
+    for (const articleQuad of dataset.match(
+      aboutQuad.subject,
+      null,
+      null,
+      graph
+    )) {
       if (articleQuad.object.termType !== "Literal") {
         continue;
       }
@@ -196,7 +221,7 @@ const getWikibaseItem = (kwds: {
   const statementsByPropertyUri: {
     [index: string]: {[index: string]: WikibaseStatement[]};
   } = {};
-  for (const propertyQuad of dataset.match(identifier)) {
+  for (const propertyQuad of dataset.match(identifier, null, null, graph)) {
     switch (propertyQuad.object.termType) {
       case "Literal":
         if (propertyQuad.object.language !== "en") {
@@ -233,6 +258,7 @@ const getWikibaseItem = (kwds: {
           const fullStatement = getFullWikibaseStatement({
             dataset,
             propertyDefinitions,
+            statementGraph: propertyQuad.graph,
             statementNode: propertyQuad.object,
           });
           if (!fullStatement) {
@@ -248,6 +274,7 @@ const getWikibaseItem = (kwds: {
         // Direct claim
         statement = getDirectClaimWikibaseStatement({
           dataset,
+          statementGraph: propertyQuad.graph,
           statementObject: propertyQuad.object,
           statementPropertyDefinition: propertyDefinition,
           statementSubject: identifier,
@@ -329,15 +356,17 @@ export const getWikibaseItems = (kwds: {
   return Object.values(itemsByUri);
 };
 
-const getWikibasePropertyDefinition = (
-  dataset: DatasetCore,
-  node: NamedNode
-): WikibasePropertyDefinition => {
+const getWikibasePropertyDefinition = (kwds: {
+  dataset: DatasetCore;
+  graph: Quad_Graph;
+  node: NamedNode;
+}): WikibasePropertyDefinition => {
+  const {dataset, graph, node} = kwds;
   const getWikibasePropertyLabels = (
     predicate: NamedNode
   ): readonly Literal[] => {
     const labels: Literal[] = [];
-    for (const quad of dataset.match(node, predicate)) {
+    for (const quad of dataset.match(node, predicate, null, graph)) {
       if (quad.object.termType === "Literal") {
         labels.push(quad.object);
       }
@@ -346,7 +375,7 @@ const getWikibasePropertyDefinition = (
   };
 
   const getWikibasePropertyUri = (predicate: NamedNode): NamedNode | null => {
-    for (const quad of dataset.match(node, predicate)) {
+    for (const quad of dataset.match(node, predicate, null, graph)) {
       if (quad.object.termType === "NamedNode") {
         return quad.object as NamedNode;
       }
@@ -390,7 +419,11 @@ const getWikibasePropertyDefinitions = (
     }
     propertyDefinitionsByUri[
       quad.subject.value
-    ] = getWikibasePropertyDefinition(dataset, quad.subject);
+    ] = getWikibasePropertyDefinition({
+      dataset,
+      graph: quad.graph,
+      node: quad.subject,
+    });
   }
   return Object.values(propertyDefinitionsByUri);
 };

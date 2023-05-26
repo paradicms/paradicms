@@ -7,8 +7,7 @@ import {WikidataModelReader} from "../../src/wikidata/WikidataModelReader";
 describe("WikidataModelReader", () => {
   const sut = new WikidataModelReader(datasetCoreToDataset(syntheticData));
 
-  it("should read at least one named Person", function() {
-    this.timeout(5000);
+  it("should read at least one named Person", () => {
     const people = sut.readNamedPeople({modelSet: dummyModelSet});
     expect(people).not.to.be.empty;
     for (const person of people) {
