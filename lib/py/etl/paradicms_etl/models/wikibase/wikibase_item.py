@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List, Optional, Tuple
 
-from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef
+from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -255,6 +255,10 @@ class WikibaseItem(ResourceBackedNamedModel):
     @classmethod
     def rdf_type_uri(cls):
         return WIKIBASE.Item
+
+    @property
+    def same_as(self) -> Tuple[URIRef, ...]:
+        return tuple(self._uri_values(OWL.sameAs))
 
     @property
     def statements(self) -> Tuple[WikibaseStatement, ...]:
