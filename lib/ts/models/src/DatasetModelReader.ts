@@ -72,12 +72,16 @@ export abstract class DatasetModelReader implements ModelReader {
     class_: NamedNode;
     factory: {new (kwds: ResourceBackedModelParameters): NamedModelT};
     modelSet: ModelSet;
+    instanceOfPredicate?: NamedNode;
+    subClassOfPredicate?: NamedNode;
   }): readonly NamedModelT[] {
     const namedModels: NamedModelT[] = [];
     // const namedModelUris: Set<string> = new Set<string>();
     for (const quad of getRdfInstanceQuads({
       class_: kwds.class_,
       dataset: this.dataset,
+      instanceOfPredicate: kwds.instanceOfPredicate,
+      subClassOfPredicate: kwds.subClassOfPredicate,
     }).values()) {
       if (quad.subject.termType === "NamedNode") {
         // invariant(

@@ -5,7 +5,6 @@ import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 export interface WikibaseItem {
   readonly altLabels: readonly string[];
   readonly articles: readonly WikibaseArticle[];
-  readonly description: string | null;
   readonly graph: BlankNode | DefaultGraph | NamedNode;
   readonly identifier: NamedNode;
   readonly prefLabel: string | null;

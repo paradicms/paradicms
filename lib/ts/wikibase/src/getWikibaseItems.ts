@@ -216,7 +216,6 @@ const getWikibaseItem = (kwds: {
   }
 
   const altLabels: string[] = [];
-  let description: string | null = null;
   let prefLabel: string | null = null;
   const statementsByPropertyUri: {
     [index: string]: {[index: string]: WikibaseStatement[]};
@@ -235,10 +234,11 @@ const getWikibaseItem = (kwds: {
         } else if (propertyQuad.predicate.equals(skos.prefLabel)) {
           prefLabel = propertyQuad.object.value;
           continue;
-        } else if (propertyQuad.predicate.equals(schema.description)) {
-          description = propertyQuad.object.value;
-          continue;
         }
+        // } else if (propertyQuad.predicate.equals(schema.description)) {
+        //   description = propertyQuad.object.value;
+        //   continue;
+        // }
         break;
       case "NamedNode":
         break;
@@ -318,7 +318,6 @@ const getWikibaseItem = (kwds: {
   return {
     altLabels,
     articles,
-    description,
     graph,
     identifier,
     prefLabel,

@@ -14,14 +14,15 @@ import {WorkEventUnion} from "../WorkEventUnion";
 import {Work} from "../Work";
 import {DatasetModelReader} from "../DatasetModelReader";
 import {getWikibaseItems, WikibaseItem} from "@paradicms/wikibase";
-import {wd} from "@paradicms/vocabularies";
+import {wd, wdt} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WikidataPerson} from "./WikidataPerson";
-import {WikidataWork} from "./WikidataWork";
+import {getRdfInstanceQuads} from "@paradicms/rdf";
+import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {WikidataModel} from "./WikidataModel";
 
 class WikidataEntities {
   static readonly HUMAN = wd["Q5"];
-  static readonly NON_WORK = [WikidataEntities.HUMAN];
 }
 
 export class WikidataModelReader extends DatasetModelReader {
@@ -54,17 +55,11 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
-    return (
-      this.wikibaseItemsByInstanceOfEntityUri[WikidataEntities.HUMAN.value] ??
-      []
-    ).map(
-      wikibaseItem =>
-        new WikidataPerson({
-          dataset: this.dataset,
-          modelSet: kwds.modelSet,
-          wikibaseItem,
-        })
-    );
+    return this.readWikidataModels({
+      class_: WikidataEntities.HUMAN,
+      factory: WikidataPerson,
+      modelSet: kwds.modelSet,
+    });
   }
 
   readNamedRightsStatements(kwds: {
@@ -81,27 +76,54 @@ export class WikidataModelReader extends DatasetModelReader {
     return [];
   }
 
+  protected readWikidataModels<WikidataModelT extends WikidataModel>(kwds: {
+    class_: NamedNode;
+    factory: {
+      new (kwds: {
+        dataset: Dataset;
+        modelSet: ModelSet;
+        wikibaseItem: WikibaseItem;
+      }): WikidataModelT;
+    };
+    modelSet: ModelSet;
+  }): readonly WikidataModelT[] {
+    const {class_, factory, modelSet} = kwds;
+    const models: WikidataModelT[] = [];
+    for (const instanceQuad of getRdfInstanceQuads({
+      class_,
+      dataset: this.dataset,
+      instanceOfPredicate: wdt["P31"],
+      subClassOfPredicate: wdt["P279"],
+    })) {
+      if (instanceQuad.subject.termType !== "NamedNode") {
+        continue;
+      }
+      this.checkModelGraph({
+        modelGraph: instanceQuad.graph as DefaultGraph | BlankNode | NamedNode,
+        modelNode: instanceQuad.subject,
+      });
+      const wikibaseItem = this.wikibaseItemsByUri[instanceQuad.subject.value];
+      if (wikibaseItem) {
+        models.push(
+          new factory({
+            dataset: this.dataset,
+            modelSet,
+            wikibaseItem,
+          })
+        );
+      } else {
+        console.error("missing Wikidata item", instanceQuad.value);
+      }
+    }
+    return models;
+  }
+
   readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
     return [];
   }
 
   readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
-    const works: Work[] = [];
-    for (const instanceOfEntityEntry of Object.entries(
-      this.wikibaseItemsByInstanceOfEntityUri
-    )) {
-      if (
-        WikidataEntities.NON_WORK.some(
-          nonWorkEntityUri => nonWorkEntityUri.value === instanceOfEntityEntry[0]
-        )
-      ) {
-        continue;
-      }
-      for (const wikibaseItem of instanceOfEntityEntry[1]) {
-        works.push(new WikidataWork({dataset: this.dataset, modelSet: kwds.modelSet, wikibaseItem})
-      }
-    }
-    return works;
+    return [];
   }
 
   @Memoize()
@@ -110,27 +132,10 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   @Memoize()
-  private get wikibaseItemsByInstanceOfEntityUri(): {
-    [index: string]: readonly WikibaseItem[];
-  } {
-    const result: {[index: string]: WikibaseItem[]} = {};
-    const instanceOfProperty = wd["P31"];
-    for (const wikibaseItem of this.wikibaseItems) {
-      for (const statement of wikibaseItem.statements) {
-        if (
-          statement.propertyDefinition.node.value !== instanceOfProperty.value
-        ) {
-          continue;
-        } else if (statement.value.termType !== "NamedNode") {
-          continue;
-        }
-        const instanceOfEntityUri = statement.value;
-        if (!result[instanceOfEntityUri.value]) {
-          result[instanceOfEntityUri.value] = [];
-        }
-        result[instanceOfEntityUri.value].push(wikibaseItem);
-      }
-    }
-    return result;
+  private get wikibaseItemsByUri(): {[index: string]: WikibaseItem} {
+    return this.wikibaseItems.reduce((map, wikibaseItem) => {
+      map[wikibaseItem.identifier.value] = wikibaseItem;
+      return map;
+    }, {} as {[index: string]: WikibaseItem});
   }
 }

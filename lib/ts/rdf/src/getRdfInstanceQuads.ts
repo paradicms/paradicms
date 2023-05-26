@@ -10,11 +10,16 @@ import {rdf, rdfs} from "@tpluscode/rdf-ns-builders";
 export const getRdfInstanceQuads = (kwds: {
   class_: NamedNode;
   dataset: Dataset;
+  instanceOfPredicate?: NamedNode;
+  subClassOfPredicate?: NamedNode;
 }): TermSet<Quad> => {
   const instanceQuads: TermSet<Quad> = new TermSet();
   getRdfInstanceQuadsRecursive({
-    ...kwds,
+    class_: kwds.class_,
+    dataset: kwds.dataset,
+    instanceOfPredicate: kwds.instanceOfPredicate ?? rdf.type,
     instanceQuads,
+    subClassOfPredicate: kwds.subClassOfPredicate ?? rdfs.subClassOf,
     visitedClasses: new TermSet<NamedNode>(),
   });
   return instanceQuads;
@@ -23,13 +28,22 @@ export const getRdfInstanceQuads = (kwds: {
 const getRdfInstanceQuadsRecursive = (kwds: {
   class_: NamedNode;
   dataset: Dataset;
+  instanceOfPredicate: NamedNode;
   instanceQuads: TermSet<Quad>;
+  subClassOfPredicate: NamedNode;
   visitedClasses: TermSet<NamedNode>;
 }): void => {
-  const {class_, dataset, instanceQuads, visitedClasses} = kwds;
+  const {
+    class_,
+    dataset,
+    instanceOfPredicate,
+    instanceQuads,
+    subClassOfPredicate,
+    visitedClasses,
+  } = kwds;
 
   // Get instanceQuads of the class
-  dataset.match(null, rdf.type, class_).forEach(quad => {
+  dataset.match(null, instanceOfPredicate, class_).forEach(quad => {
     switch (quad.subject.termType) {
       case "BlankNode":
       case "NamedNode":
@@ -42,7 +56,7 @@ const getRdfInstanceQuadsRecursive = (kwds: {
   visitedClasses.add(class_);
 
   // Recurse into class's sub-classes that haven't been visited yet.
-  dataset.match(null, rdfs.subClassOf, class_, null).forEach(quad => {
+  dataset.match(null, subClassOfPredicate, class_, null).forEach(quad => {
     if (quad.subject.termType !== "NamedNode") {
       return;
     } else if (visitedClasses.has(quad.subject)) {
@@ -51,7 +65,9 @@ const getRdfInstanceQuadsRecursive = (kwds: {
     getRdfInstanceQuadsRecursive({
       class_: quad.subject,
       dataset,
+      instanceOfPredicate,
       instanceQuads,
+      subClassOfPredicate,
       visitedClasses,
     });
   });
