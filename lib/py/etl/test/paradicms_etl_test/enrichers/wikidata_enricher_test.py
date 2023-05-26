@@ -7,9 +7,13 @@ from paradicms_etl.models.person import Person
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 
-def test_enrich(synthetic_data_models, tmp_path: Path):
+def test_enrich(data_dir_path: Path, synthetic_data_models):
     person = next(model for model in synthetic_data_models if isinstance(model, Person))
-    enriched_models = tuple(WikidataEnricher(cache_dir_path=tmp_path)((person,)))
+    enriched_models = tuple(
+        WikidataEnricher(
+            cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
+        )((person,))
+    )
     assert len(enriched_models) == 2
     assert any(
         isinstance(model, Person) and model.uri == person.uri
