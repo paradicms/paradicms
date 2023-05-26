@@ -62,23 +62,32 @@ class WikibaseItem(ResourceBackedNamedModel):
         graph: Graph,
         exclude_redundant_statements: bool = True,
         property_definitions: Optional[Tuple[WikibasePropertyDefinition, ...]] = None,
+        uris: Optional[Tuple[URIRef, ...]] = None,
     ) -> Tuple["WikibaseItem", ...]:
         """
-        Read all items from the graph and return a tuple of them.
+        Read items from the graph and return a tuple of them.
+
+        If the expected URIs (uris) is not specified, reads all wikibase:Item's.
         """
 
         if property_definitions is None:
             property_definitions = WikibasePropertyDefinition.from_rdf(graph=graph)
 
         items = []
-        for item_subject in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item):
-            item = cls.__from_wikidata_rdf(
-                exclude_redundant_statements=exclude_redundant_statements,
-                property_definitions=property_definitions,
-                resource=graph.resource(item_subject),
+        if uris is None:
+            uris = tuple(
+                item_uri
+                for item_uri in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item)
+                if isinstance(item_uri, URIRef)
             )
-            if item is not None:
-                items.append(item)
+        for uri in uris:
+            items.append(
+                cls.__from_wikidata_rdf(
+                    exclude_redundant_statements=exclude_redundant_statements,
+                    property_definitions=property_definitions,
+                    resource=graph.resource(uri),
+                )
+            )
 
         return tuple(items)
 

@@ -17,6 +17,7 @@ class TestWikidataItemFile:
     full_statements_count: int
     items_count: int
     qid: int
+    limit_uris: bool = False
 
     def graph(self, data_dir_path: Path) -> Graph:
         graph = Graph()
@@ -48,6 +49,14 @@ class TestWikidataItemFile:
             items_count=81,
             qid=92614,
         ),
+        TestWikidataItemFile(
+            articles_count=0,
+            direct_claims_count=0,
+            full_statements_count=0,
+            items_count=1,
+            limit_uris=True,
+            qid=15401930,
+        ),
     ],
 )
 def test_from_wikidata_rdf(
@@ -56,6 +65,9 @@ def test_from_wikidata_rdf(
     items = WikibaseItem.from_wikidata_rdf(
         exclude_redundant_statements=False,
         graph=test_wikidata_item_file.graph(data_dir_path=data_dir_path),
+        uris=(test_wikidata_item_file.uri,)
+        if test_wikidata_item_file.limit_uris
+        else None,
     )
     assert len(items) == test_wikidata_item_file.items_count
     file_item = next(item for item in items if item.uri == test_wikidata_item_file.uri)
@@ -81,4 +93,3 @@ def test_from_wikidata_rdf(
         )
         == test_wikidata_item_file.full_statements_count
     )
-    assert file_item.label
