@@ -1,8 +1,8 @@
 import {WikibasePropertyDefinition} from "./WikibasePropertyDefinition";
-import {WikibaseValue} from "./WikibaseValue";
+import {Literal, NamedNode} from "@rdfjs/types";
 
 export interface WikibaseStatementQualifier {
-  normalizedValue: WikibaseValue | null;
+  readonly normalizedValue: Literal | NamedNode | null;
   readonly propertyDefinition: WikibasePropertyDefinition;
-  value: WikibaseValue;
+  readonly value: Literal | NamedNode;
 }

@@ -17,6 +17,7 @@ import {getWikibaseItems, WikibaseItem} from "@paradicms/wikibase";
 import {wd} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WikidataPerson} from "./WikidataPerson";
+import {NamedNode} from "@rdfjs/types";
 
 export class WikidataModelReader extends DatasetModelReader {
   readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null {
@@ -98,13 +99,21 @@ export class WikidataModelReader extends DatasetModelReader {
         ) {
           continue;
         }
-        if (statement.value.type !== "NamedNode") {
-          continue;
+        let instanceOfUri: NamedNode;
+        switch (statement.value.type) {
+          case "NamedNode":
+            instanceOfUri = statement.value.value;
+            break;
+          case "WikibaseItem":
+            instanceOfUri = statement.value.value.identifier;
+            break;
+          default:
+            continue;
         }
-        if (!result[statement.value.value.value]) {
-          result[statement.value.value.value] = [];
+        if (!result[instanceOfUri.value]) {
+          result[instanceOfUri.value] = [];
         }
-        result[statement.value.value.value].push(wikibaseItem);
+        result[instanceOfUri.value].push(wikibaseItem);
       }
     }
     return result;
