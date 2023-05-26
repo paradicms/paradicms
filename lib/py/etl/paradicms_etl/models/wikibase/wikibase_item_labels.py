@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple
 
 from rdflib import Literal, RDFS
 from rdflib.namespace import SKOS
@@ -10,10 +9,6 @@ from paradicms_etl.namespaces import CMS
 
 @dataclass(frozen=True)
 class WikibaseItemLabels:
-    pref_label: str
-    acronym: Optional[str] = None
-    alt_labels: Optional[Tuple[str, ...]] = None
-
     def to_rdf(self, *, add_to_resource: Resource) -> None:
         labels = self
         if labels.acronym is not None:

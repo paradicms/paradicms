@@ -81,4 +81,4 @@ def test_from_wikidata_rdf(
         )
         == test_wikidata_item_file.full_statements_count
     )
-    assert file_item.labels.pref_label
+    assert file_item.label

@@ -8,7 +8,6 @@ from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamed
 from paradicms_etl.models.wikibase.wikibase_article import WikibaseArticle
 from paradicms_etl.models.wikibase.wikibase_direct_claim import WikibaseDirectClaim
 from paradicms_etl.models.wikibase.wikibase_full_statement import WikibaseFullStatement
-from paradicms_etl.models.wikibase.wikibase_item_labels import WikibaseItemLabels
 from paradicms_etl.models.wikibase.wikibase_property_definition import (
     WikibasePropertyDefinition,
 )
@@ -23,21 +22,30 @@ class WikibaseItem(ResourceBackedNamedModel):
         self,
         *,
         articles: Tuple[WikibaseArticle, ...],
+        alt_labels: Tuple[str, ...],
         description: Optional[str],
-        labels: WikibaseItemLabels,
+        pref_label: Optional[str],
         statements: Tuple[WikibaseStatement, ...],
         resource: Resource,
     ):
         ResourceBackedNamedModel.__init__(self, resource)
+        self.__alt_labels = alt_labels
         self.__articles = articles
         self.__description = description
-        self.__labels = labels
+        self.__pref_label = pref_label
         self.__statements = statements
+        self.__statements_by_property_label: Optional[
+            Dict[str, Tuple[WikibaseStatement, ...]]
+        ] = None
 
     def __eq__(self, other):
         if not isinstance(other, WikibaseItem):
             return False
         return self.uri == other.uri
+
+    @property
+    def alt_labels(self) -> Tuple[str, ...]:
+        return self.__alt_labels
 
     @property
     def articles(self) -> Tuple[WikibaseArticle, ...]:
@@ -81,7 +89,7 @@ class WikibaseItem(ResourceBackedNamedModel):
         exclude_redundant_statements: bool,
         property_definitions: Tuple[WikibasePropertyDefinition, ...],
         resource: Resource,
-    ):
+    ) -> "WikibaseItem":
         """
         Read the item corresponding to the given URI.
         """
@@ -206,11 +214,8 @@ class WikibaseItem(ResourceBackedNamedModel):
         else:
             statements = direct_claims + full_statements  # type: ignore
 
-        if pref_label is None:
-            logger.warning("item %s: no pref_label detected", resource.identifier)
-            return None
-
         return cls(
+            alt_labels=tuple(sorted(alt_labels)),
             articles=tuple(
                 WikibaseArticle.from_rdf(resource=resource.graph.resource(article_uri))
                 for article_uri in resource.graph.subjects(
@@ -225,21 +230,18 @@ class WikibaseItem(ResourceBackedNamedModel):
                 )
             ),
             description=description,
-            labels=WikibaseItemLabels(
-                alt_labels=tuple(sorted(alt_labels)) if alt_labels else None,
-                pref_label=pref_label,
-            ),
+            pref_label=pref_label,
             resource=resource,
             statements=tuple(statements),
         )
 
     @property
     def label(self):
-        return self.labels.pref_label
+        return self.pref_label
 
     @property
-    def labels(self) -> WikibaseItemLabels:
-        return self.__labels
+    def pref_label(self) -> Optional[str]:
+        return self.__pref_label
 
     @classmethod
     def rdf_type_uri(cls):
@@ -249,8 +251,15 @@ class WikibaseItem(ResourceBackedNamedModel):
     def statements(self) -> Tuple[WikibaseStatement, ...]:
         return self.__statements
 
-    def statements_by_property_label(self) -> Dict[str, List[WikibaseStatement]]:
-        result: Dict[str, List[WikibaseStatement]] = {}
-        for statement in self.statements:
-            result.setdefault(statement.property_definition.label, []).append(statement)
-        return result
+    @property
+    def statements_by_property_label(self) -> Dict[str, Tuple[WikibaseStatement, ...]]:
+        if self.__statements_by_property_label is None:
+            statements_by_property_label: Dict[str, List[WikibaseStatement]] = {}
+            for statement in self.statements:
+                statements_by_property_label.setdefault(
+                    statement.property_definition.label, []
+                ).append(statement)
+            self.__statements_by_property_label = {
+                key: tuple(value) for key, value in statements_by_property_label.items()
+            }
+        return self.__statements_by_property_label
