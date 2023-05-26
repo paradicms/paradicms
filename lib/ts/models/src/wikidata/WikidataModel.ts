@@ -41,7 +41,7 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   }
 
   get altLabels(): readonly string[] {
-    return this.altLabels;
+    return this.wikibaseItem.altLabels;
   }
 
   get articles(): readonly WikibaseArticle[] {
@@ -54,10 +54,6 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
 
   get creators(): readonly AgentUnion[] {
     return [];
-  }
-
-  get description(): string | null {
-    return this.wikibaseItem.description;
   }
 
   protected findAndMapStatement<T>(
@@ -129,7 +125,7 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   }
 
   get prefLabel(): string | null {
-    return this.prefLabel;
+    return this.wikibaseItem.prefLabel;
   }
 
   get requiresAttribution(): boolean {

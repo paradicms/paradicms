@@ -20,9 +20,11 @@ import {WikidataPerson} from "./WikidataPerson";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {WikidataModel} from "./WikidataModel";
+import {WikidataWork} from "./WikidataWork";
 
 class WikidataEntities {
   static readonly HUMAN = wd["Q5"];
+  static readonly WORK = wd["Q386724"];
 }
 
 export class WikidataModelReader extends DatasetModelReader {
@@ -123,7 +125,11 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
-    return [];
+    return this.readWikidataModels({
+      class_: WikidataEntities.WORK,
+      factory: WikidataWork,
+      modelSet: kwds.modelSet,
+    });
   }
 
   @Memoize()
