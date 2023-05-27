@@ -23,4 +23,5 @@ def test_transform(
             continue
         synthetic_data_model = synthetic_data_models_by_uri.pop(transformed_model.uri)
         assert synthetic_data_model.label == transformed_model.label
-    assert not synthetic_data_models_by_uri, len(synthetic_data_models_by_uri)
+    # Ignore the two Wikidata models
+    assert len(synthetic_data_models_by_uri) == 2, len(synthetic_data_models_by_uri)
