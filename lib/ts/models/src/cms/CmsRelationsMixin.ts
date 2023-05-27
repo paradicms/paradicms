@@ -1,4 +1,4 @@
-import {dcterms, foaf} from "@paradicms/vocabularies";
+import {dcterms, foaf, owl} from "@paradicms/vocabularies";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 
 export abstract class CmsRelationsMixin extends ResourceBackedModelMixin {
@@ -24,7 +24,7 @@ export abstract class CmsRelationsMixin extends ResourceBackedModelMixin {
   }
 
   get wikidataConceptUri(): string | null {
-    return this.findAndMapObject(dcterms.relation, term =>
+    return this.findAndMapObject(owl.sameAs, term =>
       term.termType === "NamedNode" &&
       term.value.match(/^https?:\/\/www\.wikidata\.org\/entity\//)
         ? term.value
