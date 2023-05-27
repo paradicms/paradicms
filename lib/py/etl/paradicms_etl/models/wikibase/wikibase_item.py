@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List, Optional, Tuple
 
-from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL
+from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL, ConjunctiveGraph
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -12,7 +12,7 @@ from paradicms_etl.models.wikibase.wikibase_property_definition import (
     WikibasePropertyDefinition,
 )
 from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
-from paradicms_etl.namespaces import WIKIBASE
+from paradicms_etl.namespaces import WIKIBASE, WDT
 
 logger = logging.getLogger(__name__)
 
@@ -112,11 +112,29 @@ class WikibaseItem(ResourceBackedNamedModel):
         }
 
         alt_labels = []
+        articles = []
         description = None
-        pref_label = None
-
         direct_claims = []
         full_statements = []
+        pref_label = None
+
+        for article_uri in resource.graph.subjects(
+            # SDO namespace uses https://
+            predicate=URIRef("http://schema.org/about"),
+            object=resource.identifier,
+        ):
+
+            if tuple(
+                resource.graph.triples(
+                    (article_uri, RDF.type, URIRef("http://schema.org/Article"))
+                )
+            ):
+                article = WikibaseArticle.from_rdf(
+                    resource=resource.graph.resource(article_uri)
+                )
+                if article is not None:
+                    articles.append(article)
+
         for predicate, object_ in resource.graph.predicate_objects(
             subject=resource.identifier
         ):
@@ -225,19 +243,7 @@ class WikibaseItem(ResourceBackedNamedModel):
 
         return cls(
             alt_labels=tuple(sorted(alt_labels)),
-            articles=tuple(
-                WikibaseArticle.from_rdf(resource=resource.graph.resource(article_uri))
-                for article_uri in resource.graph.subjects(
-                    # SDO namespace uses https://
-                    predicate=URIRef("http://schema.org/about"),
-                    object=resource.identifier,
-                )
-                if tuple(
-                    resource.graph.triples(
-                        (article_uri, RDF.type, URIRef("http://schema.org/Article"))
-                    )
-                )
-            ),
+            articles=tuple(articles),
             description=description,
             pref_label=pref_label,
             resource=resource,
@@ -276,3 +282,95 @@ class WikibaseItem(ResourceBackedNamedModel):
                 key: tuple(value) for key, value in statements_by_property_label.items()
             }
         return self.__statements_by_property_label
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        if isinstance(graph, ConjunctiveGraph):
+            context = graph.get_context(self._resource.identifier())
+        else:
+            context = graph
+
+        # Cut down the RDF
+
+        # Remove non-English literals
+        for s, p, o in self._resource.graph:
+            if isinstance(o, Literal) and o.language is not None and o.language != "en":
+                continue
+            context.add((s, p, o))
+
+        # Remove full statements that don't add anything on a direct statement
+        #     <http://www.wikidata.org/entity/statement/Q215627-45c7dda3-4ac2-1264-1fd0-602159435ee8> a wikibase:BestRank,
+        #     wikibase:Statement ;
+        # wikibase:rank wikibase:NormalRank ;
+        # ns197:P1552 wd:Q3968640 .
+        STATEMENT_PROPERTY_BASE_URI = "http://www.wikidata.org/prop/statement/"
+        for statement_uri in context.subjects(
+            predicate=RDF.type, object=WIKIBASE.Statement, unique=True
+        ):
+            statement_triples = tuple(context.triples((statement_uri, None, None)))
+            if len(statement_triples) != 4:
+                continue
+            statement_property_triples = []
+            for statement_triple in statement_triples:
+                if statement_triple[1] == RDF.type:
+                    continue
+                elif str(statement_triple[1]).startswith(str(WIKIBASE)):
+                    continue
+                elif str(statement_triple[1]).startswith(STATEMENT_PROPERTY_BASE_URI):
+                    statement_property_triples.append(statement_triple)
+                else:
+                    statement_property_triples = []
+                    break
+            if len(statement_property_triples) != 1:
+                continue
+            statement_property_triple = statement_property_triples[0]
+            property_id = str(statement_property_triple[1])[
+                len(STATEMENT_PROPERTY_BASE_URI) :
+            ]
+            have_statement_value_as_direct_value = False
+            for direct_value in self._resource.objects(WDT[property_id]):
+                if isinstance(direct_value, Resource):
+                    if direct_value.identifier == statement_property_triple[2]:
+                        have_statement_value_as_direct_value = True
+                        break
+                elif direct_value == statement_property_triple[2]:
+                    have_statement_value_as_direct_value = True
+                    break
+            if not have_statement_value_as_direct_value:
+                continue
+            # Full statement only has one actual property -- the rest is wikibase: metadata -- and the value of that
+            # property is the same as the direct value
+            # Remove all of the full statement's triples
+            context.remove((statement_uri, None, None))
+            # Remove all references to the statement
+            context.remove((None, None, statement_uri))
+
+        # Remove wikibase:wikiGroup statements
+        context.remove((None, WIKIBASE.wikiGroup, None))
+
+        # Remove rdf:type OWL type nodes
+        for owl_property_type_uri in (OWL.DatatypeProperty, OWL.ObjectProperty):
+            context.remove((None, None, owl_property_type_uri))
+
+        # Remove owl:Restriction blank nodes
+        for owl_restriction_subject in tuple(
+            context.subjects(predicate=RDF.type, object=OWL.Restriction, unique=True)
+        ):
+            context.remove((owl_restriction_subject, None, None))
+
+        # Remove prop/novalue OWL detritus
+        #     <http://www.wikidata.org/prop/novalue/P10017> a owl:Class ;
+        #         owl:complementOf [ ] .
+        for prop_novalue_subject in tuple(
+            context.subjects(predicate=RDF.type, object=OWL.Class)
+        ):
+            context.remove((prop_novalue_subject, None, None))
+
+        # Remove articles not in English
+        for article_subject, article_in_language in tuple(
+            context.subject_objects(predicate=URIRef("http://schema.org/inLanguage"))
+        ):
+            assert isinstance(article_in_language, Literal)
+            if article_in_language.toPython() != "en":
+                context.remove((article_subject, None, None))
+
+        return context.resource(self._resource.identifier)
