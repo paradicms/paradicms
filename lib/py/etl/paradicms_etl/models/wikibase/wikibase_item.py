@@ -374,3 +374,21 @@ class WikibaseItem(ResourceBackedNamedModel):
                 context.remove((article_subject, None, None))
 
         return context.resource(self._resource.identifier)
+
+    def to_type_rdf(
+        self,
+        *,
+        graph: Graph,
+        instance_of_property_uri: URIRef,
+        subclass_of_property_uri: URIRef,
+    ) -> "Resource":
+        for property_ in (
+            OWL.sameAs,
+            instance_of_property_uri,
+            subclass_of_property_uri,
+        ):
+            for triple in self._resource.graph.triples(
+                (self._resource.identifier, property_, None)
+            ):
+                graph.add(triple)
+        return graph.resource(self._resource.identifier)

@@ -9,6 +9,7 @@ from rdflib.resource import Resource
 from paradicms_etl.extractors.wikidata_entity_extractor import WikidataEntityExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
+from paradicms_etl.namespaces import WDT
 
 
 class WikidataEnricher:
@@ -159,7 +160,14 @@ class WikidataEnricher:
         # Combine all the related entities in one graph
         combined_graph = Graph()
         for related_wikidata_entity in related_wikidata_entities_by_id.values():
-            related_wikidata_entity.to_rdf(graph=combined_graph)
+            if related_wikidata_entity.uri == root_wikidata_entity.uri:
+                related_wikidata_entity.to_rdf(graph=combined_graph)
+            else:
+                related_wikidata_entity.to_type_rdf(
+                    graph=combined_graph,
+                    instance_of_property_uri=WDT["P31"],
+                    subclass_of_property_uri=WDT["P279"],
+                )
         combined_wikidata_items = WikibaseItem.from_wikidata_rdf(
             graph=combined_graph,
             uris=tuple(
