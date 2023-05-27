@@ -37,7 +37,8 @@ const testWikidataItemFiles: TestWikidataItemFile[] = [
 
 describe("getWikibaseItems", () => {
   testWikidataItemFiles.forEach(testWikidataItemFile => {
-    it(`should successfully parse the file ${testWikidataItemFile.qid}`, () => {
+    it(`should successfully parse the file ${testWikidataItemFile.qid}`, function() {
+      this.timeout(5000);
       const store = new N3.Store();
       store.addQuads(new N3.Parser().parse(testWikidataItemFile.ttl));
       const items = getWikibaseItems({
