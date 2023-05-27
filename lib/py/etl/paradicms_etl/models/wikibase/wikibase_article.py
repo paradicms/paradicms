@@ -4,6 +4,8 @@ from typing import Optional
 from rdflib import URIRef, Literal
 from rdflib.resource import Resource
 
+from paradicms_etl.namespaces import SDOHTTP
+
 
 @dataclass(frozen=True)
 class WikibaseArticle:
@@ -14,10 +16,10 @@ class WikibaseArticle:
     @classmethod
     def from_rdf(cls, *, resource: Resource) -> Optional["WikibaseArticle"]:
         # SDO namespace uses https://
-        in_language = resource.value(URIRef("http://schema.org/inLanguage"))
+        in_language = resource.value(SDOHTTP.inLanguage)
         assert isinstance(in_language, Literal)
 
-        name = resource.value(URIRef("http://schema.org/name"))
+        name = resource.value(SDOHTTP.name)
         if name is None:
             return None
         assert isinstance(name, Literal)

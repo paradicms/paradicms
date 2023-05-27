@@ -12,7 +12,7 @@ from paradicms_etl.models.wikibase.wikibase_property_definition import (
     WikibasePropertyDefinition,
 )
 from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
-from paradicms_etl.namespaces import WIKIBASE, WDT
+from paradicms_etl.namespaces import WIKIBASE, WDT, SDOHTTP
 
 logger = logging.getLogger(__name__)
 
@@ -104,9 +104,8 @@ class WikibaseItem(ResourceBackedNamedModel):
         """
 
         IGNORE_PREDICATES = {
-            # SDO namespace uses https://
-            URIRef("http://schema.org/description"),
-            URIRef("http://schema.org/name"),
+            URIRef(SDOHTTP.description),
+            URIRef(SDOHTTP.name),
             RDF.type,
             RDFS.label,
         }
@@ -119,16 +118,11 @@ class WikibaseItem(ResourceBackedNamedModel):
         pref_label = None
 
         for article_uri in resource.graph.subjects(
-            # SDO namespace uses https://
-            predicate=URIRef("http://schema.org/about"),
+            predicate=SDOHTTP.about,
             object=resource.identifier,
         ):
 
-            if tuple(
-                resource.graph.triples(
-                    (article_uri, RDF.type, URIRef("http://schema.org/Article"))
-                )
-            ):
+            if tuple(resource.graph.triples((article_uri, RDF.type, SDOHTTP.Article))):
                 article = WikibaseArticle.from_rdf(
                     resource=resource.graph.resource(article_uri)
                 )
@@ -153,7 +147,7 @@ class WikibaseItem(ResourceBackedNamedModel):
                 elif predicate == SKOS.prefLabel:
                     pref_label = object_.value
                     continue
-                elif str(predicate) == "http://schema.org/description":
+                elif predicate == SDOHTTP.description:
                     description = object_.value
                     continue
 
@@ -195,7 +189,7 @@ class WikibaseItem(ResourceBackedNamedModel):
             if not added_property:
                 logger.log(
                     logging.DEBUG
-                    if str(predicate).startswith("http://schema.org")
+                    if str(predicate).startswith(str(SDOHTTP))
                     else logging.WARNING,
                     "item parser: unknown triple (%s, %s, %s)",
                     resource.identifier,
@@ -283,19 +277,41 @@ class WikibaseItem(ResourceBackedNamedModel):
             }
         return self.__statements_by_property_label
 
-    def to_rdf(self, graph: Graph) -> Resource:
+    def to_concise_rdf(
+        self,
+        *,
+        graph: Graph,
+        include_non_english_articles=False,
+        include_non_english_literals=False,
+    ) -> Resource:
         if isinstance(graph, ConjunctiveGraph):
             context = graph.get_context(self._resource.identifier())
         else:
             context = graph
 
-        # Cut down the RDF
+        if not include_non_english_literals:
+            for s, p, o in self._resource.graph:
+                if (
+                    isinstance(o, Literal)
+                    and o.language is not None
+                    and o.language != "en"
+                ):
+                    continue
+                context.add((s, p, o))
 
-        # Remove non-English literals
-        for s, p, o in self._resource.graph:
-            if isinstance(o, Literal) and o.language is not None and o.language != "en":
-                continue
-            context.add((s, p, o))
+        if not include_non_english_articles:
+            for article_subject, article_in_language in tuple(
+                context.subject_objects(predicate=SDOHTTP.inLanguage)
+            ):
+                assert isinstance(article_in_language, Literal)
+                if article_in_language.toPython() != "en":
+                    context.remove((article_subject, None, None))
+
+        # Remove the schema:Dataset declaration
+        for schema_dataset_subject_uri in tuple(
+            context.subjects(predicate=RDF.type, object=SDOHTTP.Dataset, unique=True)
+        ):
+            context.remove((schema_dataset_subject_uri, None, None))
 
         # Remove full statements that don't add anything on a direct statement
         #     <http://www.wikidata.org/entity/statement/Q215627-45c7dda3-4ac2-1264-1fd0-602159435ee8> a wikibase:BestRank,
@@ -365,13 +381,38 @@ class WikibaseItem(ResourceBackedNamedModel):
         ):
             context.remove((prop_novalue_subject, None, None))
 
-        # Remove articles not in English
-        for article_subject, article_in_language in tuple(
-            context.subject_objects(predicate=URIRef("http://schema.org/inLanguage"))
+        # Remove non-primary items
+        # Statements about these may be added back by to_type_rdf
+        for wikibase_item_subject_uri in context.subjects(
+            predicate=RDF.type, object=WIKIBASE.Item, unique=True
         ):
-            assert isinstance(article_in_language, Literal)
-            if article_in_language.toPython() != "en":
-                context.remove((article_subject, None, None))
+            if wikibase_item_subject_uri == self._resource.identifier:
+                continue
+            for property_uri in (
+                RDF.type,
+                RDFS.label,
+                SDOHTTP.description,
+                SDOHTTP.name,
+                SKOS.prefLabel,
+            ):
+                context.remove((wikibase_item_subject_uri, property_uri, None))
+
+        # Remove some unnecessary property properties
+        for wikibase_property_subject_uri in tuple(
+            context.subjects(predicate=RDF.type, object=WIKIBASE.Property, unique=True)
+        ):
+            # Leave rdfs:label
+            for property_uri in (
+                SDOHTTP.description,
+                SDOHTTP.name,
+                SKOS.prefLabel,
+                WIKIBASE.novalue,
+                WIKIBASE.propertyType,
+                WIKIBASE.reference,
+                WIKIBASE.referenceValue,
+                WIKIBASE.referenceValueNormalized,
+            ):
+                context.remove((wikibase_property_subject_uri, property_uri, None))
 
         return context.resource(self._resource.identifier)
 

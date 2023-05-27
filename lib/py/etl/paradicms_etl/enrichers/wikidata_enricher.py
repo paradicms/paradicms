@@ -161,7 +161,7 @@ class WikidataEnricher:
         combined_graph = Graph()
         for related_wikidata_entity in related_wikidata_entities_by_id.values():
             if related_wikidata_entity.uri == root_wikidata_entity.uri:
-                related_wikidata_entity.to_rdf(graph=combined_graph)
+                related_wikidata_entity.to_concise_rdf(graph=combined_graph)
             else:
                 related_wikidata_entity.to_type_rdf(
                     graph=combined_graph,

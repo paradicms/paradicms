@@ -7,6 +7,7 @@ from .coco import COCO  # noqa: F401
 from .contact import CONTACT  # noqa: F401
 from .exif import EXIF  # noqa: F401
 from .prov import PROV  # noqa: F401
+from .sdohttp import SDOHTTP  # noqa: F401
 from .time import TIME  # noqa: F401
 from .vra import VRA  # noqa: F401
 from .wd import WD  # noqa: F401
