@@ -168,16 +168,20 @@ describe("MemWorkQueryService", () => {
     }
   });
 
-  it("getWorks returns facets", async () => {
+  it("getWorks returns facets with thumbnails", async () => {
     const result = await sut.getWorks(
       {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
         valueFacetValueThumbnailSelector: {
-          targetDimensions: {
-            height: 200,
-            width: 200,
-          },
+            maxDimensions: {
+                height: 200,
+                width: 200,
+            },
+            targetDimensions: {
+                height: 200,
+                width: 200,
+            },
         },
       },
       {
@@ -194,9 +198,13 @@ describe("MemWorkQueryService", () => {
         if (facet.type !== "StringPropertyValue") {
           return false;
         }
-        return (facet as StringPropertyValueFacet).values.some(
+        const thumbnail = (facet as StringPropertyValueFacet).values.find(
           value => !!value.thumbnail
-        );
+        )!.thumbnail!;
+        expect(thumbnail).not.to.be.undefined;
+        expect(thumbnail.license).not.to.be.null;
+        expect(thumbnail.rightsStatement).not.to.be.null;
+        return true;
       })
     ).to.be.true;
   });

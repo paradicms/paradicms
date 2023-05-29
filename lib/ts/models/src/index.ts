@@ -12,6 +12,7 @@ export * from "./DcmiTypePropertyValue";
 export * from "./Event";
 export * from "./Image";
 export * from "./ImageDimensions";
+export * from "./ImageJoinSelector";
 export * from "./License";
 export * from "./LiteralPropertyValue";
 export * from "./Location";
