@@ -201,8 +201,6 @@ class SyntheticDataPipeline(Pipeline):
                 person_builder.add_same_as(
                     # Wikidata concept for Alan Turing
                     URIRef("http://www.wikidata.org/entity/Q7251"),
-                ).add_relation(
-                    URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
                 )
                 agents.append(person_builder.build())
 
@@ -450,11 +448,6 @@ class SyntheticDataPipeline(Pipeline):
             # Wikidata concept for the Pilot ACE
             work_builder.add_same_as(
                 URIRef("http://www.wikidata.org/entity/Q937690"),
-            )
-
-            # Wikipedia
-            work_builder.add_relation(
-                URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
             )
 
             if include_description:
