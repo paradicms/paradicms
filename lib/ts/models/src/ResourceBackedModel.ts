@@ -1,4 +1,5 @@
 import {Resource} from "@paradicms/rdf";
+import {owl} from "@paradicms/vocabularies";
 import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
@@ -15,6 +16,10 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     this.dataset = kwds.dataset;
     this.modelSet = kwds.modelSet;
     this.graph = kwds.graph;
+  }
+
+  get sameAsUris(): readonly string[] {
+    return this.filterAndMapObjects(owl.sameAs, this.mapUriObject);
   }
 
   toRdf(): readonly ModelToRdfTriple[] {
