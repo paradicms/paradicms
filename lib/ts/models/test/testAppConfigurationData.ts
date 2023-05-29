@@ -1,5 +1,5 @@
 import {DatasetCore} from "@rdfjs/types";
-import {trigStringToDatasetCore} from "@paradicms/test/dist/trigStringToDatasetCore";
+import {trigStringToDatasetCore} from "@paradicms/test";
 
 export const testAppConfigurationData: DatasetCore = trigStringToDatasetCore(`
 @prefix : <http://www.paradicms.org/ns/configuration#> .
