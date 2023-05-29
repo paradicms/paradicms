@@ -67,7 +67,7 @@ export class ModelSetBuilder {
     if (joinSelector.thumbnail) {
       const thumbnailImage = agent.thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
-        this.addImage(thumbnailImage);
+        this.addImage(thumbnailImage, joinSelector.thumbnail);
       }
     }
 
