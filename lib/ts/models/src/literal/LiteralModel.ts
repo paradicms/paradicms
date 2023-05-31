@@ -1,6 +1,5 @@
 import {Model} from "../Model";
-import {ModelToRdfTriple} from "../ModelToRdfTriple";
-import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
+import {BlankNode, DatasetCore, Literal, NamedNode} from "@rdfjs/types";
 
 export class LiteralModel implements Model {
   constructor(protected readonly literal: Literal) {}
@@ -17,9 +16,7 @@ export class LiteralModel implements Model {
     return [];
   }
 
-  toRdf(): readonly ModelToRdfTriple[] {
-    throw new EvalError("not implemented.");
-  }
+  toRdf(addToDataset: DatasetCore) {}
 
   uri: string | null = null;
 }

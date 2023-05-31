@@ -1,9 +1,8 @@
 import {Resource} from "@paradicms/rdf";
 import {owl} from "@paradicms/vocabularies";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {BlankNode, Dataset, DatasetCore, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
-import {ModelToRdfTriple} from "./ModelToRdfTriple";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
@@ -22,34 +21,10 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     return this.filterAndMapObjects(owl.sameAs, this.mapUriObject);
   }
 
-  toRdf(): readonly ModelToRdfTriple[] {
-    const triples: ModelToRdfTriple[] = [];
+  toRdf(addToDataset: DatasetCore) {
     for (const quad of this.dataset.match(null, null, null, this.graph)) {
-      switch (quad.subject.termType) {
-        case "BlankNode":
-        case "NamedNode":
-          break;
-        default:
-          continue;
-      }
-      if (quad.predicate.termType !== "NamedNode") {
-        continue;
-      }
-      switch (quad.object.termType) {
-        case "BlankNode":
-        case "Literal":
-        case "NamedNode":
-          break;
-        default:
-          continue;
-      }
-      triples.push({
-        subject: quad.subject,
-        predicate: quad.predicate,
-        object: quad.object,
-      });
+      addToDataset.add(quad);
     }
-    return triples;
   }
 
   override toString(): string {

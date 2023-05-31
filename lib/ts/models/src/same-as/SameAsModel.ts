@@ -1,8 +1,8 @@
 import {BlankNode, NamedNode} from "rdf-js";
 import {Model} from "../Model";
 import invariant from "ts-invariant";
-import {ModelToRdfTriple} from "../ModelToRdfTriple";
 import TermMap from "@rdfjs/term-map";
+import {DatasetCore} from "@rdfjs/types";
 
 export class SameAsModel<ModelT extends Model> implements Model {
   constructor(protected readonly models: readonly ModelT[]) {
@@ -100,8 +100,10 @@ export class SameAsModel<ModelT extends Model> implements Model {
     return this.models[0];
   }
 
-  toRdf(): readonly ModelToRdfTriple[] {
-    throw new Error("Method not implemented.");
+  toRdf(addToDataset: DatasetCore) {
+    for (const model of this.models) {
+      model.toRdf(addToDataset);
+    }
   }
 
   get uri(): string | null {

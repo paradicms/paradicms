@@ -1,9 +1,8 @@
-import {ModelToRdfTriple} from "./ModelToRdfTriple";
-import {BlankNode, NamedNode} from "@rdfjs/types";
+import {BlankNode, DatasetCore, NamedNode} from "@rdfjs/types";
 
 export interface Model {
   readonly identifier: BlankNode | NamedNode;
   readonly sameAsUris: readonly string[];
-  toRdf(): readonly ModelToRdfTriple[];
+  toRdf(addToDataset: DatasetCore): void;
   readonly uri: string | null;
 }

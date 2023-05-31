@@ -1,5 +1,4 @@
-import {DataFactory, Store} from "@paradicms/rdf";
-import invariant from "ts-invariant";
+import {Store} from "@paradicms/rdf";
 import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
@@ -13,7 +12,6 @@ import {Person} from "./Person";
 import {Property} from "./Property";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {Quad} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
 import {ModelSetFactory} from "./ModelSetFactory";
 import {PropertyGroup} from "./PropertyGroup";
@@ -108,7 +106,7 @@ export class ModelSetBuilder {
     collection: Collection,
     joinSelector?: CollectionJoinSelector
   ): ModelSetBuilder {
-    this.addNamedModel(collection);
+    this.addModel(collection);
 
     if (!joinSelector) {
       return this;
@@ -144,7 +142,7 @@ export class ModelSetBuilder {
     concept: Concept,
     joinSelector?: PropertyValueJoinSelector
   ): ModelSetBuilder {
-    this.addNamedModel(concept);
+    this.addModel(concept);
 
     if (!joinSelector) {
       return this;
@@ -166,7 +164,7 @@ export class ModelSetBuilder {
       agents?: AgentJoinSelector;
     }
   ): ModelSetBuilder {
-    this.addNamedModel(image);
+    this.addModel(image);
     if (joinSelector) {
       this.addRights(joinSelector, image);
     }
@@ -183,44 +181,14 @@ export class ModelSetBuilder {
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
     if (model.uri) {
-      return this.addNamedModel(model);
+      if (this.addedModelUris.has(model.uri)) {
+        // console.debug("tried to add model", model.uri, "twice");
+        return this;
+      }
+      model.toRdf(this.store);
+      this.addedModelUris.add(model.uri);
     }
     // Blank node models should be included in the triples of another model
-    return this;
-    // const defaultGraph = DataFactory.defaultGraph();
-    // const modelDefaultGraphQuads = model
-    //   .toRdf()
-    //   .map(triple =>
-    //     DataFactory.quad(
-    //       triple.subject,
-    //       triple.predicate,
-    //       triple.object,
-    //       defaultGraph
-    //     )
-    //   );
-    // // Serialize the model to quads in the default graph
-    // // Then test whether that set of quads is isomorphic with previously-added sets of (model) quads
-    // for (const addedModelDefaultGraphQuads of this
-    //   .addedModelDefaultGraphQuads) {
-    //   if (isomorphic(modelDefaultGraphQuads, addedModelDefaultGraphQuads)) {
-    //     console.debug("tried to add isomorphic model");
-    //     return this;
-    //   }
-    // }
-    // // Add a named graph to the store, not the triples in the default graph
-    // this.store.addQuads(ModelSetBuilder.modelToQuads(model));
-    // this.addedModelDefaultGraphQuads.push(modelDefaultGraphQuads);
-    // return this;
-  }
-
-  private addNamedModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
-    invariant(model.uri, "can only add named models");
-    if (this.addedModelUris.has(model.uri)) {
-      // console.debug("tried to add model", model.uri, "twice");
-      return this;
-    }
-    this.store.addQuads(ModelSetBuilder.modelToQuads(model));
-    this.addedModelUris.add(model.uri);
     return this;
   }
 
@@ -239,7 +207,7 @@ export class ModelSetBuilder {
     property: Property,
     joinSelector?: PropertyJoinSelector
   ): ModelSetBuilder {
-    this.addNamedModel(property);
+    this.addModel(property);
 
     if (!joinSelector) {
       return this;
@@ -271,7 +239,7 @@ export class ModelSetBuilder {
     propertyGroup: PropertyGroup,
     joinSelector?: PropertyGroupJoinSelector
   ): ModelSetBuilder {
-    this.addNamedModel(propertyGroup);
+    this.addModel(propertyGroup);
 
     if (!joinSelector) {
       return this;
@@ -345,11 +313,11 @@ export class ModelSetBuilder {
   }
 
   addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {
-    return this.addNamedModel(rightsStatement);
+    return this.addModel(rightsStatement);
   }
 
   addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
-    this.addNamedModel(work);
+    this.addModel(work);
 
     if (!joinSelector) {
       return this;
@@ -453,20 +421,5 @@ export class ModelSetBuilder {
 
   build(): ModelSet {
     return ModelSetFactory.fromDatasetCore(this.store);
-  }
-
-  private static modelToQuads(model: Model): Quad[] {
-    // const modelGraph = DataFactory.blankNode();
-    const modelGraph = model.identifier;
-    return model
-      .toRdf()
-      .map(triple =>
-        DataFactory.quad(
-          triple.subject,
-          triple.predicate,
-          triple.object,
-          modelGraph
-        )
-      );
   }
 }

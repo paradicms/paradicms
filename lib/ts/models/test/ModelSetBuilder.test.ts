@@ -13,6 +13,7 @@ import {NamedModel} from "../src/NamedModel";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
