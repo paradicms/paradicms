@@ -198,10 +198,11 @@ class SyntheticDataPipeline(Pipeline):
                     person_builder.add_page(
                         URIRef(f"http://example.com/person{person_i}page")
                     )
-                person_builder.add_same_as(
-                    # Wikidata concept for Alan Turing
-                    URIRef("http://www.wikidata.org/entity/Q7251"),
-                )
+                if person_i == 0:
+                    person_builder.add_same_as(
+                        # Wikidata concept for Alan Turing
+                        URIRef("http://www.wikidata.org/entity/Q7251"),
+                    )
                 agents.append(person_builder.build())
 
             for agent in agents:
@@ -446,9 +447,10 @@ class SyntheticDataPipeline(Pipeline):
                 work_builder.add_creator(creator_uri)
 
             # Wikidata concept for the Pilot ACE
-            work_builder.add_same_as(
-                URIRef("http://www.wikidata.org/entity/Q937690"),
-            )
+            if work_i == 0:
+                work_builder.add_same_as(
+                    URIRef("http://www.wikidata.org/entity/Q937690"),
+                )
 
             if include_description:
                 description_builder = CmsText.builder(
