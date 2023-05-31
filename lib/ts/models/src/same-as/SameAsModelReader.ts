@@ -7,11 +7,17 @@ import {BlankNode, NamedNode} from "@rdfjs/types";
 import TermMap from "@rdfjs/term-map";
 import {DataFactory} from "@paradicms/rdf";
 import invariant from "ts-invariant";
+import {Person} from "../Person";
+import {SameAsPerson} from "./SameAsPerson";
 
 /**
  * Model reader that connects sameAs models from other ModelReader's.
  */
 export class SameAsModelReader extends ConcatenatingModelReader {
+    override readNamedPeople(kwds: { modelSet: ModelSet }): readonly Person[] {
+        return this.readSameAsModels<Person>(super.readNamedPeople(kwds), SameAsPerson);
+    }
+
     override readWorks(kwds: { modelSet: ModelSet }): readonly Work[] {
         return this.readSameAsModels(super.readWorks(kwds), SameAsWork);
     }

@@ -8,6 +8,7 @@ import {ConcatenatingModelReader} from "../../src/ConcatenatingModelReader";
 import {dummyModelSet} from "../dummyModelSet";
 import {expect} from "chai";
 import {SameAsWork} from "../../src/same-as/SameAsWork";
+import {SameAsPerson} from "../../src/same-as/SameAsPerson";
 
 describe("SameAsModelReader", () => {
   const dataset = datasetCoreToDataset(syntheticData);
@@ -17,6 +18,18 @@ describe("SameAsModelReader", () => {
   ];
   const concatenatingModelReader = new ConcatenatingModelReader(modelReaders);
   const sut = new SameAsModelReader(modelReaders);
+
+  it("should group CmsPersons with Wikidata people", () => {
+    const allPeople = concatenatingModelReader.readNamedPeople({
+      modelSet: dummyModelSet,
+    });
+    expect(allPeople).to.have.length(6);
+    const groupedPeople = sut.readNamedPeople({modelSet: dummyModelSet});
+    expect(groupedPeople).to.have.length(5);
+    expect(
+      groupedPeople.filter(person => person instanceof SameAsPerson)
+    ).to.have.length(1);
+  });
 
   it("should group CmsWorks with Wikidata works", () => {
     const allWorks = concatenatingModelReader.readWorks({
