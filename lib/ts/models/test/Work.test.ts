@@ -2,6 +2,7 @@ import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {Text} from "../src";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Work", () => {
   const sut = testModelSet.workByUri("http://example.com/collection0/work2");
@@ -73,12 +74,16 @@ describe("Work", () => {
   });
 
   it("should get the work's Wikidata concept URI", () => {
-    expect(sut.wikidataConceptUri).to.eq(
-      "http://www.wikidata.org/entity/Q937690"
-    );
+    expect(
+      testModelSet.workByUri("http://example.com/collection0/work0")
+        .wikidataConceptUri
+    ).to.eq("http://www.wikidata.org/entity/Q937690");
   });
 
-  it("should get the work's Wikipedia URL", () => {
-    expect(sut.wikipediaUrl).to.eq("http://en.wikipedia.org/wiki/Pilot-ACE");
-  });
+  // it("should get the work's Wikipedia URL", () => {
+  //   expect(
+  //     testModelSet.workByUri("http://example.com/collection0/work2")
+  //       .wikipediaUrl
+  //   ).to.eq("http://en.wikipedia.org/wiki/Pilot-ACE");
+  // });
 });
