@@ -8,12 +8,14 @@ import {Text} from "./Text";
 import {WorkAgent} from "./WorkAgent";
 import {WorkLocation} from "./WorkLocation";
 import {WorkEventUnion} from "./WorkEventUnion";
+import {SameAsMixin} from "./SameAsMixin";
 
 export interface Work
   extends NamedModel,
     ImagesMixin,
     RelationsMixin,
-    RightsMixin {
+    RightsMixin,
+    SameAsMixin<Work> {
   readonly agents: readonly WorkAgent[];
   readonly collections: readonly Collection[];
   readonly description: Text | null;

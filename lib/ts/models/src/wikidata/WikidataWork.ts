@@ -18,4 +18,5 @@ export class WikidataWork extends WikidataModel implements Work {
   propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
     return [];
   }
+  readonly sameAs: readonly Work[] = [];
 }

@@ -362,6 +362,10 @@ export class CachingModelSet implements ModelSet {
     return this.modelByUri(this.worksByUriIndex, workUri);
   }
 
+  workByUriOptional(workUri: string): Work | null {
+    return this.modelByUriOptional(this.worksByUriIndex, workUri);
+  }
+
   @Memoize()
   get workEvents(): readonly WorkEventUnion[] {
     return sortModelsArray(this.modelReader.readWorkEvents({modelSet: this}));

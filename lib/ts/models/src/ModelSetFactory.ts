@@ -1,29 +1,27 @@
 import {datasetCoreToDataset, fastRdfStringToDataset} from "@paradicms/rdf";
 import {Dataset, DatasetCore} from "@rdfjs/types";
-import {CachingModelSet} from "./CachingModelSet";
-import {CmsModelReader} from "./cms/CmsModelReader";
 import {SameAsModelReader} from "./same-as/SameAsModelReader";
-
-class DatasetBackedModelSet extends CachingModelSet {
-  constructor(private readonly dataset: Dataset) {
-    super(new SameAsModelReader([new CmsModelReader(dataset)]));
-  }
-
-  override toRdf(): Dataset {
-    return this.dataset;
-  }
-}
+import {CmsModelReader} from "./cms/CmsModelReader";
+import {WikidataModelReader} from "./wikidata/WikidataModelReader";
+import {DatasetBackedModelSet} from "./DatasetBackedModelSet";
+import {ModelSet} from "./ModelSet";
 
 export class ModelSetFactory {
-  static fromFastRdfString(fastRdfString: string) {
+  static fromFastRdfString(fastRdfString: string): ModelSet {
     return ModelSetFactory.fromDataset(fastRdfStringToDataset(fastRdfString));
   }
 
-  static fromDataset(dataset: Dataset) {
-    return new DatasetBackedModelSet(dataset);
+  static fromDataset(dataset: Dataset): ModelSet {
+    return new DatasetBackedModelSet(
+      dataset,
+      new SameAsModelReader([
+        new CmsModelReader(dataset),
+        new WikidataModelReader(dataset),
+      ])
+    );
   }
 
-  static fromDatasetCore(datasetCore: DatasetCore) {
+  static fromDatasetCore(datasetCore: DatasetCore): ModelSet {
     return ModelSetFactory.fromDataset(datasetCoreToDataset(datasetCore));
   }
 }

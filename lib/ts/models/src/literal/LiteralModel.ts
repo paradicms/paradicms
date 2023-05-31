@@ -12,10 +12,6 @@ export class LiteralModel implements Model {
     return this.literal.value;
   }
 
-  get sameAsUris(): readonly string[] {
-    return [];
-  }
-
   toRdf(addToDataset: DatasetCore) {}
 
   uri: string | null = null;

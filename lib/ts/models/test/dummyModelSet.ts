@@ -105,6 +105,9 @@ export const dummyModelSet: ModelSet = {
   workByUri(workUri: string): Work {
     throw new EvalError("not implemented");
   },
+  workByUriOptional(workUri: string): Work | null {
+    throw new EvalError("not implemented");
+  },
   workEventByUri(workEventUri: string): WorkEventUnion {
     throw new EvalError("not implemented");
   },

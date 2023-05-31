@@ -92,10 +92,6 @@ export class SameAsModel<ModelT extends Model> implements Model {
     return this.preferredModel.identifier;
   }
 
-  get sameAsUris(): readonly string[] {
-    return [];
-  }
-
   protected get preferredModel(): ModelT {
     return this.models[0];
   }

@@ -5,10 +5,11 @@ import {Model} from "../Model";
 import {SameAsWork} from "./SameAsWork";
 import {BlankNode, NamedNode} from "@rdfjs/types";
 import TermMap from "@rdfjs/term-map";
-import {DataFactory} from "@paradicms/rdf";
 import invariant from "ts-invariant";
 import {Person} from "../Person";
 import {SameAsPerson} from "./SameAsPerson";
+import {SameAsMixin} from "../SameAsMixin";
+import {requireDefined} from "@paradicms/utilities";
 
 /**
  * Model reader that connects sameAs models from other ModelReader's.
@@ -22,7 +23,7 @@ export class SameAsModelReader extends ConcatenatingModelReader {
         return this.readSameAsModels(super.readWorks(kwds), SameAsWork);
     }
 
-    private readSameAsModels<ModelT extends Model>(models: readonly ModelT[], sameAsModelFactory: {
+    private readSameAsModels<ModelT extends (Model & SameAsMixin<ModelT>)>(models: readonly ModelT[], sameAsModelFactory: {
         new(models: readonly ModelT[]): ModelT
     }): readonly ModelT[] {
         const modelGroupsByModelIdentifier: TermMap<BlankNode | NamedNode, ModelT[]> = new TermMap();
@@ -38,20 +39,15 @@ export class SameAsModelReader extends ConcatenatingModelReader {
         for (const model of models) {
             const modelGroup = modelGroupsByModelIdentifier.get(model.identifier);
             invariant(typeof modelGroup !== "undefined");
-            for (const sameAsUri of model.sameAsUris) {
-                const sameAsNamedNode = DataFactory.namedNode(sameAsUri);
-                const sameAsModelGroup = modelGroupsByModelIdentifier.get(sameAsNamedNode);
-                if (typeof sameAsModelGroup === "undefined") {
-                    console.debug(model.identifier.value, "sameAs", sameAsUri, "that is not in the model set");
-                    continue;
-                }
-                for (const sameAsModel of sameAsModelGroup) {
+            for (const sameAsModel of model.sameAs) {
+                const sameAsModelGroup = requireDefined(modelGroupsByModelIdentifier.get(sameAsModel.identifier));
+                for (const sameAsModelGroupModel of sameAsModelGroup) {
                     // If the sameAsModel is not already in modelGroup, pull it in
-                    if (!modelGroup.some(modelGroupModel => modelGroupModel.identifier.equals(sameAsModel.identifier))) {
-                        modelGroup.push(sameAsModel);
+                    if (!modelGroup.some(modelGroupModel => modelGroupModel.identifier.equals(sameAsModelGroupModel.identifier))) {
+                        modelGroup.push(sameAsModelGroupModel);
                     }
                     // Point sameAsModel to the model group it was pulled into
-                    modelGroupsByModelIdentifier.set(sameAsModel.identifier, modelGroup);
+                    modelGroupsByModelIdentifier.set(sameAsModelGroupModel.identifier, modelGroup);
                 }
             }
         }

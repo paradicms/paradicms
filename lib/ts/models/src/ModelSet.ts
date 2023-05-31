@@ -43,6 +43,7 @@ export interface ModelSet {
   toFastRdfString(): string;
   toRdf(): Dataset;
   workByUri(workUri: string): Work;
+  workByUriOptional(workUri: string): Work | null;
   get workEvents(): readonly WorkEventUnion[];
   workEventsByWorkUri(workUri: string): readonly WorkEventUnion[];
   workEventByUri(workEventUri: string): WorkEventUnion;

@@ -1,5 +1,5 @@
 import {DataFactory} from "@paradicms/rdf";
-import {cms, dcterms} from "@paradicms/vocabularies";
+import {cms, dcterms, owl} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Collection} from "../Collection";
@@ -172,5 +172,13 @@ export class CmsWork extends Mixin(
   @Memoize()
   propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
     return this.propertyValuesByProperty(this.modelSet.propertyByUri(propertyUri));
+  }
+
+  get sameAs(): readonly Work[] {
+    return this.filterAndMapObjects(owl.sameAs, term =>
+        term.termType === "NamedNode"
+            ? this.modelSet.workByUriOptional(term.value)
+            : null
+    );
   }
 }
