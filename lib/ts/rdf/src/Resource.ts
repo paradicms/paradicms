@@ -1,12 +1,14 @@
-import {BlankNode, Dataset, DefaultGraph, NamedNode, Term} from "@rdfjs/types";
+import {Dataset, NamedNode, Term} from "@rdfjs/types";
 import {xsd} from "@tpluscode/rdf-ns-builders";
+import {ResourceGraphIdentifier} from "./ResourceGraphIdentifier";
+import {ResourceIdentifier} from "./ResourceIdentifier";
 
 export abstract class Resource {
   abstract readonly dataset: Dataset;
-  abstract readonly graph: BlankNode | DefaultGraph | NamedNode;
-  protected readonly _identifier: BlankNode | NamedNode;
+  abstract readonly graph: ResourceGraphIdentifier;
+  protected readonly _identifier: ResourceIdentifier;
 
-  constructor(kwds: {identifier: BlankNode | NamedNode}) {
+  constructor(kwds: {identifier: ResourceIdentifier}) {
     this._identifier = kwds.identifier;
   }
 
@@ -53,7 +55,7 @@ export abstract class Resource {
     );
   }
 
-  get identifier(): BlankNode | NamedNode {
+  get identifier(): ResourceIdentifier {
     return this._identifier;
   }
 
@@ -101,7 +103,7 @@ export abstract class Resource {
     return term.value;
   }
 
-  protected mapUriObject(term: Term): string | null {
+  protected mapIriObject(term: Term): string | null {
     if (term.termType !== "NamedNode") {
       return null;
     }
