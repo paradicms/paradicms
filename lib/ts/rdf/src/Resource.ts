@@ -59,6 +59,12 @@ export abstract class Resource {
     return this._identifier;
   }
 
+  get iri(): string | null {
+    return this.identifier.termType === "NamedNode"
+      ? this.identifier.value
+      : null;
+  }
+
   protected mapBooleanObject(term: Term): boolean | null {
     if (term.termType !== "Literal") {
       return null;

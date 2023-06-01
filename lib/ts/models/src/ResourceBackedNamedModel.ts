@@ -10,7 +10,7 @@ export abstract class ResourceBackedNamedModel extends ResourceBackedModel {
     return [this.identifier];
   }
 
-  get iri(): string {
+  override get iri(): string {
     return this.identifier.value;
   }
 }
