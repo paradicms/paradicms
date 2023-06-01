@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 
 describe("License", () => {
-  const sut = testModelSet.licenseByUri(
+  const sut = testModelSet.licenseByIri(
     "http://creativecommons.org/licenses/nc/1.0/"
   );
 
@@ -14,7 +14,7 @@ describe("License", () => {
     expect(sut.label).to.not.be.empty;
   });
 
-  it("should get the license's uri", () => {
-    expect(sut.uri).to.not.be.empty;
+  it("should get the license's iri", () => {
+    expect(sut.iri).to.not.be.empty;
   });
 });

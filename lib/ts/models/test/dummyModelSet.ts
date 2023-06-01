@@ -36,64 +36,64 @@ export const dummyModelSet: ModelSet = {
   get works(): readonly Work[] {
     throw new EvalError("not implemented");
   },
-  agentByUri(agentUri: string): AgentUnion {
+  agentByIri(agentIri: string): AgentUnion {
     throw new EvalError("not implemented");
   },
-  agentWorks(agentUri: string): readonly Work[] {
+  agentWorks(agentIri: string): readonly Work[] {
     throw new EvalError("not implemented");
   },
-  collectionByUri(collectionUri: string): Collection {
+  collectionByIri(collectionIri: string): Collection {
     throw new EvalError("not implemented");
   },
-  collectionWorks(collectionUri: string): readonly Work[] {
+  collectionWorks(collectionIri: string): readonly Work[] {
     throw new EvalError("not implemented");
   },
-  conceptByUri(conceptUri: string): Concept {
+  conceptByIri(conceptIri: string): Concept {
     throw new EvalError("not implemented");
   },
-  conceptByUriOptional(conceptUri: string): Concept | null {
+  conceptByIriOptional(conceptIri: string): Concept | null {
     throw new EvalError("not implemented");
   },
-  imageByUri(imageUri: string): Image {
+  imageByIri(imageIri: string): Image {
     throw new EvalError("not implemented");
   },
-  imagesByDepictsUri(depictsUri: string): readonly Image[] {
+  imagesByDepictsIri(depictsIri: string): readonly Image[] {
     throw new EvalError("not implemented");
   },
-  imagesByOriginalImageUri(originalImageUri: string): readonly Image[] {
+  imagesByOriginalImageIri(originalImageIri: string): readonly Image[] {
     throw new EvalError("not implemented");
   },
-  licenseByUri(licenseUri: string): License {
+  licenseByIri(licenseIri: string): License {
     throw new EvalError("not implemented");
   },
-  locationByUri(locationUri: string): Location {
+  locationByIri(locationIri: string): Location {
     throw new EvalError("not implemented");
   },
-  organizationByUri(organizationUri: string): Organization {
+  organizationByIri(organizationIri: string): Organization {
     throw new EvalError("not implemented");
   },
-  organizationByUriOptional(organizationUri: string): Organization | null {
+  organizationByIriOptional(organizationIri: string): Organization | null {
     throw new EvalError("not implemented");
   },
-  personByUri(personUri: string): Person {
+  personByIri(personIri: string): Person {
     throw new EvalError("not implemented");
   },
-  personByUriOptional(personUri: string): Person | null {
+  personByIriOptional(personIri: string): Person | null {
     throw new EvalError("not implemented");
   },
-  propertiesByGroupUri(propertyGroupUri: string): readonly Property[] {
+  propertiesByGroupIri(propertyGroupIri: string): readonly Property[] {
     throw new EvalError("not implemented");
   },
-  propertyByUri(propertyUri: string): Property {
+  propertyByIri(propertyIri: string): Property {
     throw new EvalError("not implemented");
   },
-  propertyGroupByUri(propertyGroupUri: string): PropertyGroup {
+  propertyGroupByIri(propertyGroupIri: string): PropertyGroup {
     throw new EvalError("not implemented");
   },
-  propertyGroupByUriOptional(propertyGroupUri: string): PropertyGroup | null {
+  propertyGroupByIriOptional(propertyGroupIri: string): PropertyGroup | null {
     throw new EvalError("not implemented");
   },
-  rightsStatementByUri(rightsStatementUri: string): RightsStatement {
+  rightsStatementByIri(rightsStatementIri: string): RightsStatement {
     throw new EvalError("not implemented");
   },
   toFastRdfString(): string {
@@ -102,19 +102,19 @@ export const dummyModelSet: ModelSet = {
   toRdf(): Dataset {
     throw new EvalError("not implemented");
   },
-  workByUri(workUri: string): Work {
+  workByIri(workIri: string): Work {
     throw new EvalError("not implemented");
   },
-  workByUriOptional(workUri: string): Work | null {
+  workByIriOptional(workIri: string): Work | null {
     throw new EvalError("not implemented");
   },
-  workEventByUri(workEventUri: string): WorkEventUnion {
+  workEventByIri(workEventIri: string): WorkEventUnion {
     throw new EvalError("not implemented");
   },
   get workEvents(): readonly WorkEventUnion[] {
     throw new EvalError("not implemented");
   },
-  workEventsByWorkUri(workUri: string): readonly WorkEventUnion[] {
+  workEventsByWorkIri(workIri: string): readonly WorkEventUnion[] {
     throw new EvalError("not implemented");
   },
 };

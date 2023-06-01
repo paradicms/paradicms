@@ -5,7 +5,7 @@ export const getDefaultWorksQueryFilters = (
   properties: readonly {
     readonly filterable: boolean;
     readonly label: string;
-    readonly uri: string;
+    readonly iri: string;
   }[]
 ): readonly FilterUnion[] => {
   if (properties.length === 0) {
@@ -21,24 +21,24 @@ export const getDefaultWorksQueryFilters = (
       filters.some(
         filter =>
           filter.type === "StringPropertyValue" &&
-          (filter as StringPropertyValueFilter).propertyUri === property.uri
+          (filter as StringPropertyValueFilter).propertyIri === property.iri
       )
     ) {
       // console.debug(
       //   "filterable property",
-      //   propertyConfiguration.uri,
+      //   propertyConfiguration.iri,
       //   "already has a search filter, skipping"
       // );
       continue;
     }
     // console.debug(
     //   "filterable property",
-    //   propertyConfiguration.uri,
+    //   propertyConfiguration.iri,
     //   "does not have search filter, adding"
     // );
     filters.push({
       label: property.label,
-      propertyUri: property.uri,
+      propertyIri: property.iri,
       type: "StringPropertyValue",
     } as StringPropertyValueFilter);
   }

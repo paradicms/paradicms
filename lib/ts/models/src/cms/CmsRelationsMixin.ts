@@ -23,7 +23,7 @@ export abstract class CmsRelationsMixin extends ResourceBackedModelMixin {
     );
   }
 
-  get wikidataConceptUri(): string | null {
+  get wikidataConceptIri(): string | null {
     return this.findAndMapObject(owl.sameAs, term =>
       term.termType === "NamedNode" &&
       term.value.match(/^https?:\/\/www\.wikidata\.org\/entity\//)

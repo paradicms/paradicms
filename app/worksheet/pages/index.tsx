@@ -187,8 +187,8 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
         <td className="align-middle text-left w-90">
           <Link
             href={Hrefs.worksheetMark({
-              featureSetUri: null,
-              featureUri: null,
+              featureSetIri: null,
+              featureIri: null,
               mode: WorksheetMode.BEGINNER,
               review: false,
               worksheetStateId,
@@ -422,8 +422,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
         .then(() => {
           router.push(
             Hrefs.worksheetMark({
-              featureSetUri: null,
-              featureUri: null,
+              featureSetIri: null,
+              featureIri: null,
               mode: WorksheetMode.BEGINNER,
               review: false,
               worksheetStateId: newWorksheetStateId,

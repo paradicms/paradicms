@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 
 describe("Concept", () => {
-  const sut = testModelSet.conceptByUri(
+  const sut = testModelSet.conceptByIri(
     "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
   );
 

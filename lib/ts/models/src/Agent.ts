@@ -5,5 +5,6 @@ import {Work} from "./Work";
 
 export interface Agent extends Model, ImagesMixin, RelationsMixin {
   readonly label: string;
+  readonly type: "Organization" | "Other" | "Person";
   readonly works: readonly Work[];
 }

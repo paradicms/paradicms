@@ -18,20 +18,22 @@ import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
 import {WorkEventUnion} from "./WorkEventUnion";
 import * as RdfString from "rdf-string";
-import invariant from "ts-invariant"; // ts-ignore
+import invariant from "ts-invariant";
+import {ModelIdentifier} from "./ModelIdentifier";
+import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 
 export abstract class DatasetModelReader implements ModelReader {
   constructor(protected readonly dataset: Dataset) {}
 
   protected checkModelGraph(kwds: {
-    modelGraph: BlankNode | DefaultGraph | NamedNode;
-    modelNode: BlankNode | NamedNode;
+    modelGraph: ModelGraphIdentifier;
+    modelIdentifier: ModelIdentifier;
   }): void {
-    const {modelGraph, modelNode} = kwds;
-    if (!modelGraph.equals(modelNode)) {
+    const {modelGraph, modelIdentifier} = kwds;
+    if (!modelGraph.equals(modelIdentifier)) {
       const message = `expected graph (${RdfString.termToString(
         modelGraph
-      )}) to equal subject (${RdfString.termToString(modelNode)})`;
+      )}) to equal subject (${RdfString.termToString(modelIdentifier)})`;
       invariant(false, message);
       // console.warn(message);
     }
@@ -76,7 +78,7 @@ export abstract class DatasetModelReader implements ModelReader {
     subClassOfPredicate?: NamedNode;
   }): readonly NamedModelT[] {
     const namedModels: NamedModelT[] = [];
-    // const namedModelUris: Set<string> = new Set<string>();
+    // const namedModelIris: Set<string> = new Set<string>();
     for (const quad of getRdfInstanceQuads({
       class_: kwds.class_,
       dataset: this.dataset,
@@ -85,12 +87,12 @@ export abstract class DatasetModelReader implements ModelReader {
     }).values()) {
       if (quad.subject.termType === "NamedNode") {
         // invariant(
-        //   !namedModelUris.has(quad.subject.value),
+        //   !namedModelIris.has(quad.subject.value),
         //   "duplicate named model instance: " + quad.subject.value
         // );
         this.checkModelGraph({
           modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
-          modelNode: quad.subject,
+          modelIdentifier: quad.subject,
         });
         namedModels.push(
           new kwds.factory({
@@ -100,7 +102,7 @@ export abstract class DatasetModelReader implements ModelReader {
             modelSet: kwds.modelSet,
           })
         );
-        // namedModelUris.add(quad.subject.value);
+        // namedModelIris.add(quad.subject.value);
       }
     }
     return namedModels;

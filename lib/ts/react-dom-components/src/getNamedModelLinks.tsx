@@ -2,10 +2,10 @@ import * as React from "react";
 
 export const getNamedModelLinks = (kwds: {
   readonly page: string | null;
-  readonly wikidataConceptUri: string | null;
+  readonly wikidataConceptIri: string | null;
   readonly wikipediaUrl: string | null;
 }): React.ReactElement[] => {
-  const {page, wikidataConceptUri, wikipediaUrl} = kwds;
+  const {page, wikidataConceptIri, wikipediaUrl} = kwds;
 
   const links: React.ReactElement[] = [];
 
@@ -15,7 +15,7 @@ export const getNamedModelLinks = (kwds: {
       text: "Home page",
     },
     {
-      href: wikidataConceptUri,
+      href: wikidataConceptIri,
       text: "Wikidata",
     },
     {

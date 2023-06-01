@@ -3,8 +3,8 @@ import {WorksheetMark} from "~/models/WorksheetMark";
 import {WorksheetMode} from "~/models/WorksheetMode";
 
 export const useRouteWorksheetMark = (kwds: {
-  featureSetUri?: string;
-  featureUri?: string;
+  featureSetIri?: string;
+  featureIri?: string;
   review: boolean;
 }): WorksheetMark | null => {
   if (typeof window === "undefined") {
@@ -13,7 +13,7 @@ export const useRouteWorksheetMark = (kwds: {
   }
   // console.info("window is defined");
 
-  const {featureSetUri, featureUri, review} = kwds;
+  const {featureSetIri, featureIri, review} = kwds;
 
   const [modeString] = useQueryParam<string | null | undefined>(
     "mode",
@@ -43,8 +43,8 @@ export const useRouteWorksheetMark = (kwds: {
 
   return {
     mode,
-    featureSetUri: featureSetUri ?? null,
-    featureUri: featureUri ?? null,
+    featureSetIri: featureSetIri ?? null,
+    featureIri: featureIri ?? null,
     review: review,
     worksheetStateId,
   };

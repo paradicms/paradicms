@@ -33,20 +33,20 @@ const WorkLocationsMap = dynamic<{
 interface StaticProps {
   readonly collectionTitle: string | null;
   readonly modelSetString: string;
-  readonly workUri: string;
+  readonly workIri: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
   collectionTitle,
   modelSetString,
-  workUri,
+  workIri,
 }) => {
   const modelSet = useMemo(
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
   const router = useRouter();
-  const work = modelSet.workByUri(workUri);
+  const work = modelSet.workByIri(workIri);
 
   return (
     <Layout
@@ -82,11 +82,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     readFile,
   });
 
-  const paths: {params: {workUri: string}}[] = [];
+  const paths: {params: {workIri: string}}[] = [];
   for (const work of modelSet.works) {
     paths.push({
       params: {
-        workUri: encodeFileName(work.uri),
+        workIri: encodeFileName(work.iri),
       },
     });
   }
@@ -100,7 +100,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const workUri = decodeFileName(params!.workUri as string);
+  const workIri = decodeFileName(params!.workIri as string);
 
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
@@ -115,10 +115,10 @@ export const getStaticProps: GetStaticProps = async ({
           : null,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
-        .addWork(completeModelSet.workByUri(workUri), workPageWorkJoinSelector)
+        .addWork(completeModelSet.workByIri(workIri), workPageWorkJoinSelector)
         .build()
         .toFastRdfString(),
-      workUri,
+      workIri,
     },
   };
 };

@@ -81,7 +81,7 @@ export class CmsWork extends Mixin(
   }
 
   get collections(): readonly Collection[] {
-    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByUri(collection.value) : null);
+    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByIri(collection.value) : null);
   }
 
   @Memoize()
@@ -127,7 +127,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return this.modelSet.workEventsByWorkUri(this.uri);
+    return this.modelSet.workEventsByWorkIri(this.iri);
   }
 
   get label(): string {
@@ -161,7 +161,7 @@ export class CmsWork extends Mixin(
       quads: this.dataset
           .match(
               this.identifier,
-              DataFactory.namedNode(property.uri),
+              DataFactory.namedNode(property.iri),
               null,
               this.graph
           )
@@ -170,14 +170,14 @@ export class CmsWork extends Mixin(
   }
 
   @Memoize()
-  propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
-    return this.propertyValuesByProperty(this.modelSet.propertyByUri(propertyUri));
+  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+    return this.propertyValuesByProperty(this.modelSet.propertyByIri(propertyIri));
   }
 
   get sameAs(): readonly Work[] {
     return this.filterAndMapObjects(owl.sameAs, term =>
         term.termType === "NamedNode"
-            ? this.modelSet.workByUriOptional(term.value)
+            ? this.modelSet.workByIriOptional(term.value)
             : null
     );
   }

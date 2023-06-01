@@ -16,8 +16,8 @@ export class WorksheetFeatureSetDefinition {
     );
   }
 
-  get featureUris(): readonly string[] {
-    return this.features.map(feature => feature.uri);
+  get featureIris(): readonly string[] {
+    return this.features.map(feature => feature.iri);
   }
 
   get images() {
@@ -28,7 +28,7 @@ export class WorksheetFeatureSetDefinition {
     return this.propertyGroup.label;
   }
 
-  get uri() {
-    return this.propertyGroup.uri;
+  get iri() {
+    return this.propertyGroup.iri;
   }
 }

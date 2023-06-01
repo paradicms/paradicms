@@ -28,7 +28,7 @@ describe("MemWorkQueryService", () => {
     );
 
     expect(result.modelSet.works).to.be.empty;
-    expect(result.workAgentUris).not.to.be.empty;
+    expect(result.workAgentIris).not.to.be.empty;
   });
 
   it("getNamedWorkAgents returns the works associated with an agent", async () => {
@@ -45,13 +45,13 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.workAgentUris).to.not.be.empty;
+    expect(result.workAgentIris).to.not.be.empty;
     let haveAgentWorks = false;
-    for (const agent of result.workAgentUris.map(workAgentUri => result.modelSet.agentByUri(workAgentUri))) {
-      const agentWorks = result.modelSet.agentWorks(agent.uri!);
+    for (const agent of result.workAgentIris.map(workAgentIri => result.modelSet.agentByIri(workAgentIri))) {
+      const agentWorks = result.modelSet.agentWorks(agent.iri!);
       haveAgentWorks ||= agentWorks.length > 0;
       for (const work of agentWorks) {
-        expect(work.agents.some(workAgent => workAgent.agent.uri === agent.uri)).to.be.true;
+        expect(work.agents.some(workAgent => workAgent.agent.iri === agent.iri)).to.be.true;
       }
     }
     expect(haveAgentWorks).to.be.true;
@@ -161,7 +161,7 @@ describe("MemWorkQueryService", () => {
     expect(result.workLocations).to.have.length(expectedWorkLocations.length);
     for (const work of modelSet.works) {
       for (const expectedWorkLocation of expectedWorkLocations) {
-        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.uri === work.uri && resultWorkLocation.location.lat === expectedWorkLocation.location.lat && resultWorkLocation.location.long === expectedWorkLocation.location.long);
+        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.iri === work.iri && resultWorkLocation.location.lat === expectedWorkLocation.location.lat && resultWorkLocation.location.long === expectedWorkLocation.location.long);
         expect(resultWorkLocation).to.not.be.undefined;
         expect(resultWorkLocation!.work.label).to.eq(work.label);
       }
@@ -187,7 +187,7 @@ describe("MemWorkQueryService", () => {
       {
         filters: [{
           label: "Publisher",
-          propertyUri: vra.technique.value,
+          propertyIri: vra.technique.value,
           type: "StringPropertyValue"
         } as StringPropertyValueFilter],
       }
@@ -259,7 +259,7 @@ describe("MemWorkQueryService", () => {
   });
 
   it("getWorks sorts by label", async () => {
-    const allWorkUris = (await sut.getWorks(
+    const allWorkIris = (await sut.getWorks(
         {
           offset: 0,
           limit: 4,
@@ -267,9 +267,9 @@ describe("MemWorkQueryService", () => {
         {
           filters: [],
         }
-    )).modelSet.works.map(work => work.uri);
+    )).modelSet.works.map(work => work.iri);
 
-    const sortedWorkUris = (await sut.getWorks(
+    const sortedWorkIris = (await sut.getWorks(
         {
           offset: 0,
           limit: 4,
@@ -281,8 +281,8 @@ describe("MemWorkQueryService", () => {
         {
           filters: [],
         }
-    )).modelSet.works.map(work => work.uri);
+    )).modelSet.works.map(work => work.iri);
 
-    expect(sortedWorkUris).not.to.deep.eq(allWorkUris);
+    expect(sortedWorkIris).not.to.deep.eq(allWorkIris);
   });
 });

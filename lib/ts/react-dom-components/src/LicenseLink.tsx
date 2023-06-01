@@ -7,8 +7,8 @@ export const LicenseLink: React.FunctionComponent<{
   if (!license) {
     return null;
   }
-  if (!license.uri) {
+  if (!license.iri) {
     return <span>{license.label}</span>;
   }
-  return <a href={license.uri}>{license.label}</a>;
+  return <a href={license.iri}>{license.label}</a>;
 };

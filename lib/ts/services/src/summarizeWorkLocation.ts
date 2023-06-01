@@ -13,6 +13,6 @@ export const summarizeWorkLocation = (
   role: workLocation.role,
   work: {
     label: work.label,
-    uri: work.uri,
+    iri: work.iri,
   },
 });

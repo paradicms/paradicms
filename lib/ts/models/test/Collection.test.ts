@@ -22,14 +22,14 @@ describe("Collection", () => {
   });
 
   it("should get the collection's URI", () => {
-    expect(sut.uri).to.eq(sut.uri);
+    expect(sut.iri).to.eq(sut.iri);
   });
 
   it("should get the collection's thumbnail", () => {
     const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
     expect(thumbnail).to.not.be.null;
-    expect(thumbnail!.depictsUri).to.not.eq(sut.uri);
-    expect(sut.works.some(work => work.uri === thumbnail!.depictsUri)).to.be
+    expect(thumbnail!.depictsIri).to.not.eq(sut.iri);
+    expect(sut.works.some(work => work.iri === thumbnail!.depictsIri)).to.be
       .true;
   });
 });

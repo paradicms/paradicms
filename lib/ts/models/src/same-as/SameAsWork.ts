@@ -46,10 +46,10 @@ export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<
     }
 
     @Memoize()
-    propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
+    propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
         const propertyValues: PropertyValue[] = [];
         for (const propertyValue of this.propertyValues) {
-            if (propertyValue.property.uri === propertyUri) {
+            if (propertyValue.property.iri === propertyIri) {
                 propertyValues.push(propertyValue);
             }
         }

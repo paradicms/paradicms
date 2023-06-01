@@ -28,12 +28,12 @@ export class CmsProperty
   }
 
   get groups(): readonly PropertyGroup[] {
-    return this.groupUris.map(groupUri =>
-      this.modelSet.propertyGroupByUri(groupUri)
+    return this.groupIris.map(groupIri =>
+      this.modelSet.propertyGroupByIri(groupIri)
     );
   }
 
-  get groupUris(): readonly string[] {
+  get groupIris(): readonly string[] {
     return this.filterAndMapObjects(cms.propertyGroup, term =>
       term.termType === "NamedNode" ? term.value : null
     );

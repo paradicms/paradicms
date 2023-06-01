@@ -41,7 +41,7 @@ import {WorkEventUnion} from "./WorkEventUnion";
 export class ModelSetBuilder {
   private addedAppConfiguration: boolean = false;
   // private readonly addedModelDefaultGraphQuads: Quad[][] = [];
-  private readonly addedModelUris: Set<string> = new Set<string>();
+  private readonly addedModelIris: Set<string> = new Set<string>();
   private readonly store: Store = new Store();
 
   addAgent(
@@ -54,7 +54,7 @@ export class ModelSetBuilder {
 
     this.addModel(agent);
 
-    if (!agent.uri) {
+    if (!agent.iri) {
       return this;
     }
 
@@ -116,11 +116,11 @@ export class ModelSetBuilder {
       const thumbnailImage = collection.thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         this.addImage(thumbnailImage, joinSelector.thumbnail);
-        if (thumbnailImage.depictsUri !== collection.uri) {
+        if (thumbnailImage.depictsIri !== collection.iri) {
           // The thumbnail either depicts the collection or one of the collection's works.
           // If the latter case we need to include the work in the modelSet.
           for (const work of collection.works) {
-            if (thumbnailImage.depictsUri === work.uri) {
+            if (thumbnailImage.depictsIri === work.iri) {
               this.addWork(work);
               break;
             }
@@ -180,13 +180,13 @@ export class ModelSetBuilder {
   }
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
-    if (model.uri) {
-      if (this.addedModelUris.has(model.uri)) {
-        // console.debug("tried to add model", model.uri, "twice");
+    if (model.iri) {
+      if (this.addedModelIris.has(model.iri)) {
+        // console.debug("tried to add model", model.iri, "twice");
         return this;
       }
       model.toRdf(this.store);
-      this.addedModelUris.add(model.uri);
+      this.addedModelIris.add(model.iri);
     }
     // Blank node models should be included in the triples of another model
     return this;

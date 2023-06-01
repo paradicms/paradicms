@@ -12,6 +12,6 @@ export class AgentPropertyValue extends PropertyValue {
   }
 
   get value() {
-    return this.agent.uri ?? this.agent.label;
+    return this.agent.iri ?? this.agent.label;
   }
 }

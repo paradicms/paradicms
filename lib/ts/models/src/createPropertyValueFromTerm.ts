@@ -45,19 +45,19 @@ export const createPropertyValueFromTerm = (kwds: {
       // #78 index lookups take half as much time (amortized over multiple works)
       // as getting the rdf:type of the NamedNode and branching on its value.
       {
-        const concept = modelSet.conceptByUriOptional(term.value);
+        const concept = modelSet.conceptByIriOptional(term.value);
         if (concept) {
           return new ConceptPropertyValue(concept, property);
         }
       }
       {
-        const organization = modelSet.organizationByUriOptional(term.value);
+        const organization = modelSet.organizationByIriOptional(term.value);
         if (organization) {
           return new AgentPropertyValue(organization, property);
         }
       }
       {
-        const person = modelSet.personByUriOptional(term.value);
+        const person = modelSet.personByIriOptional(term.value);
         if (person) {
           return new AgentPropertyValue(person, property);
         }

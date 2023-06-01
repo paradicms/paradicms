@@ -1,13 +1,13 @@
-import { Mixin } from "ts-mixer";
-import { Collection } from "../Collection";
-import { Image } from "../Image";
-import { ResourceBackedNamedModel } from "../ResourceBackedNamedModel";
-import { ThumbnailSelector } from "../ThumbnailSelector";
-import { Work } from "../Work";
-import { selectThumbnail } from "../selectThumbnail";
-import { CmsDescriptionMixin } from "./CmsDescriptionMixin";
-import { CmsImagesMixin } from "./CmsImagesMixin";
-import { CmsTitleMixin } from "./CmsTitleMixin";
+import {Mixin} from "ts-mixer";
+import {Collection} from "../Collection";
+import {Image} from "../Image";
+import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {ThumbnailSelector} from "../ThumbnailSelector";
+import {Work} from "../Work";
+import {selectThumbnail} from "../selectThumbnail";
+import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
+import {CmsImagesMixin} from "./CmsImagesMixin";
+import {CmsTitleMixin} from "./CmsTitleMixin";
 
 export class CmsCollection extends Mixin(
   ResourceBackedNamedModel,
@@ -20,8 +20,8 @@ export class CmsCollection extends Mixin(
   }
 
   override thumbnail(selector: ThumbnailSelector): Image | null {
-    const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsUri(
-      this.uri
+    const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsIri(
+      this.iri
     );
     if (collectionImages.length > 0) {
       const thumbnail = selectThumbnail(collectionImages, selector);
@@ -40,6 +40,6 @@ export class CmsCollection extends Mixin(
   }
 
   get works(): readonly Work[] {
-    return this.modelSet.collectionWorks(this.uri);
+    return this.modelSet.collectionWorks(this.iri);
   }
 }

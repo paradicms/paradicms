@@ -9,7 +9,7 @@ export class SameAsNamedModel<ModelT extends NamedModel> extends SameAsModel<
         return super.identifier as NamedNode;
     }
 
-    override get uri(): string {
+    override get iri(): string {
         return this.identifier.value;
     }
 }

@@ -18,6 +18,6 @@ export class CmsAgent
   }
 
   get works() {
-    return this.uri ? this.modelSet.agentWorks(this.uri) : [];
+    return this.iri ? this.modelSet.agentWorks(this.iri) : [];
   }
 }

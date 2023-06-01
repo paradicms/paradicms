@@ -4,8 +4,12 @@ import {BlankNode, DatasetCore, Literal, NamedNode} from "@rdfjs/types";
 export class LiteralModel implements Model {
   constructor(protected readonly literal: Literal) {}
 
-  get identifier(): BlankNode | NamedNode {
-    throw new EvalError("not implemented");
+  get identifiers(): readonly (BlankNode | NamedNode)[] {
+    return [];
+  }
+
+  get iris(): readonly string[] {
+    return [];
   }
 
   get label(): string {
@@ -14,5 +18,5 @@ export class LiteralModel implements Model {
 
   toRdf(addToDataset: DatasetCore) {}
 
-  uri: string | null = null;
+  iri: string | null = null;
 }

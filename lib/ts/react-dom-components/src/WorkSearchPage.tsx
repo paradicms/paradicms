@@ -67,7 +67,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   objectsPerPage: number;
   onChangeFilters: (filters: readonly FilterUnion[]) => void;
   renderWorkLink: (
-    workUri: string,
+    workIri: string,
     children: React.ReactNode
   ) => React.ReactElement;
   renderWorkLocationsMap?: (
@@ -371,8 +371,8 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
         <Row>
           <AgentsGallery
-            agents={getWorkAgentsResult.workAgentUris.map(workAgentUri =>
-              getWorkAgentsResult.modelSet.agentByUri(workAgentUri)
+            agents={getWorkAgentsResult.workAgentIris.map(workAgentIri =>
+              getWorkAgentsResult.modelSet.agentByIri(workAgentIri)
             )}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
           />

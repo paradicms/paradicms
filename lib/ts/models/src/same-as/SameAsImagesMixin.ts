@@ -13,7 +13,7 @@ export abstract class SameAsImagesMixin<ModelT extends Model & ImagesMixin>
   }
 
   get originalImages(): readonly Image[] {
-    return this.images.filter(image => image.originalImageUri === null);
+    return this.images.filter(image => image.originalImageIri === null);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {

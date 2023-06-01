@@ -15,7 +15,7 @@ export class WikidataWork extends WikidataModel implements Work {
   readonly events: readonly WorkEventUnion[] = [];
   readonly location: WorkLocation | null = null;
   readonly propertyValues: readonly PropertyValue[] = [];
-  propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
+  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
     return [];
   }
   readonly sameAs: readonly Work[] = [];

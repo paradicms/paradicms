@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 
 describe("Organization", () => {
-  const sut = testModelSet.organizationByUri(
+  const sut = testModelSet.organizationByIri(
     "http://example.com/organization4"
   );
 
@@ -21,7 +21,7 @@ describe("Organization", () => {
     expect(sut.page).to.not.be.empty;
   });
 
-  it("should get the organization's uri", () => {
-    expect(sut.uri).to.not.be.empty;
+  it("should get the organization's iri", () => {
+    expect(sut.iri).to.not.be.empty;
   });
 });

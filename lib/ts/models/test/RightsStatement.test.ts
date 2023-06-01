@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 
 describe("RightsStatement", () => {
-  const sut = testModelSet.rightsStatementByUri(
+  const sut = testModelSet.rightsStatementByIri(
     "http://rightsstatements.org/vocab/InC-EDU/1.0/"
   );
 

@@ -6,7 +6,7 @@ import {WorksheetFeatureState} from "~/models/WorksheetFeatureState";
 export class WorksheetFeatureSet {
   readonly definition: WorksheetFeatureSetDefinition;
   readonly features: readonly WorksheetFeature[];
-  private readonly featuresByUri: {[index: string]: WorksheetFeature};
+  private readonly featuresByIri: {[index: string]: WorksheetFeature};
   selected: boolean;
 
   constructor(kwds: {
@@ -17,26 +17,26 @@ export class WorksheetFeatureSet {
     this.definition = kwds.definition;
     this.features = this.definition.features
       .map(
-        (featureDefinition) =>
+        featureDefinition =>
           new WorksheetFeature({
             definition: featureDefinition,
             initialState: initialState?.features?.find(
-              (featureState) => featureState.uri === featureDefinition.uri
+              featureState => featureState.iri === featureDefinition.iri
             ),
           })
       )
       .sort((left, right) => left.definition.order - right.definition.order);
-    this.featuresByUri = this.features.reduce((map, feature) => {
-      map[feature.uri] = feature;
+    this.featuresByIri = this.features.reduce((map, feature) => {
+      map[feature.iri] = feature;
       return map;
     }, {} as {[index: string]: WorksheetFeature});
     this.selected = !!initialState;
   }
 
-  featureByUri(uri: string): WorksheetFeature {
-    const feature = this.featuresByUri[uri];
+  featureByIri(iri: string): WorksheetFeature {
+    const feature = this.featuresByIri[iri];
     if (!feature) {
-      throw new RangeError("no such feature " + uri);
+      throw new RangeError("no such feature " + iri);
     }
     return feature;
   }
@@ -59,7 +59,7 @@ export class WorksheetFeatureSet {
     }
     return {
       features: featureStates.length > 0 ? featureStates : undefined,
-      uri: this.definition.uri,
+      iri: this.definition.iri,
     };
   }
 
@@ -67,7 +67,7 @@ export class WorksheetFeatureSet {
     this.selected = false;
   }
 
-  get uri(): string {
-    return this.definition.uri;
+  get iri(): string {
+    return this.definition.iri;
   }
 }

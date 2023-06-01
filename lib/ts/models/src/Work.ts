@@ -24,5 +24,5 @@ export interface Work
   readonly label: string;
   readonly location: WorkLocation | null;
   get propertyValues(): readonly PropertyValue[];
-  propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[];
+  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[];
 }

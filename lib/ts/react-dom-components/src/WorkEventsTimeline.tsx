@@ -20,7 +20,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
       {workEvents.map(workEvent => (
         <VerticalTimelineElement
           date={workEvent.displayDate ?? undefined}
-          key={workEvent.uri}
+          key={workEvent.iri}
           icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
           <h3>{workEvent.label}</h3>

@@ -3,7 +3,7 @@ import {StringPropertyValueFilter, ValueFilter, ValueFilterState} from "../src";
 
 const emptyFilter = (): StringPropertyValueFilter => ({
   label: "Ignored",
-  propertyUri: "http://example.com/property",
+  propertyIri: "http://example.com/property",
   type: "StringPropertyValue",
 });
 

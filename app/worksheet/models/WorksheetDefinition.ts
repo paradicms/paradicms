@@ -15,8 +15,8 @@ export class WorksheetDefinition {
   }
 
   @Memoize()
-  featureSetByUriOptional(uri: string): WorksheetFeatureSetDefinition | null {
-    const propertyGroup = this.modelSet.propertyGroupByUriOptional(uri);
+  featureSetByIriOptional(iri: string): WorksheetFeatureSetDefinition | null {
+    const propertyGroup = this.modelSet.propertyGroupByIriOptional(iri);
     return propertyGroup
       ? new WorksheetFeatureSetDefinition(propertyGroup)
       : null;
@@ -29,10 +29,10 @@ export class WorksheetDefinition {
     );
   }
 
-  featureValueByUriOptional(
-    uri: string
+  featureValueByIriOptional(
+    iri: string
   ): WorksheetFeatureValueDefinition | null {
-    return this.modelSet.conceptByUriOptional(uri);
+    return this.modelSet.conceptByIriOptional(iri);
   }
 
   get featureValues(): readonly WorksheetFeatureValueDefinition[] {

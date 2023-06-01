@@ -88,8 +88,8 @@ export class SameAsModel<ModelT extends Model> implements Model {
   //   return [...uniqueValues];
   // }
 
-  get identifier(): BlankNode | NamedNode {
-    return this.preferredModel.identifier;
+  get identifiers(): readonly (BlankNode | NamedNode)[] {
+    return this.models.flatMap(model => model.identifiers);
   }
 
   protected get preferredModel(): ModelT {
@@ -102,7 +102,7 @@ export class SameAsModel<ModelT extends Model> implements Model {
     }
   }
 
-  get uri(): string | null {
+  get iri(): string | null {
     switch (this.identifier.termType) {
       case "BlankNode":
         return null;

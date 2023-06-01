@@ -9,8 +9,8 @@ export abstract class SameAsRelationsMixin<
     return this.getBestValue(model => model.page);
   }
 
-  get wikidataConceptUri(): string | null {
-    return this.getBestValue(model => model.wikidataConceptUri);
+  get wikidataConceptIri(): string | null {
+    return this.getBestValue(model => model.wikidataConceptIri);
   }
 
   get wikipediaUrl(): string | null {

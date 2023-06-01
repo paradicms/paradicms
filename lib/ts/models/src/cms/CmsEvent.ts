@@ -44,7 +44,7 @@ export abstract class CmsEvent
 
     if (thisSortDate === null) {
       if (otherSortDate === null) {
-        return this.uri.localeCompare(other.uri);
+        return this.iri.localeCompare(other.iri);
       } else {
         return -1; // Events without dates are < events with dates.
       }
@@ -115,7 +115,7 @@ export abstract class CmsEvent
         };
       }
     }
-    console.debug("event", this.uri, "has no sort date");
+    console.debug("event", this.iri, "has no sort date");
     return null;
   }
 

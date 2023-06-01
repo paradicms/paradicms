@@ -11,3 +11,5 @@ export * from "./getRdfNodeLabel";
 export * from "./getRdfList";
 export * from "./hasRdfSuperClass";
 export * from "./Resource";
+export * from "./ResourceGraphIdentifier";
+export * from "./ResourceIdentifier";

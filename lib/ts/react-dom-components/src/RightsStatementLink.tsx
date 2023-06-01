@@ -7,8 +7,8 @@ export const RightsStatementLink: React.FunctionComponent<{
   if (!rightsStatement) {
     return null;
   }
-  if (!rightsStatement.uri) {
+  if (!rightsStatement.iri) {
     return <span>{rightsStatement.label}</span>;
   }
-  return <a href={rightsStatement.uri}>{rightsStatement.label}</a>;
+  return <a href={rightsStatement.iri}>{rightsStatement.label}</a>;
 };

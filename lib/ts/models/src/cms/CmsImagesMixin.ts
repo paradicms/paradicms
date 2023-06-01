@@ -7,7 +7,7 @@ import {selectThumbnail} from "../selectThumbnail";
 export abstract class CmsImagesMixin extends ResourceBackedNamedModelMixin
   implements ImagesMixin {
   get images(): readonly Image[] {
-    return this.modelSet.imagesByDepictsUri(this.uri);
+    return this.modelSet.imagesByDepictsIri(this.iri);
   }
 
   get originalImages(): readonly Image[] {

@@ -28,7 +28,7 @@ export abstract class CmsRightsMixin
         case "Literal":
           return new LiteralLicense(term);
         case "NamedNode":
-          return this.modelSet.licenseByUri(term.value);
+          return this.modelSet.licenseByIri(term.value);
         default:
           return null;
       }
@@ -53,7 +53,7 @@ export abstract class CmsRightsMixin
         case "Literal":
           return new LiteralRightsStatement(term);
         case "NamedNode":
-          return this.modelSet.rightsStatementByUri(term.value);
+          return this.modelSet.rightsStatementByIri(term.value);
         default:
           return null;
       }

@@ -102,9 +102,9 @@ export class WikidataModelReader extends DatasetModelReader {
       }
       this.checkModelGraph({
         modelGraph: instanceQuad.graph as DefaultGraph | BlankNode | NamedNode,
-        modelNode: instanceQuad.subject,
+        modelIdentifier: instanceQuad.subject,
       });
-      const wikibaseItem = this.wikibaseItemsByUri[instanceQuad.subject.value];
+      const wikibaseItem = this.wikibaseItemsByIri[instanceQuad.subject.value];
       if (wikibaseItem) {
         models.push(
           new factory({
@@ -138,7 +138,7 @@ export class WikidataModelReader extends DatasetModelReader {
   }
 
   @Memoize()
-  private get wikibaseItemsByUri(): {[index: string]: WikibaseItem} {
+  private get wikibaseItemsByIri(): {[index: string]: WikibaseItem} {
     return this.wikibaseItems.reduce((map, wikibaseItem) => {
       map[wikibaseItem.identifier.value] = wikibaseItem;
       return map;

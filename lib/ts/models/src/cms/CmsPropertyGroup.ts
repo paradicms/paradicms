@@ -15,6 +15,6 @@ export class CmsPropertyGroup
   )
   implements PropertyGroup {
   get properties(): readonly Property[] {
-    return this.modelSet.propertiesByGroupUri(this.uri);
+    return this.modelSet.propertiesByGroupIri(this.iri);
   }
 }

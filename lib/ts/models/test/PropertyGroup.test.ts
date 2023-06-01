@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 
 describe("PropertyGroup", () => {
-  const sut = testModelSet.propertyGroupByUriOptional(
+  const sut = testModelSet.propertyGroupByIriOptional(
     "urn:paradicms_etl:pipeline:synthetic_data:property_group"
   )!;
 

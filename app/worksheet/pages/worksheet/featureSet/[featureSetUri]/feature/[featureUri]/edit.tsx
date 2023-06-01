@@ -18,14 +18,14 @@ import {useRouter} from "next/router";
 import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
 
 interface StaticProps {
-  readonly featureSetUri: string;
-  readonly featureUri: string;
+  readonly featureSetIri: string;
+  readonly featureIri: string;
   readonly modelSetString: string;
 }
 
 const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
-  featureSetUri,
-  featureUri,
+  featureSetIri,
+  featureIri,
   modelSetString,
 }) => {
   const modelSet = useMemo(
@@ -34,8 +34,8 @@ const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
   );
   const configuration = modelSet.appConfiguration;
   const routeWorksheetMark = useRouteWorksheetMark({
-    featureSetUri,
-    featureUri,
+    featureSetIri,
+    featureIri,
     review: false,
   });
   const router = useRouter();
@@ -62,7 +62,7 @@ const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
     router.push(
       Hrefs.worksheetMark({
         ...worksheet.currentMark,
-        featureUri: null,
+        featureIri: null,
       })
     );
     return null;
@@ -120,13 +120,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   const worksheetDefinition = new WorksheetDefinition(modelSet);
 
-  const paths: {params: {featureSetUri: string; featureUri: string}}[] = [];
+  const paths: {params: {featureSetIri: string; featureIri: string}}[] = [];
   for (const featureSet of worksheetDefinition.featureSets) {
     for (const feature of featureSet.features) {
       paths.push({
         params: {
-          featureSetUri: encodeFileName(featureSet.uri),
-          featureUri: encodeFileName(feature.uri),
+          featureSetIri: encodeFileName(featureSet.iri),
+          featureIri: encodeFileName(feature.iri),
         },
       });
     }
@@ -145,8 +145,8 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{
   props: StaticProps;
 }> => {
-  const featureSetUri = decodeFileName(params!.featureSetUri as string);
-  const featureUri = decodeFileName(params!.featureUri as string);
+  const featureSetIri = decodeFileName(params!.featureSetIri as string);
+  const featureIri = decodeFileName(params!.featureIri as string);
 
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
@@ -155,11 +155,11 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      featureSetUri,
-      featureUri,
+      featureSetIri,
+      featureIri,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
-        .addProperty(completeModelSet.propertyByUri(featureUri), {
+        .addProperty(completeModelSet.propertyByIri(featureIri), {
           rangeValues: {
             thumbnail: galleryThumbnailSelector,
           },

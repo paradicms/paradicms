@@ -42,7 +42,7 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
                     }
                     for (const option of options) {
                       const featureValue = feature.values.find(
-                        value => value.uri === option.value
+                        value => value.iri === option.value
                       )!;
                       featureValue.select();
                     }
@@ -50,13 +50,13 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
                   }}
                   options={feature.values.map(value => ({
                     label: value.definition.prefLabel,
-                    value: value.uri,
+                    value: value.iri,
                   }))}
                   value={feature.values
                     .filter(value => value.selected)
                     .map(value => ({
                       label: value.definition.prefLabel,
-                      value: value.uri,
+                      value: value.iri,
                     }))}
                 />
               </td>
@@ -69,12 +69,12 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
 };
 
 interface StaticProps {
-  readonly featureSetUri: string;
+  readonly featureSetIri: string;
   readonly modelSetString: string;
 }
 
 const WorksheetFeatureSetEditPage: React.FunctionComponent<StaticProps> = ({
-  featureSetUri,
+  featureSetIri,
   modelSetString,
 }) => {
   const modelSet = useMemo(
@@ -84,7 +84,7 @@ const WorksheetFeatureSetEditPage: React.FunctionComponent<StaticProps> = ({
   const configuration = modelSet.appConfiguration;
   const router = useRouter();
   const routeWorksheetMark = useRouteWorksheetMark({
-    featureSetUri,
+    featureSetIri,
     review: false,
   });
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
@@ -143,8 +143,8 @@ const WorksheetFeatureSetEditPage: React.FunctionComponent<StaticProps> = ({
               onToggleSelected: () => {
                 router.push(
                   Hrefs.worksheetMark({
-                    featureSetUri: featureSet.uri,
-                    featureUri: feature.uri,
+                    featureSetIri: featureSet.iri,
+                    featureIri: feature.iri,
                     review: false,
                     mode: worksheet!.currentMark.mode,
                     worksheetStateId: worksheet!.stateId,
@@ -173,11 +173,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
   const worksheetDefinition = new WorksheetDefinition(modelSet);
 
-  const paths: {params: {featureSetUri: string}}[] = [];
+  const paths: {params: {featureSetIri: string}}[] = [];
   for (const featureSet of worksheetDefinition.featureSets) {
     paths.push({
       params: {
-        featureSetUri: encodeFileName(featureSet.uri),
+        featureSetIri: encodeFileName(featureSet.iri),
       },
     });
   }
@@ -193,7 +193,7 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{
   props: StaticProps;
 }> => {
-  const featureSetUri = decodeFileName(params!.featureSetUri as string);
+  const featureSetIri = decodeFileName(params!.featureSetIri as string);
 
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
@@ -202,10 +202,10 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      featureSetUri,
+      featureSetIri,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
-        .addPropertyGroup(completeModelSet.propertyGroupByUri(featureSetUri), {
+        .addPropertyGroup(completeModelSet.propertyGroupByIri(featureSetIri), {
           properties: {
             rangeValues: {},
             thumbnail: galleryThumbnailSelector,
@@ -214,7 +214,7 @@ export const getStaticProps: GetStaticProps = async ({
         // Add other property groups in order to determine where this page is in the workflow and how many more pages there ares
         .addPropertyGroups(
           completeModelSet.propertyGroups.filter(
-            propertyGroup => propertyGroup.uri !== featureSetUri
+            propertyGroup => propertyGroup.iri !== featureSetIri
           ),
           {
             properties: {

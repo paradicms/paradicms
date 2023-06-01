@@ -8,6 +8,6 @@ import {ImageJoinSelector} from "./ImageJoinSelector";
 export interface CollectionJoinSelector {
   // Return a single thumbnail Image for this Collection.
   thumbnail?: ImageJoinSelector & ThumbnailSelector;
-  // Return all works that have a collectionUri referring to this Collection.
+  // Return all works that have a collectionIri referring to this Collection.
   works?: WorkJoinSelector;
 }

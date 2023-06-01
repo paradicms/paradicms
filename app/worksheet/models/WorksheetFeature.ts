@@ -20,7 +20,7 @@ export class WorksheetFeature {
           new WorksheetFeatureValue({
             definition: valueDefinition,
             initialState: initialState?.values?.find(
-              featureValueState => featureValueState.uri === valueDefinition.uri
+              featureValueState => featureValueState.iri === valueDefinition.iri
             ),
           })
       )
@@ -40,13 +40,13 @@ export class WorksheetFeature {
     return valueStates.length > 0 || this.text
       ? {
           text: this.text,
-          uri: this.definition.uri,
+          iri: this.definition.iri,
           values: valueStates.length > 0 ? valueStates : undefined,
         }
       : undefined;
   }
 
-  get uri(): string {
-    return this.definition.uri;
+  get iri(): string {
+    return this.definition.iri;
   }
 }

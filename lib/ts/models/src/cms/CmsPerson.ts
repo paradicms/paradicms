@@ -14,7 +14,7 @@ export class CmsPerson extends CmsAgent implements Person {
   get sameAs(): readonly Person[] {
     return this.filterAndMapObjects(owl.sameAs, term =>
       term.termType === "NamedNode"
-        ? this.modelSet.personByUriOptional(term.value)
+        ? this.modelSet.personByIriOptional(term.value)
         : null
     );
   }

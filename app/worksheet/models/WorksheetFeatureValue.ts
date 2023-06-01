@@ -19,7 +19,7 @@ export class WorksheetFeatureValue {
 
   get state(): WorksheetFeatureValueState | undefined {
     return this.selected
-      ? {selected: this.selected, uri: this.definition.uri}
+      ? {selected: this.selected, iri: this.definition.iri}
       : undefined;
   }
 
@@ -27,7 +27,7 @@ export class WorksheetFeatureValue {
     this.selected = false;
   }
 
-  get uri(): string {
-    return this.definition.uri;
+  get iri(): string {
+    return this.definition.iri;
   }
 }

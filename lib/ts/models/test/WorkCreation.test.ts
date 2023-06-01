@@ -6,7 +6,7 @@ describe("WorkCreation", () => {
   const work = testModelSet.works[0];
 
   const sut: WorkCreation = testModelSet
-    .workEventsByWorkUri(work.uri)
+    .workEventsByWorkIri(work.iri)
     .find(workEvent => workEvent.type === "WorkCreation") as WorkCreation;
 
   before(() => {
@@ -15,8 +15,8 @@ describe("WorkCreation", () => {
 
   it("should expose the creator", () => {
     const creator = sut.creators[0];
-    testModelSet.agentByUri(creator.uri!);
-    expect(work.agents.some(agent => agent.agent.uri === creator.uri)).to.be
+    testModelSet.agentByIri(creator.iri!);
+    expect(work.agents.some(agent => agent.agent.iri === creator.iri)).to.be
       .true;
   });
 });

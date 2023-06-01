@@ -4,42 +4,42 @@ export const defaultProperties: readonly {
   readonly filterable: boolean;
   readonly label: string;
   readonly searchable: boolean;
-  readonly uri: string;
+  readonly iri: string;
 }[] = [
   {
     filterable: true,
     label: "Creator",
     searchable: false,
-    uri: dcterms.creator.value,
+    iri: dcterms.creator.value,
   },
   {
     filterable: false,
     label: "Description",
     searchable: true,
-    uri: dcterms.description.value,
+    iri: dcterms.description.value,
   },
   {
     filterable: true,
     label: "Medium",
     searchable: false,
-    uri: dcterms.medium.value,
+    iri: dcterms.medium.value,
   },
   {
     filterable: true,
     label: "Subject",
     searchable: false,
-    uri: dcterms.subject.value,
+    iri: dcterms.subject.value,
   },
   {
     filterable: false,
     label: "Title",
     searchable: true,
-    uri: dcterms.title.value,
+    iri: dcterms.title.value,
   },
   {
     filterable: true,
     label: "Type",
     searchable: false,
-    uri: dcterms.type.value,
+    iri: dcterms.type.value,
   },
 ];

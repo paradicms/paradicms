@@ -111,13 +111,13 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
 
   get license(): License {
     // All structured data from the main, Property, Lexeme, and EntitySchema namespaces is available under the Creative Commons CC0 License; text in the other namespaces is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.
-    return this.modelSet.licenseByUri(
+    return this.modelSet.licenseByIri(
       "http://creativecommons.org/licenses/by-sa/3.0/"
     );
   }
 
   get originalImages(): readonly Image[] {
-    return this.images.filter(image => image.originalImageUri === null);
+    return this.images.filter(image => image.originalImageIri === null);
   }
 
   get page(): string | null {
@@ -137,7 +137,7 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   }
 
   get rightsStatement(): RightsStatement {
-    return this.modelSet.rightsStatementByUri(
+    return this.modelSet.rightsStatementByIri(
       "http://rightsstatements.org/vocab/InC/1.0/"
     );
   }
@@ -150,7 +150,7 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
     return selectThumbnail(this.images, selector);
   }
 
-  get wikidataConceptUri(): string | null {
+  get wikidataConceptIri(): string | null {
     return this.identifier.value;
   }
 

@@ -52,7 +52,7 @@ export class CmsModelReader extends DatasetModelReader {
     }).values()) {
       this.checkModelGraph({
         modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
-        modelNode: quad.subject as BlankNode | NamedNode,
+        modelIdentifier: quad.subject as BlankNode | NamedNode,
       });
       return new AppConfiguration({
         dataset: this.dataset,
@@ -167,7 +167,7 @@ export class CmsModelReader extends DatasetModelReader {
         }
         this.checkModelGraph({
           modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
-          modelNode: quad.subject as BlankNode | NamedNode,
+          modelIdentifier: quad.subject as BlankNode | NamedNode,
         });
         const workEventClass =
           workEventClassesByRdfType[rdfTypeQuad.object.value];

@@ -20,8 +20,8 @@ export class WorksheetFeatureDefinition {
     return this.property.order;
   }
 
-  get uri() {
-    return this.property.uri;
+  get iri() {
+    return this.property.iri;
   }
 
   @Memoize()

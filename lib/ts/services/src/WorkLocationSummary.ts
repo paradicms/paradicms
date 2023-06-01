@@ -9,6 +9,6 @@ export interface WorkLocationSummary {
   readonly role: WorkLocationRole;
   readonly work: {
     readonly label: string;
-    readonly uri: string;
+    readonly iri: string;
   };
 }

@@ -7,14 +7,14 @@ import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 const WorksGalleryCard: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   renderWorkLink: (
-    workUri: string,
+    workIri: string,
     children: React.ReactNode
   ) => React.ReactElement;
   work: Work;
 }> = ({getAbsoluteImageSrc, renderWorkLink, work}) => (
   <GalleryCard
     getAbsoluteImageSrc={getAbsoluteImageSrc}
-    renderLink={children => renderWorkLink(work.uri, children)}
+    renderLink={children => renderWorkLink(work.iri, children)}
     subtitle={work.displayDate}
     thumbnail={work.thumbnail(galleryThumbnailSelector)}
     title={work.label}
@@ -29,7 +29,7 @@ const WorksGalleryCard: React.FunctionComponent<{
 export const WorksGallery: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   renderWorkLink: (
-    workUri: string,
+    workIri: string,
     children: React.ReactNode
   ) => React.ReactElement;
   works: readonly Work[];
@@ -43,7 +43,7 @@ export const WorksGallery: React.FunctionComponent<{
           work={work}
         />
       ),
-      key: work.uri,
+      key: work.iri,
     }))}
   />
 );

@@ -16,6 +16,16 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     this.graph = kwds.graph;
   }
 
+  get identifiers(): readonly (BlankNode | NamedNode)[] {
+    return [this.identifier];
+  }
+
+  get iris(): readonly string[] {
+    return this.identifiers
+        .filter(identifier => identifier.termType === "NamedNode")
+        .map(identifier => identifier.value);
+  }
+
   toRdf(addToDataset: DatasetCore) {
     for (const quad of this.dataset.match(null, null, null, this.graph)) {
       addToDataset.add(quad);
@@ -24,9 +34,5 @@ export abstract class ResourceBackedModel extends Resource implements Model {
 
   override toString(): string {
     throw new EvalError("should never call toString()");
-  }
-
-  get uri(): string | null {
-    return this.identifier.termType === "NamedNode" ? this.identifier.value : null;
   }
 }

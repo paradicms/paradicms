@@ -5,8 +5,7 @@ import {Hrefs} from "~/Hrefs";
 import {WorksheetMode} from "~/models/WorksheetMode";
 
 export class JsonLdWorksheetStateExporter
-  implements WorksheetStateExporter<any>
-{
+  implements WorksheetStateExporter<any> {
   export(
     worksheetDefinition: WorksheetDefinition,
     worksheetStates: WorksheetState[]
@@ -17,7 +16,7 @@ export class JsonLdWorksheetStateExporter
       case 1:
         return this._export(worksheetDefinition, worksheetStates[0]);
       default:
-        worksheetStates.map((worksheetState) =>
+        worksheetStates.map(worksheetState =>
           this._export(worksheetDefinition, worksheetState)
         );
     }
@@ -32,8 +31,8 @@ export class JsonLdWorksheetStateExporter
     context.cc = "https://w3id.org/costumeCore/ontology/";
     json["@context"] = context;
     let href = Hrefs.worksheetMark({
-      featureSetUri: null,
-      featureUri: null,
+      featureSetIri: null,
+      featureIri: null,
       mode: WorksheetMode.BEGINNER,
       review: false,
       worksheetStateId: worksheetState.id,
@@ -44,16 +43,16 @@ export class JsonLdWorksheetStateExporter
     json["@id"] = "https://dressdiscover.org" + href;
     for (const featureSetState of worksheetState.featureSets ?? []) {
       for (const featureState of featureSetState.features ?? []) {
-        const selectedFeatureValueUris = (featureState.values ?? [])
-          .filter((value) => value.selected)
-          .map((value) => value.uri);
+        const selectedFeatureValueIris = (featureState.values ?? [])
+          .filter(value => value.selected)
+          .map(value => value.iri);
 
-        if (selectedFeatureValueUris.length === 0) {
+        if (selectedFeatureValueIris.length === 0) {
           continue;
         }
-        const featureStateKey = featureState.uri;
+        const featureStateKey = featureState.iri;
         context[featureStateKey] = {"@type": "@id"};
-        json[featureStateKey] = selectedFeatureValueUris;
+        json[featureStateKey] = selectedFeatureValueIris;
       }
     }
     return json;

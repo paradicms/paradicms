@@ -22,7 +22,7 @@ import Hammer from "react-hammerjs";
 import path from "path";
 
 const WorkLocationsMap = dynamic<{
-  readonly collectionUri: string;
+  readonly collectionIri: string;
   readonly workLocations: readonly WorkLocationSummary[];
 }>(
   () =>
@@ -33,40 +33,40 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly collectionUri: string;
-  readonly currentWorkUri: string;
+  readonly collectionIri: string;
+  readonly currentWorkIri: string;
   readonly modelSetString: string;
-  readonly nextWorkUri: string | null;
-  readonly previousWorkUri: string | null;
+  readonly nextWorkIri: string | null;
+  readonly previousWorkIri: string | null;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
-  collectionUri,
-  currentWorkUri,
+  collectionIri,
+  currentWorkIri,
   modelSetString,
-  nextWorkUri,
-  previousWorkUri,
+  nextWorkIri,
+  previousWorkIri,
 }) => {
   const modelSet = useMemo<ModelSet>(
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
-  const collection = modelSet.collectionByUri(collectionUri);
+  const collection = modelSet.collectionByIri(collectionIri);
   const configuration = modelSet.appConfiguration;
-  const currentWork = modelSet.workByUri(currentWorkUri);
+  const currentWork = modelSet.workByIri(currentWorkIri);
   const router = useRouter();
 
   const onGoToNextWork = useCallback(() => {
-    if (nextWorkUri) {
-      router.push(Hrefs.work({collectionUri, workUri: nextWorkUri}));
+    if (nextWorkIri) {
+      router.push(Hrefs.work({collectionIri, workIri: nextWorkIri}));
     }
-  }, [nextWorkUri, router]);
+  }, [nextWorkIri, router]);
 
   const onGoToPreviousWork = useCallback(() => {
-    if (previousWorkUri) {
-      router.push(Hrefs.work({collectionUri, workUri: previousWorkUri}));
+    if (previousWorkIri) {
+      router.push(Hrefs.work({collectionIri, workIri: previousWorkIri}));
     }
-  }, [previousWorkUri, router]);
+  }, [previousWorkIri, router]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -91,8 +91,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       collection={collection}
       configuration={configuration}
       currentWork={currentWork}
-      nextWork={nextWorkUri ? {uri: nextWorkUri} : undefined}
-      previousWork={previousWorkUri ? {uri: previousWorkUri} : undefined}
+      nextWork={nextWorkIri ? {iri: nextWorkIri} : undefined}
+      previousWork={previousWorkIri ? {iri: previousWorkIri} : undefined}
     >
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
@@ -105,7 +105,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
               properties={modelSet.properties}
               renderWorkLocationsMap={workLocations => (
                 <WorkLocationsMap
-                  collectionUri={collectionUri}
+                  collectionIri={collectionIri}
                   workLocations={workLocations}
                 />
               )}
@@ -129,15 +129,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
     readFile,
   });
 
-  const paths: {params: {collectionUri: string; workUri: string}}[] = [];
+  const paths: {params: {collectionIri: string; workIri: string}}[] = [];
 
   // Use first collection with works
   for (const collection of modelSet.collections) {
-    for (const work of modelSet.collectionWorks(collection.uri)) {
+    for (const work of modelSet.collectionWorks(collection.iri)) {
       paths.push({
         params: {
-          collectionUri: encodeFileName(collection.uri),
-          workUri: encodeFileName(work.uri),
+          collectionIri: encodeFileName(collection.iri),
+          workIri: encodeFileName(work.iri),
         },
       });
     }
@@ -155,55 +155,55 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const collectionUri = decodeFileName(params!.collectionUri as string);
-  const workUri = decodeFileName(params!.workUri as string);
+  const collectionIri = decodeFileName(params!.collectionIri as string);
+  const workIri = decodeFileName(params!.workIri as string);
 
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
-  const currentWork = completeModelSet.workByUri(workUri);
-  const collectionWorks = completeModelSet.collectionWorks(collectionUri);
+  const currentWork = completeModelSet.workByIri(workIri);
+  const collectionWorks = completeModelSet.collectionWorks(collectionIri);
 
   const currentWorkI = collectionWorks.findIndex(
-    work => work.uri === currentWork.uri
+    work => work.iri === currentWork.iri
   );
   if (currentWorkI === -1) {
     throw new EvalError(
-      `current work ${currentWork.uri} not found among collection ${collectionUri} works`
+      `current work ${currentWork.iri} not found among collection ${collectionIri} works`
     );
   }
-  const nextWorkUri =
+  const nextWorkIri =
     currentWorkI + 1 < collectionWorks.length
-      ? collectionWorks[currentWorkI + 1].uri
+      ? collectionWorks[currentWorkI + 1].iri
       : null;
-  const previousWorkUri =
-    currentWorkI > 0 ? collectionWorks[currentWorkI - 1].uri : null;
+  const previousWorkIri =
+    currentWorkI > 0 ? collectionWorks[currentWorkI - 1].iri : null;
 
-  const workUris: string[] = [];
-  if (previousWorkUri) {
-    workUris.push(previousWorkUri);
+  const workIris: string[] = [];
+  if (previousWorkIri) {
+    workIris.push(previousWorkIri);
   }
-  workUris.push(workUri);
-  if (nextWorkUri) {
-    workUris.push(nextWorkUri);
+  workIris.push(workIri);
+  if (nextWorkIri) {
+    workIris.push(nextWorkIri);
   }
 
   return {
     props: {
-      collectionUri,
-      currentWorkUri: workUri,
+      collectionIri,
+      currentWorkIri: workIri,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addWorks(
-          workUris.map(workUri => completeModelSet.workByUri(workUri)),
+          workIris.map(workIri => completeModelSet.workByIri(workIri)),
           workPageWorkJoinSelector
         )
         .build()
         .toFastRdfString(),
-      nextWorkUri,
-      previousWorkUri,
+      nextWorkIri,
+      previousWorkIri,
     },
   };
 };
