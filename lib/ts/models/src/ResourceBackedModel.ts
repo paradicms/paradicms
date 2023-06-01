@@ -5,6 +5,8 @@ import {ModelSet} from "./ModelSet";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {ModelIdentifier} from "./ModelIdentifier";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
+import {Memoize} from "typescript-memoize";
+import {modelIdentifiersToKey} from "./modelIdentifiersToKey";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: Dataset;
@@ -22,6 +24,12 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     return [this.identifier];
   }
 
+  @Memoize()
+  get key(): string {
+    return modelIdentifiersToKey(this.identifiers);
+  }
+
+  @Memoize()
   get iris(): readonly string[] {
     return this.identifiers
         .filter(identifier => identifier.termType === "NamedNode")
