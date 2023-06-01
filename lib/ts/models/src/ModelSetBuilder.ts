@@ -40,8 +40,6 @@ import {WorkEventUnion} from "./WorkEventUnion";
  */
 export class ModelSetBuilder {
   private addedAppConfiguration: boolean = false;
-  // private readonly addedModelDefaultGraphQuads: Quad[][] = [];
-  private readonly addedModelIris: Set<string> = new Set<string>();
   private readonly store: Store = new Store();
 
   addAgent(
@@ -53,10 +51,6 @@ export class ModelSetBuilder {
     }
 
     this.addModel(agent);
-
-    if (!agent.iri) {
-      return this;
-    }
 
     if (!joinSelector) {
       return this;
@@ -116,11 +110,17 @@ export class ModelSetBuilder {
       const thumbnailImage = collection.thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         this.addImage(thumbnailImage, joinSelector.thumbnail);
-        if (thumbnailImage.depictsIri !== collection.iri) {
+        if (
+          !collection.iris.some(
+            collectionIri => collectionIri === thumbnailImage.depictsIri
+          )
+        ) {
           // The thumbnail either depicts the collection or one of the collection's works.
           // If the latter case we need to include the work in the modelSet.
           for (const work of collection.works) {
-            if (thumbnailImage.depictsIri === work.iri) {
+            if (
+              work.iris.some(workIri => thumbnailImage.depictsIri === workIri)
+            ) {
               this.addWork(work);
               break;
             }
@@ -180,13 +180,8 @@ export class ModelSetBuilder {
   }
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
-    if (model.iri) {
-      if (this.addedModelIris.has(model.iri)) {
-        // console.debug("tried to add model", model.iri, "twice");
-        return this;
-      }
+    if (model.iris.length > 0) {
       model.toRdf(this.store);
-      this.addedModelIris.add(model.iri);
     }
     // Blank node models should be included in the triples of another model
     return this;

@@ -5,11 +5,7 @@ import {NamedNode} from "@rdfjs/types";
 export class SameAsNamedModel<ModelT extends NamedModel> extends SameAsModel<
   ModelT
 > implements NamedModel {
-    override get identifier(): NamedNode {
-        return super.identifier as NamedNode;
-    }
-
-    override get iri(): string {
-        return this.identifier.value;
+    override get identifiers(): readonly NamedNode[] {
+        return super.identifiers as readonly NamedNode[];
     }
 }

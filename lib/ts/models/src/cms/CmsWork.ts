@@ -150,10 +150,10 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get propertyValues(): readonly PropertyValue[] {
-    return this.modelSet.properties.flatMap(property => this.propertyValuesByProperty(property));
+    return this.modelSet.properties.flatMap(property => property.iris.flatMap(propertyIri => this.propertyValuesByProperty(property, propertyIri)));
   }
 
-  private propertyValuesByProperty(property: Property): readonly PropertyValue[] {
+  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValue[] {
     return createPropertyValuesFromQuadObjects({
       dataset: this.dataset,
       modelSet: this.modelSet,
@@ -161,7 +161,7 @@ export class CmsWork extends Mixin(
       quads: this.dataset
           .match(
               this.identifier,
-              DataFactory.namedNode(property.iri),
+              DataFactory.namedNode(propertyIri),
               null,
               this.graph
           )
@@ -171,7 +171,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
-    return this.propertyValuesByProperty(this.modelSet.propertyByIri(propertyIri));
+    return this.propertyValuesByProperty(this.modelSet.propertyByIri(propertyIri), propertyIri);
   }
 
   get sameAs(): readonly Work[] {

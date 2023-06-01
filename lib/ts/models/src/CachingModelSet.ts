@@ -23,8 +23,8 @@ const indexModelsByIri = <ModelT extends Model>(
   models: readonly ModelT[]
 ): {[index: string]: ModelT} => {
   return models.reduce((map, model) => {
-    if (model.iri) {
-      map[model.iri] = model;
+    for (const iri of model.iris) {
+      map[iri] = model;
     }
     return map;
   }, {} as {[index: string]: ModelT});
@@ -67,23 +67,8 @@ const indexModelsByKey = <ModelT extends Model>(
 
 const sortModelsArray = <ModelT extends Model>(
   models: readonly ModelT[]
-): readonly ModelT[] => {
-  const sortedModels = models.concat();
-  sortedModels.sort((left, right) => {
-    if (left.iri !== null) {
-      if (right.iri !== null) {
-        return left.iri.localeCompare(right.iri);
-      } else {
-        return 1; // URI > no URI
-      }
-    } else if (right.iri !== null) {
-      return -1; // no URI < URI
-    } else {
-      return 0;
-    }
-  });
-  return sortedModels;
-};
+): readonly ModelT[] =>
+  models.concat().sort((left, right) => left.key.localeCompare(right.key));
 
 const sortModelsMultimap = <ModelT extends Model>(models: {
   [index: string]: readonly ModelT[];
