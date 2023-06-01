@@ -170,9 +170,8 @@ export class CachingModelSet implements ModelSet {
   private get imagesByOriginalImageIriIndex(): {
     [index: string]: readonly Image[];
   } {
-    return indexModelsByValue(
-      this.images,
-      image => image.originalImageIri ?? image.iri
+    return indexModelsByValues(this.images, image =>
+      image.originalImageIri ? [image.originalImageIri] : image.iris
     );
   }
 

@@ -3,8 +3,6 @@ import {ModelSet} from "../ModelSet";
 import {Work} from "../Work";
 import {Model} from "../Model";
 import {SameAsWork} from "./SameAsWork";
-import {BlankNode, NamedNode} from "@rdfjs/types";
-import TermMap from "@rdfjs/term-map";
 import invariant from "ts-invariant";
 import {Person} from "../Person";
 import {SameAsPerson} from "./SameAsPerson";
@@ -26,35 +24,38 @@ export class SameAsModelReader extends ConcatenatingModelReader {
     private readSameAsModels<ModelT extends (Model & SameAsMixin<ModelT>)>(models: readonly ModelT[], sameAsModelFactory: {
         new(models: readonly ModelT[]): ModelT
     }): readonly ModelT[] {
-        const modelGroupsByModelIdentifier: TermMap<BlankNode | NamedNode, ModelT[]> = new TermMap();
-
         // Simple agglomerative algorithm for merging models that are sameAs each other
+        const modelGroupsByModelKey: {[index: string]: ModelT[]} = {};
+        const modelsByIri: {[index: string]: ModelT} = {};
 
         // Put each model into its own group
         for (const model of models) {
-            modelGroupsByModelIdentifier.set(model.identifier, [model]);
+            modelGroupsByModelKey[model.key] = [model];
+            for (const iri of model.iris) {
+                modelsByIri[iri] = model;
+            }
         }
 
         // For each (this, sameAs, that), "pull" that's model group into "this's" model group and adjust the pointers
         for (const model of models) {
-            const modelGroup = modelGroupsByModelIdentifier.get(model.identifier);
+            const modelGroup = modelGroupsByModelKey[model.key];
             invariant(typeof modelGroup !== "undefined");
             for (const sameAsModel of model.sameAs) {
-                const sameAsModelGroup = requireDefined(modelGroupsByModelIdentifier.get(sameAsModel.identifier));
+                const sameAsModelGroup = requireDefined(modelGroupsByModelKey[sameAsModel.key]);
                 for (const sameAsModelGroupModel of sameAsModelGroup) {
                     // If the sameAsModel is not already in modelGroup, pull it in
-                    if (!modelGroup.some(modelGroupModel => modelGroupModel.identifier.equals(sameAsModelGroupModel.identifier))) {
+                    if (!modelGroup.some(modelGroupModel => modelGroupModel.key === sameAsModelGroupModel.key)) {
                         modelGroup.push(sameAsModelGroupModel);
                     }
                     // Point sameAsModel to the model group it was pulled into
-                    modelGroupsByModelIdentifier.set(sameAsModelGroupModel.identifier, modelGroup);
+                    modelGroupsByModelKey[sameAsModelGroupModel.key] = modelGroup;
                 }
             }
         }
 
         const sameAsModels: ModelT[] = [];
         // Return unique model groups.
-        for (const uniqueModelGroup of new Set(modelGroupsByModelIdentifier.values())) {
+        for (const uniqueModelGroup of new Set(Object.values(modelGroupsByModelKey))) {
             invariant(uniqueModelGroup.length > 0);
             if (uniqueModelGroup.length === 1) {
                 // Model was not sameAs anything and nothing was sameAs it, pass it through as-is.

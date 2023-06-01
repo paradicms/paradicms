@@ -49,7 +49,7 @@ export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<
     propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
         const propertyValues: PropertyValue[] = [];
         for (const propertyValue of this.propertyValues) {
-            if (propertyValue.property.iri === propertyIri) {
+            if (propertyValue.property.iris.some(propertyValuePropertyIri => propertyValuePropertyIri === propertyIri)) {
                 propertyValues.push(propertyValue);
             }
         }
