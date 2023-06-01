@@ -7,6 +7,7 @@ import {ModelIdentifier} from "./ModelIdentifier";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 import {Memoize} from "typescript-memoize";
 import {modelIdentifiersToKey} from "./modelIdentifiersToKey";
+import {owl} from "@paradicms/vocabularies";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: Dataset;
@@ -44,5 +45,17 @@ export abstract class ResourceBackedModel extends Resource implements Model {
 
   override toString(): string {
     throw new EvalError("should never call toString()");
+  }
+
+  get sameAsIdentifiers(): readonly ModelIdentifier[] {
+    return this.filterAndMapObjects(owl.sameAs, term => {
+      switch (term.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          return term as ModelIdentifier;
+        default:
+          return null;
+      }
+    });
   }
 }

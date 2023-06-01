@@ -15,7 +15,7 @@ export interface Work
     ImagesMixin,
     RelationsMixin,
     RightsMixin,
-    SameAsMixin<Work> {
+    SameAsMixin {
   readonly agents: readonly WorkAgent[];
   readonly collections: readonly Collection[];
   readonly description: Text | null;

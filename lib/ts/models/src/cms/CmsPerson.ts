@@ -1,4 +1,4 @@
-import {contact, foaf, owl} from "@paradicms/vocabularies";
+import {contact, foaf} from "@paradicms/vocabularies";
 import {Person} from "../Person";
 import {CmsAgent} from "./CmsAgent";
 
@@ -9,14 +9,6 @@ export class CmsPerson extends CmsAgent implements Person {
 
   get givenName(): string | null {
     return this.findAndMapObject(foaf.givenName, this.mapStringObject);
-  }
-
-  get sameAs(): readonly Person[] {
-    return this.filterAndMapObjects(owl.sameAs, term =>
-      term.termType === "NamedNode"
-        ? this.modelSet.personByIriOptional(term.value)
-        : null
-    );
   }
 
   get sortName(): string | null {

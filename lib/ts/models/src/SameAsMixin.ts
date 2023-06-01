@@ -1,5 +1,5 @@
-import {Model} from "./Model";
+import {ModelIdentifier} from "./ModelIdentifier";
 
-export interface SameAsMixin<ModelT extends Model> {
-  readonly sameAs: readonly ModelT[];
+export interface SameAsMixin {
+  readonly sameAsIdentifiers: readonly ModelIdentifier[];
 }

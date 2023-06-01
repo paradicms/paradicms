@@ -21,7 +21,7 @@ export class SameAsModelReader extends ConcatenatingModelReader {
         return this.readSameAsModels(super.readWorks(kwds), SameAsWork);
     }
 
-    private readSameAsModels<ModelT extends (Model & SameAsMixin<ModelT>)>(models: readonly ModelT[], sameAsModelFactory: {
+    private readSameAsModels<ModelT extends (Model & SameAsMixin)>(models: readonly ModelT[], sameAsModelFactory: {
         new(models: readonly ModelT[]): ModelT
     }): readonly ModelT[] {
         // Simple agglomerative algorithm for merging models that are sameAs each other
@@ -40,7 +40,14 @@ export class SameAsModelReader extends ConcatenatingModelReader {
         for (const model of models) {
             const modelGroup = modelGroupsByModelKey[model.key];
             invariant(typeof modelGroup !== "undefined");
-            for (const sameAsModel of model.sameAs) {
+            for (const sameAsModelIdentifier of model.sameAsIdentifiers) {
+                if (sameAsModelIdentifier.termType !== "NamedNode") {
+                    continue;
+                }
+                const sameAsModel = modelsByIri[sameAsModelIdentifier.value];
+                if (!sameAsModel) {
+                    continue;
+                }
                 const sameAsModelGroup = requireDefined(modelGroupsByModelKey[sameAsModel.key]);
                 for (const sameAsModelGroupModel of sameAsModelGroup) {
                     // If the sameAsModel is not already in modelGroup, pull it in

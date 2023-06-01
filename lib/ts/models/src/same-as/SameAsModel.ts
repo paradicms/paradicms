@@ -105,4 +105,8 @@ export class SameAsModel<ModelT extends Model> implements Model {
       model.toRdf(addToDataset);
     }
   }
+
+  get sameAsIdentifiers(): readonly ModelIdentifier[] {
+    return [];
+  }
 }

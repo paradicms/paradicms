@@ -55,8 +55,4 @@ export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<
         }
         return propertyValues;
     }
-
-    get sameAs(): readonly Work[] {
-        return [];
-    }
 }

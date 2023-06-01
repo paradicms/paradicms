@@ -42,6 +42,7 @@ export interface ModelSet {
   toRdf(): Dataset;
   workByIri(workIri: string): Work;
   workByIriOptional(workIri: string): Work | null;
+  workByKey(workKey: string): Work;
   get workEvents(): readonly WorkEventUnion[];
   workEventsByWorkIri(workIri: string): readonly WorkEventUnion[];
   workEventByIri(workEventIri: string): WorkEventUnion;

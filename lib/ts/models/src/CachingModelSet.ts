@@ -365,12 +365,12 @@ export class CachingModelSet implements ModelSet {
     return this.modelByIri(this.worksByIriIndex, workIri);
   }
 
-  workByKey(workKey: string): Work {
-    return this.modelByKey(this.worksByKeyIndex, workKey);
-  }
-
   workByIriOptional(workIri: string): Work | null {
     return this.modelByIriOptional(this.worksByIriIndex, workIri);
+  }
+
+  workByKey(workKey: string): Work {
+    return this.modelByKey(this.worksByKeyIndex, workKey);
   }
 
   @Memoize()
