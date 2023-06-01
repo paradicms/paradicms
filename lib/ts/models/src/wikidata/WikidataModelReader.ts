@@ -18,9 +18,10 @@ import {wd, wdt} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WikidataPerson} from "./WikidataPerson";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {Dataset, NamedNode} from "@rdfjs/types";
 import {WikidataModel} from "./WikidataModel";
 import {WikidataWork} from "./WikidataWork";
+import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
 
 class WikidataEntities {
   static readonly HUMAN = wd["Q5"];
@@ -101,7 +102,7 @@ export class WikidataModelReader extends DatasetModelReader {
         continue;
       }
       this.checkModelGraph({
-        modelGraph: instanceQuad.graph as DefaultGraph | BlankNode | NamedNode,
+        modelGraph: instanceQuad.graph as ModelGraphIdentifier,
         modelIdentifier: instanceQuad.subject,
       });
       const wikibaseItem = this.wikibaseItemsByIri[instanceQuad.subject.value];

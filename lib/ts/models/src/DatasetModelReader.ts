@@ -1,5 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {Dataset, NamedNode} from "@rdfjs/types";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -91,13 +91,13 @@ export abstract class DatasetModelReader implements ModelReader {
         //   "duplicate named model instance: " + quad.subject.value
         // );
         this.checkModelGraph({
-          modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
+          modelGraph: quad.graph as ModelGraphIdentifier,
           modelIdentifier: quad.subject,
         });
         namedModels.push(
           new kwds.factory({
             dataset: this.dataset,
-            graph: quad.graph as DefaultGraph | BlankNode | NamedNode,
+            graph: quad.graph as ModelGraphIdentifier,
             identifier: quad.subject as NamedNode,
             modelSet: kwds.modelSet,
           })

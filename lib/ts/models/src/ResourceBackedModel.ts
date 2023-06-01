@@ -1,12 +1,14 @@
 import {Resource} from "@paradicms/rdf";
-import {BlankNode, Dataset, DatasetCore, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {Dataset, DatasetCore} from "@rdfjs/types";
 import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {ModelIdentifier} from "./ModelIdentifier";
+import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: Dataset;
-  readonly graph: BlankNode | DefaultGraph | NamedNode;
+  readonly graph: ModelGraphIdentifier;
   readonly modelSet: ModelSet;
 
   constructor(kwds: ResourceBackedModelParameters) {
@@ -16,7 +18,7 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     this.graph = kwds.graph;
   }
 
-  get identifiers(): readonly (BlankNode | NamedNode)[] {
+  get identifiers(): readonly ModelIdentifier[] {
     return [this.identifier];
   }
 

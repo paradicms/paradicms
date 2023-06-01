@@ -1,6 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cms, configuration, rdf} from "@paradicms/vocabularies";
-import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 import {AppConfiguration} from "../AppConfiguration";
 import {Collection} from "../Collection";
 import {Concept} from "../Concept";
@@ -31,6 +30,8 @@ import {CmsWork} from "./CmsWork";
 import {CmsWorkClosing} from "./CmsWorkClosing";
 import {CmsWorkCreation} from "./CmsWorkCreation";
 import {CmsWorkOpening} from "./CmsWorkOpening";
+import {ModelIdentifier} from "../ModelIdentifier";
+import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
 
 const workEventClassesByRdfType = (() => {
   const result: {
@@ -51,14 +52,14 @@ export class CmsModelReader extends DatasetModelReader {
       dataset: this.dataset,
     }).values()) {
       this.checkModelGraph({
-        modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
-        modelIdentifier: quad.subject as BlankNode | NamedNode,
+        modelGraph: quad.graph as ModelGraphIdentifier,
+        modelIdentifier: quad.subject as ModelIdentifier,
       });
       return new AppConfiguration({
         dataset: this.dataset,
         modelSet: kwds.modelSet,
-        graph: quad.graph as BlankNode | DefaultGraph | NamedNode,
-        identifier: quad.subject as BlankNode | NamedNode,
+        graph: quad.graph as ModelGraphIdentifier,
+        identifier: quad.subject as ModelIdentifier,
       });
     }
     return null;
@@ -166,8 +167,8 @@ export class CmsModelReader extends DatasetModelReader {
           continue;
         }
         this.checkModelGraph({
-          modelGraph: quad.graph as DefaultGraph | BlankNode | NamedNode,
-          modelIdentifier: quad.subject as BlankNode | NamedNode,
+          modelGraph: quad.graph as ModelGraphIdentifier,
+          modelIdentifier: quad.subject as ModelIdentifier,
         });
         const workEventClass =
           workEventClassesByRdfType[rdfTypeQuad.object.value];
@@ -175,9 +176,9 @@ export class CmsModelReader extends DatasetModelReader {
           workEvents.push(
             new workEventClass({
               dataset: this.dataset,
-              graph: quad.graph as BlankNode | DefaultGraph | NamedNode,
+              graph: quad.graph as ModelGraphIdentifier,
               modelSet: kwds.modelSet,
-              identifier: quad.subject as BlankNode | NamedNode,
+              identifier: quad.subject as ModelIdentifier,
             })
           );
           break;

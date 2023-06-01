@@ -1,10 +1,11 @@
 import {Model} from "../Model";
-import {BlankNode, DatasetCore, Literal, NamedNode} from "@rdfjs/types";
+import {DatasetCore, Literal} from "@rdfjs/types";
+import {ModelIdentifier} from "../ModelIdentifier";
 
 export class LiteralModel implements Model {
   constructor(protected readonly literal: Literal) {}
 
-  get identifiers(): readonly (BlankNode | NamedNode)[] {
+  get identifiers(): readonly ModelIdentifier[] {
     return [];
   }
 

@@ -1,8 +1,8 @@
-import {BlankNode, NamedNode} from "rdf-js";
 import {Model} from "../Model";
 import invariant from "ts-invariant";
 import TermMap from "@rdfjs/term-map";
 import {DatasetCore} from "@rdfjs/types";
+import {ModelIdentifier} from "../ModelIdentifier";
 
 export class SameAsModel<ModelT extends Model> implements Model {
   constructor(protected readonly models: readonly ModelT[]) {
@@ -25,10 +25,7 @@ export class SameAsModel<ModelT extends Model> implements Model {
   protected getBestLinkedModel<LinkedModelT extends Model>(
     getLinkedModel: (model: ModelT) => LinkedModelT | null
   ): LinkedModelT | null {
-    const linkedModels: TermMap<
-      BlankNode | NamedNode,
-      LinkedModelT
-    > = new TermMap();
+    const linkedModels: TermMap<ModelIdentifier, LinkedModelT> = new TermMap();
     for (const model of this.models) {
       const linkedModel = getLinkedModel(model);
       if (linkedModel) {
@@ -64,10 +61,7 @@ export class SameAsModel<ModelT extends Model> implements Model {
   protected getUniqueLinkedModels<LinkedModelT extends Model>(
     getLinkedModels: (model: ModelT) => readonly LinkedModelT[]
   ): readonly LinkedModelT[] {
-    const linkedModels: TermMap<
-      BlankNode | NamedNode,
-      LinkedModelT
-    > = new TermMap();
+    const linkedModels: TermMap<ModelIdentifier, LinkedModelT> = new TermMap();
     for (const model of this.models) {
       for (const linkedModel of getLinkedModels(model)) {
         linkedModels.set(linkedModel.identifier, linkedModel);
@@ -88,7 +82,7 @@ export class SameAsModel<ModelT extends Model> implements Model {
   //   return [...uniqueValues];
   // }
 
-  get identifiers(): readonly (BlankNode | NamedNode)[] {
+  get identifiers(): readonly ModelIdentifier[] {
     return this.models.flatMap(model => model.identifiers);
   }
 
