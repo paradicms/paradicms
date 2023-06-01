@@ -4,8 +4,9 @@ import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsNameMixin} from "./CmsNameMixin";
 import {CmsRelationsMixin} from "./CmsRelationsMixin";
 import {ResourceBackedModel} from "../ResourceBackedModel";
+import {AgentType} from "../AgentType";
 
-export class CmsAgent
+export abstract class CmsAgent
   extends Mixin(
     ResourceBackedModel,
     CmsImagesMixin,
@@ -16,6 +17,8 @@ export class CmsAgent
   get label(): string {
     return this.name;
   }
+
+  abstract readonly type: AgentType;
 
   get works() {
     return this.iri ? this.modelSet.agentWorks(this.iri) : [];
