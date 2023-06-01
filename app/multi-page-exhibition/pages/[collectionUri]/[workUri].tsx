@@ -129,15 +129,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
     readFile,
   });
 
-  const paths: {params: {collectionIri: string; workIri: string}}[] = [];
+  const paths: {params: {collectionKey: string; workKey: string}}[] = [];
 
   // Use first collection with works
   for (const collection of modelSet.collections) {
-    for (const work of modelSet.collectionWorks(collection.iri)) {
+    for (const work of collection.works) {
       paths.push({
         params: {
-          collectionIri: encodeFileName(collection.iri),
-          workIri: encodeFileName(work.iri),
+          collectionKey: encodeFileName(collection.key),
+          workKey: encodeFileName(work.key),
         },
       });
     }
@@ -155,23 +155,23 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const collectionIri = decodeFileName(params!.collectionIri as string);
-  const workIri = decodeFileName(params!.workIri as string);
+  const collectionKey = decodeFileName(params!.collectionKey as string);
+  const workKey = decodeFileName(params!.workKey as string);
 
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
-  const currentWork = completeModelSet.workByIri(workIri);
-  const collectionWorks = completeModelSet.collectionWorks(collectionIri);
+  const currentWork = completeModelSet.workByKey(workKey);
+  const collectionWorks = completeModelSet.collectionByKey(collectionKey).works;
 
   const currentWorkI = collectionWorks.findIndex(
-    work => work.iri === currentWork.iri
+    work => work.key === currentWork.key
   );
   if (currentWorkI === -1) {
     throw new EvalError(
-      `current work ${currentWork.iri} not found among collection ${collectionIri} works`
+      `current work ${currentWork.iri} not found among collection ${collectionKey} works`
     );
   }
   const nextWorkIri =
@@ -185,15 +185,15 @@ export const getStaticProps: GetStaticProps = async ({
   if (previousWorkIri) {
     workIris.push(previousWorkIri);
   }
-  workIris.push(workIri);
+  workIris.push(workKey);
   if (nextWorkIri) {
     workIris.push(nextWorkIri);
   }
 
   return {
     props: {
-      collectionIri,
-      currentWorkIri: workIri,
+      collectionIri: collectionKey,
+      currentWorkIri: workKey,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addWorks(

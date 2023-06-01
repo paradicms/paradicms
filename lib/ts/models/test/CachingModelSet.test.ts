@@ -12,7 +12,7 @@ describe("CachingModelSet", () => {
     for (const collection of collections) {
       expect(sut.collectionByIri(collection.iri)).to.eq(collection);
 
-      const collectionWorks = sut.collectionWorks(collection.iri);
+      const collectionWorks = sut.worksByCollectionKey(collection.iri);
       expect(collectionWorks).to.have.length(4);
       for (const work of collectionWorks) {
         expect(sut.workByIri(work.iri)).to.eq(work);
@@ -61,7 +61,7 @@ describe("CachingModelSet", () => {
       const creator = work.creators.find(creator => creator.iri !== null)!;
       expect(
         sut
-          .agentWorks(creator.iri!)
+          .worksByAgentIri(creator.iri!)
           .some(agentWork => agentWork.iri === work.iri)
       ).to.be.true;
       expect(work.license).to.not.be.null;

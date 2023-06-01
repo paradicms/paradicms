@@ -9,6 +9,10 @@ export class LiteralModel implements Model {
     return [];
   }
 
+  get key(): string {
+    throw new EvalError("not implemented");
+  }
+
   get iris(): readonly string[] {
     return [];
   }
@@ -18,6 +22,4 @@ export class LiteralModel implements Model {
   }
 
   toRdf(addToDataset: DatasetCore) {}
-
-  iri: string | null = null;
 }

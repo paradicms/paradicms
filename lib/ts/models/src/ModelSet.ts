@@ -16,9 +16,7 @@ import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelSet {
   agentByIri(agentIri: string): AgentUnion;
-  agentWorks(agentIri: string): readonly Work[];
   readonly appConfiguration: AppConfiguration | null;
-  collectionWorks(collectionIri: string): readonly Work[];
   readonly collections: readonly Collection[];
   collectionByIri(collectionIri: string): Collection;
   conceptByIri(conceptIri: string): Concept;
@@ -48,4 +46,6 @@ export interface ModelSet {
   workEventsByWorkIri(workIri: string): readonly WorkEventUnion[];
   workEventByIri(workEventIri: string): WorkEventUnion;
   readonly works: readonly Work[];
+  worksByAgentIri(agentIri: string): readonly Work[];
+  worksByCollectionKey(collectionKey: string): readonly Work[];
 }

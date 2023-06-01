@@ -40,6 +40,6 @@ export class CmsCollection extends Mixin(
   }
 
   get works(): readonly Work[] {
-    return this.modelSet.collectionWorks(this.iri);
+    return this.modelSet.worksByCollectionKey(this.key);
   }
 }

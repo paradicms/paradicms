@@ -1,6 +1,5 @@
 import {Model} from "../Model";
 import invariant from "ts-invariant";
-import TermMap from "@rdfjs/term-map";
 import {DatasetCore} from "@rdfjs/types";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {Memoize} from "typescript-memoize";
@@ -27,21 +26,19 @@ export class SameAsModel<ModelT extends Model> implements Model {
   protected getBestLinkedModel<LinkedModelT extends Model>(
     getLinkedModel: (model: ModelT) => LinkedModelT | null
   ): LinkedModelT | null {
-    const linkedModels: TermMap<ModelIdentifier, LinkedModelT> = new TermMap();
+    const linkedModelsByKey: {[index: string]: LinkedModelT} = {};
     for (const model of this.models) {
       const linkedModel = getLinkedModel(model);
       if (linkedModel) {
-        linkedModels.set(linkedModel.identifier, linkedModel);
+        linkedModelsByKey[linkedModel.key] = linkedModel;
       }
     }
-    switch (linkedModels.size) {
+    const linkedModels = Object.values(linkedModelsByKey);
+    switch (linkedModels.length) {
       case 0:
         return null;
       case 1:
-        for (const linkedModel of linkedModels.values()) {
-          return linkedModel;
-        }
-        throw new EvalError("should never hit");
+        return linkedModels[0];
       default:
         throw new EvalError("incompatible linked models");
     }
@@ -63,13 +60,13 @@ export class SameAsModel<ModelT extends Model> implements Model {
   protected getUniqueLinkedModels<LinkedModelT extends Model>(
     getLinkedModels: (model: ModelT) => readonly LinkedModelT[]
   ): readonly LinkedModelT[] {
-    const linkedModels: TermMap<ModelIdentifier, LinkedModelT> = new TermMap();
+    const linkedModelsByKey: {[index: string]: LinkedModelT} = {};
     for (const model of this.models) {
       for (const linkedModel of getLinkedModels(model)) {
-        linkedModels.set(linkedModel.identifier, linkedModel);
+        linkedModelsByKey[linkedModel.key] = linkedModel;
       }
     }
-    return [...linkedModels.values()];
+    return Object.values(linkedModelsByKey);
   }
 
   // protected getUniqueValues<T>(

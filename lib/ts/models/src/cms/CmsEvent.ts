@@ -44,7 +44,7 @@ export abstract class CmsEvent
 
     if (thisSortDate === null) {
       if (otherSortDate === null) {
-        return this.iri.localeCompare(other.iri);
+        return this.key.localeCompare(other.key);
       } else {
         return -1; // Events without dates are < events with dates.
       }

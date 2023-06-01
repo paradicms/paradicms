@@ -21,6 +21,6 @@ export abstract class CmsAgent
   abstract readonly type: AgentType;
 
   get works() {
-    return this.iri ? this.modelSet.agentWorks(this.iri) : [];
+    return this.iri ? this.modelSet.worksByAgentIri(this.iri) : [];
   }
 }

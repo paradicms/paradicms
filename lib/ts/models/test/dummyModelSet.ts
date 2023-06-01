@@ -39,13 +39,13 @@ export const dummyModelSet: ModelSet = {
   agentByIri(agentIri: string): AgentUnion {
     throw new EvalError("not implemented");
   },
-  agentWorks(agentIri: string): readonly Work[] {
+  worksByAgentIri(agentIri: string): readonly Work[] {
     throw new EvalError("not implemented");
   },
   collectionByIri(collectionIri: string): Collection {
     throw new EvalError("not implemented");
   },
-  collectionWorks(collectionIri: string): readonly Work[] {
+  worksByCollectionKey(collectionIri: string): readonly Work[] {
     throw new EvalError("not implemented");
   },
   conceptByIri(conceptIri: string): Concept {

@@ -48,7 +48,7 @@ describe("MemWorkQueryService", () => {
     expect(result.workAgentIris).to.not.be.empty;
     let haveAgentWorks = false;
     for (const agent of result.workAgentIris.map(workAgentIri => result.modelSet.agentByIri(workAgentIri))) {
-      const agentWorks = result.modelSet.agentWorks(agent.iri!);
+      const agentWorks = result.modelSet.worksByAgentIri(agent.iri!);
       haveAgentWorks ||= agentWorks.length > 0;
       for (const work of agentWorks) {
         expect(work.agents.some(workAgent => workAgent.agent.iri === agent.iri)).to.be.true;
