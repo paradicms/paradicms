@@ -3,6 +3,8 @@ import invariant from "ts-invariant";
 import TermMap from "@rdfjs/term-map";
 import {DatasetCore} from "@rdfjs/types";
 import {ModelIdentifier} from "../ModelIdentifier";
+import {Memoize} from "typescript-memoize";
+import {modelIdentifiersToKey} from "../modelIdentifiersToKey";
 
 export class SameAsModel<ModelT extends Model> implements Model {
   constructor(protected readonly models: readonly ModelT[]) {
@@ -86,6 +88,17 @@ export class SameAsModel<ModelT extends Model> implements Model {
     return this.models.flatMap(model => model.identifiers);
   }
 
+  @Memoize()
+  get key(): string {
+    return modelIdentifiersToKey(this.identifiers);
+  }
+
+  get iris(): readonly string[] {
+    return this.identifiers
+      .filter(identifier => identifier.termType === "NamedNode")
+      .map(identifier => identifier.value);
+  }
+
   protected get preferredModel(): ModelT {
     return this.models[0];
   }
@@ -93,15 +106,6 @@ export class SameAsModel<ModelT extends Model> implements Model {
   toRdf(addToDataset: DatasetCore) {
     for (const model of this.models) {
       model.toRdf(addToDataset);
-    }
-  }
-
-  get iri(): string | null {
-    switch (this.identifier.termType) {
-      case "BlankNode":
-        return null;
-      case "NamedNode":
-        return this.identifier.value;
     }
   }
 }
