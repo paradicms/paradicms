@@ -12,7 +12,7 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 export const selectThumbnail = <
   ImageT extends {
     readonly exactDimensions: ImageDimensions | null;
-    readonly iris: string;
+    readonly iris: readonly string[];
     readonly maxDimensions: ImageDimensions | null;
     readonly originalImageIri: string | null;
   }
