@@ -1,9 +1,10 @@
 import {requireNonNull} from "@paradicms/utilities";
 import {dcterms, skos} from "@paradicms/vocabularies";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {Mixin} from "ts-mixer";
 import {RightsStatement} from "../RightsStatement";
+import {CmsNamedModel} from "./CmsNamedModel";
 
-export class CmsRightsStatement extends ResourceBackedNamedModel
+export class CmsRightsStatement extends Mixin(CmsNamedModel)
   implements RightsStatement {
   get definition(): string | null {
     return this.findAndMapObject(skos.definition, this.mapStringObject);

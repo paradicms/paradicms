@@ -4,14 +4,13 @@ import {Memoize} from "typescript-memoize";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {Event} from "../Event";
 import {Location} from "../Location";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 import {mapCmsDateTimeDescriptionObject} from "./mapCmsDateTimeDescriptionObject";
 import {mapCmsLocationObject} from "./mapCmsLocationObject";
+import {CmsNamedModel} from "./CmsNamedModel";
 
-export abstract class CmsEvent
-  extends Mixin(ResourceBackedNamedModel, CmsDescriptionMixin)
+export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   implements Event {
   @Memoize()
   get displayDate(): string | null {

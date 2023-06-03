@@ -4,7 +4,6 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Collection} from "../Collection";
 import {PropertyValue} from "../PropertyValue";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {RightsMixin} from "../RightsMixin";
 import {Text} from "../Text";
 import {Work} from "../Work";
@@ -20,6 +19,7 @@ import {CmsTitleMixin} from "./CmsTitleMixin";
 import {mapCmsLocationObject} from "./mapCmsLocationObject";
 import {mapCmsTextObject} from "./mapCmsTextObject";
 import {Property} from "../Property";
+import {CmsNamedModel} from "./CmsNamedModel";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -56,7 +56,7 @@ const getRightsWorkAgents = (
 };
 
 export class CmsWork extends Mixin(
-  ResourceBackedNamedModel,
+  CmsNamedModel,
   CmsDescriptionMixin,
   CmsImagesMixin,
   CmsTitleMixin,

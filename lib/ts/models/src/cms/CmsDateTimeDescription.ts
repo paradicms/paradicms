@@ -1,10 +1,11 @@
-import { time, xsd } from "@paradicms/vocabularies";
-import { Literal } from "@rdfjs/types";
-import { DateTimeDescription } from "../DateTimeDescription";
-import { ResourceBackedModel } from "../ResourceBackedModel";
-import { dateTimeDescriptionToString } from "../dateTimeDescriptionToString";
+import {time, xsd} from "@paradicms/vocabularies";
+import {Literal} from "@rdfjs/types";
+import {Mixin} from "ts-mixer";
+import {DateTimeDescription} from "../DateTimeDescription";
+import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
+import {CmsModel} from "./CmsModel";
 
-export class CmsDateTimeDescription extends ResourceBackedModel implements DateTimeDescription {
+export class CmsDateTimeDescription extends Mixin(CmsModel) implements DateTimeDescription {
   /**
    * Day of the month, 1..31 inclusive.
    */

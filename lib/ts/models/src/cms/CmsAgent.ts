@@ -3,16 +3,11 @@ import {Agent} from "../Agent";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsNameMixin} from "./CmsNameMixin";
 import {CmsRelationsMixin} from "./CmsRelationsMixin";
-import {ResourceBackedModel} from "../ResourceBackedModel";
 import {AgentType} from "../AgentType";
+import {CmsModel} from "./CmsModel";
 
 export abstract class CmsAgent
-  extends Mixin(
-    ResourceBackedModel,
-    CmsImagesMixin,
-    CmsNameMixin,
-    CmsRelationsMixin
-  )
+  extends Mixin(CmsModel, CmsImagesMixin, CmsNameMixin, CmsRelationsMixin)
   implements Agent {
   get label(): string {
     return this.name;

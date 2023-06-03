@@ -5,12 +5,12 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Image} from "../Image";
 import {ImageDimensions} from "../ImageDimensions";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import {CmsRightsMixin} from "./CmsRightsMixin";
+import {CmsNamedModel} from "./CmsNamedModel";
 
-export class CmsImage extends Mixin(ResourceBackedNamedModel, CmsRightsMixin)
+export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
   implements Image {
   @Memoize()
   get depictsIri(): string {

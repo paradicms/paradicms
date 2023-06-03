@@ -1,9 +1,10 @@
 import {requireNonNull} from "@paradicms/utilities";
 import {wgs} from "@paradicms/vocabularies";
+import {Mixin} from "ts-mixer";
 import {Location} from "../Location";
-import {ResourceBackedModel} from "../ResourceBackedModel";
+import {CmsModel} from "./CmsModel";
 
-export class CmsLocation extends ResourceBackedModel implements Location {
+export class CmsLocation extends Mixin(CmsModel) implements Location {
   get lat(): number {
     return requireNonNull(this.findAndMapObject(wgs.lat, this.mapFloatObject));
   }

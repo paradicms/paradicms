@@ -1,16 +1,16 @@
 import {Mixin} from "ts-mixer";
 import {Collection} from "../Collection";
 import {Image} from "../Image";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {Work} from "../Work";
 import {selectThumbnail} from "../selectThumbnail";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
+import {CmsNamedModel} from "./CmsNamedModel";
 
 export class CmsCollection extends Mixin(
-  ResourceBackedNamedModel,
+  CmsNamedModel,
   CmsDescriptionMixin,
   CmsImagesMixin,
   CmsTitleMixin

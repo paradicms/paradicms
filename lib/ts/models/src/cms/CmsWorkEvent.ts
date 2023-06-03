@@ -1,5 +1,6 @@
 import {requireNonNull} from "@paradicms/utilities";
 import {cms} from "@paradicms/vocabularies";
+import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Work} from "../Work";
 import {WorkEvent} from "../WorkEvent";
@@ -7,7 +8,7 @@ import {WorkLocation} from "../WorkLocation";
 import {WorkLocationRole} from "../WorkLocationRole";
 import {CmsEvent} from "./CmsEvent";
 
-export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
+export abstract class CmsWorkEvent extends Mixin(CmsEvent) implements WorkEvent {
   get label(): string {
     return this.title;
   }

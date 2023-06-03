@@ -1,8 +1,9 @@
-import { WorkLocationRole } from "../WorkLocationRole";
-import { WorkOpening } from "../WorkOpening";
-import { CmsWorkEvent } from "./CmsWorkEvent";
+import {Mixin} from "ts-mixer";
+import {WorkLocationRole} from "../WorkLocationRole";
+import {WorkOpening} from "../WorkOpening";
+import {CmsWorkEvent} from "./CmsWorkEvent";
 
-export class CmsWorkOpening extends CmsWorkEvent implements  WorkOpening{
+export class CmsWorkOpening extends Mixin(CmsWorkEvent) implements  WorkOpening{
     protected override get workLocationRole(): WorkLocationRole {
         return "Opening";
     }
