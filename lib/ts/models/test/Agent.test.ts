@@ -30,7 +30,7 @@ describe("Agent", () => {
   //   expect(sut.wikipediaUrl).to.eq("http://en.wikipedia.org/wiki/Alan_Turing");
   // });
 
-  it("should get the agent's iri", () => {
-    expect(sut.iri).to.not.be.empty;
+  it("should get the agent's IRIs", () => {
+    expect(sut.iris).to.not.be.empty;
   });
 });

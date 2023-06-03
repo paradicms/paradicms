@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {AppConfiguration} from "../src";
 import {ModelSetFactory} from "../src/ModelSetFactory";
 import {testAppConfigurationData} from "./testAppConfigurationData";
+import {describe} from "mocha";
 
 describe("AppConfiguration", () => {
   let jsonLdAppConfiguration: AppConfiguration;
