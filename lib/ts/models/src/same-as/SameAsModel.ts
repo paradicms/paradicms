@@ -4,10 +4,31 @@ import {DatasetCore} from "@rdfjs/types";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {Memoize} from "typescript-memoize";
 import {modelIdentifiersToKey} from "../modelIdentifiersToKey";
+import {CmsNamedModel} from "../cms/CmsNamedModel";
+import {hasMixin} from "ts-mixer";
+import {CmsModel} from "../cms/CmsModel";
+
+const isCmsModel = (model: Model) => {
+  return hasMixin(model, CmsModel) || hasMixin(model, CmsNamedModel);
+};
 
 export class SameAsModel<ModelT extends Model> implements Model {
+  private readonly cmsModels: readonly ModelT[];
+  private readonly nonCmsModels: readonly ModelT[];
+
   constructor(protected readonly models: readonly ModelT[]) {
-    invariant(models.length > 0);
+    invariant(models.length > 1);
+    const cmsModels: ModelT[] = [];
+    const nonCmsModels: ModelT[] = [];
+    for (const model of models) {
+      if (isCmsModel(model)) {
+        cmsModels.push(model);
+      } else {
+        nonCmsModels.push(model);
+      }
+    }
+    this.cmsModels = cmsModels;
+    this.nonCmsModels = nonCmsModels;
   }
 
   protected getAllValues<T>(
@@ -40,15 +61,29 @@ export class SameAsModel<ModelT extends Model> implements Model {
       case 1:
         return linkedModels[0];
       default:
-        throw new EvalError("incompatible linked models");
+        const cmsModels = linkedModels.filter(linkedModel =>
+          isCmsModel(linkedModel)
+        );
+        switch (cmsModels.length) {
+          case 0:
+            throw new EvalError("incompatible, non-CMS models");
+          case 1:
+            return cmsModels[0];
+          default:
+            return cmsModels[0];
+          // throw new EvalError("multiple CMS models");
+        }
     }
   }
 
   protected getBestValue<T>(getValue: (model: ModelT) => T | null): T | null {
-    for (const model of this.models) {
-      const value = getValue(model);
-      if (value !== null) {
-        return value;
+    // Prefer a non-null value from a CMS model
+    for (const models of [this.cmsModels, this.nonCmsModels]) {
+      for (const model of models) {
+        const value = getValue(model);
+        if (value !== null) {
+          return value;
+        }
       }
     }
     return null;
