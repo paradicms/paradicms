@@ -9,11 +9,11 @@ export const modelIdentifiersToKey = (
 ) => {
   invariant(modelIdentifiers.length > 0);
   // Add extra characters at the beginning and end so it
-  const modelIdentifierValues = modelIdentifiers.map(
-    modelIdentifier => modelIdentifier.value
+  const modelIdentifierStrings = modelIdentifiers.map(
+    modelIdentifier => `${modelIdentifier.termType}-${modelIdentifier.value}`
   );
   invariant(
-    modelIdentifierValues.length == new Set(modelIdentifierValues).size
+    modelIdentifierStrings.length == new Set(modelIdentifierStrings).size
   );
-  return "|" + modelIdentifierValues.sort().join("|") + "|";
+  return "|" + modelIdentifierStrings.sort().join("|") + "|";
 };

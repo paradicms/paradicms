@@ -10,7 +10,7 @@ export class LiteralModel implements Model {
   }
 
   get key(): string {
-    throw new EvalError("not implemented");
+    return `|${this.literal.termType}-${this.literal.value}|`;
   }
 
   get iris(): readonly string[] {
