@@ -9,6 +9,9 @@ from rdflib.resource import Resource
 from paradicms_etl.extractors.wikidata_entity_extractor import WikidataEntityExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+    RightsStatementsDotOrgRightsStatements,
+)
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.namespaces import WDT
 
@@ -25,7 +28,7 @@ class WikidataEnricher:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
-        yielded_wikidata_license = False
+        yielded_wikidata_rights_models = False
         yielded_wikidata_entity_ids: Set[str] = set()
         for model in models:
             model_graph = Graph()
@@ -38,9 +41,10 @@ class WikidataEnricher:
                     continue
                 yield self.__get_wikidata_entity_with_related(wikidata_entity_id)
                 yielded_wikidata_entity_ids.add(wikidata_entity_id)
-                if not yielded_wikidata_license:
+                if not yielded_wikidata_rights_models:
                     yield CreativeCommonsLicenses.BY_SA_3_0
-                    yielded_wikidata_license = True
+                    yield RightsStatementsDotOrgRightsStatements.InC
+                    yielded_wikidata_rights_models = True
 
             yield model
 
