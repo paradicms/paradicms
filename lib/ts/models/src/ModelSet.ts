@@ -16,9 +16,11 @@ import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelSet {
   agentByIri(agentIri: string): AgentUnion;
+  agentByKey(agentKey: string): AgentUnion;
   readonly appConfiguration: AppConfiguration | null;
   readonly collections: readonly Collection[];
   collectionByIri(collectionIri: string): Collection;
+  collectionByKey(collectionKey: string): Collection;
   conceptByIri(conceptIri: string): Concept;
   conceptByIriOptional(conceptIri: string): Concept | null;
   readonly concepts: readonly Concept[];

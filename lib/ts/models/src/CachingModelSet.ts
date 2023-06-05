@@ -102,6 +102,16 @@ export class CachingModelSet implements ModelSet {
     throw new RangeError("no such agent " + agentIri);
   }
 
+  agentByKey(agentKey: string): AgentUnion {
+    for (const index of [this.organizationsByKeyIndex, this.peopleByKeyIndex]) {
+      const agent = index[agentKey];
+      if (agent) {
+        return agent;
+      }
+    }
+    throw new RangeError("no such agent " + agentKey);
+  }
+
   @Memoize()
   get appConfiguration(): AppConfiguration | null {
     return this.modelReader.readAppConfiguration({
@@ -118,9 +128,18 @@ export class CachingModelSet implements ModelSet {
     return this.modelByIri(this.collectionsByIriIndex, collectionIri);
   }
 
+  collectionByKey(collectionKey: string): Collection {
+    return this.modelByKey(this.collectionsByKeyIndex, collectionKey);
+  }
+
   @Memoize()
   private get collectionsByIriIndex(): {[index: string]: Collection} {
     return indexModelsByIri(this.collections);
+  }
+
+  @Memoize()
+  private get collectionsByKeyIndex(): {[index: string]: Collection} {
+    return indexModelsByKey(this.collections);
   }
 
   conceptByIri(conceptIri: string): Concept {
@@ -284,8 +303,18 @@ export class CachingModelSet implements ModelSet {
   }
 
   @Memoize()
+  private get organizationsByKeyIndex(): {[index: string]: Organization} {
+    return indexModelsByKey(this.namedOrganizations);
+  }
+
+  @Memoize()
   private get peopleByIriIndex(): {[index: string]: Person} {
     return indexModelsByIri(this.namedPeople);
+  }
+
+  @Memoize()
+  private get peopleByKeyIndex(): {[index: string]: Person} {
+    return indexModelsByKey(this.namedPeople);
   }
 
   personByIri(personIri: string): Person {

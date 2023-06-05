@@ -11,6 +11,7 @@ describe("CachingModelSet", () => {
     const collections = sut.collections;
     expect(collections).to.have.length(2);
     for (const collection of collections) {
+      expect(sut.collectionByKey(collection.key)).to.eq(collection);
       for (const collectionIri of collection.iris) {
         expect(sut.collectionByIri(collectionIri)).to.eq(collection);
       }
