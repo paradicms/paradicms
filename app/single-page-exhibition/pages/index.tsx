@@ -27,12 +27,12 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly collectionIri: string;
+  readonly collectionKey: string;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collectionIri,
+  collectionKey,
   modelSetString,
 }) => {
   const modelSet = useMemo(
@@ -42,7 +42,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const configuration = modelSet.appConfiguration;
 
   const pages: React.ReactElement[] = useMemo(() => {
-    const collection = modelSet.collectionByIri(collectionIri);
+    const collection = modelSet.collectionByKey(collectionKey);
     const pages: React.ReactElement[] = [];
 
     pages.push(
@@ -156,8 +156,8 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
+      collectionKey: collection.key,
       modelSetString: modelSet.toFastRdfString(),
-      collectionIri: collection.iri,
     },
   };
 };
