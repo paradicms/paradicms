@@ -33,40 +33,44 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly collectionIri: string;
-  readonly currentWorkIri: string;
+  readonly collectionKey: string;
+  readonly currentWorkKey: string;
   readonly modelSetString: string;
-  readonly nextWorkIri: string | null;
-  readonly previousWorkIri: string | null;
+  readonly nextWorkKey: string | null;
+  readonly previousWorkKey: string | null;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
-  collectionIri,
-  currentWorkIri,
+  collectionKey,
+  currentWorkKey,
   modelSetString,
-  nextWorkIri,
-  previousWorkIri,
+  nextWorkKey,
+  previousWorkKey,
 }) => {
   const modelSet = useMemo<ModelSet>(
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
-  const collection = modelSet.collectionByIri(collectionIri);
+  const collection = modelSet.collectionByKey(collectionKey);
   const configuration = modelSet.appConfiguration;
-  const currentWork = modelSet.workByIri(currentWorkIri);
+  const currentWork = modelSet.workByKey(currentWorkKey);
   const router = useRouter();
 
   const onGoToNextWork = useCallback(() => {
-    if (nextWorkIri) {
-      router.push(Hrefs.work({collectionIri, workIri: nextWorkIri}));
+    if (nextWorkKey) {
+      router.push(
+        Hrefs.work({collectionKey: collectionKey, workKey: nextWorkKey})
+      );
     }
-  }, [nextWorkIri, router]);
+  }, [nextWorkKey, router]);
 
   const onGoToPreviousWork = useCallback(() => {
-    if (previousWorkIri) {
-      router.push(Hrefs.work({collectionIri, workIri: previousWorkIri}));
+    if (previousWorkKey) {
+      router.push(
+        Hrefs.work({collectionKey: collectionKey, workKey: previousWorkKey})
+      );
     }
-  }, [previousWorkIri, router]);
+  }, [previousWorkKey, router]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -91,8 +95,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
       collection={collection}
       configuration={configuration}
       currentWork={currentWork}
-      nextWork={nextWorkIri ? {iri: nextWorkIri} : undefined}
-      previousWork={previousWorkIri ? {iri: previousWorkIri} : undefined}
+      nextWork={nextWorkKey ? {key: nextWorkKey} : undefined}
+      previousWork={previousWorkKey ? {key: previousWorkKey} : undefined}
     >
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
@@ -105,7 +109,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
               properties={modelSet.properties}
               renderWorkLocationsMap={workLocations => (
                 <WorkLocationsMap
-                  collectionIri={collectionIri}
+                  collectionIri={collectionKey}
                   workLocations={workLocations}
                 />
               )}
@@ -171,39 +175,39 @@ export const getStaticProps: GetStaticProps = async ({
   );
   if (currentWorkI === -1) {
     throw new EvalError(
-      `current work ${currentWork.iri} not found among collection ${collectionKey} works`
+      `current work ${currentWork.key} not found among collection ${collectionKey} works`
     );
   }
-  const nextWorkIri =
+  const nextWorkKey =
     currentWorkI + 1 < collectionWorks.length
-      ? collectionWorks[currentWorkI + 1].iri
+      ? collectionWorks[currentWorkI + 1].key
       : null;
-  const previousWorkIri =
-    currentWorkI > 0 ? collectionWorks[currentWorkI - 1].iri : null;
+  const previousWorkKey =
+    currentWorkI > 0 ? collectionWorks[currentWorkI - 1].key : null;
 
-  const workIris: string[] = [];
-  if (previousWorkIri) {
-    workIris.push(previousWorkIri);
+  const workKeys: string[] = [];
+  if (previousWorkKey) {
+    workKeys.push(previousWorkKey);
   }
-  workIris.push(workKey);
-  if (nextWorkIri) {
-    workIris.push(nextWorkIri);
+  workKeys.push(workKey);
+  if (nextWorkKey) {
+    workKeys.push(nextWorkKey);
   }
 
   return {
     props: {
-      collectionIri: collectionKey,
-      currentWorkIri: workKey,
+      collectionKey: collectionKey,
+      currentWorkKey: workKey,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addWorks(
-          workIris.map(workIri => completeModelSet.workByIri(workIri)),
+          workKeys.map(workKey => completeModelSet.workByKey(workKey)),
           workPageWorkJoinSelector
         )
         .build()
         .toFastRdfString(),
-      nextWorkIri,
-      previousWorkIri,
+      nextWorkKey: nextWorkKey,
+      previousWorkKey: previousWorkKey,
     },
   };
 };

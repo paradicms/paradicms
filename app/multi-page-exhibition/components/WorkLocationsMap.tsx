@@ -31,7 +31,10 @@ export const WorkLocationsMap: React.FunctionComponent<{
           eventHandlers={{
             click: () =>
               router.push(
-                Hrefs.work({collectionIri, workIri: workLocation.work.iri})
+                Hrefs.work({
+                  collectionKey: collectionIri,
+                  workKey: workLocation.work.iri,
+                })
               ),
           }}
           key={workLocationIndex}

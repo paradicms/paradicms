@@ -5,9 +5,9 @@ export class Hrefs {
     return "/";
   }
 
-  static work(kwds: {collectionIri: string; workIri: string}): string {
-    return `/${encodeFileName(kwds.collectionIri)}/${encodeFileName(
-      kwds.workIri
+  static work(kwds: {collectionKey: string; workKey: string}): string {
+    return `/${encodeFileName(kwds.collectionKey)}/${encodeFileName(
+      kwds.workKey
     )}/`;
   }
 }

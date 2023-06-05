@@ -369,7 +369,7 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
         <Row>
           <AgentsGallery
-            agents={getWorkAgentsResult.workAgentIris.map(workAgentIri =>
+            agents={getWorkAgentsResult.workAgentKeys.map(workAgentIri =>
               getWorkAgentsResult.modelSet.agentByIri(workAgentIri)
             )}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
