@@ -199,10 +199,10 @@ export class ModelSetBuilder {
       }
     } else {
       // Otherwise the model is likely a blank node in another model's graph, don't add it
-      console.debug(
-        "tried to add a model that belongs to another model's graph:",
-        model.key
-      );
+      // console.debug(
+      //   "tried to add a model that belongs to another model's graph:",
+      //   model.key
+      // );
     }
 
     return this;
