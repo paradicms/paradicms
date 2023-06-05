@@ -67,7 +67,6 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
 export class MemWorkQueryService implements WorkQueryService {
   private readonly index: Index;
   private readonly modelSet: ModelSet;
-  private readonly worksById: {[index: string]: Work} = {};
 
   constructor(kwds: {readonly modelSet: ModelSet}) {
     this.modelSet = kwds.modelSet;
@@ -83,7 +82,6 @@ export class MemWorkQueryService implements WorkQueryService {
         .map(property => property.iri);
     }
 
-    const worksById = this.worksById;
     this.index = lunr(function() {
       const propertyFieldNamesByIri: {[index: string]: string} = {};
       for (const propertyIri of searchablePropertyIris) {
@@ -93,8 +91,7 @@ export class MemWorkQueryService implements WorkQueryService {
       }
 
       for (const work of kwds.modelSet.works) {
-        const workId = work.iris.join(" ");
-        const doc: any = {id: workId};
+        const doc: any = {id: work.key};
         for (const propertyIri of searchablePropertyIris) {
           const fieldName = propertyFieldNamesByIri[propertyIri];
           if (!fieldName) {
@@ -107,7 +104,6 @@ export class MemWorkQueryService implements WorkQueryService {
           }
         }
         this.add(doc);
-        worksById[workId] = work;
       }
     });
   }
@@ -246,7 +242,7 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
-        // workAgentIris: slicedAgents.flatMap(agent => agent.iris),
+        workAgentKeys: slicedAgents.map(agent => agent.key),
       });
     });
   }
@@ -322,7 +318,9 @@ export class MemWorkQueryService implements WorkQueryService {
   private searchWorks(query: WorksQuery): readonly Work[] {
     if (query.text) {
       // Anything matching the fulltext search
-      return this.index.search(query.text).map(({ref}) => this.worksById[ref]!);
+      return this.index
+        .search(query.text)
+        .map(({ref}) => this.modelSet.workByKey(ref));
     } else {
       // All works
       return this.modelSet.works;

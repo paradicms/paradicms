@@ -12,7 +12,7 @@ export const summarizeWorkLocation = (
   },
   role: workLocation.role,
   work: {
+    key: work.key,
     label: work.label,
-    iri: work.iri,
   },
 });

@@ -1,4 +1,4 @@
-import {ModelSetFactory, WorkLocation} from "@paradicms/models";
+import {ModelSetFactory, Work, WorkLocation} from "@paradicms/models";
 import {
     StringPropertyValueFacet,
     StringPropertyValueFilter,
@@ -28,7 +28,7 @@ describe("MemWorkQueryService", () => {
     );
 
     expect(result.modelSet.works).to.be.empty;
-    expect(result.workAgentIris).not.to.be.empty;
+    expect(result.workAgentKeys).not.to.be.empty;
   });
 
   it("getNamedWorkAgents returns the works associated with an agent", async () => {
@@ -45,13 +45,16 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.workAgentIris).to.not.be.empty;
+    expect(result.workAgentKeys).to.not.be.empty;
     let haveAgentWorks = false;
-    for (const agent of result.workAgentIris.map(workAgentIri => result.modelSet.agentByIri(workAgentIri))) {
-      const agentWorks = result.modelSet.worksByAgentIri(agent.iri!);
+    for (const agent of result.workAgentKeys.map(workAgentKey => result.modelSet.agentByKey(workAgentKey))) {
+      const agentWorks: Work[] = [];
+      for (const agentIri of agent.iris) {
+          agentWorks.push(...result.modelSet.worksByAgentIri(agentIri));
+      }
       haveAgentWorks ||= agentWorks.length > 0;
       for (const work of agentWorks) {
-        expect(work.agents.some(workAgent => workAgent.agent.iri === agent.iri)).to.be.true;
+        expect(work.agents.some(workAgent => workAgent.agent.key === agent.key)).to.be.true;
       }
     }
     expect(haveAgentWorks).to.be.true;
@@ -161,7 +164,7 @@ describe("MemWorkQueryService", () => {
     expect(result.workLocations).to.have.length(expectedWorkLocations.length);
     for (const work of modelSet.works) {
       for (const expectedWorkLocation of expectedWorkLocations) {
-        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.iri === work.iri && resultWorkLocation.location.lat === expectedWorkLocation.location.lat && resultWorkLocation.location.long === expectedWorkLocation.location.long);
+        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.key === work.key && resultWorkLocation.location.lat === expectedWorkLocation.location.lat && resultWorkLocation.location.long === expectedWorkLocation.location.long);
         expect(resultWorkLocation).to.not.be.undefined;
         expect(resultWorkLocation!.work.label).to.eq(work.label);
       }
@@ -259,7 +262,7 @@ describe("MemWorkQueryService", () => {
   });
 
   it("getWorks sorts by label", async () => {
-    const allWorkIris = (await sut.getWorks(
+    const allWorkKeys = (await sut.getWorks(
         {
           offset: 0,
           limit: 4,
@@ -267,9 +270,9 @@ describe("MemWorkQueryService", () => {
         {
           filters: [],
         }
-    )).modelSet.works.map(work => work.iri);
+    )).modelSet.works.map(work => work.key);
 
-    const sortedWorkIris = (await sut.getWorks(
+    const sortedWorkKeys = (await sut.getWorks(
         {
           offset: 0,
           limit: 4,
@@ -281,8 +284,8 @@ describe("MemWorkQueryService", () => {
         {
           filters: [],
         }
-    )).modelSet.works.map(work => work.iri);
+    )).modelSet.works.map(work => work.key);
 
-    expect(sortedWorkIris).not.to.deep.eq(allWorkIris);
+    expect(sortedWorkKeys).not.to.deep.eq(allWorkKeys);
   });
 });
