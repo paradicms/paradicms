@@ -68,8 +68,8 @@ export const WorkPropertiesContainer: React.FunctionComponent<{
     workPropertiesByGroupIri,
   } = groupWorkProperties(workProperties);
 
-  const propertyGroupsByIri = propertyGroups.reduce((map, propertyGroup) => {
-    map[propertyGroup.iri] = propertyGroup;
+  const propertyGroupsByKey = propertyGroups.reduce((map, propertyGroup) => {
+    map[propertyGroup.key] = propertyGroup;
     return map;
   }, {} as {[index: string]: PropertyGroup});
 
@@ -77,16 +77,16 @@ export const WorkPropertiesContainer: React.FunctionComponent<{
     <Container className="px-2" fluid>
       {Object.keys(workPropertiesByGroupIri)
         .sort((left, right) =>
-          requireDefined(propertyGroupsByIri[left]).label.localeCompare(
-            requireDefined(propertyGroupsByIri[right]).label
+          requireDefined(propertyGroupsByKey[left]).label.localeCompare(
+            requireDefined(propertyGroupsByKey[right]).label
           )
         )
-        .map(propertyGroupIri => (
-          <Row key={propertyGroupIri}>
+        .map(propertyGroupKey => (
+          <Row key={propertyGroupKey}>
             <Col className="px-0" xs={12}>
               <WorkPropertiesTable
                 propertyGroupLabel={
-                  requireDefined(propertyGroupsByIri[propertyGroupIri]).label
+                  requireDefined(propertyGroupsByKey[propertyGroupKey]).label
                 }
                 workProperties={workProperties}
               />

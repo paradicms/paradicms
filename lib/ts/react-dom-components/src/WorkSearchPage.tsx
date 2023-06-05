@@ -41,6 +41,7 @@ import {createFilterControls} from "./createFilterControls";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
+import {Work} from "@paradicms/models";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
@@ -66,10 +67,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
   onChangeFilters: (filters: readonly FilterUnion[]) => void;
-  renderWorkLink: (
-    workIri: string,
-    children: React.ReactNode
-  ) => React.ReactElement;
+  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactElement;
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]
   ) => React.ReactElement;

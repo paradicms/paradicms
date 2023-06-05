@@ -1,6 +1,7 @@
 import {encodeFileName} from "@paradicms/next";
 import {WorksQuery} from "@paradicms/services";
 import * as qs from "qs";
+import {Work} from "@paradicms/models";
 
 export class Hrefs {
   static home(worksQuery?: WorksQuery): string {
@@ -15,7 +16,7 @@ export class Hrefs {
     );
   }
 
-  static work(workIri: string): string {
-    return `/work/${encodeFileName(workIri)}/`;
+  static work(work: Work): string {
+    return `/work/${encodeFileName(work.key)}/`;
   }
 }

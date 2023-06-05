@@ -68,8 +68,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
         objectsPerPage={configuration?.objectsPerPage ?? 10}
-        renderWorkLink={(workIri, children) => (
-          <Link href={Hrefs.work(workIri)}>
+        renderWorkLink={(work, children) => (
+          <Link href={Hrefs.work(work)}>
             <a>{children}</a>
           </Link>
         )}

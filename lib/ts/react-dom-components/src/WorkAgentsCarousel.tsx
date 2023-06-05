@@ -110,7 +110,7 @@ export const WorkAgentsCarousel: React.FunctionComponent<{
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
       {workAgents.map(workAgent => (
-        <CarouselItem key={workAgent.agent.iri}>
+        <CarouselItem key={workAgent.agent.key}>
           {renderWorkAgent(workAgent)}
         </CarouselItem>
       ))}
