@@ -180,10 +180,31 @@ export class ModelSetBuilder {
   }
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
-    if (model.iris.length > 0) {
-      model.toRdf(this.store);
+    if (model.identifiers.length === 0) {
+      return this;
     }
-    // Blank node models should be included in the triples of another model
+    const tempStore = new Store();
+    model.toRdf(tempStore);
+    const tempStoreGraphs = tempStore.getGraphs(null, null, null);
+    if (
+      tempStoreGraphs.every(tempStoreGraph =>
+        model.identifiers.some(modelIdentifier =>
+          modelIdentifier.equals(tempStoreGraph)
+        )
+      )
+    ) {
+      // If the graphs in a model's RDF correspond to the model's identifierss, then add the model
+      for (const quad of tempStore) {
+        this.store.add(quad);
+      }
+    } else {
+      // Otherwise the model is likely a blank node in another model's graph, don't add it
+      console.debug(
+        "tried to add a model that belongs to another model's graph:",
+        model.key
+      );
+    }
+
     return this;
   }
 
