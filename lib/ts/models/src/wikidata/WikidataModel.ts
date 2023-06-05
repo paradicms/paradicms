@@ -109,11 +109,12 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
     return this.prefLabel ?? this.identifier.value;
   }
 
-  get license(): License {
+  get license(): License | null {
+    return null;
     // All structured data from the main, Property, Lexeme, and EntitySchema namespaces is available under the Creative Commons CC0 License; text in the other namespaces is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.
-    return this.modelSet.licenseByIri(
-      "http://creativecommons.org/licenses/by-sa/3.0/"
-    );
+    // return this.modelSet.licenseByIri(
+    //   "http://creativecommons.org/licenses/by-sa/3.0/"
+    // );
   }
 
   get originalImages(): readonly Image[] {
@@ -129,17 +130,18 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   }
 
   get requiresAttribution(): boolean {
-    return this.license.requiresAttribution;
+    return this.license?.requiresAttribution ?? true;
   }
 
   get rightsHolders(): readonly AgentUnion[] {
     return [];
   }
 
-  get rightsStatement(): RightsStatement {
-    return this.modelSet.rightsStatementByIri(
-      "http://rightsstatements.org/vocab/InC/1.0/"
-    );
+  get rightsStatement(): RightsStatement | null {
+    return null;
+    // return this.modelSet.rightsStatementByIri(
+    //   "http://rightsstatements.org/vocab/InC/1.0/"
+    // );
   }
 
   get statements(): readonly WikibaseStatement[] {
