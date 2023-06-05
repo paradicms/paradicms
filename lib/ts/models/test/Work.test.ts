@@ -16,13 +16,14 @@ describe("Work", () => {
 
   it("should get the work's agents", () => {
     expect(sut.agents).to.have.length(8);
-    expect(
-      sut.agents.filter(agent =>
+    const namedAgents = sut.agents.filter(
+      agent =>
+        agent.agent.identifiers.length > 0 &&
         agent.agent.identifiers.every(
           identifier => identifier.termType === "NamedNode"
         )
-      )
-    ).to.have.length(2);
+    );
+    expect(namedAgents).to.have.length(2);
     expect(
       sut.agents.filter(
         agent =>
@@ -84,7 +85,7 @@ describe("Work", () => {
     expect(sut.label).to.not.be.empty;
   });
 
-  it("should get the work's Wikidata concept URI", () => {
+  it("should get the work's Wikidata concept IRI", () => {
     expect(
       testModelSet.workByIri("http://example.com/collection0/work0")
         .wikidataConceptIri

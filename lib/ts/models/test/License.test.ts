@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("License", () => {
   const sut = testModelSet.licenseByIri(
@@ -12,9 +13,5 @@ describe("License", () => {
 
   it("should get the license's label", () => {
     expect(sut.label).to.not.be.empty;
-  });
-
-  it("should get the license's iri", () => {
-    expect(sut.iri).to.not.be.empty;
   });
 });

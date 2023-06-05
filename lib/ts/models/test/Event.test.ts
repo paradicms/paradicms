@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {Event} from "../src/Event";
 import {Location} from "../src/Location";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Event", () => {
   const sut: Event = testModelSet.works[0].events[0];

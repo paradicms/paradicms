@@ -108,6 +108,9 @@ export const dummyModelSet: ModelSet = {
   workByIriOptional(workIri: string): Work | null {
     throw new EvalError("not implemented");
   },
+  workByKey(workKey: string): Work {
+    throw new EvalError("not implemented");
+  },
   workEventByIri(workEventIri: string): WorkEventUnion {
     throw new EvalError("not implemented");
   },

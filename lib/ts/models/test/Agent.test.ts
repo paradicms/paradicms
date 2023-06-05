@@ -20,7 +20,7 @@ describe("Agent", () => {
     expect(sut.page).to.not.be.empty;
   });
 
-  it("should get the agent's Wikidata concept URI", () => {
+  it("should get the agent's Wikidata concept IRI", () => {
     expect(
       testModelSet.personByIri("http://example.com/person0").wikidataConceptIri
     ).to.eq("http://www.wikidata.org/entity/Q7251");

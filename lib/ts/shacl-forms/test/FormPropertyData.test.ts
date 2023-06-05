@@ -43,7 +43,7 @@ describe("FormPropertyData", () => {
     expect(givenNameProperty.label).to.eq("given name");
   });
 
-  it("schema:birthDate should fall back to a URI label", () => {
+  it("schema:birthDate should fall back to a IRI label", () => {
     expect(birthDateProperty.label).to.eq(schema.birthDate.value);
   });
 

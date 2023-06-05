@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Property", () => {
   const sut = testModelSet.properties.find(property => property.filterable)!;

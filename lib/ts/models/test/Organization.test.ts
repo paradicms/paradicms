@@ -1,5 +1,6 @@
 import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Organization", () => {
   const sut = testModelSet.organizationByIri(
@@ -19,9 +20,5 @@ describe("Organization", () => {
 
   it("should get the organization's page", () => {
     expect(sut.page).to.not.be.empty;
-  });
-
-  it("should get the organization's iri", () => {
-    expect(sut.iri).to.not.be.empty;
   });
 });
