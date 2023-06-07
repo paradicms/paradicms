@@ -18,7 +18,16 @@ import {
 import {Dataset} from "@rdfjs/types";
 
 export const dummyModelSet: ModelSet = {
+  agentByIri(agentIri: string): AgentUnion {
+    throw new EvalError("not implemented");
+  },
+  agentByKey(agentKey: string): AgentUnion {
+    throw new EvalError("not implemented");
+  },
   get appConfiguration(): AppConfiguration | null {
+    throw new EvalError("not implemented");
+  },
+  collectionByKey(collectionKey: string): Collection {
     throw new EvalError("not implemented");
   },
   get collections(): readonly Collection[] {
@@ -27,25 +36,7 @@ export const dummyModelSet: ModelSet = {
   get concepts(): readonly Concept[] {
     throw new EvalError("not implemented");
   },
-  get properties(): readonly Property[] {
-    throw new EvalError("not implemented");
-  },
-  get propertyGroups(): readonly PropertyGroup[] {
-    throw new EvalError("not implemented");
-  },
-  get works(): readonly Work[] {
-    throw new EvalError("not implemented");
-  },
-  agentByIri(agentIri: string): AgentUnion {
-    throw new EvalError("not implemented");
-  },
-  worksByAgentIri(agentIri: string): readonly Work[] {
-    throw new EvalError("not implemented");
-  },
   collectionByIri(collectionIri: string): Collection {
-    throw new EvalError("not implemented");
-  },
-  worksByCollectionKey(collectionIri: string): readonly Work[] {
     throw new EvalError("not implemented");
   },
   conceptByIri(conceptIri: string): Concept {
@@ -79,6 +70,12 @@ export const dummyModelSet: ModelSet = {
     throw new EvalError("not implemented");
   },
   personByIriOptional(personIri: string): Person | null {
+    throw new EvalError("not implemented");
+  },
+  get propertyGroups(): readonly PropertyGroup[] {
+    throw new EvalError("not implemented");
+  },
+  get properties(): readonly Property[] {
     throw new EvalError("not implemented");
   },
   propertiesByGroupIri(propertyGroupIri: string): readonly Property[] {
@@ -118,6 +115,15 @@ export const dummyModelSet: ModelSet = {
     throw new EvalError("not implemented");
   },
   workEventsByWorkIri(workIri: string): readonly WorkEventUnion[] {
+    throw new EvalError("not implemented");
+  },
+  get works(): readonly Work[] {
+    throw new EvalError("not implemented");
+  },
+  worksByAgentIri(agentIri: string): readonly Work[] {
+    throw new EvalError("not implemented");
+  },
+  worksByCollectionKey(collectionIri: string): readonly Work[] {
     throw new EvalError("not implemented");
   },
 };
