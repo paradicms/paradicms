@@ -11,7 +11,7 @@ import {expect} from "chai";
 import {MemWorkQueryService} from "../src/MemWorkQueryService";
 
 describe("MemWorkQueryService", () => {
-  const modelSet = ModelSetFactory.fromDatasetCore(syntheticData);
+  const modelSet = ModelSetFactory.fromDataset(syntheticData);
   const sut = new MemWorkQueryService({
     modelSet
   });

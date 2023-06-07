@@ -12,7 +12,6 @@ import {PropertyGroup} from "./PropertyGroup";
 import TermMap from "@rdfjs/term-map";
 import TermSet from "@rdfjs/term-set";
 import {requireDefined} from "@paradicms/utilities";
-import {datasetCoreToDataset} from "@paradicms/rdf";
 
 export class ShapesGraph {
   readonly graphNode: BlankNode | DefaultGraph | NamedNode;
@@ -53,10 +52,6 @@ export class ShapesGraph {
 
   static fromDataset(dataset: DatasetCore): ShapesGraph {
     return new ShapesGraph(dataset);
-  }
-
-  static fromDatasetCore(datasetCore: DatasetCore): ShapesGraph {
-    return ShapesGraph.fromDataset(datasetCoreToDataset(datasetCore));
   }
 
   nodeShapeByNode(nodeShapeNode: BlankNode | NamedNode): NodeShape {

@@ -1,35 +1,26 @@
 import {expect} from "chai";
-import {
-  DataGraph,
-  FocusNode,
-  NodeShape,
-  PropertyShape,
-  ShapesGraph,
-} from "../src";
+import {FocusNode, NodeShape, PropertyShape, ShapesGraph} from "../src";
 import {ShaclProcessor} from "../src/ShaclProcessor";
-import {DataFactory, datasetCoreToDataset} from "@paradicms/rdf";
+import {DataFactory} from "@paradicms/rdf";
 import {schema} from "@paradicms/vocabularies";
 import {
   invalidTestDataGraph,
   testShapesGraph,
   validTestDataGraph,
 } from "@paradicms/test";
+import {describe} from "mocha";
 
 describe("ShaclProcessor", () => {
-  let invalidDataGraph: DataGraph;
-  let validDataGraph: DataGraph;
   let shapesGraph: ShapesGraph;
 
   before(() => {
-    invalidDataGraph = datasetCoreToDataset(invalidTestDataGraph);
-    validDataGraph = datasetCoreToDataset(validTestDataGraph);
-    shapesGraph = ShapesGraph.fromDatasetCore(testShapesGraph);
+    shapesGraph = ShapesGraph.fromDataset(testShapesGraph);
   });
 
   it("should get the node shapes for a given rdf:type", () => {
     const nodeShapes: NodeShape[] = [];
     new ShaclProcessor({
-      dataGraph: validDataGraph,
+      dataGraph: validTestDataGraph,
       shapesGraph,
     }).someRdfTypeNodeShapes(nodeShape => {
       nodeShapes.push(nodeShape);
@@ -41,7 +32,7 @@ describe("ShaclProcessor", () => {
   it("should get the property shapes for a focus node that has them", () => {
     const propertyShapes: PropertyShape[] = [];
     new ShaclProcessor({
-      dataGraph: validDataGraph,
+      dataGraph: validTestDataGraph,
       shapesGraph,
     }).someFocusNodePropertyShapes(propertyShape => {
       propertyShapes.push(propertyShape);
@@ -58,7 +49,7 @@ describe("ShaclProcessor", () => {
   it("should get no property shapes for a focus node that has none", () => {
     const propertyShapes: PropertyShape[] = [];
     new ShaclProcessor({
-      dataGraph: validDataGraph,
+      dataGraph: validTestDataGraph,
       shapesGraph,
     }).someFocusNodePropertyShapes(propertyShape => {
       propertyShapes.push(propertyShape);
@@ -73,7 +64,7 @@ describe("ShaclProcessor", () => {
     );
     const focusNodes: FocusNode[] = [];
     new ShaclProcessor({
-      dataGraph: validDataGraph,
+      dataGraph: validTestDataGraph,
       shapesGraph,
     }).someShapeFocusNodes(focusNode => {
       focusNodes.push(focusNode);
@@ -84,7 +75,7 @@ describe("ShaclProcessor", () => {
 
   it("should validate a valid data graph", () => {
     const validationReport = new ShaclProcessor({
-      dataGraph: validDataGraph,
+      dataGraph: validTestDataGraph,
       shapesGraph,
     }).validate();
     expect(validationReport.results).to.be.empty;
@@ -92,7 +83,7 @@ describe("ShaclProcessor", () => {
 
   it("should validate an invalid data graph", () => {
     const validationReport = new ShaclProcessor({
-      dataGraph: invalidDataGraph,
+      dataGraph: invalidTestDataGraph,
       shapesGraph,
     }).validate();
     expect(validationReport.results).to.have.length(2);

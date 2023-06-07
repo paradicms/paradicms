@@ -69,6 +69,6 @@ export const readModelSet = async (kwds: {
     }
   }
 
-  _modelSet = ModelSetFactory.fromDatasetCore(combinedStore);
+  _modelSet = ModelSetFactory.fromDataset(combinedStore);
   return _modelSet!;
 };

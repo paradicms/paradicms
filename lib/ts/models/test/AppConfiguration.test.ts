@@ -7,7 +7,7 @@ import {describe} from "mocha";
 describe("AppConfiguration", () => {
   let jsonLdAppConfiguration: AppConfiguration;
   before(async () => {
-    jsonLdAppConfiguration = ModelSetFactory.fromDatasetCore(
+    jsonLdAppConfiguration = ModelSetFactory.fromDataset(
       testAppConfigurationData
     ).appConfiguration!;
     expect(jsonLdAppConfiguration).to.not.be.null;

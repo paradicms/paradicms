@@ -158,14 +158,13 @@ export class CmsWork extends Mixin(
       dataset: this.dataset,
       modelSet: this.modelSet,
       property,
-      quads: this.dataset
+      quads: [...this.dataset
           .match(
               this.identifier,
               DataFactory.namedNode(propertyIri),
               null,
               this.graph
-          )
-          .toArray()
+          )]
     });
   }
 

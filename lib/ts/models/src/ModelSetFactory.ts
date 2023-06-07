@@ -1,4 +1,4 @@
-import {datasetCoreToDataset, fastRdfStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset} from "@paradicms/rdf";
 import {DatasetCore} from "@rdfjs/types";
 import {SameAsModelReader} from "./same-as/SameAsModelReader";
 import {CmsModelReader} from "./cms/CmsModelReader";
@@ -19,9 +19,5 @@ export class ModelSetFactory {
         new WikidataModelReader(dataset),
       ])
     );
-  }
-
-  static fromDatasetCore(datasetCore: DatasetCore): ModelSet {
-    return ModelSetFactory.fromDataset(datasetCoreToDataset(datasetCore));
   }
 }
