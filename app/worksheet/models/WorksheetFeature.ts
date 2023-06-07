@@ -20,12 +20,12 @@ export class WorksheetFeature {
           new WorksheetFeatureValue({
             definition: valueDefinition,
             initialState: initialState?.values?.find(
-              featureValueState => featureValueState.iri === valueDefinition.iri
+              featureValueState => featureValueState.uri === valueDefinition.iri
             ),
           })
       )
       .sort((left, right) =>
-        left.definition.prefLabel!.localeCompare(right.definition.prefLabel!)
+        left.definition.label.localeCompare(right.definition.label)
       );
   }
 
@@ -40,7 +40,7 @@ export class WorksheetFeature {
     return valueStates.length > 0 || this.text
       ? {
           text: this.text,
-          iri: this.definition.iri,
+          uri: this.definition.iri,
           values: valueStates.length > 0 ? valueStates : undefined,
         }
       : undefined;

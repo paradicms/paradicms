@@ -251,7 +251,7 @@ const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
                                     key={value.iri}
                                     style={{borderWidth: "4px !important"}}
                                   >
-                                    {value.definition.prefLabel}
+                                    {value.definition.label}
                                   </span>
                                 ))}
                             </td>

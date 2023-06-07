@@ -53,12 +53,12 @@ export class Worksheet {
             definition: featureSetDefinition,
             initialState: initialState.featureSets?.find(
               featureSetState =>
-                featureSetState.iri === featureSetDefinition.iri
+                featureSetState.uri === featureSetDefinition.iri
             ),
           })
       )
       .sort((left, right) =>
-        left.definition.label!.localeCompare(right.definition.label!)
+        left.definition.label.localeCompare(right.definition.label)
       );
     this.featureSetsByIri = this.featureSets.reduce((map, featureSet) => {
       map[featureSet.iri] = featureSet;
@@ -146,7 +146,7 @@ export class Worksheet {
 
     if (state.featureSets && state.featureSets.length > 0) {
       for (const featureSetState of state.featureSets) {
-        const featureSetIri = featureSetState.iri;
+        const featureSetIri = featureSetState.uri;
         const featureSet = this.featureSetsByIri[featureSetIri];
 
         if (!featureSet) {

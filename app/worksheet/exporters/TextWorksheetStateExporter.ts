@@ -15,7 +15,7 @@ export class TextWorksheetStateExporter
       }
       for (const featureSetState of worksheetState.featureSets ?? []) {
         const featureSetDefinition = worksheetDefinition.featureSetByIriOptional(
-          featureSetState.iri
+          featureSetState.uri
         );
         if (!featureSetDefinition) {
           continue;
@@ -24,16 +24,13 @@ export class TextWorksheetStateExporter
         for (const featureState of featureSetState.features ?? []) {
           const clause = (featureState.values ?? [])
             .filter(value => value.selected)
-            .map(value => value.iri)
+            .map(value => value.uri)
             .flatMap(selectedFeatureValueIri => {
               const featureValueDefinition = worksheetDefinition.featureValueByIriOptional(
                 selectedFeatureValueIri
               );
               if (featureValueDefinition) {
-                return [
-                  featureValueDefinition.prefLabel ??
-                    featureValueDefinition.value.value,
-                ];
+                return [featureValueDefinition.label];
               } else {
                 return [];
               }

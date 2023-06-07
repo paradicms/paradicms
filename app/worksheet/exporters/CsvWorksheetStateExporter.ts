@@ -66,7 +66,7 @@ export class CsvWorksheetStateExporter
       for (const featureSetState of worksheetState.featureSets ?? []) {
         const featureSetDefinition = worksheetDefinition.featureSets.find(
           featureSetDefinition =>
-            featureSetDefinition.iri === featureSetState.iri
+            featureSetDefinition.iri === featureSetState.uri
         );
         if (featureSetDefinition) {
           workType.push(featureSetDefinition.label);
@@ -82,13 +82,13 @@ export class CsvWorksheetStateExporter
             continue;
           }
 
-          const header = featureHeader(featureSetState.iri, featureState.iri);
+          const header = featureHeader(featureSetState.uri, featureState.uri);
           if (!header) {
             console.warn(
               "feature set + feature not present in definition? skipping: " +
-                featureSetState.iri +
+                featureSetState.uri +
                 "|" +
-                featureState.iri
+                featureState.uri
             );
             continue;
           }
@@ -97,9 +97,9 @@ export class CsvWorksheetStateExporter
           if (dataRowIndex < 0) {
             console.warn(
               "feature set + feature not present in definition? skipping: " +
-                featureSetState.iri +
+                featureSetState.uri +
                 "|" +
-                featureState.iri
+                featureState.uri
             );
             continue;
           }
@@ -110,12 +110,12 @@ export class CsvWorksheetStateExporter
               continue;
             }
             const featureValueDefinition = worksheetDefinition.featureValueByIriOptional(
-              featureValueState.iri
+              featureValueState.uri
             );
             if (!featureValueDefinition) {
               console.warn(
                 "feature value not present in definition? skipping: " +
-                  featureValueState.iri
+                  featureValueState.uri
               );
               continue;
             }

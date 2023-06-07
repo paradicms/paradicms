@@ -21,7 +21,7 @@ export class WorksheetFeatureSet {
           new WorksheetFeature({
             definition: featureDefinition,
             initialState: initialState?.features?.find(
-              featureState => featureState.iri === featureDefinition.iri
+              featureState => featureState.uri === featureDefinition.iri
             ),
           })
       )
@@ -59,7 +59,7 @@ export class WorksheetFeatureSet {
     }
     return {
       features: featureStates.length > 0 ? featureStates : undefined,
-      iri: this.definition.iri,
+      uri: this.definition.iri,
     };
   }
 

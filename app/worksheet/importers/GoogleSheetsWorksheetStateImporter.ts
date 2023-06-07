@@ -57,12 +57,12 @@ export class GoogleSheetsWorksheetStateImporter {
           }
           const {featureSetIri, featureIri} = headerColumn;
           let featureSetState = featureSetStates.find(
-            featureSetState => featureSetState.iri === featureSetIri
+            featureSetState => featureSetState.uri === featureSetIri
           );
           if (!featureSetState) {
             featureSetState = {
               features: undefined,
-              iri: featureSetIri,
+              uri: featureSetIri,
             };
             featureSetStates.push(featureSetState);
           }
@@ -73,12 +73,12 @@ export class GoogleSheetsWorksheetStateImporter {
           }
 
           let featureState = featureSetState.features?.find(
-            feature => feature.iri === featureIri
+            feature => feature.uri === featureIri
           );
           if (!featureState) {
             featureState = {
               text: undefined,
-              iri: featureIri,
+              uri: featureIri,
               values: undefined,
             };
             if (featureSetState.features) {
@@ -91,14 +91,14 @@ export class GoogleSheetsWorksheetStateImporter {
           const featureValueIris = dataColumn.split(";");
           for (const featureValueIri of featureValueIris) {
             let featureValueState = featureState.values?.find(
-              featureValue => featureValue.iri === featureValueIri
+              featureValue => featureValue.uri === featureValueIri
             );
             if (featureValueState) {
               continue;
             }
             featureValueState = {
               selected: true,
-              iri: featureValueIri,
+              uri: featureValueIri,
             };
             if (featureState.values) {
               featureState.values.push(featureValueState);

@@ -49,13 +49,13 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
                     dispatchFeatureSet();
                   }}
                   options={feature.values.map(value => ({
-                    label: value.definition.prefLabel,
+                    label: value.definition.label,
                     value: value.iri,
                   }))}
                   value={feature.values
                     .filter(value => value.selected)
                     .map(value => ({
-                      label: value.definition.prefLabel,
+                      label: value.definition.label,
                       value: value.iri,
                     }))}
                 />
@@ -214,7 +214,10 @@ export const getStaticProps: GetStaticProps = async ({
         // Add other property groups in order to determine where this page is in the workflow and how many more pages there ares
         .addPropertyGroups(
           completeModelSet.propertyGroups.filter(
-            propertyGroup => propertyGroup.iri !== featureSetIri
+            propertyGroup =>
+              !propertyGroup.iris.some(
+                propertyGroupIri => propertyGroupIri === featureSetIri
+              )
           ),
           {
             properties: {

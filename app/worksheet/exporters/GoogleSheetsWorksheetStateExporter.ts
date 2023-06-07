@@ -69,7 +69,7 @@ export class GoogleSheetsWorksheetStateExporter
         } = GoogleSheetsWorksheetStateExporter.parseHeader(header);
         const featureSetState = worksheetState.featureSets?.find(
           existingFeatureSetState =>
-            existingFeatureSetState.iri === featureSetIri
+            existingFeatureSetState.uri === featureSetIri
         );
         if (!featureSetState) {
           dataRow.push("");
@@ -81,7 +81,7 @@ export class GoogleSheetsWorksheetStateExporter
           continue;
         }
         const featureState = featureSetState.features?.find(
-          existingFeatureState => existingFeatureState.iri === featureIri
+          existingFeatureState => existingFeatureState.uri === featureIri
         );
         if (!featureState) {
           dataRow.push("");
@@ -89,7 +89,7 @@ export class GoogleSheetsWorksheetStateExporter
         }
         const selectedFeatureValueIris = (featureState.values ?? [])
           .filter(value => value.selected)
-          .map(value => value.iri);
+          .map(value => value.uri);
         if (selectedFeatureValueIris.length === 0) {
           dataRow.push("");
           continue;

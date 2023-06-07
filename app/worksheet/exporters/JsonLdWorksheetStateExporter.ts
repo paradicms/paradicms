@@ -45,12 +45,12 @@ export class JsonLdWorksheetStateExporter
       for (const featureState of featureSetState.features ?? []) {
         const selectedFeatureValueIris = (featureState.values ?? [])
           .filter(value => value.selected)
-          .map(value => value.iri);
+          .map(value => value.uri);
 
         if (selectedFeatureValueIris.length === 0) {
           continue;
         }
-        const featureStateKey = featureState.iri;
+        const featureStateKey = featureState.uri;
         context[featureStateKey] = {"@type": "@id"};
         json[featureStateKey] = selectedFeatureValueIris;
       }

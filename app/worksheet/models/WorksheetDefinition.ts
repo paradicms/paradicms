@@ -32,10 +32,15 @@ export class WorksheetDefinition {
   featureValueByIriOptional(
     iri: string
   ): WorksheetFeatureValueDefinition | null {
-    return this.modelSet.conceptByIriOptional(iri);
+    return (
+      this.featureValues.find(featureValue => featureValue.iri === iri) ?? null
+    );
   }
 
+  @Memoize()
   get featureValues(): readonly WorksheetFeatureValueDefinition[] {
-    return this.modelSet.concepts;
+    return this.modelSet.concepts.map(
+      concept => new WorksheetFeatureValueDefinition(concept)
+    );
   }
 }

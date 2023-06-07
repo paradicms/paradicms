@@ -207,7 +207,7 @@ const ItemsGallery: React.FunctionComponent<{
         );
         let thumbnailSrc: string;
         if (thumbnail) {
-          thumbnailSrc = thumbnail.src ?? thumbnail.iri;
+          thumbnailSrc = thumbnail.src ?? thumbnail.iris[0];
         } else {
           thumbnailSrc = imagePlaceholderSrc(
             galleryThumbnailSelector.targetDimensions

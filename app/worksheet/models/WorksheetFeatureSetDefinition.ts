@@ -1,6 +1,7 @@
 import {PropertyGroup} from "@paradicms/models";
 import {Memoize} from "typescript-memoize";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
+import invariant from "ts-invariant";
 
 export class WorksheetFeatureSetDefinition {
   constructor(private readonly propertyGroup: PropertyGroup) {}
@@ -24,11 +25,15 @@ export class WorksheetFeatureSetDefinition {
     return this.propertyGroup.images;
   }
 
-  get label() {
-    return this.propertyGroup.label;
+  get iri() {
+    invariant(
+      this.propertyGroup.iris.length === 1,
+      "PropertyGroup has multiple IRIs"
+    );
+    return this.propertyGroup.iris[0];
   }
 
-  get iri() {
-    return this.propertyGroup.iri;
+  get label() {
+    return this.propertyGroup.label;
   }
 }
