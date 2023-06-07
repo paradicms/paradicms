@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {Text} from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -21,15 +22,16 @@ describe("Collection", () => {
     expect(sut.label).to.eq(sut.label);
   });
 
-  it("should get the collection's URI", () => {
-    expect(sut.uri).to.eq(sut.uri);
-  });
-
   it("should get the collection's thumbnail", () => {
     const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
     expect(thumbnail).to.not.be.null;
-    expect(thumbnail!.depictsUri).to.not.eq(sut.uri);
-    expect(sut.works.some(work => work.uri === thumbnail!.depictsUri)).to.be
-      .true;
+    expect(
+      sut.iris.some(collectionIri => collectionIri === thumbnail!.depictsIri)
+    ).to.be.false;
+    expect(
+      sut.works.some(work =>
+        work.iris.some(workIri => workIri === thumbnail!.depictsIri)
+      )
+    ).to.be.true;
   });
 });

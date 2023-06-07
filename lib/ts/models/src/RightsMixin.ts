@@ -4,7 +4,7 @@ import {ContributorsMixin} from "./ContributorsMixin";
 import {CreatorsMixin} from "./CreatorsMixin";
 import {AgentUnion} from "./AgentUnion";
 
-export interface RightsMixin extends ContributorsMixin, CreatorsMixin{
+export interface RightsMixin extends ContributorsMixin, CreatorsMixin {
   get license(): License | null;
   get requiresAttribution(): boolean;
   get rightsHolders(): readonly AgentUnion[];

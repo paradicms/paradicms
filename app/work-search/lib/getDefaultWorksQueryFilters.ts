@@ -4,8 +4,8 @@ import {defaultProperties} from "@paradicms/models";
 export const getDefaultWorksQueryFilters = (
   properties: readonly {
     readonly filterable: boolean;
+    readonly iris: readonly string[];
     readonly label: string;
-    readonly uri: string;
   }[]
 ): readonly FilterUnion[] => {
   if (properties.length === 0) {
@@ -17,28 +17,32 @@ export const getDefaultWorksQueryFilters = (
     if (!property.filterable) {
       continue;
     }
+    if (property.iris.length !== 1) {
+      throw new EvalError("not implemented: properties with 0 or 2+ IRIs");
+    }
+    const propertyIri = property.iris[0];
     if (
       filters.some(
         filter =>
           filter.type === "StringPropertyValue" &&
-          (filter as StringPropertyValueFilter).propertyUri === property.uri
+          (filter as StringPropertyValueFilter).propertyIri === propertyIri
       )
     ) {
       // console.debug(
       //   "filterable property",
-      //   propertyConfiguration.uri,
+      //   propertyConfiguration.iri,
       //   "already has a search filter, skipping"
       // );
       continue;
     }
     // console.debug(
     //   "filterable property",
-    //   propertyConfiguration.uri,
+    //   propertyConfiguration.iri,
     //   "does not have search filter, adding"
     // );
     filters.push({
       label: property.label,
-      propertyUri: property.uri,
+      propertyIri,
       type: "StringPropertyValue",
     } as StringPropertyValueFilter);
   }

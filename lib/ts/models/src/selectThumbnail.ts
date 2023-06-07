@@ -12,9 +12,9 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 export const selectThumbnail = <
   ImageT extends {
     readonly exactDimensions: ImageDimensions | null;
+    readonly iris: readonly string[];
     readonly maxDimensions: ImageDimensions | null;
-    readonly originalImageUri: string | null;
-    readonly uri: string;
+    readonly originalImageIri: string | null;
   }
 >(
   images: readonly ImageT[],
@@ -27,21 +27,24 @@ export const selectThumbnail = <
 
   const {minDimensions, maxDimensions, targetDimensions} = selector;
 
-  const imagesByOriginalImageUri: {[index: string]: ImageT[]} = {};
+  const imagesByOriginalImageIri: {[index: string]: ImageT[]} = {};
   for (const image of images) {
-    const originalImageUri = image.originalImageUri ?? image.uri;
-    (
-      imagesByOriginalImageUri[originalImageUri] ||
-      (imagesByOriginalImageUri[originalImageUri] = [])
-    ).push(image);
+    for (const originalImageIri of image.originalImageIri
+      ? [image.originalImageIri]
+      : image.iris) {
+      (
+        imagesByOriginalImageIri[originalImageIri] ||
+        (imagesByOriginalImageIri[originalImageIri] = [])
+      ).push(image);
+    }
   }
 
-  for (const originalImageUri of Object.keys(imagesByOriginalImageUri)) {
+  for (const originalImageIri of Object.keys(imagesByOriginalImageIri)) {
     const candidateImages: {
       image: ImageT;
       imageDimensions: ImageDimensions;
     }[] = [];
-    for (const image of imagesByOriginalImageUri[originalImageUri]) {
+    for (const image of imagesByOriginalImageIri[originalImageIri]) {
       let imageDimensions: ImageDimensions;
       if (image.exactDimensions) {
         imageDimensions = image.exactDimensions;

@@ -25,13 +25,13 @@ export const visitFilter = <T>(
       const facet: StringPropertyValueFacet | undefined = facets?.find(
         facet =>
           facet.type === "StringPropertyValue" &&
-          (facet as StringPropertyValueFacet).propertyUri ===
-            concreteFilter.propertyUri
+          (facet as StringPropertyValueFacet).propertyIri ===
+            concreteFilter.propertyIri
       ) as StringPropertyValueFacet | undefined;
       if (!facet && facets) {
         console.warn(
           "no matching facet for filter on property",
-          concreteFilter.propertyUri
+          concreteFilter.propertyIri
         );
       }
       return visitor.visitStringPropertyValueFilter(concreteFilter, facet);

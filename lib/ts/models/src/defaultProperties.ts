@@ -2,44 +2,44 @@ import {dcterms} from "@paradicms/vocabularies";
 
 export const defaultProperties: readonly {
   readonly filterable: boolean;
+  readonly iris: readonly string[];
   readonly label: string;
   readonly searchable: boolean;
-  readonly uri: string;
 }[] = [
   {
     filterable: true,
+    iris: [dcterms.creator.value],
     label: "Creator",
     searchable: false,
-    uri: dcterms.creator.value,
   },
   {
     filterable: false,
+    iris: [dcterms.description.value],
     label: "Description",
     searchable: true,
-    uri: dcterms.description.value,
   },
   {
     filterable: true,
+    iris: [dcterms.medium.value],
     label: "Medium",
     searchable: false,
-    uri: dcterms.medium.value,
   },
   {
     filterable: true,
+    iris: [dcterms.subject.value],
     label: "Subject",
     searchable: false,
-    uri: dcterms.subject.value,
   },
   {
     filterable: false,
+    iris: [dcterms.title.value],
     label: "Title",
     searchable: true,
-    uri: dcterms.title.value,
   },
   {
     filterable: true,
+    iris: [dcterms.type.value],
     label: "Type",
     searchable: false,
-    uri: dcterms.type.value,
   },
 ];

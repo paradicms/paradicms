@@ -3,12 +3,7 @@ import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector
 
 export const workPageWorkJoinSelector: WorkJoinSelector = {
   agents: {
-    thumbnail: {
-      agents: {},
-      license: true,
-      rightsStatement: true,
-      ...imagesCarouselThumbnailSelector,
-    },
+    thumbnail: imagesCarouselThumbnailSelector,
   },
   events: {
     location: true,

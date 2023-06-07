@@ -3,5 +3,5 @@ import {JsonPrimitiveType} from "./JsonPrimitiveType";
 
 export interface PropertyValueFacet<T extends JsonPrimitiveType>
   extends ValueFacet<T> {
-  readonly propertyUri: string;
+  readonly propertyIri: string;
 }

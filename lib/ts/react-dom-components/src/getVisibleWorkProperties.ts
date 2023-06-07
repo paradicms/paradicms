@@ -11,14 +11,16 @@ export const getVisibleWorkProperties = (kwds: {
     if (property.hidden) {
       continue;
     }
-    const values = work.propertyValuesByPropertyUri(property.uri);
-    if (values.length === 0) {
-      continue;
+    for (const propertyIri of property.iris) {
+      const values = work.propertyValuesByPropertyIri(propertyIri);
+      if (values.length === 0) {
+        continue;
+      }
+      workProperties.push({
+        property,
+        values,
+      });
     }
-    workProperties.push({
-      property,
-      values,
-    });
   }
   return workProperties;
 };

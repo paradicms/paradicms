@@ -32,7 +32,7 @@ export const createFilterControl = (kwds: {
         if (facet.values.length + (facet.unknownCount ? 1 : 0) <= 1) {
           // console.debug(
           //   "facet for property",
-          //   concreteFilter.propertyUri,
+          //   concreteFilter.propertyIri,
           //   "has <= 1 values, eliding"
           // );
           return null;

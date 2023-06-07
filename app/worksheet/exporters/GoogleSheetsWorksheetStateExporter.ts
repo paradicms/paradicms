@@ -9,19 +9,19 @@ export class GoogleSheetsWorksheetStateExporter
   static parseHeader(
     header: string
   ): {
-    featureSetUri: string;
-    featureUri?: string;
+    featureSetIri: string;
+    featureIri?: string;
   } {
     const split = header.split("|", 2);
     switch (split.length) {
       case 1:
         return {
-          featureSetUri: split[0],
+          featureSetIri: split[0],
         };
       case 2:
         return {
-          featureSetUri: split[0],
-          featureUri: split[1],
+          featureSetIri: split[0],
+          featureIri: split[1],
         };
       default:
         throw new RangeError();
@@ -38,11 +38,11 @@ export class GoogleSheetsWorksheetStateExporter
     // Output all feature sets and values so they're represented in the CSV.
     for (const featureSetDefinition of worksheetDefinition.featureSets) {
       // Column for indicating the feature set is selecting
-      headerRow.push(featureSetDefinition.uri);
+      headerRow.push(featureSetDefinition.iri);
       // Columns for each (feature set, feature) combination
       // The cells under this column contain a list of selected feature values
-      for (const featureUri of featureSetDefinition.featureUris) {
-        headerRow.push(featureSetDefinition.uri + "|" + featureUri);
+      for (const featureIri of featureSetDefinition.featureIris) {
+        headerRow.push(featureSetDefinition.iri + "|" + featureIri);
       }
     }
     rows.push(headerRow);
@@ -64,37 +64,37 @@ export class GoogleSheetsWorksheetStateExporter
         GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX
       )) {
         const {
-          featureSetUri,
-          featureUri,
+          featureSetIri,
+          featureIri,
         } = GoogleSheetsWorksheetStateExporter.parseHeader(header);
         const featureSetState = worksheetState.featureSets?.find(
           existingFeatureSetState =>
-            existingFeatureSetState.uri === featureSetUri
+            existingFeatureSetState.uri === featureSetIri
         );
         if (!featureSetState) {
           dataRow.push("");
           continue;
         }
-        if (!featureUri) {
+        if (!featureIri) {
           // Feature set is selected
           dataRow.push("1");
           continue;
         }
         const featureState = featureSetState.features?.find(
-          existingFeatureState => existingFeatureState.uri === featureUri
+          existingFeatureState => existingFeatureState.uri === featureIri
         );
         if (!featureState) {
           dataRow.push("");
           continue;
         }
-        const selectedFeatureValueUris = (featureState.values ?? [])
+        const selectedFeatureValueIris = (featureState.values ?? [])
           .filter(value => value.selected)
           .map(value => value.uri);
-        if (selectedFeatureValueUris.length === 0) {
+        if (selectedFeatureValueIris.length === 0) {
           dataRow.push("");
           continue;
         }
-        dataRow.push(selectedFeatureValueUris.join(";"));
+        dataRow.push(selectedFeatureValueIris.join(";"));
       }
 
       rows.push(dataRow);

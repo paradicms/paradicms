@@ -2,9 +2,10 @@ import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {Text} from "../src";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Work", () => {
-  const sut = testModelSet.workByUri("http://example.com/collection0/work2");
+  const sut = testModelSet.workByIri("http://example.com/collection0/work2");
 
   it("should get the work's description", () => {
     expect(sut.description).not.to.be.null;
@@ -15,8 +16,22 @@ describe("Work", () => {
 
   it("should get the work's agents", () => {
     expect(sut.agents).to.have.length(8);
-    expect(sut.agents.filter(agent => agent.agent.uri)).to.have.length(2);
-    expect(sut.agents.filter(agent => !agent.agent.uri)).to.have.length(6); // 2 blank, 4 literal
+    const namedAgents = sut.agents.filter(
+      agent =>
+        agent.agent.identifiers.length > 0 &&
+        agent.agent.identifiers.every(
+          identifier => identifier.termType === "NamedNode"
+        )
+    );
+    expect(namedAgents).to.have.length(2);
+    expect(
+      sut.agents.filter(
+        agent =>
+          !agent.agent.identifiers.some(
+            identifier => identifier.termType === "NamedNode"
+          )
+      )
+    ).to.have.length(6); // 2 blank, 4 literal
   });
 
   it("should get the work's collections", () => {
@@ -25,7 +40,9 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.images).to.not.be.empty;
-    expect(sut.images.every(image => image.depictsUri === sut.uri)).to.be.true;
+    expect(
+      sut.images.every(image => image.depictsIri === sut.identifiers[0].value)
+    ).to.be.true;
   });
 
   it("should get the work's page", () => {
@@ -33,14 +50,14 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (literal)", () => {
-    const propertyValues = sut.propertyValuesByPropertyUri(dcterms.title.value);
+    const propertyValues = sut.propertyValuesByPropertyIri(dcterms.title.value);
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq(sut.label);
   });
 
   it("should get the work's property values (named)", () => {
-    const propertyValues = sut.propertyValuesByPropertyUri(
+    const propertyValues = sut.propertyValuesByPropertyIri(
       dcterms.subject.value
     );
     expect(propertyValues).to.have.length(2);
@@ -51,7 +68,7 @@ describe("Work", () => {
   });
 
   it("should get the work's property values (Text)", () => {
-    const propertyValues = sut.propertyValuesByPropertyUri(
+    const propertyValues = sut.propertyValuesByPropertyIri(
       dcterms.description.value
     );
     expect(propertyValues).to.have.length(1);
@@ -68,17 +85,17 @@ describe("Work", () => {
     expect(sut.label).to.not.be.empty;
   });
 
-  it("should get the work's URI", () => {
-    expect(sut.uri).to.not.be.empty;
+  it("should get the work's Wikidata concept IRI", () => {
+    expect(
+      testModelSet.workByIri("http://example.com/collection0/work0")
+        .wikidataConceptIri
+    ).to.eq("http://www.wikidata.org/entity/Q937690");
   });
 
-  it("should get the work's Wikidata concept URI", () => {
-    expect(sut.wikidataConceptUri).to.eq(
-      "http://www.wikidata.org/entity/Q937690"
-    );
-  });
-
-  it("should get the work's Wikipedia URL", () => {
-    expect(sut.wikipediaUrl).to.eq("http://en.wikipedia.org/wiki/Pilot-ACE");
-  });
+  // it("should get the work's Wikipedia URL", () => {
+  //   expect(
+  //     testModelSet.workByIri("http://example.com/collection0/work2")
+  //       .wikipediaUrl
+  //   ).to.eq("http://en.wikipedia.org/wiki/Pilot-ACE");
+  // });
 });

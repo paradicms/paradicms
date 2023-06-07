@@ -91,8 +91,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
       <BreadcrumbItem active={!worksheet.currentFeature} key="feature-set-mark">
         <Link
           href={Hrefs.worksheetMark({
-            featureSetUri: worksheet.currentFeatureSet.uri,
-            featureUri: null,
+            featureSetIri: worksheet.currentFeatureSet.iri,
+            featureIri: null,
             mode: worksheet.currentMark.mode,
             review: false,
             worksheetStateId: worksheet.stateId,
@@ -108,8 +108,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
       <BreadcrumbItem active={true} key="feature-mark">
         <Link
           href={Hrefs.worksheetMark({
-            featureSetUri: worksheet.currentFeatureSet!.uri,
-            featureUri: worksheet.currentFeature.uri,
+            featureSetIri: worksheet.currentFeatureSet!.iri,
+            featureIri: worksheet.currentFeature.iri,
             mode: worksheet.currentMark.mode,
             review: false,
             worksheetStateId: worksheet.stateId,

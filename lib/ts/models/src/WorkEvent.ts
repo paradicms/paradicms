@@ -5,5 +5,5 @@ import {WorkLocation} from "./WorkLocation";
 export interface WorkEvent extends Event {
   readonly work: Work;
   readonly workLocation: WorkLocation | null;
-  readonly workUri: string;
+  readonly workIri: string;
 }

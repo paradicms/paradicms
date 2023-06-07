@@ -16,12 +16,14 @@ export class GoogleSheetsWorksheetStateImporter {
     ) {
       return [];
     }
-    const parsedHeaderColumns: {featureSetUri: string; featureUri?: string}[] =
-      headerRow
-        .slice(GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX)
-        .map((headerColumn) =>
-          GoogleSheetsWorksheetStateExporter.parseHeader(headerColumn)
-        );
+    const parsedHeaderColumns: {
+      featureSetIri: string;
+      featureIri?: string;
+    }[] = headerRow
+      .slice(GoogleSheetsWorksheetStateExporter.FIRST_FEATURE_COLUMN_INDEX)
+      .map(headerColumn =>
+        GoogleSheetsWorksheetStateExporter.parseHeader(headerColumn)
+      );
 
     const worksheetStates: WorksheetState[] = [];
     for (const dataRow of csvRows.slice(1)) {
@@ -53,30 +55,30 @@ export class GoogleSheetsWorksheetStateImporter {
           if (!headerColumn) {
             return;
           }
-          const {featureSetUri, featureUri} = headerColumn;
+          const {featureSetIri, featureIri} = headerColumn;
           let featureSetState = featureSetStates.find(
-            (featureSetState) => featureSetState.uri === featureSetUri
+            featureSetState => featureSetState.uri === featureSetIri
           );
           if (!featureSetState) {
             featureSetState = {
               features: undefined,
-              uri: featureSetUri,
+              uri: featureSetIri,
             };
             featureSetStates.push(featureSetState);
           }
 
-          if (!featureUri) {
+          if (!featureIri) {
             // dataColumn was not empty, so this is a featureSet column
             return;
           }
 
           let featureState = featureSetState.features?.find(
-            (feature) => feature.uri === featureUri
+            feature => feature.uri === featureIri
           );
           if (!featureState) {
             featureState = {
               text: undefined,
-              uri: featureUri,
+              uri: featureIri,
               values: undefined,
             };
             if (featureSetState.features) {
@@ -86,17 +88,17 @@ export class GoogleSheetsWorksheetStateImporter {
             }
           }
 
-          const featureValueUris = dataColumn.split(";");
-          for (const featureValueUri of featureValueUris) {
+          const featureValueIris = dataColumn.split(";");
+          for (const featureValueIri of featureValueIris) {
             let featureValueState = featureState.values?.find(
-              (featureValue) => featureValue.uri === featureValueUri
+              featureValue => featureValue.uri === featureValueIri
             );
             if (featureValueState) {
               continue;
             }
             featureValueState = {
               selected: true,
-              uri: featureValueUri,
+              uri: featureValueIri,
             };
             if (featureState.values) {
               featureState.values.push(featureValueState);

@@ -1,21 +1,25 @@
 import {Model} from "../Model";
-import {ModelToRdfTriple} from "../ModelToRdfTriple";
-import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
+import {DatasetCore, Literal} from "@rdfjs/types";
+import {ModelIdentifier} from "../ModelIdentifier";
 
 export class LiteralModel implements Model {
   constructor(protected readonly literal: Literal) {}
 
-  get identifier(): BlankNode | NamedNode {
-    throw new EvalError("not implemented");
+  get identifiers(): readonly ModelIdentifier[] {
+    return [];
+  }
+
+  get key(): string {
+    return `|${this.literal.termType}-${this.literal.value}|`;
+  }
+
+  get iris(): readonly string[] {
+    return [];
   }
 
   get label(): string {
     return this.literal.value;
   }
 
-  toRdf(): readonly ModelToRdfTriple[] {
-    throw new EvalError("not implemented.");
-  }
-
-  uri: string | null = null;
+  toRdf(addToDataset: DatasetCore) {}
 }

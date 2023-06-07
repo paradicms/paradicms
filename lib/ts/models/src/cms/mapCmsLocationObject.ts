@@ -18,7 +18,7 @@ export const mapCmsLocationObject = (
         identifier: term,
       });
     case "NamedNode":
-      return modelParameters.modelSet.locationByUri(term.value);
+      return modelParameters.modelSet.locationByIri(term.value);
     case "Literal":
       return new LiteralLocation(term);
     default:

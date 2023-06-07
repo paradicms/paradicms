@@ -20,12 +20,12 @@ export class WorksheetFeature {
           new WorksheetFeatureValue({
             definition: valueDefinition,
             initialState: initialState?.values?.find(
-              featureValueState => featureValueState.uri === valueDefinition.uri
+              featureValueState => featureValueState.uri === valueDefinition.iri
             ),
           })
       )
       .sort((left, right) =>
-        left.definition.prefLabel!.localeCompare(right.definition.prefLabel!)
+        left.definition.label.localeCompare(right.definition.label)
       );
   }
 
@@ -40,13 +40,13 @@ export class WorksheetFeature {
     return valueStates.length > 0 || this.text
       ? {
           text: this.text,
-          uri: this.definition.uri,
+          uri: this.definition.iri,
           values: valueStates.length > 0 ? valueStates : undefined,
         }
       : undefined;
   }
 
-  get uri(): string {
-    return this.definition.uri;
+  get iri(): string {
+    return this.definition.iri;
   }
 }

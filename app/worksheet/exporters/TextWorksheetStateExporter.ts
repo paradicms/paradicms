@@ -14,7 +14,7 @@ export class TextWorksheetStateExporter
         paragraphs.push(worksheetState.text);
       }
       for (const featureSetState of worksheetState.featureSets ?? []) {
-        const featureSetDefinition = worksheetDefinition.featureSetByUriOptional(
+        const featureSetDefinition = worksheetDefinition.featureSetByIriOptional(
           featureSetState.uri
         );
         if (!featureSetDefinition) {
@@ -25,15 +25,12 @@ export class TextWorksheetStateExporter
           const clause = (featureState.values ?? [])
             .filter(value => value.selected)
             .map(value => value.uri)
-            .flatMap(selectedFeatureValueUri => {
-              const featureValueDefinition = worksheetDefinition.featureValueByUriOptional(
-                selectedFeatureValueUri
+            .flatMap(selectedFeatureValueIri => {
+              const featureValueDefinition = worksheetDefinition.featureValueByIriOptional(
+                selectedFeatureValueIri
               );
               if (featureValueDefinition) {
-                return [
-                  featureValueDefinition.prefLabel ??
-                    featureValueDefinition.value.value,
-                ];
+                return [featureValueDefinition.label];
               } else {
                 return [];
               }

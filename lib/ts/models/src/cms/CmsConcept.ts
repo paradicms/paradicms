@@ -3,12 +3,12 @@ import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Concept} from "../Concept";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 import {CmsImagesMixin} from "./CmsImagesMixin";
+import {CmsNamedModel} from "./CmsNamedModel";
 
 export class CmsConcept
-  extends Mixin(ResourceBackedNamedModel, CmsDescriptionMixin, CmsImagesMixin)
+  extends Mixin(CmsNamedModel, CmsDescriptionMixin, CmsImagesMixin)
   implements Concept {
   @Memoize()
   get altLabels(): readonly Literal[] {

@@ -15,7 +15,7 @@ export class Hrefs {
     );
   }
 
-  static work(workUri: string): string {
-    return `/work/${encodeFileName(workUri)}/`;
+  static work(work: {key: string}): string {
+    return `/work/${encodeFileName(work.key)}/`;
   }
 }

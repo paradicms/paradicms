@@ -1,8 +1,9 @@
 import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Concept", () => {
-  const sut = testModelSet.conceptByUri(
+  const sut = testModelSet.conceptByIri(
     "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
   );
 

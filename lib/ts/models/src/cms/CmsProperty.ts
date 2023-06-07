@@ -5,20 +5,15 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Property} from "../Property";
 import {PropertyValue} from "../PropertyValue";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
 import {CmsCommentMixin} from "./CmsCommentMixin";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsLabelMixin} from "./CmsLabelMixin";
 import {PropertyGroup} from "../PropertyGroup";
+import {CmsNamedModel} from "./CmsNamedModel";
 
 export class CmsProperty
-  extends Mixin(
-    ResourceBackedNamedModel,
-    CmsCommentMixin,
-    CmsImagesMixin,
-    CmsLabelMixin
-  )
+  extends Mixin(CmsNamedModel, CmsCommentMixin, CmsImagesMixin, CmsLabelMixin)
   implements Property {
   get filterable(): boolean {
     return (
@@ -28,12 +23,12 @@ export class CmsProperty
   }
 
   get groups(): readonly PropertyGroup[] {
-    return this.groupUris.map(groupUri =>
-      this.modelSet.propertyGroupByUri(groupUri)
+    return this.groupIris.map(groupIri =>
+      this.modelSet.propertyGroupByIri(groupIri)
     );
   }
 
-  get groupUris(): readonly string[] {
+  get groupIris(): readonly string[] {
     return this.filterAndMapObjects(cms.propertyGroup, term =>
       term.termType === "NamedNode" ? term.value : null
     );

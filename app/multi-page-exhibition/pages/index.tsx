@@ -12,27 +12,27 @@ import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
 
 interface StaticProps {
-  readonly collectionUri: string;
+  readonly collectionKey: string;
   readonly modelSetString: string;
-  readonly firstWorkUri: string;
+  readonly firstWorkKey: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collectionUri,
+  collectionKey,
   modelSetString,
-  firstWorkUri,
+  firstWorkKey,
 }) => {
   const router = useRouter();
   const modelSet = useMemo(
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
-  const collection = modelSet.collectionByUri(collectionUri);
+  const collection = modelSet.collectionByKey(collectionKey);
   const configuration = modelSet.appConfiguration;
 
   React.useEffect(() => {
     if (!collection.description) {
-      router.push(Hrefs.work({collectionUri, workUri: firstWorkUri}));
+      router.push(Hrefs.work({collectionKey, workKey: firstWorkKey}));
     }
   }, []);
 
@@ -45,7 +45,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     <Layout
       collection={collection}
       configuration={configuration}
-      nextWork={{uri: firstWorkUri}}
+      nextWork={{key: firstWorkKey}}
     >
       <Container fluid>
         <Row>
@@ -88,8 +88,8 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       modelSetString: modelSet.toFastRdfString(),
-      collectionUri: collection.uri,
-      firstWorkUri: collection.works[0].uri,
+      collectionKey: collection.key,
+      firstWorkKey: collection.works[0].key,
     },
   };
 };

@@ -1,0 +1,202 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q1662611 a schema:Dataset ;
+	schema:about wd:Q1662611 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1865290134"^^xsd:integer ;
+	schema:dateModified "2023-03-31T12:10:53Z"^^xsd:dateTime ;
+	wikibase:statements "2"^^xsd:integer ;
+	wikibase:sitelinks "1"^^xsd:integer ;
+	wikibase:identifiers "1"^^xsd:integer .
+
+wd:Q1662611 a wikibase:Item .
+
+<https://de.wikipedia.org/wiki/Informationstechnisches_System> a schema:Article ;
+	schema:about wd:Q1662611 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Informationstechnisches System"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q1662611 wdt:P279 wd:Q121182 ;
+	wdt:P2671 "/g/122jx383" ;
+	wdtn:P2671 <http://g.co/kg/g/122jx383> ;
+	p:P279 s:Q1662611-eccf5b05-4cc9-0929-6d61-ce658fa5c862 .
+
+s:Q1662611-eccf5b05-4cc9-0929-6d61-ce658fa5c862 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q121182 .
+
+wd:Q1662611 p:P2671 s:Q1662611-D069D4CB-911D-4EB1-B84F-DE5975367EFD .
+
+s:Q1662611-D069D4CB-911D-4EB1-B84F-DE5975367EFD a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2671 "/g/122jx383" ;
+	psn:P2671 <http://g.co/kg/g/122jx383> .
+
+wd:Q1662611 rdfs:label "informationstechnisches System"@de ;
+	skos:prefLabel "informationstechnisches System"@de ;
+	schema:name "informationstechnisches System"@de ;
+	rdfs:label "IT system"@en ;
+	skos:prefLabel "IT system"@en ;
+	schema:name "IT system"@en ;
+	rdfs:label "информационно-техническая система"@ru ;
+	skos:prefLabel "информационно-техническая система"@ru ;
+	schema:name "информационно-техническая система"@ru ;
+	rdfs:label "informadika sistemo"@eo ;
+	skos:prefLabel "informadika sistemo"@eo ;
+	schema:name "informadika sistemo"@eo ;
+	rdfs:label "hệ thống CNTT"@vi ;
+	skos:prefLabel "hệ thống CNTT"@vi ;
+	schema:name "hệ thống CNTT"@vi ;
+	rdfs:label "سيستم اءي. تي."@ms-arab ;
+	skos:prefLabel "سيستم اءي. تي."@ms-arab ;
+	schema:name "سيستم اءي. تي."@ms-arab ;
+	rdfs:label "sistem IT"@ms ;
+	skos:prefLabel "sistem IT"@ms ;
+	schema:name "sistem IT"@ms ;
+	rdfs:label "BT sistemi"@tr ;
+	skos:prefLabel "BT sistemi"@tr ;
+	schema:name "BT sistemi"@tr ;
+	rdfs:label "IT systém"@cs ;
+	skos:prefLabel "IT systém"@cs ;
+	schema:name "IT systém"@cs ;
+	rdfs:label "Sistemụ IT"@ig ;
+	skos:prefLabel "Sistemụ IT"@ig ;
+	schema:name "Sistemụ IT"@ig ;
+	schema:description "elektronisches datenverarbeitendes System, Hardware oder Software"@de,
+		"an electronic system that processes data or information, hardware or software"@en,
+		"veri veya bilgi, donanım veya yazılım işleyen bir elektronik sistem"@tr,
+		"usoro eletrọnịkị nke na-ahazi data ma ọ bụ ozi, ngwaike ma ọ bụ ngwanrọ"@ig ;
+	skos:altLabel "Datenverarbeitungssystem"@de,
+		"DV-System"@de,
+		"IT-System"@de .
+
+wd:Q121182 a wikibase:Item ;
+	rdfs:label "information system"@en ;
+	skos:prefLabel "information system"@en ;
+	schema:name "information system"@en ;
+	schema:description "combination of information, resources, activities and people that support tasks in an organization; group of components that interact to produce information"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2671 a wikibase:Property ;
+	rdfs:label "Google Knowledge Graph ID"@en ;
+	skos:prefLabel "Google Knowledge Graph ID"@en ;
+	schema:name "Google Knowledge Graph ID"@en ;
+	schema:description "identifier for Google Knowledge Graph API (application programming interface), starting with \"/g/\". For IDs starting with \"/m/\", use Freebase ID (P646)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2671 ;
+	wikibase:claim p:P2671 ;
+	wikibase:statementProperty ps:P2671 ;
+	wikibase:statementValue psv:P2671 ;
+	wikibase:qualifier pq:P2671 ;
+	wikibase:qualifierValue pqv:P2671 ;
+	wikibase:reference pr:P2671 ;
+	wikibase:referenceValue prv:P2671 ;
+	wikibase:novalue wdno:P2671 ;
+	wikibase:directClaimNormalized wdtn:P2671 ;
+	wikibase:statementValueNormalized psn:P2671 ;
+	wikibase:qualifierValueNormalized pqn:P2671 ;
+	wikibase:referenceValueNormalized prn:P2671 .
+
+p:P2671 a owl:ObjectProperty .
+
+psv:P2671 a owl:ObjectProperty .
+
+pqv:P2671 a owl:ObjectProperty .
+
+prv:P2671 a owl:ObjectProperty .
+
+wdt:P2671 a owl:DatatypeProperty .
+
+ps:P2671 a owl:DatatypeProperty .
+
+pq:P2671 a owl:DatatypeProperty .
+
+pr:P2671 a owl:DatatypeProperty .
+
+psn:P2671 a owl:ObjectProperty .
+
+pqn:P2671 a owl:ObjectProperty .
+
+prn:P2671 a owl:ObjectProperty .
+
+wdtn:P2671 a owl:ObjectProperty .
+
+wdno:P2671 a owl:Class ;
+	owl:complementOf _:65accf8c5265233a873cf53510c73fa5 .
+
+_:65accf8c5265233a873cf53510c73fa5 a owl:Restriction ;
+	owl:onProperty wdt:P2671 ;
+	owl:someValuesFrom owl:Thing .

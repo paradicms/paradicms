@@ -1,0 +1,1190 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q16686448 a schema:Dataset ;
+	schema:about wd:Q16686448 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1903060190"^^xsd:integer ;
+	schema:dateModified "2023-05-26T18:31:26Z"^^xsd:dateTime ;
+	wikibase:statements "15"^^xsd:integer ;
+	wikibase:sitelinks "3"^^xsd:integer ;
+	wikibase:identifiers "3"^^xsd:integer .
+
+wd:Q16686448 a wikibase:Item .
+
+<https://de.wikiquote.org/wiki/Produkt> a schema:Article ;
+	schema:about wd:Q16686448 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikiquote.org/> ;
+	schema:name "Produkt"@de .
+
+<https://de.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://sk.wikiquote.org/wiki/Produkt> a schema:Article ;
+	schema:about wd:Q16686448 ;
+	schema:inLanguage "sk" ;
+	schema:isPartOf <https://sk.wikiquote.org/> ;
+	schema:name "Produkt"@sk .
+
+<https://sk.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://da.wikipedia.org/wiki/Produkt_(fabrikation)> a schema:Article ;
+	schema:about wd:Q16686448 ;
+	schema:inLanguage "da" ;
+	schema:isPartOf <https://da.wikipedia.org/> ;
+	schema:name "Produkt (fabrikation)"@da .
+
+<https://da.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q16686448 wdt:P279 wd:Q1150771 ;
+	wdt:P828 wd:Q5 ;
+	wdt:P460 wd:Q386724,
+		wd:Q2424752 ;
+	wdt:P1552 wd:Q14623823 ;
+	wdt:P1014 "300224592" ;
+	wdtn:P1014 <http://vocab.getty.edu/aat/300224592> ;
+	wdt:P461 wd:Q29651224 ;
+	wdt:P1282 "Key:man_made" ;
+	wdt:P1709 <http://www.cidoc-crm.org/entity/e25-man-made-feature/version-6.2> ;
+	wdt:P31 wd:Q96251598,
+		wd:Q33104279 ;
+	wdt:P1889 wd:Q3300022 ;
+	wdt:P1269 wd:Q15621286 ;
+	wdt:P2347 "5125" ;
+	wdtn:P2347 <http://www.yso.fi/onto/yso/p5125> ;
+	wdt:P8313 "produkt_-_fremmedord" ;
+	p:P279 s:Q16686448-B93C486C-FDB3-45A9-BA31-6D16FE120C9D .
+
+s:Q16686448-B93C486C-FDB3-45A9-BA31-6D16FE120C9D a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1150771 .
+
+wd:Q16686448 p:P828 s:Q16686448-29b1e715-40b4-068d-f317-6212131c5be4 .
+
+s:Q16686448-29b1e715-40b4-068d-f317-6212131c5be4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P828 wd:Q5 .
+
+wd:Q16686448 p:P460 s:Q16686448-b4655c45-4485-158d-5249-c7be43ec7ffe .
+
+s:Q16686448-b4655c45-4485-158d-5249-c7be43ec7ffe a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q386724 .
+
+wd:Q16686448 p:P460 s:Q16686448-A3CD9F2D-3F1E-474A-8AD6-53A310B6186F .
+
+s:Q16686448-A3CD9F2D-3F1E-474A-8AD6-53A310B6186F a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q2424752 .
+
+wd:Q16686448 p:P1552 s:Q16686448-e2160217-4374-4622-7fd6-6321c4667afa .
+
+s:Q16686448-e2160217-4374-4622-7fd6-6321c4667afa a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q14623823 .
+
+wd:Q16686448 p:P1014 s:Q16686448-E69C3EA8-F98D-4E9C-9D99-4D2128CFD557 .
+
+s:Q16686448-E69C3EA8-F98D-4E9C-9D99-4D2128CFD557 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1014 "300224592" ;
+	psn:P1014 <http://vocab.getty.edu/aat/300224592> .
+
+wd:Q16686448 p:P461 s:Q16686448-DC61A12B-A85D-4E8C-A63A-8EF2578A8540 .
+
+s:Q16686448-DC61A12B-A85D-4E8C-A63A-8EF2578A8540 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P461 wd:Q29651224 .
+
+wd:Q16686448 p:P1282 s:Q16686448-72e9d39e-42c3-d514-75ff-8f87a93e52ae .
+
+s:Q16686448-72e9d39e-42c3-d514-75ff-8f87a93e52ae a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1282 "Key:man_made" .
+
+wd:Q16686448 p:P1709 s:Q16686448-c195d447-49cc-2d0a-f85b-15a9472fe439 .
+
+s:Q16686448-c195d447-49cc-2d0a-f85b-15a9472fe439 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1709 <http://www.cidoc-crm.org/entity/e25-man-made-feature/version-6.2> .
+
+wd:Q16686448 p:P31 s:Q16686448-0d57d82a-4615-2e23-ee3c-e504bd9333da .
+
+s:Q16686448-0d57d82a-4615-2e23-ee3c-e504bd9333da a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q96251598 .
+
+wd:Q16686448 p:P31 s:Q16686448-83285187-E969-4776-A577-828D663715A2 .
+
+s:Q16686448-83285187-E969-4776-A577-828D663715A2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q33104279 .
+
+wd:Q16686448 p:P1889 s:Q16686448-494d31f0-4608-77c2-692b-8bc5f96f3041 .
+
+s:Q16686448-494d31f0-4608-77c2-692b-8bc5f96f3041 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q3300022 .
+
+wd:Q16686448 p:P1269 s:Q16686448-B5FE7C2F-41BC-4746-BAF2-C564509B9131 .
+
+s:Q16686448-B5FE7C2F-41BC-4746-BAF2-C564509B9131 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1269 wd:Q15621286 .
+
+wd:Q16686448 p:P2347 s:Q16686448-C22C133D-9F91-45E4-872A-F038C60E8A36 .
+
+s:Q16686448-C22C133D-9F91-45E4-872A-F038C60E8A36 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2347 "5125" ;
+	psn:P2347 <http://www.yso.fi/onto/yso/p5125> .
+
+wd:Q16686448 p:P8313 s:Q16686448-3DA08A56-A539-46E6-89AE-9E66FBBE8426 .
+
+s:Q16686448-3DA08A56-A539-46E6-89AE-9E66FBBE8426 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8313 "produkt_-_fremmedord" .
+
+wd:Q16686448 rdfs:label "искусственный объект"@ru ;
+	skos:prefLabel "искусственный объект"@ru ;
+	schema:name "искусственный объект"@ru ;
+	rdfs:label "artificial entity"@en ;
+	skos:prefLabel "artificial entity"@en ;
+	schema:name "artificial entity"@en ;
+	rdfs:label "인공물"@ko ;
+	skos:prefLabel "인공물"@ko ;
+	schema:name "인공물"@ko ;
+	rdfs:label "entità artificiale"@it ;
+	skos:prefLabel "entità artificiale"@it ;
+	schema:name "entità artificiale"@it ;
+	rdfs:label "entité artificielle"@fr ;
+	skos:prefLabel "entité artificielle"@fr ;
+	schema:name "entité artificielle"@fr ;
+	rdfs:label "künstliche Entität"@de ;
+	skos:prefLabel "künstliche Entität"@de ;
+	schema:name "künstliche Entität"@de ;
+	rdfs:label "kunstmatig item"@nl ;
+	skos:prefLabel "kunstmatig item"@nl ;
+	schema:name "kunstmatig item"@nl ;
+	rdfs:label "вештачка ствар"@sr ;
+	skos:prefLabel "вештачка ствар"@sr ;
+	schema:name "вештачка ствар"@sr ;
+	rdfs:label "вештачка ствар"@sr-ec ;
+	skos:prefLabel "вештачка ствар"@sr-ec ;
+	schema:name "вештачка ствар"@sr-ec ;
+	rdfs:label "veštačka stvar"@sr-el ;
+	skos:prefLabel "veštačka stvar"@sr-el ;
+	schema:name "veštačka stvar"@sr-el ;
+	rdfs:label "штучны аб’ект"@be ;
+	skos:prefLabel "штучны аб’ект"@be ;
+	schema:name "штучны аб’ект"@be ;
+	rdfs:label "entidad artificial"@es ;
+	skos:prefLabel "entidad artificial"@es ;
+	schema:name "entidad artificial"@es ;
+	rdfs:label "vật nhân tạo"@vi ;
+	skos:prefLabel "vật nhân tạo"@vi ;
+	schema:name "vật nhân tạo"@vi ;
+	rdfs:label "airtifeecial item"@sco ;
+	skos:prefLabel "airtifeecial item"@sco ;
+	schema:name "airtifeecial item"@sco ;
+	rdfs:label "人造客体"@zh-hans ;
+	skos:prefLabel "人造客体"@zh-hans ;
+	schema:name "人造客体"@zh-hans ;
+	rdfs:label "sztuczny obiekt"@pl ;
+	skos:prefLabel "sztuczny obiekt"@pl ;
+	schema:name "sztuczny obiekt"@pl ;
+	rdfs:label "kunstig entitet"@nb ;
+	skos:prefLabel "kunstig entitet"@nb ;
+	schema:name "kunstig entitet"@nb ;
+	rdfs:label "menneskeskabt entitet"@da ;
+	skos:prefLabel "menneskeskabt entitet"@da ;
+	schema:name "menneskeskabt entitet"@da ;
+	rdfs:label "মনুষ্যনির্মিত বস্তু"@bn ;
+	skos:prefLabel "মনুষ্যনির্মিত বস্তু"@bn ;
+	schema:name "মনুষ্যনির্মিত বস্তু"@bn ;
+	rdfs:label "人造客體"@zh-hk ;
+	skos:prefLabel "人造客體"@zh-hk ;
+	schema:name "人造客體"@zh-hk ;
+	rdfs:label "人造客體"@zh-hant ;
+	skos:prefLabel "人造客體"@zh-hant ;
+	schema:name "人造客體"@zh-hant ;
+	rdfs:label "人造客體"@zh-tw ;
+	skos:prefLabel "人造客體"@zh-tw ;
+	schema:name "人造客體"@zh-tw ;
+	rdfs:label "人造客体"@zh ;
+	skos:prefLabel "人造客体"@zh ;
+	schema:name "人造客体"@zh ;
+	rdfs:label "人造客体"@zh-cn ;
+	skos:prefLabel "人造客体"@zh-cn ;
+	schema:name "人造客体"@zh-cn ;
+	rdfs:label "вештачки објект"@mk ;
+	skos:prefLabel "вештачки објект"@mk ;
+	schema:name "вештачки објект"@mk ;
+	rdfs:label "oggettu artificiali"@scn ;
+	skos:prefLabel "oggettu artificiali"@scn ;
+	schema:name "oggettu artificiali"@scn ;
+	rdfs:label "шаш йина объект"@ce ;
+	skos:prefLabel "шаш йина объект"@ce ;
+	schema:name "шаш йина объект"@ce ;
+	rdfs:label "umjetni objekt"@hr ;
+	skos:prefLabel "umjetni objekt"@hr ;
+	schema:name "umjetni objekt"@hr ;
+	rdfs:label "keinotekoinen olio"@fi ;
+	skos:prefLabel "keinotekoinen olio"@fi ;
+	schema:name "keinotekoinen olio"@fi ;
+	rdfs:label "objeto artificial"@pt-br ;
+	skos:prefLabel "objeto artificial"@pt-br ;
+	schema:name "objeto artificial"@pt-br ;
+	rdfs:label "objeto artificial"@pt ;
+	skos:prefLabel "objeto artificial"@pt ;
+	schema:name "objeto artificial"@pt ;
+	rdfs:label "τεχνητό αντικείμενο"@el ;
+	skos:prefLabel "τεχνητό αντικείμενο"@el ;
+	schema:name "τεχνητό αντικείμενο"@el ;
+	rdfs:label "mākslīgs objekts"@lv ;
+	skos:prefLabel "mākslīgs objekts"@lv ;
+	schema:name "mākslīgs objekts"@lv ;
+	rdfs:label "mesterséges tárgy"@hu ;
+	skos:prefLabel "mesterséges tárgy"@hu ;
+	schema:name "mesterséges tárgy"@hu ;
+	rdfs:label "vještački objekt"@bs ;
+	skos:prefLabel "vještački objekt"@bs ;
+	schema:name "vještački objekt"@bs ;
+	rdfs:label "kunsmatige objek"@af ;
+	skos:prefLabel "kunsmatige objek"@af ;
+	schema:name "kunsmatige objek"@af ;
+	rdfs:label "tehisnähtus"@et ;
+	skos:prefLabel "tehisnähtus"@et ;
+	schema:name "tehisnähtus"@et ;
+	rdfs:label "objecte artificial"@ca ;
+	skos:prefLabel "objecte artificial"@ca ;
+	schema:name "objecte artificial"@ca ;
+	rdfs:label "штучний об'єкт"@uk ;
+	skos:prefLabel "штучний об'єкт"@uk ;
+	schema:name "штучний об'єкт"@uk ;
+	rdfs:label "dirbtinis objektas"@lt ;
+	skos:prefLabel "dirbtinis objektas"@lt ;
+	schema:name "dirbtinis objektas"@lt ;
+	rdfs:label "oxetu artificial"@ast ;
+	skos:prefLabel "oxetu artificial"@ast ;
+	schema:name "oxetu artificial"@ast ;
+	rdfs:label "изкуствен обект"@bg ;
+	skos:prefLabel "изкуствен обект"@bg ;
+	schema:name "изкуствен обект"@bg ;
+	rdfs:label "object artificial"@ia ;
+	skos:prefLabel "object artificial"@ia ;
+	schema:name "object artificial"@ia ;
+	rdfs:label "kunstig objekt"@nn ;
+	skos:prefLabel "kunstig objekt"@nn ;
+	schema:name "kunstig objekt"@nn ;
+	rdfs:label "كائن اصطناعي"@ar ;
+	skos:prefLabel "كائن اصطناعي"@ar ;
+	schema:name "كائن اصطناعي"@ar ;
+	rdfs:label "umělá entita"@cs ;
+	skos:prefLabel "umělá entita"@cs ;
+	schema:name "umělá entita"@cs ;
+	rdfs:label "objècte artificial"@oc ;
+	skos:prefLabel "objècte artificial"@oc ;
+	schema:name "objècte artificial"@oc ;
+	rdfs:label "ашёи сунъӣ"@tg ;
+	skos:prefLabel "ашёи сунъӣ"@tg ;
+	schema:name "ашёи сунъӣ"@tg ;
+	rdfs:label "объекти сунъӣ"@tg-cyrl ;
+	skos:prefLabel "объекти сунъӣ"@tg-cyrl ;
+	schema:name "объекти сунъӣ"@tg-cyrl ;
+	rdfs:label "яһалма объект"@ba ;
+	skos:prefLabel "яһалма объект"@ba ;
+	schema:name "яһалма объект"@ba ;
+	rdfs:label "entidade artificial"@gl ;
+	skos:prefLabel "entidade artificial"@gl ;
+	schema:name "entidade artificial"@gl ;
+	rdfs:label "artificiell entitet"@sv ;
+	skos:prefLabel "artificiell entitet"@sv ;
+	schema:name "artificiell entitet"@sv ;
+	rdfs:label "artefarita aĵo"@eo ;
+	skos:prefLabel "artefarita aĵo"@eo ;
+	schema:name "artefarita aĵo"@eo ;
+	rdfs:label "entitet artificial"@sq ;
+	skos:prefLabel "entitet artificial"@sq ;
+	schema:name "entitet artificial"@sq ;
+	rdfs:label "ישות מלאכותית"@he ;
+	skos:prefLabel "ישות מלאכותית"@he ;
+	schema:name "ישות מלאכותית"@he ;
+	rdfs:label "штучны аб’ект"@be-tarask ;
+	skos:prefLabel "штучны аб’ект"@be-tarask ;
+	schema:name "штучны аб’ект"@be-tarask ;
+	rdfs:label "entitas rekaan"@id ;
+	skos:prefLabel "entitas rekaan"@id ;
+	schema:name "entitas rekaan"@id ;
+	rdfs:label "ხელოვნური ობიექტი"@ka ;
+	skos:prefLabel "ხელოვნური ობიექტი"@ka ;
+	schema:name "ხელოვნური ობიექტი"@ka ;
+	rdfs:label "entiti tiruan"@ms ;
+	skos:prefLabel "entiti tiruan"@ms ;
+	schema:name "entiti tiruan"@ms ;
+	rdfs:label "yapay varlık"@tr ;
+	skos:prefLabel "yapay varlık"@tr ;
+	schema:name "yapay varlık"@tr ;
+	rdfs:label "süni varlıq"@az ;
+	skos:prefLabel "süni varlıq"@az ;
+	schema:name "süni varlıq"@az ;
+	rdfs:label "人造実体"@ja ;
+	skos:prefLabel "人造実体"@ja ;
+	schema:name "人造実体"@ja ;
+	rdfs:label "aonán saorga"@ga ;
+	skos:prefLabel "aonán saorga"@ga ;
+	schema:name "aonán saorga"@ga ;
+	rdfs:label "entitate artificială"@ro ;
+	skos:prefLabel "entitate artificială"@ro ;
+	schema:name "entitate artificială"@ro ;
+	rdfs:label "endid artiffisial"@cy ;
+	skos:prefLabel "endid artiffisial"@cy ;
+	schema:name "endid artiffisial"@cy ;
+	rdfs:label "ясалма объект"@tt ;
+	skos:prefLabel "ясалма объект"@tt ;
+	schema:name "ясалма объект"@tt ;
+	rdfs:label "اينتيتي تيروان"@ms-arab ;
+	skos:prefLabel "اينتيتي تيروان"@ms-arab ;
+	schema:name "اينتيتي تيروان"@ms-arab ;
+	rdfs:label "ojeto artifisałe"@vec ;
+	skos:prefLabel "ojeto artifisałe"@vec ;
+	schema:name "ojeto artifisałe"@vec ;
+	rdfs:label "vıraste estek"@diq ;
+	skos:prefLabel "vıraste estek"@diq ;
+	schema:name "vıraste estek"@diq ;
+	rdfs:label "umetna entiteta"@sl ;
+	skos:prefLabel "umetna entiteta"@sl ;
+	schema:name "umetna entiteta"@sl ;
+	rdfs:label "produkt"@sk ;
+	skos:prefLabel "produkt"@sk ;
+	schema:name "produkt"@sk ;
+	rdfs:label "ഉൽപ്പന്നം"@ml ;
+	skos:prefLabel "ഉൽപ്പന്നം"@ml ;
+	schema:name "ഉൽപ്പന്നം"@ml ;
+	rdfs:label "Produkt"@gsw ;
+	skos:prefLabel "Produkt"@gsw ;
+	schema:name "Produkt"@gsw ;
+	rdfs:label "тырышлык нәтиҗәсе"@tt-cyrl ;
+	skos:prefLabel "тырышлык нәтиҗәсе"@tt-cyrl ;
+	schema:name "тырышлык нәтиҗәсе"@tt-cyrl ;
+	rdfs:label "apopy"@gn ;
+	skos:prefLabel "apopy"@gn ;
+	schema:name "apopy"@gn ;
+	rdfs:label "product"@en-us ;
+	skos:prefLabel "product"@en-us ;
+	schema:name "product"@en-us ;
+	rdfs:label "ผลิตผล"@th ;
+	skos:prefLabel "ผลิตผล"@th ;
+	schema:name "ผลิตผล"@th ;
+	schema:description "необязательно материальный, но созданный человеком"@ru,
+		"anything created by humans (either material or mental)"@en,
+		"사람이 만들어 낸 것 (물질적인 것과 정신적인 것 둘 다 포함)"@ko,
+		"objet ou concept créé par des humains"@fr,
+		"von Menschen Erschaffenes"@de,
+		"entidad u objeto creado por humanos tanto material como inmaterial"@es,
+		"dowolny wytwór działalności człowieka (materialny lub niematerialny)"@pl,
+		"noe skapt av mennesker (materielt eller mentalt)"@nb,
+		"cosa matiriali o immatiriali ca fu fatta o cuncipita di l'omu"@scn,
+		"人によって作られたあらゆるもの（物質的・精神的両方を含む）"@ja,
+		"mikä tahansa ihmisten luoma (joko aineellinen tai henkinen)"@fi,
+		"qualquer coisa criada por humanos (seja material ou mental)"@pt-br,
+		"jebkas cilvēka radīts (materiāls vai garīgs)"@lv,
+		"eenige ding wat deur mense gemaak of verbeel is"@af,
+		"будь що зроблене людиною, матеріальне чи нематеріальне"@uk,
+		"cualquier cosa (material o mental) creada por humanos"@ast,
+		"всичко създадено от човек"@bg,
+		"cokoliv, co vytvořil člověk"@cs,
+		"çdo gjë e krijuar nga njerëzit (qoftë materiale apo mendore)"@sq,
+		"כל דבר שנוצר על־ידי אנשים, חומרי או רוחני"@he,
+		"door mensen gemaakt object of idee"@nl,
+		"hal yang direka oleh manusia baik material maupun mental"@id,
+		"створаная чалавекам сутнасьць"@be-tarask,
+		"insanlar tarafından yaratılan her şey (maddi veya zihinsel)"@tr,
+		"apa-apa yang dicipta oleh manusia (sama ada bahan atau mental)"@ms,
+		"orice creat de oameni (fie material sau mental)"@ro,
+		"tipo di oggetto"@it,
+		"resultat d'algun tipus de treball o esforç"@ca,
+		"എതെങ്കിലും വിധത്തിലുള്ള / സൃഷ്ടിയുടെ ശ്രമത്തിന്റെ ഫലം"@ml,
+		"某些工作或努力带来的成果"@zh-hans,
+		"s Ergebnis vo Arbet oder anderem ziilgrichtetem Handle"@gsw,
+		"resultado de um trabalho ou esforço"@pt,
+		"resultado de algún tipo de traballo"@gl,
+		"resultat af et arbejde eller indsats"@da,
+		"výsledok vytvorený druhom práce alebo úsilia"@sk,
+		"result of some kind of work or effort"@en-us ;
+	skos:altLabel "Entität"@de,
+		"Produkt"@de,
+		"Arbeitsergebnis"@de,
+		"Arbeitsprodukt"@de,
+		"creation"@en,
+		"human-made"@en,
+		"man-made"@en,
+		"man-made object"@en,
+		"human-made object"@en,
+		"artificial object"@en,
+		"non-natural object"@en,
+		"product"@en,
+		"work product"@en,
+		"kreacija"@hr,
+		"rezultat"@hr,
+		"criação"@pt-br,
+		"produto"@pt-br,
+		"зроблено людиною"@uk,
+		"створено людиною"@uk,
+		"результат праці"@uk,
+		"продукт праці"@uk,
+		"результати праці"@uk,
+		"продукти праці"@uk,
+		"создано человеком"@ru,
+		"артефакт"@ru,
+		"результат усилий"@ru,
+		"creación"@ast,
+		"fecho pol ser humanu"@ast,
+		"productu"@ast,
+		"творба"@bg,
+		"сътворение"@bg,
+		"인공 물체"@ko,
+		"인공적 객체"@ko,
+		"인공적 개체"@ko,
+		"인공 개체"@ko,
+		"인공 객체"@ko,
+		"인공"@ko,
+		"جسم اصطناعي"@ar,
+		"výtvor"@cs,
+		"entita"@cs,
+		"lidský výtvor"@cs,
+		"produkt"@cs,
+		"výrobek"@cs,
+		"menneskelaga objekt"@nn,
+		"menneskeskapt objekt"@nn,
+		"kunstig skapning"@nn,
+		"kunstig entitet"@nn,
+		"produkt"@nn,
+		"кеше яһаған"@ba,
+		"krijim"@sq,
+		"objekt artificial"@sq,
+		"objekt jo-natyral"@sq,
+		"i bërë nga njeriu"@sq,
+		"prodhim"@sq,
+		"produkt"@sq,
+		"штучны твор"@be-tarask,
+		"чалавечы твор"@be-tarask,
+		"артэфакт"@be-tarask,
+		"прадукт"@be-tarask,
+		"вынік працы"@be-tarask,
+		"вынік намаганьняў"@be-tarask,
+		"entiti buatan"@ms,
+		"entiti buatan manusia"@ms,
+		"buatan manusia"@ms,
+		"barang ciptaan"@ms,
+		"barang buatan manusia"@ms,
+		"barangan buatan"@ms,
+		"barangan ciptaan"@ms,
+		"barangan buatan manusia"@ms,
+		"keluaran"@ms,
+		"produk"@ms,
+		"oluşturma"@tr,
+		"insan yapımı"@tr,
+		"el yapımı"@tr,
+		"yapay madde"@tr,
+		"yapay nesne"@tr,
+		"yapay ürün"@tr,
+		"suni madde"@tr,
+		"suni nesne"@tr,
+		"suni ürün"@tr,
+		"ürün"@tr,
+		"çalışma ürünü"@tr,
+		"creație"@ro,
+		"realizat de om"@ro,
+		"fabricat"@ro,
+		"obiect artificial"@ro,
+		"obiect nenatural"@ro,
+		"人造物"@ja,
+		"人工実体"@ja,
+		"産物"@ja,
+		"製作品"@ja,
+		"objeto artificial"@es,
+		"creación"@es,
+		"producto"@es,
+		"producto de trabajo"@es,
+		"oggetto artificiale"@it,
+		"prodotto"@it,
+		"prodotto del lavoro"@it,
+		"produit"@fr,
+		"produit du travail"@fr,
+		"production du travail"@fr,
+		"পণ্য"@bn,
+		"натиҷаи заҳматҳо"@tg-cyrl,
+		"producte"@ca,
+		"product"@nl,
+		"产品"@zh-hans,
+		"תוצר"@he,
+		"produkt"@sv,
+		"produkt"@pl,
+		"производ"@sr,
+		"produkt"@nb,
+		"tuotos"@fi,
+		"produto"@pt,
+		"táirge"@ga,
+		"məhsul"@az,
+		"produkt"@da,
+		"darba rezultāts"@lv,
+		"darba produkts"@lv,
+		"тырышлык нәтиҗәсе"@tt,
+		"produkto"@eo,
+		"produto"@gl,
+		"produto de traballo"@gl,
+		"produto do traballo"@gl,
+		"کلوارن"@ms-arab,
+		"prodoto"@vec,
+		"termék"@hu,
+		"work product"@en-us .
+
+wd:Q1150771 a wikibase:Item ;
+	rdfs:label "output"@en ;
+	skos:prefLabel "output"@en ;
+	schema:name "output"@en ;
+	schema:description "what comes out of something (input)"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q5 a wikibase:Item ;
+	rdfs:label "human"@en ;
+	skos:prefLabel "human"@en ;
+	schema:name "human"@en ;
+	schema:description "common name of Homo sapiens, unique extant species of the genus Homo, from embryo to adult"@en .
+
+wd:P828 a wikibase:Property ;
+	rdfs:label "has cause"@en ;
+	skos:prefLabel "has cause"@en ;
+	schema:name "has cause"@en ;
+	schema:description "underlying cause, thing that ultimately resulted in this effect"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P828 ;
+	wikibase:claim p:P828 ;
+	wikibase:statementProperty ps:P828 ;
+	wikibase:statementValue psv:P828 ;
+	wikibase:qualifier pq:P828 ;
+	wikibase:qualifierValue pqv:P828 ;
+	wikibase:reference pr:P828 ;
+	wikibase:referenceValue prv:P828 ;
+	wikibase:novalue wdno:P828 .
+
+p:P828 a owl:ObjectProperty .
+
+psv:P828 a owl:ObjectProperty .
+
+pqv:P828 a owl:ObjectProperty .
+
+prv:P828 a owl:ObjectProperty .
+
+wdt:P828 a owl:ObjectProperty .
+
+ps:P828 a owl:ObjectProperty .
+
+pq:P828 a owl:ObjectProperty .
+
+pr:P828 a owl:ObjectProperty .
+
+wdno:P828 a owl:Class ;
+	owl:complementOf _:d5c04d284ed06e97d905f88f3040f07f .
+
+_:d5c04d284ed06e97d905f88f3040f07f a owl:Restriction ;
+	owl:onProperty wdt:P828 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q386724 a wikibase:Item ;
+	rdfs:label "work"@en ;
+	skos:prefLabel "work"@en ;
+	schema:name "work"@en ;
+	schema:description "individual intellectual or artistic creation"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q2424752 a wikibase:Item ;
+	rdfs:label "product"@en ;
+	skos:prefLabel "product"@en ;
+	schema:name "product"@en ;
+	schema:description "anything that can be offered to a market"@en .
+
+wd:Q14623823 a wikibase:Item ;
+	rdfs:label "artificiality"@en ;
+	skos:prefLabel "artificiality"@en ;
+	schema:name "artificiality"@en ;
+	schema:description "state of being the product of intentional human manufacture, rather than occurring naturally"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1014 a wikibase:Property ;
+	rdfs:label "Art & Architecture Thesaurus ID"@en ;
+	skos:prefLabel "Art & Architecture Thesaurus ID"@en ;
+	schema:name "Art & Architecture Thesaurus ID"@en ;
+	schema:description "identifier in the Art & Architecture Thesaurus by the Getty Research Institute"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1014 ;
+	wikibase:claim p:P1014 ;
+	wikibase:statementProperty ps:P1014 ;
+	wikibase:statementValue psv:P1014 ;
+	wikibase:qualifier pq:P1014 ;
+	wikibase:qualifierValue pqv:P1014 ;
+	wikibase:reference pr:P1014 ;
+	wikibase:referenceValue prv:P1014 ;
+	wikibase:novalue wdno:P1014 ;
+	wikibase:directClaimNormalized wdtn:P1014 ;
+	wikibase:statementValueNormalized psn:P1014 ;
+	wikibase:qualifierValueNormalized pqn:P1014 ;
+	wikibase:referenceValueNormalized prn:P1014 .
+
+p:P1014 a owl:ObjectProperty .
+
+psv:P1014 a owl:ObjectProperty .
+
+pqv:P1014 a owl:ObjectProperty .
+
+prv:P1014 a owl:ObjectProperty .
+
+wdt:P1014 a owl:DatatypeProperty .
+
+ps:P1014 a owl:DatatypeProperty .
+
+pq:P1014 a owl:DatatypeProperty .
+
+pr:P1014 a owl:DatatypeProperty .
+
+psn:P1014 a owl:ObjectProperty .
+
+pqn:P1014 a owl:ObjectProperty .
+
+prn:P1014 a owl:ObjectProperty .
+
+wdtn:P1014 a owl:ObjectProperty .
+
+wdno:P1014 a owl:Class ;
+	owl:complementOf _:b3313e8714e8603bc734ad31fe890277 .
+
+_:b3313e8714e8603bc734ad31fe890277 a owl:Restriction ;
+	owl:onProperty wdt:P1014 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q29651224 a wikibase:Item ;
+	rdfs:label "natural object"@en ;
+	skos:prefLabel "natural object"@en ;
+	schema:name "natural object"@en ;
+	schema:description "naturally occurring object in a natural state, without modification by human effort"@en .
+
+wd:P461 a wikibase:Property ;
+	rdfs:label "opposite of"@en ;
+	skos:prefLabel "opposite of"@en ;
+	schema:name "opposite of"@en ;
+	schema:description "item that is in some way the opposite of this item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P461 ;
+	wikibase:claim p:P461 ;
+	wikibase:statementProperty ps:P461 ;
+	wikibase:statementValue psv:P461 ;
+	wikibase:qualifier pq:P461 ;
+	wikibase:qualifierValue pqv:P461 ;
+	wikibase:reference pr:P461 ;
+	wikibase:referenceValue prv:P461 ;
+	wikibase:novalue wdno:P461 .
+
+p:P461 a owl:ObjectProperty .
+
+psv:P461 a owl:ObjectProperty .
+
+pqv:P461 a owl:ObjectProperty .
+
+prv:P461 a owl:ObjectProperty .
+
+wdt:P461 a owl:ObjectProperty .
+
+ps:P461 a owl:ObjectProperty .
+
+pq:P461 a owl:ObjectProperty .
+
+pr:P461 a owl:ObjectProperty .
+
+wdno:P461 a owl:Class ;
+	owl:complementOf _:7c6b4349f2e51cd4f621a4581e9beb4f .
+
+_:7c6b4349f2e51cd4f621a4581e9beb4f a owl:Restriction ;
+	owl:onProperty wdt:P461 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1282 a wikibase:Property ;
+	rdfs:label "OpenStreetMap tag or key"@en ;
+	skos:prefLabel "OpenStreetMap tag or key"@en ;
+	schema:name "OpenStreetMap tag or key"@en ;
+	schema:description "OpenStreetMap tagging schema (a Key:key, Tag:key=value, Relation:type, or Role:role) for classes, properties, and values"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1282 ;
+	wikibase:claim p:P1282 ;
+	wikibase:statementProperty ps:P1282 ;
+	wikibase:statementValue psv:P1282 ;
+	wikibase:qualifier pq:P1282 ;
+	wikibase:qualifierValue pqv:P1282 ;
+	wikibase:reference pr:P1282 ;
+	wikibase:referenceValue prv:P1282 ;
+	wikibase:novalue wdno:P1282 .
+
+p:P1282 a owl:ObjectProperty .
+
+psv:P1282 a owl:ObjectProperty .
+
+pqv:P1282 a owl:ObjectProperty .
+
+prv:P1282 a owl:ObjectProperty .
+
+wdt:P1282 a owl:DatatypeProperty .
+
+ps:P1282 a owl:DatatypeProperty .
+
+pq:P1282 a owl:DatatypeProperty .
+
+pr:P1282 a owl:DatatypeProperty .
+
+wdno:P1282 a owl:Class ;
+	owl:complementOf _:7fad5050b59b043589f8a3d5515f3c81 .
+
+_:7fad5050b59b043589f8a3d5515f3c81 a owl:Restriction ;
+	owl:onProperty wdt:P1282 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1709 a wikibase:Property ;
+	rdfs:label "equivalent class"@en ;
+	skos:prefLabel "equivalent class"@en ;
+	schema:name "equivalent class"@en ;
+	schema:description "equivalent class in other ontologies (use property URI)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P1709 ;
+	wikibase:claim p:P1709 ;
+	wikibase:statementProperty ps:P1709 ;
+	wikibase:statementValue psv:P1709 ;
+	wikibase:qualifier pq:P1709 ;
+	wikibase:qualifierValue pqv:P1709 ;
+	wikibase:reference pr:P1709 ;
+	wikibase:referenceValue prv:P1709 ;
+	wikibase:novalue wdno:P1709 .
+
+p:P1709 a owl:ObjectProperty .
+
+psv:P1709 a owl:ObjectProperty .
+
+pqv:P1709 a owl:ObjectProperty .
+
+prv:P1709 a owl:ObjectProperty .
+
+wdt:P1709 a owl:ObjectProperty .
+
+ps:P1709 a owl:ObjectProperty .
+
+pq:P1709 a owl:ObjectProperty .
+
+pr:P1709 a owl:ObjectProperty .
+
+wdno:P1709 a owl:Class ;
+	owl:complementOf _:93c565e7ae0faaeda9bd92b52aafde14 .
+
+_:93c565e7ae0faaeda9bd92b52aafde14 a owl:Restriction ;
+	owl:onProperty wdt:P1709 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q96251598 a wikibase:Item ;
+	rdfs:label "type of object"@en ;
+	skos:prefLabel "type of object"@en ;
+	schema:name "type of object"@en ;
+	schema:description "Wikidata metaclass of object, which could be concrete or abstract"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q33104279 a wikibase:Item ;
+	rdfs:label "philosophical concept"@en ;
+	skos:prefLabel "philosophical concept"@en ;
+	schema:name "philosophical concept"@en ;
+	schema:description "concept used in philosophy"@en .
+
+wd:Q3300022 a wikibase:Item ;
+	rdfs:label "synthetic material"@en ;
+	skos:prefLabel "synthetic material"@en ;
+	schema:name "synthetic material"@en ;
+	schema:description "material created by processing man-made materials, usually as a substitute for a natural material"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15621286 a wikibase:Item ;
+	rdfs:label "intellectual work"@en ;
+	skos:prefLabel "intellectual work"@en ;
+	schema:name "intellectual work"@en ;
+	schema:description "work created through human thought and perception, including creative work"@en .
+
+wd:P1269 a wikibase:Property ;
+	rdfs:label "facet of"@en ;
+	skos:prefLabel "facet of"@en ;
+	schema:name "facet of"@en ;
+	schema:description "topic of which this item is an aspect, item that offers a broader perspective on the same topic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1269 ;
+	wikibase:claim p:P1269 ;
+	wikibase:statementProperty ps:P1269 ;
+	wikibase:statementValue psv:P1269 ;
+	wikibase:qualifier pq:P1269 ;
+	wikibase:qualifierValue pqv:P1269 ;
+	wikibase:reference pr:P1269 ;
+	wikibase:referenceValue prv:P1269 ;
+	wikibase:novalue wdno:P1269 .
+
+p:P1269 a owl:ObjectProperty .
+
+psv:P1269 a owl:ObjectProperty .
+
+pqv:P1269 a owl:ObjectProperty .
+
+prv:P1269 a owl:ObjectProperty .
+
+wdt:P1269 a owl:ObjectProperty .
+
+ps:P1269 a owl:ObjectProperty .
+
+pq:P1269 a owl:ObjectProperty .
+
+pr:P1269 a owl:ObjectProperty .
+
+wdno:P1269 a owl:Class ;
+	owl:complementOf _:a498557c9680bd52a026c4a3e1e3a863 .
+
+_:a498557c9680bd52a026c4a3e1e3a863 a owl:Restriction ;
+	owl:onProperty wdt:P1269 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2347 a wikibase:Property ;
+	rdfs:label "YSO ID"@en ;
+	skos:prefLabel "YSO ID"@en ;
+	schema:name "YSO ID"@en ;
+	schema:description "identifier for a concept in the General Finnish Ontology YSO"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2347 ;
+	wikibase:claim p:P2347 ;
+	wikibase:statementProperty ps:P2347 ;
+	wikibase:statementValue psv:P2347 ;
+	wikibase:qualifier pq:P2347 ;
+	wikibase:qualifierValue pqv:P2347 ;
+	wikibase:reference pr:P2347 ;
+	wikibase:referenceValue prv:P2347 ;
+	wikibase:novalue wdno:P2347 ;
+	wikibase:directClaimNormalized wdtn:P2347 ;
+	wikibase:statementValueNormalized psn:P2347 ;
+	wikibase:qualifierValueNormalized pqn:P2347 ;
+	wikibase:referenceValueNormalized prn:P2347 .
+
+p:P2347 a owl:ObjectProperty .
+
+psv:P2347 a owl:ObjectProperty .
+
+pqv:P2347 a owl:ObjectProperty .
+
+prv:P2347 a owl:ObjectProperty .
+
+wdt:P2347 a owl:DatatypeProperty .
+
+ps:P2347 a owl:DatatypeProperty .
+
+pq:P2347 a owl:DatatypeProperty .
+
+pr:P2347 a owl:DatatypeProperty .
+
+psn:P2347 a owl:ObjectProperty .
+
+pqn:P2347 a owl:ObjectProperty .
+
+prn:P2347 a owl:ObjectProperty .
+
+wdtn:P2347 a owl:ObjectProperty .
+
+wdno:P2347 a owl:Class ;
+	owl:complementOf _:5938edce2b698c44bad94eb14b56af07 .
+
+_:5938edce2b698c44bad94eb14b56af07 a owl:Restriction ;
+	owl:onProperty wdt:P2347 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8313 a wikibase:Property ;
+	rdfs:label "Den Store Danske ID"@en ;
+	skos:prefLabel "Den Store Danske ID"@en ;
+	schema:name "Den Store Danske ID"@en ;
+	schema:description "identifier of an article in the online encyclopedia denstoredanske.lex.dk"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8313 ;
+	wikibase:claim p:P8313 ;
+	wikibase:statementProperty ps:P8313 ;
+	wikibase:statementValue psv:P8313 ;
+	wikibase:qualifier pq:P8313 ;
+	wikibase:qualifierValue pqv:P8313 ;
+	wikibase:reference pr:P8313 ;
+	wikibase:referenceValue prv:P8313 ;
+	wikibase:novalue wdno:P8313 ;
+	wikibase:directClaimNormalized wdtn:P8313 ;
+	wikibase:statementValueNormalized psn:P8313 ;
+	wikibase:qualifierValueNormalized pqn:P8313 ;
+	wikibase:referenceValueNormalized prn:P8313 .
+
+p:P8313 a owl:ObjectProperty .
+
+psv:P8313 a owl:ObjectProperty .
+
+pqv:P8313 a owl:ObjectProperty .
+
+prv:P8313 a owl:ObjectProperty .
+
+wdt:P8313 a owl:DatatypeProperty .
+
+ps:P8313 a owl:DatatypeProperty .
+
+pq:P8313 a owl:DatatypeProperty .
+
+pr:P8313 a owl:DatatypeProperty .
+
+psn:P8313 a owl:ObjectProperty .
+
+pqn:P8313 a owl:ObjectProperty .
+
+prn:P8313 a owl:ObjectProperty .
+
+wdtn:P8313 a owl:ObjectProperty .
+
+wdno:P8313 a owl:Class ;
+	owl:complementOf _:5ce4742f42f26afe436b747d2437666d .
+
+_:5ce4742f42f26afe436b747d2437666d a owl:Restriction ;
+	owl:onProperty wdt:P8313 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15401930 owl:sameAs wd:Q16686448 .

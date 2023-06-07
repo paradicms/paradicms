@@ -1,8 +1,9 @@
 import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Person", () => {
-  const sut = testModelSet.personByUri("http://example.com/person4");
+  const sut = testModelSet.personByIri("http://example.com/person4");
 
   it("should get the person's family name", () => {
     expect(sut.familyName).to.not.be.empty;

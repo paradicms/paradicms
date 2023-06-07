@@ -15,8 +15,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: Collection;
   configuration: AppConfiguration | null;
   currentWork?: Work;
-  nextWork?: {readonly uri: string};
-  previousWork?: {readonly uri: string};
+  nextWork?: {readonly key: string};
+  previousWork?: {readonly key: string};
 }>> = ({
   collection,
   children,
@@ -52,8 +52,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             {previousWork ? (
               <Link
                 href={Hrefs.work({
-                  collectionUri: collection.uri,
-                  workUri: previousWork.uri,
+                  collectionKey: collection.key,
+                  workKey: previousWork.key,
                 })}
                 passHref
               >
@@ -71,8 +71,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
               <span>&nbsp;/&nbsp;</span>
               <Link
                 href={Hrefs.work({
-                  collectionUri: collection.uri,
-                  workUri: currentWork.uri,
+                  collectionKey: collection.key,
+                  workKey: currentWork.key,
                 })}
               >
                 {currentWork.label}
@@ -96,8 +96,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             {nextWork ? (
               <Link
                 href={Hrefs.work({
-                  collectionUri: collection.uri,
-                  workUri: nextWork.uri,
+                  collectionKey: collection.key,
+                  workKey: nextWork.key,
                 })}
                 passHref
               >

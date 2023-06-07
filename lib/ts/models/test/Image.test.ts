@@ -1,19 +1,20 @@
 import {expect} from "chai";
 import {imagePlaceholderSrc} from "../src";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Image", () => {
   // sut should be an original image
   const sut = testModelSet.works[0].images.find(image => image.isOriginal)!;
 
   it("should get the image's original image", () => {
-    expect(sut.originalImage.uri).to.eq(sut.uri);
+    expect(sut.originalImage.iris).to.eq(sut.iris);
   });
 
   it("should get derived images", () => {
     expect(sut.derivedImages).to.not.be.empty;
     for (const derivedImage of sut.derivedImages) {
-      expect(derivedImage.originalImageUri).to.eq(sut.uri);
+      expect(derivedImage.originalImageIri).to.eq(sut.iris[0]);
       expect(derivedImage.derivedImages).to.be.empty;
     }
   });
@@ -42,9 +43,5 @@ describe("Image", () => {
 
   it("should get the label", () => {
     expect(sut.label).to.not.be.empty;
-  });
-
-  it("should get the image's URI", () => {
-    expect(sut.uri).to.not.be.empty;
   });
 });

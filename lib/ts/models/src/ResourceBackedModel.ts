@@ -1,13 +1,17 @@
 import {Resource} from "@paradicms/rdf";
-import {BlankNode, Dataset, DefaultGraph, NamedNode} from "@rdfjs/types";
+import {Dataset, DatasetCore} from "@rdfjs/types";
 import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
-import {ModelToRdfTriple} from "./ModelToRdfTriple";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {ModelIdentifier} from "./ModelIdentifier";
+import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
+import {Memoize} from "typescript-memoize";
+import {modelIdentifiersToKey} from "./modelIdentifiersToKey";
+import {owl} from "@paradicms/vocabularies";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: Dataset;
-  readonly graph: BlankNode | DefaultGraph | NamedNode;
+  readonly graph: ModelGraphIdentifier;
   readonly modelSet: ModelSet;
 
   constructor(kwds: ResourceBackedModelParameters) {
@@ -17,41 +21,41 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     this.graph = kwds.graph;
   }
 
-  toRdf(): readonly ModelToRdfTriple[] {
-    const triples: ModelToRdfTriple[] = [];
+  get identifiers(): readonly ModelIdentifier[] {
+    return [this.identifier];
+  }
+
+  @Memoize()
+  get key(): string {
+    return modelIdentifiersToKey(this.identifiers);
+  }
+
+  @Memoize()
+  get iris(): readonly string[] {
+    return this.identifiers
+        .filter(identifier => identifier.termType === "NamedNode")
+        .map(identifier => identifier.value);
+  }
+
+  toRdf(addToDataset: DatasetCore) {
     for (const quad of this.dataset.match(null, null, null, this.graph)) {
-      switch (quad.subject.termType) {
-        case "BlankNode":
-        case "NamedNode":
-          break;
-        default:
-          continue;
-      }
-      if (quad.predicate.termType !== "NamedNode") {
-        continue;
-      }
-      switch (quad.object.termType) {
-        case "BlankNode":
-        case "Literal":
-        case "NamedNode":
-          break;
-        default:
-          continue;
-      }
-      triples.push({
-        subject: quad.subject,
-        predicate: quad.predicate,
-        object: quad.object,
-      });
+      addToDataset.add(quad);
     }
-    return triples;
   }
 
   override toString(): string {
     throw new EvalError("should never call toString()");
   }
 
-  get uri(): string | null {
-    return this.identifier.termType === "NamedNode" ? this.identifier.value : null;
+  get sameAsIdentifiers(): readonly ModelIdentifier[] {
+    return this.filterAndMapObjects(owl.sameAs, term => {
+      switch (term.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          return term as ModelIdentifier;
+        default:
+          return null;
+      }
+    });
   }
 }

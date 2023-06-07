@@ -1,10 +1,10 @@
-import { requireNonNull } from "@paradicms/utilities";
-import { rdf } from "@paradicms/vocabularies";
-import { Mixin } from "ts-mixer";
-import { ResourceBackedModel } from "../ResourceBackedModel";
-import { CmsRightsMixin } from "./CmsRightsMixin";
+import {requireNonNull} from "@paradicms/utilities";
+import {rdf} from "@paradicms/vocabularies";
+import {Mixin} from "ts-mixer";
+import {CmsRightsMixin} from "./CmsRightsMixin";
+import {CmsModel} from "./CmsModel";
 
-export class CmsText extends Mixin(ResourceBackedModel, CmsRightsMixin) {
+export class CmsText extends Mixin(CmsModel, CmsRightsMixin) {
   override toString(): string {
     return this.value;
   }

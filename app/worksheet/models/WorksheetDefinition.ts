@@ -15,8 +15,8 @@ export class WorksheetDefinition {
   }
 
   @Memoize()
-  featureSetByUriOptional(uri: string): WorksheetFeatureSetDefinition | null {
-    const propertyGroup = this.modelSet.propertyGroupByUriOptional(uri);
+  featureSetByIriOptional(iri: string): WorksheetFeatureSetDefinition | null {
+    const propertyGroup = this.modelSet.propertyGroupByIriOptional(iri);
     return propertyGroup
       ? new WorksheetFeatureSetDefinition(propertyGroup)
       : null;
@@ -29,13 +29,18 @@ export class WorksheetDefinition {
     );
   }
 
-  featureValueByUriOptional(
-    uri: string
+  featureValueByIriOptional(
+    iri: string
   ): WorksheetFeatureValueDefinition | null {
-    return this.modelSet.conceptByUriOptional(uri);
+    return (
+      this.featureValues.find(featureValue => featureValue.iri === iri) ?? null
+    );
   }
 
+  @Memoize()
   get featureValues(): readonly WorksheetFeatureValueDefinition[] {
-    return this.modelSet.concepts;
+    return this.modelSet.concepts.map(
+      concept => new WorksheetFeatureValueDefinition(concept)
+    );
   }
 }

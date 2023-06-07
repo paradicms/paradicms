@@ -1,9 +1,10 @@
 import {expect} from "chai";
 import {Text} from "../src";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 describe("Text", () => {
-  const work = testModelSet.workByUri("http://example.com/collection0/work2");
+  const work = testModelSet.workByIri("http://example.com/collection0/work2");
   const sut: Text = work.description! as Text;
 
   it("should provide the value", () => {

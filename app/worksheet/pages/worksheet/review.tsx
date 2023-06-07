@@ -215,7 +215,7 @@ const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
                 return null;
               }
               return (
-                <React.Fragment key={featureSet.uri}>
+                <React.Fragment key={featureSet.iri}>
                   <h4 className="text-center">{featureSet.definition.label}</h4>
                   <Table className="table-bordered">
                     <thead>
@@ -227,13 +227,13 @@ const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
                     <tbody>
                       {featureSet.features.map(feature => {
                         return (
-                          <tr key={feature.uri}>
+                          <tr key={feature.iri}>
                             <td className="align-middle text-center w-25">
                               <Link
                                 className="btn btn-lg btn-secondary w-100"
                                 href={Hrefs.worksheetMark({
-                                  featureSetUri: featureSet.uri,
-                                  featureUri: feature.uri,
+                                  featureSetIri: featureSet.iri,
+                                  featureIri: feature.iri,
                                   review: false,
                                   mode: worksheet!.currentMark.mode,
                                   worksheetStateId: worksheet!.stateId,
@@ -248,10 +248,10 @@ const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
                                 .map(value => (
                                   <span
                                     className="border border-info d-inline-block h4 m-2 p-2"
-                                    key={value.uri}
+                                    key={value.iri}
                                     style={{borderWidth: "4px !important"}}
                                   >
-                                    {value.definition.prefLabel}
+                                    {value.definition.label}
                                   </span>
                                 ))}
                             </td>

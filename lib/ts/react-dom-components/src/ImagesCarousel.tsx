@@ -138,7 +138,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
           return null;
         }
         return (
-          <CarouselItem key={originalImage.uri}>
+          <CarouselItem key={originalImage.key}>
             {renderedOriginalImage}
           </CarouselItem>
         );

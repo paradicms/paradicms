@@ -1,12 +1,5 @@
 import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
-import {
-  BlankNode,
-  Dataset,
-  DefaultGraph,
-  NamedNode,
-  Quad_Graph,
-  Term,
-} from "@rdfjs/types";
+import {Dataset, Quad_Graph, Term} from "@rdfjs/types";
 import {AgentPropertyValue} from "./AgentPropertyValue";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
@@ -16,6 +9,7 @@ import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
 import {CmsText} from "./cms/CmsText";
 import {Property} from "./Property";
+import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 
 export const createPropertyValueFromTerm = (kwds: {
   dataset: Dataset;
@@ -35,7 +29,7 @@ export const createPropertyValueFromTerm = (kwds: {
         property,
         new CmsText({
           dataset,
-          graph: termGraph as BlankNode | DefaultGraph | NamedNode, // Blank node must be in the same graph as the current node
+          graph: termGraph as ModelGraphIdentifier, // Blank node must be in the same graph as the current node
           identifier: term,
           modelSet,
         })
@@ -45,19 +39,19 @@ export const createPropertyValueFromTerm = (kwds: {
       // #78 index lookups take half as much time (amortized over multiple works)
       // as getting the rdf:type of the NamedNode and branching on its value.
       {
-        const concept = modelSet.conceptByUriOptional(term.value);
+        const concept = modelSet.conceptByIriOptional(term.value);
         if (concept) {
           return new ConceptPropertyValue(concept, property);
         }
       }
       {
-        const organization = modelSet.organizationByUriOptional(term.value);
+        const organization = modelSet.organizationByIriOptional(term.value);
         if (organization) {
           return new AgentPropertyValue(organization, property);
         }
       }
       {
-        const person = modelSet.personByUriOptional(term.value);
+        const person = modelSet.personByIriOptional(term.value);
         if (person) {
           return new AgentPropertyValue(person, property);
         }

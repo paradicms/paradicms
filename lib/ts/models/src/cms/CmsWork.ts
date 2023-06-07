@@ -4,7 +4,6 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Collection} from "../Collection";
 import {PropertyValue} from "../PropertyValue";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {RightsMixin} from "../RightsMixin";
 import {Text} from "../Text";
 import {Work} from "../Work";
@@ -20,6 +19,7 @@ import {CmsTitleMixin} from "./CmsTitleMixin";
 import {mapCmsLocationObject} from "./mapCmsLocationObject";
 import {mapCmsTextObject} from "./mapCmsTextObject";
 import {Property} from "../Property";
+import {CmsNamedModel} from "./CmsNamedModel";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -56,7 +56,7 @@ const getRightsWorkAgents = (
 };
 
 export class CmsWork extends Mixin(
-  ResourceBackedNamedModel,
+  CmsNamedModel,
   CmsDescriptionMixin,
   CmsImagesMixin,
   CmsTitleMixin,
@@ -81,7 +81,7 @@ export class CmsWork extends Mixin(
   }
 
   get collections(): readonly Collection[] {
-    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByUri(collection.value) : null);
+    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByIri(collection.value) : null);
   }
 
   @Memoize()
@@ -127,7 +127,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return this.modelSet.workEventsByWorkUri(this.uri);
+    return this.modelSet.workEventsByWorkIri(this.iri);
   }
 
   get label(): string {
@@ -150,10 +150,10 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get propertyValues(): readonly PropertyValue[] {
-    return this.modelSet.properties.flatMap(property => this.propertyValuesByProperty(property));
+    return this.modelSet.properties.flatMap(property => property.iris.flatMap(propertyIri => this.propertyValuesByProperty(property, propertyIri)));
   }
 
-  private propertyValuesByProperty(property: Property): readonly PropertyValue[] {
+  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValue[] {
     return createPropertyValuesFromQuadObjects({
       dataset: this.dataset,
       modelSet: this.modelSet,
@@ -161,7 +161,7 @@ export class CmsWork extends Mixin(
       quads: this.dataset
           .match(
               this.identifier,
-              DataFactory.namedNode(property.uri),
+              DataFactory.namedNode(propertyIri),
               null,
               this.graph
           )
@@ -170,7 +170,7 @@ export class CmsWork extends Mixin(
   }
 
   @Memoize()
-  propertyValuesByPropertyUri(propertyUri: string): readonly PropertyValue[] {
-    return this.propertyValuesByProperty(this.modelSet.propertyByUri(propertyUri));
+  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+    return this.propertyValuesByProperty(this.modelSet.propertyByIri(propertyIri), propertyIri);
   }
 }

@@ -30,7 +30,7 @@ export const mapCmsAgentObject = (
     case "Literal":
       return new LiteralAgent(term);
     case "NamedNode":
-      return modelParameters.modelSet.agentByUri(term.value);
+      return modelParameters.modelSet.agentByIri(term.value);
     default:
       return null;
   }

@@ -5,26 +5,26 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Image} from "../Image";
 import {ImageDimensions} from "../ImageDimensions";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import {CmsRightsMixin} from "./CmsRightsMixin";
+import {CmsNamedModel} from "./CmsNamedModel";
 
-export class CmsImage extends Mixin(ResourceBackedNamedModel, CmsRightsMixin)
+export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
   implements Image {
   @Memoize()
-  get depictsUri(): string {
+  get depictsIri(): string {
     return requireNonNull(
-      this.findAndMapObject(foaf.depicts, this.mapUriObject)
+      this.findAndMapObject(foaf.depicts, this.mapIriObject)
     );
   }
 
   get derivedImages(): readonly Image[] {
-    if (this.originalImageUri !== null) {
+    if (this.originalImageIri !== null) {
       // This is a derived image
       return [];
     }
-    return this.modelSet.imagesByOriginalImageUri(this.uri);
+    return this.modelSet.imagesByOriginalImageIri(this.iri);
   }
 
   @Memoize()
@@ -51,7 +51,7 @@ export class CmsImage extends Mixin(ResourceBackedNamedModel, CmsRightsMixin)
   }
 
   get isOriginal(): boolean {
-    return this.originalImageUri === null;
+    return this.originalImageIri === null;
   }
 
   get label(): string | null {
@@ -64,13 +64,13 @@ export class CmsImage extends Mixin(ResourceBackedNamedModel, CmsRightsMixin)
   }
 
   @Memoize()
-  get originalImageUri(): string | null {
-    return this.findAndMapObject(cms.thumbnailOf, this.mapUriObject);
+  get originalImageIri(): string | null {
+    return this.findAndMapObject(cms.thumbnailOf, this.mapIriObject);
   }
 
   get originalImage(): Image {
-    const originalImageUri = this.originalImageUri;
-    return originalImageUri ? this.modelSet.imageByUri(originalImageUri) : this;
+    const originalImageIri = this.originalImageIri;
+    return originalImageIri ? this.modelSet.imageByIri(originalImageIri) : this;
   }
 
   static placeholderSrc(dimensions: ImageDimensions) {
@@ -85,10 +85,10 @@ export class CmsImage extends Mixin(ResourceBackedNamedModel, CmsRightsMixin)
     if (src) {
       return src;
     } else if (
-      this.uri.startsWith("http://") ||
-      this.uri.startsWith("https://")
+      this.iri.startsWith("http://") ||
+      this.iri.startsWith("https://")
     ) {
-      return this.uri;
+      return this.iri;
     } else {
       return null;
     }

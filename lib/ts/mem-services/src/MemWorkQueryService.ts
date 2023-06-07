@@ -71,35 +71,34 @@ export class MemWorkQueryService implements WorkQueryService {
   constructor(kwds: {readonly modelSet: ModelSet}) {
     this.modelSet = kwds.modelSet;
 
-    let searchablePropertyUris: string[];
+    let searchablePropertyIris: string[];
     if (kwds.modelSet.properties.length > 0) {
-      searchablePropertyUris = kwds.modelSet.properties
+      searchablePropertyIris = kwds.modelSet.properties
         .filter(property => property.searchable)
-        .map(property => property.uri);
+        .flatMap(property => property.iris);
     } else {
-      searchablePropertyUris = defaultProperties
+      searchablePropertyIris = defaultProperties
         .filter(property => property.searchable)
-        .map(property => property.uri);
+        .flatMap(property => property.iris);
     }
 
     this.index = lunr(function() {
-      const propertyFieldNamesByUri: {[index: string]: string} = {};
-      for (const propertyUri of searchablePropertyUris) {
-        const fieldName = MemWorkQueryService.encodeFieldName(propertyUri);
-        propertyFieldNamesByUri[propertyUri] = fieldName;
+      const propertyFieldNamesByIri: {[index: string]: string} = {};
+      for (const propertyIri of searchablePropertyIris) {
+        const fieldName = MemWorkQueryService.encodeFieldName(propertyIri);
+        propertyFieldNamesByIri[propertyIri] = fieldName;
         this.field(fieldName);
       }
-      this.ref("uri");
 
       for (const work of kwds.modelSet.works) {
-        const doc: any = {uri: work.uri};
-        for (const propertyUri of searchablePropertyUris) {
-          const fieldName = propertyFieldNamesByUri[propertyUri];
+        const doc: any = {id: work.key};
+        for (const propertyIri of searchablePropertyIris) {
+          const fieldName = propertyFieldNamesByIri[propertyIri];
           if (!fieldName) {
             continue;
           }
-          for (const propertyValue of work.propertyValuesByPropertyUri(
-            propertyUri
+          for (const propertyValue of work.propertyValuesByPropertyIri(
+            propertyIri
           )) {
             doc[fieldName] = propertyValue.value;
           }
@@ -130,8 +129,8 @@ export class MemWorkQueryService implements WorkQueryService {
           } = {};
           for (const work of works) {
             let workHasProperty = false;
-            for (const propertyValue of work.propertyValuesByPropertyUri(
-              concreteFilter.propertyUri
+            for (const propertyValue of work.propertyValuesByPropertyIri(
+              concreteFilter.propertyIri
             )) {
               const propertyValueString: string = propertyValue.value;
               const facetValue = facetValues[propertyValueString];
@@ -158,10 +157,10 @@ export class MemWorkQueryService implements WorkQueryService {
             }
           }
           const facet: StringPropertyValueFacet = {
-            propertyUri: concreteFilter.propertyUri,
+            propertyIri: concreteFilter.propertyIri,
             type: "StringPropertyValue",
             unknownCount,
-            values: Object.keys(facetValues).map(value => facetValues[value]),
+            values: Object.values(facetValues),
           };
           facets.push(facet);
           break;
@@ -184,8 +183,8 @@ export class MemWorkQueryService implements WorkQueryService {
             MemWorkQueryService.testValueFilter(
               filter as StringPropertyValueFilter,
               work
-                .propertyValuesByPropertyUri(
-                  (filter as StringPropertyValueFilter).propertyUri
+                .propertyValuesByPropertyIri(
+                  (filter as StringPropertyValueFilter).propertyIri
                 )
                 .map(propertyValue => propertyValue.value)
             )
@@ -212,21 +211,21 @@ export class MemWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const agentsByUri: {[index: string]: AgentUnion} = {};
+      const agentsByIri: {[index: string]: AgentUnion} = {};
       for (const work of works) {
         for (const agent of work.agents) {
-          if (!agent.agent.uri) {
-            continue;
+          for (const agentIri of agent.agent.iris) {
+            if (!agentIri) {
+              continue;
+            }
+            if (agentsByIri[agentIri]) {
+              continue;
+            }
+            agentsByIri[agentIri] = agent.agent;
           }
-          if (agentsByUri[agent.agent.uri]) {
-            continue;
-          }
-          agentsByUri[agent.agent.uri] = agent.agent;
         }
       }
-      const agents = Object.keys(agentsByUri).map(
-        agentUri => agentsByUri[agentUri]
-      );
+      const agents = Object.values(agentsByIri);
 
       const sortedAgents = agents;
       MemWorkQueryService.sortWorkAgentsInPlace(
@@ -243,7 +242,7 @@ export class MemWorkQueryService implements WorkQueryService {
       resolve({
         modelSet: slicedAgentsModelSet,
         totalWorkAgentsCount: agents.length,
-        workAgentUris: slicedAgents.map(agent => agent.uri!),
+        workAgentKeys: slicedAgents.map(agent => agent.key),
       });
     });
   }
@@ -321,7 +320,7 @@ export class MemWorkQueryService implements WorkQueryService {
       // Anything matching the fulltext search
       return this.index
         .search(query.text)
-        .map(({ref}) => this.modelSet.workByUri(ref));
+        .map(({ref}) => this.modelSet.workByKey(ref));
     } else {
       // All works
       return this.modelSet.works;

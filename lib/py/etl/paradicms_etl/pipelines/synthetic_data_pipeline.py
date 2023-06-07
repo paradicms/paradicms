@@ -1,17 +1,21 @@
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple, Dict, Iterable
+from typing import Optional, Tuple, Dict
 from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
 
+from paradicms_etl.enrichers.ambient_reference_enricher import (
+    ambient_reference_enricher,
+)
+from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
+from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
-from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_agent import CmsAgent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
@@ -38,30 +42,6 @@ from paradicms_etl.pipeline import Pipeline
 
 class SyntheticDataPipeline(Pipeline):
     ID = "synthetic_data"
-
-    class __SyntheticDataTsLoader:
-        def __init__(self, *, rdf_file_path: Path, ts_file_path: Path):
-            self.__rdf_file_path = rdf_file_path
-            self.__ts_file_path = ts_file_path
-
-        def __call__(self, *, models: Iterable[Model], **kwds) -> Iterable[Model]:
-            with open(self.__rdf_file_path) as rdf_file:
-                rdf = rdf_file.read().rstrip()
-
-            with open(self.__ts_file_path, "w+") as ts_file:
-                ts_file.write(
-                    """\
-import {trigStringToDatasetCore} from "./trigStringToDatasetCore";
-import {DatasetCore} from "@rdfjs/types";
-
-export const syntheticData: DatasetCore = trigStringToDatasetCore(`
-%s
-`);
-"""
-                    % rdf
-                )
-
-            yield from models
 
     class __SyntheticDataTransformer:
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
@@ -218,15 +198,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                     person_builder.add_page(
                         URIRef(f"http://example.com/person{person_i}page")
                     )
-                person_builder.add(
-                    # dcterms:relation
-                    # Wikidata concept for Alan Turing
-                    DCTERMS.relation,
-                    URIRef("http://www.wikidata.org/entity/Q7251"),
-                ).add(
-                    DCTERMS.relation,
-                    URIRef("http://en.wikipedia.org/wiki/Alan_Turing"),
-                )
+                if person_i == 0:
+                    person_builder.add_same_as(
+                        # Wikidata concept for Alan Turing
+                        URIRef("http://www.wikidata.org/entity/Q7251"),
+                    )
                 agents.append(person_builder.build())
 
             for agent in agents:
@@ -427,12 +403,11 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
 
             # Properties that depend on the work title
             for i in range(2):
-                work_builder.add(
-                    DCTERMS.alternative,
+                work_builder.add_alternative_title(
                     f"{title} alternative title {i}",
                 )
-                work_builder.add(DCTERMS.identifier, f"{title}Id{i}")
-                work_builder.add(DCTERMS.provenance, f"{title} provenance {i}")
+                work_builder.add_identifier(f"{title}Id{i}")
+                work_builder.add_provenance(f"{title} provenance {i}")
 
                 work_builder.add_rights_holder(f"{title} rights holder").add_license(
                     CreativeCommonsLicenses.NC_1_0.uri
@@ -464,25 +439,18 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
                 for contributor_i in range(2)
             ]
             for contributor in contributors:
-                work_builder.add(DCTERMS.contributor, contributor)
+                work_builder.add_contributor(contributor)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
             for creator_uri in creator_uris:
-                work_builder.add(DCTERMS.creator, creator_uri)
+                work_builder.add_creator(creator_uri)
 
-            # dcterms:relation
             # Wikidata concept for the Pilot ACE
-            work_builder.add(
-                DCTERMS.relation,
-                URIRef("http://www.wikidata.org/entity/Q937690"),
-            )
-
-            # Wikipedia
-            work_builder.add(
-                DCTERMS.relation,
-                URIRef("http://en.wikipedia.org/wiki/Pilot-ACE"),
-            )
+            if work_i == 0:
+                work_builder.add_same_as(
+                    URIRef("http://www.wikidata.org/entity/Q937690"),
+                )
 
             if include_description:
                 description_builder = CmsText.builder(
@@ -553,37 +521,35 @@ export const syntheticData: DatasetCore = trigStringToDatasetCore(`
             ).build()
 
     def __init__(self, loader: Optional[Loader] = None):
+        root_dir_path = (
+            Path(__file__).absolute().parent.parent.parent.parent.parent.parent
+        )
+        data_dir_path = root_dir_path / "data" / "synthetic"
+        cache_dir_path = data_dir_path / ".cache"
+
         if loader is None:
-            root_dir_path = (
-                Path(__file__).absolute().parent.parent.parent.parent.parent.parent
-            )
-            data_dir_path = root_dir_path / "data"
-            rdf_file_path = data_dir_path / "synthetic" / "synthetic_data.trig"
+            rdf_file_path = data_dir_path / "synthetic_data.trig"
 
             loader = CompositeLoader(
                 loaders=(
                     Excel2010Loader(
-                        xlsx_file_path=data_dir_path
-                        / "synthetic"
-                        / "synthetic_data.xlsx"
+                        xlsx_file_path=data_dir_path / "synthetic_data.xlsx"
                     ),
                     RdfFileLoader(
                         rdf_file_path=rdf_file_path,
-                    ),
-                    self.__SyntheticDataTsLoader(
-                        rdf_file_path=rdf_file_path,
-                        ts_file_path=root_dir_path
-                        / "lib"
-                        / "ts"
-                        / "test"
-                        / "src"
-                        / "syntheticData.ts",
                     ),
                 )
             )
 
         Pipeline.__init__(
             self,
+            enrichers=(
+                WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
+                WikimediaCommonsEnricher(
+                    cache_dir_path=cache_dir_path / "wikimedia_commons"
+                ),
+                ambient_reference_enricher,  # Should be last
+            ),
             extractor=nop_extractor,
             id=self.ID,
             loader=loader,

@@ -8,6 +8,8 @@ import {getRdfInstanceQuads} from "./getRdfInstanceQuads";
 export const getRdfInstances = (kwds: {
   class_: NamedNode;
   dataset: Dataset;
+  instanceOfPredicate?: NamedNode;
+  subClassOfPredicate?: NamedNode;
 }): TermSet<BlankNode | NamedNode> => {
   const instances = new TermSet<BlankNode | NamedNode>();
   for (const instanceQuad of getRdfInstanceQuads(kwds)) {

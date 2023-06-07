@@ -1,5 +1,7 @@
 import {ConceptPropertyValue, Property} from "@paradicms/models";
 import {Memoize} from "typescript-memoize";
+import invariant from "ts-invariant";
+import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 
 export class WorksheetFeatureDefinition {
   constructor(private readonly property: Property) {}
@@ -12,6 +14,11 @@ export class WorksheetFeatureDefinition {
     return this.property.images;
   }
 
+  get iri() {
+    invariant(this.property.iris.length === 1, "property has multiple IRIs");
+    return this.property.iris[0];
+  }
+
   get label() {
     return this.property.label;
   }
@@ -20,14 +27,15 @@ export class WorksheetFeatureDefinition {
     return this.property.order;
   }
 
-  get uri() {
-    return this.property.uri;
-  }
-
   @Memoize()
-  get values() {
+  get values(): readonly WorksheetFeatureValueDefinition[] {
     return this.property.rangeValues
       .filter(propertyValue => propertyValue instanceof ConceptPropertyValue)
-      .map(propertyValue => (propertyValue as ConceptPropertyValue).concept);
+      .map(
+        propertyValue =>
+          new WorksheetFeatureValueDefinition(
+            (propertyValue as ConceptPropertyValue).concept
+          )
+      );
   }
 }

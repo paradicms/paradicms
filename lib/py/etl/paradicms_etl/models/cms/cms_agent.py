@@ -1,4 +1,4 @@
-from rdflib import FOAF, RDF, DCTERMS, URIRef
+from rdflib import FOAF, RDF, DCTERMS, URIRef, OWL
 from rdflib.resource import Resource
 
 from paradicms_etl.models.agent import Agent
@@ -15,6 +15,10 @@ class CmsAgent(CmsModel, Agent):
 
         def add_relation(self, relation: URIRef) -> "CmsAgent.Builder":
             self.add(DCTERMS.relation, relation)
+            return self
+
+        def add_same_as(self, same_as: URIRef) -> "CmsAgent.Builder":
+            self.add(OWL.sameAs, same_as)
             return self
 
         def set_sort_name(self, sort_name: str) -> "CmsAgent.Builder":
@@ -34,6 +38,7 @@ class CmsAgent(CmsModel, Agent):
                 "name": {"@id": str(FOAF.name)},
                 "page": {"@id": str(FOAF.page)},
                 "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
+                "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},
                 "sortName": {"@id": str(CONTACT.sortName)},
             },
         )

@@ -9,7 +9,7 @@ import {RightsJoinSelector} from "./RightsJoinSelector";
  * See note in ModelSetBuilder re: the use of this interface.
  */
 export interface WorkJoinSelector extends RightsJoinSelector {
-  // Return all collections referred to by this Work's collectionUris.
+  // Return all collections referred to by this Work's collectionIris.
   collections?: CollectionJoinSelector;
   // Return all events that refer to this work.
   events?: WorkEventJoinSelector;

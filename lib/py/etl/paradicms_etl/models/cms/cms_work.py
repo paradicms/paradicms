@@ -1,6 +1,6 @@
 from typing import Tuple, Union
 
-from rdflib import URIRef, Graph
+from rdflib import URIRef, Graph, OWL
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
@@ -15,12 +15,32 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
     class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
+        def add_alternative_title(self, alternative_title: str) -> "CmsWork.Builder":
+            self.add(DCTERMS.alternative, alternative_title)
+            return self
+
         def add_collection_uri(self, collection_uri: URIRef) -> "CmsWork.Builder":
             self.add(CMS.collection, collection_uri)
             return self
 
+        def add_identifier(self, identifier: str) -> "CmsWork.Builder":
+            self.add(DCTERMS.identifier, identifier)
+            return self
+
         def add_page(self, page: Union[str, URIRef]) -> "CmsWork.Builder":
             self.add(FOAF.page, page)
+            return self
+
+        def add_provenance(self, provenance: str) -> "CmsWork.Builder":
+            self.add(DCTERMS.provenance, provenance)
+            return self
+
+        def add_relation(self, relation: URIRef) -> "CmsWork.Builder":
+            self.add(DCTERMS.relation, relation)
+            return self
+
+        def add_same_as(self, same_as: URIRef) -> "CmsWork.Builder":
+            self.add(OWL.sameAs, same_as)
             return self
 
         def build(self) -> "CmsWork":
@@ -67,6 +87,7 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
                     "collection": {"@id": str(CMS.collection), "@type": "@id"},
                     "page": {"@id": str(FOAF.page)},
                     "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
+                    "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},
                     "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
                     "title": {"@id": str(DCTERMS.title)},
                     "type": {"@id": str(DCTERMS.type), "@type": "@id"},

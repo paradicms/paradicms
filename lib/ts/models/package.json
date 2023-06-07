@@ -5,6 +5,7 @@
   "dependencies": {
     "@paradicms/rdf": "1.0.5",
     "@paradicms/vocabularies": "1.0.5",
+    "@paradicms/wikibase": "1.0.5",
     "any-date-parser": "1.5.4",
     "dayjs": "1.10.7",
     "ts-mixer": "6.0.0",
@@ -39,7 +40,7 @@
     "rebuild": "rimraf dist && tsc -b",
     "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register 'test/**/*.ts'",
     "test-coverage": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' nyc mocha -r source-map-support/register -r ts-node/register 'test/**/*.ts'",
-    "test-profile": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -r mocha-profiler 'test/**/Collection.test.ts'",
+    "test-profile": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -r mocha-profiler 'test/**/WikidataModelReader.test.ts'",
     "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -w 'test/**/*.ts'",
     "watch": "tsc -w --preserveWatchOutput"
   },

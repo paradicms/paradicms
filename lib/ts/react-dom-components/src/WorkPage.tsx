@@ -52,7 +52,7 @@ export const WorkPage: React.FunctionComponent<{
   for (const workAgent of work.agents) {
     if (
       !workAgents.find(
-        uniqueWorkAgent => uniqueWorkAgent.agent.uri === workAgent.agent.uri
+        uniqueWorkAgent => uniqueWorkAgent.agent.key === workAgent.agent.key
       )
     ) {
       workAgents.push(workAgent);

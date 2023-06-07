@@ -1,19 +1,20 @@
-import { requireNonNull } from "@paradicms/utilities";
-import { cms } from "@paradicms/vocabularies";
-import { Memoize } from "typescript-memoize";
-import { Work } from "../Work";
-import { WorkEvent } from "../WorkEvent";
-import { WorkLocation } from "../WorkLocation";
-import { WorkLocationRole } from "../WorkLocationRole";
-import { CmsEvent } from "./CmsEvent";
+import {requireNonNull} from "@paradicms/utilities";
+import {cms} from "@paradicms/vocabularies";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {Work} from "../Work";
+import {WorkEvent} from "../WorkEvent";
+import {WorkLocation} from "../WorkLocation";
+import {WorkLocationRole} from "../WorkLocationRole";
+import {CmsEvent} from "./CmsEvent";
 
-export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
+export abstract class CmsWorkEvent extends Mixin(CmsEvent) implements WorkEvent {
   get label(): string {
     return this.title;
   }
 
   get work(): Work {
-    return this.modelSet.workByUri(this.workUri);
+    return this.modelSet.workByIri(this.workIri);
   }
 
   @Memoize()
@@ -47,7 +48,7 @@ export abstract class CmsWorkEvent extends CmsEvent implements WorkEvent {
     }
   }
 
-  get workUri(): string {
-    return requireNonNull(this.findAndMapObject(cms.work, this.mapUriObject));
+  get workIri(): string {
+    return requireNonNull(this.findAndMapObject(cms.work, this.mapIriObject));
   }
 }

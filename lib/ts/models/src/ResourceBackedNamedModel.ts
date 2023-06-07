@@ -1,13 +1,16 @@
 import {NamedNode} from "@rdfjs/types";
-import {NamedModel} from "./NamedModel";
 import {ResourceBackedModel} from "./ResourceBackedModel";
 
-export abstract class ResourceBackedNamedModel extends ResourceBackedModel implements NamedModel{
+export abstract class ResourceBackedNamedModel extends ResourceBackedModel {
   override get identifier(): NamedNode {
     return this._identifier as NamedNode;
   }
 
-  override get uri(): string {
+  override get identifiers(): readonly NamedNode[] {
+    return [this.identifier];
+  }
+
+  override get iri(): string {
     return this.identifier.value;
   }
 }

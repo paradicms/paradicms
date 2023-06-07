@@ -13,6 +13,6 @@ export class LiteralAgent extends LiteralModel implements OtherAgent {
   }
   type: "OtherAgent" = "OtherAgent";
   wikipediaUrl: string | null = null;
-  wikidataConceptUri: string | null = null;
+  wikidataConceptIri: string | null = null;
   readonly works: readonly Work[] = [];
 }

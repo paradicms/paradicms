@@ -13,6 +13,7 @@ import {NamedModel} from "../src/NamedModel";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
 import {testModelSet} from "./testModelSet";
+import {describe} from "mocha";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -24,12 +25,12 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
 ) =>
   expect(
     leftModels
-      .map(model => model.uri)
+      .flatMap(model => model.iris)
       .concat()
       .sort()
   ).to.deep.eq(
     rightModels
-      .map(model => model.uri)
+      .flatMap(model => model.iris)
       .concat()
       .sort()
   );
@@ -48,6 +49,7 @@ const countModelSetNamedRdfInstances = (
   modelSet: ModelSet
 ) =>
   [
+    // @ts-ignore
     ...getRdfInstanceQuads({
       class_,
       dataset: modelSet.toRdf(),
@@ -56,6 +58,20 @@ const countModelSetNamedRdfInstances = (
 
 const countModelSetRightsStatements = (modelSet: ModelSet): number =>
   countModelSetNamedRdfInstances(cms.RightsStatement, modelSet);
+
+const hasCommonIri = (
+  leftIris: readonly string[],
+  rightIris: readonly string[]
+): boolean => {
+  for (const leftIri of leftIris) {
+    for (const rightIri of rightIris) {
+      if (leftIri === rightIri) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
 
 describe("ModelSetBuilder", () => {
   const completeModelSet = testModelSet;
@@ -74,7 +90,7 @@ describe("ModelSetBuilder", () => {
   it("should get an agents subset (agents gallery)", () => {
     const work = completeModelSet.works[0];
     const agents = work.agents.map(agent => agent.agent);
-    const namedAgents = agents.filter(agent => agent.uri);
+    const namedAgents = agents.filter(agent => agent.iris.length > 0);
     expect(namedAgents.length).to.be.lt(agents.length);
     const agentsModelSet = sut
       .addAgents(agents, {
@@ -84,9 +100,9 @@ describe("ModelSetBuilder", () => {
     expect(countModelSetNamedAgents(agentsModelSet)).to.eq(namedAgents.length);
     expect(countModelSetImages(agentsModelSet)).to.eq(namedAgents.length);
     for (const namedAgent of namedAgents) {
-      expect(agentsModelSet.imagesByDepictsUri(namedAgent.uri!).length).to.eq(
-        1
-      );
+      expect(
+        agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
+      ).to.eq(1);
     }
   });
 
@@ -186,8 +202,8 @@ describe("ModelSetBuilder", () => {
     expectModelsDeepEq(
       workModelSet.collections,
       completeModelSet.collections.filter(collection =>
-        work.collections.some(
-          workCollection => workCollection.uri === collection.uri
+        work.collections.some(workCollection =>
+          hasCommonIri(workCollection.iris, collection.iris)
         )
       )
     );
@@ -195,7 +211,7 @@ describe("ModelSetBuilder", () => {
     for (const work of workModelSet.works) {
       expect(work.agents).to.have.length(8); // 2 named agents + 2 blank node agents + 4 literal agents
       for (const agent of work.agents) {
-        if (agent.agent.uri) {
+        if (agent.agent.iris.length > 0) {
           expect(agent.agent.thumbnail(THUMBNAIL_SELECTOR)).to.not.be.null;
         }
       }
@@ -213,7 +229,7 @@ describe("ModelSetBuilder", () => {
     expectModelsDeepEq(workModelSet.works, [work]);
     for (const work of workModelSet.works) {
       expect(work.location).not.to.be.null;
-      expect(work.location!.location.uri).to.not.be.empty;
+      expect(work.location!.location.iris).to.not.be.empty;
       expect(work.location!.location.lat).not.to.be.undefined;
     }
 
@@ -228,7 +244,9 @@ describe("ModelSetBuilder", () => {
     let workCreation: WorkCreation | undefined;
     // @ts-ignore
     let workOpening: WorkOpening | undefined;
-    for (const workEvent of completeModelSet.workEventsByWorkUri(work.uri)) {
+    for (const workEvent of completeModelSet.workEventsByWorkIri(
+      work.iris[0]
+    )) {
       switch (workEvent.type) {
         case "WorkClosing":
           workClosing = workEvent;

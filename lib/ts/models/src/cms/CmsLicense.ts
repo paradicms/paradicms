@@ -1,9 +1,10 @@
 import {requireNonNull} from "@paradicms/utilities";
 import {dc11} from "@paradicms/vocabularies";
+import {Mixin} from "ts-mixer";
 import {License} from "../License";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {CmsNamedModel} from "./CmsNamedModel";
 
-export class CmsLicense extends ResourceBackedNamedModel implements License {
+export class CmsLicense extends Mixin(CmsNamedModel) implements License {
   // get identifier(): string {
   //   return requireNonNull(
   //     this.findAndMapObject(dc11.identifier, this.mapStringObject)
@@ -15,7 +16,7 @@ export class CmsLicense extends ResourceBackedNamedModel implements License {
   }
 
   get requiresAttribution(): boolean {
-    switch (this.uri) {
+    switch (this.iri) {
       case "http://creativecommons.org/publicdomain/mark/1.0/":
       case "http://creativecommons.org/publicdomain/zero/1.0/":
         return false;

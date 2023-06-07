@@ -1,6 +1,7 @@
 import {PropertyGroup} from "@paradicms/models";
 import {Memoize} from "typescript-memoize";
 import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
+import invariant from "ts-invariant";
 
 export class WorksheetFeatureSetDefinition {
   constructor(private readonly propertyGroup: PropertyGroup) {}
@@ -16,19 +17,23 @@ export class WorksheetFeatureSetDefinition {
     );
   }
 
-  get featureUris(): readonly string[] {
-    return this.features.map(feature => feature.uri);
+  get featureIris(): readonly string[] {
+    return this.features.map(feature => feature.iri);
   }
 
   get images() {
     return this.propertyGroup.images;
   }
 
-  get label() {
-    return this.propertyGroup.label;
+  get iri() {
+    invariant(
+      this.propertyGroup.iris.length === 1,
+      "PropertyGroup has multiple IRIs"
+    );
+    return this.propertyGroup.iris[0];
   }
 
-  get uri() {
-    return this.propertyGroup.uri;
+  get label() {
+    return this.propertyGroup.label;
   }
 }

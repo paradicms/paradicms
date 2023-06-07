@@ -30,12 +30,12 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly collectionTitle: string | null;
+  readonly collectionLabel: string | null;
   readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collectionTitle,
+  collectionLabel,
   modelSetString,
 }) => {
   const modelSet = useMemo<ModelSet>(
@@ -58,7 +58,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
   return (
     <Layout
-      collectionTitle={collectionTitle ?? undefined}
+      collectionLabel={collectionLabel ?? undefined}
       configuration={configuration}
       onSearch={onSearch}
       properties={modelSet.properties}
@@ -68,8 +68,8 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
         objectsPerPage={configuration?.objectsPerPage ?? 10}
-        renderWorkLink={(workUri, children) => (
-          <Link href={Hrefs.work(workUri)}>
+        renderWorkLink={(work, children) => (
+          <Link href={Hrefs.work(work)}>
             <a>{children}</a>
           </Link>
         )}
@@ -96,7 +96,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      collectionTitle:
+      collectionLabel:
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].label
           : null,

@@ -1,0 +1,462 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q56146933 a schema:Dataset ;
+	schema:about wd:Q56146933 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1879758034"^^xsd:integer ;
+	schema:dateModified "2023-04-21T12:38:10Z"^^xsd:dateTime ;
+	wikibase:statements "6"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "4"^^xsd:integer .
+
+wd:Q56146933 a wikibase:Item ;
+	wdt:P1014 "300235715" ;
+	wdtn:P1014 <http://vocab.getty.edu/aat/300235715> ;
+	wdt:P279 wd:Q10273457 ;
+	wdt:P10431 "MUSIC" ;
+	wdt:P10674 "97088" ;
+	wdt:P11293 "11965861" ;
+	wdt:P1269 wd:Q638 ;
+	p:P1014 s:Q56146933-421616E9-10C7-45BE-A762-0F0540705055 .
+
+s:Q56146933-421616E9-10C7-45BE-A762-0F0540705055 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1014 "300235715" ;
+	psn:P1014 <http://vocab.getty.edu/aat/300235715> .
+
+wd:Q56146933 p:P279 s:Q56146933-4266A1B2-39C5-4599-8E2B-9122F7CA865A .
+
+s:Q56146933-4266A1B2-39C5-4599-8E2B-9122F7CA865A a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q10273457 .
+
+wd:Q56146933 p:P10431 s:Q56146933-B22C506B-AC14-4FB5-AB5F-D3A37593FBFA .
+
+s:Q56146933-B22C506B-AC14-4FB5-AB5F-D3A37593FBFA a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10431 "MUSIC" .
+
+wd:Q56146933 p:P10674 s:Q56146933-5C6C40E5-0282-4B44-83A1-E17CB77DA5D1 .
+
+s:Q56146933-5C6C40E5-0282-4B44-83A1-E17CB77DA5D1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10674 "97088" ;
+	pq:P1810 "Music" .
+
+wd:Q56146933 p:P11293 s:Q56146933-b1e28261-4429-d232-cfea-1601b202701a .
+
+s:Q56146933-b1e28261-4429-d232-cfea-1601b202701a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P11293 "11965861" .
+
+wd:Q56146933 p:P1269 s:Q56146933-b92c09a4-4ad5-53a5-9916-25719f506fcf .
+
+s:Q56146933-b92c09a4-4ad5-53a5-9916-25719f506fcf a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1269 wd:Q638 .
+
+wd:Q56146933 rdfs:label "music equipment"@en ;
+	skos:prefLabel "music equipment"@en ;
+	schema:name "music equipment"@en ;
+	rdfs:label "Gerät für das Musizieren"@de ;
+	skos:prefLabel "Gerät für das Musizieren"@de ;
+	schema:name "Gerät für das Musizieren"@de ;
+	rdfs:label "equipo para música"@es ;
+	skos:prefLabel "equipo para música"@es ;
+	schema:name "equipo para música"@es ;
+	rdfs:label "muziekbenodigdheden"@nl ;
+	skos:prefLabel "muziekbenodigdheden"@nl ;
+	schema:name "muziekbenodigdheden"@nl ;
+	rdfs:label "музыкальное оборудование"@ru ;
+	skos:prefLabel "музыкальное оборудование"@ru ;
+	schema:name "музыкальное оборудование"@ru ;
+	rdfs:label "musiikkiväline"@fi ;
+	skos:prefLabel "musiikkiväline"@fi ;
+	schema:name "musiikkiväline"@fi ;
+	rdfs:label "apparecchiature musicali"@it ;
+	skos:prefLabel "apparecchiature musicali"@it ;
+	schema:name "apparecchiature musicali"@it ;
+	rdfs:label "muzika ekipaĵo"@eo ;
+	skos:prefLabel "muzika ekipaĵo"@eo ;
+	schema:name "muzika ekipaĵo"@eo ;
+	rdfs:label "музичне обладнання"@uk ;
+	skos:prefLabel "музичне обладнання"@uk ;
+	schema:name "музичне обладнання"@uk ;
+	schema:description "instruments, components, and accessories used to make music"@en,
+		"instrumentos, componentes y accesorios utilizados para hacer música"@es,
+		"soittimet, komonentit ja lisävälineet musiikin tuottamiseen"@fi,
+		"strumenti, componenti e accessori utilizzati per fare musica"@it ;
+	skos:altLabel "equipment for music"@en,
+		"attrezzature musicali"@it,
+		"обладнання для музики"@uk .
+
+wd:P1014 a wikibase:Property ;
+	rdfs:label "Art & Architecture Thesaurus ID"@en ;
+	skos:prefLabel "Art & Architecture Thesaurus ID"@en ;
+	schema:name "Art & Architecture Thesaurus ID"@en ;
+	schema:description "identifier in the Art & Architecture Thesaurus by the Getty Research Institute"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1014 ;
+	wikibase:claim p:P1014 ;
+	wikibase:statementProperty ps:P1014 ;
+	wikibase:statementValue psv:P1014 ;
+	wikibase:qualifier pq:P1014 ;
+	wikibase:qualifierValue pqv:P1014 ;
+	wikibase:reference pr:P1014 ;
+	wikibase:referenceValue prv:P1014 ;
+	wikibase:novalue wdno:P1014 ;
+	wikibase:directClaimNormalized wdtn:P1014 ;
+	wikibase:statementValueNormalized psn:P1014 ;
+	wikibase:qualifierValueNormalized pqn:P1014 ;
+	wikibase:referenceValueNormalized prn:P1014 .
+
+p:P1014 a owl:ObjectProperty .
+
+psv:P1014 a owl:ObjectProperty .
+
+pqv:P1014 a owl:ObjectProperty .
+
+prv:P1014 a owl:ObjectProperty .
+
+wdt:P1014 a owl:DatatypeProperty .
+
+ps:P1014 a owl:DatatypeProperty .
+
+pq:P1014 a owl:DatatypeProperty .
+
+pr:P1014 a owl:DatatypeProperty .
+
+psn:P1014 a owl:ObjectProperty .
+
+pqn:P1014 a owl:ObjectProperty .
+
+prn:P1014 a owl:ObjectProperty .
+
+wdtn:P1014 a owl:ObjectProperty .
+
+wdno:P1014 a owl:Class ;
+	owl:complementOf _:b3313e8714e8603bc734ad31fe890277 .
+
+_:b3313e8714e8603bc734ad31fe890277 a owl:Restriction ;
+	owl:onProperty wdt:P1014 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q10273457 a wikibase:Item ;
+	rdfs:label "equipment"@en ;
+	skos:prefLabel "equipment"@en ;
+	schema:name "equipment"@en ;
+	schema:description "collective term for all physical items that are required to exercise a certain activity"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10431 a wikibase:Property ;
+	rdfs:label "Portable Antiquities Scheme object type ID"@en ;
+	skos:prefLabel "Portable Antiquities Scheme object type ID"@en ;
+	schema:name "Portable Antiquities Scheme object type ID"@en ;
+	schema:description "identifier for a type or class of archaeological object, in the United Kingdom Portable Antiquities Scheme database"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10431 ;
+	wikibase:claim p:P10431 ;
+	wikibase:statementProperty ps:P10431 ;
+	wikibase:statementValue psv:P10431 ;
+	wikibase:qualifier pq:P10431 ;
+	wikibase:qualifierValue pqv:P10431 ;
+	wikibase:reference pr:P10431 ;
+	wikibase:referenceValue prv:P10431 ;
+	wikibase:novalue wdno:P10431 ;
+	wikibase:directClaimNormalized wdtn:P10431 ;
+	wikibase:statementValueNormalized psn:P10431 ;
+	wikibase:qualifierValueNormalized pqn:P10431 ;
+	wikibase:referenceValueNormalized prn:P10431 .
+
+p:P10431 a owl:ObjectProperty .
+
+psv:P10431 a owl:ObjectProperty .
+
+pqv:P10431 a owl:ObjectProperty .
+
+prv:P10431 a owl:ObjectProperty .
+
+wdt:P10431 a owl:DatatypeProperty .
+
+ps:P10431 a owl:DatatypeProperty .
+
+pq:P10431 a owl:DatatypeProperty .
+
+pr:P10431 a owl:DatatypeProperty .
+
+psn:P10431 a owl:ObjectProperty .
+
+pqn:P10431 a owl:ObjectProperty .
+
+prn:P10431 a owl:ObjectProperty .
+
+wdtn:P10431 a owl:ObjectProperty .
+
+wdno:P10431 a owl:Class ;
+	owl:complementOf _:1d4712951853488916d54b7d7def7b8d .
+
+_:1d4712951853488916d54b7d7def7b8d a owl:Restriction ;
+	owl:onProperty wdt:P10431 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10674 a wikibase:Property ;
+	rdfs:label "FISH Archaeological Objects Thesaurus ID"@en ;
+	skos:prefLabel "FISH Archaeological Objects Thesaurus ID"@en ;
+	schema:name "FISH Archaeological Objects Thesaurus ID"@en ;
+	schema:description "identifier for a type or class of archaeological object, in the FISH Archaeological Objects Thesaurus"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10674 ;
+	wikibase:claim p:P10674 ;
+	wikibase:statementProperty ps:P10674 ;
+	wikibase:statementValue psv:P10674 ;
+	wikibase:qualifier pq:P10674 ;
+	wikibase:qualifierValue pqv:P10674 ;
+	wikibase:reference pr:P10674 ;
+	wikibase:referenceValue prv:P10674 ;
+	wikibase:novalue wdno:P10674 ;
+	wikibase:directClaimNormalized wdtn:P10674 ;
+	wikibase:statementValueNormalized psn:P10674 ;
+	wikibase:qualifierValueNormalized pqn:P10674 ;
+	wikibase:referenceValueNormalized prn:P10674 .
+
+p:P10674 a owl:ObjectProperty .
+
+psv:P10674 a owl:ObjectProperty .
+
+pqv:P10674 a owl:ObjectProperty .
+
+prv:P10674 a owl:ObjectProperty .
+
+wdt:P10674 a owl:DatatypeProperty .
+
+ps:P10674 a owl:DatatypeProperty .
+
+pq:P10674 a owl:DatatypeProperty .
+
+pr:P10674 a owl:DatatypeProperty .
+
+psn:P10674 a owl:ObjectProperty .
+
+pqn:P10674 a owl:ObjectProperty .
+
+prn:P10674 a owl:ObjectProperty .
+
+wdtn:P10674 a owl:ObjectProperty .
+
+wdno:P10674 a owl:Class ;
+	owl:complementOf _:4c47ca7f060200fe45ddc07bd374d61c .
+
+_:4c47ca7f060200fe45ddc07bd374d61c a owl:Restriction ;
+	owl:onProperty wdt:P10674 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P11293 a wikibase:Property ;
+	rdfs:label "Amazon.com browse node"@en ;
+	skos:prefLabel "Amazon.com browse node"@en ;
+	schema:name "Amazon.com browse node"@en ;
+	schema:description "node related to this concept on amazon.com"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P11293 ;
+	wikibase:claim p:P11293 ;
+	wikibase:statementProperty ps:P11293 ;
+	wikibase:statementValue psv:P11293 ;
+	wikibase:qualifier pq:P11293 ;
+	wikibase:qualifierValue pqv:P11293 ;
+	wikibase:reference pr:P11293 ;
+	wikibase:referenceValue prv:P11293 ;
+	wikibase:novalue wdno:P11293 ;
+	wikibase:directClaimNormalized wdtn:P11293 ;
+	wikibase:statementValueNormalized psn:P11293 ;
+	wikibase:qualifierValueNormalized pqn:P11293 ;
+	wikibase:referenceValueNormalized prn:P11293 .
+
+p:P11293 a owl:ObjectProperty .
+
+psv:P11293 a owl:ObjectProperty .
+
+pqv:P11293 a owl:ObjectProperty .
+
+prv:P11293 a owl:ObjectProperty .
+
+wdt:P11293 a owl:DatatypeProperty .
+
+ps:P11293 a owl:DatatypeProperty .
+
+pq:P11293 a owl:DatatypeProperty .
+
+pr:P11293 a owl:DatatypeProperty .
+
+psn:P11293 a owl:ObjectProperty .
+
+pqn:P11293 a owl:ObjectProperty .
+
+prn:P11293 a owl:ObjectProperty .
+
+wdtn:P11293 a owl:ObjectProperty .
+
+wdno:P11293 a owl:Class ;
+	owl:complementOf _:ecca70d1676759b5ec09c24bfcb88bb7 .
+
+_:ecca70d1676759b5ec09c24bfcb88bb7 a owl:Restriction ;
+	owl:onProperty wdt:P11293 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q638 a wikibase:Item ;
+	rdfs:label "music"@en ;
+	skos:prefLabel "music"@en ;
+	schema:name "music"@en ;
+	schema:description "art/activity of creating art using sound"@en .
+
+wd:P1269 a wikibase:Property ;
+	rdfs:label "facet of"@en ;
+	skos:prefLabel "facet of"@en ;
+	schema:name "facet of"@en ;
+	schema:description "topic of which this item is an aspect, item that offers a broader perspective on the same topic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1269 ;
+	wikibase:claim p:P1269 ;
+	wikibase:statementProperty ps:P1269 ;
+	wikibase:statementValue psv:P1269 ;
+	wikibase:qualifier pq:P1269 ;
+	wikibase:qualifierValue pqv:P1269 ;
+	wikibase:reference pr:P1269 ;
+	wikibase:referenceValue prv:P1269 ;
+	wikibase:novalue wdno:P1269 .
+
+p:P1269 a owl:ObjectProperty .
+
+psv:P1269 a owl:ObjectProperty .
+
+pqv:P1269 a owl:ObjectProperty .
+
+prv:P1269 a owl:ObjectProperty .
+
+wdt:P1269 a owl:ObjectProperty .
+
+ps:P1269 a owl:ObjectProperty .
+
+pq:P1269 a owl:ObjectProperty .
+
+pr:P1269 a owl:ObjectProperty .
+
+wdno:P1269 a owl:Class ;
+	owl:complementOf _:a498557c9680bd52a026c4a3e1e3a863 .
+
+_:a498557c9680bd52a026c4a3e1e3a863 a owl:Restriction ;
+	owl:onProperty wdt:P1269 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q111490522 owl:sameAs wd:Q56146933 .
