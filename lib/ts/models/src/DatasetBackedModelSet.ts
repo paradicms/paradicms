@@ -1,13 +1,13 @@
 import {CachingModelSet} from "./CachingModelSet";
-import {Dataset} from "@rdfjs/types";
+import {DatasetCore} from "@rdfjs/types";
 import {ModelReader} from "./ModelReader";
 
 export class DatasetBackedModelSet extends CachingModelSet {
-    constructor(private readonly dataset: Dataset, modelReader: ModelReader) {
+    constructor(private readonly dataset: DatasetCore, modelReader: ModelReader) {
         super(modelReader);
     }
 
-    override toRdf(): Dataset {
+    override toRdf(): DatasetCore {
         return this.dataset;
     }
 }

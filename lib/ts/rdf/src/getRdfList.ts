@@ -1,6 +1,6 @@
 import {
   BlankNode,
-  Dataset,
+  DatasetCore,
   DefaultGraph,
   Literal,
   NamedNode,
@@ -8,7 +8,7 @@ import {
 import {rdf} from "@tpluscode/rdf-ns-builders";
 
 export const getRdfList = (kwds: {
-  dataset: Dataset;
+  dataset: DatasetCore;
   graph?: BlankNode | DefaultGraph | NamedNode;
   node: BlankNode | NamedNode;
 }): (BlankNode | NamedNode | Literal)[] => {

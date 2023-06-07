@@ -1,4 +1,4 @@
-import {Dataset} from "@rdfjs/types";
+import {DatasetCore} from "@rdfjs/types";
 import {Store} from "n3";
 import {datasetCoreToDataset} from "./datasetCoreToDataset";
 import rdfParser, {ParseOptions} from "rdf-parse";
@@ -24,8 +24,8 @@ class StreamifyString extends Readable {
 export const anyRdfStringToDataset = async (
   input: string,
   options: ParseOptions
-): Promise<Dataset> => {
-  return new Promise<Dataset>((resolve, reject) => {
+): Promise<DatasetCore> => {
+  return new Promise<DatasetCore>((resolve, reject) => {
     const inputStream = new StreamifyString(input);
     const store = new Store();
     rdfParser

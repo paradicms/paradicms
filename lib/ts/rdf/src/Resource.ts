@@ -1,10 +1,10 @@
-import {Dataset, NamedNode, Term} from "@rdfjs/types";
+import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import {xsd} from "@tpluscode/rdf-ns-builders";
 import {ResourceGraphIdentifier} from "./ResourceGraphIdentifier";
 import {ResourceIdentifier} from "./ResourceIdentifier";
 
 export abstract class Resource {
-  abstract readonly dataset: Dataset;
+  abstract readonly dataset: DatasetCore;
   abstract readonly graph: ResourceGraphIdentifier;
   protected readonly _identifier: ResourceIdentifier;
 

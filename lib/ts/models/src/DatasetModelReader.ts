@@ -1,5 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {Dataset, NamedNode} from "@rdfjs/types";
+import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -23,7 +23,7 @@ import {ModelIdentifier} from "./ModelIdentifier";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 
 export abstract class DatasetModelReader implements ModelReader {
-  constructor(protected readonly dataset: Dataset) {}
+  constructor(protected readonly dataset: DatasetCore) {}
 
   protected checkModelGraph(kwds: {
     modelGraph: ModelGraphIdentifier;

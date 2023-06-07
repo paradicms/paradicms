@@ -15,7 +15,7 @@ import {
   Work,
   WorkEventUnion,
 } from "../src";
-import {Dataset} from "@rdfjs/types";
+import {DatasetCore} from "@rdfjs/types";
 
 export const dummyModelSet: ModelSet = {
   agentByIri(agentIri: string): AgentUnion {
@@ -96,7 +96,7 @@ export const dummyModelSet: ModelSet = {
   toFastRdfString(): string {
     throw new EvalError("not implemented");
   },
-  toRdf(): Dataset {
+  toRdf(): DatasetCore {
     throw new EvalError("not implemented");
   },
   workByIri(workIri: string): Work {

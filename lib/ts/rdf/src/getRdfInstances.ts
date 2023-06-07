@@ -1,4 +1,4 @@
-import {BlankNode, Dataset, NamedNode} from "@rdfjs/types";
+import {BlankNode, DatasetCore, NamedNode} from "@rdfjs/types";
 import TermSet from "@rdfjs/term-set";
 import {getRdfInstanceQuads} from "./getRdfInstanceQuads";
 
@@ -7,7 +7,7 @@ import {getRdfInstanceQuads} from "./getRdfInstanceQuads";
  */
 export const getRdfInstances = (kwds: {
   class_: NamedNode;
-  dataset: Dataset;
+  dataset: DatasetCore;
   instanceOfPredicate?: NamedNode;
   subClassOfPredicate?: NamedNode;
 }): TermSet<BlankNode | NamedNode> => {

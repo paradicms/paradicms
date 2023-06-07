@@ -29,7 +29,7 @@
 @prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
 @prefix wdno: <http://www.wikidata.org/prop/novalue/> .
 
-data:Q24229398 a schema:Dataset ;
+data:Q24229398 a schema:DatasetCore ;
 	schema:about wd:Q24229398 ;
 	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
 	schema:softwareVersion "1.0.0" ;

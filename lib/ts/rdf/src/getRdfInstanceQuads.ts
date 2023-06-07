@@ -1,4 +1,4 @@
-import {Dataset, NamedNode, Quad} from "@rdfjs/types";
+import {DatasetCore, NamedNode, Quad} from "@rdfjs/types";
 import TermSet from "@rdfjs/term-set";
 import {rdf, rdfs} from "@tpluscode/rdf-ns-builders";
 
@@ -9,7 +9,7 @@ import {rdf, rdfs} from "@tpluscode/rdf-ns-builders";
  */
 export const getRdfInstanceQuads = (kwds: {
   class_: NamedNode;
-  dataset: Dataset;
+  dataset: DatasetCore;
   instanceOfPredicate?: NamedNode;
   subClassOfPredicate?: NamedNode;
 }): TermSet<Quad> => {
@@ -27,7 +27,7 @@ export const getRdfInstanceQuads = (kwds: {
 
 const getRdfInstanceQuadsRecursive = (kwds: {
   class_: NamedNode;
-  dataset: Dataset;
+  dataset: DatasetCore;
   instanceOfPredicate: NamedNode;
   instanceQuads: TermSet<Quad>;
   subClassOfPredicate: NamedNode;

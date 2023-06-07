@@ -3,7 +3,7 @@ import {
   WikibaseItem,
   WikibaseStatement,
 } from "@paradicms/wikibase";
-import {Dataset, Literal, NamedNode} from "@rdfjs/types";
+import {DatasetCore, Literal, NamedNode} from "@rdfjs/types";
 import {ModelSet} from "../ModelSet";
 import {RelationsMixin} from "../RelationsMixin";
 import {ImagesMixin} from "../ImagesMixin";
@@ -27,7 +27,7 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   private readonly wikibaseItem: WikibaseItem;
 
   constructor(kwds: {
-    dataset: Dataset;
+    dataset: DatasetCore;
     modelSet: ModelSet;
     wikibaseItem: WikibaseItem;
   }) {

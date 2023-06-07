@@ -1,5 +1,5 @@
 import {datasetToFastRdfString} from "@paradicms/rdf";
-import {Dataset} from "rdf-js";
+import {DatasetCore} from "rdf-js";
 import {Memoize} from "typescript-memoize";
 import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
@@ -386,7 +386,7 @@ export class CachingModelSet implements ModelSet {
     return datasetToFastRdfString(this.toRdf());
   }
 
-  toRdf(): Dataset {
+  toRdf(): DatasetCore {
     throw new EvalError("use model.toRdf to serialize");
   }
 

@@ -1,5 +1,5 @@
 import {Resource} from "@paradicms/rdf";
-import {Dataset, DatasetCore} from "@rdfjs/types";
+import {DatasetCore} from "@rdfjs/types";
 import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
@@ -10,7 +10,7 @@ import {modelIdentifiersToKey} from "./modelIdentifiersToKey";
 import {owl} from "@paradicms/vocabularies";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
-  readonly dataset: Dataset;
+  readonly dataset: DatasetCore;
   readonly graph: ModelGraphIdentifier;
   readonly modelSet: ModelSet;
 

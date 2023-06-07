@@ -1,6 +1,5 @@
 import {
   BlankNode,
-  Dataset,
   DatasetCore,
   DefaultGraph,
   NamedNode,
@@ -30,7 +29,7 @@ export class ShapesGraph {
     PropertyShape
   >;
 
-  private constructor(readonly dataset: Dataset) {
+  private constructor(readonly dataset: DatasetCore) {
     this.graphNode = ShapesGraph.readGraph(dataset);
 
     const {
@@ -52,7 +51,7 @@ export class ShapesGraph {
     this.propertyGroupsByNode = propertyGroupsByNode;
   }
 
-  static fromDataset(dataset: Dataset): ShapesGraph {
+  static fromDataset(dataset: DatasetCore): ShapesGraph {
     return new ShapesGraph(dataset);
   }
 
@@ -73,7 +72,7 @@ export class ShapesGraph {
   }
 
   private static readGraph(
-    dataset: Dataset
+    dataset: DatasetCore
   ): BlankNode | DefaultGraph | NamedNode {
     const graphs = [
       ...dataset.reduce((termSet, quad) => {
@@ -97,7 +96,7 @@ export class ShapesGraph {
   }
 
   private static readPropertyGroups(
-    dataset: Dataset,
+    dataset: DatasetCore,
     graph: BlankNode | DefaultGraph | NamedNode,
     shapesGraph: ShapesGraph
   ): {
@@ -124,7 +123,7 @@ export class ShapesGraph {
   }
 
   private static readShapes(
-    dataset: Dataset,
+    dataset: DatasetCore,
     graph: BlankNode | DefaultGraph | NamedNode,
     shapesGraph: ShapesGraph
   ): {

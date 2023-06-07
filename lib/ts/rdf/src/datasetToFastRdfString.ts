@@ -1,7 +1,7 @@
-import {Dataset} from "@rdfjs/types";
+import {DatasetCore} from "@rdfjs/types";
 import {Writer} from "n3";
 
-export const datasetToFastRdfString = (dataset: Dataset): string => {
+export const datasetToFastRdfString = (dataset: DatasetCore): string => {
   const writer = new Writer({
     format: "N-Quads",
   });

@@ -1,5 +1,5 @@
 import {datasetCoreToDataset, fastRdfStringToDataset} from "@paradicms/rdf";
-import {Dataset, DatasetCore} from "@rdfjs/types";
+import {DatasetCore} from "@rdfjs/types";
 import {SameAsModelReader} from "./same-as/SameAsModelReader";
 import {CmsModelReader} from "./cms/CmsModelReader";
 import {WikidataModelReader} from "./wikidata/WikidataModelReader";
@@ -11,7 +11,7 @@ export class ModelSetFactory {
     return ModelSetFactory.fromDataset(fastRdfStringToDataset(fastRdfString));
   }
 
-  static fromDataset(dataset: Dataset): ModelSet {
+  static fromDataset(dataset: DatasetCore): ModelSet {
     return new DatasetBackedModelSet(
       dataset,
       new SameAsModelReader([
