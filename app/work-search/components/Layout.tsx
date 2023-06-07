@@ -24,7 +24,7 @@ import {AppConfiguration, Property} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   cardHeaderLinks?: React.ReactElement[];
-  collectionTitle?: string;
+  collectionLabel?: string;
   className?: string;
   configuration: AppConfiguration | null;
   onSearch?: (text: string) => void;
@@ -33,7 +33,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
 }>> = ({
   cardHeaderLinks,
   children,
-  collectionTitle,
+  collectionLabel,
   configuration,
   title,
   onSearch: onSearchUserDefined,
@@ -60,8 +60,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   let siteTitle: string | undefined;
   if (configuration?.title) {
     siteTitle = configuration.title;
-  } else if (collectionTitle) {
-    siteTitle = collectionTitle;
+  } else if (collectionLabel) {
+    siteTitle = collectionLabel;
   }
 
   const documentTitle: string[] = [];

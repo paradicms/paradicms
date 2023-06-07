@@ -22,7 +22,7 @@ import Hammer from "react-hammerjs";
 import path from "path";
 
 const WorkLocationsMap = dynamic<{
-  readonly collectionIri: string;
+  readonly collectionKey: string;
   readonly workLocations: readonly WorkLocationSummary[];
 }>(
   () =>
@@ -109,7 +109,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
               properties={modelSet.properties}
               renderWorkLocationsMap={workLocations => (
                 <WorkLocationsMap
-                  collectionIri={collectionKey}
+                  collectionKey={collectionKey}
                   workLocations={workLocations}
                 />
               )}

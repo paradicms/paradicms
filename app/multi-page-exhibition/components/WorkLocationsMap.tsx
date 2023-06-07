@@ -7,9 +7,9 @@ import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
 import {Hrefs} from "../lib/Hrefs";
 
 export const WorkLocationsMap: React.FunctionComponent<{
-  readonly collectionIri: string;
+  readonly collectionKey: string;
   readonly workLocations: readonly WorkLocationSummary[];
-}> = ({collectionIri, workLocations}) => {
+}> = ({collectionKey, workLocations}) => {
   if (workLocations.length === 0) {
     return null;
   }
@@ -32,8 +32,8 @@ export const WorkLocationsMap: React.FunctionComponent<{
             click: () =>
               router.push(
                 Hrefs.work({
-                  collectionKey: collectionIri,
-                  workKey: workLocation.work.iri,
+                  collectionKey,
+                  workKey: workLocation.work.key,
                 })
               ),
           }}

@@ -28,7 +28,7 @@ export const WorkLocationsMap: React.FunctionComponent<{
       {workLocations.map((workLocation, workLocationIndex) => (
         <Marker
           eventHandlers={{
-            click: () => router.push(Hrefs.work(workLocation.work.iri)),
+            click: () => router.push(Hrefs.work(workLocation.work)),
           }}
           key={workLocationIndex}
           position={[workLocation.location.lat, workLocation.location.long]}

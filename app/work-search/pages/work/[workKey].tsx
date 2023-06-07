@@ -31,27 +31,27 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly collectionTitle: string | null;
+  readonly collectionLabel: string | null;
   readonly modelSetString: string;
-  readonly workIri: string;
+  readonly workKey: string;
 }
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
-  collectionTitle,
+  collectionLabel,
   modelSetString,
-  workIri,
+  workKey,
 }) => {
   const modelSet = useMemo(
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
   const router = useRouter();
-  const work = modelSet.workByIri(workIri);
+  const work = modelSet.workByKey(workKey);
 
   return (
     <Layout
       cardHeaderLinks={getNamedModelLinks(work)}
-      collectionTitle={collectionTitle ?? undefined}
+      collectionLabel={collectionLabel ?? undefined}
       configuration={modelSet.appConfiguration}
       properties={modelSet.properties}
       title={work.label}
@@ -82,11 +82,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
     readFile,
   });
 
-  const paths: {params: {workIri: string}}[] = [];
+  const paths: {params: {workKey: string}}[] = [];
   for (const work of modelSet.works) {
     paths.push({
       params: {
-        workIri: encodeFileName(work.iri),
+        workKey: encodeFileName(work.key),
       },
     });
   }
@@ -100,7 +100,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const workIri = decodeFileName(params!.workIri as string);
+  const workKey = decodeFileName(params!.workKey as string);
 
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
@@ -109,16 +109,16 @@ export const getStaticProps: GetStaticProps = async ({
 
   return {
     props: {
-      collectionTitle:
+      collectionLabel:
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].label
           : null,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
-        .addWork(completeModelSet.workByIri(workIri), workPageWorkJoinSelector)
+        .addWork(completeModelSet.workByKey(workKey), workPageWorkJoinSelector)
         .build()
         .toFastRdfString(),
-      workIri,
+      workKey: workKey,
     },
   };
 };
