@@ -79,7 +79,7 @@ export class MemWorkQueryService implements WorkQueryService {
     } else {
       searchablePropertyIris = defaultProperties
         .filter(property => property.searchable)
-        .map(property => property.iri);
+        .flatMap(property => property.iris);
     }
 
     this.index = lunr(function() {
