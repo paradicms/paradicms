@@ -43,7 +43,7 @@ const getRdfInstanceQuadsRecursive = (kwds: {
   } = kwds;
 
   // Get instanceQuads of the class
-  dataset.match(null, instanceOfPredicate, class_).forEach(quad => {
+  for (const quad of dataset.match(null, instanceOfPredicate, class_)) {
     switch (quad.subject.termType) {
       case "BlankNode":
       case "NamedNode":
@@ -52,15 +52,15 @@ const getRdfInstanceQuadsRecursive = (kwds: {
       default:
         break;
     }
-  });
+  }
   visitedClasses.add(class_);
 
   // Recurse into class's sub-classes that haven't been visited yet.
-  dataset.match(null, subClassOfPredicate, class_, null).forEach(quad => {
+  for (const quad of dataset.match(null, subClassOfPredicate, class_, null)) {
     if (quad.subject.termType !== "NamedNode") {
-      return;
+      continue;
     } else if (visitedClasses.has(quad.subject)) {
-      return;
+      continue;
     }
     getRdfInstanceQuadsRecursive({
       class_: quad.subject,
@@ -70,5 +70,5 @@ const getRdfInstanceQuadsRecursive = (kwds: {
       subClassOfPredicate,
       visitedClasses,
     });
-  });
+  }
 };

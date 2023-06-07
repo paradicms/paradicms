@@ -4,8 +4,16 @@ import {
   DefaultGraph,
   Literal,
   NamedNode,
+  Quad,
 } from "@rdfjs/types";
 import {rdf} from "@tpluscode/rdf-ns-builders";
+
+const firstQuad = (dataset: DatasetCore): Quad => {
+  for (const quad of dataset) {
+    return quad;
+  }
+  throw new EvalError("should never be reached");
+};
 
 export const getRdfList = (kwds: {
   dataset: DatasetCore;
@@ -25,7 +33,7 @@ export const getRdfList = (kwds: {
   } else if (firstDataset.size > 1) {
     throw new RangeError("RDF list has multiple rdf:first quads");
   }
-  const firstTerm = firstDataset.toArray()[0].object;
+  const firstTerm = firstQuad(firstDataset).object;
   switch (firstTerm.termType) {
     case "BlankNode":
     case "Literal":
@@ -43,7 +51,7 @@ export const getRdfList = (kwds: {
   } else if (restDataset.size > 1) {
     throw new RangeError("RDF list has multiple rdf:rest quads");
   }
-  const restTerm = restDataset.toArray()[0].object;
+  const restTerm = firstQuad(restDataset).object;
   switch (restTerm.termType) {
     case "BlankNode":
     case "NamedNode":
