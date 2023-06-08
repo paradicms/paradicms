@@ -3,6 +3,7 @@ import {dash, schema} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {DataFactory} from "@paradicms/rdf";
 import {FormNodeData, FormNodeTypeData, FormPropertyData} from "../src";
+import {describe} from "mocha";
 
 describe("FormPropertyData", () => {
   let addressProperty: FormPropertyData;

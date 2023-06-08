@@ -158,7 +158,7 @@ export class FormPropertyData extends FormModel {
 
   set values(terms: readonly FormPropertyValue[]) {
     const quadsToDelete: Quad[] = [];
-    for (const quad of this.dataGraph.match(this.path)) {
+    for (const quad of this.dataGraph.match(this.dataGraphNode, this.path)) {
       quadsToDelete.push(quad);
     }
     for (const quad of quadsToDelete) {

@@ -3,6 +3,7 @@ import {DataFactory} from "n3";
 import {getRdfList} from "../src/getRdfList";
 import {BlankNode, NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
+import {describe} from "mocha";
 
 describe("getRdfList", () => {
   const subject = DataFactory.namedNode("urn:example:subject");
@@ -14,8 +15,9 @@ describe("getRdfList", () => {
     });
     return getRdfList({
       dataset,
-      node: dataset.match(subject, predicate, null, null).toArray()[0]
-        .object as BlankNode | NamedNode,
+      node: [...dataset.match(subject, predicate, null, null)][0].object as
+        | BlankNode
+        | NamedNode,
     });
   };
 
