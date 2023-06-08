@@ -1,4 +1,3 @@
-import {datasetCoreToDataset} from "@paradicms/rdf";
 import {syntheticData} from "@paradicms/test";
 import {SameAsModelReader} from "../../src/same-as/SameAsModelReader";
 import {describe} from "mocha";
@@ -11,7 +10,7 @@ import {SameAsPerson} from "../../src/same-as/SameAsPerson";
 import {DatasetBackedModelSet} from "../../src/DatasetBackedModelSet";
 
 describe("SameAsModelReader", () => {
-  const dataset = datasetCoreToDataset(syntheticData);
+  const dataset = syntheticData;
   const modelReaders = [
     new CmsModelReader(dataset),
     new WikidataModelReader(dataset),

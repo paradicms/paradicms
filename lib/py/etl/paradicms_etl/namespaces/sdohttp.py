@@ -17,4 +17,4 @@ class SDOHTTP(DefinedNamespace):
 
     # Resources
     Article: URIRef
-    Dataset: URIRef
+    DatasetCore: URIRef

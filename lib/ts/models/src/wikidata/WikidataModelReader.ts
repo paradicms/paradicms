@@ -18,7 +18,7 @@ import {wd, wdt} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WikidataPerson} from "./WikidataPerson";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {Dataset, NamedNode} from "@rdfjs/types";
+import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {WikidataModel} from "./WikidataModel";
 import {WikidataWork} from "./WikidataWork";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
@@ -83,7 +83,7 @@ export class WikidataModelReader extends DatasetModelReader {
     class_: NamedNode;
     factory: {
       new (kwds: {
-        dataset: Dataset;
+        dataset: DatasetCore;
         modelSet: ModelSet;
         wikibaseItem: WikibaseItem;
       }): WikidataModelT;

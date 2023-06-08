@@ -1,5 +1,5 @@
 import {DataGraph, PropertyShape} from "@paradicms/shacl";
-import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
+import {DatasetCore, NamedNode, Quad, Term} from "@rdfjs/types";
 import {FormNodeData} from "./FormNodeData";
 import {DataFactory, getRdfNodeLabel} from "@paradicms/rdf";
 import TermMap from "@rdfjs/term-map";
@@ -157,10 +157,17 @@ export class FormPropertyData extends FormModel {
   }
 
   set values(terms: readonly FormPropertyValue[]) {
-    this.dataGraph.deleteMatches(this.dataGraphNode, this.path);
-    this.dataGraph.addAll(
-      terms.map(term => DataFactory.quad(this.dataGraphNode, this.path, term))
-    );
+    const quadsToDelete: Quad[] = [];
+    for (const quad of this.dataGraph.match(this.dataGraphNode, this.path)) {
+      quadsToDelete.push(quad);
+    }
+    for (const quad of quadsToDelete) {
+      this.dataGraph.delete(quad);
+    }
+
+    for (const term of terms) {
+      this.dataGraph.add(DataFactory.quad(this.dataGraphNode, this.path, term));
+    }
   }
 
   get viewer(): NamedNode | null {

@@ -436,6 +436,6 @@ export class ModelSetBuilder {
   }
 
   build(): ModelSet {
-    return ModelSetFactory.fromDatasetCore(this.store);
+    return ModelSetFactory.fromDataset(this.store);
   }
 }

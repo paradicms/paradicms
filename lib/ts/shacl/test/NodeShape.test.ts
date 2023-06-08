@@ -7,7 +7,7 @@ describe("Shapes", () => {
   let shapes: ShapesGraph;
 
   before(() => {
-    shapes = ShapesGraph.fromDatasetCore(testShapesGraph);
+    shapes = ShapesGraph.fromDataset(testShapesGraph);
   });
 
   it("should have properties", () => {

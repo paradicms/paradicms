@@ -307,9 +307,11 @@ class WikibaseItem(ResourceBackedNamedModel):
                 if article_in_language.toPython() != "en":
                     context.remove((article_subject, None, None))
 
-        # Remove the schema:Dataset declaration
+        # Remove the schema:DatasetCore declaration
         for schema_dataset_subject_uri in tuple(
-            context.subjects(predicate=RDF.type, object=SDOHTTP.Dataset, unique=True)
+            context.subjects(
+                predicate=RDF.type, object=SDOHTTP.DatasetCore, unique=True
+            )
         ):
             context.remove((schema_dataset_subject_uri, None, None))
 

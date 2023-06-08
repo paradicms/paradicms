@@ -1,5 +1,5 @@
 import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
-import {Dataset, Quad_Graph, Term} from "@rdfjs/types";
+import {DatasetCore, Quad_Graph, Term} from "@rdfjs/types";
 import {AgentPropertyValue} from "./AgentPropertyValue";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
@@ -12,7 +12,7 @@ import {Property} from "./Property";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 
 export const createPropertyValueFromTerm = (kwds: {
-  dataset: Dataset;
+  dataset: DatasetCore;
   modelSet: ModelSet;
   property: Property;
   term: Term;

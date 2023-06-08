@@ -31,14 +31,14 @@
 
 wd:Q15401930 owl:sameAs wd:Q16686448 .
 
-data:Q15401930 a schema:Dataset ;
+data:Q15401930 a schema:DatasetCore ;
 	schema:about wd:Q15401930 ;
 	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
 	schema:softwareVersion "1.0.0" ;
 	schema:version "1903059993"^^xsd:integer ;
 	schema:dateModified "2023-05-26T18:30:51Z"^^xsd:dateTime .
 
-data:Q16686448 a schema:Dataset ;
+data:Q16686448 a schema:DatasetCore ;
 	schema:about wd:Q16686448 ;
 	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
 	schema:softwareVersion "1.0.0" ;

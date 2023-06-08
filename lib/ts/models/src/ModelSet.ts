@@ -1,4 +1,4 @@
-import {Dataset} from "@rdfjs/types";
+import {DatasetCore} from "@rdfjs/types";
 import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
@@ -41,7 +41,7 @@ export interface ModelSet {
   readonly propertyGroups: readonly PropertyGroup[];
   rightsStatementByIri(rightsStatementIri: string): RightsStatement;
   toFastRdfString(): string;
-  toRdf(): Dataset;
+  toRdf(): DatasetCore;
   workByIri(workIri: string): Work;
   workByIriOptional(workIri: string): Work | null;
   workByKey(workKey: string): Work;

@@ -1,11 +1,11 @@
 import {CmsModelReader} from "../../src/cms/CmsModelReader";
-import {datasetCoreToDataset} from "@paradicms/rdf";
 import {syntheticData} from "@paradicms/test";
 import {expect} from "chai";
 import {dummyModelSet} from "../dummyModelSet";
+import {describe} from "mocha";
 
 describe("CmsModelReader", () => {
-  const sut = new CmsModelReader(datasetCoreToDataset(syntheticData));
+  const sut = new CmsModelReader(syntheticData);
 
   it("should not find an AppConfiguration", () => {
     expect(sut.readAppConfiguration({modelSet: dummyModelSet})).to.be.null;

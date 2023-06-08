@@ -6,7 +6,7 @@ describe("ShapesGraph", () => {
   let shapesGraph: ShapesGraph;
 
   before(() => {
-    shapesGraph = ShapesGraph.fromDatasetCore(testShapesGraph);
+    shapesGraph = ShapesGraph.fromDataset(testShapesGraph);
   });
 
   it("should parse the shapes correctly", () => {

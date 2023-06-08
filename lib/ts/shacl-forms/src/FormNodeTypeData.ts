@@ -59,19 +59,23 @@ export class FormNodeTypeData extends FormModel {
   }
 
   private get nodesById(): {[index: string]: FormNodeData} {
-    return this.dataGraph
-      .match(null, rdf.type, this.rdfType, null)
-      .reduce((map, quad) => {
-        const subject = quad.subject;
-        if (subject.termType === "NamedNode" && !map[subject.value]) {
-          map[subject.value] = new FormNodeData({
-            dataGraph: this.dataGraph,
-            dataGraphNode: subject,
-            shape: this.shape,
-          });
-        }
-        return map;
-      }, {} as {[index: string]: FormNodeData});
+    const nodesById: {[index: string]: FormNodeData} = {};
+    for (const quad of this.dataGraph.match(
+      null,
+      rdf.type,
+      this.rdfType,
+      null
+    )) {
+      const subject = quad.subject;
+      if (subject.termType === "NamedNode" && !nodesById[subject.value]) {
+        nodesById[subject.value] = new FormNodeData({
+          dataGraph: this.dataGraph,
+          dataGraphNode: subject,
+          shape: this.shape,
+        });
+      }
+    }
+    return nodesById;
   }
 
   get shapesGraph(): ShapesGraph {
