@@ -258,21 +258,25 @@ export class ShaclProcessor {
     shape: Shape
   ): boolean {
     // If s is a shape in a shapes graph SG and s has value p for sh:targetObjectsOf in SG then the set of nodes in a data graph DG that are objects of triples in DG with predicate p is a target from DG for s in SG.
-    return shape.targetObjectsOf.some(p =>
-      this.dataGraph.match(null, p, null, null).some(quad => {
+    return shape.targetObjectsOf.some(p => {
+      for (const quad of this.dataGraph.match(null, p, null, null)) {
         switch (quad.object.termType) {
           case "BlankNode":
           case "NamedNode":
-            if (seenFocusNodeSet.add(quad.object)) {
-              return callback(quad.object);
+            if (seenFocusNodeSet.add(quad.object) && callback(quad.object)) {
+              return true;
             }
+            break;
           case "Literal":
-            return callback(quad.object);
+            if (callback(quad.object)) {
+              return true;
+            }
           default:
             return false;
         }
-      })
-    );
+      }
+      return false;
+    });
   }
 
   /**
@@ -285,19 +289,21 @@ export class ShaclProcessor {
     shape: Shape
   ): boolean {
     // If s is a shape in a shapes graph SG and s has value p for sh:targetSubjectsOf in SG then the set of nodes in a data graph DG that are subjects of triples in DG with predicate p is a target from DG for s in SG.
-    return shape.targetSubjectsOf.some(p =>
-      this.dataGraph.match(null, p, null, null).some(quad => {
+    return shape.targetSubjectsOf.some(p => {
+      for (const quad of this.dataGraph.match(null, p, null, null)) {
         switch (quad.subject.termType) {
           case "BlankNode":
           case "NamedNode":
-            if (seenFocusNodeSet.add(quad.subject)) {
-              return callback(quad.subject);
+            if (seenFocusNodeSet.add(quad.subject) && callback(quad.subject)) {
+              return true;
             }
+            break;
           default:
             return false;
         }
-      })
-    );
+      }
+      return false;
+    });
   }
 
   /**

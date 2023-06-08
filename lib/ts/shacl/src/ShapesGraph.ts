@@ -69,23 +69,22 @@ export class ShapesGraph {
   private static readGraph(
     dataset: DatasetCore
   ): BlankNode | DefaultGraph | NamedNode {
-    const graphs = [
-      ...dataset.reduce((termSet, quad) => {
-        termSet.add(quad.graph);
-        return termSet;
-      }, new TermSet()),
-    ];
-    if (graphs.length !== 1) {
+    const graphs = new TermSet();
+    for (const quad of dataset) {
+      graphs.add(quad.graph);
+    }
+    if (graphs.size !== 1) {
       throw new RangeError("expected a single graph");
     }
-    switch (graphs[0].termType) {
+    const graph = [...graphs.values()][0];
+    switch (graph.termType) {
       case "BlankNode":
       case "DefaultGraph":
       case "NamedNode":
-        return graphs[0];
+        return graph;
       default:
         throw new RangeError(
-          `expected NamedNode or default graph, actual ${graphs[0].termType}`
+          `expected NamedNode or default graph, actual ${graph.termType}`
         );
     }
   }
@@ -103,17 +102,17 @@ export class ShapesGraph {
       NamedNode,
       PropertyGroup
     > = new TermMap();
-    dataset.match(null, rdf.type, sh.PropertyGroup, graph).forEach(quad => {
+    for (const quad of dataset.match(null, rdf.type, sh.PropertyGroup, graph)) {
       const subject = quad.subject;
       if (subject.termType !== "NamedNode") {
-        return;
+        continue;
       } else if (propertyGroupsByNode.has(subject)) {
-        return;
+        continue;
       }
       const propertyGroup = new PropertyGroup({node: subject, shapesGraph});
       propertyGroups.push(propertyGroup);
       propertyGroupsByNode.set(subject, propertyGroup);
-    });
+    }
     return {propertyGroups, propertyGroupsByNode};
   }
 
@@ -145,9 +144,9 @@ export class ShapesGraph {
 
     // Subject is a SHACL instance of sh:NodeShape or sh:PropertyShape
     for (const rdfType of [sh.NodeShape, sh.PropertyShape]) {
-      dataset
-        .match(null, rdf.type, rdfType, graph)
-        .forEach(quad => addShapeNode(quad.subject));
+      for (const quad of dataset.match(null, rdf.type, rdfType, graph)) {
+        addShapeNode(quad.subject);
+      }
     }
 
     // Subject of a triple with sh:targetClass, sh:targetNode, sh:targetObjectsOf, or sh:targetSubjectsOf predicate
@@ -157,9 +156,9 @@ export class ShapesGraph {
       sh.targetObjectsOf,
       sh.targetSubjectsOf,
     ]) {
-      dataset
-        .match(null, predicate, null, graph)
-        .forEach(quad => addShapeNode(quad.subject));
+      for (const quad of dataset.match(null, predicate, null, graph)) {
+        addShapeNode(quad.subject);
+      }
     }
 
     // Subject of a triple that has a parameter as predicate
@@ -198,17 +197,17 @@ export class ShapesGraph {
       sh.hasValue,
       sh.in,
     ]) {
-      dataset
-        .match(null, predicate, null, graph)
-        .forEach(quad => addShapeNode(quad.subject));
+      for (const quad of dataset.match(null, predicate, null, graph)) {
+        addShapeNode(quad.subject);
+      }
     }
 
     // Object of a shape-expecting, non-list-taking parameter such as sh:node
     // TODO: handle list-taking parameters
     for (const predicate of [sh.node, sh.property]) {
-      dataset
-        .match(null, predicate, graph)
-        .forEach(quad => addShapeNode(quad.object));
+      for (const quad of dataset.match(null, predicate, graph)) {
+        addShapeNode(quad.object);
+      }
     }
 
     // Separate shapes into node and property shapes.
