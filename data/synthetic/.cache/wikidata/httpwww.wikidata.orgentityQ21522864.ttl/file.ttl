@@ -1,0 +1,340 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q21522864 a schema:Dataset ;
+	schema:about wd:Q21522864 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1908214179"^^xsd:integer ;
+	schema:dateModified "2023-06-04T18:55:56Z"^^xsd:dateTime ;
+	wikibase:statements "4"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q21522864 a wikibase:Item ;
+	wdt:P279 wd:Q35120,
+		wd:Q19478619 ;
+	wdt:P366 wd:Q324254 ;
+	wdt:P2738 wd:Q23766486 ;
+	p:P279 s:Q21522864-250ef207-4490-4d07-44a4-83ee47737427 .
+
+s:Q21522864-250ef207-4490-4d07-44a4-83ee47737427 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q35120 .
+
+wd:Q21522864 p:P279 s:Q21522864-ab41d256-46f1-16bd-eca5-d1d5152f4bae .
+
+s:Q21522864-ab41d256-46f1-16bd-eca5-d1d5152f4bae a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q19478619 .
+
+wd:Q21522864 p:P366 s:Q21522864-99b2ee3b-4e1b-92e0-b384-48ab1539e334 .
+
+s:Q21522864-99b2ee3b-4e1b-92e0-b384-48ab1539e334 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P366 wd:Q324254 .
+
+wd:Q21522864 p:P2738 s:Q21522864-068b443f-4d03-9704-35b7-9c6b5adafd9f .
+
+s:Q21522864-068b443f-4d03-9704-35b7-9c6b5adafd9f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2738 wd:Q23766486 ;
+	pq:P11260 wd:Q21522908,
+		wd:Q19478619 .
+
+wd:Q21522864 rdfs:label "classe ou métaclasse de l'ontologie Wikidata"@fr ;
+	skos:prefLabel "classe ou métaclasse de l'ontologie Wikidata"@fr ;
+	schema:name "classe ou métaclasse de l'ontologie Wikidata"@fr ;
+	rdfs:label "class or metaclass of Wikidata ontology"@en ;
+	skos:prefLabel "class or metaclass of Wikidata ontology"@en ;
+	schema:name "class or metaclass of Wikidata ontology"@en ;
+	rdfs:label "класс или метакласс в онтологии Викиданных"@ru ;
+	skos:prefLabel "класс или метакласс в онтологии Викиданных"@ru ;
+	schema:name "класс или метакласс в онтологии Викиданных"@ru ;
+	rdfs:label "třída nebo metatřída v ontologii Wikidat"@cs ;
+	skos:prefLabel "třída nebo metatřída v ontologii Wikidat"@cs ;
+	schema:name "třída nebo metatřída v ontologii Wikidat"@cs ;
+	rdfs:label "klasse of metaklasse van Wikidata-ontologie"@nl ;
+	skos:prefLabel "klasse of metaklasse van Wikidata-ontologie"@nl ;
+	schema:name "klasse of metaklasse van Wikidata-ontologie"@nl ;
+	rdfs:label "klaso aŭ metaklaso en ontologio de Vikidatumoj"@eo ;
+	skos:prefLabel "klaso aŭ metaklaso en ontologio de Vikidatumoj"@eo ;
+	schema:name "klaso aŭ metaklaso en ontologio de Vikidatumoj"@eo ;
+	rdfs:label "класа или метакласа на Википодатоците"@mk ;
+	skos:prefLabel "класа или метакласа на Википодатоците"@mk ;
+	schema:name "класа или метакласа на Википодатоците"@mk ;
+	rdfs:label "classe o metaclasse dell'ontologia di Wikidata"@it ;
+	skos:prefLabel "classe o metaclasse dell'ontologia di Wikidata"@it ;
+	schema:name "classe o metaclasse dell'ontologia di Wikidata"@it ;
+	rdfs:label "clase ou metaclase da ontoloxía de Wikidata"@gl ;
+	skos:prefLabel "clase ou metaclase da ontoloxía de Wikidata"@gl ;
+	schema:name "clase ou metaclase da ontoloxía de Wikidata"@gl ;
+	rdfs:label "Wikidata-klasse eller -metaklasse"@nn ;
+	skos:prefLabel "Wikidata-klasse eller -metaklasse"@nn ;
+	schema:name "Wikidata-klasse eller -metaklasse"@nn ;
+	rdfs:label "клас або метаклас у анталогіі Вікіданых"@be ;
+	skos:prefLabel "клас або метаклас у анталогіі Вікіданых"@be ;
+	schema:name "клас або метаклас у анталогіі Вікіданых"@be ;
+	rdfs:label "kelas atau metakelas di ontologi Wikidata"@id ;
+	skos:prefLabel "kelas atau metakelas di ontologi Wikidata"@id ;
+	schema:name "kelas atau metakelas di ontologi Wikidata"@id ;
+	rdfs:label "кляса або мэтакляса ў анталёгіі Вікізьвестак"@be-tarask ;
+	skos:prefLabel "кляса або мэтакляса ў анталёгіі Вікізьвестак"@be-tarask ;
+	schema:name "кляса або мэтакляса ў анталёгіі Вікізьвестак"@be-tarask ;
+	rdfs:label "classe o metaclasse d'ontologia de Wikidata"@ca ;
+	skos:prefLabel "classe o metaclasse d'ontologia de Wikidata"@ca ;
+	schema:name "classe o metaclasse d'ontologia de Wikidata"@ca ;
+	rdfs:label "kevrennad pe metakevrennad eus ontologiezh Wikidata"@br ;
+	skos:prefLabel "kevrennad pe metakevrennad eus ontologiezh Wikidata"@br ;
+	schema:name "kevrennad pe metakevrennad eus ontologiezh Wikidata"@br ;
+	rdfs:label "维基数据本体的类或元类"@zh ;
+	skos:prefLabel "维基数据本体的类或元类"@zh ;
+	schema:name "维基数据本体的类或元类"@zh ;
+	rdfs:label "کلس اتاو ميتاکلس اونتولوݢي ويکيداتا"@ms-arab ;
+	skos:prefLabel "کلس اتاو ميتاکلس اونتولوݢي ويکيداتا"@ms-arab ;
+	schema:name "کلس اتاو ميتاکلس اونتولوݢي ويکيداتا"@ms-arab ;
+	rdfs:label "kelas atau metakelas ontologi Wikidata"@ms ;
+	skos:prefLabel "kelas atau metakelas ontologi Wikidata"@ms ;
+	schema:name "kelas atau metakelas ontologi Wikidata"@ms ;
+	rdfs:label "ウィキデータオントロジーのクラス又はメタクラス"@ja ;
+	skos:prefLabel "ウィキデータオントロジーのクラス又はメタクラス"@ja ;
+	schema:name "ウィキデータオントロジーのクラス又はメタクラス"@ja ;
+	rdfs:label "Wikidata-klasse eller -metaklasse"@nb ;
+	skos:prefLabel "Wikidata-klasse eller -metaklasse"@nb ;
+	schema:name "Wikidata-klasse eller -metaklasse"@nb ;
+	rdfs:label "klasa lub metaklasa ontologii Wikidanych"@pl ;
+	skos:prefLabel "klasa lub metaklasa ontologii Wikidanych"@pl ;
+	schema:name "klasa lub metaklasa ontologii Wikidanych"@pl ;
+	rdfs:label "Vikiveri ontolojisinin sınıfı veya meta sınıfı"@tr ;
+	skos:prefLabel "Vikiveri ontolojisinin sınıfı veya meta sınıfı"@tr ;
+	schema:name "Vikiveri ontolojisinin sınıfı veya meta sınıfı"@tr ;
+	rdfs:label "razred ali metarazred ontologije Wikipodatkov"@sl ;
+	skos:prefLabel "razred ali metarazred ontologije Wikipodatkov"@sl ;
+	schema:name "razred ali metarazred ontologije Wikipodatkov"@sl ;
+	schema:description "classe ou classe d'ordre supérieur utilisées comme unité de classification dans l'ontologie Wikidata"@fr,
+		"classes or higher order classes of elements as used in Wikidata's ontology"@en,
+		"třídy nebo třídy vyšších řádů používané v ontologii Wikidat"@cs,
+		"clases ou clases de elementos de orde superior como se usa na ontoloxía de Wikidata"@gl,
+		"维基数据本体中使用的类或更高阶的元素类"@zh,
+		"ウィキデータのオントロジーとして使用される要素のクラス又は高次クラス"@ja,
+		"klasser eller høyere ordensklasser av elementer brukt i Wikidatas ontologi"@nb,
+		"Vikiveri'nin ontolojisinde kullanıldığı şekliyle sınıflar veya daha yüksek dereceli öğe sınıfları"@tr ;
+	skos:altLabel "klasse eller metaklasse av Wikidata-ontologi"@nb .
+
+wd:Q35120 a wikibase:Item ;
+	rdfs:label "entity"@en ;
+	skos:prefLabel "entity"@en ;
+	schema:name "entity"@en ;
+	schema:description "anything that can be considered, discussed, or observed"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q19478619 a wikibase:Item ;
+	rdfs:label "metaclass"@en ;
+	skos:prefLabel "metaclass"@en ;
+	schema:name "metaclass"@en ;
+	schema:description "in knowledge representation, a class which has instances that are themselves classes"@en .
+
+wd:Q324254 a wikibase:Item ;
+	rdfs:label "ontology"@en ;
+	skos:prefLabel "ontology"@en ;
+	schema:name "ontology"@en ;
+	schema:description "specification of a conceptualization in computer science and information science"@en .
+
+wd:P366 a wikibase:Property ;
+	rdfs:label "has use"@en ;
+	skos:prefLabel "has use"@en ;
+	schema:name "has use"@en ;
+	schema:description "main use of the subject (includes current and former usage)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P366 ;
+	wikibase:claim p:P366 ;
+	wikibase:statementProperty ps:P366 ;
+	wikibase:statementValue psv:P366 ;
+	wikibase:qualifier pq:P366 ;
+	wikibase:qualifierValue pqv:P366 ;
+	wikibase:reference pr:P366 ;
+	wikibase:referenceValue prv:P366 ;
+	wikibase:novalue wdno:P366 .
+
+p:P366 a owl:ObjectProperty .
+
+psv:P366 a owl:ObjectProperty .
+
+pqv:P366 a owl:ObjectProperty .
+
+prv:P366 a owl:ObjectProperty .
+
+wdt:P366 a owl:ObjectProperty .
+
+ps:P366 a owl:ObjectProperty .
+
+pq:P366 a owl:ObjectProperty .
+
+pr:P366 a owl:ObjectProperty .
+
+wdno:P366 a owl:Class ;
+	owl:complementOf _:e3313a663f1512d0bc6282d834b00038 .
+
+_:e3313a663f1512d0bc6282d834b00038 a owl:Restriction ;
+	owl:onProperty wdt:P366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q23766486 a wikibase:Item ;
+	rdfs:label "list of values as qualifiers"@en ;
+	skos:prefLabel "list of values as qualifiers"@en ;
+	schema:name "list of values as qualifiers"@en ;
+	schema:description "dummy value for \"union of\" P2737 and \"disjoint union of\" P2738 to specify the list of items this class can. Use \"list item\" P11260 as a qualifier to specify the items."@en .
+
+wd:P2738 a wikibase:Property ;
+	rdfs:label "disjoint union of"@en ;
+	skos:prefLabel "disjoint union of"@en ;
+	schema:name "disjoint union of"@en ;
+	schema:description "every instance of this class is an instance of exactly one class in that list of classes. Use \"list item\" P11260 as qualifiers to specify the list of classes"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2738 ;
+	wikibase:claim p:P2738 ;
+	wikibase:statementProperty ps:P2738 ;
+	wikibase:statementValue psv:P2738 ;
+	wikibase:qualifier pq:P2738 ;
+	wikibase:qualifierValue pqv:P2738 ;
+	wikibase:reference pr:P2738 ;
+	wikibase:referenceValue prv:P2738 ;
+	wikibase:novalue wdno:P2738 .
+
+p:P2738 a owl:ObjectProperty .
+
+psv:P2738 a owl:ObjectProperty .
+
+pqv:P2738 a owl:ObjectProperty .
+
+prv:P2738 a owl:ObjectProperty .
+
+wdt:P2738 a owl:ObjectProperty .
+
+ps:P2738 a owl:ObjectProperty .
+
+pq:P2738 a owl:ObjectProperty .
+
+pr:P2738 a owl:ObjectProperty .
+
+wdno:P2738 a owl:Class ;
+	owl:complementOf _:6aaa3867b3357f38dc0ed30c3a4d35c3 .
+
+_:6aaa3867b3357f38dc0ed30c3a4d35c3 a owl:Restriction ;
+	owl:onProperty wdt:P2738 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q21522908 a wikibase:Item ;
+	rdfs:label "Wikidata instance class"@en ;
+	skos:prefLabel "Wikidata instance class"@en ;
+	schema:name "Wikidata instance class"@en ;
+	schema:description "class whose instances are never other classes; class which is not a metaclass"@en .
+
+wd:P11260 a wikibase:Property ;
+	rdfs:label "list item"@en ;
+	skos:prefLabel "list item"@en ;
+	schema:name "list item"@en ;
+	schema:description "qualifier for \"union of\" (P2737) and \"disjoint union of\" (P2738) to identify constituent entities"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P11260 ;
+	wikibase:claim p:P11260 ;
+	wikibase:statementProperty ps:P11260 ;
+	wikibase:statementValue psv:P11260 ;
+	wikibase:qualifier pq:P11260 ;
+	wikibase:qualifierValue pqv:P11260 ;
+	wikibase:reference pr:P11260 ;
+	wikibase:referenceValue prv:P11260 ;
+	wikibase:novalue wdno:P11260 .
+
+p:P11260 a owl:ObjectProperty .
+
+psv:P11260 a owl:ObjectProperty .
+
+pqv:P11260 a owl:ObjectProperty .
+
+prv:P11260 a owl:ObjectProperty .
+
+wdt:P11260 a owl:ObjectProperty .
+
+ps:P11260 a owl:ObjectProperty .
+
+pq:P11260 a owl:ObjectProperty .
+
+pr:P11260 a owl:ObjectProperty .
+
+wdno:P11260 a owl:Class ;
+	owl:complementOf _:2508e0ad1a5ef04e1071e414e197f099 .
+
+_:2508e0ad1a5ef04e1071e414e197f099 a owl:Restriction ;
+	owl:onProperty wdt:P11260 ;
+	owl:someValuesFrom owl:Thing .

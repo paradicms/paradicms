@@ -1,0 +1,2786 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q164509 a schema:Dataset ;
+	schema:about wd:Q164509 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1890830781"^^xsd:integer ;
+	schema:dateModified "2023-05-06T20:47:33Z"^^xsd:dateTime ;
+	wikibase:statements "25"^^xsd:integer ;
+	wikibase:sitelinks "75"^^xsd:integer ;
+	wikibase:identifiers "18"^^xsd:integer .
+
+wd:Q164509 a wikibase:Item .
+
+<https://it.wikiquote.org/wiki/Onnivoro> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikiquote.org/> ;
+	schema:name "Onnivoro"@it .
+
+<https://it.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://en.wikipedia.org/wiki/Omnivore> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Omnivore"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Allesfresser> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Allesfresser"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Omnivore> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Omnivore"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Omn%C3%ADvoro> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Omnívoro"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%92%D1%81%D0%B5%D1%8F%D0%B4%D0%BD%D0%BE%D1%81%D1%82%D1%8C> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Всеядность"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Onnivoro> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Onnivoro"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E9%9B%91%E9%A3%9F> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "雑食"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Omnivoor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Omnivoor"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Wszystko%C5%BCerno%C5%9B%C4%87> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Wszystkożerność"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pt.wikipedia.org/wiki/Omn%C3%ADvoro> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Omnívoro"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/All%C3%A4tare> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Allätare"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D9%87%D9%85%D9%87%E2%80%8C%DA%86%DB%8C%D8%B2%D8%AE%D9%88%D8%A7%D8%B1> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "همه‌چیزخوار"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://he.wikipedia.org/wiki/%D7%90%D7%95%D7%9B%D7%9C-%D7%9B%D7%95%D7%9C> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "he" ;
+	schema:isPartOf <https://he.wikipedia.org/> ;
+	schema:name "אוכל-כול"@he .
+
+<https://he.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Hep%C3%A7il> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Hepçil"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hu.wikipedia.org/wiki/Mindenev%C5%91> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "hu" ;
+	schema:isPartOf <https://hu.wikipedia.org/> ;
+	schema:name "Mindenevő"@hu .
+
+<https://hu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fi.wikipedia.org/wiki/Kaikkiruokaisuus> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "fi" ;
+	schema:isPartOf <https://fi.wikipedia.org/> ;
+	schema:name "Kaikkiruokaisuus"@fi .
+
+<https://fi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D9%82%D8%A7%D8%B1%D8%AA> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "قارت"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/%C4%90%E1%BB%99ng_v%E1%BA%ADt_%C4%83n_t%E1%BA%A1p> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Động vật ăn tạp"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://no.wikipedia.org/wiki/Alteter> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "nb" ;
+	schema:isPartOf <https://no.wikipedia.org/> ;
+	schema:name "Alteter"@nb .
+
+<https://no.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%92%D1%81%D0%B5%D1%97%D0%B4%D0%BD%D1%96> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Всеїдні"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/V%C5%A1e%C5%BEravec> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Všežravec"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sr.wikipedia.org/wiki/%D0%A1%D0%B2%D0%B0%D1%88%D1%82%D0%BE%D1%98%D0%B5%D0%B4> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "sr" ;
+	schema:isPartOf <https://sr.wikipedia.org/> ;
+	schema:name "Сваштојед"@sr .
+
+<https://sr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ro.wikipedia.org/wiki/Omnivor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ro" ;
+	schema:isPartOf <https://ro.wikipedia.org/> ;
+	schema:name "Omnivor"@ro .
+
+<https://ro.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://id.wikipedia.org/wiki/Omnivor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "id" ;
+	schema:isPartOf <https://id.wikipedia.org/> ;
+	schema:name "Omnivor"@id .
+
+<https://id.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://da.wikipedia.org/wiki/Omnivor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "da" ;
+	schema:isPartOf <https://da.wikipedia.org/> ;
+	schema:name "Omnivor"@da .
+
+<https://da.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://simple.wikipedia.org/wiki/Omnivore> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "en-simple" ;
+	schema:isPartOf <https://simple.wikipedia.org/> ;
+	schema:name "Omnivore"@en-simple .
+
+<https://simple.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bg.wikipedia.org/wiki/%D0%92%D1%81%D0%B5%D1%8F%D0%B4%D0%BD%D0%B8_%D0%B6%D0%B8%D0%B2%D0%BE%D1%82%D0%BD%D0%B8> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "bg" ;
+	schema:isPartOf <https://bg.wikipedia.org/> ;
+	schema:name "Всеядни животни"@bg .
+
+<https://bg.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://af.wikipedia.org/wiki/Omnivoor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "af" ;
+	schema:isPartOf <https://af.wikipedia.org/> ;
+	schema:name "Omnivoor"@af .
+
+<https://af.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ast.wikipedia.org/wiki/Omn%C3%ADvoru> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ast" ;
+	schema:isPartOf <https://ast.wikipedia.org/> ;
+	schema:name "Omnívoru"@ast .
+
+<https://ast.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bn.wikipedia.org/wiki/%E0%A6%B8%E0%A6%B0%E0%A7%8D%E0%A6%AC%E0%A6%AD%E0%A7%82%E0%A6%95_%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%BE%E0%A6%A3%E0%A7%80> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "bn" ;
+	schema:isPartOf <https://bn.wikipedia.org/> ;
+	schema:name "সর্বভূক প্রাণী"@bn .
+
+<https://bn.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bs.wikipedia.org/wiki/Sva%C5%A1tojedi> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "bs" ;
+	schema:isPartOf <https://bs.wikipedia.org/> ;
+	schema:name "Svaštojedi"@bs .
+
+<https://bs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cy.wikipedia.org/wiki/Hollysydd> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "cy" ;
+	schema:isPartOf <https://cy.wikipedia.org/> ;
+	schema:name "Hollysydd"@cy .
+
+<https://cy.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eo.wikipedia.org/wiki/%C4%88ioman%C4%9Danto> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "eo" ;
+	schema:isPartOf <https://eo.wikipedia.org/> ;
+	schema:name "Ĉiomanĝanto"@eo .
+
+<https://eo.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://et.wikipedia.org/wiki/Omnivoor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikipedia.org/> ;
+	schema:name "Omnivoor"@et .
+
+<https://et.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eu.wikipedia.org/wiki/Orojale> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "eu" ;
+	schema:isPartOf <https://eu.wikipedia.org/> ;
+	schema:name "Orojale"@eu .
+
+<https://eu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fy.wikipedia.org/wiki/Omnivoar> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "fy" ;
+	schema:isPartOf <https://fy.wikipedia.org/> ;
+	schema:name "Omnivoar"@fy .
+
+<https://fy.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://gl.wikipedia.org/wiki/Omn%C3%ADvoro> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "gl" ;
+	schema:isPartOf <https://gl.wikipedia.org/> ;
+	schema:name "Omnívoro"@gl .
+
+<https://gl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hi.wikipedia.org/wiki/%E0%A4%B8%E0%A4%B0%E0%A5%8D%E0%A4%B5%E0%A4%BE%E0%A4%B9%E0%A4%BE%E0%A4%B0%E0%A5%80> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "hi" ;
+	schema:isPartOf <https://hi.wikipedia.org/> ;
+	schema:name "सर्वाहारी"@hi .
+
+<https://hi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hr.wikipedia.org/wiki/Sve%C5%BEderi> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "hr" ;
+	schema:isPartOf <https://hr.wikipedia.org/> ;
+	schema:name "Svežderi"@hr .
+
+<https://hr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ht.wikipedia.org/wiki/Omniv%C3%B2> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ht" ;
+	schema:isPartOf <https://ht.wikipedia.org/> ;
+	schema:name "Omnivò"@ht .
+
+<https://ht.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ia.wikipedia.org/wiki/Omnivore> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ia" ;
+	schema:isPartOf <https://ia.wikipedia.org/> ;
+	schema:name "Omnivore"@ia .
+
+<https://ia.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://io.wikipedia.org/wiki/Omnivoro> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "io" ;
+	schema:isPartOf <https://io.wikipedia.org/> ;
+	schema:name "Omnivoro"@io .
+
+<https://io.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://is.wikipedia.org/wiki/Al%C3%A6ta> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "is" ;
+	schema:isPartOf <https://is.wikipedia.org/> ;
+	schema:name "Alæta"@is .
+
+<https://is.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://jv.wikipedia.org/wiki/Omnivora> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "jv" ;
+	schema:isPartOf <https://jv.wikipedia.org/> ;
+	schema:name "Omnivora"@jv .
+
+<https://jv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://kk.wikipedia.org/wiki/%D0%A2%D0%B0%D0%BB%D2%93%D0%B0%D1%83%D1%81%D1%8B%D0%B7%D0%B4%D0%B0%D1%80> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "kk" ;
+	schema:isPartOf <https://kk.wikipedia.org/> ;
+	schema:name "Талғаусыздар"@kk .
+
+<https://kk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://kw.wikipedia.org/wiki/Olldhebrer> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "kw" ;
+	schema:isPartOf <https://kw.wikipedia.org/> ;
+	schema:name "Olldhebrer"@kw .
+
+<https://kw.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://la.wikipedia.org/wiki/Omnivora> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "la" ;
+	schema:isPartOf <https://la.wikipedia.org/> ;
+	schema:name "Omnivora"@la .
+
+<https://la.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://lb.wikipedia.org/wiki/Allesfr%C3%ABsser> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "lb" ;
+	schema:isPartOf <https://lb.wikipedia.org/> ;
+	schema:name "Allesfrësser"@lb .
+
+<https://lb.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://li.wikipedia.org/wiki/Omnivoor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "li" ;
+	schema:isPartOf <https://li.wikipedia.org/> ;
+	schema:name "Omnivoor"@li .
+
+<https://li.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://lv.wikipedia.org/wiki/Vis%C4%93d%C4%81ji> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "lv" ;
+	schema:isPartOf <https://lv.wikipedia.org/> ;
+	schema:name "Visēdāji"@lv .
+
+<https://lv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ml.wikipedia.org/wiki/%E0%B4%AE%E0%B4%BF%E0%B4%B6%E0%B5%8D%E0%B4%B0%E0%B4%AD%E0%B5%81%E0%B4%95%E0%B5%8D%E0%B4%95%E0%B5%8D> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ml" ;
+	schema:isPartOf <https://ml.wikipedia.org/> ;
+	schema:name "മിശ്രഭുക്ക്"@ml .
+
+<https://ml.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://mt.wikipedia.org/wiki/Omnivoru> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "mt" ;
+	schema:isPartOf <https://mt.wikipedia.org/> ;
+	schema:name "Omnivoru"@mt .
+
+<https://mt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nn.wikipedia.org/wiki/Altetar> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "nn" ;
+	schema:isPartOf <https://nn.wikipedia.org/> ;
+	schema:name "Altetar"@nn .
+
+<https://nn.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://qu.wikipedia.org/wiki/Tukuy_mikhuq> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "qu" ;
+	schema:isPartOf <https://qu.wikipedia.org/> ;
+	schema:name "Tukuy mikhuq"@qu .
+
+<https://qu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sh.wikipedia.org/wiki/Omnivor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "sh" ;
+	schema:isPartOf <https://sh.wikipedia.org/> ;
+	schema:name "Omnivor"@sh .
+
+<https://sh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sk.wikipedia.org/wiki/V%C5%A1e%C5%BEravec> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "sk" ;
+	schema:isPartOf <https://sk.wikipedia.org/> ;
+	schema:name "Všežravec"@sk .
+
+<https://sk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sl.wikipedia.org/wiki/Vsejed> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "sl" ;
+	schema:isPartOf <https://sl.wikipedia.org/> ;
+	schema:name "Vsejed"@sl .
+
+<https://sl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://su.wikipedia.org/wiki/Omnivora> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "su" ;
+	schema:isPartOf <https://su.wikipedia.org/> ;
+	schema:name "Omnivora"@su .
+
+<https://su.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ta.wikipedia.org/wiki/%E0%AE%85%E0%AE%A9%E0%AF%88%E0%AE%A4%E0%AF%8D%E0%AE%A4%E0%AF%81%E0%AE%A3%E0%AF%8D%E0%AE%A3%E0%AE%BF> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ta" ;
+	schema:isPartOf <https://ta.wikipedia.org/> ;
+	schema:name "அனைத்துண்ணி"@ta .
+
+<https://ta.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ur.wikipedia.org/wiki/%DB%81%D9%85%DB%81_%D8%AE%D9%88%D8%B1> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ur" ;
+	schema:isPartOf <https://ur.wikipedia.org/> ;
+	schema:name "ہمہ خور"@ur .
+
+<https://ur.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://war.wikipedia.org/wiki/Omniboro> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "war" ;
+	schema:isPartOf <https://war.wikipedia.org/> ;
+	schema:name "Omniboro"@war .
+
+<https://war.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://xh.wikipedia.org/wiki/I-omnivore> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "xh" ;
+	schema:isPartOf <https://xh.wikipedia.org/> ;
+	schema:name "I-omnivore"@xh .
+
+<https://xh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EC%9E%A1%EC%8B%9D_%EB%8F%99%EB%AC%BC> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "잡식 동물"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh-yue.wikipedia.org/wiki/%E9%9B%9C%E9%A3%9F%E6%80%A7%E5%8B%95%E7%89%A9> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "yue" ;
+	schema:isPartOf <https://zh-yue.wikipedia.org/> ;
+	schema:name "雜食性動物"@yue .
+
+<https://zh-yue.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://kab.wikipedia.org/wiki/Aramma> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "kab" ;
+	schema:isPartOf <https://kab.wikipedia.org/> ;
+	schema:name "Aramma"@kab .
+
+<https://kab.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://th.wikipedia.org/wiki/%E0%B8%AA%E0%B8%B4%E0%B9%88%E0%B8%87%E0%B8%A1%E0%B8%B5%E0%B8%8A%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%95%E0%B8%81%E0%B8%B4%E0%B8%99%E0%B8%97%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%9E%E0%B8%B7%E0%B8%8A%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AA%E0%B8%B1%E0%B8%95%E0%B8%A7%E0%B9%8C> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "th" ;
+	schema:isPartOf <https://th.wikipedia.org/> ;
+	schema:name "สิ่งมีชีวิตกินทั้งพืชและสัตว์"@th .
+
+<https://th.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://mk.wikipedia.org/wiki/%D0%A1%D0%B5%D1%88%D1%82%D0%BE%D1%98%D0%B0%D0%B4> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "mk" ;
+	schema:isPartOf <https://mk.wikipedia.org/> ;
+	schema:name "Сештојад"@mk .
+
+<https://mk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://wuu.wikipedia.org/wiki/%E6%9D%82%E9%A3%9F%E5%8A%A8%E7%89%A9> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "wuu" ;
+	schema:isPartOf <https://wuu.wikipedia.org/> ;
+	schema:name "杂食动物"@wuu .
+
+<https://wuu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E9%9B%9C%E9%A3%9F%E6%80%A7%E5%8B%95%E7%89%A9> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "雜食性動物"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ms.wikipedia.org/wiki/Omnivor> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ms" ;
+	schema:isPartOf <https://ms.wikipedia.org/> ;
+	schema:name "Omnivor"@ms .
+
+<https://ms.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ka.wikipedia.org/wiki/%E1%83%94%E1%83%95%E1%83%A0%E1%83%98%E1%83%A4%E1%83%90%E1%83%92%E1%83%98%E1%83%90> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ka" ;
+	schema:isPartOf <https://ka.wikipedia.org/> ;
+	schema:name "ევრიფაგია"@ka .
+
+<https://ka.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://wa.wikipedia.org/wiki/Magneu_did_tot> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "wa" ;
+	schema:isPartOf <https://wa.wikipedia.org/> ;
+	schema:name "Magneu did tot"@wa .
+
+<https://wa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://et.wikiquote.org/wiki/K%C3%B5iges%C3%B6%C3%B6ja> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikiquote.org/> ;
+	schema:name "Kõigesööja"@et .
+
+<https://et.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://ga.wikipedia.org/wiki/Uiliteoir> a schema:Article ;
+	schema:about wd:Q164509 ;
+	schema:inLanguage "ga" ;
+	schema:isPartOf <https://ga.wikipedia.org/> ;
+	schema:name "Uiliteoir"@ga .
+
+<https://ga.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q164509 wdt:P646 "/m/0150w7" ;
+	wdt:P279 wd:Q72638,
+		wd:Q729 ;
+	wdt:P1014 "300250275" ;
+	wdtn:P1014 <http://vocab.getty.edu/aat/300250275> ;
+	wdt:P227 "4256952-7" ;
+	wdtn:P227 <https://d-nb.info/gnd/4256952-7> ;
+	wdt:P3417 "Omnivores" ;
+	wdt:P3569 "levenswetenschappen-en-geneeskunde/omnivoor" ;
+	wdt:P3827 "omnivores" ;
+	wdt:P1417 "science/omnivore" ;
+	wdt:P1552 wd:Q46413310,
+		wd:Q1053008 ;
+	wdt:P4746 "028901" ;
+	wdt:P7033 "scot/1299" ;
+	wdtn:P7033 <http://vocabulary.curriculum.edu.au/scot/1299.rdf> ;
+	wdt:P6771 "293571" ;
+	wdt:P2716 <http://commons.wikimedia.org/wiki/Special:FilePath/Omnivore%20Examples.png> ;
+	wdt:P6366 "11796040" ;
+	wdtn:P6366 <http://ma-graph.org/entity/11796040> ;
+	wdt:P7818 "Omnivore" ;
+	wdt:P7832 "Orojale" ;
+	wdt:P910 wd:Q9608003 ;
+	wdt:P8408 "Omnivore" ;
+	wdtn:P8408 <http://kbpedia.org/kko/rc/Omnivore> ;
+	wdt:P10283 "C11796040" ;
+	wdt:P8313 "omnivor" ;
+	wdt:P8814 "02078264-n" ;
+	wdtn:P8814 <http://wordnet-rdf.princeton.edu/rdf/id/02078264-n> ;
+	wdt:P4342 "altetende_dyr" ;
+	wdt:P1343 wd:Q19219752 ;
+	p:P646 s:Q164509-651DE814-68A6-41DB-8CF6-CB3FD0EC65D2 .
+
+s:Q164509-651DE814-68A6-41DB-8CF6-CB3FD0EC65D2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/0150w7" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q164509 p:P279 s:Q164509-10684e11-44e2-f3ec-f333-a3fa9e02ba41 .
+
+s:Q164509-10684e11-44e2-f3ec-f333-a3fa9e02ba41 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q72638 .
+
+wd:Q164509 p:P279 s:Q164509-1f8f7d6e-41c8-ffc0-f734-3b689fb49373 .
+
+s:Q164509-1f8f7d6e-41c8-ffc0-f734-3b689fb49373 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q729 .
+
+wd:Q164509 p:P1014 s:Q164509-40F27681-AC67-4566-910A-D31459EF2C47 .
+
+s:Q164509-40F27681-AC67-4566-910A-D31459EF2C47 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1014 "300250275" ;
+	psn:P1014 <http://vocab.getty.edu/aat/300250275> .
+
+wd:Q164509 p:P227 s:Q164509-956C25C1-D9A7-49BF-B1F1-EB09707283A3 .
+
+s:Q164509-956C25C1-D9A7-49BF-B1F1-EB09707283A3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P227 "4256952-7" ;
+	psn:P227 <https://d-nb.info/gnd/4256952-7> ;
+	prov:wasDerivedFrom ref:9a24f7c0208b05d6be97077d855671d1dfdbc0dd .
+
+wd:Q164509 p:P3417 s:Q164509-B2FA5DC3-B393-4EC5-B10E-E7B28FDA8FF8 .
+
+s:Q164509-B2FA5DC3-B393-4EC5-B10E-E7B28FDA8FF8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3417 "Omnivores" ;
+	prov:wasDerivedFrom ref:3b0a5bb3c1f955edce73740124f7d935698092ad .
+
+wd:Q164509 p:P3569 s:Q164509-C0D991AF-BBA2-437B-9464-0A7AC2C9A3F8 .
+
+s:Q164509-C0D991AF-BBA2-437B-9464-0A7AC2C9A3F8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3569 "levenswetenschappen-en-geneeskunde/omnivoor" .
+
+wd:Q164509 p:P3827 s:Q164509-A82F3E84-D94A-477F-B4B7-999B9685B6C3 .
+
+s:Q164509-A82F3E84-D94A-477F-B4B7-999B9685B6C3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3827 "omnivores" .
+
+wd:Q164509 p:P1417 s:Q164509-8DE40903-BD3E-46B2-9B80-DD58ECC84A62 .
+
+s:Q164509-8DE40903-BD3E-46B2-9B80-DD58ECC84A62 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1417 "science/omnivore" .
+
+wd:Q164509 p:P1552 s:Q164509-366e4788-4bee-e23b-e10b-83789424b7a7 .
+
+s:Q164509-366e4788-4bee-e23b-e10b-83789424b7a7 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q46413310 .
+
+wd:Q164509 p:P1552 s:Q164509-b7b3037b-4c2c-ce3e-8f73-21246445621a .
+
+s:Q164509-b7b3037b-4c2c-ce3e-8f73-21246445621a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q1053008 .
+
+wd:Q164509 p:P4746 s:Q164509-4AE91643-E901-4AB7-90D9-3552C2E0B0DD .
+
+s:Q164509-4AE91643-E901-4AB7-90D9-3552C2E0B0DD a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4746 "028901" .
+
+wd:Q164509 p:P7033 s:Q164509-5B473C8E-919E-454D-AEC6-A131A950C877 .
+
+s:Q164509-5B473C8E-919E-454D-AEC6-A131A950C877 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7033 "scot/1299" ;
+	psn:P7033 <http://vocabulary.curriculum.edu.au/scot/1299.rdf> .
+
+wd:Q164509 p:P6771 s:Q164509-5419a7e6-4657-e94c-f2d9-8771e9924914 .
+
+s:Q164509-5419a7e6-4657-e94c-f2d9-8771e9924914 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6771 "293571" .
+
+wd:Q164509 p:P2716 s:Q164509-97f1c84d-4985-8f5f-5f15-08e4e3537805 .
+
+s:Q164509-97f1c84d-4985-8f5f-5f15-08e4e3537805 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2716 <http://commons.wikimedia.org/wiki/Special:FilePath/Omnivore%20Examples.png> .
+
+wd:Q164509 p:P6366 s:Q164509-F3A27465-1B7F-4FC5-9D93-DCF1B8E09D46 .
+
+s:Q164509-F3A27465-1B7F-4FC5-9D93-DCF1B8E09D46 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "11796040" ;
+	psn:P6366 <http://ma-graph.org/entity/11796040> .
+
+wd:Q164509 p:P7818 s:Q164509-FD3CD192-BC2E-4F93-8175-433F1824642E .
+
+s:Q164509-FD3CD192-BC2E-4F93-8175-433F1824642E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7818 "Omnivore" .
+
+wd:Q164509 p:P7832 s:Q164509-5DB47565-C2C2-4C7F-B309-3C142BFEAB9E .
+
+s:Q164509-5DB47565-C2C2-4C7F-B309-3C142BFEAB9E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7832 "Orojale" .
+
+wd:Q164509 p:P910 s:Q164509-d20faef5-5669-4a27-8031-98a591ee35a3 .
+
+s:Q164509-d20faef5-5669-4a27-8031-98a591ee35a3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q9608003 .
+
+wd:Q164509 p:P8408 s:Q164509-5BBAA5F7-B3B9-40A5-AF71-B80D40BBB828 .
+
+s:Q164509-5BBAA5F7-B3B9-40A5-AF71-B80D40BBB828 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8408 "Omnivore" ;
+	psn:P8408 <http://kbpedia.org/kko/rc/Omnivore> ;
+	prov:wasDerivedFrom ref:9a681f9dd95c90224547c404e11295f4f7dcf54e .
+
+wd:Q164509 p:P10283 s:Q164509-697C607F-DDAE-4E67-AC92-0718FE7211CD .
+
+s:Q164509-697C607F-DDAE-4E67-AC92-0718FE7211CD a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10283 "C11796040" ;
+	prov:wasDerivedFrom ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 .
+
+wd:Q164509 p:P8313 s:Q164509-B18D01B2-6311-455C-946D-24F6EE130F2D .
+
+s:Q164509-B18D01B2-6311-455C-946D-24F6EE130F2D a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8313 "omnivor" .
+
+wd:Q164509 p:P8814 s:Q164509-539CB622-2AD6-4CC3-BD52-62B052D76571 .
+
+s:Q164509-539CB622-2AD6-4CC3-BD52-62B052D76571 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8814 "02078264-n" ;
+	psn:P8814 <http://wordnet-rdf.princeton.edu/rdf/id/02078264-n> ;
+	prov:wasDerivedFrom ref:3f8c4934cc38de77b597e01bd5028acb514abd2d .
+
+wd:Q164509 p:P4342 s:Q164509-e0778aeb-4980-12b6-8c44-d87170363b1b .
+
+s:Q164509-e0778aeb-4980-12b6-8c44-d87170363b1b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4342 "altetende_dyr" .
+
+wd:Q164509 p:P1343 s:Q164509-3B2037EB-3204-472F-92A9-9F77712E3193 .
+
+s:Q164509-3B2037EB-3204-472F-92A9-9F77712E3193 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1343 wd:Q19219752 ;
+	pq:P805 wd:Q112791231 .
+
+wd:Q164509 rdfs:label "Allesfrësser"@lb ;
+	skos:prefLabel "Allesfrësser"@lb ;
+	schema:name "Allesfrësser"@lb ;
+	rdfs:label "杂食动物"@zh-hans ;
+	skos:prefLabel "杂食动物"@zh-hans ;
+	schema:name "杂食动物"@zh-hans ;
+	rdfs:label "雜食動物"@zh-hant ;
+	skos:prefLabel "雜食動物"@zh-hant ;
+	schema:name "雜食動物"@zh-hant ;
+	rdfs:label "雜食動物"@zh-hk ;
+	skos:prefLabel "雜食動物"@zh-hk ;
+	schema:name "雜食動物"@zh-hk ;
+	rdfs:label "杂食动物"@zh-cn ;
+	skos:prefLabel "杂食动物"@zh-cn ;
+	schema:name "杂食动物"@zh-cn ;
+	rdfs:label "杂食动物"@zh-sg ;
+	skos:prefLabel "杂食动物"@zh-sg ;
+	schema:name "杂食动物"@zh-sg ;
+	rdfs:label "雜食動物"@zh-tw ;
+	skos:prefLabel "雜食動物"@zh-tw ;
+	schema:name "雜食動物"@zh-tw ;
+	rdfs:label "omnivor"@jv ;
+	skos:prefLabel "omnivor"@jv ;
+	schema:name "omnivor"@jv ;
+	rdfs:label "wszystkożerca"@pl ;
+	skos:prefLabel "wszystkożerca"@pl ;
+	schema:name "wszystkożerca"@pl ;
+	rdfs:label "orojale"@eu ;
+	skos:prefLabel "orojale"@eu ;
+	schema:name "orojale"@eu ;
+	rdfs:label "tukuy mikhuq"@qu ;
+	skos:prefLabel "tukuy mikhuq"@qu ;
+	schema:name "tukuy mikhuq"@qu ;
+	rdfs:label "omnívoro"@es ;
+	skos:prefLabel "omnívoro"@es ;
+	schema:name "omnívoro"@es ;
+	rdfs:label "அனைத்துண்ணி"@ta ;
+	skos:prefLabel "அனைத்துண்ணி"@ta ;
+	schema:name "அனைத்துண்ணி"@ta ;
+	rdfs:label "omnivoor"@af ;
+	skos:prefLabel "omnivoor"@af ;
+	schema:name "omnivoor"@af ;
+	rdfs:label "mindenevő"@hu ;
+	skos:prefLabel "mindenevő"@hu ;
+	schema:name "mindenevő"@hu ;
+	rdfs:label "maserba"@ms ;
+	skos:prefLabel "maserba"@ms ;
+	schema:name "maserba"@ms ;
+	rdfs:label "omnivoor"@et ;
+	skos:prefLabel "omnivoor"@et ;
+	schema:name "omnivoor"@et ;
+	rdfs:label "omnivoru"@mt ;
+	skos:prefLabel "omnivoru"@mt ;
+	schema:name "omnivoru"@mt ;
+	rdfs:label "omnivore"@ia ;
+	skos:prefLabel "omnivore"@ia ;
+	schema:name "omnivore"@ia ;
+	rdfs:label "قارت"@ar ;
+	skos:prefLabel "قارت"@ar ;
+	schema:name "قارت"@ar ;
+	rdfs:label "allätare"@sv ;
+	skos:prefLabel "allätare"@sv ;
+	schema:name "allätare"@sv ;
+	rdfs:label "omnivoor"@nl ;
+	skos:prefLabel "omnivoor"@nl ;
+	schema:name "omnivoor"@nl ;
+	rdfs:label "omnívoro"@pt ;
+	skos:prefLabel "omnívoro"@pt ;
+	schema:name "omnívoro"@pt ;
+	rdfs:label "alæta"@is ;
+	skos:prefLabel "alæta"@is ;
+	schema:name "alæta"@is ;
+	rdfs:label "ĉiomanĝanto"@eo ;
+	skos:prefLabel "ĉiomanĝanto"@eo ;
+	schema:name "ĉiomanĝanto"@eo ;
+	rdfs:label "всеядное животное"@ru ;
+	skos:prefLabel "всеядное животное"@ru ;
+	schema:name "всеядное животное"@ru ;
+	rdfs:label "omnivor"@sr-el ;
+	skos:prefLabel "omnivor"@sr-el ;
+	schema:name "omnivor"@sr-el ;
+	rdfs:label "омнивор"@sr-ec ;
+	skos:prefLabel "омнивор"@sr-ec ;
+	schema:name "омнивор"@sr-ec ;
+	rdfs:label "hepçil"@tr ;
+	skos:prefLabel "hepçil"@tr ;
+	schema:name "hepçil"@tr ;
+	rdfs:label "kaikkiruokaisuus"@fi ;
+	skos:prefLabel "kaikkiruokaisuus"@fi ;
+	schema:name "kaikkiruokaisuus"@fi ;
+	rdfs:label "всеїдні"@uk ;
+	skos:prefLabel "всеїдні"@uk ;
+	schema:name "всеїдні"@uk ;
+	rdfs:label "altetar"@nn ;
+	skos:prefLabel "altetar"@nn ;
+	schema:name "altetar"@nn ;
+	rdfs:label "omnivoro"@io ;
+	skos:prefLabel "omnivoro"@io ;
+	schema:name "omnivoro"@io ;
+	rdfs:label "svežderi"@hr ;
+	skos:prefLabel "svežderi"@hr ;
+	schema:name "svežderi"@hr ;
+	rdfs:label "تالعاۋسىزدار"@kk-arab ;
+	skos:prefLabel "تالعاۋسىزدار"@kk-arab ;
+	schema:name "تالعاۋسىزدار"@kk-arab ;
+	rdfs:label "تالعاۋسىزدار"@kk-cn ;
+	skos:prefLabel "تالعاۋسىزدار"@kk-cn ;
+	schema:name "تالعاۋسىزدار"@kk-cn ;
+	rdfs:label "talğawsızdar"@kk-tr ;
+	skos:prefLabel "talğawsızdar"@kk-tr ;
+	schema:name "talğawsızdar"@kk-tr ;
+	rdfs:label "Талғаусыздар"@kk-kz ;
+	skos:prefLabel "Талғаусыздар"@kk-kz ;
+	schema:name "Талғаусыздар"@kk-kz ;
+	rdfs:label "Талғаусыздар"@kk-cyrl ;
+	skos:prefLabel "Талғаусыздар"@kk-cyrl ;
+	schema:name "Талғаусыздар"@kk-cyrl ;
+	rdfs:label "talğawsızdar"@kk-latn ;
+	skos:prefLabel "talğawsızdar"@kk-latn ;
+	schema:name "talğawsızdar"@kk-latn ;
+	rdfs:label "omnivor"@da ;
+	skos:prefLabel "omnivor"@da ;
+	schema:name "omnivor"@da ;
+	rdfs:label "omnivore"@fr ;
+	skos:prefLabel "omnivore"@fr ;
+	schema:name "omnivore"@fr ;
+	rdfs:label "אוכל-כול"@he ;
+	skos:prefLabel "אוכל-כול"@he ;
+	schema:name "אוכל-כול"@he ;
+	rdfs:label "visēdāji"@lv ;
+	skos:prefLabel "visēdāji"@lv ;
+	schema:name "visēdāji"@lv ;
+	rdfs:label "onnivoro"@it ;
+	skos:prefLabel "onnivoro"@it ;
+	schema:name "onnivoro"@it ;
+	rdfs:label "omnivora"@id ;
+	skos:prefLabel "omnivora"@id ;
+	schema:name "omnivora"@id ;
+	rdfs:label "Allesfresser"@de ;
+	skos:prefLabel "Allesfresser"@de ;
+	schema:name "Allesfresser"@de ;
+	rdfs:label "雑食動物"@ja ;
+	skos:prefLabel "雑食動物"@ja ;
+	schema:name "雑食動物"@ja ;
+	rdfs:label "Động vật ăn tạp"@vi ;
+	skos:prefLabel "Động vật ăn tạp"@vi ;
+	schema:name "Động vật ăn tạp"@vi ;
+	rdfs:label "omnivore"@en ;
+	skos:prefLabel "omnivore"@en ;
+	schema:name "omnivore"@en ;
+	rdfs:label "सर्वाहारी"@hi ;
+	skos:prefLabel "सर्वाहारी"@hi ;
+	schema:name "सर्वाहारी"@hi ;
+	rdfs:label "všežravec"@sk ;
+	skos:prefLabel "všežravec"@sk ;
+	schema:name "všežravec"@sk ;
+	rdfs:label "omnívor"@ca ;
+	skos:prefLabel "omnívor"@ca ;
+	schema:name "omnívor"@ca ;
+	rdfs:label "Omnivora"@la ;
+	skos:prefLabel "Omnivora"@la ;
+	schema:name "Omnivora"@la ;
+	rdfs:label "hollysydd"@cy ;
+	skos:prefLabel "hollysydd"@cy ;
+	schema:name "hollysydd"@cy ;
+	rdfs:label "vsejed"@sl ;
+	skos:prefLabel "vsejed"@sl ;
+	schema:name "vsejed"@sl ;
+	rdfs:label "všežravec"@cs ;
+	skos:prefLabel "všežravec"@cs ;
+	schema:name "všežravec"@cs ;
+	rdfs:label "همه‌چیزخوار"@fa ;
+	skos:prefLabel "همه‌چیزخوار"@fa ;
+	schema:name "همه‌چیزخوار"@fa ;
+	rdfs:label "всеядни животни"@bg ;
+	skos:prefLabel "всеядни животни"@bg ;
+	schema:name "всеядни животни"@bg ;
+	rdfs:label "ہمہ خور"@ur ;
+	skos:prefLabel "ہمہ خور"@ur ;
+	schema:name "ہمہ خور"@ur ;
+	rdfs:label "Талғаусыздар"@kk ;
+	skos:prefLabel "Талғаусыздар"@kk ;
+	schema:name "Талғаусыздар"@kk ;
+	rdfs:label "雜食動物"@zh ;
+	skos:prefLabel "雜食動物"@zh ;
+	schema:name "雜食動物"@zh ;
+	rdfs:label "сваштојед"@sr ;
+	skos:prefLabel "сваштојед"@sr ;
+	schema:name "сваштојед"@sr ;
+	rdfs:label "alteter"@nb ;
+	skos:prefLabel "alteter"@nb ;
+	schema:name "alteter"@nb ;
+	rdfs:label "മിശ്രഭുക്ക്"@ml ;
+	skos:prefLabel "മിശ്രഭുക്ക്"@ml ;
+	schema:name "മിശ്രഭുക്ക്"@ml ;
+	rdfs:label "সর্বভূক প্রাণী"@bn ;
+	skos:prefLabel "সর্বভূক প্রাণী"@bn ;
+	schema:name "সর্বভূক প্রাণী"@bn ;
+	rdfs:label "omnivor"@ro ;
+	skos:prefLabel "omnivor"@ro ;
+	schema:name "omnivor"@ro ;
+	rdfs:label "uiliteoir"@ga ;
+	skos:prefLabel "uiliteoir"@ga ;
+	schema:name "uiliteoir"@ga ;
+	rdfs:label "omnivor"@sh ;
+	skos:prefLabel "omnivor"@sh ;
+	schema:name "omnivor"@sh ;
+	rdfs:label "Omnivoar"@fy ;
+	skos:prefLabel "Omnivoar"@fy ;
+	schema:name "Omnivoar"@fy ;
+	rdfs:label "omnívoro"@gl ;
+	skos:prefLabel "omnívoro"@gl ;
+	schema:name "omnívoro"@gl ;
+	rdfs:label "Omnivoor"@li ;
+	skos:prefLabel "Omnivoor"@li ;
+	schema:name "Omnivoor"@li ;
+	rdfs:label "svežderi"@bs ;
+	skos:prefLabel "svežderi"@bs ;
+	schema:name "svežderi"@bs ;
+	rdfs:label "olldhebrer"@kw ;
+	skos:prefLabel "olldhebrer"@kw ;
+	schema:name "olldhebrer"@kw ;
+	rdfs:label "Omnivora"@su ;
+	skos:prefLabel "Omnivora"@su ;
+	schema:name "Omnivora"@su ;
+	rdfs:label "I-omnivore"@xh ;
+	skos:prefLabel "I-omnivore"@xh ;
+	schema:name "I-omnivore"@xh ;
+	rdfs:label "잡식성"@ko ;
+	skos:prefLabel "잡식성"@ko ;
+	schema:name "잡식성"@ko ;
+	rdfs:label "omnivò"@ht ;
+	skos:prefLabel "omnivò"@ht ;
+	schema:name "omnivò"@ht ;
+	rdfs:label "Allesfresser"@de-ch ;
+	skos:prefLabel "Allesfresser"@de-ch ;
+	schema:name "Allesfresser"@de-ch ;
+	rdfs:label "omnivore"@en-ca ;
+	skos:prefLabel "omnivore"@en-ca ;
+	schema:name "omnivore"@en-ca ;
+	rdfs:label "omnivore"@en-gb ;
+	skos:prefLabel "omnivore"@en-gb ;
+	schema:name "omnivore"@en-gb ;
+	rdfs:label "omnívoro"@pt-br ;
+	skos:prefLabel "omnívoro"@pt-br ;
+	schema:name "omnívoro"@pt-br ;
+	rdfs:label "omnívoru"@ast ;
+	skos:prefLabel "omnívoru"@ast ;
+	schema:name "omnívoru"@ast ;
+	rdfs:label "сештојад"@mk ;
+	skos:prefLabel "сештојад"@mk ;
+	schema:name "сештојад"@mk ;
+	rdfs:label "manigetend"@ang ;
+	skos:prefLabel "manigetend"@ang ;
+	schema:name "manigetend"@ang ;
+	rdfs:label "Omniboro"@war ;
+	skos:prefLabel "Omniboro"@war ;
+	schema:name "Omniboro"@war ;
+	rdfs:label "бөтен нәрсәне ашаучан хайван"@tt ;
+	skos:prefLabel "бөтен нәрсәне ашаучан хайван"@tt ;
+	schema:name "бөтен нәрсәне ашаучан хайван"@tt ;
+	rdfs:label "бөтен нәрсәне ашаучан хайван"@tt-cyrl ;
+	skos:prefLabel "бөтен нәрсәне ашаучан хайван"@tt-cyrl ;
+	schema:name "бөтен нәрсәне ашаучан хайван"@tt-cyrl ;
+	rdfs:label "omnivoro"@an ;
+	skos:prefLabel "omnivoro"@an ;
+	schema:name "omnivoro"@an ;
+	rdfs:label "Evrifagiya"@uz ;
+	skos:prefLabel "Evrifagiya"@uz ;
+	schema:name "Evrifagiya"@uz ;
+	rdfs:label "giştxur"@ku ;
+	skos:prefLabel "giştxur"@ku ;
+	schema:name "giştxur"@ku ;
+	rdfs:label "giştxur"@ku-latn ;
+	skos:prefLabel "giştxur"@ku-latn ;
+	schema:name "giştxur"@ku-latn ;
+	rdfs:label "雜食性動物"@yue ;
+	skos:prefLabel "雜食性動物"@yue ;
+	schema:name "雜食性動物"@yue ;
+	rdfs:label "Aramma"@kab ;
+	skos:prefLabel "Aramma"@kab ;
+	schema:name "Aramma"@kab ;
+	rdfs:label "усёедны"@be-tarask ;
+	skos:prefLabel "усёедны"@be-tarask ;
+	schema:name "усёедны"@be-tarask ;
+	rdfs:label "สิ่งมีชีวิตกินทั้งพืชและสัตว์"@th ;
+	skos:prefLabel "สิ่งมีชีวิตกินทั้งพืชและสัตว์"@th ;
+	schema:name "สิ่งมีชีวิตกินทั้งพืชและสัตว์"@th ;
+	rdfs:label "杂食动物"@wuu ;
+	skos:prefLabel "杂食动物"@wuu ;
+	schema:name "杂食动物"@wuu ;
+	rdfs:label "ევრიფაგია"@ka ;
+	skos:prefLabel "ევრიფაგია"@ka ;
+	schema:name "ევრიფაგია"@ka ;
+	rdfs:label "puohporree"@smn ;
+	skos:prefLabel "puohporree"@smn ;
+	schema:name "puohporree"@smn ;
+	rdfs:label "Magneu did tot"@wa ;
+	skos:prefLabel "Magneu did tot"@wa ;
+	schema:name "Magneu did tot"@wa ;
+	rdfs:label "সৰ্বভোজী"@as ;
+	skos:prefLabel "সৰ্বভোজী"@as ;
+	schema:name "সৰ্বভোজী"@as ;
+	schema:description "organism consuming a variety of foods, usually including both plants and animals as diet"@en,
+		"animal que se alimenta tanto de animales como de plantas"@es,
+		"diersoort die gewoonlijk zowel dierlijk als plantaardig voedsel eet"@nl,
+		"organizm konsumujący większą gamę jedzenia, przeważnie zarówno rośliny jak i zwierzęta"@pl,
+		"Organismen, die sowohl pflanzliche als auch tierische Nahrung zu sich nehmen"@de,
+		"organisme pemakan segala jenis makanan, umumnya termasuk tumbuh-tumbuhan dan hewan"@id,
+		"ser que s'alimenta lo mesmo de plantes que d'animales"@ast,
+		"organismo que consome de forma indiferenciada alimentos de origem animal ou vegetal"@pt,
+		"animal com capacidade para metabolização de diferentes classes alimentícias"@pt-br,
+		"Animalia- zein landare-substantziak janez elikatzen dena"@eu,
+		"organisme consommant indifféremment des aliments de toute origine (animale, végétale, fongique ou bactérienne)"@fr,
+		"Giyanewerên hem goşt hem jî riwekan wekî xurek dixwin."@ku-latn,
+		"בעל חיים שתזונתו צמחית ובשרית כאחת"@he,
+		"арганізм, які спажывае разнастайныя віды ежы, пераважна расьлінаў і жывёлаў"@be-tarask,
+		"hem et hem de otla beslenen canlılar"@tr,
+		"উদ্ভিদ ও প্রাণী উভয়ের ওপর নির্ভর করে এমন প্রাণী"@bn,
+		"ცხოველთა კვება ცხოველური და მცენარეული შედგენილობის სხვადასხვა საკვებით"@ka,
+		"organismo che si nutre di una vasta gamma di alimenti, sia di origine vegetale che animale"@it,
+		"djur som hämtar sin föda från både växt- och djurrikena"@sv,
+		"肉や草などを何でも食べる動物"@ja,
+		"고기와 풀 모두 먹는 생물들을 총칭하는 것"@ko,
+		"loài lấy năng lượng để nuôi dưỡng sự sống từ nguồn thức ăn của cả thực vật và động vật"@vi,
+		"বিভিন্ন ধৰণৰ খাদ্য গ্ৰহণ কৰা জীৱ, সাধাৰণতে যি উদ্ভিদ আৰু প্ৰাণী দুয়োকে আহাৰ হিচাপে গ্ৰহণ কৰে"@as ;
+	skos:altLabel "Omnivor"@lb,
+		"Allesfréisser"@lb,
+		"Allesfriesser"@lb,
+		"杂食性"@zh,
+		"雜食性"@zh,
+		"omniwora"@pl,
+		"wszystkożerne"@pl,
+		"zwierzę wszystkożerne"@pl,
+		"pantofag"@pl,
+		"wszystkożercy"@pl,
+		"Omniboro"@eu,
+		"Omnívoros"@es,
+		"Omnivora"@es,
+		"Omnívora"@es,
+		"Omnivoro"@es,
+		"Omnivoros"@es,
+		"Alleseter"@af,
+		"omnivor"@ms,
+		"Kõigetoiduline"@et,
+		"Polüfaagid"@et,
+		"Kõigesööja"@et,
+		"Kõigetoidulised"@et,
+		"Segatoiduline loom"@et,
+		"Segatoidulised loomad"@et,
+		"Omnivoorid"@et,
+		"Polüfaag"@et,
+		"Eurüfaag"@et,
+		"Segatoiduline"@et,
+		"قوارات"@ar,
+		"حيوانات قارتة"@ar,
+		"حيوان قارت"@ar,
+		"القوارت"@ar,
+		"قوارت"@ar,
+		"النهميات"@ar,
+		"حَيَوَانٌ قارِتِيّ"@ar,
+		"قارِتِيّ"@ar,
+		"Omnivor"@sv,
+		"Omnivoren"@nl,
+		"Alleseter"@nl,
+		"omnívoros"@pt,
+		"omnívora"@pt,
+		"ĉiomanĝulo"@eo,
+		"ĉiomanĝantoj"@eo,
+		"ĉiomanĝanta"@eo,
+		"ĉionvora"@eo,
+		"ĉiomanĝuloj"@eo,
+		"ĉiovorantoj"@eo,
+		"всеядные"@ru,
+		"эврифаг"@ru,
+		"пантофаг"@ru,
+		"всеядные животные"@ru,
+		"Сваштојед"@sr,
+		"Сваштоједи"@sr,
+		"Омнивори"@sr,
+		"Omnivorlar"@tr,
+		"Herşey yiyici"@tr,
+		"Her şey yiyici"@tr,
+		"Hepçiller"@tr,
+		"Omnivor"@tr,
+		"Hepobur"@tr,
+		"Kaikkiruokainen eläin"@fi,
+		"Omnivori"@fi,
+		"Omnivoria"@fi,
+		"Sekaravinto"@fi,
+		"Kaikkiruokainen"@fi,
+		"всеїдність"@uk,
+		"пантофаг"@uk,
+		"пантофаги"@uk,
+		"Svejed"@hr,
+		"Svežder"@hr,
+		"Svejedi"@hr,
+		"Altædende"@da,
+		"Altæder"@da,
+		"Altædende dyr"@da,
+		"Omnivores"@fr,
+		"אוכל-כל"@he,
+		"אוכל כל"@he,
+		"אוכלי כול"@he,
+		"אוכלי כל"@he,
+		"אומניבור"@he,
+		"אוכל כול"@he,
+		"Visēdājs"@lv,
+		"Omnivora"@lv,
+		"Omnivore"@lv,
+		"onnivori"@it,
+		"Omniphage"@de,
+		"Omnivoren"@de,
+		"Nahrungsgeneralist"@de,
+		"Omnivor"@de,
+		"Pantophage"@de,
+		"Omnivore"@de,
+		"雑食魚"@ja,
+		"雑食性"@ja,
+		"卵食"@ja,
+		"Omnivor"@sk,
+		"Omnívors"@ca,
+		"Omnívora"@ca,
+		"Omnívores"@ca,
+		"Hollysol"@cy,
+		"Anifil hollysydd"@cy,
+		"Anifail hollysydd"@cy,
+		"Omnivor"@sl,
+		"Omnivora"@cs,
+		"všežravci"@cs,
+		"pantofág"@cs,
+		"omnivor"@cs,
+		"omnivorní"@cs,
+		"همه‌چیزخواری"@fa,
+		"همه‌چیزخواران"@fa,
+		"همه چیزخوار"@fa,
+		"Всеядни"@bg,
+		"ہمہ خوری"@ur,
+		"Altspisere"@nb,
+		"Altetere"@nb,
+		"Omnivor"@nb,
+		"Altspiser"@nb,
+		"Omnivora"@id,
+		"Omnivora"@jv,
+		"усёедная"@be-tarask,
+		"усёеднае"@be-tarask,
+		"усёедныя"@be-tarask,
+		"усёедны арганізм"@be-tarask,
+		"Onívoros"@pt-br,
+		"Onívora"@pt-br,
+		"Onívoro"@pt-br,
+		"ყოვლისმჭამელობა"@ka,
+		"პანტოფაგია"@ka,
+		"잡식 동물"@ko,
+		"잡식동물"@ko,
+		"잡식"@ko,
+		"সৰ্বভক্ষী"@as,
+		"সৰ্বভক্ষণকাৰী"@as,
+		"uiliteach"@ga,
+		"omnabhóir"@ga .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q72638 a wikibase:Item ;
+	rdfs:label "consumer"@en ;
+	skos:prefLabel "consumer"@en ;
+	schema:name "consumer"@en ;
+	schema:description "organism in an ecological food chain that receives energy by consuming other organisms"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q729 a wikibase:Item ;
+	rdfs:label "animal"@en ;
+	skos:prefLabel "animal"@en ;
+	schema:name "animal"@en ;
+	schema:description "kingdom of multicellular eukaryotic organisms"@en .
+
+wd:P1014 a wikibase:Property ;
+	rdfs:label "Art & Architecture Thesaurus ID"@en ;
+	skos:prefLabel "Art & Architecture Thesaurus ID"@en ;
+	schema:name "Art & Architecture Thesaurus ID"@en ;
+	schema:description "identifier in the Art & Architecture Thesaurus by the Getty Research Institute"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1014 ;
+	wikibase:claim p:P1014 ;
+	wikibase:statementProperty ps:P1014 ;
+	wikibase:statementValue psv:P1014 ;
+	wikibase:qualifier pq:P1014 ;
+	wikibase:qualifierValue pqv:P1014 ;
+	wikibase:reference pr:P1014 ;
+	wikibase:referenceValue prv:P1014 ;
+	wikibase:novalue wdno:P1014 ;
+	wikibase:directClaimNormalized wdtn:P1014 ;
+	wikibase:statementValueNormalized psn:P1014 ;
+	wikibase:qualifierValueNormalized pqn:P1014 ;
+	wikibase:referenceValueNormalized prn:P1014 .
+
+p:P1014 a owl:ObjectProperty .
+
+psv:P1014 a owl:ObjectProperty .
+
+pqv:P1014 a owl:ObjectProperty .
+
+prv:P1014 a owl:ObjectProperty .
+
+wdt:P1014 a owl:DatatypeProperty .
+
+ps:P1014 a owl:DatatypeProperty .
+
+pq:P1014 a owl:DatatypeProperty .
+
+pr:P1014 a owl:DatatypeProperty .
+
+psn:P1014 a owl:ObjectProperty .
+
+pqn:P1014 a owl:ObjectProperty .
+
+prn:P1014 a owl:ObjectProperty .
+
+wdtn:P1014 a owl:ObjectProperty .
+
+wdno:P1014 a owl:Class ;
+	owl:complementOf _:b3313e8714e8603bc734ad31fe890277 .
+
+_:b3313e8714e8603bc734ad31fe890277 a owl:Restriction ;
+	owl:onProperty wdt:P1014 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P227 a wikibase:Property ;
+	rdfs:label "GND ID"@en ;
+	skos:prefLabel "GND ID"@en ;
+	schema:name "GND ID"@en ;
+	schema:description "identifier from an international authority file of names, subjects, and organizations (please don't use type n = name, disambiguation) - Deutsche Nationalbibliothek"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P227 ;
+	wikibase:claim p:P227 ;
+	wikibase:statementProperty ps:P227 ;
+	wikibase:statementValue psv:P227 ;
+	wikibase:qualifier pq:P227 ;
+	wikibase:qualifierValue pqv:P227 ;
+	wikibase:reference pr:P227 ;
+	wikibase:referenceValue prv:P227 ;
+	wikibase:novalue wdno:P227 ;
+	wikibase:directClaimNormalized wdtn:P227 ;
+	wikibase:statementValueNormalized psn:P227 ;
+	wikibase:qualifierValueNormalized pqn:P227 ;
+	wikibase:referenceValueNormalized prn:P227 .
+
+p:P227 a owl:ObjectProperty .
+
+psv:P227 a owl:ObjectProperty .
+
+pqv:P227 a owl:ObjectProperty .
+
+prv:P227 a owl:ObjectProperty .
+
+wdt:P227 a owl:DatatypeProperty .
+
+ps:P227 a owl:DatatypeProperty .
+
+pq:P227 a owl:DatatypeProperty .
+
+pr:P227 a owl:DatatypeProperty .
+
+psn:P227 a owl:ObjectProperty .
+
+pqn:P227 a owl:ObjectProperty .
+
+prn:P227 a owl:ObjectProperty .
+
+wdtn:P227 a owl:ObjectProperty .
+
+wdno:P227 a owl:Class ;
+	owl:complementOf _:286c7ee15bc3c86b8eb6b23547b34d68 .
+
+_:286c7ee15bc3c86b8eb6b23547b34d68 a owl:Restriction ;
+	owl:onProperty wdt:P227 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3417 a wikibase:Property ;
+	rdfs:label "Quora topic ID"@en ;
+	skos:prefLabel "Quora topic ID"@en ;
+	schema:name "Quora topic ID"@en ;
+	schema:description "identifier for a topic on Quora (English language version)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3417 ;
+	wikibase:claim p:P3417 ;
+	wikibase:statementProperty ps:P3417 ;
+	wikibase:statementValue psv:P3417 ;
+	wikibase:qualifier pq:P3417 ;
+	wikibase:qualifierValue pqv:P3417 ;
+	wikibase:reference pr:P3417 ;
+	wikibase:referenceValue prv:P3417 ;
+	wikibase:novalue wdno:P3417 ;
+	wikibase:directClaimNormalized wdtn:P3417 ;
+	wikibase:statementValueNormalized psn:P3417 ;
+	wikibase:qualifierValueNormalized pqn:P3417 ;
+	wikibase:referenceValueNormalized prn:P3417 .
+
+p:P3417 a owl:ObjectProperty .
+
+psv:P3417 a owl:ObjectProperty .
+
+pqv:P3417 a owl:ObjectProperty .
+
+prv:P3417 a owl:ObjectProperty .
+
+wdt:P3417 a owl:DatatypeProperty .
+
+ps:P3417 a owl:DatatypeProperty .
+
+pq:P3417 a owl:DatatypeProperty .
+
+pr:P3417 a owl:DatatypeProperty .
+
+psn:P3417 a owl:ObjectProperty .
+
+pqn:P3417 a owl:ObjectProperty .
+
+prn:P3417 a owl:ObjectProperty .
+
+wdtn:P3417 a owl:ObjectProperty .
+
+wdno:P3417 a owl:Class ;
+	owl:complementOf _:54217a89695819ffcfec13afc576b468 .
+
+_:54217a89695819ffcfec13afc576b468 a owl:Restriction ;
+	owl:onProperty wdt:P3417 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3569 a wikibase:Property ;
+	rdfs:label "Cultureel Woordenboek ID"@en ;
+	skos:prefLabel "Cultureel Woordenboek ID"@en ;
+	schema:name "Cultureel Woordenboek ID"@en ;
+	schema:description "identifier for a concept in the Dutch Cultureel Woordenboek ('Cultural Dictionary')"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3569 ;
+	wikibase:claim p:P3569 ;
+	wikibase:statementProperty ps:P3569 ;
+	wikibase:statementValue psv:P3569 ;
+	wikibase:qualifier pq:P3569 ;
+	wikibase:qualifierValue pqv:P3569 ;
+	wikibase:reference pr:P3569 ;
+	wikibase:referenceValue prv:P3569 ;
+	wikibase:novalue wdno:P3569 ;
+	wikibase:directClaimNormalized wdtn:P3569 ;
+	wikibase:statementValueNormalized psn:P3569 ;
+	wikibase:qualifierValueNormalized pqn:P3569 ;
+	wikibase:referenceValueNormalized prn:P3569 .
+
+p:P3569 a owl:ObjectProperty .
+
+psv:P3569 a owl:ObjectProperty .
+
+pqv:P3569 a owl:ObjectProperty .
+
+prv:P3569 a owl:ObjectProperty .
+
+wdt:P3569 a owl:DatatypeProperty .
+
+ps:P3569 a owl:DatatypeProperty .
+
+pq:P3569 a owl:DatatypeProperty .
+
+pr:P3569 a owl:DatatypeProperty .
+
+psn:P3569 a owl:ObjectProperty .
+
+pqn:P3569 a owl:ObjectProperty .
+
+prn:P3569 a owl:ObjectProperty .
+
+wdtn:P3569 a owl:ObjectProperty .
+
+wdno:P3569 a owl:Class ;
+	owl:complementOf _:f1ea87b0f33efb1ef85c5b433a66bfc0 .
+
+_:f1ea87b0f33efb1ef85c5b433a66bfc0 a owl:Restriction ;
+	owl:onProperty wdt:P3569 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3827 a wikibase:Property ;
+	rdfs:label "JSTOR topic ID"@en ;
+	skos:prefLabel "JSTOR topic ID"@en ;
+	schema:name "JSTOR topic ID"@en ;
+	schema:description "identifier for a topic at JSTOR"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3827 ;
+	wikibase:claim p:P3827 ;
+	wikibase:statementProperty ps:P3827 ;
+	wikibase:statementValue psv:P3827 ;
+	wikibase:qualifier pq:P3827 ;
+	wikibase:qualifierValue pqv:P3827 ;
+	wikibase:reference pr:P3827 ;
+	wikibase:referenceValue prv:P3827 ;
+	wikibase:novalue wdno:P3827 ;
+	wikibase:directClaimNormalized wdtn:P3827 ;
+	wikibase:statementValueNormalized psn:P3827 ;
+	wikibase:qualifierValueNormalized pqn:P3827 ;
+	wikibase:referenceValueNormalized prn:P3827 .
+
+p:P3827 a owl:ObjectProperty .
+
+psv:P3827 a owl:ObjectProperty .
+
+pqv:P3827 a owl:ObjectProperty .
+
+prv:P3827 a owl:ObjectProperty .
+
+wdt:P3827 a owl:DatatypeProperty .
+
+ps:P3827 a owl:DatatypeProperty .
+
+pq:P3827 a owl:DatatypeProperty .
+
+pr:P3827 a owl:DatatypeProperty .
+
+psn:P3827 a owl:ObjectProperty .
+
+pqn:P3827 a owl:ObjectProperty .
+
+prn:P3827 a owl:ObjectProperty .
+
+wdtn:P3827 a owl:ObjectProperty .
+
+wdno:P3827 a owl:Class ;
+	owl:complementOf _:591354acd9a1c60143190541be6b2d38 .
+
+_:591354acd9a1c60143190541be6b2d38 a owl:Restriction ;
+	owl:onProperty wdt:P3827 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1417 a wikibase:Property ;
+	rdfs:label "Encyclopædia Britannica Online ID"@en ;
+	skos:prefLabel "Encyclopædia Britannica Online ID"@en ;
+	schema:name "Encyclopædia Britannica Online ID"@en ;
+	schema:description "identifier for an article in the online version of Encyclopædia Britannica"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1417 ;
+	wikibase:claim p:P1417 ;
+	wikibase:statementProperty ps:P1417 ;
+	wikibase:statementValue psv:P1417 ;
+	wikibase:qualifier pq:P1417 ;
+	wikibase:qualifierValue pqv:P1417 ;
+	wikibase:reference pr:P1417 ;
+	wikibase:referenceValue prv:P1417 ;
+	wikibase:novalue wdno:P1417 ;
+	wikibase:directClaimNormalized wdtn:P1417 ;
+	wikibase:statementValueNormalized psn:P1417 ;
+	wikibase:qualifierValueNormalized pqn:P1417 ;
+	wikibase:referenceValueNormalized prn:P1417 .
+
+p:P1417 a owl:ObjectProperty .
+
+psv:P1417 a owl:ObjectProperty .
+
+pqv:P1417 a owl:ObjectProperty .
+
+prv:P1417 a owl:ObjectProperty .
+
+wdt:P1417 a owl:DatatypeProperty .
+
+ps:P1417 a owl:DatatypeProperty .
+
+pq:P1417 a owl:DatatypeProperty .
+
+pr:P1417 a owl:DatatypeProperty .
+
+psn:P1417 a owl:ObjectProperty .
+
+pqn:P1417 a owl:ObjectProperty .
+
+prn:P1417 a owl:ObjectProperty .
+
+wdtn:P1417 a owl:ObjectProperty .
+
+wdno:P1417 a owl:Class ;
+	owl:complementOf _:0cb1ab8817799c4db539b18975ce292a .
+
+_:0cb1ab8817799c4db539b18975ce292a a owl:Restriction ;
+	owl:onProperty wdt:P1417 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q46413310 a wikibase:Item ;
+	rdfs:label "omnivorism"@en ;
+	skos:prefLabel "omnivorism"@en ;
+	schema:name "omnivorism"@en ;
+	schema:description "type of feeding behaviour"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1053008 a wikibase:Item ;
+	rdfs:label "trophic level"@en ;
+	skos:prefLabel "trophic level"@en ;
+	schema:name "trophic level"@en ;
+	schema:description "position of an organism in a food chain"@en .
+
+wd:P4746 a wikibase:Property ;
+	rdfs:label "Elhuyar ZTH ID"@en ;
+	skos:prefLabel "Elhuyar ZTH ID"@en ;
+	schema:name "Elhuyar ZTH ID"@en ;
+	schema:description "Elhuyar Science and Technology Dictionary has a wide range of terms in four languages (en, es, fr, eu) that can easily be linked to and from Wikidata"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4746 ;
+	wikibase:claim p:P4746 ;
+	wikibase:statementProperty ps:P4746 ;
+	wikibase:statementValue psv:P4746 ;
+	wikibase:qualifier pq:P4746 ;
+	wikibase:qualifierValue pqv:P4746 ;
+	wikibase:reference pr:P4746 ;
+	wikibase:referenceValue prv:P4746 ;
+	wikibase:novalue wdno:P4746 ;
+	wikibase:directClaimNormalized wdtn:P4746 ;
+	wikibase:statementValueNormalized psn:P4746 ;
+	wikibase:qualifierValueNormalized pqn:P4746 ;
+	wikibase:referenceValueNormalized prn:P4746 .
+
+p:P4746 a owl:ObjectProperty .
+
+psv:P4746 a owl:ObjectProperty .
+
+pqv:P4746 a owl:ObjectProperty .
+
+prv:P4746 a owl:ObjectProperty .
+
+wdt:P4746 a owl:DatatypeProperty .
+
+ps:P4746 a owl:DatatypeProperty .
+
+pq:P4746 a owl:DatatypeProperty .
+
+pr:P4746 a owl:DatatypeProperty .
+
+psn:P4746 a owl:ObjectProperty .
+
+pqn:P4746 a owl:ObjectProperty .
+
+prn:P4746 a owl:ObjectProperty .
+
+wdtn:P4746 a owl:ObjectProperty .
+
+wdno:P4746 a owl:Class ;
+	owl:complementOf _:bb7f68ecb3e1370fa661a0df6b6a66ba .
+
+_:bb7f68ecb3e1370fa661a0df6b6a66ba a owl:Restriction ;
+	owl:onProperty wdt:P4746 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7033 a wikibase:Property ;
+	rdfs:label "Australian Educational Vocabulary ID"@en ;
+	skos:prefLabel "Australian Educational Vocabulary ID"@en ;
+	schema:name "Australian Educational Vocabulary ID"@en ;
+	schema:description "ID for curriculum term in one of the controlled vocabularies at Australian education vocabularies"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7033 ;
+	wikibase:claim p:P7033 ;
+	wikibase:statementProperty ps:P7033 ;
+	wikibase:statementValue psv:P7033 ;
+	wikibase:qualifier pq:P7033 ;
+	wikibase:qualifierValue pqv:P7033 ;
+	wikibase:reference pr:P7033 ;
+	wikibase:referenceValue prv:P7033 ;
+	wikibase:novalue wdno:P7033 ;
+	wikibase:directClaimNormalized wdtn:P7033 ;
+	wikibase:statementValueNormalized psn:P7033 ;
+	wikibase:qualifierValueNormalized pqn:P7033 ;
+	wikibase:referenceValueNormalized prn:P7033 .
+
+p:P7033 a owl:ObjectProperty .
+
+psv:P7033 a owl:ObjectProperty .
+
+pqv:P7033 a owl:ObjectProperty .
+
+prv:P7033 a owl:ObjectProperty .
+
+wdt:P7033 a owl:DatatypeProperty .
+
+ps:P7033 a owl:DatatypeProperty .
+
+pq:P7033 a owl:DatatypeProperty .
+
+pr:P7033 a owl:DatatypeProperty .
+
+psn:P7033 a owl:ObjectProperty .
+
+pqn:P7033 a owl:ObjectProperty .
+
+prn:P7033 a owl:ObjectProperty .
+
+wdtn:P7033 a owl:ObjectProperty .
+
+wdno:P7033 a owl:Class ;
+	owl:complementOf _:de7f93128804c8ae757ad1972d2e3f4f .
+
+_:de7f93128804c8ae757ad1972d2e3f4f a owl:Restriction ;
+	owl:onProperty wdt:P7033 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6771 a wikibase:Property ;
+	rdfs:label "Arabic Ontology ID"@en ;
+	skos:prefLabel "Arabic Ontology ID"@en ;
+	schema:name "Arabic Ontology ID"@en ;
+	schema:description "identifier for external link ontology.birzeit.edu, item equivalent on Q63107058 in English and/or Arabic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6771 ;
+	wikibase:claim p:P6771 ;
+	wikibase:statementProperty ps:P6771 ;
+	wikibase:statementValue psv:P6771 ;
+	wikibase:qualifier pq:P6771 ;
+	wikibase:qualifierValue pqv:P6771 ;
+	wikibase:reference pr:P6771 ;
+	wikibase:referenceValue prv:P6771 ;
+	wikibase:novalue wdno:P6771 ;
+	wikibase:directClaimNormalized wdtn:P6771 ;
+	wikibase:statementValueNormalized psn:P6771 ;
+	wikibase:qualifierValueNormalized pqn:P6771 ;
+	wikibase:referenceValueNormalized prn:P6771 .
+
+p:P6771 a owl:ObjectProperty .
+
+psv:P6771 a owl:ObjectProperty .
+
+pqv:P6771 a owl:ObjectProperty .
+
+prv:P6771 a owl:ObjectProperty .
+
+wdt:P6771 a owl:DatatypeProperty .
+
+ps:P6771 a owl:DatatypeProperty .
+
+pq:P6771 a owl:DatatypeProperty .
+
+pr:P6771 a owl:DatatypeProperty .
+
+psn:P6771 a owl:ObjectProperty .
+
+pqn:P6771 a owl:ObjectProperty .
+
+prn:P6771 a owl:ObjectProperty .
+
+wdtn:P6771 a owl:ObjectProperty .
+
+wdno:P6771 a owl:Class ;
+	owl:complementOf _:9e857a1179ee68a55063411495fa4f4d .
+
+_:9e857a1179ee68a55063411495fa4f4d a owl:Restriction ;
+	owl:onProperty wdt:P6771 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2716 a wikibase:Property ;
+	rdfs:label "collage image"@en ;
+	skos:prefLabel "collage image"@en ;
+	schema:name "collage image"@en ;
+	schema:description "image file that assembles two or more other images of item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#CommonsMedia> ;
+	wikibase:directClaim wdt:P2716 ;
+	wikibase:claim p:P2716 ;
+	wikibase:statementProperty ps:P2716 ;
+	wikibase:statementValue psv:P2716 ;
+	wikibase:qualifier pq:P2716 ;
+	wikibase:qualifierValue pqv:P2716 ;
+	wikibase:reference pr:P2716 ;
+	wikibase:referenceValue prv:P2716 ;
+	wikibase:novalue wdno:P2716 .
+
+p:P2716 a owl:ObjectProperty .
+
+psv:P2716 a owl:ObjectProperty .
+
+pqv:P2716 a owl:ObjectProperty .
+
+prv:P2716 a owl:ObjectProperty .
+
+wdt:P2716 a owl:ObjectProperty .
+
+ps:P2716 a owl:ObjectProperty .
+
+pq:P2716 a owl:ObjectProperty .
+
+pr:P2716 a owl:ObjectProperty .
+
+wdno:P2716 a owl:Class ;
+	owl:complementOf _:dc240b69ffa2c2306356616d38b46c43 .
+
+_:dc240b69ffa2c2306356616d38b46c43 a owl:Restriction ;
+	owl:onProperty wdt:P2716 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7818 a wikibase:Property ;
+	rdfs:label "French Vikidia ID"@en ;
+	skos:prefLabel "French Vikidia ID"@en ;
+	schema:name "French Vikidia ID"@en ;
+	schema:description "ID of the article in French Vikidia"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7818 ;
+	wikibase:claim p:P7818 ;
+	wikibase:statementProperty ps:P7818 ;
+	wikibase:statementValue psv:P7818 ;
+	wikibase:qualifier pq:P7818 ;
+	wikibase:qualifierValue pqv:P7818 ;
+	wikibase:reference pr:P7818 ;
+	wikibase:referenceValue prv:P7818 ;
+	wikibase:novalue wdno:P7818 ;
+	wikibase:directClaimNormalized wdtn:P7818 ;
+	wikibase:statementValueNormalized psn:P7818 ;
+	wikibase:qualifierValueNormalized pqn:P7818 ;
+	wikibase:referenceValueNormalized prn:P7818 .
+
+p:P7818 a owl:ObjectProperty .
+
+psv:P7818 a owl:ObjectProperty .
+
+pqv:P7818 a owl:ObjectProperty .
+
+prv:P7818 a owl:ObjectProperty .
+
+wdt:P7818 a owl:DatatypeProperty .
+
+ps:P7818 a owl:DatatypeProperty .
+
+pq:P7818 a owl:DatatypeProperty .
+
+pr:P7818 a owl:DatatypeProperty .
+
+psn:P7818 a owl:ObjectProperty .
+
+pqn:P7818 a owl:ObjectProperty .
+
+prn:P7818 a owl:ObjectProperty .
+
+wdtn:P7818 a owl:ObjectProperty .
+
+wdno:P7818 a owl:Class ;
+	owl:complementOf _:e5c0122052dd88d24773d9b09332f4e1 .
+
+_:e5c0122052dd88d24773d9b09332f4e1 a owl:Restriction ;
+	owl:onProperty wdt:P7818 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7832 a wikibase:Property ;
+	rdfs:label "Basque Vikidia ID"@en ;
+	skos:prefLabel "Basque Vikidia ID"@en ;
+	schema:name "Basque Vikidia ID"@en ;
+	schema:description "ID of the article in Basque Vikidia"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7832 ;
+	wikibase:claim p:P7832 ;
+	wikibase:statementProperty ps:P7832 ;
+	wikibase:statementValue psv:P7832 ;
+	wikibase:qualifier pq:P7832 ;
+	wikibase:qualifierValue pqv:P7832 ;
+	wikibase:reference pr:P7832 ;
+	wikibase:referenceValue prv:P7832 ;
+	wikibase:novalue wdno:P7832 ;
+	wikibase:directClaimNormalized wdtn:P7832 ;
+	wikibase:statementValueNormalized psn:P7832 ;
+	wikibase:qualifierValueNormalized pqn:P7832 ;
+	wikibase:referenceValueNormalized prn:P7832 .
+
+p:P7832 a owl:ObjectProperty .
+
+psv:P7832 a owl:ObjectProperty .
+
+pqv:P7832 a owl:ObjectProperty .
+
+prv:P7832 a owl:ObjectProperty .
+
+wdt:P7832 a owl:DatatypeProperty .
+
+ps:P7832 a owl:DatatypeProperty .
+
+pq:P7832 a owl:DatatypeProperty .
+
+pr:P7832 a owl:DatatypeProperty .
+
+psn:P7832 a owl:ObjectProperty .
+
+pqn:P7832 a owl:ObjectProperty .
+
+prn:P7832 a owl:ObjectProperty .
+
+wdtn:P7832 a owl:ObjectProperty .
+
+wdno:P7832 a owl:Class ;
+	owl:complementOf _:7ade911160649bb4a3d2745705eb1544 .
+
+_:7ade911160649bb4a3d2745705eb1544 a owl:Restriction ;
+	owl:onProperty wdt:P7832 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q9608003 a wikibase:Item ;
+	schema:description "Wikimedia category"@en .
+
+wd:P910 a wikibase:Property ;
+	rdfs:label "topic's main category"@en ;
+	skos:prefLabel "topic's main category"@en ;
+	schema:name "topic's main category"@en ;
+	schema:description "main Wikimedia category"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P910 ;
+	wikibase:claim p:P910 ;
+	wikibase:statementProperty ps:P910 ;
+	wikibase:statementValue psv:P910 ;
+	wikibase:qualifier pq:P910 ;
+	wikibase:qualifierValue pqv:P910 ;
+	wikibase:reference pr:P910 ;
+	wikibase:referenceValue prv:P910 ;
+	wikibase:novalue wdno:P910 .
+
+p:P910 a owl:ObjectProperty .
+
+psv:P910 a owl:ObjectProperty .
+
+pqv:P910 a owl:ObjectProperty .
+
+prv:P910 a owl:ObjectProperty .
+
+wdt:P910 a owl:ObjectProperty .
+
+ps:P910 a owl:ObjectProperty .
+
+pq:P910 a owl:ObjectProperty .
+
+pr:P910 a owl:ObjectProperty .
+
+wdno:P910 a owl:Class ;
+	owl:complementOf _:06be9361e78d041ce01df69013cf6906 .
+
+_:06be9361e78d041ce01df69013cf6906 a owl:Restriction ;
+	owl:onProperty wdt:P910 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8408 a wikibase:Property ;
+	rdfs:label "KBpedia ID"@en ;
+	skos:prefLabel "KBpedia ID"@en ;
+	schema:name "KBpedia ID"@en ;
+	schema:description "identifier for the KBpedia knowledge graph, which provides consistent mappings across seven large-scale public knowledge bases including Wikidata, and is used to promote data interoperability and extraction of training sets for machine learning"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8408 ;
+	wikibase:claim p:P8408 ;
+	wikibase:statementProperty ps:P8408 ;
+	wikibase:statementValue psv:P8408 ;
+	wikibase:qualifier pq:P8408 ;
+	wikibase:qualifierValue pqv:P8408 ;
+	wikibase:reference pr:P8408 ;
+	wikibase:referenceValue prv:P8408 ;
+	wikibase:novalue wdno:P8408 ;
+	wikibase:directClaimNormalized wdtn:P8408 ;
+	wikibase:statementValueNormalized psn:P8408 ;
+	wikibase:qualifierValueNormalized pqn:P8408 ;
+	wikibase:referenceValueNormalized prn:P8408 .
+
+p:P8408 a owl:ObjectProperty .
+
+psv:P8408 a owl:ObjectProperty .
+
+pqv:P8408 a owl:ObjectProperty .
+
+prv:P8408 a owl:ObjectProperty .
+
+wdt:P8408 a owl:DatatypeProperty .
+
+ps:P8408 a owl:DatatypeProperty .
+
+pq:P8408 a owl:DatatypeProperty .
+
+pr:P8408 a owl:DatatypeProperty .
+
+psn:P8408 a owl:ObjectProperty .
+
+pqn:P8408 a owl:ObjectProperty .
+
+prn:P8408 a owl:ObjectProperty .
+
+wdtn:P8408 a owl:ObjectProperty .
+
+wdno:P8408 a owl:Class ;
+	owl:complementOf _:a5c6b2a39aa8787e5b2a55612fc3d63e .
+
+_:a5c6b2a39aa8787e5b2a55612fc3d63e a owl:Restriction ;
+	owl:onProperty wdt:P8408 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10283 a wikibase:Property ;
+	rdfs:label "OpenAlex ID"@en ;
+	skos:prefLabel "OpenAlex ID"@en ;
+	schema:name "OpenAlex ID"@en ;
+	schema:description "identifier for works, grants, authors, institutes, venues, concepts/subjects in OpenAlex"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10283 ;
+	wikibase:claim p:P10283 ;
+	wikibase:statementProperty ps:P10283 ;
+	wikibase:statementValue psv:P10283 ;
+	wikibase:qualifier pq:P10283 ;
+	wikibase:qualifierValue pqv:P10283 ;
+	wikibase:reference pr:P10283 ;
+	wikibase:referenceValue prv:P10283 ;
+	wikibase:novalue wdno:P10283 ;
+	wikibase:directClaimNormalized wdtn:P10283 ;
+	wikibase:statementValueNormalized psn:P10283 ;
+	wikibase:qualifierValueNormalized pqn:P10283 ;
+	wikibase:referenceValueNormalized prn:P10283 .
+
+p:P10283 a owl:ObjectProperty .
+
+psv:P10283 a owl:ObjectProperty .
+
+pqv:P10283 a owl:ObjectProperty .
+
+prv:P10283 a owl:ObjectProperty .
+
+wdt:P10283 a owl:DatatypeProperty .
+
+ps:P10283 a owl:DatatypeProperty .
+
+pq:P10283 a owl:DatatypeProperty .
+
+pr:P10283 a owl:DatatypeProperty .
+
+psn:P10283 a owl:ObjectProperty .
+
+pqn:P10283 a owl:ObjectProperty .
+
+prn:P10283 a owl:ObjectProperty .
+
+wdtn:P10283 a owl:ObjectProperty .
+
+wdno:P10283 a owl:Class ;
+	owl:complementOf _:32a5275a7dbbfba13192c77c3ada4d3a .
+
+_:32a5275a7dbbfba13192c77c3ada4d3a a owl:Restriction ;
+	owl:onProperty wdt:P10283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8313 a wikibase:Property ;
+	rdfs:label "Den Store Danske ID"@en ;
+	skos:prefLabel "Den Store Danske ID"@en ;
+	schema:name "Den Store Danske ID"@en ;
+	schema:description "identifier of an article in the online encyclopedia denstoredanske.lex.dk"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8313 ;
+	wikibase:claim p:P8313 ;
+	wikibase:statementProperty ps:P8313 ;
+	wikibase:statementValue psv:P8313 ;
+	wikibase:qualifier pq:P8313 ;
+	wikibase:qualifierValue pqv:P8313 ;
+	wikibase:reference pr:P8313 ;
+	wikibase:referenceValue prv:P8313 ;
+	wikibase:novalue wdno:P8313 ;
+	wikibase:directClaimNormalized wdtn:P8313 ;
+	wikibase:statementValueNormalized psn:P8313 ;
+	wikibase:qualifierValueNormalized pqn:P8313 ;
+	wikibase:referenceValueNormalized prn:P8313 .
+
+p:P8313 a owl:ObjectProperty .
+
+psv:P8313 a owl:ObjectProperty .
+
+pqv:P8313 a owl:ObjectProperty .
+
+prv:P8313 a owl:ObjectProperty .
+
+wdt:P8313 a owl:DatatypeProperty .
+
+ps:P8313 a owl:DatatypeProperty .
+
+pq:P8313 a owl:DatatypeProperty .
+
+pr:P8313 a owl:DatatypeProperty .
+
+psn:P8313 a owl:ObjectProperty .
+
+pqn:P8313 a owl:ObjectProperty .
+
+prn:P8313 a owl:ObjectProperty .
+
+wdtn:P8313 a owl:ObjectProperty .
+
+wdno:P8313 a owl:Class ;
+	owl:complementOf _:5ce4742f42f26afe436b747d2437666d .
+
+_:5ce4742f42f26afe436b747d2437666d a owl:Restriction ;
+	owl:onProperty wdt:P8313 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8814 a wikibase:Property ;
+	rdfs:label "WordNet 3.1 Synset ID"@en ;
+	skos:prefLabel "WordNet 3.1 Synset ID"@en ;
+	schema:name "WordNet 3.1 Synset ID"@en ;
+	schema:description "Synset identifier in Princeton’s WordNet Version 3.1"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8814 ;
+	wikibase:claim p:P8814 ;
+	wikibase:statementProperty ps:P8814 ;
+	wikibase:statementValue psv:P8814 ;
+	wikibase:qualifier pq:P8814 ;
+	wikibase:qualifierValue pqv:P8814 ;
+	wikibase:reference pr:P8814 ;
+	wikibase:referenceValue prv:P8814 ;
+	wikibase:novalue wdno:P8814 ;
+	wikibase:directClaimNormalized wdtn:P8814 ;
+	wikibase:statementValueNormalized psn:P8814 ;
+	wikibase:qualifierValueNormalized pqn:P8814 ;
+	wikibase:referenceValueNormalized prn:P8814 .
+
+p:P8814 a owl:ObjectProperty .
+
+psv:P8814 a owl:ObjectProperty .
+
+pqv:P8814 a owl:ObjectProperty .
+
+prv:P8814 a owl:ObjectProperty .
+
+wdt:P8814 a owl:DatatypeProperty .
+
+ps:P8814 a owl:DatatypeProperty .
+
+pq:P8814 a owl:DatatypeProperty .
+
+pr:P8814 a owl:DatatypeProperty .
+
+psn:P8814 a owl:ObjectProperty .
+
+pqn:P8814 a owl:ObjectProperty .
+
+prn:P8814 a owl:ObjectProperty .
+
+wdtn:P8814 a owl:ObjectProperty .
+
+wdno:P8814 a owl:Class ;
+	owl:complementOf _:eb345aeb18fe7fba166f7abc9770574d .
+
+_:eb345aeb18fe7fba166f7abc9770574d a owl:Restriction ;
+	owl:onProperty wdt:P8814 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4342 a wikibase:Property ;
+	rdfs:label "Store norske leksikon ID"@en ;
+	skos:prefLabel "Store norske leksikon ID"@en ;
+	schema:name "Store norske leksikon ID"@en ;
+	schema:description "identifier of an article in the online encyclopedia snl.no"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4342 ;
+	wikibase:claim p:P4342 ;
+	wikibase:statementProperty ps:P4342 ;
+	wikibase:statementValue psv:P4342 ;
+	wikibase:qualifier pq:P4342 ;
+	wikibase:qualifierValue pqv:P4342 ;
+	wikibase:reference pr:P4342 ;
+	wikibase:referenceValue prv:P4342 ;
+	wikibase:novalue wdno:P4342 ;
+	wikibase:directClaimNormalized wdtn:P4342 ;
+	wikibase:statementValueNormalized psn:P4342 ;
+	wikibase:qualifierValueNormalized pqn:P4342 ;
+	wikibase:referenceValueNormalized prn:P4342 .
+
+p:P4342 a owl:ObjectProperty .
+
+psv:P4342 a owl:ObjectProperty .
+
+pqv:P4342 a owl:ObjectProperty .
+
+prv:P4342 a owl:ObjectProperty .
+
+wdt:P4342 a owl:DatatypeProperty .
+
+ps:P4342 a owl:DatatypeProperty .
+
+pq:P4342 a owl:DatatypeProperty .
+
+pr:P4342 a owl:DatatypeProperty .
+
+psn:P4342 a owl:ObjectProperty .
+
+pqn:P4342 a owl:ObjectProperty .
+
+prn:P4342 a owl:ObjectProperty .
+
+wdtn:P4342 a owl:ObjectProperty .
+
+wdno:P4342 a owl:Class ;
+	owl:complementOf _:798f6d589e42f1b7a13b07c18239c1c6 .
+
+_:798f6d589e42f1b7a13b07c18239c1c6 a owl:Restriction ;
+	owl:onProperty wdt:P4342 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q19219752 a wikibase:Item ;
+	rdfs:label "Meyers Konversations-Lexikon, 4th edition (1885–1890)"@en ;
+	skos:prefLabel "Meyers Konversations-Lexikon, 4th edition (1885–1890)"@en ;
+	schema:name "Meyers Konversations-Lexikon, 4th edition (1885–1890)"@en ;
+	schema:description "Edition of a German language encyclopaedia"@en .
+
+wd:P1343 a wikibase:Property ;
+	rdfs:label "described by source"@en ;
+	skos:prefLabel "described by source"@en ;
+	schema:name "described by source"@en ;
+	schema:description "work where this item is described"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1343 ;
+	wikibase:claim p:P1343 ;
+	wikibase:statementProperty ps:P1343 ;
+	wikibase:statementValue psv:P1343 ;
+	wikibase:qualifier pq:P1343 ;
+	wikibase:qualifierValue pqv:P1343 ;
+	wikibase:reference pr:P1343 ;
+	wikibase:referenceValue prv:P1343 ;
+	wikibase:novalue wdno:P1343 .
+
+p:P1343 a owl:ObjectProperty .
+
+psv:P1343 a owl:ObjectProperty .
+
+pqv:P1343 a owl:ObjectProperty .
+
+prv:P1343 a owl:ObjectProperty .
+
+wdt:P1343 a owl:ObjectProperty .
+
+ps:P1343 a owl:ObjectProperty .
+
+pq:P1343 a owl:ObjectProperty .
+
+pr:P1343 a owl:ObjectProperty .
+
+wdno:P1343 a owl:Class ;
+	owl:complementOf _:9c5978c46703ed90be57b769a8622d59 .
+
+_:9c5978c46703ed90be57b769a8622d59 a owl:Restriction ;
+	owl:onProperty wdt:P1343 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q48183 a wikibase:Item ;
+	rdfs:label "German Wikipedia"@en ;
+	skos:prefLabel "German Wikipedia"@en ;
+	schema:name "German Wikipedia"@en ;
+	schema:description "German-language edition of Wikipedia"@en .
+
+wd:P143 a wikibase:Property ;
+	rdfs:label "imported from Wikimedia project"@en ;
+	skos:prefLabel "imported from Wikimedia project"@en ;
+	schema:name "imported from Wikimedia project"@en ;
+	schema:description "source of this claim's value; used in references section by bots or humans importing data from Wikimedia projects"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P143 ;
+	wikibase:claim p:P143 ;
+	wikibase:statementProperty ps:P143 ;
+	wikibase:statementValue psv:P143 ;
+	wikibase:qualifier pq:P143 ;
+	wikibase:qualifierValue pqv:P143 ;
+	wikibase:reference pr:P143 ;
+	wikibase:referenceValue prv:P143 ;
+	wikibase:novalue wdno:P143 .
+
+p:P143 a owl:ObjectProperty .
+
+psv:P143 a owl:ObjectProperty .
+
+pqv:P143 a owl:ObjectProperty .
+
+prv:P143 a owl:ObjectProperty .
+
+wdt:P143 a owl:ObjectProperty .
+
+ps:P143 a owl:ObjectProperty .
+
+pq:P143 a owl:ObjectProperty .
+
+pr:P143 a owl:ObjectProperty .
+
+wdno:P143 a owl:Class ;
+	owl:complementOf _:66a2156e9cbfe8d655274b862fca1b59 .
+
+_:66a2156e9cbfe8d655274b862fca1b59 a owl:Restriction ;
+	owl:onProperty wdt:P143 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q51711 a wikibase:Item ;
+	rdfs:label "Quora"@en ;
+	skos:prefLabel "Quora"@en ;
+	schema:name "Quora"@en ;
+	schema:description "American question-and-answer website"@en .
+
+wd:Q64139102 a wikibase:Item ;
+	rdfs:label "KBpedia"@en ;
+	skos:prefLabel "KBpedia"@en ;
+	schema:name "KBpedia"@en ;
+	schema:description "free ontology aimed at making data and knowledge interoperable for machine learning"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q107507571 a wikibase:Item ;
+	rdfs:label "OpenAlex"@en ;
+	skos:prefLabel "OpenAlex"@en ;
+	schema:name "OpenAlex"@en ;
+	schema:description "an open catalog of scholarly papers, authors, institutions, venues, and concepts"@en .
+
+wd:P854 a wikibase:Property ;
+	rdfs:label "reference URL"@en ;
+	skos:prefLabel "reference URL"@en ;
+	schema:name "reference URL"@en ;
+	schema:description "should be used for Internet URLs as references. Use \"Wikimedia import URL\" (P4656) for imports from WMF sites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P854 ;
+	wikibase:claim p:P854 ;
+	wikibase:statementProperty ps:P854 ;
+	wikibase:statementValue psv:P854 ;
+	wikibase:qualifier pq:P854 ;
+	wikibase:qualifierValue pqv:P854 ;
+	wikibase:reference pr:P854 ;
+	wikibase:referenceValue prv:P854 ;
+	wikibase:novalue wdno:P854 .
+
+p:P854 a owl:ObjectProperty .
+
+psv:P854 a owl:ObjectProperty .
+
+pqv:P854 a owl:ObjectProperty .
+
+prv:P854 a owl:ObjectProperty .
+
+wdt:P854 a owl:ObjectProperty .
+
+ps:P854 a owl:ObjectProperty .
+
+pq:P854 a owl:ObjectProperty .
+
+pr:P854 a owl:ObjectProperty .
+
+wdno:P854 a owl:Class ;
+	owl:complementOf _:7317e7e5a3edc1980ecfe7616bb5fa1d .
+
+_:7317e7e5a3edc1980ecfe7616bb5fa1d a owl:Restriction ;
+	owl:onProperty wdt:P854 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q112258758 a wikibase:Item ;
+	rdfs:label "GF WordNet"@en ;
+	skos:prefLabel "GF WordNet"@en ;
+	schema:name "GF WordNet"@en ;
+	schema:description "A Lexical Resource which Combines WordNet resources from many languages and makes them compatible within GF"@en .
+
+wd:Q112791231 a wikibase:Item ;
+	schema:description "encyclopedia article published in Meyers Konversations-Lexikon, 4th edition (1885–1890)"@en .
+
+wd:P805 a wikibase:Property ;
+	rdfs:label "statement is subject of"@en ;
+	skos:prefLabel "statement is subject of"@en ;
+	schema:name "statement is subject of"@en ;
+	schema:description "(qualifying) item that describes the relation identified in this statement"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P805 ;
+	wikibase:claim p:P805 ;
+	wikibase:statementProperty ps:P805 ;
+	wikibase:statementValue psv:P805 ;
+	wikibase:qualifier pq:P805 ;
+	wikibase:qualifierValue pqv:P805 ;
+	wikibase:reference pr:P805 ;
+	wikibase:referenceValue prv:P805 ;
+	wikibase:novalue wdno:P805 .
+
+p:P805 a owl:ObjectProperty .
+
+psv:P805 a owl:ObjectProperty .
+
+pqv:P805 a owl:ObjectProperty .
+
+prv:P805 a owl:ObjectProperty .
+
+wdt:P805 a owl:ObjectProperty .
+
+ps:P805 a owl:ObjectProperty .
+
+pq:P805 a owl:ObjectProperty .
+
+pr:P805 a owl:ObjectProperty .
+
+wdno:P805 a owl:Class ;
+	owl:complementOf _:b0057da68fba9959eba43619c1638733 .
+
+_:b0057da68fba9959eba43619c1638733 a owl:Restriction ;
+	owl:onProperty wdt:P805 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q25526964 owl:sameAs wd:Q164509 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:664bae4effccc18fd4ad1ae188fab025 a wikibase:TimeValue ;
+	wikibase:timeValue "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:3b2ff2744ee9af4b07734336d1723792 a wikibase:TimeValue ;
+	wikibase:timeValue "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:9a24f7c0208b05d6be97077d855671d1dfdbc0dd a wikibase:Reference ;
+	pr:P143 wd:Q48183 .
+
+ref:3b0a5bb3c1f955edce73740124f7d935698092ad a wikibase:Reference ;
+	pr:P248 wd:Q51711 .
+
+ref:9a681f9dd95c90224547c404e11295f4f7dcf54e a wikibase:Reference ;
+	pr:P248 wd:Q64139102 ;
+	pr:P813 "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:664bae4effccc18fd4ad1ae188fab025 .
+
+ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 a wikibase:Reference ;
+	pr:P248 wd:Q107507571 ;
+	pr:P813 "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:3b2ff2744ee9af4b07734336d1723792 ;
+	pr:P854 <https://docs.openalex.org/download-snapshot/snapshot-data-format> .
+
+ref:3f8c4934cc38de77b597e01bd5028acb514abd2d a wikibase:Reference ;
+	pr:P248 wd:Q112258758 .

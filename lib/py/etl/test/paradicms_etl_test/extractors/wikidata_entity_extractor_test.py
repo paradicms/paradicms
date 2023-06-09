@@ -9,7 +9,11 @@ from paradicms_etl.extractors.wikidata_entity_extractor import WikidataEntityExt
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Wikidata in CI")
 def test_extract(tmp_path):
     sut = WikidataEntityExtractor(
-        cache_dir_path=tmp_path, entity_ids=("Q160534", "Q167518")
+        cache_dir_path=tmp_path,
+        entity_uris=(
+            "http://www.wikidata.org/entity/Q160534",
+            "http://www.wikidata.org/entity/Q167518",
+        ),
     )  # Jack Kerouac, Neal Cassady
     result = sut(force=False)
     graph = result["graph"]

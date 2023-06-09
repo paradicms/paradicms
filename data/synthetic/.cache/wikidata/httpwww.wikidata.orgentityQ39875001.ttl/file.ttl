@@ -1,0 +1,699 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q39875001 a schema:Dataset ;
+	schema:about wd:Q39875001 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1898685835"^^xsd:integer ;
+	schema:dateModified "2023-05-18T18:54:59Z"^^xsd:dateTime ;
+	wikibase:statements "7"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "2"^^xsd:integer .
+
+wd:Q39875001 a wikibase:Item ;
+	wdt:P279 wd:Q1207505 ;
+	wdt:P460 wd:Q937228,
+		wd:Q1271511 ;
+	wdt:P2347 "3587" ;
+	wdtn:P2347 <http://www.yso.fi/onto/yso/p3587> ;
+	wdt:P4212 "pcrtvf0mpf0kwr" ;
+	wdtn:P4212 <https://ark.frantiq.fr/ark:/26678/pcrtvf0mpf0kwr> ;
+	wdt:P1963 wd:P6563 ;
+	wdt:P366 wd:Q12453 ;
+	p:P279 s:Q39875001-1968341f-4ef3-01cb-756b-25762ab635dc .
+
+s:Q39875001-1968341f-4ef3-01cb-756b-25762ab635dc a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1207505 .
+
+wd:Q39875001 p:P460 s:Q39875001-4d0740a6-404b-20bf-c367-3d6458cc7819 .
+
+s:Q39875001-4d0740a6-404b-20bf-c367-3d6458cc7819 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q937228 .
+
+wd:Q39875001 p:P460 s:Q39875001-f169d3a8-4c19-7daa-209d-d79e1c80da6b .
+
+s:Q39875001-f169d3a8-4c19-7daa-209d-d79e1c80da6b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q1271511 .
+
+wd:Q39875001 p:P2347 s:Q39875001-DB8C8257-5B39-4382-92BC-968B862763DB .
+
+s:Q39875001-DB8C8257-5B39-4382-92BC-968B862763DB a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2347 "3587" ;
+	psn:P2347 <http://www.yso.fi/onto/yso/p3587> ;
+	pq:P1810 "mitat",
+		"mått",
+		"measures (measurement)" ;
+	prov:wasDerivedFrom ref:49e001d01bdd17fe908cfa8857b8ce6093bae511 .
+
+wd:Q39875001 p:P4212 s:Q39875001-37fb4e02-48b7-870c-ec9e-654e836f3a0f .
+
+s:Q39875001-37fb4e02-48b7-870c-ec9e-654e836f3a0f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4212 "pcrtvf0mpf0kwr" ;
+	psn:P4212 <https://ark.frantiq.fr/ark:/26678/pcrtvf0mpf0kwr> .
+
+wd:Q39875001 p:P1963 s:Q39875001-70b32e73-414b-8ad0-3fd9-c9cd16467ef6 .
+
+s:Q39875001-70b32e73-414b-8ad0-3fd9-c9cd16467ef6 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P6563 .
+
+wd:Q39875001 p:P366 s:Q39875001-5a36ab45-4d66-fc0d-7551-2a200a965b4c .
+
+s:Q39875001-5a36ab45-4d66-fc0d-7551-2a200a965b4c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P366 wd:Q12453 .
+
+wd:Q39875001 rdfs:label "measure"@en ;
+	skos:prefLabel "measure"@en ;
+	schema:name "measure"@en ;
+	rdfs:label "мера"@ru ;
+	skos:prefLabel "мера"@ru ;
+	schema:name "мера"@ru ;
+	rdfs:label "maat"@nl ;
+	skos:prefLabel "maat"@nl ;
+	schema:name "maat"@nl ;
+	rdfs:label "അളവ്"@ml ;
+	skos:prefLabel "അളവ്"@ml ;
+	schema:name "അളവ്"@ml ;
+	rdfs:label "miara"@pl ;
+	skos:prefLabel "miara"@pl ;
+	schema:name "miara"@pl ;
+	rdfs:label "Messung"@de ;
+	skos:prefLabel "Messung"@de ;
+	schema:name "Messung"@de ;
+	rdfs:label "målekriterium"@nn ;
+	skos:prefLabel "målekriterium"@nn ;
+	schema:name "målekriterium"@nn ;
+	rdfs:label "мера"@sr ;
+	skos:prefLabel "мера"@sr ;
+	schema:name "мера"@sr ;
+	rdfs:label "міра"@uk ;
+	skos:prefLabel "міра"@uk ;
+	schema:name "міра"@uk ;
+	rdfs:label "規準"@ja ;
+	skos:prefLabel "規準"@ja ;
+	schema:name "規準"@ja ;
+	rdfs:label "normo"@eo ;
+	skos:prefLabel "normo"@eo ;
+	schema:name "normo"@eo ;
+	rdfs:label "maat"@af ;
+	skos:prefLabel "maat"@af ;
+	schema:name "maat"@af ;
+	rdfs:label "mesur"@cy ;
+	skos:prefLabel "mesur"@cy ;
+	schema:name "mesur"@cy ;
+	rdfs:label "jednotka"@cs ;
+	skos:prefLabel "jednotka"@cs ;
+	schema:name "jednotka"@cs ;
+	rdfs:label "ölçü"@az ;
+	skos:prefLabel "ölçü"@az ;
+	schema:name "ölçü"@az ;
+	rdfs:label "llogaritje"@sq ;
+	skos:prefLabel "llogaritje"@sq ;
+	schema:name "llogaritje"@sq ;
+	rdfs:label "мера"@be-tarask ;
+	skos:prefLabel "мера"@be-tarask ;
+	schema:name "мера"@be-tarask ;
+	rdfs:label "mesura"@ca ;
+	skos:prefLabel "mesura"@ca ;
+	schema:name "mesura"@ca ;
+	rdfs:label "mesure"@fr ;
+	skos:prefLabel "mesure"@fr ;
+	schema:name "mesure"@fr ;
+	rdfs:label "măsură"@ro ;
+	skos:prefLabel "măsură"@ro ;
+	schema:name "măsură"@ro ;
+	rdfs:label "mérték"@hu ;
+	skos:prefLabel "mérték"@hu ;
+	schema:name "mérték"@hu ;
+	rdfs:label "muzul"@br ;
+	skos:prefLabel "muzul"@br ;
+	schema:name "muzul"@br ;
+	rdfs:label "מידה"@he ;
+	skos:prefLabel "מידה"@he ;
+	schema:name "מידה"@he ;
+	rdfs:label "medida"@pt ;
+	skos:prefLabel "medida"@pt ;
+	schema:name "medida"@pt ;
+	rdfs:label "ölçü"@tr ;
+	skos:prefLabel "ölçü"@tr ;
+	schema:name "ölçü"@tr ;
+	rdfs:label "mått"@sv ;
+	skos:prefLabel "mått"@sv ;
+	schema:name "mått"@sv ;
+	rdfs:label "ukuran"@ms ;
+	skos:prefLabel "ukuran"@ms ;
+	schema:name "ukuran"@ms ;
+	rdfs:label "পরিমাপ"@bn ;
+	skos:prefLabel "পরিমাপ"@bn ;
+	schema:name "পরিমাপ"@bn ;
+	rdfs:label "قياس"@ar ;
+	skos:prefLabel "قياس"@ar ;
+	schema:name "قياس"@ar ;
+	rdfs:label "اوکورن"@ms-arab ;
+	skos:prefLabel "اوکورن"@ms-arab ;
+	schema:name "اوکورن"@ms-arab ;
+	rdfs:label "度量"@zh ;
+	skos:prefLabel "度量"@zh ;
+	schema:name "度量"@zh ;
+	rdfs:label "medida"@es ;
+	skos:prefLabel "medida"@es ;
+	schema:name "medida"@es ;
+	rdfs:label "mezura"@vec ;
+	skos:prefLabel "mezura"@vec ;
+	schema:name "mezura"@vec ;
+	rdfs:label "misura"@it ;
+	skos:prefLabel "misura"@it ;
+	schema:name "misura"@it ;
+	rdfs:label "mitta"@fi ;
+	skos:prefLabel "mitta"@fi ;
+	schema:name "mitta"@fi ;
+	rdfs:label "målekriterium"@nb ;
+	skos:prefLabel "målekriterium"@nb ;
+	schema:name "målekriterium"@nb ;
+	rdfs:label "merilo"@sl ;
+	skos:prefLabel "merilo"@sl ;
+	schema:name "merilo"@sl ;
+	schema:description "standard against which something can be judged; a criterion"@en,
+		"standard, wg którego można coś ocenić"@pl,
+		"etwas, durch das man Dinge bewerten kann"@de,
+		"стандарт, за яким можна оцінювати щось"@uk,
+		"物事を判断するもととなるもの"@ja,
+		"safon y gellir barnu rhywbeth yn ei herbyn; maen prawf"@cy,
+		"hər hansı bir şeyi ölçmək üçün qəbul edilmiş vahid"@az,
+		"стандарт, паводле якога можна нешта ацаніць"@be-tarask,
+		"standard după care ceva poate fi judecat; un criteriu"@ro,
+		"viszonyítási szabvány, ami alapján valamilyen besorolás elvégezhető; egy kritérium"@hu,
+		"norme selon laquelle une chose peut être jugée, quantifiée ou comparée à d'autres objets selon un même critère"@fr,
+		"תקן של מידה לאובייקטים"@he,
+		"aynı kritere göre bir şeyin yargılanabileceği, ölçülebileceği veya diğer nesnelerle karşılaştırılabileceği standart"@tr,
+		"判断事物的标准； 一个标准"@zh,
+		"standard som noe kan bedømmes mot; et kriterium"@nb ;
+	skos:altLabel "kryterium"@pl,
+		"målestandard"@nn,
+		"критерій"@uk,
+		"クライテリア"@ja,
+		"míra"@cs,
+		"əndazə"@az,
+		"përmasë"@sq,
+		"matje"@sq,
+		"вымярэньне"@be-tarask,
+		"крытэр"@be-tarask,
+		"målekriteria"@nb,
+		"målestandard"@nb .
+
+wd:Q1207505 a wikibase:Item ;
+	rdfs:label "quality"@en ;
+	skos:prefLabel "quality"@en ;
+	schema:name "quality"@en ;
+	schema:description "distinguishing feature"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q937228 a wikibase:Item ;
+	rdfs:label "property"@en ;
+	skos:prefLabel "property"@en ;
+	schema:name "property"@en ;
+	schema:description "predominant feature that characterizes a being, a thing, a phenomenon, etc. and which differentiates one being from another, one thing from another"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1271511 a wikibase:Item ;
+	rdfs:label "measurement standard"@en ;
+	skos:prefLabel "measurement standard"@en ;
+	schema:name "measurement standard"@en ;
+	schema:description "realization of the definition of a given quantity used as reference"@en .
+
+wd:P2347 a wikibase:Property ;
+	rdfs:label "YSO ID"@en ;
+	skos:prefLabel "YSO ID"@en ;
+	schema:name "YSO ID"@en ;
+	schema:description "identifier for a concept in the General Finnish Ontology YSO"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2347 ;
+	wikibase:claim p:P2347 ;
+	wikibase:statementProperty ps:P2347 ;
+	wikibase:statementValue psv:P2347 ;
+	wikibase:qualifier pq:P2347 ;
+	wikibase:qualifierValue pqv:P2347 ;
+	wikibase:reference pr:P2347 ;
+	wikibase:referenceValue prv:P2347 ;
+	wikibase:novalue wdno:P2347 ;
+	wikibase:directClaimNormalized wdtn:P2347 ;
+	wikibase:statementValueNormalized psn:P2347 ;
+	wikibase:qualifierValueNormalized pqn:P2347 ;
+	wikibase:referenceValueNormalized prn:P2347 .
+
+p:P2347 a owl:ObjectProperty .
+
+psv:P2347 a owl:ObjectProperty .
+
+pqv:P2347 a owl:ObjectProperty .
+
+prv:P2347 a owl:ObjectProperty .
+
+wdt:P2347 a owl:DatatypeProperty .
+
+ps:P2347 a owl:DatatypeProperty .
+
+pq:P2347 a owl:DatatypeProperty .
+
+pr:P2347 a owl:DatatypeProperty .
+
+psn:P2347 a owl:ObjectProperty .
+
+pqn:P2347 a owl:ObjectProperty .
+
+prn:P2347 a owl:ObjectProperty .
+
+wdtn:P2347 a owl:ObjectProperty .
+
+wdno:P2347 a owl:Class ;
+	owl:complementOf _:5938edce2b698c44bad94eb14b56af07 .
+
+_:5938edce2b698c44bad94eb14b56af07 a owl:Restriction ;
+	owl:onProperty wdt:P2347 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4212 a wikibase:Property ;
+	rdfs:label "PACTOLS thesaurus ID"@en ;
+	skos:prefLabel "PACTOLS thesaurus ID"@en ;
+	schema:name "PACTOLS thesaurus ID"@en ;
+	schema:description "identifier in the PACTOLS archaeology thesaurus by FRANTIQ"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4212 ;
+	wikibase:claim p:P4212 ;
+	wikibase:statementProperty ps:P4212 ;
+	wikibase:statementValue psv:P4212 ;
+	wikibase:qualifier pq:P4212 ;
+	wikibase:qualifierValue pqv:P4212 ;
+	wikibase:reference pr:P4212 ;
+	wikibase:referenceValue prv:P4212 ;
+	wikibase:novalue wdno:P4212 ;
+	wikibase:directClaimNormalized wdtn:P4212 ;
+	wikibase:statementValueNormalized psn:P4212 ;
+	wikibase:qualifierValueNormalized pqn:P4212 ;
+	wikibase:referenceValueNormalized prn:P4212 .
+
+p:P4212 a owl:ObjectProperty .
+
+psv:P4212 a owl:ObjectProperty .
+
+pqv:P4212 a owl:ObjectProperty .
+
+prv:P4212 a owl:ObjectProperty .
+
+wdt:P4212 a owl:DatatypeProperty .
+
+ps:P4212 a owl:DatatypeProperty .
+
+pq:P4212 a owl:DatatypeProperty .
+
+pr:P4212 a owl:DatatypeProperty .
+
+psn:P4212 a owl:ObjectProperty .
+
+pqn:P4212 a owl:ObjectProperty .
+
+prn:P4212 a owl:ObjectProperty .
+
+wdtn:P4212 a owl:ObjectProperty .
+
+wdno:P4212 a owl:Class ;
+	owl:complementOf _:33d1adc3de407b8bae3b156a069bd25a .
+
+_:33d1adc3de407b8bae3b156a069bd25a a owl:Restriction ;
+	owl:onProperty wdt:P4212 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6563 a wikibase:Property ;
+	rdfs:label "key performance indicator"@en ;
+	skos:prefLabel "key performance indicator"@en ;
+	schema:name "key performance indicator"@en ;
+	schema:description "measure used to track progress towards a target"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P6563 ;
+	wikibase:claim p:P6563 ;
+	wikibase:statementProperty ps:P6563 ;
+	wikibase:statementValue psv:P6563 ;
+	wikibase:qualifier pq:P6563 ;
+	wikibase:qualifierValue pqv:P6563 ;
+	wikibase:reference pr:P6563 ;
+	wikibase:referenceValue prv:P6563 ;
+	wikibase:novalue wdno:P6563 .
+
+p:P6563 a owl:ObjectProperty .
+
+psv:P6563 a owl:ObjectProperty .
+
+pqv:P6563 a owl:ObjectProperty .
+
+prv:P6563 a owl:ObjectProperty .
+
+wdt:P6563 a owl:ObjectProperty .
+
+ps:P6563 a owl:ObjectProperty .
+
+pq:P6563 a owl:ObjectProperty .
+
+pr:P6563 a owl:ObjectProperty .
+
+wdno:P6563 a owl:Class ;
+	owl:complementOf _:4049cd73fbde6fc40c14ad5f8a7f3d59 .
+
+_:4049cd73fbde6fc40c14ad5f8a7f3d59 a owl:Restriction ;
+	owl:onProperty wdt:P6563 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1963 a wikibase:Property ;
+	rdfs:label "properties for this type"@en ;
+	skos:prefLabel "properties for this type"@en ;
+	schema:name "properties for this type"@en ;
+	schema:description "when this subject is used as object of \"instance of\" or \"occupation\", the following properties normally apply"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseProperty> ;
+	wikibase:directClaim wdt:P1963 ;
+	wikibase:claim p:P1963 ;
+	wikibase:statementProperty ps:P1963 ;
+	wikibase:statementValue psv:P1963 ;
+	wikibase:qualifier pq:P1963 ;
+	wikibase:qualifierValue pqv:P1963 ;
+	wikibase:reference pr:P1963 ;
+	wikibase:referenceValue prv:P1963 ;
+	wikibase:novalue wdno:P1963 .
+
+p:P1963 a owl:ObjectProperty .
+
+psv:P1963 a owl:ObjectProperty .
+
+pqv:P1963 a owl:ObjectProperty .
+
+prv:P1963 a owl:ObjectProperty .
+
+wdt:P1963 a owl:ObjectProperty .
+
+ps:P1963 a owl:ObjectProperty .
+
+pq:P1963 a owl:ObjectProperty .
+
+pr:P1963 a owl:ObjectProperty .
+
+wdno:P1963 a owl:Class ;
+	owl:complementOf _:4d8769fc1c544b1caed9e52ec1f84247 .
+
+_:4d8769fc1c544b1caed9e52ec1f84247 a owl:Restriction ;
+	owl:onProperty wdt:P1963 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q12453 a wikibase:Item ;
+	rdfs:label "measurement"@en ;
+	skos:prefLabel "measurement"@en ;
+	schema:name "measurement"@en ;
+	schema:description "process of assigning quantities to objects or events"@en .
+
+wd:P366 a wikibase:Property ;
+	rdfs:label "has use"@en ;
+	skos:prefLabel "has use"@en ;
+	schema:name "has use"@en ;
+	schema:description "main use of the subject (includes current and former usage)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P366 ;
+	wikibase:claim p:P366 ;
+	wikibase:statementProperty ps:P366 ;
+	wikibase:statementValue psv:P366 ;
+	wikibase:qualifier pq:P366 ;
+	wikibase:qualifierValue pqv:P366 ;
+	wikibase:reference pr:P366 ;
+	wikibase:referenceValue prv:P366 ;
+	wikibase:novalue wdno:P366 .
+
+p:P366 a owl:ObjectProperty .
+
+psv:P366 a owl:ObjectProperty .
+
+pqv:P366 a owl:ObjectProperty .
+
+prv:P366 a owl:ObjectProperty .
+
+wdt:P366 a owl:ObjectProperty .
+
+ps:P366 a owl:ObjectProperty .
+
+pq:P366 a owl:ObjectProperty .
+
+pr:P366 a owl:ObjectProperty .
+
+wdno:P366 a owl:Class ;
+	owl:complementOf _:e3313a663f1512d0bc6282d834b00038 .
+
+_:e3313a663f1512d0bc6282d834b00038 a owl:Restriction ;
+	owl:onProperty wdt:P366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q89345680 a wikibase:Item ;
+	rdfs:label "YSO-Wikidata mapping project"@en ;
+	skos:prefLabel "YSO-Wikidata mapping project"@en ;
+	schema:name "YSO-Wikidata mapping project"@en ;
+	schema:description "project where concepts of the Finnish General Ontology are matched with Wikidata equivalents"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+v:97e9d13e1352a72eb22be68a9d5b8bcb a wikibase:TimeValue ;
+	wikibase:timeValue "2022-03-29T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:49e001d01bdd17fe908cfa8857b8ce6093bae511 a wikibase:Reference ;
+	pr:P248 wd:Q89345680 ;
+	pr:P813 "2022-03-29T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:97e9d13e1352a72eb22be68a9d5b8bcb .

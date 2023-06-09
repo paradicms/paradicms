@@ -1,0 +1,255 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q78754808 a schema:Dataset ;
+	schema:about wd:Q78754808 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1908159462"^^xsd:integer ;
+	schema:dateModified "2023-06-04T17:23:19Z"^^xsd:dateTime ;
+	wikibase:statements "3"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q78754808 a wikibase:Item ;
+	wdt:P279 wd:Q47574 ;
+	wdt:P460 wd:Q1618549 ;
+	wdt:P1889 wd:Q2360980 ;
+	p:P279 s:Q78754808-e2590791-4ebf-fafd-77db-049e48c3042b .
+
+s:Q78754808-e2590791-4ebf-fafd-77db-049e48c3042b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q47574 .
+
+wd:Q78754808 p:P460 s:Q78754808-b70322fb-4baa-8499-3209-d3fac969090d .
+
+s:Q78754808-b70322fb-4baa-8499-3209-d3fac969090d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q1618549 .
+
+wd:Q78754808 p:P1889 s:Q78754808-3e87f0f5-4f17-923b-cc4e-7513676acfd4 .
+
+s:Q78754808-3e87f0f5-4f17-923b-cc4e-7513676acfd4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q2360980 .
+
+wd:Q78754808 rdfs:label "counting unit"@en ;
+	skos:prefLabel "counting unit"@en ;
+	schema:name "counting unit"@en ;
+	rdfs:label "Zähl­maß"@de ;
+	skos:prefLabel "Zähl­maß"@de ;
+	schema:name "Zähl­maß"@de ;
+	rdfs:label "адзінка зьлічэньня"@be-tarask ;
+	skos:prefLabel "адзінка зьлічэньня"@be-tarask ;
+	schema:name "адзінка зьлічэньня"@be-tarask ;
+	rdfs:label "счётная единица"@ru ;
+	skos:prefLabel "счётная единица"@ru ;
+	schema:name "счётная единица"@ru ;
+	rdfs:label "unidade de contagem"@pt ;
+	skos:prefLabel "unidade de contagem"@pt ;
+	schema:name "unidade de contagem"@pt ;
+	rdfs:label "وحدة عد"@ar ;
+	skos:prefLabel "وحدة عد"@ar ;
+	schema:name "وحدة عد"@ar ;
+	rdfs:label "räkneenhet"@sv ;
+	skos:prefLabel "räkneenhet"@sv ;
+	schema:name "räkneenhet"@sv ;
+	rdfs:label "unité de comptage"@fr ;
+	skos:prefLabel "unité de comptage"@fr ;
+	schema:name "unité de comptage"@fr ;
+	rdfs:label "одиниця підрахунку"@uk ;
+	skos:prefLabel "одиниця підрахунку"@uk ;
+	schema:name "одиниця підрахунку"@uk ;
+	rdfs:label "unidad de conteo"@es ;
+	skos:prefLabel "unidad de conteo"@es ;
+	schema:name "unidad de conteo"@es ;
+	rdfs:label "اونيت ڤمبيلڠن"@ms-arab ;
+	skos:prefLabel "اونيت ڤمبيلڠن"@ms-arab ;
+	schema:name "اونيت ڤمبيلڠن"@ms-arab ;
+	rdfs:label "unit pembilangan"@ms ;
+	skos:prefLabel "unit pembilangan"@ms ;
+	schema:name "unit pembilangan"@ms ;
+	rdfs:label "brojna jedinica"@bs ;
+	skos:prefLabel "brojna jedinica"@bs ;
+	schema:name "brojna jedinica"@bs ;
+	rdfs:label "unitat de recompte"@ca ;
+	skos:prefLabel "unitat de recompte"@ca ;
+	schema:name "unitat de recompte"@ca ;
+	rdfs:label "števna enota"@sl ;
+	skos:prefLabel "števna enota"@sl ;
+	schema:name "števna enota"@sl ;
+	schema:description "unit counting objects of a certain type"@en,
+		"Einheit zur Angabe der Zahl von Objekten eines bestimmten Typs"@de,
+		"unidade de contagem de uma certa quantidade"@pt,
+		"enhet för räkning av objekt av en viss typ (som enheterna varv eller megapixel)"@sv,
+		"одиниця підрахунку об'єктів певного типу"@uk,
+		"unidad para contar objectos"@es ;
+	skos:altLabel "адзінка вымярэньня"@be-tarask,
+		"адзінка падліку"@be-tarask,
+		"counting unit of measurement"@en .
+
+wd:Q47574 a wikibase:Item ;
+	rdfs:label "unit of measurement"@en ;
+	skos:prefLabel "unit of measurement"@en ;
+	schema:name "unit of measurement"@en ;
+	schema:description "real scalar quantity, defined and adopted by convention, with which any other quantity of the same kind can be compared to express the ratio of the two quantities as a number (VIM)"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1618549 a wikibase:Item ;
+	rdfs:label "dimensionless unit"@en ;
+	skos:prefLabel "dimensionless unit"@en ;
+	schema:name "dimensionless unit"@en ;
+	schema:description "in physical quantity, the unit without dimension (no length, no time, ...)"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q2360980 a wikibase:Item ;
+	rdfs:label "unit of amount"@en ;
+	skos:prefLabel "unit of amount"@en ;
+	schema:name "unit of amount"@en ;
+	schema:description "class of units for determining the amount of a good by counting"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .

@@ -1,0 +1,1574 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q10273457 a schema:Dataset ;
+	schema:about wd:Q10273457 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1906983467"^^xsd:integer ;
+	schema:dateModified "2023-06-03T01:31:51Z"^^xsd:dateTime ;
+	wikibase:statements "19"^^xsd:integer ;
+	wikibase:sitelinks "12"^^xsd:integer ;
+	wikibase:identifiers "10"^^xsd:integer .
+
+wd:Q10273457 a wikibase:Item .
+
+<https://pt.wikipedia.org/wiki/Equipamento> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Equipamento"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikivoyage.org/wiki/Equipment> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikivoyage.org/> ;
+	schema:name "Equipment"@en .
+
+<https://en.wikivoyage.org/> wikibase:wikiGroup "wikivoyage" .
+
+<https://uk.wikipedia.org/wiki/%D0%9E%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Обладнання"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Enginy_(artefacte)> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Enginy (artefacte)"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Artefacto> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Artefacto"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikivoyage.org/wiki/%E8%A3%9D%E5%82%99> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikivoyage.org/> ;
+	schema:name "裝備"@zh .
+
+<https://zh.wikivoyage.org/> wikibase:wikiGroup "wikivoyage" .
+
+<https://it.wikivoyage.org/wiki/Equipaggiamento> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikivoyage.org/> ;
+	schema:name "Equipaggiamento"@it .
+
+<https://it.wikivoyage.org/> wikibase:wikiGroup "wikivoyage" .
+
+<https://en.wikipedia.org/wiki/Equipment> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Equipment"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://rue.wikipedia.org/wiki/%D0%9E%D0%B1%D0%BB%D0%B0%D0%B4%D1%83%D0%BD%D0%BE%D0%BA> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "rue" ;
+	schema:isPartOf <https://rue.wikipedia.org/> ;
+	schema:name "Обладунок"@rue .
+
+<https://rue.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikiquote.org/wiki/Vybaven%C3%AD> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikiquote.org/> ;
+	schema:name "Vybavení"@cs .
+
+<https://cs.wikiquote.org/> wikibase:wikiGroup "wikiquote" .
+
+<https://nl.wikipedia.org/wiki/Gebruiksvoorwerp> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Gebruiksvoorwerp"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Redskap> a schema:Article ;
+	schema:about wd:Q10273457 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Redskap"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q10273457 wdt:P2671 "/g/122pqwpv" ;
+	wdtn:P2671 <http://g.co/kg/g/122pqwpv> ;
+	wdt:P2671 "/g/1232v3zw" ;
+	wdtn:P2671 <http://g.co/kg/g/1232v3zw> ;
+	wdt:P279 wd:Q8205328,
+		wd:Q16686448,
+		wd:Q2424752 ;
+	wdt:P373 "Equipment" ;
+	wdt:P948 <http://commons.wikimedia.org/wiki/Special:FilePath/Helsinki%20suitcases%20banner.jpg> ;
+	wdt:P910 wd:Q6063063 ;
+	wdt:P1014 "300122241" ;
+	wdtn:P1014 <http://vocab.getty.edu/aat/300122241> ;
+	wdt:P1889 wd:Q779859 ;
+	wdt:P268 "13163006s" ;
+	wdtn:P268 <http://data.bnf.fr/ark:/12148/cb13163006s#about> ;
+	wdt:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Electronics%20workbench.jpg> ;
+	wdt:P8519 "91955" ;
+	wdtn:P8519 <https://data.rkd.nl/thesau/91955> ;
+	wdt:P8834 "equipment" ;
+	wdt:P8248 "Y:8" ;
+	wdt:P4527 "91144" ;
+	wdtn:P4527 <http://data.parliament.uk/terms/91144> ;
+	wdt:P2347 "4577" ;
+	wdtn:P2347 <http://www.yso.fi/onto/yso/p4577> ;
+	wdt:P8814 "03298959-n" ;
+	wdtn:P8814 <http://wordnet-rdf.princeton.edu/rdf/id/03298959-n> ;
+	wdt:P1963 wd:P366 ;
+	p:P2671 s:Q10273457-E0E660CD-D4B4-420E-8639-041E59AB5EF1 .
+
+s:Q10273457-E0E660CD-D4B4-420E-8639-041E59AB5EF1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2671 "/g/122pqwpv" ;
+	psn:P2671 <http://g.co/kg/g/122pqwpv> .
+
+wd:Q10273457 p:P2671 s:Q10273457-4037C559-5216-468F-8B7D-C64B0A0BFBF3 .
+
+s:Q10273457-4037C559-5216-468F-8B7D-C64B0A0BFBF3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2671 "/g/1232v3zw" ;
+	psn:P2671 <http://g.co/kg/g/1232v3zw> .
+
+wd:Q10273457 p:P279 s:Q10273457-0D89CA06-94C5-49F4-8B6D-C97C6357C85E .
+
+s:Q10273457-0D89CA06-94C5-49F4-8B6D-C97C6357C85E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q8205328 .
+
+wd:Q10273457 p:P279 s:Q10273457-CB3C2F7F-484E-40A1-846B-D0170DBCDB6C .
+
+s:Q10273457-CB3C2F7F-484E-40A1-846B-D0170DBCDB6C a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q16686448 .
+
+wd:Q10273457 p:P279 s:Q10273457-207cc784-44ee-e75a-a0b7-a5ad7d4530a0 .
+
+s:Q10273457-207cc784-44ee-e75a-a0b7-a5ad7d4530a0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q2424752 .
+
+wd:Q10273457 p:P373 s:Q10273457-99612FC1-B24E-4E5E-B314-56DE28DFC83C .
+
+s:Q10273457-99612FC1-B24E-4E5E-B314-56DE28DFC83C a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P373 "Equipment" .
+
+wd:Q10273457 p:P948 s:Q10273457-3DC1821D-BBEF-4E0B-8129-9CC88A0B860D .
+
+s:Q10273457-3DC1821D-BBEF-4E0B-8129-9CC88A0B860D a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P948 <http://commons.wikimedia.org/wiki/Special:FilePath/Helsinki%20suitcases%20banner.jpg> .
+
+wd:Q10273457 p:P910 s:Q10273457-0E76DB70-4404-41CA-899E-84BA7C65E0ED .
+
+s:Q10273457-0E76DB70-4404-41CA-899E-84BA7C65E0ED a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q6063063 .
+
+wd:Q10273457 p:P1014 s:Q10273457-C40EFF66-2095-44C1-B36D-044393E8B299 .
+
+s:Q10273457-C40EFF66-2095-44C1-B36D-044393E8B299 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1014 "300122241" ;
+	psn:P1014 <http://vocab.getty.edu/aat/300122241> ;
+	pq:P1810 "equipment" .
+
+wd:Q10273457 p:P1889 s:Q10273457-216BD706-3D47-4FE1-8F5B-3D46AD9BB896 .
+
+s:Q10273457-216BD706-3D47-4FE1-8F5B-3D46AD9BB896 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q779859 ;
+	pq:P1013 wd:Q24005632 .
+
+wd:Q10273457 p:P268 s:Q10273457-E17AE64A-00DC-4FE9-A1A1-58B671D0AC30 .
+
+s:Q10273457-E17AE64A-00DC-4FE9-A1A1-58B671D0AC30 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P268 "13163006s" ;
+	psn:P268 <http://data.bnf.fr/ark:/12148/cb13163006s#about> .
+
+wd:Q10273457 p:P18 s:Q10273457-6598093A-BF1F-4B0A-89C0-86BAE2294342 .
+
+s:Q10273457-6598093A-BF1F-4B0A-89C0-86BAE2294342 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Electronics%20workbench.jpg> .
+
+wd:Q10273457 p:P8519 s:Q10273457-589F19BE-7FB1-43FF-BE92-CE1BCBD807A5 .
+
+s:Q10273457-589F19BE-7FB1-43FF-BE92-CE1BCBD807A5 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8519 "91955" ;
+	psn:P8519 <https://data.rkd.nl/thesau/91955> .
+
+wd:Q10273457 p:P8834 s:Q10273457-643B9554-824F-45F8-A798-1CE20803A0B1 .
+
+s:Q10273457-643B9554-824F-45F8-A798-1CE20803A0B1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8834 "equipment" .
+
+wd:Q10273457 p:P8248 s:Q10273457-140F136F-5370-42EC-ADE9-7E2DE8661D52 .
+
+s:Q10273457-140F136F-5370-42EC-ADE9-7E2DE8661D52 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8248 "Y:8" ;
+	pq:P747 wd:Q95449814 .
+
+wd:Q10273457 p:P4527 s:Q10273457-af2636ed-463d-790a-c0b0-f87f89553485 .
+
+s:Q10273457-af2636ed-463d-790a-c0b0-f87f89553485 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4527 "91144" ;
+	psn:P4527 <http://data.parliament.uk/terms/91144> ;
+	pq:P1810 "Equipment" .
+
+wd:Q10273457 p:P2347 s:Q10273457-D016B209-9C5D-4477-9CB4-F19F3F5D8D0E .
+
+s:Q10273457-D016B209-9C5D-4477-9CB4-F19F3F5D8D0E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2347 "4577" ;
+	psn:P2347 <http://www.yso.fi/onto/yso/p4577> ;
+	pq:P1810 "varusteet",
+		"utrustning",
+		"equipment" ;
+	prov:wasDerivedFrom ref:a5327c7d451b92419149e391f1e51131a370da6f .
+
+wd:Q10273457 p:P8814 s:Q10273457-dcb0f8ae-4854-797d-15ce-f9874cb3fe2d .
+
+s:Q10273457-dcb0f8ae-4854-797d-15ce-f9874cb3fe2d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8814 "03298959-n" ;
+	psn:P8814 <http://wordnet-rdf.princeton.edu/rdf/id/03298959-n> .
+
+wd:Q10273457 p:P1963 s:Q10273457-8016aa77-4bc2-2e99-b590-3ad68a82e00c .
+
+s:Q10273457-8016aa77-4bc2-2e99-b590-3ad68a82e00c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P366 .
+
+wd:Q10273457 rdfs:label "equipamento"@pt ;
+	skos:prefLabel "equipamento"@pt ;
+	schema:name "equipamento"@pt ;
+	rdfs:label "equipamento"@pt-br ;
+	skos:prefLabel "equipamento"@pt-br ;
+	schema:name "equipamento"@pt-br ;
+	rdfs:label "Ausrüstung"@de ;
+	skos:prefLabel "Ausrüstung"@de ;
+	schema:name "Ausrüstung"@de ;
+	rdfs:label "equipment"@en ;
+	skos:prefLabel "equipment"@en ;
+	schema:name "equipment"@en ;
+	rdfs:label "équipement"@fr ;
+	skos:prefLabel "équipement"@fr ;
+	schema:name "équipement"@fr ;
+	rdfs:label "dụng cụ"@vi ;
+	skos:prefLabel "dụng cụ"@vi ;
+	schema:name "dụng cụ"@vi ;
+	rdfs:label "oprema"@sr-el ;
+	skos:prefLabel "oprema"@sr-el ;
+	schema:name "oprema"@sr-el ;
+	rdfs:label "опрема"@sr-ec ;
+	skos:prefLabel "опрема"@sr-ec ;
+	schema:name "опрема"@sr-ec ;
+	rdfs:label "опрема"@sr ;
+	skos:prefLabel "опрема"@sr ;
+	schema:name "опрема"@sr ;
+	rdfs:label "attrizzatura"@scn ;
+	skos:prefLabel "attrizzatura"@scn ;
+	schema:name "attrizzatura"@scn ;
+	rdfs:label "опрема"@mk ;
+	skos:prefLabel "опрема"@mk ;
+	schema:name "опрема"@mk ;
+	rdfs:label "equipamiento"@es ;
+	skos:prefLabel "equipamiento"@es ;
+	schema:name "equipamiento"@es ;
+	rdfs:label "vybavení"@cs ;
+	skos:prefLabel "vybavení"@cs ;
+	schema:name "vybavení"@cs ;
+	rdfs:label "uitrusting"@nl ;
+	skos:prefLabel "uitrusting"@nl ;
+	schema:name "uitrusting"@nl ;
+	rdfs:label "снаряжение"@ru ;
+	skos:prefLabel "снаряжение"@ru ;
+	schema:name "снаряжение"@ru ;
+	rdfs:label "معدات"@ar ;
+	skos:prefLabel "معدات"@ar ;
+	schema:name "معدات"@ar ;
+	rdfs:label "εξοπλισμός"@el ;
+	skos:prefLabel "εξοπλισμός"@el ;
+	schema:name "εξοπλισμός"@el ;
+	rdfs:label "equipaggiamento"@it ;
+	skos:prefLabel "equipaggiamento"@it ;
+	schema:name "equipaggiamento"@it ;
+	rdfs:label "wyposażenie"@pl ;
+	skos:prefLabel "wyposażenie"@pl ;
+	schema:name "wyposażenie"@pl ;
+	rdfs:label "utstyr"@nb ;
+	skos:prefLabel "utstyr"@nb ;
+	schema:name "utstyr"@nb ;
+	rdfs:label "ekipaĵo"@eo ;
+	skos:prefLabel "ekipaĵo"@eo ;
+	schema:name "ekipaĵo"@eo ;
+	rdfs:label "utrustning"@sv ;
+	skos:prefLabel "utrustning"@sv ;
+	schema:name "utrustning"@sv ;
+	rdfs:label "设备"@zh ;
+	skos:prefLabel "设备"@zh ;
+	schema:name "设备"@zh ;
+	rdfs:label "equipament"@ca ;
+	skos:prefLabel "equipament"@ca ;
+	schema:name "equipament"@ca ;
+	rdfs:label "udstyr"@da ;
+	skos:prefLabel "udstyr"@da ;
+	schema:name "udstyr"@da ;
+	rdfs:label "обладнання"@uk ;
+	skos:prefLabel "обладнання"@uk ;
+	schema:name "обладнання"@uk ;
+	rdfs:label "peralatan"@id ;
+	skos:prefLabel "peralatan"@id ;
+	schema:name "peralatan"@id ;
+	rdfs:label "utstyr"@nn ;
+	skos:prefLabel "utstyr"@nn ;
+	schema:name "utstyr"@nn ;
+	rdfs:label "абсталяваньне"@be-tarask ;
+	skos:prefLabel "абсталяваньне"@be-tarask ;
+	schema:name "абсталяваньне"@be-tarask ;
+	rdfs:label "абсталяванне"@be ;
+	skos:prefLabel "абсталяванне"@be ;
+	schema:name "абсталяванне"@be ;
+	rdfs:label "აღჭურვილობა"@ka ;
+	skos:prefLabel "აღჭურვილობა"@ka ;
+	schema:name "აღჭურვილობა"@ka ;
+	rdfs:label "ഉപകരണം"@ml ;
+	skos:prefLabel "ഉപകരണം"@ml ;
+	schema:name "ഉപകരണം"@ml ;
+	rdfs:label "aprīkojums"@lv ;
+	skos:prefLabel "aprīkojums"@lv ;
+	schema:name "aprīkojums"@lv ;
+	rdfs:label "offer"@cy ;
+	skos:prefLabel "offer"@cy ;
+	schema:name "offer"@cy ;
+	rdfs:label "設備"@zh-tw ;
+	skos:prefLabel "設備"@zh-tw ;
+	schema:name "設備"@zh-tw ;
+	rdfs:label "設備"@zh-hant ;
+	skos:prefLabel "設備"@zh-hant ;
+	schema:name "設備"@zh-hant ;
+	rdfs:label "pajisje"@sq ;
+	skos:prefLabel "pajisje"@sq ;
+	schema:name "pajisje"@sq ;
+	rdfs:label "väline"@fi ;
+	skos:prefLabel "väline"@fi ;
+	schema:name "väline"@fi ;
+	rdfs:label "장비"@ko ;
+	skos:prefLabel "장비"@ko ;
+	schema:name "장비"@ko ;
+	rdfs:label "trealamh"@ga ;
+	skos:prefLabel "trealamh"@ga ;
+	schema:name "trealamh"@ga ;
+	rdfs:label "kelengkapan"@ms ;
+	skos:prefLabel "kelengkapan"@ms ;
+	schema:name "kelengkapan"@ms ;
+	rdfs:label "equipamientu"@ast ;
+	skos:prefLabel "equipamientu"@ast ;
+	schema:name "equipamientu"@ast ;
+	rdfs:label "設備"@ja ;
+	skos:prefLabel "設備"@ja ;
+	schema:name "設備"@ja ;
+	rdfs:label "oprema"@hr ;
+	skos:prefLabel "oprema"@hr ;
+	schema:name "oprema"@hr ;
+	rdfs:label "ekipamendu"@eu ;
+	skos:prefLabel "ekipamendu"@eu ;
+	schema:name "ekipamendu"@eu ;
+	rdfs:label "ציוד"@he ;
+	skos:prefLabel "ציוד"@he ;
+	schema:name "ציוד"@he ;
+	rdfs:label "Обладунок"@rue ;
+	skos:prefLabel "Обладунок"@rue ;
+	schema:name "Обладунок"@rue ;
+	rdfs:label "সারঞ্জাম"@bn ;
+	skos:prefLabel "সারঞ্জাম"@bn ;
+	schema:name "সারঞ্জাম"@bn ;
+	rdfs:label "daffar"@kw ;
+	skos:prefLabel "daffar"@kw ;
+	schema:name "daffar"@kw ;
+	rdfs:label "ecuipajamento"@vec ;
+	skos:prefLabel "ecuipajamento"@vec ;
+	schema:name "ecuipajamento"@vec ;
+	rdfs:label "آلہ"@ur ;
+	skos:prefLabel "آلہ"@ur ;
+	schema:name "آلہ"@ur ;
+	rdfs:label "کلڠکڤن"@ms-arab ;
+	skos:prefLabel "کلڠکڤن"@ms-arab ;
+	schema:name "کلڠکڤن"@ms-arab ;
+	rdfs:label "felszerelés"@hu ;
+	skos:prefLabel "felszerelés"@hu ;
+	schema:name "felszerelés"@hu ;
+	rdfs:label "Akụrụngwa"@ig ;
+	skos:prefLabel "Akụrụngwa"@ig ;
+	schema:name "Akụrụngwa"@ig ;
+	rdfs:label "ஏந்தனம்"@ta ;
+	skos:prefLabel "ஏந்தனம்"@ta ;
+	schema:name "ஏந்தனம்"@ta ;
+	rdfs:label "ekipman"@tr ;
+	skos:prefLabel "ekipman"@tr ;
+	schema:name "ekipman"@tr ;
+	rdfs:label "oprema"@sl ;
+	skos:prefLabel "oprema"@sl ;
+	schema:name "oprema"@sl ;
+	schema:description "instrumentos e/ou ferramentas utilizadas para alguma finalidade"@pt,
+		"instrumentos e/ou ferramentas utilizadas para alguma finalidade"@pt-br,
+		"allgemeiner Sammelbegriff für alle Gegenstände, die benötigt werden um eine bestimmte Tätigkeit auszuüben"@de,
+		"collective term for all physical items that are required to exercise a certain activity"@en,
+		"terme générique pour tous les objets qui sont nécessaires pour exercer une activité"@fr,
+		"insiemi dî cosi ca giùvunu pi fari na certa attività"@scn,
+		"término genérico para todos los elementos necesarios para ejercer cierta actividad"@es,
+		"собрание вещей для некоторой деятельности"@ru,
+		"termin określający wszystkie przedmioty wymagane przy wykonywaniu aktywności"@pl,
+		"ting som trengs for å utøve en bestemt aktivitet"@nb,
+		"terme genèric per a tots els elements necessaris per realitzar una activitat"@ca,
+		"oggetto con un'utilità pratica"@it,
+		"istilah kolektif untuk semua barang yang diperlukan untuk melakukan kegiatan tertentu"@id,
+		"ഒരു പ്രവൃത്തി ചെയ്യാനുള്ള വസ്തു"@ml,
+		"term cyfunol ar gyfer pob eitem sy'n ofynnol i ymarfer gweithgaredd penodol"@cy,
+		"de beschikbaar gestelde objecten om een taak uit te voeren"@nl,
+		"ting er nødvendige for at udføre en bestemt aktivitet"@da,
+		"términu colectivu pa tolos elementos precisos pa facer una actividá"@ast,
+		"特定の活動を実行するために必要なすべてのアイテムの総称"@ja,
+		"sredstva i stvari koje imaju neku zajedničku namjenu, koje služe istoj svrsi"@hr,
+		"kollektiv term för alla saker som är nödvändiga för att genomföra en viss aktivitet"@sv,
+		"مصطلح جماعي لجميع العناصر المطلوبة لممارسة نشاط معين"@ar,
+		"egy adott tevékenység végzéséhez szükséges összes elem gyűjtőfogalma"@hu,
+		"Aha Nchịkọta nye ihe dum atụrụ anya iji mepụta ihe"@ig,
+		"ஒரு ஆள் அல்லது பொருளைச் சித்தப்படுத்துவதற்கு உதவும் கருவிகள் அல்லது வளங்களின் தொகுப்பு"@ta,
+		"belirli bir aktiviteyi gerçekleştirmek için gerekli olan tüm fiziksel öğeler için toplu şekilde kullanılan bir terim"@tr ;
+	skos:altLabel "equipamentos"@pt,
+		"equipamentos públicos"@pt,
+		"công cụ"@vi,
+		"thiết bị"@vi,
+		"прибор"@mk,
+		"аппаратура"@ru,
+		"оборудование"@ru,
+		"экипировка"@ru,
+		"تجهيزات"@ar,
+		"utrustning"@nb,
+		"redskap"@nb,
+		"enginy"@ca,
+		"equipo"@es,
+		"equipement"@fr,
+		"perlengkapan"@id,
+		"alat"@id,
+		"reiskap"@nn,
+		"aparatūra"@lv,
+		"aparaturë"@sq,
+		"peralatan"@ms,
+		"perkakas"@ms,
+		"perlengkapan"@ms,
+		"equipu"@ast,
+		"装置"@ja,
+		"don"@sv,
+		"apparat"@da,
+		"апаратура"@uk,
+		"ڤرالتن"@ms-arab,
+		"ڤرکاکس"@ms-arab,
+		"ڤرلڠکڤن"@ms-arab,
+		"készlet"@hu,
+		"teçhizat"@tr,
+		"takım"@tr .
+
+wd:P2671 a wikibase:Property ;
+	rdfs:label "Google Knowledge Graph ID"@en ;
+	skos:prefLabel "Google Knowledge Graph ID"@en ;
+	schema:name "Google Knowledge Graph ID"@en ;
+	schema:description "identifier for Google Knowledge Graph API, starting with \"/g/\". For IDs starting with \"/m/\", use Freebase ID (P646)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2671 ;
+	wikibase:claim p:P2671 ;
+	wikibase:statementProperty ps:P2671 ;
+	wikibase:statementValue psv:P2671 ;
+	wikibase:qualifier pq:P2671 ;
+	wikibase:qualifierValue pqv:P2671 ;
+	wikibase:reference pr:P2671 ;
+	wikibase:referenceValue prv:P2671 ;
+	wikibase:novalue wdno:P2671 ;
+	wikibase:directClaimNormalized wdtn:P2671 ;
+	wikibase:statementValueNormalized psn:P2671 ;
+	wikibase:qualifierValueNormalized pqn:P2671 ;
+	wikibase:referenceValueNormalized prn:P2671 .
+
+p:P2671 a owl:ObjectProperty .
+
+psv:P2671 a owl:ObjectProperty .
+
+pqv:P2671 a owl:ObjectProperty .
+
+prv:P2671 a owl:ObjectProperty .
+
+wdt:P2671 a owl:DatatypeProperty .
+
+ps:P2671 a owl:DatatypeProperty .
+
+pq:P2671 a owl:DatatypeProperty .
+
+pr:P2671 a owl:DatatypeProperty .
+
+psn:P2671 a owl:ObjectProperty .
+
+pqn:P2671 a owl:ObjectProperty .
+
+prn:P2671 a owl:ObjectProperty .
+
+wdtn:P2671 a owl:ObjectProperty .
+
+wdno:P2671 a owl:Class ;
+	owl:complementOf _:65accf8c5265233a873cf53510c73fa5 .
+
+_:65accf8c5265233a873cf53510c73fa5 a owl:Restriction ;
+	owl:onProperty wdt:P2671 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q8205328 a wikibase:Item ;
+	rdfs:label "artificial physical object"@en ;
+	skos:prefLabel "artificial physical object"@en ;
+	schema:name "artificial physical object"@en ;
+	schema:description "physical object made or shaped by human hand"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q16686448 a wikibase:Item ;
+	rdfs:label "artificial entity"@en ;
+	skos:prefLabel "artificial entity"@en ;
+	schema:name "artificial entity"@en ;
+	schema:description "anything created by humans (either material or mental)"@en .
+
+wd:Q2424752 a wikibase:Item ;
+	rdfs:label "product"@en ;
+	skos:prefLabel "product"@en ;
+	schema:name "product"@en ;
+	schema:description "anything that can be offered to a market"@en .
+
+wd:P373 a wikibase:Property ;
+	rdfs:label "Commons category"@en ;
+	skos:prefLabel "Commons category"@en ;
+	schema:name "Commons category"@en ;
+	schema:description "name of the Wikimedia Commons category containing files related to this item (without the prefix \"Category:\")"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P373 ;
+	wikibase:claim p:P373 ;
+	wikibase:statementProperty ps:P373 ;
+	wikibase:statementValue psv:P373 ;
+	wikibase:qualifier pq:P373 ;
+	wikibase:qualifierValue pqv:P373 ;
+	wikibase:reference pr:P373 ;
+	wikibase:referenceValue prv:P373 ;
+	wikibase:novalue wdno:P373 .
+
+p:P373 a owl:ObjectProperty .
+
+psv:P373 a owl:ObjectProperty .
+
+pqv:P373 a owl:ObjectProperty .
+
+prv:P373 a owl:ObjectProperty .
+
+wdt:P373 a owl:DatatypeProperty .
+
+ps:P373 a owl:DatatypeProperty .
+
+pq:P373 a owl:DatatypeProperty .
+
+pr:P373 a owl:DatatypeProperty .
+
+wdno:P373 a owl:Class ;
+	owl:complementOf _:3de19c92e209926f02f215095eb4fd12 .
+
+_:3de19c92e209926f02f215095eb4fd12 a owl:Restriction ;
+	owl:onProperty wdt:P373 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P948 a wikibase:Property ;
+	rdfs:label "page banner"@en ;
+	skos:prefLabel "page banner"@en ;
+	schema:name "page banner"@en ;
+	schema:description "image at top of an article about the topic, mainly used by Wikivoyage and Women in Red"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#CommonsMedia> ;
+	wikibase:directClaim wdt:P948 ;
+	wikibase:claim p:P948 ;
+	wikibase:statementProperty ps:P948 ;
+	wikibase:statementValue psv:P948 ;
+	wikibase:qualifier pq:P948 ;
+	wikibase:qualifierValue pqv:P948 ;
+	wikibase:reference pr:P948 ;
+	wikibase:referenceValue prv:P948 ;
+	wikibase:novalue wdno:P948 .
+
+p:P948 a owl:ObjectProperty .
+
+psv:P948 a owl:ObjectProperty .
+
+pqv:P948 a owl:ObjectProperty .
+
+prv:P948 a owl:ObjectProperty .
+
+wdt:P948 a owl:ObjectProperty .
+
+ps:P948 a owl:ObjectProperty .
+
+pq:P948 a owl:ObjectProperty .
+
+pr:P948 a owl:ObjectProperty .
+
+wdno:P948 a owl:Class ;
+	owl:complementOf _:e7ac318f0652f24e4512780808b5c6a8 .
+
+_:e7ac318f0652f24e4512780808b5c6a8 a owl:Restriction ;
+	owl:onProperty wdt:P948 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q6063063 a wikibase:Item ;
+	rdfs:label "Category:Equipment"@en ;
+	skos:prefLabel "Category:Equipment"@en ;
+	schema:name "Category:Equipment"@en ;
+	schema:description "Wikimedia category"@en .
+
+wd:P910 a wikibase:Property ;
+	rdfs:label "topic's main category"@en ;
+	skos:prefLabel "topic's main category"@en ;
+	schema:name "topic's main category"@en ;
+	schema:description "main Wikimedia category"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P910 ;
+	wikibase:claim p:P910 ;
+	wikibase:statementProperty ps:P910 ;
+	wikibase:statementValue psv:P910 ;
+	wikibase:qualifier pq:P910 ;
+	wikibase:qualifierValue pqv:P910 ;
+	wikibase:reference pr:P910 ;
+	wikibase:referenceValue prv:P910 ;
+	wikibase:novalue wdno:P910 .
+
+p:P910 a owl:ObjectProperty .
+
+psv:P910 a owl:ObjectProperty .
+
+pqv:P910 a owl:ObjectProperty .
+
+prv:P910 a owl:ObjectProperty .
+
+wdt:P910 a owl:ObjectProperty .
+
+ps:P910 a owl:ObjectProperty .
+
+pq:P910 a owl:ObjectProperty .
+
+pr:P910 a owl:ObjectProperty .
+
+wdno:P910 a owl:Class ;
+	owl:complementOf _:06be9361e78d041ce01df69013cf6906 .
+
+_:06be9361e78d041ce01df69013cf6906 a owl:Restriction ;
+	owl:onProperty wdt:P910 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1014 a wikibase:Property ;
+	rdfs:label "Art & Architecture Thesaurus ID"@en ;
+	skos:prefLabel "Art & Architecture Thesaurus ID"@en ;
+	schema:name "Art & Architecture Thesaurus ID"@en ;
+	schema:description "identifier in the Art & Architecture Thesaurus by the Getty Research Institute"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1014 ;
+	wikibase:claim p:P1014 ;
+	wikibase:statementProperty ps:P1014 ;
+	wikibase:statementValue psv:P1014 ;
+	wikibase:qualifier pq:P1014 ;
+	wikibase:qualifierValue pqv:P1014 ;
+	wikibase:reference pr:P1014 ;
+	wikibase:referenceValue prv:P1014 ;
+	wikibase:novalue wdno:P1014 ;
+	wikibase:directClaimNormalized wdtn:P1014 ;
+	wikibase:statementValueNormalized psn:P1014 ;
+	wikibase:qualifierValueNormalized pqn:P1014 ;
+	wikibase:referenceValueNormalized prn:P1014 .
+
+p:P1014 a owl:ObjectProperty .
+
+psv:P1014 a owl:ObjectProperty .
+
+pqv:P1014 a owl:ObjectProperty .
+
+prv:P1014 a owl:ObjectProperty .
+
+wdt:P1014 a owl:DatatypeProperty .
+
+ps:P1014 a owl:DatatypeProperty .
+
+pq:P1014 a owl:DatatypeProperty .
+
+pr:P1014 a owl:DatatypeProperty .
+
+psn:P1014 a owl:ObjectProperty .
+
+pqn:P1014 a owl:ObjectProperty .
+
+prn:P1014 a owl:ObjectProperty .
+
+wdtn:P1014 a owl:ObjectProperty .
+
+wdno:P1014 a owl:Class ;
+	owl:complementOf _:b3313e8714e8603bc734ad31fe890277 .
+
+_:b3313e8714e8603bc734ad31fe890277 a owl:Restriction ;
+	owl:onProperty wdt:P1014 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q779859 a wikibase:Item ;
+	rdfs:label "equipment"@en ;
+	skos:prefLabel "equipment"@en ;
+	schema:name "equipment"@en ;
+	schema:description "Wikimedia disambiguation page"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P268 a wikibase:Property ;
+	rdfs:label "Bibliothèque nationale de France ID"@en ;
+	skos:prefLabel "Bibliothèque nationale de France ID"@en ;
+	schema:name "Bibliothèque nationale de France ID"@en ;
+	schema:description "identifier for the subject issued by BNF (Bibliothèque nationale de France). Format: 8 digits followed by a check-digit or letter, do not include the initial 'cb'."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P268 ;
+	wikibase:claim p:P268 ;
+	wikibase:statementProperty ps:P268 ;
+	wikibase:statementValue psv:P268 ;
+	wikibase:qualifier pq:P268 ;
+	wikibase:qualifierValue pqv:P268 ;
+	wikibase:reference pr:P268 ;
+	wikibase:referenceValue prv:P268 ;
+	wikibase:novalue wdno:P268 ;
+	wikibase:directClaimNormalized wdtn:P268 ;
+	wikibase:statementValueNormalized psn:P268 ;
+	wikibase:qualifierValueNormalized pqn:P268 ;
+	wikibase:referenceValueNormalized prn:P268 .
+
+p:P268 a owl:ObjectProperty .
+
+psv:P268 a owl:ObjectProperty .
+
+pqv:P268 a owl:ObjectProperty .
+
+prv:P268 a owl:ObjectProperty .
+
+wdt:P268 a owl:DatatypeProperty .
+
+ps:P268 a owl:DatatypeProperty .
+
+pq:P268 a owl:DatatypeProperty .
+
+pr:P268 a owl:DatatypeProperty .
+
+psn:P268 a owl:ObjectProperty .
+
+pqn:P268 a owl:ObjectProperty .
+
+prn:P268 a owl:ObjectProperty .
+
+wdtn:P268 a owl:ObjectProperty .
+
+wdno:P268 a owl:Class ;
+	owl:complementOf _:d3120d2b47ac0e3950d9219515d435cc .
+
+_:d3120d2b47ac0e3950d9219515d435cc a owl:Restriction ;
+	owl:onProperty wdt:P268 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P18 a wikibase:Property ;
+	rdfs:label "image"@en ;
+	skos:prefLabel "image"@en ;
+	schema:name "image"@en ;
+	schema:description "image of relevant illustration of the subject; if available, also use more specific properties (sample: coat of arms image, locator map, flag image, signature image, logo image, collage image)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#CommonsMedia> ;
+	wikibase:directClaim wdt:P18 ;
+	wikibase:claim p:P18 ;
+	wikibase:statementProperty ps:P18 ;
+	wikibase:statementValue psv:P18 ;
+	wikibase:qualifier pq:P18 ;
+	wikibase:qualifierValue pqv:P18 ;
+	wikibase:reference pr:P18 ;
+	wikibase:referenceValue prv:P18 ;
+	wikibase:novalue wdno:P18 .
+
+p:P18 a owl:ObjectProperty .
+
+psv:P18 a owl:ObjectProperty .
+
+pqv:P18 a owl:ObjectProperty .
+
+prv:P18 a owl:ObjectProperty .
+
+wdt:P18 a owl:ObjectProperty .
+
+ps:P18 a owl:ObjectProperty .
+
+pq:P18 a owl:ObjectProperty .
+
+pr:P18 a owl:ObjectProperty .
+
+wdno:P18 a owl:Class ;
+	owl:complementOf _:90353c5ec33a5dc569985590a17a3551 .
+
+_:90353c5ec33a5dc569985590a17a3551 a owl:Restriction ;
+	owl:onProperty wdt:P18 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8519 a wikibase:Property ;
+	rdfs:label "RKD thesaurus ID"@en ;
+	skos:prefLabel "RKD thesaurus ID"@en ;
+	schema:name "RKD thesaurus ID"@en ;
+	schema:description "identifier in the RKD thesaurus (Rijksbureau voor Kunsthistorische Documentatie)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8519 ;
+	wikibase:claim p:P8519 ;
+	wikibase:statementProperty ps:P8519 ;
+	wikibase:statementValue psv:P8519 ;
+	wikibase:qualifier pq:P8519 ;
+	wikibase:qualifierValue pqv:P8519 ;
+	wikibase:reference pr:P8519 ;
+	wikibase:referenceValue prv:P8519 ;
+	wikibase:novalue wdno:P8519 ;
+	wikibase:directClaimNormalized wdtn:P8519 ;
+	wikibase:statementValueNormalized psn:P8519 ;
+	wikibase:qualifierValueNormalized pqn:P8519 ;
+	wikibase:referenceValueNormalized prn:P8519 .
+
+p:P8519 a owl:ObjectProperty .
+
+psv:P8519 a owl:ObjectProperty .
+
+pqv:P8519 a owl:ObjectProperty .
+
+prv:P8519 a owl:ObjectProperty .
+
+wdt:P8519 a owl:DatatypeProperty .
+
+ps:P8519 a owl:DatatypeProperty .
+
+pq:P8519 a owl:DatatypeProperty .
+
+pr:P8519 a owl:DatatypeProperty .
+
+psn:P8519 a owl:ObjectProperty .
+
+pqn:P8519 a owl:ObjectProperty .
+
+prn:P8519 a owl:ObjectProperty .
+
+wdtn:P8519 a owl:ObjectProperty .
+
+wdno:P8519 a owl:Class ;
+	owl:complementOf _:da548e7f1dbb9a9772003bef26820301 .
+
+_:da548e7f1dbb9a9772003bef26820301 a owl:Restriction ;
+	owl:onProperty wdt:P8519 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8834 a wikibase:Property ;
+	rdfs:label "MetaSat ID"@en ;
+	skos:prefLabel "MetaSat ID"@en ;
+	schema:name "MetaSat ID"@en ;
+	schema:description "identifier for MetaSat, an open metadata vocabulary used to describe space missions"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8834 ;
+	wikibase:claim p:P8834 ;
+	wikibase:statementProperty ps:P8834 ;
+	wikibase:statementValue psv:P8834 ;
+	wikibase:qualifier pq:P8834 ;
+	wikibase:qualifierValue pqv:P8834 ;
+	wikibase:reference pr:P8834 ;
+	wikibase:referenceValue prv:P8834 ;
+	wikibase:novalue wdno:P8834 ;
+	wikibase:directClaimNormalized wdtn:P8834 ;
+	wikibase:statementValueNormalized psn:P8834 ;
+	wikibase:qualifierValueNormalized pqn:P8834 ;
+	wikibase:referenceValueNormalized prn:P8834 .
+
+p:P8834 a owl:ObjectProperty .
+
+psv:P8834 a owl:ObjectProperty .
+
+pqv:P8834 a owl:ObjectProperty .
+
+prv:P8834 a owl:ObjectProperty .
+
+wdt:P8834 a owl:DatatypeProperty .
+
+ps:P8834 a owl:DatatypeProperty .
+
+pq:P8834 a owl:DatatypeProperty .
+
+pr:P8834 a owl:DatatypeProperty .
+
+psn:P8834 a owl:ObjectProperty .
+
+pqn:P8834 a owl:ObjectProperty .
+
+prn:P8834 a owl:ObjectProperty .
+
+wdtn:P8834 a owl:ObjectProperty .
+
+wdno:P8834 a owl:Class ;
+	owl:complementOf _:9c8553707586f9c480f6c00c85507f6a .
+
+_:9c8553707586f9c480f6c00c85507f6a a owl:Restriction ;
+	owl:onProperty wdt:P8834 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8248 a wikibase:Property ;
+	rdfs:label "Colon Classification"@en ;
+	skos:prefLabel "Colon Classification"@en ;
+	schema:name "Colon Classification"@en ;
+	schema:description "type of library classification, to be used for topics, not for written works; use with qualifier \"edition (P747)\" with item value \"CC 6\" or \"CC 7\""@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8248 ;
+	wikibase:claim p:P8248 ;
+	wikibase:statementProperty ps:P8248 ;
+	wikibase:statementValue psv:P8248 ;
+	wikibase:qualifier pq:P8248 ;
+	wikibase:qualifierValue pqv:P8248 ;
+	wikibase:reference pr:P8248 ;
+	wikibase:referenceValue prv:P8248 ;
+	wikibase:novalue wdno:P8248 ;
+	wikibase:directClaimNormalized wdtn:P8248 ;
+	wikibase:statementValueNormalized psn:P8248 ;
+	wikibase:qualifierValueNormalized pqn:P8248 ;
+	wikibase:referenceValueNormalized prn:P8248 .
+
+p:P8248 a owl:ObjectProperty .
+
+psv:P8248 a owl:ObjectProperty .
+
+pqv:P8248 a owl:ObjectProperty .
+
+prv:P8248 a owl:ObjectProperty .
+
+wdt:P8248 a owl:DatatypeProperty .
+
+ps:P8248 a owl:DatatypeProperty .
+
+pq:P8248 a owl:DatatypeProperty .
+
+pr:P8248 a owl:DatatypeProperty .
+
+psn:P8248 a owl:ObjectProperty .
+
+pqn:P8248 a owl:ObjectProperty .
+
+prn:P8248 a owl:ObjectProperty .
+
+wdtn:P8248 a owl:ObjectProperty .
+
+wdno:P8248 a owl:Class ;
+	owl:complementOf _:c8a523b2e1b1601bbedc16d43783f54e .
+
+_:c8a523b2e1b1601bbedc16d43783f54e a owl:Restriction ;
+	owl:onProperty wdt:P8248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4527 a wikibase:Property ;
+	rdfs:label "UK Parliament thesaurus ID"@en ;
+	skos:prefLabel "UK Parliament thesaurus ID"@en ;
+	schema:name "UK Parliament thesaurus ID"@en ;
+	schema:description "identifier in the thesaurus of subject headings maintained by the librarians in the House of Commons in the UK"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4527 ;
+	wikibase:claim p:P4527 ;
+	wikibase:statementProperty ps:P4527 ;
+	wikibase:statementValue psv:P4527 ;
+	wikibase:qualifier pq:P4527 ;
+	wikibase:qualifierValue pqv:P4527 ;
+	wikibase:reference pr:P4527 ;
+	wikibase:referenceValue prv:P4527 ;
+	wikibase:novalue wdno:P4527 ;
+	wikibase:directClaimNormalized wdtn:P4527 ;
+	wikibase:statementValueNormalized psn:P4527 ;
+	wikibase:qualifierValueNormalized pqn:P4527 ;
+	wikibase:referenceValueNormalized prn:P4527 .
+
+p:P4527 a owl:ObjectProperty .
+
+psv:P4527 a owl:ObjectProperty .
+
+pqv:P4527 a owl:ObjectProperty .
+
+prv:P4527 a owl:ObjectProperty .
+
+wdt:P4527 a owl:DatatypeProperty .
+
+ps:P4527 a owl:DatatypeProperty .
+
+pq:P4527 a owl:DatatypeProperty .
+
+pr:P4527 a owl:DatatypeProperty .
+
+psn:P4527 a owl:ObjectProperty .
+
+pqn:P4527 a owl:ObjectProperty .
+
+prn:P4527 a owl:ObjectProperty .
+
+wdtn:P4527 a owl:ObjectProperty .
+
+wdno:P4527 a owl:Class ;
+	owl:complementOf _:c981d7c8f90ee91b968dbd5dd918abb6 .
+
+_:c981d7c8f90ee91b968dbd5dd918abb6 a owl:Restriction ;
+	owl:onProperty wdt:P4527 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2347 a wikibase:Property ;
+	rdfs:label "YSO ID"@en ;
+	skos:prefLabel "YSO ID"@en ;
+	schema:name "YSO ID"@en ;
+	schema:description "identifier for a concept in the General Finnish Ontology YSO"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2347 ;
+	wikibase:claim p:P2347 ;
+	wikibase:statementProperty ps:P2347 ;
+	wikibase:statementValue psv:P2347 ;
+	wikibase:qualifier pq:P2347 ;
+	wikibase:qualifierValue pqv:P2347 ;
+	wikibase:reference pr:P2347 ;
+	wikibase:referenceValue prv:P2347 ;
+	wikibase:novalue wdno:P2347 ;
+	wikibase:directClaimNormalized wdtn:P2347 ;
+	wikibase:statementValueNormalized psn:P2347 ;
+	wikibase:qualifierValueNormalized pqn:P2347 ;
+	wikibase:referenceValueNormalized prn:P2347 .
+
+p:P2347 a owl:ObjectProperty .
+
+psv:P2347 a owl:ObjectProperty .
+
+pqv:P2347 a owl:ObjectProperty .
+
+prv:P2347 a owl:ObjectProperty .
+
+wdt:P2347 a owl:DatatypeProperty .
+
+ps:P2347 a owl:DatatypeProperty .
+
+pq:P2347 a owl:DatatypeProperty .
+
+pr:P2347 a owl:DatatypeProperty .
+
+psn:P2347 a owl:ObjectProperty .
+
+pqn:P2347 a owl:ObjectProperty .
+
+prn:P2347 a owl:ObjectProperty .
+
+wdtn:P2347 a owl:ObjectProperty .
+
+wdno:P2347 a owl:Class ;
+	owl:complementOf _:5938edce2b698c44bad94eb14b56af07 .
+
+_:5938edce2b698c44bad94eb14b56af07 a owl:Restriction ;
+	owl:onProperty wdt:P2347 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8814 a wikibase:Property ;
+	rdfs:label "WordNet 3.1 Synset ID"@en ;
+	skos:prefLabel "WordNet 3.1 Synset ID"@en ;
+	schema:name "WordNet 3.1 Synset ID"@en ;
+	schema:description "Synset identifier in Princeton’s WordNet Version 3.1"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8814 ;
+	wikibase:claim p:P8814 ;
+	wikibase:statementProperty ps:P8814 ;
+	wikibase:statementValue psv:P8814 ;
+	wikibase:qualifier pq:P8814 ;
+	wikibase:qualifierValue pqv:P8814 ;
+	wikibase:reference pr:P8814 ;
+	wikibase:referenceValue prv:P8814 ;
+	wikibase:novalue wdno:P8814 ;
+	wikibase:directClaimNormalized wdtn:P8814 ;
+	wikibase:statementValueNormalized psn:P8814 ;
+	wikibase:qualifierValueNormalized pqn:P8814 ;
+	wikibase:referenceValueNormalized prn:P8814 .
+
+p:P8814 a owl:ObjectProperty .
+
+psv:P8814 a owl:ObjectProperty .
+
+pqv:P8814 a owl:ObjectProperty .
+
+prv:P8814 a owl:ObjectProperty .
+
+wdt:P8814 a owl:DatatypeProperty .
+
+ps:P8814 a owl:DatatypeProperty .
+
+pq:P8814 a owl:DatatypeProperty .
+
+pr:P8814 a owl:DatatypeProperty .
+
+psn:P8814 a owl:ObjectProperty .
+
+pqn:P8814 a owl:ObjectProperty .
+
+prn:P8814 a owl:ObjectProperty .
+
+wdtn:P8814 a owl:ObjectProperty .
+
+wdno:P8814 a owl:Class ;
+	owl:complementOf _:eb345aeb18fe7fba166f7abc9770574d .
+
+_:eb345aeb18fe7fba166f7abc9770574d a owl:Restriction ;
+	owl:onProperty wdt:P8814 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P366 a wikibase:Property ;
+	rdfs:label "has use"@en ;
+	skos:prefLabel "has use"@en ;
+	schema:name "has use"@en ;
+	schema:description "main use of the subject (includes current and former usage)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P366 ;
+	wikibase:claim p:P366 ;
+	wikibase:statementProperty ps:P366 ;
+	wikibase:statementValue psv:P366 ;
+	wikibase:qualifier pq:P366 ;
+	wikibase:qualifierValue pqv:P366 ;
+	wikibase:reference pr:P366 ;
+	wikibase:referenceValue prv:P366 ;
+	wikibase:novalue wdno:P366 .
+
+p:P366 a owl:ObjectProperty .
+
+psv:P366 a owl:ObjectProperty .
+
+pqv:P366 a owl:ObjectProperty .
+
+prv:P366 a owl:ObjectProperty .
+
+wdt:P366 a owl:ObjectProperty .
+
+ps:P366 a owl:ObjectProperty .
+
+pq:P366 a owl:ObjectProperty .
+
+pr:P366 a owl:ObjectProperty .
+
+wdno:P366 a owl:Class ;
+	owl:complementOf _:e3313a663f1512d0bc6282d834b00038 .
+
+_:e3313a663f1512d0bc6282d834b00038 a owl:Restriction ;
+	owl:onProperty wdt:P366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1963 a wikibase:Property ;
+	rdfs:label "properties for this type"@en ;
+	skos:prefLabel "properties for this type"@en ;
+	schema:name "properties for this type"@en ;
+	schema:description "when this subject is used as object of \"instance of\" or \"occupation\", the following properties normally apply"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseProperty> ;
+	wikibase:directClaim wdt:P1963 ;
+	wikibase:claim p:P1963 ;
+	wikibase:statementProperty ps:P1963 ;
+	wikibase:statementValue psv:P1963 ;
+	wikibase:qualifier pq:P1963 ;
+	wikibase:qualifierValue pqv:P1963 ;
+	wikibase:reference pr:P1963 ;
+	wikibase:referenceValue prv:P1963 ;
+	wikibase:novalue wdno:P1963 .
+
+p:P1963 a owl:ObjectProperty .
+
+psv:P1963 a owl:ObjectProperty .
+
+pqv:P1963 a owl:ObjectProperty .
+
+prv:P1963 a owl:ObjectProperty .
+
+wdt:P1963 a owl:ObjectProperty .
+
+ps:P1963 a owl:ObjectProperty .
+
+pq:P1963 a owl:ObjectProperty .
+
+pr:P1963 a owl:ObjectProperty .
+
+wdno:P1963 a owl:Class ;
+	owl:complementOf _:4d8769fc1c544b1caed9e52ec1f84247 .
+
+_:4d8769fc1c544b1caed9e52ec1f84247 a owl:Restriction ;
+	owl:onProperty wdt:P1963 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q24005632 a wikibase:Item ;
+	rdfs:label "descriptive page and disambiguation page have to be in different items"@en ;
+	skos:prefLabel "descriptive page and disambiguation page have to be in different items"@en ;
+	schema:name "descriptive page and disambiguation page have to be in different items"@en ;
+	schema:description "Wikidata-specific criterion related to disambiguation pages"@en .
+
+wd:P1013 a wikibase:Property ;
+	rdfs:label "criterion used"@en ;
+	skos:prefLabel "criterion used"@en ;
+	schema:name "criterion used"@en ;
+	schema:description "property by which a distinction or classification is made"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1013 ;
+	wikibase:claim p:P1013 ;
+	wikibase:statementProperty ps:P1013 ;
+	wikibase:statementValue psv:P1013 ;
+	wikibase:qualifier pq:P1013 ;
+	wikibase:qualifierValue pqv:P1013 ;
+	wikibase:reference pr:P1013 ;
+	wikibase:referenceValue prv:P1013 ;
+	wikibase:novalue wdno:P1013 .
+
+p:P1013 a owl:ObjectProperty .
+
+psv:P1013 a owl:ObjectProperty .
+
+pqv:P1013 a owl:ObjectProperty .
+
+prv:P1013 a owl:ObjectProperty .
+
+wdt:P1013 a owl:ObjectProperty .
+
+ps:P1013 a owl:ObjectProperty .
+
+pq:P1013 a owl:ObjectProperty .
+
+pr:P1013 a owl:ObjectProperty .
+
+wdno:P1013 a owl:Class ;
+	owl:complementOf _:5273a0069dacad510b42ec771f79d93a .
+
+_:5273a0069dacad510b42ec771f79d93a a owl:Restriction ;
+	owl:onProperty wdt:P1013 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q95449814 a wikibase:Item ;
+	rdfs:label "CC 6"@en ;
+	skos:prefLabel "CC 6"@en ;
+	schema:name "CC 6"@en ;
+	schema:description "sixth edition of the colon classification system"@en .
+
+wd:P747 a wikibase:Property ;
+	rdfs:label "has edition or translation"@en ;
+	skos:prefLabel "has edition or translation"@en ;
+	schema:name "has edition or translation"@en ;
+	schema:description "link to an edition of this item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P747 ;
+	wikibase:claim p:P747 ;
+	wikibase:statementProperty ps:P747 ;
+	wikibase:statementValue psv:P747 ;
+	wikibase:qualifier pq:P747 ;
+	wikibase:qualifierValue pqv:P747 ;
+	wikibase:reference pr:P747 ;
+	wikibase:referenceValue prv:P747 ;
+	wikibase:novalue wdno:P747 .
+
+p:P747 a owl:ObjectProperty .
+
+psv:P747 a owl:ObjectProperty .
+
+pqv:P747 a owl:ObjectProperty .
+
+prv:P747 a owl:ObjectProperty .
+
+wdt:P747 a owl:ObjectProperty .
+
+ps:P747 a owl:ObjectProperty .
+
+pq:P747 a owl:ObjectProperty .
+
+pr:P747 a owl:ObjectProperty .
+
+wdno:P747 a owl:Class ;
+	owl:complementOf _:7feb6d2d25ba4947303c43d6d5fabcd2 .
+
+_:7feb6d2d25ba4947303c43d6d5fabcd2 a owl:Restriction ;
+	owl:onProperty wdt:P747 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q89345680 a wikibase:Item ;
+	rdfs:label "YSO-Wikidata mapping project"@en ;
+	skos:prefLabel "YSO-Wikidata mapping project"@en ;
+	schema:name "YSO-Wikidata mapping project"@en ;
+	schema:description "project where concepts of the Finnish General Ontology are matched with Wikidata equivalents"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q16798631 owl:sameAs wd:Q10273457 .
+
+wd:Q29960888 owl:sameAs wd:Q10273457 .
+
+v:c1e4e531c5ac7d1dac0681888653faae a wikibase:TimeValue ;
+	wikibase:timeValue "2022-03-21T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:a5327c7d451b92419149e391f1e51131a370da6f a wikibase:Reference ;
+	pr:P248 wd:Q89345680 ;
+	pr:P813 "2022-03-21T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:c1e4e531c5ac7d1dac0681888653faae .
