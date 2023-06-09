@@ -133,6 +133,15 @@ class WikimediaCommonsEnricher:
             path_prefix = "/wiki/File:"
             if parsed_url.path.startswith(path_prefix):
                 return unquote(parsed_url.path[len(path_prefix) :])
+        elif parsed_url.netloc.endswith("upload.wikimedia.org"):
+            # https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg/375px-Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg
+            if parsed_url.path.startswith("/wikipedia/commons/thumb/"):
+                return unquote(parsed_url.path.rsplit("/", 2)[-2])
+        else:
+            return None
+        self.__logger.warning(
+            "unrecognized Wikimedia Commons URL pattern: %s", parsed_url
+        )
         return None
 
     def __get_wikimedia_commons_image_info(
@@ -143,6 +152,11 @@ class WikimediaCommonsEnricher:
             image_info_json = json.load(image_info_json_file)
 
         for pageid, page in image_info_json["query"]["pages"].items():
+            if pageid == "-1":
+                self.__logger.warning(
+                    "missing file from Wikimedia Commons: " + file_name
+                )
+                return None
             imageinfos = page["imageinfo"]
             if not imageinfos:
                 continue

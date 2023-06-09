@@ -20,6 +20,7 @@ from paradicms_etl.models.image import Image
         "http://commons.wikimedia.org/wiki/File:Tux.svg",
         "http://commons.wikimedia.org/wiki/File:Visionary_Doug_Engelbart_did_quite_a_bit_more_than_invent_the_mouse,_but_also_pioneered_the_Graphics_User_Interface._His_Stanford_demo_in_1968_%E2%80%9CThe_Mother_of_all_Demos%E2%80%9D_was_groundbreaking_vision_for_(1805321166).jpg",
         "http://commons.wikimedia.org/wiki/File:WWW_logo_by_Robert_Cailliau.svg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg/375px-Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg",
     ],
 )
 def test_enrich(data_dir_path: Path, source: str):
