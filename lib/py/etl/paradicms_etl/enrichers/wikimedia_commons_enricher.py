@@ -26,10 +26,6 @@ class WikimediaCommonsEnricher:
         __LICENSE_URIS_BY_ID = {
             # "Attribution": CreativeCommonsLicenses.BY_4_0,
             "cc0": CreativeCommonsLicenses.CC0_1_0.uri,
-            "cc-by-3.0": CreativeCommonsLicenses.BY_3_0.uri,
-            "cc-by-sa-2.5": CreativeCommonsLicenses.BY_SA_2_5.uri,
-            "cc-by-sa-3.0": CreativeCommonsLicenses.BY_SA_3_0.uri,
-            "cc-by-sa-4.0": CreativeCommonsLicenses.BY_SA_4_0.uri,
             # "GFDL": None,
             "pd": CreativeCommonsLicenses.MARK_1_0.uri,
         }
@@ -58,14 +54,28 @@ class WikimediaCommonsEnricher:
                 return None
 
             try:
+                # Explicit table lookup
                 return self.__LICENSE_URIS_BY_ID[self.license]
             except KeyError:
-                logger.warning(
-                    "Wikimedia Commons file (%s) has unknown license: %s",
-                    self.file_name,
-                    self.license,
-                )
-                return None
+                if not self.license.startswith("cc-"):
+                    raise
+                # Resolve cc-* against the CreativeCommonsLicenses e.g.,
+                # cc-by-2.5 -> CreativeCommonsLicenses.BY_2_5
+                try:
+                    return getattr(
+                        CreativeCommonsLicenses,
+                        self.license[len("cc-") :]
+                        .replace("-", "_")
+                        .replace(".", "_")
+                        .upper(),
+                    ).uri
+                except AttributeError:
+                    logger.warning(
+                        "Wikimedia Commons file (%s) has unknown license: %s",
+                        self.file_name,
+                        self.license,
+                    )
+                    return None
 
     def __init__(self, *, cache_dir_path: Path):
         self.__file_cache = FileCache(cache_dir_path=cache_dir_path)
@@ -79,11 +89,18 @@ class WikimediaCommonsEnricher:
                 yield model
 
     def __enrich_image(self, image: Image) -> Image:
-        image_wikimedia_commons_file_name = self.__get_wikimedia_commons_file_name(
-            str(image.source if image.source is not None else image.uri)
-        )
+        image_wikimedia_commons_file_name: Optional[str] = None
+        for image_source in (image.source, image.src, image.uri):
+            if image_source is None:
+                continue
+            image_wikimedia_commons_file_name = self.__get_wikimedia_commons_file_name(
+                str(image_source)
+            )
+            if image_wikimedia_commons_file_name is not None:
+                break
         if image_wikimedia_commons_file_name is None:
             return image
+
         wikimedia_commons_image_info = self.__get_wikimedia_commons_image_info(
             image_wikimedia_commons_file_name
         )
@@ -128,8 +145,11 @@ class WikimediaCommonsEnricher:
         try:
             parsed_url = urlparse(str(url))
         except ValueError:
+            self.__logger.warning("error parsing URL: %s", url)
             return None
+
         if parsed_url.netloc == "commons.wikimedia.org":
+            #  http://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine.jpg
             path_prefix = "/wiki/File:"
             if parsed_url.path.startswith(path_prefix):
                 return unquote(parsed_url.path[len(path_prefix) :])
@@ -137,6 +157,11 @@ class WikimediaCommonsEnricher:
             # https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg/375px-Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg
             if parsed_url.path.startswith("/wikipedia/commons/thumb/"):
                 return unquote(parsed_url.path.rsplit("/", 2)[-2])
+        elif parsed_url.netloc.endswith("wikipedia.org"):
+            # https://en.wikipedia.org/wiki/File:Judgement_of_Paris_Met_98.8.11_cca2_img_by_Marie-Lan_Nguyen_edited_by_K_Vail.jpg
+            path_prefix = "/wiki/File:"
+            if parsed_url.path.startswith(path_prefix):
+                return unquote(parsed_url.path[len(path_prefix) :])
         else:
             return None
         self.__logger.warning(
