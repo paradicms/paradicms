@@ -25,6 +25,10 @@ class Image(NamedModel, RightsMixin):
         ) -> "Image.Builder":
             raise NotImplementedError
 
+        @abstractmethod
+        def set_title(self, title: str) -> "Image.Builder":
+            raise NotImplementedError
+
     @property
     @abstractmethod
     def copyable(self) -> bool:
