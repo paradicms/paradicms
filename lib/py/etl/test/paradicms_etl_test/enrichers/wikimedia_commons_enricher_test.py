@@ -25,6 +25,8 @@ from paradicms_etl.models.image import Image
         "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg/375px-Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg",
         # Thumbnail image link from Wikipedia
         "https://en.wikipedia.org/wiki/File:Judgement_of_Paris_Met_98.8.11_cca2_img_by_Marie-Lan_Nguyen_edited_by_K_Vail.jpg",
+        # Special file path from Wikidata wdt:P18
+        "http://commons.wikimedia.org/wiki/Special:FilePath/Pilot%20ACE%20computer-2.jpg",
     ],
 )
 def test_enrich(data_dir_path: Path, source: str):

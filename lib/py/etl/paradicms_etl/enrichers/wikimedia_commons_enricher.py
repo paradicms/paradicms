@@ -150,9 +150,9 @@ class WikimediaCommonsEnricher:
 
         if parsed_url.netloc == "commons.wikimedia.org":
             #  http://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine.jpg
-            path_prefix = "/wiki/File:"
-            if parsed_url.path.startswith(path_prefix):
-                return unquote(parsed_url.path[len(path_prefix) :])
+            for path_prefix in ("/wiki/File:", "/wiki/Special:FilePath/"):
+                if parsed_url.path.startswith(path_prefix):
+                    return unquote(parsed_url.path[len(path_prefix) :])
         elif parsed_url.netloc.endswith("upload.wikimedia.org"):
             # https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg/375px-Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg
             if parsed_url.path.startswith("/wikipedia/commons/thumb/"):
