@@ -3,7 +3,7 @@ import logging
 from dataclasses import dataclass
 from functools import cache
 from pathlib import Path
-from typing import Iterable, Optional, Tuple
+from typing import Iterable, Optional, Tuple, Dict, Any
 from urllib.parse import urlparse, quote, unquote
 
 from bs4 import BeautifulSoup
@@ -50,7 +50,7 @@ class WikimediaCommonsEnricher:
         restrictions: Optional[str] = None
         usage_terms: Optional[str] = None
 
-        @property
+        @property  # type: ignore
         @cache
         def license_uri(self) -> Optional[URIRef]:
             if self.license is None:
@@ -230,7 +230,7 @@ class WikimediaCommonsEnricher:
             if len(imageinfos) > 1:
                 raise NotImplementedError(f"{file_name} has more than one imageinfo")
             imageinfo = imageinfos[0]
-            dataclass_kwds = {"file_name": file_name}
+            dataclass_kwds: Dict[str, Any] = {"file_name": file_name}
             for key, value_object in imageinfo["extmetadata"].items():
                 value = value_object["value"]
                 if not value:
@@ -287,7 +287,7 @@ class WikimediaCommonsEnricher:
             return self.__WikimediaCommonsImageExtendedMetadata(**dataclass_kwds)
 
         raise NotImplementedError(
-            "no Wikimedia Commons info for file name " + file_name
+            "no Wikimedia Commons extended metadata for image file name " + file_name
         )
 
     def __get_wikimedia_commons_image_url(self, file_name: str) -> str:
@@ -314,3 +314,7 @@ class WikimediaCommonsEnricher:
                 raise NotImplementedError(f"{file_name} has more than one imageinfo")
             imageinfo = imageinfos[0]
             return imageinfo["url"]
+
+        raise NotImplementedError(
+            "no Wikimedia Commons URL for image file name " + file_name
+        )
