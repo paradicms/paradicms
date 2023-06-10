@@ -187,10 +187,7 @@ class WikibaseItem(ResourceBackedNamedModel):
                     added_property = True
                     break
             if not added_property:
-                logger.log(
-                    logging.DEBUG
-                    if str(predicate).startswith(str(SDOHTTP))
-                    else logging.WARNING,
+                logger.debug(
                     "item parser: unknown triple (%s, %s, %s)",
                     resource.identifier,
                     predicate,

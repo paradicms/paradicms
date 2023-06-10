@@ -7,7 +7,9 @@ from rdflib.resource import Resource
 
 from paradicms_etl.extractors.wikidata_entity_extractor import WikidataEntityExtractor
 from paradicms_etl.model import Model
+from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -43,12 +45,16 @@ class WikidataEnricher:
             for wikidata_entity_uri in referenced_wikidata_entity_uris:
                 if wikidata_entity_uri in yielded_wikidata_entity_uris:
                     continue
-                yield self.__get_wikidata_entity_with_related(wikidata_entity_uri)
+                wikidata_entity = self.__get_wikidata_entity_with_related(
+                    wikidata_entity_uri
+                )
+                yield wikidata_entity
                 yielded_wikidata_entity_uris.add(wikidata_entity_uri)
                 if not yielded_wikidata_rights_models:
                     yield CreativeCommonsLicenses.BY_SA_3_0
                     yield RightsStatementsDotOrgRightsStatements.InC
                     yielded_wikidata_rights_models = True
+                yield from self.__get_wikidata_entity_images(wikidata_entity)
 
             yield model
 
@@ -77,6 +83,19 @@ class WikidataEnricher:
                     )
                     continue
         return tuple(wikidata_entity_uris)
+
+    @staticmethod
+    def __get_wikidata_entity_images(wikidata_entity: WikibaseItem) -> Iterable[Image]:
+        yielded_image_uris: Set[URIRef] = set()
+        for statement in wikidata_entity.statements_by_property_label.get("image", []):
+            assert isinstance(statement.value, URIRef)
+            image_uri = statement.value
+            if image_uri in yielded_image_uris:
+                continue
+            yield CmsImage.builder(
+                depicts_uri=wikidata_entity.uri, uri=image_uri
+            ).build()
+            yielded_image_uris.add(image_uri)
 
     def __get_wikidata_entity_with_related(
         self, root_wikidata_entity_uri: URIRef

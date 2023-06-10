@@ -3,6 +3,7 @@ from pathlib import Path
 from rdflib import URIRef
 
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights_statement import RightsStatement
@@ -16,9 +17,13 @@ def test_enrich(data_dir_path: Path, synthetic_data_models):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((person,))
     )
-    assert len(enriched_models) == 4
+    assert len(enriched_models) == 5
     assert any(
         isinstance(model, Person) and model.uri == person.uri
+        for model in enriched_models
+    )
+    assert any(
+        isinstance(model, Image) and model.depicts_uri == person.uri
         for model in enriched_models
     )
     assert any(isinstance(model, License) for model in enriched_models)
