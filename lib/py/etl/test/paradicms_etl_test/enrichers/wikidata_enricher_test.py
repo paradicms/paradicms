@@ -22,14 +22,14 @@ def test_enrich(data_dir_path: Path, synthetic_data_models):
         isinstance(model, Person) and model.uri == person.uri
         for model in enriched_models
     )
-    assert any(
-        isinstance(model, Image) and model.depicts_uri == person.uri
-        for model in enriched_models
-    )
     assert any(isinstance(model, License) for model in enriched_models)
     assert any(isinstance(model, RightsStatement) for model in enriched_models)
+    wikidata_entity_uri = URIRef("http://www.wikidata.org/entity/Q7251")
     assert any(
-        isinstance(model, WikibaseItem)
-        and model.uri == URIRef("http://www.wikidata.org/entity/Q7251")
+        isinstance(model, WikibaseItem) and model.uri == wikidata_entity_uri
+        for model in enriched_models
+    )
+    assert any(
+        isinstance(model, Image) and model.depicts_uri == wikidata_entity_uri
         for model in enriched_models
     )
