@@ -17,6 +17,7 @@ import {License} from "../License";
 import {RightsStatement} from "../RightsStatement";
 import {AgentUnion} from "../AgentUnion";
 import {Memoize} from "typescript-memoize";
+import {wdt} from "@paradicms/vocabularies";
 
 export abstract class WikidataModel extends ResourceBackedNamedModel
   implements
@@ -108,15 +109,21 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
 
   @Memoize()
   get images(): readonly Image[] {
-    // return this.filterAndMapStatements(wdt["P18"], statement => {
-    //   if (statement.value.termType !== "NamedNode") {
-    //     return null;
-    //   }
-    //   return this.modelSet.imageByIri(statement.value.value);
-    // });
+    const p18Images = this.filterAndMapStatements(wdt["P18"], statement => {
+      if (statement.value.termType !== "NamedNode") {
+        return null;
+      }
+      return this.modelSet.imageByIri(statement.value.value);
+    });
     // Traversing wdt:P18 will only get the original image
     // We want every image that points at this item.
-    return this.modelSet.imagesByDepictsIri(this.iri);
+    const depictsImages = this.modelSet.imagesByDepictsIri(this.iri);
+    return p18Images.concat(
+      depictsImages.filter(
+        depictsImage =>
+          !p18Images.some(p18Image => p18Image.key === depictsImage.key)
+      )
+    );
   }
 
   get label(): string {
