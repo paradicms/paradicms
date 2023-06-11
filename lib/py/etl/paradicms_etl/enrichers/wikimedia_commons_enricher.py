@@ -135,7 +135,9 @@ class WikimediaCommonsEnricher:
                     BeautifulSoup(
                         wikimedia_commons_image_extended_metadata.artist,
                         features="html.parser",
-                    ).get_text()
+                    )
+                    .get_text()
+                    .strip()
                 )
             else:
                 self.__logger.debug(
