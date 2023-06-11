@@ -9,11 +9,11 @@ from rdflib.namespace import Namespace
 from stringcase import spinalcase, snakecase
 
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
-from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
-    CMS_ROOT_MODEL_CLASSES_BY_NAME,
-)
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.root_model_classes_by_name import (
+    ROOT_MODEL_CLASSES_BY_NAME,
+)
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 _MultidictKeyT = TypeVar("_MultidictKeyT")
@@ -57,7 +57,7 @@ class SpreadsheetTransformer:
             image_data_class = CmsImageData
         self.__image_data_class = image_data_class
         if root_model_classes_by_name is None:
-            root_model_classes_by_name = CMS_ROOT_MODEL_CLASSES_BY_NAME
+            root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
         self.__root_model_classes_by_alias = root_model_classes_by_name.copy()
 
         self.__json_ld_context = {"ss": str(self.__pipeline_namespace)}

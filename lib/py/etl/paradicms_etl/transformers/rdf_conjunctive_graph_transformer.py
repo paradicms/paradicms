@@ -4,10 +4,10 @@ from typing import Optional, Dict, Type, Iterable
 from rdflib import ConjunctiveGraph, RDF, URIRef
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
-    CMS_ROOT_MODEL_CLASSES_BY_NAME,
-)
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.root_model_classes_by_name import (
+    ROOT_MODEL_CLASSES_BY_NAME,
+)
 
 
 class RdfConjunctiveGraphTransformer:
@@ -24,7 +24,7 @@ class RdfConjunctiveGraphTransformer:
     ):
         self.__logger = logging.getLogger(__name__)
         if root_model_classes_by_name is None:
-            root_model_classes_by_name = CMS_ROOT_MODEL_CLASSES_BY_NAME
+            root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
         self.__root_model_classes_by_rdf_type_uri = {
             root_model_class.rdf_type_uri(): root_model_class
             for root_model_class in root_model_classes_by_name.values()

@@ -15,8 +15,9 @@ from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
 from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
 from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
-__CMS_ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
+__ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     CmsCollection,
     CmsConcept,
     CmsImage,
@@ -31,10 +32,11 @@ __CMS_ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     CmsWorkClosing,
     CmsWorkCreation,
     CmsWorkOpening,
+    WikibaseItem,
 )
 
-CMS_ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[ResourceBackedModel]] = {}
-for __class in __CMS_ROOT_MODEL_CLASSES:
-    CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__] = __class
-    assert __class.__name__.startswith("Cms")
-    CMS_ROOT_MODEL_CLASSES_BY_NAME[__class.__name__[len("Cms") :]] = __class
+ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[ResourceBackedModel]] = {}
+for __class in __ROOT_MODEL_CLASSES:
+    ROOT_MODEL_CLASSES_BY_NAME[__class.__name__] = __class
+    if __class.__name__.startswith("Cms"):
+        ROOT_MODEL_CLASSES_BY_NAME[__class.__name__[len("Cms") :]] = __class
