@@ -1,15 +1,15 @@
 import {WikidataModel} from "./WikidataModel";
 import {Person} from "../Person";
 import {Work} from "../Work";
-import {wd} from "@paradicms/vocabularies";
+import {wdt} from "@paradicms/vocabularies";
 
 export class WikidataPerson extends WikidataModel implements Person {
   get familyName(): string | null {
-    return this.findAndMapStatementValue(wd["P734"], this.mapStringObject);
+    return this.findAndMapStatementValue(wdt["P734"], this.mapStringObject);
   }
 
   get givenName(): string | null {
-    return this.findAndMapStatementValue(wd["P735"], this.mapStringObject);
+    return this.findAndMapStatementValue(wdt["P735"], this.mapStringObject);
   }
 
   readonly sameAs: readonly Person[] = [];
