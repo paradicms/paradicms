@@ -64,8 +64,12 @@ const WorkAgentCard: React.FunctionComponent<{
 export const WorkAgentsCarousel: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   workAgents: readonly WorkAgent[];
-}> = ({getAbsoluteImageSrc, workAgents}) => {
+}> = ({getAbsoluteImageSrc, workAgents: rawWorkAgents}) => {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const filteredWorkAgents = rawWorkAgents.filter(
+    workAgent => workAgent.agent.images.length > 0
+  );
 
   const renderWorkAgent = (workAgent: WorkAgent) => (
     <WorkAgentCard
@@ -78,22 +82,22 @@ export const WorkAgentsCarousel: React.FunctionComponent<{
   const onClickNext = useCallback(() => {
     // if (animating) return;
     const nextIndex =
-      activeIndex === workAgents.length - 1 ? 0 : activeIndex + 1;
+      activeIndex === filteredWorkAgents.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
   }, [activeIndex]);
 
   const onClickPrevious = useCallback(() => {
     // if (animating) return;
     const nextIndex =
-      activeIndex === 0 ? workAgents.length - 1 : activeIndex - 1;
+      activeIndex === 0 ? filteredWorkAgents.length - 1 : activeIndex - 1;
     setActiveIndex(nextIndex);
   }, [activeIndex]);
 
-  switch (workAgents.length) {
+  switch (filteredWorkAgents.length) {
     case 0:
       return null;
     case 1:
-      return renderWorkAgent(workAgents[0]);
+      return renderWorkAgent(filteredWorkAgents[0]);
   }
 
   return (
@@ -109,7 +113,7 @@ export const WorkAgentsCarousel: React.FunctionComponent<{
       {/*  items={items}*/}
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
-      {workAgents.map(workAgent => (
+      {filteredWorkAgents.map(workAgent => (
         <CarouselItem key={workAgent.agent.key}>
           {renderWorkAgent(workAgent)}
         </CarouselItem>
