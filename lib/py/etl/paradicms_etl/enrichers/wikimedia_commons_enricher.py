@@ -24,6 +24,15 @@ logger = logging.getLogger(__name__)
 class WikimediaCommonsEnricher:
     @dataclass(frozen=True)
     class __WikimediaCommonsImageExtendedMetadata:
+        IGNORE_API_PROPERTIES = {
+            "Assessments",
+            "CommonsMetadataExtension",
+            "GPSLatitude",
+            "GPSLongitude",
+            "GPSMapDatum",
+            "LicenseUrl",  # Do our own lookup
+        }
+
         __LICENSE_URIS_BY_ID = {
             # "Attribution": CreativeCommonsLicenses.BY_4_0,
             "cc0": CreativeCommonsLicenses.CC0_1_0.uri,
@@ -33,10 +42,8 @@ class WikimediaCommonsEnricher:
 
         file_name: str
         artist: Optional[str] = None
-        # Ignore Assessments
         attribution_required: Optional[bool] = None
         categories: Optional[Tuple[str, ...]] = None
-        # Ignore CommonsMetadataExtension
         copyrighted: Optional[bool] = None
         credit: Optional[str] = None
         date_time: Optional[str] = None
@@ -44,7 +51,6 @@ class WikimediaCommonsEnricher:
         image_description: Optional[str] = None
         license: Optional[str] = None
         license_short_name: Optional[str] = None
-        # Ignore LicenseUrl to do our own lookup
         object_name: Optional[str] = None
         permission: Optional[str] = None
         restrictions: Optional[str] = None
@@ -236,12 +242,10 @@ class WikimediaCommonsEnricher:
                 if not value:
                     continue
                 dataclass_key = snakecase(key)
-                if key in {
-                    "Assessments",
-                    "CommonsMetadataExtension",
-                    "DeletionReason",
-                    "LicenseUrl",
-                }:
+                if (
+                    key
+                    in WikimediaCommonsEnricher.__WikimediaCommonsImageExtendedMetadata.IGNORE_API_PROPERTIES
+                ):
                     self.__logger.debug(
                         "Wikidata file %s: ignoring %s=%s", file_name, key, value
                     )
