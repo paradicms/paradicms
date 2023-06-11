@@ -14,6 +14,7 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
+from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.namespaces import WDT
 from paradicms_etl.utils.canonicalize_wikidata_entity_uri import (
     canonicalize_wikidata_entity_uri,
@@ -198,7 +199,7 @@ class WikidataEnricher:
                     instance_of_property_uri=WDT["P31"],
                     subclass_of_property_uri=WDT["P279"],
                 )
-        combined_wikidata_items = WikibaseItem.from_wikidata_rdf(
+        combined_wikidata_items = WikibaseItems.from_rdf(
             graph=combined_graph, uris=tuple(related_wikidata_entities_by_uri.keys())
         )
         # Return the root entity backed by the combined graph
@@ -227,7 +228,7 @@ class WikidataEnricher:
             cache_dir_path=self.__cache_dir_path,
             entity_uris=(wikidata_entity_uri,),
         )(force=False)["graph"]
-        extracted_wikidata_items = WikibaseItem.from_wikidata_rdf(
+        extracted_wikidata_items = WikibaseItems.from_rdf(
             graph=graph,
             uris=(wikidata_entity_uri,),
         )

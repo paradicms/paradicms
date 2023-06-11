@@ -6,7 +6,7 @@ from rdflib import Graph, URIRef
 
 from paradicms_etl.models.wikibase.wikibase_direct_claim import WikibaseDirectClaim
 from paradicms_etl.models.wikibase.wikibase_full_statement import WikibaseFullStatement
-from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
+from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.namespaces import WD
 
 
@@ -59,10 +59,8 @@ class TestWikidataItemFile:
         ),
     ],
 )
-def test_from_wikidata_rdf(
-    data_dir_path: Path, test_wikidata_item_file: TestWikidataItemFile
-):
-    items = WikibaseItem.from_wikidata_rdf(
+def test_from_rdf(data_dir_path: Path, test_wikidata_item_file: TestWikidataItemFile):
+    items = WikibaseItems.from_rdf(
         exclude_redundant_statements=False,
         graph=test_wikidata_item_file.graph(data_dir_path=data_dir_path),
         uris=(test_wikidata_item_file.uri,)

@@ -20,88 +20,12 @@ logger = logging.getLogger(__name__)
 class WikibaseItem(ResourceBackedNamedModel):
     def __init__(
         self,
-        *,
-        articles: Tuple[WikibaseArticle, ...],
-        alt_labels: Tuple[str, ...],
-        description: Optional[str],
-        pref_label: Optional[str],
-        statements: Tuple[WikibaseStatement, ...],
         resource: Resource,
-    ):
-        ResourceBackedNamedModel.__init__(self, resource)
-        self.__alt_labels = alt_labels
-        self.__articles = articles
-        self.__description = description
-        self.__pref_label = pref_label
-        self.__statements = statements
-        self.__statements_by_property_label: Optional[
-            Dict[str, Tuple[WikibaseStatement, ...]]
-        ] = None
-
-    def __eq__(self, other):
-        if not isinstance(other, WikibaseItem):
-            return False
-        return self.uri == other.uri
-
-    @property
-    def alt_labels(self) -> Tuple[str, ...]:
-        return self.__alt_labels
-
-    @property
-    def articles(self) -> Tuple[WikibaseArticle, ...]:
-        return self.__articles
-
-    @property
-    def description(self) -> Optional[str]:
-        return self.__description
-
-    @classmethod
-    def from_wikidata_rdf(
-        cls,
         *,
-        graph: Graph,
         exclude_redundant_statements: bool = True,
         property_definitions: Optional[Tuple[WikibasePropertyDefinition, ...]] = None,
-        uris: Optional[Tuple[URIRef, ...]] = None,
-    ) -> Tuple["WikibaseItem", ...]:
-        """
-        Read items from the graph and return a tuple of them.
-
-        If the expected URIs (uris) is not specified, reads all wikibase:Item's.
-        """
-
-        if property_definitions is None:
-            property_definitions = WikibasePropertyDefinition.from_rdf(graph=graph)
-
-        items = []
-        if uris is None:
-            uris = tuple(
-                item_uri
-                for item_uri in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item)
-                if isinstance(item_uri, URIRef)
-            )
-        for uri in uris:
-            items.append(
-                cls.__from_wikidata_rdf(
-                    exclude_redundant_statements=exclude_redundant_statements,
-                    property_definitions=property_definitions,
-                    resource=graph.resource(uri),
-                )
-            )
-
-        return tuple(items)
-
-    @classmethod
-    def __from_wikidata_rdf(
-        cls,
-        *,
-        exclude_redundant_statements: bool,
-        property_definitions: Tuple[WikibasePropertyDefinition, ...],
-        resource: Resource,
-    ) -> "WikibaseItem":
-        """
-        Read the item corresponding to the given URI.
-        """
+    ):
+        ResourceBackedNamedModel.__init__(self, resource)
 
         IGNORE_PREDICATES = {
             URIRef(SDOHTTP.description),
@@ -232,14 +156,31 @@ class WikibaseItem(ResourceBackedNamedModel):
         else:
             statements = direct_claims + full_statements  # type: ignore
 
-        return cls(
-            alt_labels=tuple(sorted(alt_labels)),
-            articles=tuple(articles),
-            description=description,
-            pref_label=pref_label,
-            resource=resource,
-            statements=tuple(statements),
-        )
+        self.__alt_labels = tuple(sorted(alt_labels))
+        self.__articles = tuple(articles)
+        self.__description = description
+        self.__pref_label = pref_label
+        self.__statements = tuple(statements)
+        self.__statements_by_property_label: Optional[
+            Dict[str, Tuple[WikibaseStatement, ...]]
+        ] = None
+
+    def __eq__(self, other):
+        if not isinstance(other, WikibaseItem):
+            return False
+        return self.uri == other.uri
+
+    @property
+    def alt_labels(self) -> Tuple[str, ...]:
+        return self.__alt_labels
+
+    @property
+    def articles(self) -> Tuple[WikibaseArticle, ...]:
+        return self.__articles
+
+    @property
+    def description(self) -> Optional[str]:
+        return self.__description
 
     @property
     def label(self):
