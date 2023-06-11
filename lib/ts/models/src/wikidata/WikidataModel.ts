@@ -113,7 +113,7 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
       if (statement.value.termType !== "NamedNode") {
         return null;
       }
-      return this.modelSet.imageByIri(statement.value.value);
+      return this.modelSet.imageByIriOptional(statement.value.value);
     });
     // Traversing wdt:P18 will only get the original image
     // We want every image that points at this item.
