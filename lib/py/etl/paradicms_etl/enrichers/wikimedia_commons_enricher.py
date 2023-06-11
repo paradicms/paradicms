@@ -1,32 +1,94 @@
+import json
 import logging
+from dataclasses import dataclass
+from functools import cache
 from pathlib import Path
-from typing import Iterable, Optional
-from urllib.parse import urlparse
+from typing import Iterable, Optional, Tuple, Dict, Any
+from urllib.parse import urlparse, quote, unquote
 
 from bs4 import BeautifulSoup
 from rdflib import URIRef
+from stringcase import snakecase
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+    RightsStatementsDotOrgRightsStatements,
+)
 from paradicms_etl.utils.file_cache import FileCache
+
+logger = logging.getLogger(__name__)
 
 
 class WikimediaCommonsEnricher:
-    __LICENSE_URIS_BY_ID = {
-        "Attribution": CreativeCommonsLicenses.BY_4_0,
-        "CC0": CreativeCommonsLicenses.CC0_1_0.uri,
-        "CC BY 3.0": CreativeCommonsLicenses.BY_3_0.uri,
-        "CC BY-SA 2.5": CreativeCommonsLicenses.BY_SA_2_5.uri,
-        "CC BY-SA 3.0": CreativeCommonsLicenses.BY_SA_3_0.uri,
-        "CC BY-SA 4.0": CreativeCommonsLicenses.BY_SA_4_0.uri,
-        "GFDL": None,
-        "Public domain": CreativeCommonsLicenses.MARK_1_0.uri,
-    }
+    @dataclass(frozen=True)
+    class __WikimediaCommonsImageExtendedMetadata:
+        IGNORE_API_PROPERTIES = {
+            "Assessments",
+            "CommonsMetadataExtension",
+            "GPSLatitude",
+            "GPSLongitude",
+            "GPSMapDatum",
+            "LicenseUrl",  # Do our own lookup
+        }
+
+        __LICENSE_URIS_BY_ID = {
+            # "Attribution": CreativeCommonsLicenses.BY_4_0,
+            "cc0": CreativeCommonsLicenses.CC0_1_0.uri,
+            # "GFDL": None,
+            "pd": CreativeCommonsLicenses.MARK_1_0.uri,
+        }
+
+        file_name: str
+        artist: Optional[str] = None
+        attribution_required: Optional[bool] = None
+        categories: Optional[Tuple[str, ...]] = None
+        copyrighted: Optional[bool] = None
+        credit: Optional[str] = None
+        date_time: Optional[str] = None
+        date_time_original: Optional[str] = None
+        image_description: Optional[str] = None
+        license: Optional[str] = None
+        license_short_name: Optional[str] = None
+        object_name: Optional[str] = None
+        permission: Optional[str] = None
+        restrictions: Optional[str] = None
+        usage_terms: Optional[str] = None
+
+        @property  # type: ignore
+        @cache
+        def license_uri(self) -> Optional[URIRef]:
+            if self.license is None:
+                return None
+
+            try:
+                # Explicit table lookup
+                return self.__LICENSE_URIS_BY_ID[self.license]
+            except KeyError:
+                if not self.license.startswith("cc-"):
+                    raise
+                # Resolve cc-* against the CreativeCommonsLicenses e.g.,
+                # cc-by-2.5 -> CreativeCommonsLicenses.BY_2_5
+                try:
+                    return getattr(
+                        CreativeCommonsLicenses,
+                        self.license[len("cc-") :]
+                        .replace("-", "_")
+                        .replace(".", "_")
+                        .upper(),
+                    ).uri
+                except AttributeError:
+                    logger.warning(
+                        "Wikimedia Commons file (%s) has unknown license: %s",
+                        self.file_name,
+                        self.license,
+                    )
+                    return None
 
     def __init__(self, *, cache_dir_path: Path):
         self.__file_cache = FileCache(cache_dir_path=cache_dir_path)
-        self.__logger = logging.getLogger(__name__)
+        self.__logger = logger
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
@@ -36,176 +98,229 @@ class WikimediaCommonsEnricher:
                 yield model
 
     def __enrich_image(self, image: Image) -> Image:
-        image_wikimedia_commons_file_url = self.__get_wikimedia_commons_file_url(image)
-        if image_wikimedia_commons_file_url is None:
-            return image
-        with open(
-            self.__file_cache.get_file(file_url=image_wikimedia_commons_file_url), "r"
-        ) as wikimedia_commons_file_html_file:
-            return self.__parse_wikimedia_commons_file_html(
-                image,
-                wikimedia_commons_file_html=wikimedia_commons_file_html_file.read(),
-                wikimedia_commons_file_url=image_wikimedia_commons_file_url,
+        wikimedia_commons_image_file_name: Optional[str] = None
+        for image_source in (image.source, image.src, image.uri):
+            if image_source is None:
+                continue
+            wikimedia_commons_image_file_name = self.__get_wikimedia_commons_file_name(
+                str(image_source)
             )
+            if wikimedia_commons_image_file_name is not None:
+                break
+        if wikimedia_commons_image_file_name is None:
+            return image
 
-    def __get_wikimedia_commons_file_url(self, image: Image) -> Optional[URIRef]:
-        image_source = image.source
-        if image_source is None:
-            return None
-        try:
-            parsed_image_source = urlparse(str(image_source))
-        except ValueError:
-            return None
-        if parsed_image_source.netloc != "commons.wikimedia.org":
-            return None
-        if not parsed_image_source.path.startswith("/wiki/File:"):
-            return None
-        return image_source
-
-    def __parse_wikimedia_commons_file_html(
-        self,
-        image: Image,
-        wikimedia_commons_file_html: str,
-        wikimedia_commons_file_url: URIRef,
-    ) -> Image:
-        image_replacer = image.replacer()
-
-        soup = BeautifulSoup(wikimedia_commons_file_html, features="html.parser")
-        commons_file_information_table = (
-            soup.find(class_="commons-file-information-table")
-            .find(name="table", recursive=False)
-            .find(name="tbody", recursive=False)
+        wikimedia_commons_image_extended_metadata = (
+            self.__get_wikimedia_commons_image_extended_metadata(
+                wikimedia_commons_image_file_name
+            )
         )
 
-        for (
-            commons_file_information_table_row
-        ) in commons_file_information_table.find_all(name="tr", recursive=False):
-            commons_file_information_table_cells = tuple(
-                commons_file_information_table_row.find_all(name="td", recursive=False)
-            )
-            if len(commons_file_information_table_cells) != 2:
-                continue
-            key = commons_file_information_table_cells[0].text.strip()
-            if not key:
-                continue
-            value_element = commons_file_information_table_cells[1]
-            value_text = value_element.text.strip()
-            if key in {"Author", "Photographer"}:
-                if image.creators:
-                    self.__logger.debug(
-                        "image %s: already has a creator(s), ignoring information from Wikimedia Commons file HTML (%s)",
-                        image.uri,
-                        wikimedia_commons_file_url,
-                    )
-                    continue
+        image_replacer = image.replacer()
 
-                added_creator = False
-                commons_creator_table = value_element.find(
-                    class_="commons-creator-table"
+        if wikimedia_commons_image_extended_metadata.copyrighted:
+            if not image.rights_statement:
+                image_replacer.add_rights_statement(
+                    RightsStatementsDotOrgRightsStatements.InC
                 )
-                if commons_creator_table:
-                    creator_span = commons_creator_table.find(attrs={"id": "creator"})
-                    if creator_span:
-                        # Could get Wikidata QID and construct an agent here, but we're not that interested in image agents at the moment.
-                        creator_text = creator_span.text
-                        self.__logger.debug(
-                            "image %s: adding text creator %s from Wikimedia Commons file HTML (%s)",
-                            image.uri,
-                            creator_text,
-                            wikimedia_commons_file_url,
-                        )
-                        image_replacer.add_creator(creator_text)
-                        added_creator = True
-
-                if not added_creator:
-                    self.__logger.debug(
-                        "image %s: adding text creator %s from Wikimedia Commons file HTML (%s)",
-                        image.uri,
-                        value_text,
-                        wikimedia_commons_file_url,
-                    )
-                    image_replacer.add_creator(value_text)
-            elif key == "Date":
-                time_value_element = value_element.find("time")
-                if not time_value_element:
-                    continue
-                datetime_attr = time_value_element.get("datetime")
-                if not datetime_attr:
-                    continue
-                self.__logger.debug(
-                    "image %s: Wikimedia Commons file HTML (%s) datetime: %s",
-                    image.uri,
-                    wikimedia_commons_file_url,
-                    datetime_attr,
-                )
-            elif key.startswith("Description"):
-                pass
-            elif key == "Permission(Reusing this file)":
-                continue
-            elif key in {
-                "Accession number",
-                "Collection",
-                "Depicted people",
-                "Dimensions",
-                "Flickr setsInfoField",
-                "Genre",
-                "Medium",
-                "Object type",
-                "Other versions",
-                "References",
-                "Source",
-                "Source/Photographer",
-                "SVG developmentInfoField",
-                "Title",
-            }:
-                pass
             else:
-                self.__logger.warning(
-                    "image %s: Wikimedia commons file HTML (%s): unhandled key (%s) = value (%s)",
+                self.__logger.debug(
+                    "image %s: already has a rights statement, ignoring information from Wikimedia Commons",
                     image.uri,
-                    wikimedia_commons_file_url,
-                    key,
-                    value_text,
                 )
 
-        if image.license:
-            self.__logger.debug(
-                "image %s: already has a license(s), ignoring information from Wikimedia Commons file HTML (%s)",
-                image.uri,
-                wikimedia_commons_file_url,
+        if wikimedia_commons_image_extended_metadata.artist is not None:
+            if not image.creators:
+                image_replacer.add_creator(
+                    BeautifulSoup(
+                        wikimedia_commons_image_extended_metadata.artist,
+                        features="html.parser",
+                    )
+                    .get_text()
+                    .strip()
+                )
+            else:
+                self.__logger.debug(
+                    "image %s: already has a creator(s), ignoring information from Wikimedia Commons",
+                    image.uri,
+                )
+
+        if wikimedia_commons_image_extended_metadata.license_uri is not None:
+            if image.license is None:
+                image_replacer.add_license(
+                    wikimedia_commons_image_extended_metadata.license_uri
+                )
+            else:
+                self.__logger.debug(
+                    "image %s: already has a license(s), ignoring information from Wikimedia Commons",
+                    image.uri,
+                )
+
+        if wikimedia_commons_image_extended_metadata.image_description is not None:
+            image_replacer.set_title(
+                wikimedia_commons_image_extended_metadata.image_description
+            )
+
+        if image.source is None:
+            image_replacer.set_source(
+                URIRef(
+                    f"http://commons.wikimedia.org/wiki/File:{quote(wikimedia_commons_image_file_name)}"
+                )
             )
         else:
-            added_license = False
-            for license_id_element in soup.find_all(class_="licensetpl_short"):
-                license_id = license_id_element.text.strip()
-                if not license_id:
-                    continue
+            self.__logger.debug(
+                "image %s: already has a source, ignoring information from Wikimedia Commons",
+                image.uri,
+            )
 
-                try:
-                    license_uri = self.__LICENSE_URIS_BY_ID[license_id]
-                except KeyError:
-                    self.__logger.warning(
-                        "image %s: Wikimedia Commons file HTML (%s) has unknown license: %s",
-                        image.uri,
-                        wikimedia_commons_file_url,
-                        license_id,
-                    )
-                    continue
-                self.__logger.debug(
-                    "image %s: Wikimedia Commons file HTML (%s) license: %s -> %s",
-                    image.uri,
-                    wikimedia_commons_file_url,
-                    license_id,
-                    license_uri,
+        if image.src is None:
+            image_replacer.set_src(
+                self.__get_wikimedia_commons_image_url(
+                    wikimedia_commons_image_file_name
                 )
-                if license_uri is not None:
-                    image_replacer.add_license(license_uri)
-                    added_license = True
-            if not added_license:
-                self.__logger.warning(
-                    "image %s: could not parse a license from Wikimedia Commons file HTML (%s)",
-                    image.uri,
-                    wikimedia_commons_file_url,
-                )
+            )
+        else:
+            self.__logger.debug(
+                "image %s: already has a src, ignoring information from Wikimedia Commons",
+                image.uri,
+            )
 
         return image_replacer.build()
+
+    def __get_wikimedia_commons_file_name(self, url: str) -> Optional[str]:
+        try:
+            parsed_url = urlparse(str(url))
+        except ValueError:
+            self.__logger.warning("error parsing URL: %s", url)
+            return None
+
+        if parsed_url.netloc == "commons.wikimedia.org":
+            #  http://commons.wikimedia.org/wiki/File:Babbage_Difference_Engine.jpg
+            for path_prefix in ("/wiki/File:", "/wiki/Special:FilePath/"):
+                if parsed_url.path.startswith(path_prefix):
+                    return unquote(parsed_url.path[len(path_prefix) :])
+        elif parsed_url.netloc.endswith("upload.wikimedia.org"):
+            # https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg/375px-Akhilleus_Patroklos_Antikensammlung_Berlin_F2278.jpg
+            if parsed_url.path.startswith("/wikipedia/commons/thumb/"):
+                return unquote(parsed_url.path.rsplit("/", 2)[-2])
+        elif parsed_url.netloc.endswith("wikipedia.org"):
+            # https://en.wikipedia.org/wiki/File:Judgement_of_Paris_Met_98.8.11_cca2_img_by_Marie-Lan_Nguyen_edited_by_K_Vail.jpg
+            path_prefix = "/wiki/File:"
+            if parsed_url.path.startswith(path_prefix):
+                return unquote(parsed_url.path[len(path_prefix) :])
+        else:
+            return None
+        self.__logger.warning(
+            "unrecognized Wikimedia Commons URL pattern: %s", parsed_url
+        )
+        return None
+
+    def __get_wikimedia_commons_image_extended_metadata(
+        self, file_name: str
+    ) -> __WikimediaCommonsImageExtendedMetadata:
+        with open(
+            self.__file_cache.get_file(
+                URIRef(
+                    f"https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&titles=File%3a{quote(file_name)}&format=json"
+                )
+            )
+        ) as image_info_json_file:
+            image_info_json = json.load(image_info_json_file)
+
+        for pageid, page in image_info_json["query"]["pages"].items():
+            if pageid == "-1":
+                raise ValueError("missing file from Wikimedia Commons: " + file_name)
+            imageinfos = page["imageinfo"]
+            if not imageinfos:
+                raise ValueError(
+                    "missing imageinfos for Wikimedia Commons file: " + file_name
+                )
+            if len(imageinfos) > 1:
+                raise NotImplementedError(f"{file_name} has more than one imageinfo")
+            imageinfo = imageinfos[0]
+            dataclass_kwds: Dict[str, Any] = {"file_name": file_name}
+            for key, value_object in imageinfo["extmetadata"].items():
+                value = value_object["value"]
+                if not value:
+                    continue
+                dataclass_key = snakecase(key)
+                if (
+                    key
+                    in WikimediaCommonsEnricher.__WikimediaCommonsImageExtendedMetadata.IGNORE_API_PROPERTIES
+                ):
+                    self.__logger.debug(
+                        "Wikidata file %s: ignoring %s=%s", file_name, key, value
+                    )
+                    continue
+                elif key in {
+                    "Artist",
+                    "Credit",
+                    "DateTime",
+                    "DateTimeOriginal",
+                    "ImageDescription",
+                    "License",
+                    "LicenseShortName",
+                    "ObjectName",
+                    "Permission",
+                    "Restrictions",
+                    "UsageTerms",
+                }:
+                    dataclass_kwds[dataclass_key] = value
+                elif key in {"AttributionRequired", "Copyrighted"}:
+                    value_lower = value.lower()
+                    if value_lower == "false":
+                        dataclass_kwds[dataclass_key] = False
+                    elif value_lower == "true":
+                        dataclass_kwds[dataclass_key] = True
+                    else:
+                        self.__logger.warning(
+                            "unhandled Wikimedia file %s boolean value %s=%s",
+                            file_name,
+                            key,
+                            value,
+                        )
+                elif key == "Categories":
+                    dataclass_kwds[dataclass_key] = tuple(value.split("|"))
+                else:
+                    self.__logger.warning(
+                        "unhandled Wikimedia Commons file %s imageinfo extmetadata %s=%s",
+                        file_name,
+                        key,
+                        value,
+                    )
+                    continue
+
+            return self.__WikimediaCommonsImageExtendedMetadata(**dataclass_kwds)
+
+        raise NotImplementedError(
+            "no Wikimedia Commons extended metadata for image file name " + file_name
+        )
+
+    def __get_wikimedia_commons_image_url(self, file_name: str) -> str:
+        with open(
+            self.__file_cache.get_file(
+                URIRef(
+                    f"https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&titles=File%3a{quote(file_name)}&format=json"
+                )
+            )
+        ) as image_info_json_file:
+            image_info_json = json.load(image_info_json_file)
+
+        for pageid, page in image_info_json["query"]["pages"].items():
+            # if pageid != "-1":
+            #     raise ValueError(
+            #         "unable to retrieve URL for Wikimedia Commons file " + file_name
+            #     )
+            imageinfos = page["imageinfo"]
+            if not imageinfos:
+                raise ValueError(
+                    "missing imageinfos for Wikimedia Commons file: " + file_name
+                )
+            if len(imageinfos) > 1:
+                raise NotImplementedError(f"{file_name} has more than one imageinfo")
+            imageinfo = imageinfos[0]
+            return imageinfo["url"]
+
+        raise NotImplementedError(
+            "no Wikimedia Commons URL for image file name " + file_name
+        )

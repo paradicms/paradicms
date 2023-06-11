@@ -16,6 +16,8 @@ import {RightsMixin} from "../RightsMixin";
 import {License} from "../License";
 import {RightsStatement} from "../RightsStatement";
 import {AgentUnion} from "../AgentUnion";
+import {Memoize} from "typescript-memoize";
+import {wdt} from "@paradicms/vocabularies";
 
 export abstract class WikidataModel extends ResourceBackedNamedModel
   implements
@@ -57,10 +59,12 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   }
 
   protected findAndMapStatement<T>(
-    property: NamedNode,
+    directClaimProperty: NamedNode,
     callback: (statement: WikibaseStatement) => NonNullable<T> | null
   ): NonNullable<T> | null {
-    for (const statement of this.statements) {
+    for (const statement of this.statementsByDirectPropertyIri(
+      directClaimProperty.value
+    )) {
       const mappedObject: T | null = callback(statement);
       if (mappedObject !== null) {
         return mappedObject as NonNullable<T>;
@@ -70,20 +74,22 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   }
 
   protected findAndMapStatementValue<T>(
-    property: NamedNode,
+    directClaimProperty: NamedNode,
     callback: (value: Literal | NamedNode) => NonNullable<T> | null
   ): NonNullable<T> | null {
-    return this.findAndMapStatement(property, statement =>
+    return this.findAndMapStatement(directClaimProperty, statement =>
       callback(statement.value)
     );
   }
 
   protected filterAndMapStatements<T>(
-    property: NamedNode,
+    directClaimProperty: NamedNode,
     callback: (statement: WikibaseStatement) => NonNullable<T> | null
   ): readonly NonNullable<T>[] {
     const mappedObjects: NonNullable<T>[] = [];
-    for (const statement of this.statements) {
+    for (const statement of this.statementsByDirectPropertyIri(
+      directClaimProperty.value
+    )) {
       const mappedObject: T | null = callback(statement);
       if (mappedObject !== null) {
         mappedObjects.push(mappedObject as NonNullable<T>);
@@ -93,16 +99,31 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
   }
 
   protected filterAndMapStatementValues<T>(
-    property: NamedNode,
+    directClaimProperty: NamedNode,
     callback: (value: Literal | NamedNode) => NonNullable<T> | null
   ): readonly NonNullable<T>[] {
-    return this.filterAndMapStatements(property, statement =>
+    return this.filterAndMapStatements(directClaimProperty, statement =>
       callback(statement.value)
     );
   }
 
+  @Memoize()
   get images(): readonly Image[] {
-    return [];
+    const p18Images = this.filterAndMapStatements(wdt["P18"], statement => {
+      if (statement.value.termType !== "NamedNode") {
+        return null;
+      }
+      return this.modelSet.imageByIriOptional(statement.value.value);
+    });
+    // Traversing wdt:P18 will only get the original image
+    // We want every image that points at this item.
+    const depictsImages = this.modelSet.imagesByDepictsIri(this.iri);
+    return p18Images.concat(
+      depictsImages.filter(
+        depictsImage =>
+          !p18Images.some(p18Image => p18Image.key === depictsImage.key)
+      )
+    );
   }
 
   get label(): string {
@@ -146,6 +167,17 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
 
   get statements(): readonly WikibaseStatement[] {
     return this.wikibaseItem.statements;
+  }
+
+  @Memoize()
+  private statementsByDirectPropertyIri(
+    directClaimPropertyIri: string
+  ): readonly WikibaseStatement[] {
+    return this.statements.filter(
+      statement =>
+        statement.propertyDefinition.directClaim?.value ===
+        directClaimPropertyIri
+    );
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {

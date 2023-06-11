@@ -11,17 +11,20 @@ from paradicms_etl.transformers.rdf_conjunctive_graph_transformer import (
 def test_transform(
     synthetic_data_models: Tuple[Model, ...], synthetic_data_rdf_file_path: Path
 ):
-    synthetic_data_models_by_uri = {
+    remaining_synthetic_data_models_by_uri = {
         model.uri: model for model in synthetic_data_models if model.uri is not None
     }
-    assert synthetic_data_models_by_uri
+    assert remaining_synthetic_data_models_by_uri
 
     for transformed_model in RdfConjunctiveGraphTransformer()(
         **RdfFileExtractor(rdf_file_path=synthetic_data_rdf_file_path)()
     ):
         if transformed_model.uri is None:
             continue
-        synthetic_data_model = synthetic_data_models_by_uri.pop(transformed_model.uri)
+        synthetic_data_model = remaining_synthetic_data_models_by_uri.pop(
+            transformed_model.uri
+        )
         assert synthetic_data_model.label == transformed_model.label
-    # Ignore the two Wikidata models
-    assert len(synthetic_data_models_by_uri) == 2, len(synthetic_data_models_by_uri)
+    assert len(remaining_synthetic_data_models_by_uri) == 0, len(
+        remaining_synthetic_data_models_by_uri
+    )

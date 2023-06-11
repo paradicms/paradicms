@@ -1,0 +1,911 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q931447 a schema:Dataset ;
+	schema:about wd:Q931447 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1908117254"^^xsd:integer ;
+	schema:dateModified "2023-06-04T16:08:37Z"^^xsd:dateTime ;
+	wikibase:statements "6"^^xsd:integer ;
+	wikibase:sitelinks "24"^^xsd:integer ;
+	wikibase:identifiers "3"^^xsd:integer .
+
+wd:Q931447 a wikibase:Item .
+
+<https://de.wikipedia.org/wiki/Elektrischer_Verbraucher> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Elektrischer Verbraucher"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/Electrical_load> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Electrical load"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Belasting_(elektrotechniek)> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Belasting (elektrotechniek)"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Last_(elektricitet)> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Last (elektricitet)"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E8%B4%9F%E8%BD%BD> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "负载"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://or.wikipedia.org/wiki/%E0%AC%AC%E0%AD%88%E0%AC%A6%E0%AD%81%E0%AC%A4%E0%AC%BF%E0%AC%95_%E0%AC%AD%E0%AC%BE%E0%AC%B0> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "or" ;
+	schema:isPartOf <https://or.wikipedia.org/> ;
+	schema:name "ବୈଦୁତିକ ଭାର"@or .
+
+<https://or.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fi.wikipedia.org/wiki/Vaihejohdin> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "fi" ;
+	schema:isPartOf <https://fi.wikipedia.org/> ;
+	schema:name "Vaihejohdin"@fi .
+
+<https://fi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/Elektrick%C3%BD_spot%C5%99ebi%C4%8D> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Elektrický spotřebič"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/R%C3%A9cepteur_%C3%A9lectrique> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Récepteur électrique"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://li.wikipedia.org/wiki/Belasting_(lektrotechniek)> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "li" ;
+	schema:isPartOf <https://li.wikipedia.org/> ;
+	schema:name "Belasting (lektrotechniek)"@li .
+
+<https://li.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Carga_(electricidad)> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Carga (electricidad)"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D8%A8%D8%A7%D8%B1_%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%DB%8C%DA%A9%DB%8C_(%D8%A7%D9%85%D9%BE%D8%AF%D8%A7%D9%86%D8%B3)> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "بار الکتریکی (امپدانس)"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://he.wikipedia.org/wiki/%D7%A2%D7%95%D7%9E%D7%A1_%D7%97%D7%A9%D7%9E%D7%9C%D7%99> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "he" ;
+	schema:isPartOf <https://he.wikipedia.org/> ;
+	schema:name "עומס חשמלי"@he .
+
+<https://he.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eu.wikipedia.org/wiki/Karga_(elektrizitatea)> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "eu" ;
+	schema:isPartOf <https://eu.wikipedia.org/> ;
+	schema:name "Karga (elektrizitatea)"@eu .
+
+<https://eu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ro.wikipedia.org/wiki/Consumator_electric> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "ro" ;
+	schema:isPartOf <https://ro.wikipedia.org/> ;
+	schema:name "Consumator electric"@ro .
+
+<https://ro.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hi.wikipedia.org/wiki/%E0%A4%B5%E0%A4%BF%E0%A4%A6%E0%A5%8D%E0%A4%AF%E0%A5%81%E0%A4%A4_%E0%A4%AD%E0%A4%BE%E0%A4%B0> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "hi" ;
+	schema:isPartOf <https://hi.wikipedia.org/> ;
+	schema:name "विद्युत भार"@hi .
+
+<https://hi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Y%C3%BCk_(elektrik_devresi)> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Yük (elektrik devresi)"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sk.wikipedia.org/wiki/Spotrebi%C4%8D> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "sk" ;
+	schema:isPartOf <https://sk.wikipedia.org/> ;
+	schema:name "Spotrebič"@sk .
+
+<https://sk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hr.wikipedia.org/wiki/Tro%C5%A1ilo> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "hr" ;
+	schema:isPartOf <https://hr.wikipedia.org/> ;
+	schema:name "Trošilo"@hr .
+
+<https://hr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/Ph%E1%BB%A5_t%E1%BA%A3i_%C4%91i%E1%BB%87n> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Phụ tải điện"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sh.wikipedia.org/wiki/Tro%C5%A1ilo> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "sh" ;
+	schema:isPartOf <https://sh.wikipedia.org/> ;
+	schema:name "Trošilo"@sh .
+
+<https://sh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bn.wikipedia.org/wiki/%E0%A6%AC%E0%A7%88%E0%A6%A6%E0%A7%8D%E0%A6%AF%E0%A7%81%E0%A6%A4%E0%A6%BF%E0%A6%95_%E0%A6%AD%E0%A6%BE%E0%A6%B0_%E0%A6%B0%E0%A7%8B%E0%A6%A7> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "bn" ;
+	schema:isPartOf <https://bn.wikipedia.org/> ;
+	schema:name "বৈদ্যুতিক ভার রোধ"@bn .
+
+<https://bn.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D8%AD%D9%85%D9%84_%D9%83%D9%87%D8%B1%D8%A8%D8%A7%D8%A6%D9%8A> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "حمل كهربائي"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Apparecchio_utilizzatore> a schema:Article ;
+	schema:about wd:Q931447 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Apparecchio utilizzatore"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q931447 wdt:P646 "/m/09dthv" ;
+	wdt:P461 wd:Q23925486 ;
+	wdt:P361 wd:Q132629 ;
+	wdt:P279 wd:Q210729 ;
+	wdt:P6366 "77715397" ;
+	wdtn:P6366 <http://ma-graph.org/entity/77715397> ;
+	wdt:P10283 "C77715397" ;
+	p:P646 s:Q931447-05718439-D0D0-494F-B394-0E657B5FB8F7 .
+
+s:Q931447-05718439-D0D0-494F-B394-0E657B5FB8F7 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/09dthv" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q931447 p:P461 s:Q931447-59ab979e-4021-a419-88f2-fffb8c23cbca .
+
+s:Q931447-59ab979e-4021-a419-88f2-fffb8c23cbca a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P461 wd:Q23925486 .
+
+wd:Q931447 p:P361 s:Q931447-0f28529a-4b73-b874-37c5-f2417d5fe9f4 .
+
+s:Q931447-0f28529a-4b73-b874-37c5-f2417d5fe9f4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q132629 .
+
+wd:Q931447 p:P279 s:Q931447-953f2cac-4633-09f3-79d0-e26af8b37d13 .
+
+s:Q931447-953f2cac-4633-09f3-79d0-e26af8b37d13 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q210729 .
+
+wd:Q931447 p:P6366 s:Q931447-75082524-53B2-4C61-88E5-799890DA0C1A .
+
+s:Q931447-75082524-53B2-4C61-88E5-799890DA0C1A a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "77715397" ;
+	psn:P6366 <http://ma-graph.org/entity/77715397> .
+
+wd:Q931447 p:P10283 s:Q931447-3BE92669-0F64-4327-9644-FAC0514B14F4 .
+
+s:Q931447-3BE92669-0F64-4327-9644-FAC0514B14F4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10283 "C77715397" ;
+	prov:wasDerivedFrom ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 .
+
+wd:Q931447 rdfs:label "carico"@it ;
+	skos:prefLabel "carico"@it ;
+	schema:name "carico"@it ;
+	rdfs:label "حمل كهربي"@ar ;
+	skos:prefLabel "حمل كهربي"@ar ;
+	schema:name "حمل كهربي"@ar ;
+	rdfs:label "elektrischer Verbraucher"@de ;
+	skos:prefLabel "elektrischer Verbraucher"@de ;
+	schema:name "elektrischer Verbraucher"@de ;
+	rdfs:label "electrical load"@en ;
+	skos:prefLabel "electrical load"@en ;
+	schema:name "electrical load"@en ;
+	rdfs:label "belasting"@nl ;
+	skos:prefLabel "belasting"@nl ;
+	schema:name "belasting"@nl ;
+	rdfs:label "last"@sv ;
+	skos:prefLabel "last"@sv ;
+	schema:name "last"@sv ;
+	rdfs:label "elektrik yükü"@tr ;
+	skos:prefLabel "elektrik yükü"@tr ;
+	schema:name "elektrik yükü"@tr ;
+	rdfs:label "负载"@zh ;
+	skos:prefLabel "负载"@zh ;
+	schema:name "负载"@zh ;
+	rdfs:label "carga elétrica"@pt ;
+	skos:prefLabel "carga elétrica"@pt ;
+	schema:name "carga elétrica"@pt ;
+	rdfs:label "електрично оптерећење"@sr ;
+	skos:prefLabel "електрично оптерећење"@sr ;
+	schema:name "електрично оптерећење"@sr ;
+	rdfs:label "електрично оптерећење"@sr-ec ;
+	skos:prefLabel "електрично оптерећење"@sr-ec ;
+	schema:name "електрично оптерећење"@sr-ec ;
+	rdfs:label "električno opterećenje"@sr-el ;
+	skos:prefLabel "električno opterećenje"@sr-el ;
+	schema:name "električno opterećenje"@sr-el ;
+	rdfs:label "ବୈଦୁତିକ ଭାର"@or ;
+	skos:prefLabel "ବୈଦୁତିକ ଭାର"@or ;
+	schema:name "ବୈଦୁତିକ ଭାର"@or ;
+	rdfs:label "electrical load"@sco ;
+	skos:prefLabel "electrical load"@sco ;
+	schema:name "electrical load"@sco ;
+	rdfs:label "vaihejohdin"@fi ;
+	skos:prefLabel "vaihejohdin"@fi ;
+	schema:name "vaihejohdin"@fi ;
+	rdfs:label "електрично оптоварување"@mk ;
+	skos:prefLabel "електрично оптоварување"@mk ;
+	schema:name "електрично оптоварување"@mk ;
+	rdfs:label "càrricu elèttricu"@scn ;
+	skos:prefLabel "càrricu elèttricu"@scn ;
+	schema:name "càrricu elèttricu"@scn ;
+	rdfs:label "электрическая нагрузка"@ru ;
+	skos:prefLabel "электрическая нагрузка"@ru ;
+	schema:name "электрическая нагрузка"@ru ;
+	rdfs:label "elektrický spotřebič"@cs ;
+	skos:prefLabel "elektrický spotřebič"@cs ;
+	schema:name "elektrický spotřebič"@cs ;
+	rdfs:label "récepteur électrique"@fr ;
+	skos:prefLabel "récepteur électrique"@fr ;
+	schema:name "récepteur électrique"@fr ;
+	rdfs:label "بار الکتریکی (مقاومت)"@fa ;
+	skos:prefLabel "بار الکتریکی (مقاومت)"@fa ;
+	schema:name "بار الکتریکی (مقاومت)"@fa ;
+	rdfs:label "carga"@es ;
+	skos:prefLabel "carga"@es ;
+	schema:name "carga"@es ;
+	rdfs:label "Belasting"@li ;
+	skos:prefLabel "Belasting"@li ;
+	schema:name "Belasting"@li ;
+	rdfs:label "עומס חשמלי"@he ;
+	skos:prefLabel "עומס חשמלי"@he ;
+	schema:name "עומס חשמלי"@he ;
+	rdfs:label "karga"@eu ;
+	skos:prefLabel "karga"@eu ;
+	schema:name "karga"@eu ;
+	rdfs:label "Consumator electric"@ro ;
+	skos:prefLabel "Consumator electric"@ro ;
+	schema:name "Consumator electric"@ro ;
+	rdfs:label "विद्युत भार"@hi ;
+	skos:prefLabel "विद्युत भार"@hi ;
+	schema:name "विद्युत भार"@hi ;
+	rdfs:label "электрычная нагрузка"@be ;
+	skos:prefLabel "электрычная нагрузка"@be ;
+	schema:name "электрычная нагрузка"@be ;
+	rdfs:label "ელექტრონული დატვირთვა"@ka ;
+	skos:prefLabel "ელექტრონული დატვირთვა"@ka ;
+	schema:name "ელექტრონული დატვირთვა"@ka ;
+	rdfs:label "Spotrebič"@sk ;
+	skos:prefLabel "Spotrebič"@sk ;
+	schema:name "Spotrebič"@sk ;
+	rdfs:label "beban listrik"@id ;
+	skos:prefLabel "beban listrik"@id ;
+	schema:name "beban listrik"@id ;
+	rdfs:label "elektrisk påkjenning"@nn ;
+	skos:prefLabel "elektrisk påkjenning"@nn ;
+	schema:name "elektrisk påkjenning"@nn ;
+	rdfs:label "Trošilo"@hr ;
+	skos:prefLabel "Trošilo"@hr ;
+	schema:name "Trošilo"@hr ;
+	rdfs:label "Phụ tải điện"@vi ;
+	skos:prefLabel "Phụ tải điện"@vi ;
+	schema:name "Phụ tải điện"@vi ;
+	rdfs:label "электрычная нагрузка"@be-tarask ;
+	skos:prefLabel "электрычная нагрузка"@be-tarask ;
+	schema:name "электрычная нагрузка"@be-tarask ;
+	rdfs:label "โหลดไฟฟ้า"@th ;
+	skos:prefLabel "โหลดไฟฟ้า"@th ;
+	schema:name "โหลดไฟฟ้า"@th ;
+	rdfs:label "Trošilo"@sh ;
+	skos:prefLabel "Trošilo"@sh ;
+	schema:name "Trošilo"@sh ;
+	rdfs:label "elektra ŝarĝo"@eo ;
+	skos:prefLabel "elektra ŝarĝo"@eo ;
+	schema:name "elektra ŝarĝo"@eo ;
+	rdfs:label "বৈদ্যুতিক ভার রোধ"@bn ;
+	skos:prefLabel "বৈদ্যুতিক ভার রোধ"@bn ;
+	schema:name "বৈদ্যুতিক ভার রোধ"@bn ;
+	rdfs:label "電力負荷"@ja ;
+	skos:prefLabel "電力負荷"@ja ;
+	schema:name "電力負荷"@ja ;
+	rdfs:label "električno breme"@sl ;
+	skos:prefLabel "električno breme"@sl ;
+	schema:name "električno breme"@sl ;
+	schema:description "elektrotechniek"@nl,
+		"dispusitivu ca cunsuma putenza elèttrica"@scn,
+		"componente de un circuito eléctrico"@es,
+		"electrical component or portion of a circuit that consumes electric power"@en,
+		"elektrisches Bauelement in einem Stromkreis, welches Energie verbraucht"@de,
+		"8000"@hi,
+		"elektrik enerjisi tüketen bir devrenin elektrikli bileşeni veya kısmı"@tr ;
+	skos:altLabel "carga eléctrica"@es,
+		"receptor eléctrico"@es,
+		"carga electrica"@es,
+		"receptor electrico"@es,
+		"påkjenning"@nn,
+		"elektrisk belastning"@nn,
+		"belastning"@nn,
+		"elektriksel yük"@tr,
+		"電気負荷"@ja .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q23925486 a wikibase:Item ;
+	rdfs:label "electrical energy source"@en ;
+	skos:prefLabel "electrical energy source"@en ;
+	schema:name "electrical energy source"@en ;
+	schema:description "system that converts any energy in electric energy; not exactly device, can be i. e. a vegetable"@en .
+
+wd:P461 a wikibase:Property ;
+	rdfs:label "opposite of"@en ;
+	skos:prefLabel "opposite of"@en ;
+	schema:name "opposite of"@en ;
+	schema:description "item that is in some way the opposite of this item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P461 ;
+	wikibase:claim p:P461 ;
+	wikibase:statementProperty ps:P461 ;
+	wikibase:statementValue psv:P461 ;
+	wikibase:qualifier pq:P461 ;
+	wikibase:qualifierValue pqv:P461 ;
+	wikibase:reference pr:P461 ;
+	wikibase:referenceValue prv:P461 ;
+	wikibase:novalue wdno:P461 .
+
+p:P461 a owl:ObjectProperty .
+
+psv:P461 a owl:ObjectProperty .
+
+pqv:P461 a owl:ObjectProperty .
+
+prv:P461 a owl:ObjectProperty .
+
+wdt:P461 a owl:ObjectProperty .
+
+ps:P461 a owl:ObjectProperty .
+
+pq:P461 a owl:ObjectProperty .
+
+pr:P461 a owl:ObjectProperty .
+
+wdno:P461 a owl:Class ;
+	owl:complementOf _:7c6b4349f2e51cd4f621a4581e9beb4f .
+
+_:7c6b4349f2e51cd4f621a4581e9beb4f a owl:Restriction ;
+	owl:onProperty wdt:P461 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q132629 a wikibase:Item ;
+	rdfs:label "electrical network"@en ;
+	skos:prefLabel "electrical network"@en ;
+	schema:name "electrical network"@en ;
+	schema:description "interconnection of electrical components or a model of such an interconnection, consisting of electrical elements"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q210729 a wikibase:Item ;
+	rdfs:label "electrical element"@en ;
+	skos:prefLabel "electrical element"@en ;
+	schema:name "electrical element"@en ;
+	schema:description "smallest basic component of an electrical circuit, considered as a unit"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10283 a wikibase:Property ;
+	rdfs:label "OpenAlex ID"@en ;
+	skos:prefLabel "OpenAlex ID"@en ;
+	schema:name "OpenAlex ID"@en ;
+	schema:description "identifier for works, grants, authors, institutes, venues, concepts/subjects in OpenAlex"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10283 ;
+	wikibase:claim p:P10283 ;
+	wikibase:statementProperty ps:P10283 ;
+	wikibase:statementValue psv:P10283 ;
+	wikibase:qualifier pq:P10283 ;
+	wikibase:qualifierValue pqv:P10283 ;
+	wikibase:reference pr:P10283 ;
+	wikibase:referenceValue prv:P10283 ;
+	wikibase:novalue wdno:P10283 ;
+	wikibase:directClaimNormalized wdtn:P10283 ;
+	wikibase:statementValueNormalized psn:P10283 ;
+	wikibase:qualifierValueNormalized pqn:P10283 ;
+	wikibase:referenceValueNormalized prn:P10283 .
+
+p:P10283 a owl:ObjectProperty .
+
+psv:P10283 a owl:ObjectProperty .
+
+pqv:P10283 a owl:ObjectProperty .
+
+prv:P10283 a owl:ObjectProperty .
+
+wdt:P10283 a owl:DatatypeProperty .
+
+ps:P10283 a owl:DatatypeProperty .
+
+pq:P10283 a owl:DatatypeProperty .
+
+pr:P10283 a owl:DatatypeProperty .
+
+psn:P10283 a owl:ObjectProperty .
+
+pqn:P10283 a owl:ObjectProperty .
+
+prn:P10283 a owl:ObjectProperty .
+
+wdtn:P10283 a owl:ObjectProperty .
+
+wdno:P10283 a owl:Class ;
+	owl:complementOf _:32a5275a7dbbfba13192c77c3ada4d3a .
+
+_:32a5275a7dbbfba13192c77c3ada4d3a a owl:Restriction ;
+	owl:onProperty wdt:P10283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q107507571 a wikibase:Item ;
+	rdfs:label "OpenAlex"@en ;
+	skos:prefLabel "OpenAlex"@en ;
+	schema:name "OpenAlex"@en ;
+	schema:description "an open catalog of scholarly papers, authors, institutions, venues, and concepts"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P854 a wikibase:Property ;
+	rdfs:label "reference URL"@en ;
+	skos:prefLabel "reference URL"@en ;
+	schema:name "reference URL"@en ;
+	schema:description "should be used for Internet URLs as references. Use \"Wikimedia import URL\" (P4656) for imports from WMF sites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P854 ;
+	wikibase:claim p:P854 ;
+	wikibase:statementProperty ps:P854 ;
+	wikibase:statementValue psv:P854 ;
+	wikibase:qualifier pq:P854 ;
+	wikibase:qualifierValue pqv:P854 ;
+	wikibase:reference pr:P854 ;
+	wikibase:referenceValue prv:P854 ;
+	wikibase:novalue wdno:P854 .
+
+p:P854 a owl:ObjectProperty .
+
+psv:P854 a owl:ObjectProperty .
+
+pqv:P854 a owl:ObjectProperty .
+
+prv:P854 a owl:ObjectProperty .
+
+wdt:P854 a owl:ObjectProperty .
+
+ps:P854 a owl:ObjectProperty .
+
+pq:P854 a owl:ObjectProperty .
+
+pr:P854 a owl:ObjectProperty .
+
+wdno:P854 a owl:Class ;
+	owl:complementOf _:7317e7e5a3edc1980ecfe7616bb5fa1d .
+
+_:7317e7e5a3edc1980ecfe7616bb5fa1d a owl:Restriction ;
+	owl:onProperty wdt:P854 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q3454546 owl:sameAs wd:Q931447 .
+
+wd:Q11877744 owl:sameAs wd:Q931447 .
+
+wd:Q16517152 owl:sameAs wd:Q931447 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:3b2ff2744ee9af4b07734336d1723792 a wikibase:TimeValue ;
+	wikibase:timeValue "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 a wikibase:Reference ;
+	pr:P248 wd:Q107507571 ;
+	pr:P813 "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:3b2ff2744ee9af4b07734336d1723792 ;
+	pr:P854 <https://docs.openalex.org/download-snapshot/snapshot-data-format> .

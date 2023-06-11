@@ -1,0 +1,684 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q23960977 a schema:Dataset ;
+	schema:about wd:Q23960977 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1909855670"^^xsd:integer ;
+	schema:dateModified "2023-06-07T01:06:54Z"^^xsd:dateTime ;
+	wikibase:statements "8"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q23960977 a wikibase:Item ;
+	wdt:P1709 <http://sw.opencyc.org/concept/Mx4rvViAzJwpEbGdrcN5Y29ycA> ;
+	wdt:P31 wd:Q23958852 ;
+	wdt:P2738 wd:Q23766486 ;
+	wdt:P279 wd:Q35120 ;
+	wdt:P460 wd:Q19478619 ;
+	wdt:P6104 wd:Q60005226 ;
+	wdt:P1889 wd:Q24017414 ;
+	wdt:P973 <https://www.wikidata.org/wiki/Wikidata:WikiProject_Ontology/Modelling> ;
+	p:P1709 s:Q23960977-6c9302b1-40ce-a3b5-ca0f-8500452807b1 .
+
+s:Q23960977-6c9302b1-40ce-a3b5-ca0f-8500452807b1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1709 <http://sw.opencyc.org/concept/Mx4rvViAzJwpEbGdrcN5Y29ycA> .
+
+wd:Q23960977 p:P31 s:Q23960977-6b18dfb7-42c2-2b8f-f811-761bb95bbfbf .
+
+s:Q23960977-6b18dfb7-42c2-2b8f-f811-761bb95bbfbf a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q23958852 .
+
+wd:Q23960977 p:P2738 s:Q23960977-4452b1cd-4efd-43a1-0dce-b41fe92ecb76 .
+
+s:Q23960977-4452b1cd-4efd-43a1-0dce-b41fe92ecb76 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2738 wd:Q23766486 ;
+	pq:P11260 wd:Q23958852,
+		wd:Q23959932 .
+
+wd:Q23960977 p:P279 s:Q23960977-46a27666-4c8b-cb38-cbc6-7de948cf559a .
+
+s:Q23960977-46a27666-4c8b-cb38-cbc6-7de948cf559a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q35120 .
+
+wd:Q23960977 p:P460 s:Q23960977-742b3184-4450-db13-200a-325ca437d59c .
+
+s:Q23960977-742b3184-4450-db13-200a-325ca437d59c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q19478619 .
+
+wd:Q23960977 p:P6104 s:Q23960977-7f134c6b-4be8-fbbb-c383-d0a39a4dbe3e .
+
+s:Q23960977-7f134c6b-4be8-fbbb-c383-d0a39a4dbe3e a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6104 wd:Q60005226 .
+
+wd:Q23960977 p:P1889 s:Q23960977-5cc843f2-4d53-efa0-22ca-2f0ab964edef .
+
+s:Q23960977-5cc843f2-4d53-efa0-22ca-2f0ab964edef a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q24017414 .
+
+wd:Q23960977 p:P973 s:Q23960977-b5d0e4db-4e89-f156-57a1-955cdb19c1c0 .
+
+s:Q23960977-b5d0e4db-4e89-f156-57a1-955cdb19c1c0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P973 <https://www.wikidata.org/wiki/Wikidata:WikiProject_Ontology/Modelling> .
+
+wd:Q23960977 rdfs:label "(méta)classe"@fr ;
+	skos:prefLabel "(méta)classe"@fr ;
+	schema:name "(méta)classe"@fr ;
+	rdfs:label "(meta)class"@en ;
+	skos:prefLabel "(meta)class"@en ;
+	schema:name "(meta)class"@en ;
+	rdfs:label "(мета)класа"@mk ;
+	skos:prefLabel "(мета)класа"@mk ;
+	schema:name "(мета)класа"@mk ;
+	rdfs:label "(мета)класс"@ru ;
+	skos:prefLabel "(мета)класс"@ru ;
+	schema:name "(мета)класс"@ru ;
+	rdfs:label "(meta)clase"@es ;
+	skos:prefLabel "(meta)clase"@es ;
+	schema:name "(meta)clase"@es ;
+	rdfs:label "(мета)клас"@uk ;
+	skos:prefLabel "(мета)клас"@uk ;
+	schema:name "(мета)клас"@uk ;
+	rdfs:label "(мета)синф"@tg ;
+	skos:prefLabel "(мета)синф"@tg ;
+	schema:name "(мета)синф"@tg ;
+	rdfs:label "(meta)classe"@ca ;
+	skos:prefLabel "(meta)classe"@ca ;
+	schema:name "(meta)classe"@ca ;
+	rdfs:label "(meta)clase"@ast ;
+	skos:prefLabel "(meta)clase"@ast ;
+	schema:name "(meta)clase"@ast ;
+	rdfs:label "（元）类"@zh-hans ;
+	skos:prefLabel "（元）类"@zh-hans ;
+	schema:name "（元）类"@zh-hans ;
+	rdfs:label "(мета)синф"@tg-cyrl ;
+	skos:prefLabel "(мета)синф"@tg-cyrl ;
+	schema:name "(мета)синф"@tg-cyrl ;
+	rdfs:label "klasse eller metaklasse"@nn ;
+	skos:prefLabel "klasse eller metaklasse"@nn ;
+	schema:name "klasse eller metaklasse"@nn ;
+	rdfs:label "(meta)classe"@it ;
+	skos:prefLabel "(meta)classe"@it ;
+	schema:name "(meta)classe"@it ;
+	rdfs:label "(meta)clase"@gl ;
+	skos:prefLabel "(meta)clase"@gl ;
+	schema:name "(meta)clase"@gl ;
+	rdfs:label "(meta)klasse"@da ;
+	skos:prefLabel "(meta)klasse"@da ;
+	schema:name "(meta)klasse"@da ;
+	rdfs:label "(Meta)klasse"@de ;
+	skos:prefLabel "(Meta)klasse"@de ;
+	schema:name "(Meta)klasse"@de ;
+	rdfs:label "(meta)klasa"@pl ;
+	skos:prefLabel "(meta)klasa"@pl ;
+	schema:name "(meta)klasa"@pl ;
+	rdfs:label "(meta)klasse"@nl ;
+	skos:prefLabel "(meta)klasse"@nl ;
+	schema:name "(meta)klasse"@nl ;
+	rdfs:label "(meta)classe"@pt ;
+	skos:prefLabel "(meta)classe"@pt ;
+	schema:name "(meta)classe"@pt ;
+	rdfs:label "(мэта)кляса"@be-tarask ;
+	skos:prefLabel "(мэта)кляса"@be-tarask ;
+	schema:name "(мэта)кляса"@be-tarask ;
+	rdfs:label "(мета)клас"@be ;
+	skos:prefLabel "(мета)клас"@be ;
+	schema:name "(мета)клас"@be ;
+	rdfs:label "(мета)сыйныф"@tt ;
+	skos:prefLabel "(мета)сыйныф"@tt ;
+	schema:name "(мета)сыйныф"@tt ;
+	rdfs:label "(мета)сыйныф"@tt-cyrl ;
+	skos:prefLabel "(мета)сыйныф"@tt-cyrl ;
+	schema:name "(мета)сыйныф"@tt-cyrl ;
+	rdfs:label "(meta)klasë"@sq ;
+	skos:prefLabel "(meta)klasë"@sq ;
+	schema:name "(meta)klasë"@sq ;
+	rdfs:label "（元）類"@zh-hant ;
+	skos:prefLabel "（元）類"@zh-hant ;
+	schema:name "（元）類"@zh-hant ;
+	rdfs:label "（元）类"@zh ;
+	skos:prefLabel "（元）类"@zh ;
+	schema:name "（元）类"@zh ;
+	rdfs:label "(meta)klass"@sv ;
+	skos:prefLabel "(meta)klass"@sv ;
+	schema:name "(meta)klass"@sv ;
+	rdfs:label "klasse eller metaklasse"@nb ;
+	skos:prefLabel "klasse eller metaklasse"@nb ;
+	schema:name "klasse eller metaklasse"@nb ;
+	rdfs:label "(meta)sinif"@az ;
+	skos:prefLabel "(meta)sinif"@az ;
+	schema:name "(meta)sinif"@az ;
+	rdfs:label "מטא־מחלקה"@he ;
+	skos:prefLabel "מטא־מחלקה"@he ;
+	schema:name "מטא־מחלקה"@he ;
+	rdfs:label "(meitea-)aicme"@ga ;
+	skos:prefLabel "(meitea-)aicme"@ga ;
+	schema:name "(meitea-)aicme"@ga ;
+	rdfs:label "（元）類別"@zh-tw ;
+	skos:prefLabel "（元）類別"@zh-tw ;
+	schema:name "（元）類別"@zh-tw ;
+	rdfs:label "(meta)kevrennad"@br ;
+	skos:prefLabel "(meta)kevrennad"@br ;
+	schema:name "(meta)kevrennad"@br ;
+	rdfs:label "(meta)luokka"@fi ;
+	skos:prefLabel "(meta)luokka"@fi ;
+	schema:name "(meta)luokka"@fi ;
+	rdfs:label "(メタ)クラス"@ja ;
+	skos:prefLabel "(メタ)クラス"@ja ;
+	schema:name "(メタ)クラス"@ja ;
+	rdfs:label "(meta)kelas"@ms ;
+	skos:prefLabel "(meta)kelas"@ms ;
+	schema:name "(meta)kelas"@ms ;
+	rdfs:label "(meta)sınıf"@tr ;
+	skos:prefLabel "(meta)sınıf"@tr ;
+	schema:name "(meta)sınıf"@tr ;
+	rdfs:label "(meta)třída"@cs ;
+	skos:prefLabel "(meta)třída"@cs ;
+	schema:name "(meta)třída"@cs ;
+	rdfs:label "metaklase"@lv ;
+	skos:prefLabel "metaklase"@lv ;
+	schema:name "metaklase"@lv ;
+	rdfs:label "(ميتا)کلس"@ms-arab ;
+	skos:prefLabel "(ميتا)کلس"@ms-arab ;
+	schema:name "(ميتا)کلس"@ms-arab ;
+	rdfs:label "(мета)класс"@ba ;
+	skos:prefLabel "(мета)класс"@ba ;
+	schema:name "(мета)класс"@ba ;
+	rdfs:label "(meta)klasė"@lt ;
+	skos:prefLabel "(meta)klasė"@lt ;
+	schema:name "(meta)klasė"@lt ;
+	rdfs:label "(meta)osztály"@hu ;
+	skos:prefLabel "(meta)osztály"@hu ;
+	schema:name "(meta)osztály"@hu ;
+	rdfs:label "(meta)razred"@sl ;
+	skos:prefLabel "(meta)razred"@sl ;
+	schema:name "(meta)razred"@sl ;
+	schema:description "collection d'entité qui peuvent être des classes, ou des individus selon les cas"@fr,
+		"colección de entidades que pueden ser clases o individuos"@es,
+		"множина, яка складається з об'єктів, які можуть бути як окремими сутностями, так і множинами, класами окремих сутностей, або таких самих (мета)класів"@uk,
+		"colección d'entidaes que pueden ser clases o individuos"@ast,
+		"collezione di entità che possono essere classi o individui"@it,
+		"colección de entidades que poden ser clases ou individuos"@gl,
+		"Sammlungen von Objekten oder Subjekten, die eine Klasse oder ein einzelnes Objekt bzw. Subjekt sein können"@de,
+		"coleção de entidades que podem ser classe ou indivíduos"@pt,
+		"koleksion i entiteteve që mund të jenë klasë ose individë"@sq,
+		"samling av entiteter som kan vara klasser eller individer"@sv,
+		"набор існасьцяў, якія могуць быць як клясамі, так і экзэмплярамі"@be-tarask,
+		"kokoelma entiteettejä, jotka voivat olla luokkia tai yksilöitä"@fi,
+		"クラスまたは個人のエンティティの集まり"@ja,
+		"sınıflar veya bireyler olabilen varlık koleksiyonu"@tr,
+		"soubor entit, které mohou být třídami i jednotlivci"@cs,
+		"可以是类或个体的实体集合"@zh,
+		"collection of entities that can be classes or individuals"@en,
+		"samling av entiteter som kan være klasser eller individer"@nb ;
+	skos:altLabel "collection"@fr,
+		"метакласс"@ru,
+		"коллекция"@ru,
+		"colección"@es,
+		"coleccion"@es,
+		"collection"@en,
+		"клас або метаклас"@uk,
+		"збірка"@uk,
+		"колекція"@uk,
+		"набір"@uk,
+		"множина"@uk,
+		"комплект"@uk,
+		"метасинф"@tg,
+		"коллексия"@tg,
+		"colección"@ast,
+		"coleccion"@gl,
+		"Sammlung"@de,
+		"coleção"@pt,
+		"метасыйныф"@tt,
+		"метасыйныф"@tt-cyrl,
+		"(meta)klasse"@nn,
+		"samling"@nn,
+		"samling"@sv,
+		"калекцыя"@be-tarask,
+		"(meta)klasse"@nb,
+		"samling"@nb,
+		"kolleksiya"@az,
+		"מטא-מחלקה"@he,
+		"kokoelma"@fi,
+		"kelas meta"@ms,
+		"koleksiyon"@tr,
+		"klase"@lv,
+		"kolekcija"@lv,
+		"grupa"@lv .
+
+wd:P1709 a wikibase:Property ;
+	rdfs:label "equivalent class"@en ;
+	skos:prefLabel "equivalent class"@en ;
+	schema:name "equivalent class"@en ;
+	schema:description "equivalent class in other ontologies (use property URI)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P1709 ;
+	wikibase:claim p:P1709 ;
+	wikibase:statementProperty ps:P1709 ;
+	wikibase:statementValue psv:P1709 ;
+	wikibase:qualifier pq:P1709 ;
+	wikibase:qualifierValue pqv:P1709 ;
+	wikibase:reference pr:P1709 ;
+	wikibase:referenceValue prv:P1709 ;
+	wikibase:novalue wdno:P1709 .
+
+p:P1709 a owl:ObjectProperty .
+
+psv:P1709 a owl:ObjectProperty .
+
+pqv:P1709 a owl:ObjectProperty .
+
+prv:P1709 a owl:ObjectProperty .
+
+wdt:P1709 a owl:ObjectProperty .
+
+ps:P1709 a owl:ObjectProperty .
+
+pq:P1709 a owl:ObjectProperty .
+
+pr:P1709 a owl:ObjectProperty .
+
+wdno:P1709 a owl:Class ;
+	owl:complementOf _:93c565e7ae0faaeda9bd92b52aafde14 .
+
+_:93c565e7ae0faaeda9bd92b52aafde14 a owl:Restriction ;
+	owl:onProperty wdt:P1709 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q23958852 a wikibase:Item ;
+	rdfs:label "variable-order class"@en ;
+	skos:prefLabel "variable-order class"@en ;
+	schema:name "variable-order class"@en ;
+	schema:description "abstract entity representing classes whose instances may or may not be classes themselves"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q23766486 a wikibase:Item ;
+	rdfs:label "list of values as qualifiers"@en ;
+	skos:prefLabel "list of values as qualifiers"@en ;
+	schema:name "list of values as qualifiers"@en ;
+	schema:description "dummy value for \"union of\" P2737 and \"disjoint union of\" P2738 to specify the list of items this class can. Use \"list item\" P11260 as a qualifier to specify the items."@en .
+
+wd:P2738 a wikibase:Property ;
+	rdfs:label "disjoint union of"@en ;
+	skos:prefLabel "disjoint union of"@en ;
+	schema:name "disjoint union of"@en ;
+	schema:description "every instance of this class is an instance of exactly one class in that list of classes. Use \"list item\" P11260 as qualifiers to specify the list of classes"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2738 ;
+	wikibase:claim p:P2738 ;
+	wikibase:statementProperty ps:P2738 ;
+	wikibase:statementValue psv:P2738 ;
+	wikibase:qualifier pq:P2738 ;
+	wikibase:qualifierValue pqv:P2738 ;
+	wikibase:reference pr:P2738 ;
+	wikibase:referenceValue prv:P2738 ;
+	wikibase:novalue wdno:P2738 .
+
+p:P2738 a owl:ObjectProperty .
+
+psv:P2738 a owl:ObjectProperty .
+
+pqv:P2738 a owl:ObjectProperty .
+
+prv:P2738 a owl:ObjectProperty .
+
+wdt:P2738 a owl:ObjectProperty .
+
+ps:P2738 a owl:ObjectProperty .
+
+pq:P2738 a owl:ObjectProperty .
+
+pr:P2738 a owl:ObjectProperty .
+
+wdno:P2738 a owl:Class ;
+	owl:complementOf _:6aaa3867b3357f38dc0ed30c3a4d35c3 .
+
+_:6aaa3867b3357f38dc0ed30c3a4d35c3 a owl:Restriction ;
+	owl:onProperty wdt:P2738 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q35120 a wikibase:Item ;
+	rdfs:label "entity"@en ;
+	skos:prefLabel "entity"@en ;
+	schema:name "entity"@en ;
+	schema:description "anything that can be considered, discussed, or observed"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q19478619 a wikibase:Item ;
+	rdfs:label "metaclass"@en ;
+	skos:prefLabel "metaclass"@en ;
+	schema:name "metaclass"@en ;
+	schema:description "in knowledge representation, a class which has instances that are themselves classes"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q60005226 a wikibase:Item ;
+	rdfs:label "WikiProject Ontology"@en ;
+	skos:prefLabel "WikiProject Ontology"@en ;
+	schema:name "WikiProject Ontology"@en .
+
+wd:P6104 a wikibase:Property ;
+	rdfs:label "maintained by WikiProject"@en ;
+	skos:prefLabel "maintained by WikiProject"@en ;
+	schema:name "maintained by WikiProject"@en ;
+	schema:description "WikiProject that maintains this property, item, or linked pages. If the WikiProject is hosted outside of Wikidata, define the scope using the qualifier \"of (P642)\""@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P6104 ;
+	wikibase:claim p:P6104 ;
+	wikibase:statementProperty ps:P6104 ;
+	wikibase:statementValue psv:P6104 ;
+	wikibase:qualifier pq:P6104 ;
+	wikibase:qualifierValue pqv:P6104 ;
+	wikibase:reference pr:P6104 ;
+	wikibase:referenceValue prv:P6104 ;
+	wikibase:novalue wdno:P6104 .
+
+p:P6104 a owl:ObjectProperty .
+
+psv:P6104 a owl:ObjectProperty .
+
+pqv:P6104 a owl:ObjectProperty .
+
+prv:P6104 a owl:ObjectProperty .
+
+wdt:P6104 a owl:ObjectProperty .
+
+ps:P6104 a owl:ObjectProperty .
+
+pq:P6104 a owl:ObjectProperty .
+
+pr:P6104 a owl:ObjectProperty .
+
+wdno:P6104 a owl:Class ;
+	owl:complementOf _:8ed522f108b0fd974fa8303edd0ec44c .
+
+_:8ed522f108b0fd974fa8303edd0ec44c a owl:Restriction ;
+	owl:onProperty wdt:P6104 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q24017414 a wikibase:Item ;
+	rdfs:label "second-order class"@en ;
+	skos:prefLabel "second-order class"@en ;
+	schema:name "second-order class"@en ;
+	schema:description "metaclass whose instances are classes of individuals"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P973 a wikibase:Property ;
+	rdfs:label "described at URL"@en ;
+	skos:prefLabel "described at URL"@en ;
+	schema:name "described at URL"@en ;
+	schema:description "item is described at the following URL"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P973 ;
+	wikibase:claim p:P973 ;
+	wikibase:statementProperty ps:P973 ;
+	wikibase:statementValue psv:P973 ;
+	wikibase:qualifier pq:P973 ;
+	wikibase:qualifierValue pqv:P973 ;
+	wikibase:reference pr:P973 ;
+	wikibase:referenceValue prv:P973 ;
+	wikibase:novalue wdno:P973 .
+
+p:P973 a owl:ObjectProperty .
+
+psv:P973 a owl:ObjectProperty .
+
+pqv:P973 a owl:ObjectProperty .
+
+prv:P973 a owl:ObjectProperty .
+
+wdt:P973 a owl:ObjectProperty .
+
+ps:P973 a owl:ObjectProperty .
+
+pq:P973 a owl:ObjectProperty .
+
+pr:P973 a owl:ObjectProperty .
+
+wdno:P973 a owl:Class ;
+	owl:complementOf _:f87a33fb67bd0567df6bde1358e21e19 .
+
+_:f87a33fb67bd0567df6bde1358e21e19 a owl:Restriction ;
+	owl:onProperty wdt:P973 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P11260 a wikibase:Property ;
+	rdfs:label "list item"@en ;
+	skos:prefLabel "list item"@en ;
+	schema:name "list item"@en ;
+	schema:description "qualifier for \"union of\" (P2737) and \"disjoint union of\" (P2738) to identify constituent entities"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P11260 ;
+	wikibase:claim p:P11260 ;
+	wikibase:statementProperty ps:P11260 ;
+	wikibase:statementValue psv:P11260 ;
+	wikibase:qualifier pq:P11260 ;
+	wikibase:qualifierValue pqv:P11260 ;
+	wikibase:reference pr:P11260 ;
+	wikibase:referenceValue prv:P11260 ;
+	wikibase:novalue wdno:P11260 .
+
+p:P11260 a owl:ObjectProperty .
+
+psv:P11260 a owl:ObjectProperty .
+
+pqv:P11260 a owl:ObjectProperty .
+
+prv:P11260 a owl:ObjectProperty .
+
+wdt:P11260 a owl:ObjectProperty .
+
+ps:P11260 a owl:ObjectProperty .
+
+pq:P11260 a owl:ObjectProperty .
+
+pr:P11260 a owl:ObjectProperty .
+
+wdno:P11260 a owl:Class ;
+	owl:complementOf _:2508e0ad1a5ef04e1071e414e197f099 .
+
+_:2508e0ad1a5ef04e1071e414e197f099 a owl:Restriction ;
+	owl:onProperty wdt:P11260 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q23959932 a wikibase:Item ;
+	rdfs:label "fixed-order class"@en ;
+	skos:prefLabel "fixed-order class"@en ;
+	schema:name "fixed-order class"@en ;
+	schema:description "class whose instances are all either individuals or same-fixed-order classes"@en .

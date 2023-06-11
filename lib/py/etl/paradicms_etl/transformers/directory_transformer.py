@@ -14,12 +14,12 @@ from paradicms_etl.extractors.directory_extractor import DirectoryExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_root_model_classes_by_name import (
-    CMS_ROOT_MODEL_CLASSES_BY_NAME,
-)
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.root_model_classes_by_name import (
+    ROOT_MODEL_CLASSES_BY_NAME,
+)
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
@@ -53,7 +53,7 @@ class DirectoryTransformer:
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
         if root_model_classes_by_name is None:
-            root_model_classes_by_name = CMS_ROOT_MODEL_CLASSES_BY_NAME
+            root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
         self.__root_model_classes_by_name = root_model_classes_by_name
 
     # Rather than managing the state of the transform as variable assignments in a particular order,
@@ -123,7 +123,7 @@ class DirectoryTransformer:
                     )
                 except KeyError:
                     self.__logger.warning(
-                        "unknown model type %s for file %s",
+                        "unknown model type %s for image file %s",
                         image_file_entry.model_type,
                         image_file_entry.path,
                     )
@@ -143,7 +143,7 @@ class DirectoryTransformer:
                     )
                 except KeyError:
                     self.__logger.warning(
-                        "unknown model type %s for file %s",
+                        "unknown model type %s for model file %s",
                         metadata_file_entry.model_type,
                         metadata_file_entry.path,
                     )

@@ -23,6 +23,8 @@ class DirectoryExtractor:
         path: Path
         source: str
 
+    __IGNORE_FILE_FORMATS = {"iml", "sh"}
+
     def __init__(self, *, directory_path: Path):
         self.__logger = logging.getLogger(__name__)
         self.__directory_path = directory_path
@@ -61,9 +63,18 @@ class DirectoryExtractor:
                     self.__logger.debug("skipping hidden file %s", file_path)
                     continue
 
+                if file_path == root_dir_path / "README.md":
+                    self.__logger.debug("skipping README.md")
+                    continue
+
                 file_format = splitext(file_name)[1][1:].lower()
                 if not file_format:
                     self.__logger.debug("skipping file with no extension %s", file_path)
+                    continue
+                elif file_format in self.__IGNORE_FILE_FORMATS:
+                    self.__logger.debug(
+                        "ignoring file format %s on %s", file_format, file_path
+                    )
                     continue
 
                 if dir_path == root_dir_path:

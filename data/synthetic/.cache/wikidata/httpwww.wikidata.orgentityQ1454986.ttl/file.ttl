@@ -1,0 +1,2074 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q1454986 a schema:Dataset ;
+	schema:about wd:Q1454986 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1908195685"^^xsd:integer ;
+	schema:dateModified "2023-06-04T18:25:37Z"^^xsd:dateTime ;
+	wikibase:statements "25"^^xsd:integer ;
+	wikibase:sitelinks "42"^^xsd:integer ;
+	wikibase:identifiers "7"^^xsd:integer .
+
+wd:Q1454986 a wikibase:Item .
+
+<https://en.wikipedia.org/wiki/Physical_system> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Physical system"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Physikalisches_System> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Physikalisches System"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Syst%C3%A8me_physique> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Système physique"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Sistema_f%C3%ADsico> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Sistema físico"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%A4%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Физическая система"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Sistema_(fisica)> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Sistema (fisica)"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E7%B3%BB_(%E8%87%AA%E7%84%B6%E7%A7%91%E5%AD%A6)> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "系 (自然科学)"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Natuurkundig_systeem> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Natuurkundig systeem"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Uk%C5%82ad_fizyczny> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Układ fizyczny"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pt.wikipedia.org/wiki/Sistema_f%C3%ADsico> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Sistema físico"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E7%89%A9%E7%90%86%E7%B3%BB%E7%BB%9F> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "物理系统"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Fysikaliskt_system> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Fysikaliskt system"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://he.wikipedia.org/wiki/%D7%9E%D7%A2%D7%A8%D7%9B%D7%AA_%D7%A4%D7%99%D7%96%D7%99%D7%A7%D7%9C%D7%99%D7%AA> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "he" ;
+	schema:isPartOf <https://he.wikipedia.org/> ;
+	schema:name "מערכת פיזיקלית"@he .
+
+<https://he.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D9%86%D8%B8%D8%A7%D9%85_%D9%81%D9%8A%D8%B2%D9%8A%D8%A7%D8%A6%D9%8A> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "نظام فيزيائي"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%A4%D1%96%D0%B7%D0%B8%D1%87%D0%BD%D0%B0_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Фізична система"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Sistema_f%C3%ADsic> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Sistema físic"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/Fyzik%C3%A1ln%C3%AD_syst%C3%A9m> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Fyzikální systém"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ro.wikipedia.org/wiki/Sistem_fizic> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ro" ;
+	schema:isPartOf <https://ro.wikipedia.org/> ;
+	schema:name "Sistem fizic"@ro .
+
+<https://ro.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://simple.wikipedia.org/wiki/Physical_system> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "en-simple" ;
+	schema:isPartOf <https://simple.wikipedia.org/> ;
+	schema:name "Physical system"@en-simple .
+
+<https://simple.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ast.wikipedia.org/wiki/Sistema_f%C3%ADsicu> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ast" ;
+	schema:isPartOf <https://ast.wikipedia.org/> ;
+	schema:name "Sistema físicu"@ast .
+
+<https://ast.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://be.wikipedia.org/wiki/%D0%A4%D1%96%D0%B7%D1%96%D1%87%D0%BD%D0%B0%D1%8F_%D1%81%D1%96%D1%81%D1%82%D1%8D%D0%BC%D0%B0> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "be" ;
+	schema:isPartOf <https://be.wikipedia.org/> ;
+	schema:name "Фізічная сістэма"@be .
+
+<https://be.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://et.wikipedia.org/wiki/F%C3%BC%C3%BCsikaline_s%C3%BCsteem> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikipedia.org/> ;
+	schema:name "Füüsikaline süsteem"@et .
+
+<https://et.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://gl.wikipedia.org/wiki/Sistema_f%C3%ADsico> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "gl" ;
+	schema:isPartOf <https://gl.wikipedia.org/> ;
+	schema:name "Sistema físico"@gl .
+
+<https://gl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://is.wikipedia.org/wiki/Kerfi_(e%C3%B0lisfr%C3%A6%C3%B0i)> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "is" ;
+	schema:isPartOf <https://is.wikipedia.org/> ;
+	schema:name "Kerfi (eðlisfræði)"@is .
+
+<https://is.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pa.wikipedia.org/wiki/%E0%A8%AD%E0%A9%8C%E0%A8%A4%E0%A8%BF%E0%A8%95%E0%A9%80_%E0%A8%B8%E0%A8%BF%E0%A8%B8%E0%A8%9F%E0%A8%AE> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "pa" ;
+	schema:isPartOf <https://pa.wikipedia.org/> ;
+	schema:name "ਭੌਤਿਕੀ ਸਿਸਟਮ"@pa .
+
+<https://pa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sh.wikipedia.org/wiki/Fizi%C4%8Dki_sistem> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "sh" ;
+	schema:isPartOf <https://sh.wikipedia.org/> ;
+	schema:name "Fizički sistem"@sh .
+
+<https://sh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sk.wikipedia.org/wiki/Fyzik%C3%A1lna_s%C3%BAstava> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "sk" ;
+	schema:isPartOf <https://sk.wikipedia.org/> ;
+	schema:name "Fyzikálna sústava"@sk .
+
+<https://sk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D9%85%D8%A7%D9%86%D9%87_%D9%81%DB%8C%D8%B2%DB%8C%DA%A9%DB%8C> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "سامانه فیزیکی"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hi.wikipedia.org/wiki/%E0%A4%AD%E0%A5%8C%E0%A4%A4%E0%A4%BF%E0%A4%95_%E0%A4%A4%E0%A4%82%E0%A4%A4%E0%A5%8D%E0%A4%B0> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "hi" ;
+	schema:isPartOf <https://hi.wikipedia.org/> ;
+	schema:name "भौतिक तंत्र"@hi .
+
+<https://hi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EB%AC%BC%EB%A6%AC%EA%B3%84> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "물리계"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/H%E1%BB%87_v%E1%BA%ADt_l%C3%BD> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Hệ vật lý"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sr.wikipedia.org/wiki/Fizi%C4%8Dki_sistem> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "sr" ;
+	schema:isPartOf <https://sr.wikipedia.org/> ;
+	schema:name "Fizički sistem"@sr .
+
+<https://sr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cv.wikipedia.org/wiki/%D0%A4%D0%B8%D0%B7%D0%B8%D0%BA%C4%83%D0%BB%D0%BB%D0%B0_%D1%82%D1%8B%D1%82%C4%83%D0%BC> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "cv" ;
+	schema:isPartOf <https://cv.wikipedia.org/> ;
+	schema:name "Физикăлла тытăм"@cv .
+
+<https://cv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh-yue.wikipedia.org/wiki/%E7%89%A9%E7%90%86%E7%B3%BB%E7%B5%B1> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "yue" ;
+	schema:isPartOf <https://zh-yue.wikipedia.org/> ;
+	schema:name "物理系統"@yue .
+
+<https://zh-yue.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Fiziksel_sistem> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Fiziksel sistem"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bn.wikipedia.org/wiki/%E0%A6%AD%E0%A7%8C%E0%A6%A4_%E0%A6%AC%E0%A7%8D%E0%A6%AF%E0%A6%AC%E0%A6%B8%E0%A7%8D%E0%A6%A5%E0%A6%BE> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "bn" ;
+	schema:isPartOf <https://bn.wikipedia.org/> ;
+	schema:name "ভৌত ব্যবস্থা"@bn .
+
+<https://bn.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bg.wikipedia.org/wiki/%D0%A4%D0%B8%D0%B7%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B0> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "bg" ;
+	schema:isPartOf <https://bg.wikipedia.org/> ;
+	schema:name "Физическа система"@bg .
+
+<https://bg.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://oc.wikipedia.org/wiki/Sist%C3%A8ma_fisic> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "oc" ;
+	schema:isPartOf <https://oc.wikipedia.org/> ;
+	schema:name "Sistèma fisic"@oc .
+
+<https://oc.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://lv.wikipedia.org/wiki/Fizik%C4%81l%C4%81_sist%C4%93ma> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "lv" ;
+	schema:isPartOf <https://lv.wikipedia.org/> ;
+	schema:name "Fizikālā sistēma"@lv .
+
+<https://lv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ckb.wikipedia.org/wiki/%D8%B3%DB%8C%D8%B3%D8%AA%D9%85%DB%8C_%D9%81%DB%8C%D8%B2%DB%8C%DA%A9%DB%8C> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "ckb" ;
+	schema:isPartOf <https://ckb.wikipedia.org/> ;
+	schema:name "سیستمی فیزیکی"@ckb .
+
+<https://ckb.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eu.wikipedia.org/wiki/Sistema_fisiko> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "eu" ;
+	schema:isPartOf <https://eu.wikipedia.org/> ;
+	schema:name "Sistema fisiko"@eu .
+
+<https://eu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://mk.wikipedia.org/wiki/%D0%A4%D0%B8%D0%B7%D0%B8%D1%87%D0%BA%D0%B8_%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC> a schema:Article ;
+	schema:about wd:Q1454986 ;
+	schema:inLanguage "mk" ;
+	schema:isPartOf <https://mk.wikipedia.org/> ;
+	schema:name "Физички систем"@mk .
+
+<https://mk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q1454986 wdt:P1557 wd:Q413 ;
+	wdt:P361 wd:Q1 ;
+	wdt:P373 "Physical systems" ;
+	wdt:P527 wd:Q223557 ;
+	wdt:P910 wd:Q9239363 ;
+	wdt:P279 wd:Q58778 ;
+	wdt:P646 "/m/03bbtg" ;
+	wdt:P227 "4174610-7" ;
+	wdtn:P227 <https://d-nb.info/gnd/4174610-7> ;
+	wdt:P1552 wd:Q4373292,
+		wd:Q274502,
+		wd:Q104934,
+		wd:Q230855 ;
+	wdt:P2579 wd:Q413,
+		wd:Q14632398 ;
+	wdt:P1889 wd:Q28843577 ;
+	wdt:P2581 "02437884n" ;
+	wdtn:P2581 <http://babelnet.org/rdf/s02437884n> ;
+	wdt:P460 wd:Q15710813 ;
+	wdt:P7497 "PhysicalSystem" ;
+	wdt:P6366 "116672817" ;
+	wdtn:P6366 <http://ma-graph.org/entity/116672817> ;
+	wdt:P31 wd:Q96116695 ;
+	wdt:P8408 "PhysicalSystem" ;
+	wdtn:P8408 <http://kbpedia.org/kko/rc/PhysicalSystem> ;
+	wdt:P10283 "C116672817" ;
+	p:P1557 s:Q1454986-719dc05b-43f2-3bca-bf26-0811fabd6edc .
+
+s:Q1454986-719dc05b-43f2-3bca-bf26-0811fabd6edc a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1557 wd:Q413 .
+
+wd:Q1454986 p:P361 s:q1454986-aa3e1170-470f-c850-8d7a-90fb10985f8b .
+
+s:q1454986-aa3e1170-470f-c850-8d7a-90fb10985f8b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:PreferredRank ;
+	ps:P361 wd:Q1 .
+
+wd:Q1454986 p:P373 s:q1454986-FBB28DE2-94B6-45A9-AD67-115AD7C01B64 .
+
+s:q1454986-FBB28DE2-94B6-45A9-AD67-115AD7C01B64 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P373 "Physical systems" .
+
+wd:Q1454986 p:P527 s:q1454986-d7c3ace1-4de3-c731-655e-35fc686b974b .
+
+s:q1454986-d7c3ace1-4de3-c731-655e-35fc686b974b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P527 wd:Q223557 .
+
+wd:Q1454986 p:P910 s:Q1454986-97304A8E-35F5-4D3D-BE7F-9356C3FFEB6E .
+
+s:Q1454986-97304A8E-35F5-4D3D-BE7F-9356C3FFEB6E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q9239363 .
+
+wd:Q1454986 p:P279 s:q1454986-57fe37c6-4c32-4a25-35c1-c31b26a3f2ea .
+
+s:q1454986-57fe37c6-4c32-4a25-35c1-c31b26a3f2ea a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:PreferredRank ;
+	ps:P279 wd:Q58778 .
+
+wd:Q1454986 p:P279 s:Q1454986-c6c15990-4b18-7491-8c74-6635acff72ac .
+
+s:Q1454986-c6c15990-4b18-7491-8c74-6635acff72ac a wikibase:Statement ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q4406616 .
+
+wd:Q1454986 p:P279 s:Q1454986-67609eda-4833-f0a4-d20d-28e3b733d04b .
+
+s:Q1454986-67609eda-4833-f0a4-d20d-28e3b733d04b a wikibase:Statement ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q30060700 ;
+	pq:P642 wd:Q413 .
+
+wd:Q1454986 p:P279 s:Q1454986-1adebef7-4757-42b4-0d57-7e00822efa47 .
+
+s:Q1454986-1adebef7-4757-42b4-0d57-7e00822efa47 a wikibase:Statement ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q112276019 .
+
+wd:Q1454986 p:P646 s:Q1454986-7B3D897F-0A7A-4FEB-898F-28DE11E31095 .
+
+s:Q1454986-7B3D897F-0A7A-4FEB-898F-28DE11E31095 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/03bbtg" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q1454986 p:P227 s:Q1454986-1AC6AD51-8406-4492-AB63-AEB276644C24 .
+
+s:Q1454986-1AC6AD51-8406-4492-AB63-AEB276644C24 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P227 "4174610-7" ;
+	psn:P227 <https://d-nb.info/gnd/4174610-7> ;
+	prov:wasDerivedFrom ref:9a24f7c0208b05d6be97077d855671d1dfdbc0dd .
+
+wd:Q1454986 p:P1552 s:Q1454986-417473df-4ae4-e3d4-1d58-fac9def59c5c .
+
+s:Q1454986-417473df-4ae4-e3d4-1d58-fac9def59c5c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q4373292 .
+
+wd:Q1454986 p:P1552 s:Q1454986-613b58e7-4937-257b-50ed-2f6dae027f40 .
+
+s:Q1454986-613b58e7-4937-257b-50ed-2f6dae027f40 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q274502 .
+
+wd:Q1454986 p:P1552 s:Q1454986-0b54ac28-4c79-9348-1837-36371dd4df7f .
+
+s:Q1454986-0b54ac28-4c79-9348-1837-36371dd4df7f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q104934 .
+
+wd:Q1454986 p:P1552 s:Q1454986-f5a8e4b3-42ac-33cd-17b5-9da734bcf385 .
+
+s:Q1454986-f5a8e4b3-42ac-33cd-17b5-9da734bcf385 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q230855 .
+
+wd:Q1454986 p:P2579 s:Q1454986-70574b46-4531-9332-32ea-c7e6656c8551 .
+
+s:Q1454986-70574b46-4531-9332-32ea-c7e6656c8551 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2579 wd:Q413 .
+
+wd:Q1454986 p:P2579 s:Q1454986-9b281c83-4bb7-93a5-2fa2-1b59a0ce3787 .
+
+s:Q1454986-9b281c83-4bb7-93a5-2fa2-1b59a0ce3787 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2579 wd:Q14632398 .
+
+wd:Q1454986 p:P1889 s:Q1454986-1a78a2c8-4955-d9cc-464f-be7123e06d6a .
+
+s:Q1454986-1a78a2c8-4955-d9cc-464f-be7123e06d6a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q28843577 .
+
+wd:Q1454986 p:P2581 s:Q1454986-82FC0D62-9495-4E03-ACD1-EE805CA36BD1 .
+
+s:Q1454986-82FC0D62-9495-4E03-ACD1-EE805CA36BD1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2581 "02437884n" ;
+	psn:P2581 <http://babelnet.org/rdf/s02437884n> ;
+	prov:wasDerivedFrom ref:248ac337a217a5f5eed7139a82a4e60931611af0 .
+
+wd:Q1454986 p:P460 s:Q1454986-2b049fda-4a43-e883-bd27-1efb24653a6d .
+
+s:Q1454986-2b049fda-4a43-e883-bd27-1efb24653a6d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q15710813 .
+
+wd:Q1454986 p:P7497 s:Q1454986-5c70ab90-46f6-3637-c66b-671e8f2b0503 .
+
+s:Q1454986-5c70ab90-46f6-3637-c66b-671e8f2b0503 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7497 "PhysicalSystem" .
+
+wd:Q1454986 p:P6366 s:Q1454986-568A6D8A-9862-4EDE-A514-D365146094B5 .
+
+s:Q1454986-568A6D8A-9862-4EDE-A514-D365146094B5 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "116672817" ;
+	psn:P6366 <http://ma-graph.org/entity/116672817> .
+
+wd:Q1454986 p:P31 s:Q1454986-69141e9f-4f70-7317-b5df-b941d2fa09c9 .
+
+s:Q1454986-69141e9f-4f70-7317-b5df-b941d2fa09c9 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q96116695 .
+
+wd:Q1454986 p:P8408 s:Q1454986-E0110C1F-7214-4FD1-9B20-F1837C014A29 .
+
+s:Q1454986-E0110C1F-7214-4FD1-9B20-F1837C014A29 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8408 "PhysicalSystem" ;
+	psn:P8408 <http://kbpedia.org/kko/rc/PhysicalSystem> ;
+	prov:wasDerivedFrom ref:9a681f9dd95c90224547c404e11295f4f7dcf54e .
+
+wd:Q1454986 p:P10283 s:Q1454986-77C595E4-E698-466E-B3BD-00CF5E7BD529 .
+
+s:Q1454986-77C595E4-E698-466E-B3BD-00CF5E7BD529 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10283 "C116672817" ;
+	prov:wasDerivedFrom ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 .
+
+wd:Q1454986 rdfs:label "sistema físico"@pt ;
+	skos:prefLabel "sistema físico"@pt ;
+	schema:name "sistema físico"@pt ;
+	rdfs:label "Kerfi"@is ;
+	skos:prefLabel "Kerfi"@is ;
+	schema:name "Kerfi"@is ;
+	rdfs:label "układ fizyczny"@pl ;
+	skos:prefLabel "układ fizyczny"@pl ;
+	schema:name "układ fizyczny"@pl ;
+	rdfs:label "fyzikálna sústava"@sk ;
+	skos:prefLabel "fyzikálna sústava"@sk ;
+	schema:name "fyzikálna sústava"@sk ;
+	rdfs:label "физическая система"@ru ;
+	skos:prefLabel "физическая система"@ru ;
+	schema:name "физическая система"@ru ;
+	rdfs:label "מערכת פיזיקלית"@he ;
+	skos:prefLabel "מערכת פיזיקלית"@he ;
+	schema:name "מערכת פיזיקלית"@he ;
+	rdfs:label "système physique"@fr ;
+	skos:prefLabel "système physique"@fr ;
+	schema:name "système physique"@fr ;
+	rdfs:label "sistema físico"@es ;
+	skos:prefLabel "sistema físico"@es ;
+	schema:name "sistema físico"@es ;
+	rdfs:label "physical system"@en ;
+	skos:prefLabel "physical system"@en ;
+	schema:name "physical system"@en ;
+	rdfs:label "sistem fizic"@ro ;
+	skos:prefLabel "sistem fizic"@ro ;
+	schema:name "sistem fizic"@ro ;
+	rdfs:label "sistema físic"@ca ;
+	skos:prefLabel "sistema físic"@ca ;
+	schema:name "sistema físic"@ca ;
+	rdfs:label "фізична система"@uk ;
+	skos:prefLabel "фізична система"@uk ;
+	schema:name "фізична система"@uk ;
+	rdfs:label "sistema fisico"@it ;
+	skos:prefLabel "sistema fisico"@it ;
+	schema:name "sistema fisico"@it ;
+	rdfs:label "sistema físico"@gl ;
+	skos:prefLabel "sistema físico"@gl ;
+	schema:name "sistema físico"@gl ;
+	rdfs:label "Füüsikaline süsteem"@et ;
+	skos:prefLabel "Füüsikaline süsteem"@et ;
+	schema:name "Füüsikaline süsteem"@et ;
+	rdfs:label "系"@ja ;
+	skos:prefLabel "系"@ja ;
+	schema:name "系"@ja ;
+	rdfs:label "fyzikální systém"@cs ;
+	skos:prefLabel "fyzikální systém"@cs ;
+	schema:name "fyzikální systém"@cs ;
+	rdfs:label "hệ vận động"@vi ;
+	skos:prefLabel "hệ vận động"@vi ;
+	schema:name "hệ vận động"@vi ;
+	rdfs:label "نظام فيزيائي"@ar ;
+	skos:prefLabel "نظام فيزيائي"@ar ;
+	schema:name "نظام فيزيائي"@ar ;
+	rdfs:label "natuurkundig systeem"@nl ;
+	skos:prefLabel "natuurkundig systeem"@nl ;
+	schema:name "natuurkundig systeem"@nl ;
+	rdfs:label "physikalisches System"@de ;
+	skos:prefLabel "physikalisches System"@de ;
+	schema:name "physikalisches System"@de ;
+	rdfs:label "physical system"@en-ca ;
+	skos:prefLabel "physical system"@en-ca ;
+	schema:name "physical system"@en-ca ;
+	rdfs:label "physical system"@en-gb ;
+	skos:prefLabel "physical system"@en-gb ;
+	schema:name "physical system"@en-gb ;
+	rdfs:label "sistema físico"@pt-br ;
+	skos:prefLabel "sistema físico"@pt-br ;
+	schema:name "sistema físico"@pt-br ;
+	rdfs:label "物质系统"@zh ;
+	skos:prefLabel "物质系统"@zh ;
+	schema:name "物质系统"@zh ;
+	rdfs:label "фізычная сыстэма"@be-tarask ;
+	skos:prefLabel "фізычная сыстэма"@be-tarask ;
+	schema:name "фізычная сыстэма"@be-tarask ;
+	rdfs:label "natuurkundige stelsel"@af ;
+	skos:prefLabel "natuurkundige stelsel"@af ;
+	schema:name "natuurkundige stelsel"@af ;
+	rdfs:label "물리계"@ko ;
+	skos:prefLabel "물리계"@ko ;
+	schema:name "물리계"@ko ;
+	rdfs:label "физички систем"@sr ;
+	skos:prefLabel "физички систем"@sr ;
+	schema:name "физички систем"@sr ;
+	rdfs:label "физички систем"@sr-ec ;
+	skos:prefLabel "физички систем"@sr-ec ;
+	schema:name "физички систем"@sr-ec ;
+	rdfs:label "fizički sistem"@sr-el ;
+	skos:prefLabel "fizički sistem"@sr-el ;
+	schema:name "fizički sistem"@sr-el ;
+	rdfs:label "pheesical seestem"@sco ;
+	skos:prefLabel "pheesical seestem"@sco ;
+	schema:name "pheesical seestem"@sco ;
+	rdfs:label "fysisk system"@da ;
+	skos:prefLabel "fysisk system"@da ;
+	schema:name "fysisk system"@da ;
+	rdfs:label "φυσικό σύστημα"@el ;
+	skos:prefLabel "φυσικό σύστημα"@el ;
+	schema:name "φυσικό σύστημα"@el ;
+	rdfs:label "fysisk system"@nb ;
+	skos:prefLabel "fysisk system"@nb ;
+	schema:name "fysisk system"@nb ;
+	rdfs:label "भौतिक प्रणाली"@hi ;
+	skos:prefLabel "भौतिक प्रणाली"@hi ;
+	schema:name "भौतिक प्रणाली"@hi ;
+	rdfs:label "物质系统"@zh-hans ;
+	skos:prefLabel "物质系统"@zh-hans ;
+	schema:name "物质系统"@zh-hans ;
+	rdfs:label "фізічная сістэма"@be ;
+	skos:prefLabel "фізічная сістэма"@be ;
+	schema:name "фізічная сістэма"@be ;
+	rdfs:label "fizički sistem"@sh ;
+	skos:prefLabel "fizički sistem"@sh ;
+	schema:name "fizički sistem"@sh ;
+	rdfs:label "物质系统"@zh-cn ;
+	skos:prefLabel "物质系统"@zh-cn ;
+	schema:name "物质系统"@zh-cn ;
+	rdfs:label "物質系統"@zh-hk ;
+	skos:prefLabel "物質系統"@zh-hk ;
+	schema:name "物質系統"@zh-hk ;
+	rdfs:label "物理系統"@zh-tw ;
+	skos:prefLabel "物理系統"@zh-tw ;
+	schema:name "物理系統"@zh-tw ;
+	rdfs:label "物理系統"@zh-hant ;
+	skos:prefLabel "物理系統"@zh-hant ;
+	schema:name "物理系統"@zh-hant ;
+	rdfs:label "физички систем"@mk ;
+	skos:prefLabel "физички систем"@mk ;
+	schema:name "физички систем"@mk ;
+	rdfs:label "fysiskt system"@sv ;
+	skos:prefLabel "fysiskt system"@sv ;
+	schema:name "fysiskt system"@sv ;
+	rdfs:label "fizika sistemo"@eo ;
+	skos:prefLabel "fizika sistemo"@eo ;
+	schema:name "fizika sistemo"@eo ;
+	rdfs:label "sistema fìsicu"@scn ;
+	skos:prefLabel "sistema fìsicu"@scn ;
+	schema:name "sistema fìsicu"@scn ;
+	rdfs:label "fizikinė sistema"@lt ;
+	skos:prefLabel "fizikinė sistema"@lt ;
+	schema:name "fizikinė sistema"@lt ;
+	rdfs:label "sistema físicu"@ast ;
+	skos:prefLabel "sistema físicu"@ast ;
+	schema:name "sistema físicu"@ast ;
+	rdfs:label "fizikai rendszer"@hu ;
+	skos:prefLabel "fizikai rendszer"@hu ;
+	schema:name "fizikai rendszer"@hu ;
+	rdfs:label "ਭੌਤਿਕੀ ਸਿਸਟਮ"@pa ;
+	skos:prefLabel "ਭੌਤਿਕੀ ਸਿਸਟਮ"@pa ;
+	schema:name "ਭੌਤਿਕੀ ਸਿਸਟਮ"@pa ;
+	rdfs:label "sistem fisik"@id ;
+	skos:prefLabel "sistem fisik"@id ;
+	schema:name "sistem fisik"@id ;
+	rdfs:label "ფიზიკური სისტემა"@ka ;
+	skos:prefLabel "ფიზიკური სისტემა"@ka ;
+	schema:name "ფიზიკური სისტემა"@ka ;
+	rdfs:label "fiziksel sistem"@tr ;
+	skos:prefLabel "fiziksel sistem"@tr ;
+	schema:name "fiziksel sistem"@tr ;
+	rdfs:label "ֆիզիկական համակարգ"@hy ;
+	skos:prefLabel "ֆիզիկական համակարգ"@hy ;
+	schema:name "ֆիզիկական համակարգ"@hy ;
+	rdfs:label "системаи физикӣ"@tg ;
+	skos:prefLabel "системаи физикӣ"@tg ;
+	schema:name "системаи физикӣ"@tg ;
+	rdfs:label "fysisk system"@nn ;
+	skos:prefLabel "fysisk system"@nn ;
+	schema:name "fysisk system"@nn ;
+	rdfs:label "физик система"@ba ;
+	skos:prefLabel "физик система"@ba ;
+	schema:name "физик система"@ba ;
+	rdfs:label "سامانه فیزیکی"@fa ;
+	skos:prefLabel "سامانه فیزیکی"@fa ;
+	schema:name "سامانه فیزیکی"@fa ;
+	rdfs:label "fyzikaliski system"@hsb ;
+	skos:prefLabel "fyzikaliski system"@hsb ;
+	schema:name "fyzikaliski system"@hsb ;
+	rdfs:label "fizikāla sistēma"@lv ;
+	skos:prefLabel "fizikāla sistēma"@lv ;
+	schema:name "fizikāla sistēma"@lv ;
+	rdfs:label "fiziki sistem"@az ;
+	skos:prefLabel "fiziki sistem"@az ;
+	schema:name "fiziki sistem"@az ;
+	rdfs:label "sistem fizik"@sq ;
+	skos:prefLabel "sistem fizik"@sq ;
+	schema:name "sistem fizik"@sq ;
+	rdfs:label "fyysinen järjestelmä"@fi ;
+	skos:prefLabel "fyysinen järjestelmä"@fi ;
+	schema:name "fyysinen järjestelmä"@fi ;
+	rdfs:label "مادی نظام"@ur ;
+	skos:prefLabel "مادی نظام"@ur ;
+	schema:name "مادی نظام"@ur ;
+	rdfs:label "Физикăлла тытăм"@cv ;
+	skos:prefLabel "Физикăлла тытăм"@cv ;
+	schema:name "Физикăлла тытăм"@cv ;
+	rdfs:label "ระบบทางกายภาพ"@th ;
+	skos:prefLabel "ระบบทางกายภาพ"@th ;
+	schema:name "ระบบทางกายภาพ"@th ;
+	rdfs:label "物理系統"@yue ;
+	skos:prefLabel "物理系統"@yue ;
+	schema:name "物理系統"@yue ;
+	rdfs:label "sistem fizikal"@ms ;
+	skos:prefLabel "sistem fizikal"@ms ;
+	schema:name "sistem fizikal"@ms ;
+	rdfs:label "sistema fisiko"@eu ;
+	skos:prefLabel "sistema fisiko"@eu ;
+	schema:name "sistema fisiko"@eu ;
+	rdfs:label "system ffisegol"@cy ;
+	skos:prefLabel "system ffisegol"@cy ;
+	schema:name "system ffisegol"@cy ;
+	rdfs:label "ভৌত ব্যবস্থা"@bn ;
+	skos:prefLabel "ভৌত ব্যবস্থা"@bn ;
+	schema:name "ভৌত ব্যবস্থা"@bn ;
+	rdfs:label "سيستم فيزيکل"@ms-arab ;
+	skos:prefLabel "سيستم فيزيکل"@ms-arab ;
+	schema:name "سيستم فيزيکل"@ms-arab ;
+	rdfs:label "sistema fìzego"@vec ;
+	skos:prefLabel "sistema fìzego"@vec ;
+	schema:name "sistema fìzego"@vec ;
+	rdfs:label "Физическа система"@bg ;
+	skos:prefLabel "Физическа система"@bg ;
+	schema:name "Физическа система"@bg ;
+	rdfs:label "Sistèma fisic"@oc ;
+	skos:prefLabel "Sistèma fisic"@oc ;
+	schema:name "Sistèma fisic"@oc ;
+	rdfs:label "سیستمی فیزیکی"@ckb ;
+	skos:prefLabel "سیستمی فیزیکی"@ckb ;
+	schema:name "سیستمی فیزیکی"@ckb ;
+	rdfs:label "fizički sistem"@bs ;
+	skos:prefLabel "fizički sistem"@bs ;
+	schema:name "fizički sistem"@bs ;
+	rdfs:label "fizikalni sistem"@sl ;
+	skos:prefLabel "fizikalni sistem"@sl ;
+	schema:name "fizikalni sistem"@sl ;
+	schema:description "partie de l'univers choisie pour analyse en physique"@fr,
+		"portion of the physical universe chosen for analysis; everything outside the system is known as the environment"@en,
+		"объект физических исследований"@ru,
+		"μέρος του φυσικού σύμπαντος που επιλέγεται για ανάλυση"@el,
+		"physikalisches Objekt, oder eine Ansammlung solcher Objekte, die sich als Ganzes in wohl definierter Weise von seiner Umgebung abgrenzen lässt"@de,
+		"nsiemi cumpletu di tutti l'aggenti di na discrizzioni fìsica"@scn,
+		"deel van het fysisch universum"@nl,
+		"parte del universu físicu escoyía p'analizar"@ast,
+		"bagian dari fisik alam semesta yang dipilih untuk dianalisis"@id,
+		"porción del universo físico escogido para análisis científico"@es,
+		"porzione dell'universo oggetto dell'indagine scientifica"@it,
+		"agregado de objetos ou entidades materiais entre cujas partes existe uma vinculação ou interação de tipo causal"@pt,
+		"частина фізичного всесвіту, обрана для аналізу; все за межами системи відоме як середовище"@uk,
+		"الميثازول"@ar,
+		"選擇用於分析的物理世界的一部分; 系統外的一切都被稱為環境"@zh,
+		"選擇進行分析的物理宇宙的一部分；系統外的一切都被稱為環境"@zh-hant,
+		"fiziki araşdırma obyekti"@az,
+		"ভৌত জগতের বিচার-বিশ্লেষণাধীন অংশবিশেষ"@bn,
+		"要素の構成の一つ"@ja,
+		"구성 요소들의 체계"@ko ;
+	skos:altLabel "Eðlisfræðilegt kerfi"@is,
+		"fyzikálny systém"@sk,
+		"מערכת"@he,
+		"systeme physique"@fr,
+		"Sistema fisico"@es,
+		"sistema material"@es,
+		"sistema concreto"@es,
+		"фізичні системи"@uk,
+		"sistemi fisici"@it,
+		"hệ vận động người"@vi,
+		"جملة فيزيائية"@ar,
+		"تعقيدات النظام الفيزيائي"@ar,
+		"konkretes System"@de,
+		"materielles System"@de,
+		"physical subsystem"@en,
+		"subsystem (physical)"@en,
+		"system (physical)"@en,
+		"fyzikální soustava"@cs,
+		"sistema"@lt,
+		"subsistema"@ast,
+		"物理系統"@zh,
+		"實體系統"@zh-hant,
+		"實體系统"@zh-cn,
+		"sistem"@id,
+		"subsistem"@id,
+		"alt sistem"@tr,
+		"fiziksel alt sistem"@tr,
+		"Fiziksel sistem"@tr,
+		"fysikalsk system"@nb,
+		"system (fysisk)"@nb,
+		"물리적 세계"@ko,
+		"fizički sustav"@sh,
+		"sistema (fisika)"@eu,
+		"system gorfforol"@cy,
+		"ভৌত সিস্টেম"@bn,
+		"fiziska sistēma"@lv .
+
+wd:Q413 a wikibase:Item ;
+	rdfs:label "physics"@en ;
+	skos:prefLabel "physics"@en ;
+	schema:name "physics"@en ;
+	schema:description "study of matter and its motion, along with related concepts such as energy and force"@en .
+
+wd:P1557 a wikibase:Property ;
+	rdfs:label "manifestation of"@en ;
+	skos:prefLabel "manifestation of"@en ;
+	schema:name "manifestation of"@en ;
+	schema:description "inherent and characteristic embodiment of a given concept"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1557 ;
+	wikibase:claim p:P1557 ;
+	wikibase:statementProperty ps:P1557 ;
+	wikibase:statementValue psv:P1557 ;
+	wikibase:qualifier pq:P1557 ;
+	wikibase:qualifierValue pqv:P1557 ;
+	wikibase:reference pr:P1557 ;
+	wikibase:referenceValue prv:P1557 ;
+	wikibase:novalue wdno:P1557 .
+
+p:P1557 a owl:ObjectProperty .
+
+psv:P1557 a owl:ObjectProperty .
+
+pqv:P1557 a owl:ObjectProperty .
+
+prv:P1557 a owl:ObjectProperty .
+
+wdt:P1557 a owl:ObjectProperty .
+
+ps:P1557 a owl:ObjectProperty .
+
+pq:P1557 a owl:ObjectProperty .
+
+pr:P1557 a owl:ObjectProperty .
+
+wdno:P1557 a owl:Class ;
+	owl:complementOf _:983903d5dff2219d18c3fcdb5c55e893 .
+
+_:983903d5dff2219d18c3fcdb5c55e893 a owl:Restriction ;
+	owl:onProperty wdt:P1557 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1 a wikibase:Item ;
+	rdfs:label "Universe"@en ;
+	skos:prefLabel "Universe"@en ;
+	schema:name "Universe"@en ;
+	schema:description "all of the spacetime and its contents including the Earth, possibly being part of a multiverse, distinct from parallel universes if they exist"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P373 a wikibase:Property ;
+	rdfs:label "Commons category"@en ;
+	skos:prefLabel "Commons category"@en ;
+	schema:name "Commons category"@en ;
+	schema:description "name of the Wikimedia Commons category containing files related to this item (without the prefix \"Category:\")"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P373 ;
+	wikibase:claim p:P373 ;
+	wikibase:statementProperty ps:P373 ;
+	wikibase:statementValue psv:P373 ;
+	wikibase:qualifier pq:P373 ;
+	wikibase:qualifierValue pqv:P373 ;
+	wikibase:reference pr:P373 ;
+	wikibase:referenceValue prv:P373 ;
+	wikibase:novalue wdno:P373 .
+
+p:P373 a owl:ObjectProperty .
+
+psv:P373 a owl:ObjectProperty .
+
+pqv:P373 a owl:ObjectProperty .
+
+prv:P373 a owl:ObjectProperty .
+
+wdt:P373 a owl:DatatypeProperty .
+
+ps:P373 a owl:DatatypeProperty .
+
+pq:P373 a owl:DatatypeProperty .
+
+pr:P373 a owl:DatatypeProperty .
+
+wdno:P373 a owl:Class ;
+	owl:complementOf _:3de19c92e209926f02f215095eb4fd12 .
+
+_:3de19c92e209926f02f215095eb4fd12 a owl:Restriction ;
+	owl:onProperty wdt:P373 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q223557 a wikibase:Item ;
+	rdfs:label "physical object"@en ;
+	skos:prefLabel "physical object"@en ;
+	schema:name "physical object"@en ;
+	schema:description "singular aggregation of substance(s) such as matter or radiation, with overall properties such as mass, position or momentum"@en .
+
+wd:P527 a wikibase:Property ;
+	rdfs:label "has part(s)"@en ;
+	skos:prefLabel "has part(s)"@en ;
+	schema:name "has part(s)"@en ;
+	schema:description "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P527 ;
+	wikibase:claim p:P527 ;
+	wikibase:statementProperty ps:P527 ;
+	wikibase:statementValue psv:P527 ;
+	wikibase:qualifier pq:P527 ;
+	wikibase:qualifierValue pqv:P527 ;
+	wikibase:reference pr:P527 ;
+	wikibase:referenceValue prv:P527 ;
+	wikibase:novalue wdno:P527 .
+
+p:P527 a owl:ObjectProperty .
+
+psv:P527 a owl:ObjectProperty .
+
+pqv:P527 a owl:ObjectProperty .
+
+prv:P527 a owl:ObjectProperty .
+
+wdt:P527 a owl:ObjectProperty .
+
+ps:P527 a owl:ObjectProperty .
+
+pq:P527 a owl:ObjectProperty .
+
+pr:P527 a owl:ObjectProperty .
+
+wdno:P527 a owl:Class ;
+	owl:complementOf _:c508fd90817ec28651ec025cc3117403 .
+
+_:c508fd90817ec28651ec025cc3117403 a owl:Restriction ;
+	owl:onProperty wdt:P527 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q9239363 a wikibase:Item ;
+	rdfs:label "Category:Physical systems"@en ;
+	skos:prefLabel "Category:Physical systems"@en ;
+	schema:name "Category:Physical systems"@en ;
+	schema:description "Wikimedia category"@en .
+
+wd:P910 a wikibase:Property ;
+	rdfs:label "topic's main category"@en ;
+	skos:prefLabel "topic's main category"@en ;
+	schema:name "topic's main category"@en ;
+	schema:description "main Wikimedia category"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P910 ;
+	wikibase:claim p:P910 ;
+	wikibase:statementProperty ps:P910 ;
+	wikibase:statementValue psv:P910 ;
+	wikibase:qualifier pq:P910 ;
+	wikibase:qualifierValue pqv:P910 ;
+	wikibase:reference pr:P910 ;
+	wikibase:referenceValue prv:P910 ;
+	wikibase:novalue wdno:P910 .
+
+p:P910 a owl:ObjectProperty .
+
+psv:P910 a owl:ObjectProperty .
+
+pqv:P910 a owl:ObjectProperty .
+
+prv:P910 a owl:ObjectProperty .
+
+wdt:P910 a owl:ObjectProperty .
+
+ps:P910 a owl:ObjectProperty .
+
+pq:P910 a owl:ObjectProperty .
+
+pr:P910 a owl:ObjectProperty .
+
+wdno:P910 a owl:Class ;
+	owl:complementOf _:06be9361e78d041ce01df69013cf6906 .
+
+_:06be9361e78d041ce01df69013cf6906 a owl:Restriction ;
+	owl:onProperty wdt:P910 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q58778 a wikibase:Item ;
+	rdfs:label "system"@en ;
+	skos:prefLabel "system"@en ;
+	schema:name "system"@en ;
+	schema:description "set of interacting or interdependent components"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P227 a wikibase:Property ;
+	rdfs:label "GND ID"@en ;
+	skos:prefLabel "GND ID"@en ;
+	schema:name "GND ID"@en ;
+	schema:description "identifier from an international authority file of names, subjects, and organizations (please don't use type n = name, disambiguation) - Deutsche Nationalbibliothek"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P227 ;
+	wikibase:claim p:P227 ;
+	wikibase:statementProperty ps:P227 ;
+	wikibase:statementValue psv:P227 ;
+	wikibase:qualifier pq:P227 ;
+	wikibase:qualifierValue pqv:P227 ;
+	wikibase:reference pr:P227 ;
+	wikibase:referenceValue prv:P227 ;
+	wikibase:novalue wdno:P227 ;
+	wikibase:directClaimNormalized wdtn:P227 ;
+	wikibase:statementValueNormalized psn:P227 ;
+	wikibase:qualifierValueNormalized pqn:P227 ;
+	wikibase:referenceValueNormalized prn:P227 .
+
+p:P227 a owl:ObjectProperty .
+
+psv:P227 a owl:ObjectProperty .
+
+pqv:P227 a owl:ObjectProperty .
+
+prv:P227 a owl:ObjectProperty .
+
+wdt:P227 a owl:DatatypeProperty .
+
+ps:P227 a owl:DatatypeProperty .
+
+pq:P227 a owl:DatatypeProperty .
+
+pr:P227 a owl:DatatypeProperty .
+
+psn:P227 a owl:ObjectProperty .
+
+pqn:P227 a owl:ObjectProperty .
+
+prn:P227 a owl:ObjectProperty .
+
+wdtn:P227 a owl:ObjectProperty .
+
+wdno:P227 a owl:Class ;
+	owl:complementOf _:286c7ee15bc3c86b8eb6b23547b34d68 .
+
+_:286c7ee15bc3c86b8eb6b23547b34d68 a owl:Restriction ;
+	owl:onProperty wdt:P227 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4373292 a wikibase:Item ;
+	rdfs:label "physical property"@en ;
+	skos:prefLabel "physical property"@en ;
+	schema:name "physical property"@en ;
+	schema:description "attribute of a physical system or body; OR non-chemical property of a material"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q274502 a wikibase:Item ;
+	rdfs:label "degree of freedom"@en ;
+	skos:prefLabel "degree of freedom"@en ;
+	schema:name "degree of freedom"@en ;
+	schema:description "independent physical parameter in the formal description of the state of a physical system"@en .
+
+wd:Q104934 a wikibase:Item ;
+	rdfs:label "fundamental interaction"@en ;
+	skos:prefLabel "fundamental interaction"@en ;
+	schema:name "fundamental interaction"@en ;
+	schema:description "any of the physical interactions or forces: gravitational, electromagnetic, strong nuclear, and weak nuclear"@en .
+
+wd:Q230855 a wikibase:Item ;
+	rdfs:label "physical state"@en ;
+	skos:prefLabel "physical state"@en ;
+	schema:name "physical state"@en ;
+	schema:description "describes the current properties of a physical system"@en .
+
+wd:P2579 a wikibase:Property ;
+	rdfs:label "studied by"@en ;
+	skos:prefLabel "studied by"@en ;
+	schema:name "studied by"@en ;
+	schema:description "subject is studied by this science or domain"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2579 ;
+	wikibase:claim p:P2579 ;
+	wikibase:statementProperty ps:P2579 ;
+	wikibase:statementValue psv:P2579 ;
+	wikibase:qualifier pq:P2579 ;
+	wikibase:qualifierValue pqv:P2579 ;
+	wikibase:reference pr:P2579 ;
+	wikibase:referenceValue prv:P2579 ;
+	wikibase:novalue wdno:P2579 .
+
+p:P2579 a owl:ObjectProperty .
+
+psv:P2579 a owl:ObjectProperty .
+
+pqv:P2579 a owl:ObjectProperty .
+
+prv:P2579 a owl:ObjectProperty .
+
+wdt:P2579 a owl:ObjectProperty .
+
+ps:P2579 a owl:ObjectProperty .
+
+pq:P2579 a owl:ObjectProperty .
+
+pr:P2579 a owl:ObjectProperty .
+
+wdno:P2579 a owl:Class ;
+	owl:complementOf _:646b8b1e4925fe4fca2b57678b2ceb02 .
+
+_:646b8b1e4925fe4fca2b57678b2ceb02 a owl:Restriction ;
+	owl:onProperty wdt:P2579 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q14632398 a wikibase:Item ;
+	rdfs:label "physical sciences"@en ;
+	skos:prefLabel "physical sciences"@en ;
+	schema:name "physical sciences"@en ;
+	schema:description "branch of natural science that studies non-living systems"@en .
+
+wd:Q28843577 a wikibase:Item ;
+	rdfs:label "physical system"@en ;
+	skos:prefLabel "physical system"@en ;
+	schema:name "physical system"@en ;
+	schema:description "system within which chemical interactions do not take place, or can be neglected"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2581 a wikibase:Property ;
+	rdfs:label "BabelNet ID"@en ;
+	skos:prefLabel "BabelNet ID"@en ;
+	schema:name "BabelNet ID"@en ;
+	schema:description "ID in BabelNet encyclopedic dictionary"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2581 ;
+	wikibase:claim p:P2581 ;
+	wikibase:statementProperty ps:P2581 ;
+	wikibase:statementValue psv:P2581 ;
+	wikibase:qualifier pq:P2581 ;
+	wikibase:qualifierValue pqv:P2581 ;
+	wikibase:reference pr:P2581 ;
+	wikibase:referenceValue prv:P2581 ;
+	wikibase:novalue wdno:P2581 ;
+	wikibase:directClaimNormalized wdtn:P2581 ;
+	wikibase:statementValueNormalized psn:P2581 ;
+	wikibase:qualifierValueNormalized pqn:P2581 ;
+	wikibase:referenceValueNormalized prn:P2581 .
+
+p:P2581 a owl:ObjectProperty .
+
+psv:P2581 a owl:ObjectProperty .
+
+pqv:P2581 a owl:ObjectProperty .
+
+prv:P2581 a owl:ObjectProperty .
+
+wdt:P2581 a owl:DatatypeProperty .
+
+ps:P2581 a owl:DatatypeProperty .
+
+pq:P2581 a owl:DatatypeProperty .
+
+pr:P2581 a owl:DatatypeProperty .
+
+psn:P2581 a owl:ObjectProperty .
+
+pqn:P2581 a owl:ObjectProperty .
+
+prn:P2581 a owl:ObjectProperty .
+
+wdtn:P2581 a owl:ObjectProperty .
+
+wdno:P2581 a owl:Class ;
+	owl:complementOf _:bdd44b035df3e72593f3ac1acbd85353 .
+
+_:bdd44b035df3e72593f3ac1acbd85353 a owl:Restriction ;
+	owl:onProperty wdt:P2581 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15710813 a wikibase:Item ;
+	rdfs:label "physical structure"@en ;
+	skos:prefLabel "physical structure"@en ;
+	schema:name "physical structure"@en ;
+	schema:description "body or assemblage of bodies in space that form a system capable of supporting loads"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7497 a wikibase:Property ;
+	rdfs:label "Wolfram Language entity type"@en ;
+	skos:prefLabel "Wolfram Language entity type"@en ;
+	schema:name "Wolfram Language entity type"@en ;
+	schema:description "first part of the Wolfram Language entity code"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7497 ;
+	wikibase:claim p:P7497 ;
+	wikibase:statementProperty ps:P7497 ;
+	wikibase:statementValue psv:P7497 ;
+	wikibase:qualifier pq:P7497 ;
+	wikibase:qualifierValue pqv:P7497 ;
+	wikibase:reference pr:P7497 ;
+	wikibase:referenceValue prv:P7497 ;
+	wikibase:novalue wdno:P7497 ;
+	wikibase:directClaimNormalized wdtn:P7497 ;
+	wikibase:statementValueNormalized psn:P7497 ;
+	wikibase:qualifierValueNormalized pqn:P7497 ;
+	wikibase:referenceValueNormalized prn:P7497 .
+
+p:P7497 a owl:ObjectProperty .
+
+psv:P7497 a owl:ObjectProperty .
+
+pqv:P7497 a owl:ObjectProperty .
+
+prv:P7497 a owl:ObjectProperty .
+
+wdt:P7497 a owl:DatatypeProperty .
+
+ps:P7497 a owl:DatatypeProperty .
+
+pq:P7497 a owl:DatatypeProperty .
+
+pr:P7497 a owl:DatatypeProperty .
+
+psn:P7497 a owl:ObjectProperty .
+
+pqn:P7497 a owl:ObjectProperty .
+
+prn:P7497 a owl:ObjectProperty .
+
+wdtn:P7497 a owl:ObjectProperty .
+
+wdno:P7497 a owl:Class ;
+	owl:complementOf _:fc76848817599d44ab77684f3df057b6 .
+
+_:fc76848817599d44ab77684f3df057b6 a owl:Restriction ;
+	owl:onProperty wdt:P7497 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q96116695 a wikibase:Item ;
+	rdfs:label "type of system"@en ;
+	skos:prefLabel "type of system"@en ;
+	schema:name "type of system"@en ;
+	schema:description "Wikidata metaclass of sets of interacting or interdependent components"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8408 a wikibase:Property ;
+	rdfs:label "KBpedia ID"@en ;
+	skos:prefLabel "KBpedia ID"@en ;
+	schema:name "KBpedia ID"@en ;
+	schema:description "identifier for the KBpedia knowledge graph, which provides consistent mappings across seven large-scale public knowledge bases including Wikidata, and is used to promote data interoperability and extraction of training sets for machine learning"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8408 ;
+	wikibase:claim p:P8408 ;
+	wikibase:statementProperty ps:P8408 ;
+	wikibase:statementValue psv:P8408 ;
+	wikibase:qualifier pq:P8408 ;
+	wikibase:qualifierValue pqv:P8408 ;
+	wikibase:reference pr:P8408 ;
+	wikibase:referenceValue prv:P8408 ;
+	wikibase:novalue wdno:P8408 ;
+	wikibase:directClaimNormalized wdtn:P8408 ;
+	wikibase:statementValueNormalized psn:P8408 ;
+	wikibase:qualifierValueNormalized pqn:P8408 ;
+	wikibase:referenceValueNormalized prn:P8408 .
+
+p:P8408 a owl:ObjectProperty .
+
+psv:P8408 a owl:ObjectProperty .
+
+pqv:P8408 a owl:ObjectProperty .
+
+prv:P8408 a owl:ObjectProperty .
+
+wdt:P8408 a owl:DatatypeProperty .
+
+ps:P8408 a owl:DatatypeProperty .
+
+pq:P8408 a owl:DatatypeProperty .
+
+pr:P8408 a owl:DatatypeProperty .
+
+psn:P8408 a owl:ObjectProperty .
+
+pqn:P8408 a owl:ObjectProperty .
+
+prn:P8408 a owl:ObjectProperty .
+
+wdtn:P8408 a owl:ObjectProperty .
+
+wdno:P8408 a owl:Class ;
+	owl:complementOf _:a5c6b2a39aa8787e5b2a55612fc3d63e .
+
+_:a5c6b2a39aa8787e5b2a55612fc3d63e a owl:Restriction ;
+	owl:onProperty wdt:P8408 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10283 a wikibase:Property ;
+	rdfs:label "OpenAlex ID"@en ;
+	skos:prefLabel "OpenAlex ID"@en ;
+	schema:name "OpenAlex ID"@en ;
+	schema:description "identifier for works, grants, authors, institutes, venues, concepts/subjects in OpenAlex"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10283 ;
+	wikibase:claim p:P10283 ;
+	wikibase:statementProperty ps:P10283 ;
+	wikibase:statementValue psv:P10283 ;
+	wikibase:qualifier pq:P10283 ;
+	wikibase:qualifierValue pqv:P10283 ;
+	wikibase:reference pr:P10283 ;
+	wikibase:referenceValue prv:P10283 ;
+	wikibase:novalue wdno:P10283 ;
+	wikibase:directClaimNormalized wdtn:P10283 ;
+	wikibase:statementValueNormalized psn:P10283 ;
+	wikibase:qualifierValueNormalized pqn:P10283 ;
+	wikibase:referenceValueNormalized prn:P10283 .
+
+p:P10283 a owl:ObjectProperty .
+
+psv:P10283 a owl:ObjectProperty .
+
+pqv:P10283 a owl:ObjectProperty .
+
+prv:P10283 a owl:ObjectProperty .
+
+wdt:P10283 a owl:DatatypeProperty .
+
+ps:P10283 a owl:DatatypeProperty .
+
+pq:P10283 a owl:DatatypeProperty .
+
+pr:P10283 a owl:DatatypeProperty .
+
+psn:P10283 a owl:ObjectProperty .
+
+pqn:P10283 a owl:ObjectProperty .
+
+prn:P10283 a owl:ObjectProperty .
+
+wdtn:P10283 a owl:ObjectProperty .
+
+wdno:P10283 a owl:Class ;
+	owl:complementOf _:32a5275a7dbbfba13192c77c3ada4d3a .
+
+_:32a5275a7dbbfba13192c77c3ada4d3a a owl:Restriction ;
+	owl:onProperty wdt:P10283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4406616 a wikibase:Item ;
+	rdfs:label "concrete object"@en ;
+	skos:prefLabel "concrete object"@en ;
+	schema:name "concrete object"@en ;
+	schema:description "object with a physical referent"@en .
+
+wd:Q30060700 a wikibase:Item ;
+	rdfs:label "scientific object"@en ;
+	skos:prefLabel "scientific object"@en ;
+	schema:name "scientific object"@en ;
+	schema:description "type of object"@en .
+
+wd:P642 a wikibase:Property ;
+	rdfs:label "of"@en ;
+	skos:prefLabel "of"@en ;
+	schema:name "of"@en ;
+	schema:description "qualifier stating that a statement applies within the scope of a particular item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P642 ;
+	wikibase:claim p:P642 ;
+	wikibase:statementProperty ps:P642 ;
+	wikibase:statementValue psv:P642 ;
+	wikibase:qualifier pq:P642 ;
+	wikibase:qualifierValue pqv:P642 ;
+	wikibase:reference pr:P642 ;
+	wikibase:referenceValue prv:P642 ;
+	wikibase:novalue wdno:P642 .
+
+p:P642 a owl:ObjectProperty .
+
+psv:P642 a owl:ObjectProperty .
+
+pqv:P642 a owl:ObjectProperty .
+
+prv:P642 a owl:ObjectProperty .
+
+wdt:P642 a owl:ObjectProperty .
+
+ps:P642 a owl:ObjectProperty .
+
+pq:P642 a owl:ObjectProperty .
+
+pr:P642 a owl:ObjectProperty .
+
+wdno:P642 a owl:Class ;
+	owl:complementOf _:2a127b1015667b59aad92244e4ebb227 .
+
+_:2a127b1015667b59aad92244e4ebb227 a owl:Restriction ;
+	owl:onProperty wdt:P642 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q112276019 a wikibase:Item ;
+	rdfs:label "physical entity"@en ;
+	skos:prefLabel "physical entity"@en ;
+	schema:name "physical entity"@en ;
+	schema:description "entity having physical existence"@en .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q48183 a wikibase:Item ;
+	rdfs:label "German Wikipedia"@en ;
+	skos:prefLabel "German Wikipedia"@en ;
+	schema:name "German Wikipedia"@en ;
+	schema:description "German-language edition of Wikipedia"@en .
+
+wd:P143 a wikibase:Property ;
+	rdfs:label "imported from Wikimedia project"@en ;
+	skos:prefLabel "imported from Wikimedia project"@en ;
+	schema:name "imported from Wikimedia project"@en ;
+	schema:description "source of this claim's value; used in references section by bots or humans importing data from Wikimedia projects"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P143 ;
+	wikibase:claim p:P143 ;
+	wikibase:statementProperty ps:P143 ;
+	wikibase:statementValue psv:P143 ;
+	wikibase:qualifier pq:P143 ;
+	wikibase:qualifierValue pqv:P143 ;
+	wikibase:reference pr:P143 ;
+	wikibase:referenceValue prv:P143 ;
+	wikibase:novalue wdno:P143 .
+
+p:P143 a owl:ObjectProperty .
+
+psv:P143 a owl:ObjectProperty .
+
+pqv:P143 a owl:ObjectProperty .
+
+prv:P143 a owl:ObjectProperty .
+
+wdt:P143 a owl:ObjectProperty .
+
+ps:P143 a owl:ObjectProperty .
+
+pq:P143 a owl:ObjectProperty .
+
+pr:P143 a owl:ObjectProperty .
+
+wdno:P143 a owl:Class ;
+	owl:complementOf _:66a2156e9cbfe8d655274b862fca1b59 .
+
+_:66a2156e9cbfe8d655274b862fca1b59 a owl:Restriction ;
+	owl:onProperty wdt:P143 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4837690 a wikibase:Item ;
+	rdfs:label "BabelNet"@en ;
+	skos:prefLabel "BabelNet"@en ;
+	schema:name "BabelNet"@en ;
+	schema:description "multilingual semantic network and encyclopedic dictionary"@en .
+
+wd:Q64139102 a wikibase:Item ;
+	rdfs:label "KBpedia"@en ;
+	skos:prefLabel "KBpedia"@en ;
+	schema:name "KBpedia"@en ;
+	schema:description "free ontology aimed at making data and knowledge interoperable for machine learning"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q107507571 a wikibase:Item ;
+	rdfs:label "OpenAlex"@en ;
+	skos:prefLabel "OpenAlex"@en ;
+	schema:name "OpenAlex"@en ;
+	schema:description "an open catalog of scholarly papers, authors, institutions, venues, and concepts"@en .
+
+wd:P854 a wikibase:Property ;
+	rdfs:label "reference URL"@en ;
+	skos:prefLabel "reference URL"@en ;
+	schema:name "reference URL"@en ;
+	schema:description "should be used for Internet URLs as references. Use \"Wikimedia import URL\" (P4656) for imports from WMF sites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P854 ;
+	wikibase:claim p:P854 ;
+	wikibase:statementProperty ps:P854 ;
+	wikibase:statementValue psv:P854 ;
+	wikibase:qualifier pq:P854 ;
+	wikibase:qualifierValue pqv:P854 ;
+	wikibase:reference pr:P854 ;
+	wikibase:referenceValue prv:P854 ;
+	wikibase:novalue wdno:P854 .
+
+p:P854 a owl:ObjectProperty .
+
+psv:P854 a owl:ObjectProperty .
+
+pqv:P854 a owl:ObjectProperty .
+
+prv:P854 a owl:ObjectProperty .
+
+wdt:P854 a owl:ObjectProperty .
+
+ps:P854 a owl:ObjectProperty .
+
+pq:P854 a owl:ObjectProperty .
+
+pr:P854 a owl:ObjectProperty .
+
+wdno:P854 a owl:Class ;
+	owl:complementOf _:7317e7e5a3edc1980ecfe7616bb5fa1d .
+
+_:7317e7e5a3edc1980ecfe7616bb5fa1d a owl:Restriction ;
+	owl:onProperty wdt:P854 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q12202727 owl:sameAs wd:Q1454986 .
+
+wd:Q1492317 owl:sameAs wd:Q1454986 .
+
+wd:Q2793905 owl:sameAs wd:Q1454986 .
+
+wd:Q85970557 owl:sameAs wd:Q1454986 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:664bae4effccc18fd4ad1ae188fab025 a wikibase:TimeValue ;
+	wikibase:timeValue "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:3b2ff2744ee9af4b07734336d1723792 a wikibase:TimeValue ;
+	wikibase:timeValue "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:9a24f7c0208b05d6be97077d855671d1dfdbc0dd a wikibase:Reference ;
+	pr:P143 wd:Q48183 .
+
+ref:248ac337a217a5f5eed7139a82a4e60931611af0 a wikibase:Reference ;
+	pr:P248 wd:Q4837690 .
+
+ref:9a681f9dd95c90224547c404e11295f4f7dcf54e a wikibase:Reference ;
+	pr:P248 wd:Q64139102 ;
+	pr:P813 "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:664bae4effccc18fd4ad1ae188fab025 .
+
+ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 a wikibase:Reference ;
+	pr:P248 wd:Q107507571 ;
+	pr:P813 "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:3b2ff2744ee9af4b07734336d1723792 ;
+	pr:P854 <https://docs.openalex.org/download-snapshot/snapshot-data-format> .

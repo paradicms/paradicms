@@ -1,0 +1,2719 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q1327500 a schema:Dataset ;
+	schema:about wd:Q1327500 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1911394751"^^xsd:integer ;
+	schema:dateModified "2023-06-09T11:20:03Z"^^xsd:dateTime ;
+	wikibase:statements "34"^^xsd:integer ;
+	wikibase:sitelinks "29"^^xsd:integer ;
+	wikibase:identifiers "18"^^xsd:integer .
+
+wd:Q1327500 a wikibase:Item .
+
+<https://ru.wikinews.org/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikinews.org/> ;
+	schema:name "Категория:Электронные музыкальные инструменты"@ru .
+
+<https://ru.wikinews.org/> wikibase:wikiGroup "wikinews" .
+
+<https://en.wikipedia.org/wiki/Electronic_musical_instrument> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Electronic musical instrument"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Elektronisches_Musikinstrument> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Elektronisches Musikinstrument"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Instrument_de_musique_%C3%A9lectronique> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Instrument de musique électronique"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Instrumento_musical_electr%C3%B3nico> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Instrumento musical electrónico"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%AD%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D0%BC%D1%83%D0%B7%D1%8B%D0%BA%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B5_%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Электронные музыкальные инструменты"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Strumento_musicale_elettronico> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Strumento musicale elettronico"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E9%9B%BB%E5%AD%90%E6%A5%BD%E5%99%A8> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "電子楽器"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Elektrofony_elektroniczne> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Elektrofony elektroniczne"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E9%9B%BB%E5%AD%90%E6%A8%82%E5%99%A8> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "電子樂器"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Elektroniska_musikinstrument> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Elektroniska musikinstrument"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D8%B3%D8%A7%D8%B2_%D8%A7%D9%84%DA%A9%D8%AA%D8%B1%D9%88%D9%86%DB%8C%DA%A9> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "ساز الکترونیک"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://he.wikipedia.org/wiki/%D7%9B%D7%9C%D7%99_%D7%A0%D7%92%D7%99%D7%A0%D7%94_%D7%90%D7%9C%D7%A7%D7%98%D7%A8%D7%95%D7%A0%D7%99%D7%99%D7%9D> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "he" ;
+	schema:isPartOf <https://he.wikipedia.org/> ;
+	schema:name "כלי נגינה אלקטרוניים"@he .
+
+<https://he.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Elektronik_m%C3%BCzik_aleti> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Elektronik müzik aleti"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%95%D0%BB%D0%B5%D0%BA%D1%82%D1%80%D0%BE%D0%BD%D0%BD%D1%96_%D0%BC%D1%83%D0%B7%D0%B8%D1%87%D0%BD%D1%96_%D1%96%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D0%B8> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Електронні музичні інструменти"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EC%A0%84%EC%9E%90_%EC%95%85%EA%B8%B0> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "전자 악기"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Instrument_musical_electr%C3%B2nic> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Instrument musical electrònic"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ro.wikipedia.org/wiki/Instrument_muzical_electronic> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ro" ;
+	schema:isPartOf <https://ro.wikipedia.org/> ;
+	schema:name "Instrument muzical electronic"@ro .
+
+<https://ro.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://da.wikipedia.org/wiki/Elektroniske_musikinstrumenter> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "da" ;
+	schema:isPartOf <https://da.wikipedia.org/> ;
+	schema:name "Elektroniske musikinstrumenter"@da .
+
+<https://da.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://et.wikipedia.org/wiki/Elektroonilised_muusikainstrumendid> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikipedia.org/> ;
+	schema:name "Elektroonilised muusikainstrumendid"@et .
+
+<https://et.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eo.wikipedia.org/wiki/Elektronika_muzikilo> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "eo" ;
+	schema:isPartOf <https://eo.wikipedia.org/> ;
+	schema:name "Elektronika muzikilo"@eo .
+
+<https://eo.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://wuu.wikipedia.org/wiki/%E7%94%B5%E5%AD%90%E4%B9%90%E5%99%A8> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "wuu" ;
+	schema:isPartOf <https://wuu.wikipedia.org/> ;
+	schema:name "电子乐器"@wuu .
+
+<https://wuu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://el.wikipedia.org/wiki/%CE%97%CE%BB%CE%B5%CE%BA%CF%84%CF%81%CE%BF%CE%BD%CE%B9%CE%BA%CF%8C_%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CF%8C_%CF%8C%CF%81%CE%B3%CE%B1%CE%BD%CE%BF> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "el" ;
+	schema:isPartOf <https://el.wikipedia.org/> ;
+	schema:name "Ηλεκτρονικό μουσικό όργανο"@el .
+
+<https://el.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D8%A2%D9%84%D8%A9_%D9%85%D9%88%D8%B3%D9%8A%D9%82%D9%8A%D8%A9_%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A%D8%A9> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "آلة موسيقية إلكترونية"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sl.wikipedia.org/wiki/Elektronsko_glasbilo> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "sl" ;
+	schema:isPartOf <https://sl.wikipedia.org/> ;
+	schema:name "Elektronsko glasbilo"@sl .
+
+<https://sl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sr.wikipedia.org/wiki/Elektronski_muzi%C4%8Dki_instrument> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "sr" ;
+	schema:isPartOf <https://sr.wikipedia.org/> ;
+	schema:name "Elektronski muzički instrument"@sr .
+
+<https://sr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ast.wikipedia.org/wiki/Instrumentu_musical_electr%C3%B3nicu> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "ast" ;
+	schema:isPartOf <https://ast.wikipedia.org/> ;
+	schema:name "Instrumentu musical electrónicu"@ast .
+
+<https://ast.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eu.wikipedia.org/wiki/Instrumentu_elektroniko> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "eu" ;
+	schema:isPartOf <https://eu.wikipedia.org/> ;
+	schema:name "Instrumentu elektroniko"@eu .
+
+<https://eu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fi.wikipedia.org/wiki/S%C3%A4hk%C3%B6soitin> a schema:Article ;
+	schema:about wd:Q1327500 ;
+	schema:inLanguage "fi" ;
+	schema:isPartOf <https://fi.wikipedia.org/> ;
+	schema:name "Sähkösoitin"@fi .
+
+<https://fi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q1327500 wdt:P279 wd:Q105738,
+		wd:Q876367,
+		wd:Q34379 ;
+	wdt:P373 "Electronic musical instruments" ;
+	wdt:P349 "00561432" ;
+	wdtn:P349 <http://id.ndl.go.jp/auth/ndlna/00561432> ;
+	wdt:P646 "/m/02qjv" ;
+	wdt:P1330 "a51219e5-fc36-4427-93a9-743e616c6f0c" ;
+	wdtn:P1330 <http://musicbrainz.org/instrument/a51219e5-fc36-4427-93a9-743e616c6f0c> ;
+	wdt:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/EMS%20at%20MIM%20Sequencer.jpg>,
+		<http://commons.wikimedia.org/wiki/Special:FilePath/Detailed%20view%20of%20Audiocubes.jpg>,
+		<http://commons.wikimedia.org/wiki/Special:FilePath/Bob%20Moog3.jpg> ;
+	wdt:P1014 "300194214" ;
+	wdtn:P1014 <http://vocab.getty.edu/aat/300194214> ;
+	wdt:P2581 "00030254n" ;
+	wdtn:P2581 <http://babelnet.org/rdf/s00030254n> ;
+	wdt:P3763 "2208" ;
+	wdtn:P3763 <http://www.mimo-db.eu/InstrumentsKeywords/2208> ;
+	wdt:P1762 "53" ;
+	wdt:P910 wd:Q6299307 ;
+	wdt:P2283 wd:Q174925 ;
+	wdt:P5395 "electronic-musical-instruments-emc" ;
+	wdt:P31 wd:Q1254773 ;
+	wdt:P361 wd:Q26836418 ;
+	wdt:P1448 "Analogue electronic instruments, modules and components"@en ;
+	wdt:P973 <http://www.mimo-db.eu/HornbostelAndSachs/6167> ;
+	wdt:P1417 "art/electronic-instrument" ;
+	wdt:P7033 "scot/5650" ;
+	wdtn:P7033 <http://vocabulary.curriculum.edu.au/scot/5650.rdf> ;
+	wdt:P7749 "10688" ;
+	wdtn:P7749 <https://nomenclature.info/nom/10688> ;
+	wdt:P1343 wd:Q20078554 ;
+	wdt:P2347 "618" ;
+	wdtn:P2347 <http://www.yso.fi/onto/yso/p618> ;
+	wdt:P508 "2366" ;
+	wdtn:P508 <http://purl.org/bncf/tid/2366> ;
+	wdt:P227 "4014362-4" ;
+	wdtn:P227 <https://d-nb.info/gnd/4014362-4> ;
+	wdt:P10283 "C2994507667" ;
+	wdt:P691 "ph118679" ;
+	wdt:P5008 wd:Q6173448 ;
+	wdt:P11302 "6001" ;
+	wdt:P10063 "01021" ;
+	wdtn:P10063 <http://urn.fi/urn:nbn:fi:au:seko:01021> ;
+	wdt:P8516 "mp2013015244" ;
+	wdtn:P8516 <http://id.loc.gov/authorities/performanceMediums/mp2013015244> ;
+	p:P279 s:q1327500-90B0D7B5-5F02-4303-8744-00EEB939184D .
+
+s:q1327500-90B0D7B5-5F02-4303-8744-00EEB939184D a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q105738 ;
+	prov:wasDerivedFrom ref:cc9f42c1db59c16bc43c36594047ad19d23d23ab .
+
+wd:Q1327500 p:P279 s:Q1327500-718de5dd-4fc8-790e-f886-27fc9ded2400 .
+
+s:Q1327500-718de5dd-4fc8-790e-f886-27fc9ded2400 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q876367 .
+
+wd:Q1327500 p:P279 s:Q1327500-1e2c016a-49db-fa26-3ba5-4b2e2464f35f .
+
+s:Q1327500-1e2c016a-49db-fa26-3ba5-4b2e2464f35f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q34379 .
+
+wd:Q1327500 p:P373 s:q1327500-A2057F70-F525-4875-B511-CC06472E8CE1 .
+
+s:q1327500-A2057F70-F525-4875-B511-CC06472E8CE1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P373 "Electronic musical instruments" .
+
+wd:Q1327500 p:P349 s:Q1327500-B99CB038-317D-4280-B439-064A2CEC544C .
+
+s:Q1327500-B99CB038-317D-4280-B439-064A2CEC544C a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P349 "00561432" ;
+	psn:P349 <http://id.ndl.go.jp/auth/ndlna/00561432> .
+
+wd:Q1327500 p:P646 s:Q1327500-A7F91085-5A57-41C5-84B3-61F4148DB161 .
+
+s:Q1327500-A7F91085-5A57-41C5-84B3-61F4148DB161 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/02qjv" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q1327500 p:P1330 s:Q1327500-5957A926-A309-46D9-97B1-19F8CFB27134 .
+
+s:Q1327500-5957A926-A309-46D9-97B1-19F8CFB27134 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1330 "a51219e5-fc36-4427-93a9-743e616c6f0c" ;
+	psn:P1330 <http://musicbrainz.org/instrument/a51219e5-fc36-4427-93a9-743e616c6f0c> ;
+	prov:wasDerivedFrom ref:706208b3024200fd0a39ad499808dd0d98d74065 .
+
+wd:Q1327500 p:P18 s:Q1327500-929729B1-9EB5-4AAA-ABEC-16CD2308D199 .
+
+s:Q1327500-929729B1-9EB5-4AAA-ABEC-16CD2308D199 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/EMS%20at%20MIM%20Sequencer.jpg> .
+
+wd:Q1327500 p:P18 s:Q1327500-3423A0C9-DBF4-47A2-8836-DB1F797A0AEF .
+
+s:Q1327500-3423A0C9-DBF4-47A2-8836-DB1F797A0AEF a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Detailed%20view%20of%20Audiocubes.jpg> .
+
+wd:Q1327500 p:P18 s:Q1327500-9bd3d50d-4ec0-8fae-c907-0ec949d007b9 .
+
+s:Q1327500-9bd3d50d-4ec0-8fae-c907-0ec949d007b9 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Bob%20Moog3.jpg> ;
+	pq:P180 wd:Q34379 .
+
+wd:Q1327500 p:P1014 s:Q1327500-3AB0D754-2819-4CA9-A13B-6B9BB87ED6DB .
+
+s:Q1327500-3AB0D754-2819-4CA9-A13B-6B9BB87ED6DB a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1014 "300194214" ;
+	psn:P1014 <http://vocab.getty.edu/aat/300194214> .
+
+wd:Q1327500 p:P2581 s:Q1327500-FC0330AB-6C0D-4CBB-9916-BF1E582C749D .
+
+s:Q1327500-FC0330AB-6C0D-4CBB-9916-BF1E582C749D a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2581 "00030254n" ;
+	psn:P2581 <http://babelnet.org/rdf/s00030254n> ;
+	prov:wasDerivedFrom ref:248ac337a217a5f5eed7139a82a4e60931611af0 .
+
+wd:Q1327500 p:P3763 s:Q1327500-C1FD245D-459F-4250-9FC3-0EB4066B1657 .
+
+s:Q1327500-C1FD245D-459F-4250-9FC3-0EB4066B1657 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3763 "2208" ;
+	psn:P3763 <http://www.mimo-db.eu/InstrumentsKeywords/2208> .
+
+wd:Q1327500 p:P1762 s:Q1327500-78bade7a-40c5-135a-ab47-e4043ca4a589 .
+
+s:Q1327500-78bade7a-40c5-135a-ab47-e4043ca4a589 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1762 "53" ;
+	prov:wasDerivedFrom ref:1eab7d6110e7ad26f014ea09be9c11c6bad88f45 .
+
+wd:Q1327500 p:P910 s:Q1327500-dc4a971f-490a-31e0-306a-8b7f02b9e5b6 .
+
+s:Q1327500-dc4a971f-490a-31e0-306a-8b7f02b9e5b6 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q6299307 .
+
+wd:Q1327500 p:P2283 s:Q1327500-6F4145CB-DBBB-43BC-8396-D0D41C3303F3 .
+
+s:Q1327500-6F4145CB-DBBB-43BC-8396-D0D41C3303F3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2283 wd:Q174925 .
+
+wd:Q1327500 p:P5395 s:Q1327500-D5460B71-7563-4234-BA2D-8CD1AB9FC7A7 .
+
+s:Q1327500-D5460B71-7563-4234-BA2D-8CD1AB9FC7A7 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P5395 "electronic-musical-instruments-emc" .
+
+wd:Q1327500 p:P31 s:Q1327500-3EB15EBD-EF64-4BAE-BA68-B77B0AC9C025 .
+
+s:Q1327500-3EB15EBD-EF64-4BAE-BA68-B77B0AC9C025 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q1254773 ;
+	prov:wasDerivedFrom ref:1eab7d6110e7ad26f014ea09be9c11c6bad88f45 .
+
+wd:Q1327500 p:P361 s:Q1327500-C7F24757-1042-485A-B6DF-7E76072B3445 .
+
+s:Q1327500-C7F24757-1042-485A-B6DF-7E76072B3445 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q26836418 ;
+	prov:wasDerivedFrom ref:1eab7d6110e7ad26f014ea09be9c11c6bad88f45 .
+
+wd:Q1327500 p:P1448 s:Q1327500-F98C4591-C346-4BBB-A940-D42A77FC3BDA .
+
+s:Q1327500-F98C4591-C346-4BBB-A940-D42A77FC3BDA a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1448 "Analogue electronic instruments, modules and components"@en ;
+	prov:wasDerivedFrom ref:1eab7d6110e7ad26f014ea09be9c11c6bad88f45 .
+
+wd:Q1327500 p:P973 s:Q1327500-AC05380F-EE52-47D5-8DA0-BF7D04B5CE34 .
+
+s:Q1327500-AC05380F-EE52-47D5-8DA0-BF7D04B5CE34 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P973 <http://www.mimo-db.eu/HornbostelAndSachs/6167> ;
+	pq:P407 wd:Q1860 ;
+	prov:wasDerivedFrom ref:1eab7d6110e7ad26f014ea09be9c11c6bad88f45 .
+
+wd:Q1327500 p:P1417 s:Q1327500-4D4AACA5-C8C6-4550-9E7E-007236811DDF .
+
+s:Q1327500-4D4AACA5-C8C6-4550-9E7E-007236811DDF a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1417 "art/electronic-instrument" .
+
+wd:Q1327500 p:P7033 s:Q1327500-3EB899B6-9DE6-4536-9F3E-DC9DA920D203 .
+
+s:Q1327500-3EB899B6-9DE6-4536-9F3E-DC9DA920D203 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7033 "scot/5650" ;
+	psn:P7033 <http://vocabulary.curriculum.edu.au/scot/5650.rdf> .
+
+wd:Q1327500 p:P7749 s:Q1327500-267CD176-6A29-40CD-B3FB-3828888F5251 .
+
+s:Q1327500-267CD176-6A29-40CD-B3FB-3828888F5251 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7749 "10688" ;
+	psn:P7749 <https://nomenclature.info/nom/10688> .
+
+wd:Q1327500 p:P1343 s:Q1327500-f301c89e-426c-2bcb-1b57-688b426d0dce .
+
+s:Q1327500-f301c89e-426c-2bcb-1b57-688b426d0dce a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1343 wd:Q20078554 ;
+	pq:P805 wd:Q98684528 .
+
+wd:Q1327500 p:P2347 s:Q1327500-D95EAEFB-ECB3-493B-B648-127267B238EE .
+
+s:Q1327500-D95EAEFB-ECB3-493B-B648-127267B238EE a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2347 "618" ;
+	psn:P2347 <http://www.yso.fi/onto/yso/p618> ;
+	prov:wasDerivedFrom ref:e5fe28150ece4f5cad8ddd10a83cb85e350db185 .
+
+wd:Q1327500 p:P508 s:Q1327500-D256B723-F9EA-447E-AEDF-706502CF9EBB .
+
+s:Q1327500-D256B723-F9EA-447E-AEDF-706502CF9EBB a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P508 "2366" ;
+	psn:P508 <http://purl.org/bncf/tid/2366> .
+
+wd:Q1327500 p:P227 s:Q1327500-be716b59-42e4-eb4c-0e59-978779d79db0 .
+
+s:Q1327500-be716b59-42e4-eb4c-0e59-978779d79db0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P227 "4014362-4" ;
+	psn:P227 <https://d-nb.info/gnd/4014362-4> ;
+	pq:P4070 wd:Q105738 ;
+	prov:wasDerivedFrom ref:590d8e13d1dbe9138b01bd00dd4cd4fdee6a78c4 .
+
+wd:Q1327500 p:P10283 s:Q1327500-3C4E5B21-99DA-41D9-A794-5BE996A3C28E .
+
+s:Q1327500-3C4E5B21-99DA-41D9-A794-5BE996A3C28E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10283 "C2994507667" ;
+	prov:wasDerivedFrom ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 .
+
+wd:Q1327500 p:P691 s:Q1327500-5B8A4595-C468-472D-956A-98404A81B5F3 .
+
+s:Q1327500-5B8A4595-C468-472D-956A-98404A81B5F3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P691 "ph118679" ;
+	pq:P1810 "elektronické hudební nástroje" .
+
+wd:Q1327500 p:P5008 s:Q1327500-32AD811E-DE12-4E7A-97B5-C8A14C5A4C80 .
+
+s:Q1327500-32AD811E-DE12-4E7A-97B5-C8A14C5A4C80 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P5008 wd:Q6173448 ;
+	pq:P585 "2022-10-31T00:00:00Z"^^xsd:dateTime ;
+	pqv:P585 v:70f06890e5b9388fda5e8da1c1fcd26a .
+
+wd:Q1327500 p:P11302 s:Q1327500-04B8A02F-8BC8-4ACC-9C1D-0CD315808F39 .
+
+s:Q1327500-04B8A02F-8BC8-4ACC-9C1D-0CD315808F39 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P11302 "6001" ;
+	pq:P1810 "6001 - Arts & Entertainment > Hobbies & Creative Arts > Musical Instruments > Electronic Musical Instruments" .
+
+wd:Q1327500 p:P10063 s:Q1327500-b94efb3d-4721-6d0f-5ea9-45f7874d277c .
+
+s:Q1327500-b94efb3d-4721-6d0f-5ea9-45f7874d277c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10063 "01021" ;
+	psn:P10063 <http://urn.fi/urn:nbn:fi:au:seko:01021> .
+
+wd:Q1327500 p:P8516 s:Q1327500-97f06d00-4708-9377-f952-0fce30bad17a .
+
+s:Q1327500-97f06d00-4708-9377-f952-0fce30bad17a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8516 "mp2013015244" ;
+	psn:P8516 <http://id.loc.gov/authorities/performanceMediums/mp2013015244> .
+
+wd:Q1327500 rdfs:label "электронные музыкальные инструменты"@ru ;
+	skos:prefLabel "электронные музыкальные инструменты"@ru ;
+	schema:name "электронные музыкальные инструменты"@ru ;
+	rdfs:label "instrument de musique électronique"@fr ;
+	skos:prefLabel "instrument de musique électronique"@fr ;
+	schema:name "instrument de musique électronique"@fr ;
+	rdfs:label "electronic musical instrument"@en ;
+	skos:prefLabel "electronic musical instrument"@en ;
+	schema:name "electronic musical instrument"@en ;
+	rdfs:label "電子樂器"@zh ;
+	skos:prefLabel "電子樂器"@zh ;
+	schema:name "電子樂器"@zh ;
+	rdfs:label "Instrument musical electrònic"@ca ;
+	skos:prefLabel "Instrument musical electrònic"@ca ;
+	schema:name "Instrument musical electrònic"@ca ;
+	rdfs:label "elektronisches Musikinstrument"@de ;
+	skos:prefLabel "elektronisches Musikinstrument"@de ;
+	schema:name "elektronisches Musikinstrument"@de ;
+	rdfs:label "전자 악기"@ko ;
+	skos:prefLabel "전자 악기"@ko ;
+	schema:name "전자 악기"@ko ;
+	rdfs:label "elektroniska musikinstrument"@sv ;
+	skos:prefLabel "elektroniska musikinstrument"@sv ;
+	schema:name "elektroniska musikinstrument"@sv ;
+	rdfs:label "elektronisk musikinstrument"@da ;
+	skos:prefLabel "elektronisk musikinstrument"@da ;
+	schema:name "elektronisk musikinstrument"@da ;
+	rdfs:label "ساز موسیقی الکترونیک"@fa ;
+	skos:prefLabel "ساز موسیقی الکترونیک"@fa ;
+	schema:name "ساز موسیقی الکترونیک"@fa ;
+	rdfs:label "elektrofon elektroniczny"@pl ;
+	skos:prefLabel "elektrofon elektroniczny"@pl ;
+	schema:name "elektrofon elektroniczny"@pl ;
+	rdfs:label "електронні музичні інструменти"@uk ;
+	skos:prefLabel "електронні музичні інструменти"@uk ;
+	schema:name "електронні музичні інструменти"@uk ;
+	rdfs:label "elektronska glasbila"@sl ;
+	skos:prefLabel "elektronska glasbila"@sl ;
+	schema:name "elektronska glasbila"@sl ;
+	rdfs:label "Elektroonilised muusikainstrumendid"@et ;
+	skos:prefLabel "Elektroonilised muusikainstrumendid"@et ;
+	schema:name "Elektroonilised muusikainstrumendid"@et ;
+	rdfs:label "instrument muzical electronic"@ro ;
+	skos:prefLabel "instrument muzical electronic"@ro ;
+	schema:name "instrument muzical electronic"@ro ;
+	rdfs:label "電子楽器"@ja ;
+	skos:prefLabel "電子楽器"@ja ;
+	schema:name "電子楽器"@ja ;
+	rdfs:label "instrumento musical electrónico"@es ;
+	skos:prefLabel "instrumento musical electrónico"@es ;
+	schema:name "instrumento musical electrónico"@es ;
+	rdfs:label "כלי נגינה אלקטרוניים"@he ;
+	skos:prefLabel "כלי נגינה אלקטרוניים"@he ;
+	schema:name "כלי נגינה אלקטרוניים"@he ;
+	rdfs:label "elektronisch muziekinstrument"@nl ;
+	skos:prefLabel "elektronisch muziekinstrument"@nl ;
+	schema:name "elektronisch muziekinstrument"@nl ;
+	rdfs:label "elettrofoni analogici"@it ;
+	skos:prefLabel "elettrofoni analogici"@it ;
+	schema:name "elettrofoni analogici"@it ;
+	rdfs:label "електронски музички инструмент"@mk ;
+	skos:prefLabel "електронски музички инструмент"@mk ;
+	schema:name "електронски музички инструмент"@mk ;
+	rdfs:label "електрични музички инструмент"@sr ;
+	skos:prefLabel "електрични музички инструмент"@sr ;
+	schema:name "електрични музички инструмент"@sr ;
+	rdfs:label "elektronisk musikkinstrument"@nb ;
+	skos:prefLabel "elektronisk musikkinstrument"@nb ;
+	schema:name "elektronisk musikkinstrument"@nb ;
+	rdfs:label "elektronisk musikkinstrument"@nn ;
+	skos:prefLabel "elektronisk musikkinstrument"@nn ;
+	schema:name "elektronisk musikkinstrument"@nn ;
+	rdfs:label "ηλεκτρονικό μουσικό όργανο"@el ;
+	skos:prefLabel "ηλεκτρονικό μουσικό όργανο"@el ;
+	schema:name "ηλεκτρονικό μουσικό όργανο"@el ;
+	rdfs:label "elektronika muzika instrumento"@eo ;
+	skos:prefLabel "elektronika muzika instrumento"@eo ;
+	schema:name "elektronika muzika instrumento"@eo ;
+	rdfs:label "Elektronik müzik aleti"@tr ;
+	skos:prefLabel "Elektronik müzik aleti"@tr ;
+	schema:name "Elektronik müzik aleti"@tr ;
+	rdfs:label "instrumentu musical electrónicu"@ast ;
+	skos:prefLabel "instrumentu musical electrónicu"@ast ;
+	schema:name "instrumentu musical electrónicu"@ast ;
+	rdfs:label "electronic musical instrument"@en-ca ;
+	skos:prefLabel "electronic musical instrument"@en-ca ;
+	schema:name "electronic musical instrument"@en-ca ;
+	rdfs:label "electronic musical instrument"@en-gb ;
+	skos:prefLabel "electronic musical instrument"@en-gb ;
+	schema:name "electronic musical instrument"@en-gb ;
+	rdfs:label "电子乐器"@wuu ;
+	skos:prefLabel "电子乐器"@wuu ;
+	schema:name "电子乐器"@wuu ;
+	rdfs:label "էլեկտրոնային երաժշտական գործիքներ"@hy ;
+	skos:prefLabel "էլեկտրոնային երաժշտական գործիքներ"@hy ;
+	schema:name "էլեկտրոնային երաժշտական գործիքներ"@hy ;
+	rdfs:label "gléas ceoil leictreonach"@ga ;
+	skos:prefLabel "gléas ceoil leictreonach"@ga ;
+	schema:name "gléas ceoil leictreonach"@ga ;
+	rdfs:label "آلة موسيقية إلكترونية"@ar ;
+	skos:prefLabel "آلة موسيقية إلكترونية"@ar ;
+	schema:name "آلة موسيقية إلكترونية"@ar ;
+	rdfs:label "электронны музычны інструмэнт"@be-tarask ;
+	skos:prefLabel "электронны музычны інструмэнт"@be-tarask ;
+	schema:name "электронны музычны інструмэнт"@be-tarask ;
+	rdfs:label "電子樂器"@zh-hant ;
+	skos:prefLabel "電子樂器"@zh-hant ;
+	schema:name "電子樂器"@zh-hant ;
+	rdfs:label "電子樂器"@zh-tw ;
+	skos:prefLabel "電子樂器"@zh-tw ;
+	schema:name "電子樂器"@zh-tw ;
+	rdfs:label "sähkösoitin"@fi ;
+	skos:prefLabel "sähkösoitin"@fi ;
+	schema:name "sähkösoitin"@fi ;
+	rdfs:label "الت موزيک ايليکترونيک"@ms-arab ;
+	skos:prefLabel "الت موزيک ايليکترونيک"@ms-arab ;
+	schema:name "الت موزيک ايليکترونيک"@ms-arab ;
+	rdfs:label "alat muzik elektronik"@ms ;
+	skos:prefLabel "alat muzik elektronik"@ms ;
+	schema:name "alat muzik elektronik"@ms ;
+	rdfs:label "elektronický hudební nástroj"@cs ;
+	skos:prefLabel "elektronický hudební nástroj"@cs ;
+	schema:name "elektronický hudební nástroj"@cs ;
+	rdfs:label "Instrumentu elektroniko"@eu ;
+	skos:prefLabel "Instrumentu elektroniko"@eu ;
+	schema:name "Instrumentu elektroniko"@eu ;
+	rdfs:label "электронны музычны інструмент"@be ;
+	skos:prefLabel "электронны музычны інструмент"@be ;
+	schema:name "электронны музычны інструмент"@be ;
+	schema:description "musical instrument that produces its sounds using electronics"@en,
+		"famiglia di strumenti musicali"@it,
+		"instrument qui utilise des circuits électroniques pour produire des sons"@fr,
+		"آلة موسيقية تنتج صوتها باستخدام الإلكترونيات"@ar,
+		"grupa instrumentów muzycznych"@pl,
+		"電子回路によって作動する楽器"@ja,
+		"instrument musical que produeix soons usant l'electrònica"@ca,
+		"musical instrument that produces its sounds using electronics"@en-gb,
+		"musical instrument that produces its sounds using electronics"@en-ca,
+		"hudební nástroj, ve kterém je zvuk produkován pomocí elektroniky"@cs,
+		"soitin, jonka ääni syntyy sähköisesti"@fi,
+		"instrumento musical que produce sus sonidos utilizando la electrónica"@es,
+		"музичний інструмент, який відтворює свої звуки за допомогою електроніки"@uk,
+		"Musikinstrument ohne mechanisch bewegliche bzw. schwingende Elemente zur Tonerzeugung."@de,
+		"музыкальный инструмент, который совершает свои звуки с помощью электроники"@ru ;
+	skos:altLabel "электромузыкальные инструменты"@ru,
+		"электронный музыкальный инструмент"@ru,
+		"электромузыкальный инструмент"@ru,
+		"Instrument électroanalogique"@fr,
+		"L'instrument electroanalogique"@fr,
+		"Instrument De Musique Électronique"@fr,
+		"Instrument de musique electronique"@fr,
+		"Instruments de musique électronique"@fr,
+		"Instruments électroniques"@fr,
+		"電鳴樂器"@zh,
+		"elektronisches Instrument"@de,
+		"elektronische Musikinstrumente"@de,
+		"전자악기"@ko,
+		"Elektroniska instrument"@sv,
+		"elektrofon"@sv,
+		"ابزارهای موسیقی الکترونیک"@fa,
+		"instrument elektroniczny"@pl,
+		"Elektrooniline muusikainstrument"@et,
+		"Instrumentos musicales electrónicos"@es,
+		"Instrumento musical electronico"@es,
+		"Instrumentos musicales electronicos"@es,
+		"כלי נגינה - אלקטרופוניים"@he,
+		"כלי נגינה חשמליים"@he,
+		"elektroniske musikinstrumenter"@da,
+		"electronic instrument"@en,
+		"analogue electronic instruments"@en,
+		"analogue electronic instruments, modules and components"@en,
+		"analogue electrophones"@en,
+		"electrophone"@en,
+		"strumenti musicali elettronici"@it,
+		"elettrofoni a oscillatori"@it,
+		"strumenti musicali elettronici analogici"@it,
+		"آلة إلكترونية"@ar,
+		"電気楽器"@ja,
+		"elektronický nástroj"@cs,
+		"electronic musical instrument"@uk,
+		"elektrofoni"@fi .
+
+wd:Q105738 a wikibase:Item ;
+	rdfs:label "electrophone"@en ;
+	skos:prefLabel "electrophone"@en ;
+	schema:name "electrophone"@en ;
+	schema:description "class of musical instruments"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q876367 a wikibase:Item ;
+	rdfs:label "electronic instrument"@en ;
+	skos:prefLabel "electronic instrument"@en ;
+	schema:name "electronic instrument"@en .
+
+wd:Q34379 a wikibase:Item ;
+	rdfs:label "musical instrument"@en ;
+	skos:prefLabel "musical instrument"@en ;
+	schema:name "musical instrument"@en ;
+	schema:description "device created or adapted to make musical sounds"@en .
+
+wd:P373 a wikibase:Property ;
+	rdfs:label "Commons category"@en ;
+	skos:prefLabel "Commons category"@en ;
+	schema:name "Commons category"@en ;
+	schema:description "name of the Wikimedia Commons category containing files related to this item (without the prefix \"Category:\")"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P373 ;
+	wikibase:claim p:P373 ;
+	wikibase:statementProperty ps:P373 ;
+	wikibase:statementValue psv:P373 ;
+	wikibase:qualifier pq:P373 ;
+	wikibase:qualifierValue pqv:P373 ;
+	wikibase:reference pr:P373 ;
+	wikibase:referenceValue prv:P373 ;
+	wikibase:novalue wdno:P373 .
+
+p:P373 a owl:ObjectProperty .
+
+psv:P373 a owl:ObjectProperty .
+
+pqv:P373 a owl:ObjectProperty .
+
+prv:P373 a owl:ObjectProperty .
+
+wdt:P373 a owl:DatatypeProperty .
+
+ps:P373 a owl:DatatypeProperty .
+
+pq:P373 a owl:DatatypeProperty .
+
+pr:P373 a owl:DatatypeProperty .
+
+wdno:P373 a owl:Class ;
+	owl:complementOf _:3de19c92e209926f02f215095eb4fd12 .
+
+_:3de19c92e209926f02f215095eb4fd12 a owl:Restriction ;
+	owl:onProperty wdt:P373 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P349 a wikibase:Property ;
+	rdfs:label "NDL Authority ID"@en ;
+	skos:prefLabel "NDL Authority ID"@en ;
+	schema:name "NDL Authority ID"@en ;
+	schema:description "identifier for authority control per the National Diet Library of Japan"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P349 ;
+	wikibase:claim p:P349 ;
+	wikibase:statementProperty ps:P349 ;
+	wikibase:statementValue psv:P349 ;
+	wikibase:qualifier pq:P349 ;
+	wikibase:qualifierValue pqv:P349 ;
+	wikibase:reference pr:P349 ;
+	wikibase:referenceValue prv:P349 ;
+	wikibase:novalue wdno:P349 ;
+	wikibase:directClaimNormalized wdtn:P349 ;
+	wikibase:statementValueNormalized psn:P349 ;
+	wikibase:qualifierValueNormalized pqn:P349 ;
+	wikibase:referenceValueNormalized prn:P349 .
+
+p:P349 a owl:ObjectProperty .
+
+psv:P349 a owl:ObjectProperty .
+
+pqv:P349 a owl:ObjectProperty .
+
+prv:P349 a owl:ObjectProperty .
+
+wdt:P349 a owl:DatatypeProperty .
+
+ps:P349 a owl:DatatypeProperty .
+
+pq:P349 a owl:DatatypeProperty .
+
+pr:P349 a owl:DatatypeProperty .
+
+psn:P349 a owl:ObjectProperty .
+
+pqn:P349 a owl:ObjectProperty .
+
+prn:P349 a owl:ObjectProperty .
+
+wdtn:P349 a owl:ObjectProperty .
+
+wdno:P349 a owl:Class ;
+	owl:complementOf _:cd24209e08bc1ccf071135ac50a89a01 .
+
+_:cd24209e08bc1ccf071135ac50a89a01 a owl:Restriction ;
+	owl:onProperty wdt:P349 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1330 a wikibase:Property ;
+	rdfs:label "MusicBrainz instrument ID"@en ;
+	skos:prefLabel "MusicBrainz instrument ID"@en ;
+	schema:name "MusicBrainz instrument ID"@en ;
+	schema:description "identifier for an instrument on the music encyclopedia MusicBrainz"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1330 ;
+	wikibase:claim p:P1330 ;
+	wikibase:statementProperty ps:P1330 ;
+	wikibase:statementValue psv:P1330 ;
+	wikibase:qualifier pq:P1330 ;
+	wikibase:qualifierValue pqv:P1330 ;
+	wikibase:reference pr:P1330 ;
+	wikibase:referenceValue prv:P1330 ;
+	wikibase:novalue wdno:P1330 ;
+	wikibase:directClaimNormalized wdtn:P1330 ;
+	wikibase:statementValueNormalized psn:P1330 ;
+	wikibase:qualifierValueNormalized pqn:P1330 ;
+	wikibase:referenceValueNormalized prn:P1330 .
+
+p:P1330 a owl:ObjectProperty .
+
+psv:P1330 a owl:ObjectProperty .
+
+pqv:P1330 a owl:ObjectProperty .
+
+prv:P1330 a owl:ObjectProperty .
+
+wdt:P1330 a owl:DatatypeProperty .
+
+ps:P1330 a owl:DatatypeProperty .
+
+pq:P1330 a owl:DatatypeProperty .
+
+pr:P1330 a owl:DatatypeProperty .
+
+psn:P1330 a owl:ObjectProperty .
+
+pqn:P1330 a owl:ObjectProperty .
+
+prn:P1330 a owl:ObjectProperty .
+
+wdtn:P1330 a owl:ObjectProperty .
+
+wdno:P1330 a owl:Class ;
+	owl:complementOf _:327ff3e016ad7cc212f46c47f676bc3b .
+
+_:327ff3e016ad7cc212f46c47f676bc3b a owl:Restriction ;
+	owl:onProperty wdt:P1330 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P18 a wikibase:Property ;
+	rdfs:label "image"@en ;
+	skos:prefLabel "image"@en ;
+	schema:name "image"@en ;
+	schema:description "image of relevant illustration of the subject; if available, also use more specific properties (sample: coat of arms image, locator map, flag image, signature image, logo image, collage image)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#CommonsMedia> ;
+	wikibase:directClaim wdt:P18 ;
+	wikibase:claim p:P18 ;
+	wikibase:statementProperty ps:P18 ;
+	wikibase:statementValue psv:P18 ;
+	wikibase:qualifier pq:P18 ;
+	wikibase:qualifierValue pqv:P18 ;
+	wikibase:reference pr:P18 ;
+	wikibase:referenceValue prv:P18 ;
+	wikibase:novalue wdno:P18 .
+
+p:P18 a owl:ObjectProperty .
+
+psv:P18 a owl:ObjectProperty .
+
+pqv:P18 a owl:ObjectProperty .
+
+prv:P18 a owl:ObjectProperty .
+
+wdt:P18 a owl:ObjectProperty .
+
+ps:P18 a owl:ObjectProperty .
+
+pq:P18 a owl:ObjectProperty .
+
+pr:P18 a owl:ObjectProperty .
+
+wdno:P18 a owl:Class ;
+	owl:complementOf _:90353c5ec33a5dc569985590a17a3551 .
+
+_:90353c5ec33a5dc569985590a17a3551 a owl:Restriction ;
+	owl:onProperty wdt:P18 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1014 a wikibase:Property ;
+	rdfs:label "Art & Architecture Thesaurus ID"@en ;
+	skos:prefLabel "Art & Architecture Thesaurus ID"@en ;
+	schema:name "Art & Architecture Thesaurus ID"@en ;
+	schema:description "identifier in the Art & Architecture Thesaurus by the Getty Research Institute"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1014 ;
+	wikibase:claim p:P1014 ;
+	wikibase:statementProperty ps:P1014 ;
+	wikibase:statementValue psv:P1014 ;
+	wikibase:qualifier pq:P1014 ;
+	wikibase:qualifierValue pqv:P1014 ;
+	wikibase:reference pr:P1014 ;
+	wikibase:referenceValue prv:P1014 ;
+	wikibase:novalue wdno:P1014 ;
+	wikibase:directClaimNormalized wdtn:P1014 ;
+	wikibase:statementValueNormalized psn:P1014 ;
+	wikibase:qualifierValueNormalized pqn:P1014 ;
+	wikibase:referenceValueNormalized prn:P1014 .
+
+p:P1014 a owl:ObjectProperty .
+
+psv:P1014 a owl:ObjectProperty .
+
+pqv:P1014 a owl:ObjectProperty .
+
+prv:P1014 a owl:ObjectProperty .
+
+wdt:P1014 a owl:DatatypeProperty .
+
+ps:P1014 a owl:DatatypeProperty .
+
+pq:P1014 a owl:DatatypeProperty .
+
+pr:P1014 a owl:DatatypeProperty .
+
+psn:P1014 a owl:ObjectProperty .
+
+pqn:P1014 a owl:ObjectProperty .
+
+prn:P1014 a owl:ObjectProperty .
+
+wdtn:P1014 a owl:ObjectProperty .
+
+wdno:P1014 a owl:Class ;
+	owl:complementOf _:b3313e8714e8603bc734ad31fe890277 .
+
+_:b3313e8714e8603bc734ad31fe890277 a owl:Restriction ;
+	owl:onProperty wdt:P1014 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2581 a wikibase:Property ;
+	rdfs:label "BabelNet ID"@en ;
+	skos:prefLabel "BabelNet ID"@en ;
+	schema:name "BabelNet ID"@en ;
+	schema:description "ID in BabelNet encyclopedic dictionary"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2581 ;
+	wikibase:claim p:P2581 ;
+	wikibase:statementProperty ps:P2581 ;
+	wikibase:statementValue psv:P2581 ;
+	wikibase:qualifier pq:P2581 ;
+	wikibase:qualifierValue pqv:P2581 ;
+	wikibase:reference pr:P2581 ;
+	wikibase:referenceValue prv:P2581 ;
+	wikibase:novalue wdno:P2581 ;
+	wikibase:directClaimNormalized wdtn:P2581 ;
+	wikibase:statementValueNormalized psn:P2581 ;
+	wikibase:qualifierValueNormalized pqn:P2581 ;
+	wikibase:referenceValueNormalized prn:P2581 .
+
+p:P2581 a owl:ObjectProperty .
+
+psv:P2581 a owl:ObjectProperty .
+
+pqv:P2581 a owl:ObjectProperty .
+
+prv:P2581 a owl:ObjectProperty .
+
+wdt:P2581 a owl:DatatypeProperty .
+
+ps:P2581 a owl:DatatypeProperty .
+
+pq:P2581 a owl:DatatypeProperty .
+
+pr:P2581 a owl:DatatypeProperty .
+
+psn:P2581 a owl:ObjectProperty .
+
+pqn:P2581 a owl:ObjectProperty .
+
+prn:P2581 a owl:ObjectProperty .
+
+wdtn:P2581 a owl:ObjectProperty .
+
+wdno:P2581 a owl:Class ;
+	owl:complementOf _:bdd44b035df3e72593f3ac1acbd85353 .
+
+_:bdd44b035df3e72593f3ac1acbd85353 a owl:Restriction ;
+	owl:onProperty wdt:P2581 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3763 a wikibase:Property ;
+	rdfs:label "MIMO instrument ID"@en ;
+	skos:prefLabel "MIMO instrument ID"@en ;
+	schema:name "MIMO instrument ID"@en ;
+	schema:description "identifier for a musical instrument, on the instrument keyword thesaurus from Musical Instruments Museums Online"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3763 ;
+	wikibase:claim p:P3763 ;
+	wikibase:statementProperty ps:P3763 ;
+	wikibase:statementValue psv:P3763 ;
+	wikibase:qualifier pq:P3763 ;
+	wikibase:qualifierValue pqv:P3763 ;
+	wikibase:reference pr:P3763 ;
+	wikibase:referenceValue prv:P3763 ;
+	wikibase:novalue wdno:P3763 ;
+	wikibase:directClaimNormalized wdtn:P3763 ;
+	wikibase:statementValueNormalized psn:P3763 ;
+	wikibase:qualifierValueNormalized pqn:P3763 ;
+	wikibase:referenceValueNormalized prn:P3763 .
+
+p:P3763 a owl:ObjectProperty .
+
+psv:P3763 a owl:ObjectProperty .
+
+pqv:P3763 a owl:ObjectProperty .
+
+prv:P3763 a owl:ObjectProperty .
+
+wdt:P3763 a owl:DatatypeProperty .
+
+ps:P3763 a owl:DatatypeProperty .
+
+pq:P3763 a owl:DatatypeProperty .
+
+pr:P3763 a owl:DatatypeProperty .
+
+psn:P3763 a owl:ObjectProperty .
+
+pqn:P3763 a owl:ObjectProperty .
+
+prn:P3763 a owl:ObjectProperty .
+
+wdtn:P3763 a owl:ObjectProperty .
+
+wdno:P3763 a owl:Class ;
+	owl:complementOf _:28112c8fa302e754fed59d24fb706365 .
+
+_:28112c8fa302e754fed59d24fb706365 a owl:Restriction ;
+	owl:onProperty wdt:P3763 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1762 a wikibase:Property ;
+	rdfs:label "Hornbostel-Sachs classification"@en ;
+	skos:prefLabel "Hornbostel-Sachs classification"@en ;
+	schema:name "Hornbostel-Sachs classification"@en ;
+	schema:description "Hornbostel-Sachs classification of a musical instrument"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1762 ;
+	wikibase:claim p:P1762 ;
+	wikibase:statementProperty ps:P1762 ;
+	wikibase:statementValue psv:P1762 ;
+	wikibase:qualifier pq:P1762 ;
+	wikibase:qualifierValue pqv:P1762 ;
+	wikibase:reference pr:P1762 ;
+	wikibase:referenceValue prv:P1762 ;
+	wikibase:novalue wdno:P1762 .
+
+p:P1762 a owl:ObjectProperty .
+
+psv:P1762 a owl:ObjectProperty .
+
+pqv:P1762 a owl:ObjectProperty .
+
+prv:P1762 a owl:ObjectProperty .
+
+wdt:P1762 a owl:DatatypeProperty .
+
+ps:P1762 a owl:DatatypeProperty .
+
+pq:P1762 a owl:DatatypeProperty .
+
+pr:P1762 a owl:DatatypeProperty .
+
+wdno:P1762 a owl:Class ;
+	owl:complementOf _:ab7a04ddcc79f0667d9f2909700bede9 .
+
+_:ab7a04ddcc79f0667d9f2909700bede9 a owl:Restriction ;
+	owl:onProperty wdt:P1762 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q6299307 a wikibase:Item ;
+	rdfs:label "Category:Electronic musical instruments"@en ;
+	skos:prefLabel "Category:Electronic musical instruments"@en ;
+	schema:name "Category:Electronic musical instruments"@en ;
+	schema:description "Wikimedia category"@en .
+
+wd:P910 a wikibase:Property ;
+	rdfs:label "topic's main category"@en ;
+	skos:prefLabel "topic's main category"@en ;
+	schema:name "topic's main category"@en ;
+	schema:description "main Wikimedia category"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P910 ;
+	wikibase:claim p:P910 ;
+	wikibase:statementProperty ps:P910 ;
+	wikibase:statementValue psv:P910 ;
+	wikibase:qualifier pq:P910 ;
+	wikibase:qualifierValue pqv:P910 ;
+	wikibase:reference pr:P910 ;
+	wikibase:referenceValue prv:P910 ;
+	wikibase:novalue wdno:P910 .
+
+p:P910 a owl:ObjectProperty .
+
+psv:P910 a owl:ObjectProperty .
+
+pqv:P910 a owl:ObjectProperty .
+
+prv:P910 a owl:ObjectProperty .
+
+wdt:P910 a owl:ObjectProperty .
+
+ps:P910 a owl:ObjectProperty .
+
+pq:P910 a owl:ObjectProperty .
+
+pr:P910 a owl:ObjectProperty .
+
+wdno:P910 a owl:Class ;
+	owl:complementOf _:06be9361e78d041ce01df69013cf6906 .
+
+_:06be9361e78d041ce01df69013cf6906 a owl:Restriction ;
+	owl:onProperty wdt:P910 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q174925 a wikibase:Item ;
+	rdfs:label "analog electronics"@en ;
+	skos:prefLabel "analog electronics"@en ;
+	schema:name "analog electronics"@en ;
+	schema:description "electronic systems with a continuously variable signal"@en .
+
+wd:P2283 a wikibase:Property ;
+	rdfs:label "uses"@en ;
+	skos:prefLabel "uses"@en ;
+	schema:name "uses"@en ;
+	schema:description "item or concept used by the subject or in the operation (see also instrument [P1303] and armament [P520])"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2283 ;
+	wikibase:claim p:P2283 ;
+	wikibase:statementProperty ps:P2283 ;
+	wikibase:statementValue psv:P2283 ;
+	wikibase:qualifier pq:P2283 ;
+	wikibase:qualifierValue pqv:P2283 ;
+	wikibase:reference pr:P2283 ;
+	wikibase:referenceValue prv:P2283 ;
+	wikibase:novalue wdno:P2283 .
+
+p:P2283 a owl:ObjectProperty .
+
+psv:P2283 a owl:ObjectProperty .
+
+pqv:P2283 a owl:ObjectProperty .
+
+prv:P2283 a owl:ObjectProperty .
+
+wdt:P2283 a owl:ObjectProperty .
+
+ps:P2283 a owl:ObjectProperty .
+
+pq:P2283 a owl:ObjectProperty .
+
+pr:P2283 a owl:ObjectProperty .
+
+wdno:P2283 a owl:Class ;
+	owl:complementOf _:44b76bf20cf7a758150a833ef3056d89 .
+
+_:44b76bf20cf7a758150a833ef3056d89 a owl:Restriction ;
+	owl:onProperty wdt:P2283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P5395 a wikibase:Property ;
+	rdfs:label "Canadian Encyclopedia article ID"@en ;
+	skos:prefLabel "Canadian Encyclopedia article ID"@en ;
+	schema:name "Canadian Encyclopedia article ID"@en ;
+	schema:description "identifier for articles in the Canadian Encyclopedia"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P5395 ;
+	wikibase:claim p:P5395 ;
+	wikibase:statementProperty ps:P5395 ;
+	wikibase:statementValue psv:P5395 ;
+	wikibase:qualifier pq:P5395 ;
+	wikibase:qualifierValue pqv:P5395 ;
+	wikibase:reference pr:P5395 ;
+	wikibase:referenceValue prv:P5395 ;
+	wikibase:novalue wdno:P5395 ;
+	wikibase:directClaimNormalized wdtn:P5395 ;
+	wikibase:statementValueNormalized psn:P5395 ;
+	wikibase:qualifierValueNormalized pqn:P5395 ;
+	wikibase:referenceValueNormalized prn:P5395 .
+
+p:P5395 a owl:ObjectProperty .
+
+psv:P5395 a owl:ObjectProperty .
+
+pqv:P5395 a owl:ObjectProperty .
+
+prv:P5395 a owl:ObjectProperty .
+
+wdt:P5395 a owl:DatatypeProperty .
+
+ps:P5395 a owl:DatatypeProperty .
+
+pq:P5395 a owl:DatatypeProperty .
+
+pr:P5395 a owl:DatatypeProperty .
+
+psn:P5395 a owl:ObjectProperty .
+
+pqn:P5395 a owl:ObjectProperty .
+
+prn:P5395 a owl:ObjectProperty .
+
+wdtn:P5395 a owl:ObjectProperty .
+
+wdno:P5395 a owl:Class ;
+	owl:complementOf _:1cba599581ebd270d3031242587e00c3 .
+
+_:1cba599581ebd270d3031242587e00c3 a owl:Restriction ;
+	owl:onProperty wdt:P5395 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1254773 a wikibase:Item ;
+	rdfs:label "family of musical instruments"@en ;
+	skos:prefLabel "family of musical instruments"@en ;
+	schema:name "family of musical instruments"@en ;
+	schema:description "grouping of different but related types of instruments"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q26836418 a wikibase:Item ;
+	rdfs:label "MIMO's classification of musical instrument"@en ;
+	skos:prefLabel "MIMO's classification of musical instrument"@en ;
+	schema:name "MIMO's classification of musical instrument"@en ;
+	schema:description "revision of the Hornbostel-Sachs Classification of Musical Instrument by the MIMO Consortium"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1448 a wikibase:Property ;
+	rdfs:label "official name"@en ;
+	skos:prefLabel "official name"@en ;
+	schema:name "official name"@en ;
+	schema:description "official name of the subject in its official language(s)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Monolingualtext> ;
+	wikibase:directClaim wdt:P1448 ;
+	wikibase:claim p:P1448 ;
+	wikibase:statementProperty ps:P1448 ;
+	wikibase:statementValue psv:P1448 ;
+	wikibase:qualifier pq:P1448 ;
+	wikibase:qualifierValue pqv:P1448 ;
+	wikibase:reference pr:P1448 ;
+	wikibase:referenceValue prv:P1448 ;
+	wikibase:novalue wdno:P1448 .
+
+p:P1448 a owl:ObjectProperty .
+
+psv:P1448 a owl:ObjectProperty .
+
+pqv:P1448 a owl:ObjectProperty .
+
+prv:P1448 a owl:ObjectProperty .
+
+wdt:P1448 a owl:DatatypeProperty .
+
+ps:P1448 a owl:DatatypeProperty .
+
+pq:P1448 a owl:DatatypeProperty .
+
+pr:P1448 a owl:DatatypeProperty .
+
+wdno:P1448 a owl:Class ;
+	owl:complementOf _:262ace7888163a9086c18611df9f3893 .
+
+_:262ace7888163a9086c18611df9f3893 a owl:Restriction ;
+	owl:onProperty wdt:P1448 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P973 a wikibase:Property ;
+	rdfs:label "described at URL"@en ;
+	skos:prefLabel "described at URL"@en ;
+	schema:name "described at URL"@en ;
+	schema:description "item is described at the following URL"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P973 ;
+	wikibase:claim p:P973 ;
+	wikibase:statementProperty ps:P973 ;
+	wikibase:statementValue psv:P973 ;
+	wikibase:qualifier pq:P973 ;
+	wikibase:qualifierValue pqv:P973 ;
+	wikibase:reference pr:P973 ;
+	wikibase:referenceValue prv:P973 ;
+	wikibase:novalue wdno:P973 .
+
+p:P973 a owl:ObjectProperty .
+
+psv:P973 a owl:ObjectProperty .
+
+pqv:P973 a owl:ObjectProperty .
+
+prv:P973 a owl:ObjectProperty .
+
+wdt:P973 a owl:ObjectProperty .
+
+ps:P973 a owl:ObjectProperty .
+
+pq:P973 a owl:ObjectProperty .
+
+pr:P973 a owl:ObjectProperty .
+
+wdno:P973 a owl:Class ;
+	owl:complementOf _:f87a33fb67bd0567df6bde1358e21e19 .
+
+_:f87a33fb67bd0567df6bde1358e21e19 a owl:Restriction ;
+	owl:onProperty wdt:P973 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1417 a wikibase:Property ;
+	rdfs:label "Encyclopædia Britannica Online ID"@en ;
+	skos:prefLabel "Encyclopædia Britannica Online ID"@en ;
+	schema:name "Encyclopædia Britannica Online ID"@en ;
+	schema:description "identifier for an article in the online version of Encyclopædia Britannica"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1417 ;
+	wikibase:claim p:P1417 ;
+	wikibase:statementProperty ps:P1417 ;
+	wikibase:statementValue psv:P1417 ;
+	wikibase:qualifier pq:P1417 ;
+	wikibase:qualifierValue pqv:P1417 ;
+	wikibase:reference pr:P1417 ;
+	wikibase:referenceValue prv:P1417 ;
+	wikibase:novalue wdno:P1417 ;
+	wikibase:directClaimNormalized wdtn:P1417 ;
+	wikibase:statementValueNormalized psn:P1417 ;
+	wikibase:qualifierValueNormalized pqn:P1417 ;
+	wikibase:referenceValueNormalized prn:P1417 .
+
+p:P1417 a owl:ObjectProperty .
+
+psv:P1417 a owl:ObjectProperty .
+
+pqv:P1417 a owl:ObjectProperty .
+
+prv:P1417 a owl:ObjectProperty .
+
+wdt:P1417 a owl:DatatypeProperty .
+
+ps:P1417 a owl:DatatypeProperty .
+
+pq:P1417 a owl:DatatypeProperty .
+
+pr:P1417 a owl:DatatypeProperty .
+
+psn:P1417 a owl:ObjectProperty .
+
+pqn:P1417 a owl:ObjectProperty .
+
+prn:P1417 a owl:ObjectProperty .
+
+wdtn:P1417 a owl:ObjectProperty .
+
+wdno:P1417 a owl:Class ;
+	owl:complementOf _:0cb1ab8817799c4db539b18975ce292a .
+
+_:0cb1ab8817799c4db539b18975ce292a a owl:Restriction ;
+	owl:onProperty wdt:P1417 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7033 a wikibase:Property ;
+	rdfs:label "Australian Educational Vocabulary ID"@en ;
+	skos:prefLabel "Australian Educational Vocabulary ID"@en ;
+	schema:name "Australian Educational Vocabulary ID"@en ;
+	schema:description "ID for curriculum term in one of the controlled vocabularies at Australian education vocabularies"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7033 ;
+	wikibase:claim p:P7033 ;
+	wikibase:statementProperty ps:P7033 ;
+	wikibase:statementValue psv:P7033 ;
+	wikibase:qualifier pq:P7033 ;
+	wikibase:qualifierValue pqv:P7033 ;
+	wikibase:reference pr:P7033 ;
+	wikibase:referenceValue prv:P7033 ;
+	wikibase:novalue wdno:P7033 ;
+	wikibase:directClaimNormalized wdtn:P7033 ;
+	wikibase:statementValueNormalized psn:P7033 ;
+	wikibase:qualifierValueNormalized pqn:P7033 ;
+	wikibase:referenceValueNormalized prn:P7033 .
+
+p:P7033 a owl:ObjectProperty .
+
+psv:P7033 a owl:ObjectProperty .
+
+pqv:P7033 a owl:ObjectProperty .
+
+prv:P7033 a owl:ObjectProperty .
+
+wdt:P7033 a owl:DatatypeProperty .
+
+ps:P7033 a owl:DatatypeProperty .
+
+pq:P7033 a owl:DatatypeProperty .
+
+pr:P7033 a owl:DatatypeProperty .
+
+psn:P7033 a owl:ObjectProperty .
+
+pqn:P7033 a owl:ObjectProperty .
+
+prn:P7033 a owl:ObjectProperty .
+
+wdtn:P7033 a owl:ObjectProperty .
+
+wdno:P7033 a owl:Class ;
+	owl:complementOf _:de7f93128804c8ae757ad1972d2e3f4f .
+
+_:de7f93128804c8ae757ad1972d2e3f4f a owl:Restriction ;
+	owl:onProperty wdt:P7033 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7749 a wikibase:Property ;
+	rdfs:label "Nomenclature for Museum Cataloging"@en ;
+	skos:prefLabel "Nomenclature for Museum Cataloging"@en ;
+	schema:name "Nomenclature for Museum Cataloging"@en ;
+	schema:description "nomenclature for object naming and classification, maintained by Canadian Heritage Information Network (CHIN) and American Association for State and Local History (AASLH)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7749 ;
+	wikibase:claim p:P7749 ;
+	wikibase:statementProperty ps:P7749 ;
+	wikibase:statementValue psv:P7749 ;
+	wikibase:qualifier pq:P7749 ;
+	wikibase:qualifierValue pqv:P7749 ;
+	wikibase:reference pr:P7749 ;
+	wikibase:referenceValue prv:P7749 ;
+	wikibase:novalue wdno:P7749 ;
+	wikibase:directClaimNormalized wdtn:P7749 ;
+	wikibase:statementValueNormalized psn:P7749 ;
+	wikibase:qualifierValueNormalized pqn:P7749 ;
+	wikibase:referenceValueNormalized prn:P7749 .
+
+p:P7749 a owl:ObjectProperty .
+
+psv:P7749 a owl:ObjectProperty .
+
+pqv:P7749 a owl:ObjectProperty .
+
+prv:P7749 a owl:ObjectProperty .
+
+wdt:P7749 a owl:DatatypeProperty .
+
+ps:P7749 a owl:DatatypeProperty .
+
+pq:P7749 a owl:DatatypeProperty .
+
+pr:P7749 a owl:DatatypeProperty .
+
+psn:P7749 a owl:ObjectProperty .
+
+pqn:P7749 a owl:ObjectProperty .
+
+prn:P7749 a owl:ObjectProperty .
+
+wdtn:P7749 a owl:ObjectProperty .
+
+wdno:P7749 a owl:Class ;
+	owl:complementOf _:150d039075147356d0d6360f0b24b917 .
+
+_:150d039075147356d0d6360f0b24b917 a owl:Restriction ;
+	owl:onProperty wdt:P7749 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q20078554 a wikibase:Item ;
+	rdfs:label "Great Soviet Encyclopedia (1926–1947)"@en ;
+	skos:prefLabel "Great Soviet Encyclopedia (1926–1947)"@en ;
+	schema:name "Great Soviet Encyclopedia (1926–1947)"@en ;
+	schema:description "1st edition of the Great Soviet Encyclopedia"@en .
+
+wd:P1343 a wikibase:Property ;
+	rdfs:label "described by source"@en ;
+	skos:prefLabel "described by source"@en ;
+	schema:name "described by source"@en ;
+	schema:description "work where this item is described"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1343 ;
+	wikibase:claim p:P1343 ;
+	wikibase:statementProperty ps:P1343 ;
+	wikibase:statementValue psv:P1343 ;
+	wikibase:qualifier pq:P1343 ;
+	wikibase:qualifierValue pqv:P1343 ;
+	wikibase:reference pr:P1343 ;
+	wikibase:referenceValue prv:P1343 ;
+	wikibase:novalue wdno:P1343 .
+
+p:P1343 a owl:ObjectProperty .
+
+psv:P1343 a owl:ObjectProperty .
+
+pqv:P1343 a owl:ObjectProperty .
+
+prv:P1343 a owl:ObjectProperty .
+
+wdt:P1343 a owl:ObjectProperty .
+
+ps:P1343 a owl:ObjectProperty .
+
+pq:P1343 a owl:ObjectProperty .
+
+pr:P1343 a owl:ObjectProperty .
+
+wdno:P1343 a owl:Class ;
+	owl:complementOf _:9c5978c46703ed90be57b769a8622d59 .
+
+_:9c5978c46703ed90be57b769a8622d59 a owl:Restriction ;
+	owl:onProperty wdt:P1343 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2347 a wikibase:Property ;
+	rdfs:label "YSO ID"@en ;
+	skos:prefLabel "YSO ID"@en ;
+	schema:name "YSO ID"@en ;
+	schema:description "identifier for a concept in the General Finnish Ontology YSO"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2347 ;
+	wikibase:claim p:P2347 ;
+	wikibase:statementProperty ps:P2347 ;
+	wikibase:statementValue psv:P2347 ;
+	wikibase:qualifier pq:P2347 ;
+	wikibase:qualifierValue pqv:P2347 ;
+	wikibase:reference pr:P2347 ;
+	wikibase:referenceValue prv:P2347 ;
+	wikibase:novalue wdno:P2347 ;
+	wikibase:directClaimNormalized wdtn:P2347 ;
+	wikibase:statementValueNormalized psn:P2347 ;
+	wikibase:qualifierValueNormalized pqn:P2347 ;
+	wikibase:referenceValueNormalized prn:P2347 .
+
+p:P2347 a owl:ObjectProperty .
+
+psv:P2347 a owl:ObjectProperty .
+
+pqv:P2347 a owl:ObjectProperty .
+
+prv:P2347 a owl:ObjectProperty .
+
+wdt:P2347 a owl:DatatypeProperty .
+
+ps:P2347 a owl:DatatypeProperty .
+
+pq:P2347 a owl:DatatypeProperty .
+
+pr:P2347 a owl:DatatypeProperty .
+
+psn:P2347 a owl:ObjectProperty .
+
+pqn:P2347 a owl:ObjectProperty .
+
+prn:P2347 a owl:ObjectProperty .
+
+wdtn:P2347 a owl:ObjectProperty .
+
+wdno:P2347 a owl:Class ;
+	owl:complementOf _:5938edce2b698c44bad94eb14b56af07 .
+
+_:5938edce2b698c44bad94eb14b56af07 a owl:Restriction ;
+	owl:onProperty wdt:P2347 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P508 a wikibase:Property ;
+	rdfs:label "BNCF Thesaurus ID"@en ;
+	skos:prefLabel "BNCF Thesaurus ID"@en ;
+	schema:name "BNCF Thesaurus ID"@en ;
+	schema:description "identifier in the subject indexing tool of the National Central Library of Florence"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P508 ;
+	wikibase:claim p:P508 ;
+	wikibase:statementProperty ps:P508 ;
+	wikibase:statementValue psv:P508 ;
+	wikibase:qualifier pq:P508 ;
+	wikibase:qualifierValue pqv:P508 ;
+	wikibase:reference pr:P508 ;
+	wikibase:referenceValue prv:P508 ;
+	wikibase:novalue wdno:P508 ;
+	wikibase:directClaimNormalized wdtn:P508 ;
+	wikibase:statementValueNormalized psn:P508 ;
+	wikibase:qualifierValueNormalized pqn:P508 ;
+	wikibase:referenceValueNormalized prn:P508 .
+
+p:P508 a owl:ObjectProperty .
+
+psv:P508 a owl:ObjectProperty .
+
+pqv:P508 a owl:ObjectProperty .
+
+prv:P508 a owl:ObjectProperty .
+
+wdt:P508 a owl:DatatypeProperty .
+
+ps:P508 a owl:DatatypeProperty .
+
+pq:P508 a owl:DatatypeProperty .
+
+pr:P508 a owl:DatatypeProperty .
+
+psn:P508 a owl:ObjectProperty .
+
+pqn:P508 a owl:ObjectProperty .
+
+prn:P508 a owl:ObjectProperty .
+
+wdtn:P508 a owl:ObjectProperty .
+
+wdno:P508 a owl:Class ;
+	owl:complementOf _:5fd266465d236ed65347f82b760ee461 .
+
+_:5fd266465d236ed65347f82b760ee461 a owl:Restriction ;
+	owl:onProperty wdt:P508 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P227 a wikibase:Property ;
+	rdfs:label "GND ID"@en ;
+	skos:prefLabel "GND ID"@en ;
+	schema:name "GND ID"@en ;
+	schema:description "identifier from an international authority file of names, subjects, and organizations (please don't use type n = name, disambiguation) - Deutsche Nationalbibliothek"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P227 ;
+	wikibase:claim p:P227 ;
+	wikibase:statementProperty ps:P227 ;
+	wikibase:statementValue psv:P227 ;
+	wikibase:qualifier pq:P227 ;
+	wikibase:qualifierValue pqv:P227 ;
+	wikibase:reference pr:P227 ;
+	wikibase:referenceValue prv:P227 ;
+	wikibase:novalue wdno:P227 ;
+	wikibase:directClaimNormalized wdtn:P227 ;
+	wikibase:statementValueNormalized psn:P227 ;
+	wikibase:qualifierValueNormalized pqn:P227 ;
+	wikibase:referenceValueNormalized prn:P227 .
+
+p:P227 a owl:ObjectProperty .
+
+psv:P227 a owl:ObjectProperty .
+
+pqv:P227 a owl:ObjectProperty .
+
+prv:P227 a owl:ObjectProperty .
+
+wdt:P227 a owl:DatatypeProperty .
+
+ps:P227 a owl:DatatypeProperty .
+
+pq:P227 a owl:DatatypeProperty .
+
+pr:P227 a owl:DatatypeProperty .
+
+psn:P227 a owl:ObjectProperty .
+
+pqn:P227 a owl:ObjectProperty .
+
+prn:P227 a owl:ObjectProperty .
+
+wdtn:P227 a owl:ObjectProperty .
+
+wdno:P227 a owl:Class ;
+	owl:complementOf _:286c7ee15bc3c86b8eb6b23547b34d68 .
+
+_:286c7ee15bc3c86b8eb6b23547b34d68 a owl:Restriction ;
+	owl:onProperty wdt:P227 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10283 a wikibase:Property ;
+	rdfs:label "OpenAlex ID"@en ;
+	skos:prefLabel "OpenAlex ID"@en ;
+	schema:name "OpenAlex ID"@en ;
+	schema:description "identifier for works, grants, authors, institutes, venues, concepts/subjects in OpenAlex"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10283 ;
+	wikibase:claim p:P10283 ;
+	wikibase:statementProperty ps:P10283 ;
+	wikibase:statementValue psv:P10283 ;
+	wikibase:qualifier pq:P10283 ;
+	wikibase:qualifierValue pqv:P10283 ;
+	wikibase:reference pr:P10283 ;
+	wikibase:referenceValue prv:P10283 ;
+	wikibase:novalue wdno:P10283 ;
+	wikibase:directClaimNormalized wdtn:P10283 ;
+	wikibase:statementValueNormalized psn:P10283 ;
+	wikibase:qualifierValueNormalized pqn:P10283 ;
+	wikibase:referenceValueNormalized prn:P10283 .
+
+p:P10283 a owl:ObjectProperty .
+
+psv:P10283 a owl:ObjectProperty .
+
+pqv:P10283 a owl:ObjectProperty .
+
+prv:P10283 a owl:ObjectProperty .
+
+wdt:P10283 a owl:DatatypeProperty .
+
+ps:P10283 a owl:DatatypeProperty .
+
+pq:P10283 a owl:DatatypeProperty .
+
+pr:P10283 a owl:DatatypeProperty .
+
+psn:P10283 a owl:ObjectProperty .
+
+pqn:P10283 a owl:ObjectProperty .
+
+prn:P10283 a owl:ObjectProperty .
+
+wdtn:P10283 a owl:ObjectProperty .
+
+wdno:P10283 a owl:Class ;
+	owl:complementOf _:32a5275a7dbbfba13192c77c3ada4d3a .
+
+_:32a5275a7dbbfba13192c77c3ada4d3a a owl:Restriction ;
+	owl:onProperty wdt:P10283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P691 a wikibase:Property ;
+	rdfs:label "NL CR AUT ID"@en ;
+	skos:prefLabel "NL CR AUT ID"@en ;
+	schema:name "NL CR AUT ID"@en ;
+	schema:description "identifier in the Czech National Authority Database of National Library of the Czech Republic (NL CR)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P691 ;
+	wikibase:claim p:P691 ;
+	wikibase:statementProperty ps:P691 ;
+	wikibase:statementValue psv:P691 ;
+	wikibase:qualifier pq:P691 ;
+	wikibase:qualifierValue pqv:P691 ;
+	wikibase:reference pr:P691 ;
+	wikibase:referenceValue prv:P691 ;
+	wikibase:novalue wdno:P691 ;
+	wikibase:directClaimNormalized wdtn:P691 ;
+	wikibase:statementValueNormalized psn:P691 ;
+	wikibase:qualifierValueNormalized pqn:P691 ;
+	wikibase:referenceValueNormalized prn:P691 .
+
+p:P691 a owl:ObjectProperty .
+
+psv:P691 a owl:ObjectProperty .
+
+pqv:P691 a owl:ObjectProperty .
+
+prv:P691 a owl:ObjectProperty .
+
+wdt:P691 a owl:DatatypeProperty .
+
+ps:P691 a owl:DatatypeProperty .
+
+pq:P691 a owl:DatatypeProperty .
+
+pr:P691 a owl:DatatypeProperty .
+
+psn:P691 a owl:ObjectProperty .
+
+pqn:P691 a owl:ObjectProperty .
+
+prn:P691 a owl:ObjectProperty .
+
+wdtn:P691 a owl:ObjectProperty .
+
+wdno:P691 a owl:Class ;
+	owl:complementOf _:eee17ba34d3dca4b3bf5b23f68ca71b1 .
+
+_:eee17ba34d3dca4b3bf5b23f68ca71b1 a owl:Restriction ;
+	owl:onProperty wdt:P691 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q6173448 a wikibase:Item ;
+	rdfs:label "Wikipedia:Vital articles/Level/4"@en ;
+	skos:prefLabel "Wikipedia:Vital articles/Level/4"@en ;
+	schema:name "Wikipedia:Vital articles/Level/4"@en ;
+	schema:description "Wikimedia project page"@en .
+
+wd:P5008 a wikibase:Property ;
+	rdfs:label "on focus list of Wikimedia project"@en ;
+	skos:prefLabel "on focus list of Wikimedia project"@en ;
+	schema:name "on focus list of Wikimedia project"@en ;
+	schema:description "property to indicate that an item is of particular interest for a Wikimedia project. This property does not add notability. Items should not be created with this property if they are not notable for Wikidata. See also P6104, P972, P2354."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P5008 ;
+	wikibase:claim p:P5008 ;
+	wikibase:statementProperty ps:P5008 ;
+	wikibase:statementValue psv:P5008 ;
+	wikibase:qualifier pq:P5008 ;
+	wikibase:qualifierValue pqv:P5008 ;
+	wikibase:reference pr:P5008 ;
+	wikibase:referenceValue prv:P5008 ;
+	wikibase:novalue wdno:P5008 .
+
+p:P5008 a owl:ObjectProperty .
+
+psv:P5008 a owl:ObjectProperty .
+
+pqv:P5008 a owl:ObjectProperty .
+
+prv:P5008 a owl:ObjectProperty .
+
+wdt:P5008 a owl:ObjectProperty .
+
+ps:P5008 a owl:ObjectProperty .
+
+pq:P5008 a owl:ObjectProperty .
+
+pr:P5008 a owl:ObjectProperty .
+
+wdno:P5008 a owl:Class ;
+	owl:complementOf _:ccd0828df5e103c905abf7e82e607008 .
+
+_:ccd0828df5e103c905abf7e82e607008 a owl:Restriction ;
+	owl:onProperty wdt:P5008 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P11302 a wikibase:Property ;
+	rdfs:label "Google Product Taxonomy ID"@en ;
+	skos:prefLabel "Google Product Taxonomy ID"@en ;
+	schema:name "Google Product Taxonomy ID"@en ;
+	schema:description "ID for the product related to this concept on the Google Product Taxonomy"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P11302 ;
+	wikibase:claim p:P11302 ;
+	wikibase:statementProperty ps:P11302 ;
+	wikibase:statementValue psv:P11302 ;
+	wikibase:qualifier pq:P11302 ;
+	wikibase:qualifierValue pqv:P11302 ;
+	wikibase:reference pr:P11302 ;
+	wikibase:referenceValue prv:P11302 ;
+	wikibase:novalue wdno:P11302 ;
+	wikibase:directClaimNormalized wdtn:P11302 ;
+	wikibase:statementValueNormalized psn:P11302 ;
+	wikibase:qualifierValueNormalized pqn:P11302 ;
+	wikibase:referenceValueNormalized prn:P11302 .
+
+p:P11302 a owl:ObjectProperty .
+
+psv:P11302 a owl:ObjectProperty .
+
+pqv:P11302 a owl:ObjectProperty .
+
+prv:P11302 a owl:ObjectProperty .
+
+wdt:P11302 a owl:DatatypeProperty .
+
+ps:P11302 a owl:DatatypeProperty .
+
+pq:P11302 a owl:DatatypeProperty .
+
+pr:P11302 a owl:DatatypeProperty .
+
+psn:P11302 a owl:ObjectProperty .
+
+pqn:P11302 a owl:ObjectProperty .
+
+prn:P11302 a owl:ObjectProperty .
+
+wdtn:P11302 a owl:ObjectProperty .
+
+wdno:P11302 a owl:Class ;
+	owl:complementOf _:9654d92dfba8686adfde46c56c3c3cef .
+
+_:9654d92dfba8686adfde46c56c3c3cef a owl:Restriction ;
+	owl:onProperty wdt:P11302 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10063 a wikibase:Property ;
+	rdfs:label "SEKO ID"@en ;
+	skos:prefLabel "SEKO ID"@en ;
+	schema:name "SEKO ID"@en ;
+	schema:description "identifier for a subject in the Finnish medium of performance thesaurus SEKO"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10063 ;
+	wikibase:claim p:P10063 ;
+	wikibase:statementProperty ps:P10063 ;
+	wikibase:statementValue psv:P10063 ;
+	wikibase:qualifier pq:P10063 ;
+	wikibase:qualifierValue pqv:P10063 ;
+	wikibase:reference pr:P10063 ;
+	wikibase:referenceValue prv:P10063 ;
+	wikibase:novalue wdno:P10063 ;
+	wikibase:directClaimNormalized wdtn:P10063 ;
+	wikibase:statementValueNormalized psn:P10063 ;
+	wikibase:qualifierValueNormalized pqn:P10063 ;
+	wikibase:referenceValueNormalized prn:P10063 .
+
+p:P10063 a owl:ObjectProperty .
+
+psv:P10063 a owl:ObjectProperty .
+
+pqv:P10063 a owl:ObjectProperty .
+
+prv:P10063 a owl:ObjectProperty .
+
+wdt:P10063 a owl:DatatypeProperty .
+
+ps:P10063 a owl:DatatypeProperty .
+
+pq:P10063 a owl:DatatypeProperty .
+
+pr:P10063 a owl:DatatypeProperty .
+
+psn:P10063 a owl:ObjectProperty .
+
+pqn:P10063 a owl:ObjectProperty .
+
+prn:P10063 a owl:ObjectProperty .
+
+wdtn:P10063 a owl:ObjectProperty .
+
+wdno:P10063 a owl:Class ;
+	owl:complementOf _:6028bc8dcf518acd1a50ce6422440290 .
+
+_:6028bc8dcf518acd1a50ce6422440290 a owl:Restriction ;
+	owl:onProperty wdt:P10063 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8516 a wikibase:Property ;
+	rdfs:label "Library of Congress Medium of Performance Thesaurus ID"@en ;
+	skos:prefLabel "Library of Congress Medium of Performance Thesaurus ID"@en ;
+	schema:name "Library of Congress Medium of Performance Thesaurus ID"@en ;
+	schema:description "identifier for a term in the Library of Congress Medium of Performance Thesaurus for Music"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8516 ;
+	wikibase:claim p:P8516 ;
+	wikibase:statementProperty ps:P8516 ;
+	wikibase:statementValue psv:P8516 ;
+	wikibase:qualifier pq:P8516 ;
+	wikibase:qualifierValue pqv:P8516 ;
+	wikibase:reference pr:P8516 ;
+	wikibase:referenceValue prv:P8516 ;
+	wikibase:novalue wdno:P8516 ;
+	wikibase:directClaimNormalized wdtn:P8516 ;
+	wikibase:statementValueNormalized psn:P8516 ;
+	wikibase:qualifierValueNormalized pqn:P8516 ;
+	wikibase:referenceValueNormalized prn:P8516 .
+
+p:P8516 a owl:ObjectProperty .
+
+psv:P8516 a owl:ObjectProperty .
+
+pqv:P8516 a owl:ObjectProperty .
+
+prv:P8516 a owl:ObjectProperty .
+
+wdt:P8516 a owl:DatatypeProperty .
+
+ps:P8516 a owl:DatatypeProperty .
+
+pq:P8516 a owl:DatatypeProperty .
+
+pr:P8516 a owl:DatatypeProperty .
+
+psn:P8516 a owl:ObjectProperty .
+
+pqn:P8516 a owl:ObjectProperty .
+
+prn:P8516 a owl:ObjectProperty .
+
+wdtn:P8516 a owl:ObjectProperty .
+
+wdno:P8516 a owl:Class ;
+	owl:complementOf _:f252d927b418245698fd7f2caa7d78d4 .
+
+_:f252d927b418245698fd7f2caa7d78d4 a owl:Restriction ;
+	owl:onProperty wdt:P8516 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q42968453 a wikibase:Item ;
+	rdfs:label "Revision of the Hornbostel-Sachs Classification of Musical Instruments by the MIMO Consortium"@en ;
+	skos:prefLabel "Revision of the Hornbostel-Sachs Classification of Musical Instruments by the MIMO Consortium"@en ;
+	schema:name "Revision of the Hornbostel-Sachs Classification of Musical Instruments by the MIMO Consortium"@en ;
+	schema:description "document by the MIMO Consortium"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q14005 a wikibase:Item ;
+	rdfs:label "MusicBrainz"@en ;
+	skos:prefLabel "MusicBrainz"@en ;
+	schema:name "MusicBrainz"@en ;
+	schema:description "online music metadata database"@en .
+
+wd:P180 a wikibase:Property ;
+	rdfs:label "depicts"@en ;
+	skos:prefLabel "depicts"@en ;
+	schema:name "depicts"@en ;
+	schema:description "entity visually depicted in an image, literarily described in a work, or otherwise incorporated into an audiovisual or other medium; see also P921,  'main subject'"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P180 ;
+	wikibase:claim p:P180 ;
+	wikibase:statementProperty ps:P180 ;
+	wikibase:statementValue psv:P180 ;
+	wikibase:qualifier pq:P180 ;
+	wikibase:qualifierValue pqv:P180 ;
+	wikibase:reference pr:P180 ;
+	wikibase:referenceValue prv:P180 ;
+	wikibase:novalue wdno:P180 .
+
+p:P180 a owl:ObjectProperty .
+
+psv:P180 a owl:ObjectProperty .
+
+pqv:P180 a owl:ObjectProperty .
+
+prv:P180 a owl:ObjectProperty .
+
+wdt:P180 a owl:ObjectProperty .
+
+ps:P180 a owl:ObjectProperty .
+
+pq:P180 a owl:ObjectProperty .
+
+pr:P180 a owl:ObjectProperty .
+
+wdno:P180 a owl:Class ;
+	owl:complementOf _:20c681d1555b7d642c63c655f8ceb64a .
+
+_:20c681d1555b7d642c63c655f8ceb64a a owl:Restriction ;
+	owl:onProperty wdt:P180 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4837690 a wikibase:Item ;
+	rdfs:label "BabelNet"@en ;
+	skos:prefLabel "BabelNet"@en ;
+	schema:name "BabelNet"@en ;
+	schema:description "multilingual semantic network and encyclopedic dictionary"@en .
+
+wd:Q1550070 a wikibase:Item ;
+	rdfs:label "Musical Instrument Museums Online"@en ;
+	skos:prefLabel "Musical Instrument Museums Online"@en ;
+	schema:name "Musical Instrument Museums Online"@en ;
+	schema:description "collections of musical instruments"@en .
+
+wd:Q1860 a wikibase:Item ;
+	rdfs:label "English"@en ;
+	skos:prefLabel "English"@en ;
+	schema:name "English"@en ;
+	schema:description "West Germanic language"@en .
+
+wd:P407 a wikibase:Property ;
+	rdfs:label "language of work or name"@en ;
+	skos:prefLabel "language of work or name"@en ;
+	schema:name "language of work or name"@en ;
+	schema:description "language associated with this creative work (such as books, shows, songs, broadcasts or websites) or a name (for persons use \"native language\" (P103) and \"languages spoken, written or signed\" (P1412))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P407 ;
+	wikibase:claim p:P407 ;
+	wikibase:statementProperty ps:P407 ;
+	wikibase:statementValue psv:P407 ;
+	wikibase:qualifier pq:P407 ;
+	wikibase:qualifierValue pqv:P407 ;
+	wikibase:reference pr:P407 ;
+	wikibase:referenceValue prv:P407 ;
+	wikibase:novalue wdno:P407 .
+
+p:P407 a owl:ObjectProperty .
+
+psv:P407 a owl:ObjectProperty .
+
+pqv:P407 a owl:ObjectProperty .
+
+prv:P407 a owl:ObjectProperty .
+
+wdt:P407 a owl:ObjectProperty .
+
+ps:P407 a owl:ObjectProperty .
+
+pq:P407 a owl:ObjectProperty .
+
+pr:P407 a owl:ObjectProperty .
+
+wdno:P407 a owl:Class ;
+	owl:complementOf _:7ecb658fb35d6b90057eeb2a2a932c62 .
+
+_:7ecb658fb35d6b90057eeb2a2a932c62 a owl:Restriction ;
+	owl:onProperty wdt:P407 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q98684528 a wikibase:Item ;
+	schema:description "encyclopedia article"@en .
+
+wd:P805 a wikibase:Property ;
+	rdfs:label "statement is subject of"@en ;
+	skos:prefLabel "statement is subject of"@en ;
+	schema:name "statement is subject of"@en ;
+	schema:description "(qualifying) item that describes the relation identified in this statement"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P805 ;
+	wikibase:claim p:P805 ;
+	wikibase:statementProperty ps:P805 ;
+	wikibase:statementValue psv:P805 ;
+	wikibase:qualifier pq:P805 ;
+	wikibase:qualifierValue pqv:P805 ;
+	wikibase:reference pr:P805 ;
+	wikibase:referenceValue prv:P805 ;
+	wikibase:novalue wdno:P805 .
+
+p:P805 a owl:ObjectProperty .
+
+psv:P805 a owl:ObjectProperty .
+
+pqv:P805 a owl:ObjectProperty .
+
+prv:P805 a owl:ObjectProperty .
+
+wdt:P805 a owl:ObjectProperty .
+
+ps:P805 a owl:ObjectProperty .
+
+pq:P805 a owl:ObjectProperty .
+
+pr:P805 a owl:ObjectProperty .
+
+wdno:P805 a owl:Class ;
+	owl:complementOf _:b0057da68fba9959eba43619c1638733 .
+
+_:b0057da68fba9959eba43619c1638733 a owl:Restriction ;
+	owl:onProperty wdt:P805 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q89345680 a wikibase:Item ;
+	rdfs:label "YSO-Wikidata mapping project"@en ;
+	skos:prefLabel "YSO-Wikidata mapping project"@en ;
+	schema:name "YSO-Wikidata mapping project"@en ;
+	schema:description "project where concepts of the Finnish General Ontology are matched with Wikidata equivalents"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4070 a wikibase:Property ;
+	rdfs:label "identifier shared with"@en ;
+	skos:prefLabel "identifier shared with"@en ;
+	schema:name "identifier shared with"@en ;
+	schema:description "qualifier, to be used on external identifier IDs, indicating another Wikidata item is also matched to this ID"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P4070 ;
+	wikibase:claim p:P4070 ;
+	wikibase:statementProperty ps:P4070 ;
+	wikibase:statementValue psv:P4070 ;
+	wikibase:qualifier pq:P4070 ;
+	wikibase:qualifierValue pqv:P4070 ;
+	wikibase:reference pr:P4070 ;
+	wikibase:referenceValue prv:P4070 ;
+	wikibase:novalue wdno:P4070 .
+
+p:P4070 a owl:ObjectProperty .
+
+psv:P4070 a owl:ObjectProperty .
+
+pqv:P4070 a owl:ObjectProperty .
+
+prv:P4070 a owl:ObjectProperty .
+
+wdt:P4070 a owl:ObjectProperty .
+
+ps:P4070 a owl:ObjectProperty .
+
+pq:P4070 a owl:ObjectProperty .
+
+pr:P4070 a owl:ObjectProperty .
+
+wdno:P4070 a owl:Class ;
+	owl:complementOf _:06a1195b6cde3c8d071cd4c7171e1cb1 .
+
+_:06a1195b6cde3c8d071cd4c7171e1cb1 a owl:Restriction ;
+	owl:onProperty wdt:P4070 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q107507571 a wikibase:Item ;
+	rdfs:label "OpenAlex"@en ;
+	skos:prefLabel "OpenAlex"@en ;
+	schema:name "OpenAlex"@en ;
+	schema:description "an open catalog of scholarly papers, authors, institutions, venues, and concepts"@en .
+
+wd:P854 a wikibase:Property ;
+	rdfs:label "reference URL"@en ;
+	skos:prefLabel "reference URL"@en ;
+	schema:name "reference URL"@en ;
+	schema:description "should be used for Internet URLs as references. Use \"Wikimedia import URL\" (P4656) for imports from WMF sites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P854 ;
+	wikibase:claim p:P854 ;
+	wikibase:statementProperty ps:P854 ;
+	wikibase:statementValue psv:P854 ;
+	wikibase:qualifier pq:P854 ;
+	wikibase:qualifierValue pqv:P854 ;
+	wikibase:reference pr:P854 ;
+	wikibase:referenceValue prv:P854 ;
+	wikibase:novalue wdno:P854 .
+
+p:P854 a owl:ObjectProperty .
+
+psv:P854 a owl:ObjectProperty .
+
+pqv:P854 a owl:ObjectProperty .
+
+prv:P854 a owl:ObjectProperty .
+
+wdt:P854 a owl:ObjectProperty .
+
+ps:P854 a owl:ObjectProperty .
+
+pq:P854 a owl:ObjectProperty .
+
+pr:P854 a owl:ObjectProperty .
+
+wdno:P854 a owl:Class ;
+	owl:complementOf _:7317e7e5a3edc1980ecfe7616bb5fa1d .
+
+_:7317e7e5a3edc1980ecfe7616bb5fa1d a owl:Restriction ;
+	owl:onProperty wdt:P854 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P585 a wikibase:Property ;
+	rdfs:label "point in time"@en ;
+	skos:prefLabel "point in time"@en ;
+	schema:name "point in time"@en ;
+	schema:description "time and date something took place, existed or a statement was true"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P585 ;
+	wikibase:claim p:P585 ;
+	wikibase:statementProperty ps:P585 ;
+	wikibase:statementValue psv:P585 ;
+	wikibase:qualifier pq:P585 ;
+	wikibase:qualifierValue pqv:P585 ;
+	wikibase:reference pr:P585 ;
+	wikibase:referenceValue prv:P585 ;
+	wikibase:novalue wdno:P585 .
+
+p:P585 a owl:ObjectProperty .
+
+psv:P585 a owl:ObjectProperty .
+
+pqv:P585 a owl:ObjectProperty .
+
+prv:P585 a owl:ObjectProperty .
+
+wdt:P585 a owl:DatatypeProperty .
+
+ps:P585 a owl:DatatypeProperty .
+
+pq:P585 a owl:DatatypeProperty .
+
+pr:P585 a owl:DatatypeProperty .
+
+wdno:P585 a owl:Class ;
+	owl:complementOf _:dd1c08307a09e1466ce90c482ad42ea9 .
+
+_:dd1c08307a09e1466ce90c482ad42ea9 a owl:Restriction ;
+	owl:onProperty wdt:P585 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q50821776 owl:sameAs wd:Q1327500 .
+
+wd:Q55738974 owl:sameAs wd:Q1327500 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:8bd95bf9f747c1b0f7be6b601e972089 a wikibase:TimeValue ;
+	wikibase:timeValue "2021-11-29T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:eddfc700f0007c0269c29bc15545afb3 a wikibase:TimeValue ;
+	wikibase:timeValue "2022-02-15T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:3b2ff2744ee9af4b07734336d1723792 a wikibase:TimeValue ;
+	wikibase:timeValue "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:70f06890e5b9388fda5e8da1c1fcd26a a wikibase:TimeValue ;
+	wikibase:timeValue "2022-10-31T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:cc9f42c1db59c16bc43c36594047ad19d23d23ab a wikibase:Reference ;
+	pr:P248 wd:Q42968453 .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:706208b3024200fd0a39ad499808dd0d98d74065 a wikibase:Reference ;
+	pr:P248 wd:Q14005 .
+
+ref:248ac337a217a5f5eed7139a82a4e60931611af0 a wikibase:Reference ;
+	pr:P248 wd:Q4837690 .
+
+ref:1eab7d6110e7ad26f014ea09be9c11c6bad88f45 a wikibase:Reference ;
+	pr:P248 wd:Q42968453,
+		wd:Q1550070 .
+
+ref:e5fe28150ece4f5cad8ddd10a83cb85e350db185 a wikibase:Reference ;
+	pr:P248 wd:Q89345680 ;
+	pr:P813 "2021-11-29T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:8bd95bf9f747c1b0f7be6b601e972089 .
+
+ref:590d8e13d1dbe9138b01bd00dd4cd4fdee6a78c4 a wikibase:Reference ;
+	pr:P813 "2022-02-15T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:eddfc700f0007c0269c29bc15545afb3 .
+
+ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 a wikibase:Reference ;
+	pr:P248 wd:Q107507571 ;
+	pr:P813 "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:3b2ff2744ee9af4b07734336d1723792 ;
+	pr:P854 <https://docs.openalex.org/download-snapshot/snapshot-data-format> .

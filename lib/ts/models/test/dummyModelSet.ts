@@ -48,6 +48,9 @@ export const dummyModelSet: ModelSet = {
   imageByIri(imageIri: string): Image {
     throw new EvalError("not implemented");
   },
+  imageByIriOptional(imageIri: string): Image | null {
+    throw new EvalError("not implemented");
+  },
   imagesByDepictsIri(depictsIri: string): readonly Image[] {
     throw new EvalError("not implemented");
   },

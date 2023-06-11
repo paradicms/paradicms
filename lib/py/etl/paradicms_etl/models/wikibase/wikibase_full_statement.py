@@ -168,7 +168,7 @@ class WikibaseFullStatement(WikibaseStatement):
             assert isinstance(time_value_literal, Literal)
             time_value = time_value_literal.toPython()
             if not isinstance(time_value, datetime):
-                logger.info("ignoring malformed time value: %s", time_value)
+                logger.debug("ignoring malformed time value: %s", time_value)
                 return None
 
             time_precision_literal = tuple(

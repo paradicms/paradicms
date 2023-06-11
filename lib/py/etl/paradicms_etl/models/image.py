@@ -20,9 +20,17 @@ class Image(NamedModel, RightsMixin):
             raise NotImplementedError
 
         @abstractmethod
+        def set_source(self, source: URIRef) -> "Image.Builder":
+            raise NotImplementedError
+
+        @abstractmethod
         def set_src(
             self, src: Union[str, CmsImageData, Literal, URIRef]
         ) -> "Image.Builder":
+            raise NotImplementedError
+
+        @abstractmethod
+        def set_title(self, title: str) -> "Image.Builder":
             raise NotImplementedError
 
     @property

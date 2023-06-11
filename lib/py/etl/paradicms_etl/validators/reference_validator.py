@@ -7,6 +7,7 @@ from stringcase import snakecase
 from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
@@ -17,6 +18,10 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+    RightsStatementsDotOrgRightsStatements,
+)
+from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
@@ -278,3 +283,15 @@ class ReferenceValidator:
                         message=f"unreferenced {uri_type} URI: {universe_uri}",
                         severity=ValidationResult.Severity.INFO,
                     )
+
+    def _validate_wikibase_item(
+        self, wikibase_item: WikibaseItem
+    ) -> Iterable[ValidationResult]:
+        self.__referenced_license_uris.add(CreativeCommonsLicenses.BY_SA_3_0)
+        self.__referenced_rights_statement_uris.add(
+            RightsStatementsDotOrgRightsStatements.InC
+        )
+        return ()
+
+    def _validate_wikibase_item_references(self) -> Iterable[ValidationResult]:
+        return ()

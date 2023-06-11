@@ -1,0 +1,217 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q66310125 a schema:Dataset ;
+	schema:about wd:Q66310125 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1908117364"^^xsd:integer ;
+	schema:dateModified "2023-06-04T16:08:54Z"^^xsd:dateTime ;
+	wikibase:statements "2"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q66310125 a wikibase:Item ;
+	wdt:P279 wd:Q1310239 ;
+	wdt:P31 wd:Q22811462 ;
+	p:P279 s:Q66310125-cd79f262-40be-6c29-9e05-18ed69128b57 .
+
+s:Q66310125-cd79f262-40be-6c29-9e05-18ed69128b57 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1310239 .
+
+wd:Q66310125 p:P31 s:Q66310125-dcda9b24-483b-6997-e317-46d3f085e37c .
+
+s:Q66310125-dcda9b24-483b-6997-e317-46d3f085e37c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q22811462 .
+
+wd:Q66310125 rdfs:label "nonbiological component"@en ;
+	skos:prefLabel "nonbiological component"@en ;
+	schema:name "nonbiological component"@en ;
+	rdfs:label "небиологический компонент"@ru ;
+	skos:prefLabel "небиологический компонент"@ru ;
+	schema:name "небиологический компонент"@ru ;
+	rdfs:label "niet-biologisch component"@nl ;
+	skos:prefLabel "niet-biologisch component"@nl ;
+	schema:name "niet-biologisch component"@nl ;
+	rdfs:label "небіялягічны складнік"@be-tarask ;
+	skos:prefLabel "небіялягічны складнік"@be-tarask ;
+	schema:name "небіялягічны складнік"@be-tarask ;
+	rdfs:label "component no-biològic"@ca ;
+	skos:prefLabel "component no-biològic"@ca ;
+	schema:name "component no-biològic"@ca ;
+	rdfs:label "składnik niebiologiczny"@pl ;
+	skos:prefLabel "składnik niebiologiczny"@pl ;
+	schema:name "składnik niebiologiczny"@pl ;
+	rdfs:label "nichtbiologischer Bestandteil"@de ;
+	skos:prefLabel "nichtbiologischer Bestandteil"@de ;
+	schema:name "nichtbiologischer Bestandteil"@de ;
+	rdfs:label "ickebiologisk beståndsdel"@sv ;
+	skos:prefLabel "ickebiologisk beståndsdel"@sv ;
+	schema:name "ickebiologisk beståndsdel"@sv ;
+	rdfs:label "cydran nad yw'n fiolegol"@cy ;
+	skos:prefLabel "cydran nad yw'n fiolegol"@cy ;
+	schema:name "cydran nad yw'n fiolegol"@cy ;
+	rdfs:label "biyolojik olmayan bileşen"@tr ;
+	skos:prefLabel "biyolojik olmayan bileşen"@tr ;
+	schema:name "biyolojik olmayan bileşen"@tr ;
+	rdfs:label "небіологічний компонент"@uk ;
+	skos:prefLabel "небіологічний компонент"@uk ;
+	schema:name "небіологічний компонент"@uk ;
+	rdfs:label "ikkebiologisk bestanddel"@nb ;
+	skos:prefLabel "ikkebiologisk bestanddel"@nb ;
+	schema:name "ikkebiologisk bestanddel"@nb ;
+	rdfs:label "רכיב לא-ביולוגי"@he ;
+	skos:prefLabel "רכיב לא-ביולוגי"@he ;
+	schema:name "רכיב לא-ביולוגי"@he ;
+	rdfs:label "componente no biológico"@es ;
+	skos:prefLabel "componente no biológico"@es ;
+	schema:name "componente no biológico"@es ;
+	rdfs:label "komponen nonbiologis"@id ;
+	skos:prefLabel "komponen nonbiologis"@id ;
+	schema:name "komponen nonbiologis"@id ;
+	rdfs:label "非生物学的要素"@ja ;
+	skos:prefLabel "非生物学的要素"@ja ;
+	schema:name "非生物学的要素"@ja ;
+	rdfs:label "nebiološka komponenta"@sl ;
+	skos:prefLabel "nebiološka komponenta"@sl ;
+	schema:name "nebiološka komponenta"@sl ;
+	schema:description "komponent będący produktem sztucznym"@pl,
+		"type of manufactured good"@en,
+		"tipo de bien manufacturado"@es,
+		"jenis barang manufaktur"@id,
+		"製造品の一種"@ja ;
+	skos:altLabel "небіялягічны кампанэнт"@be-tarask,
+		"ickebiologisk komponent"@sv,
+		"artificial component"@en,
+		"רכיב מלאכותי"@he,
+		"komponen buatan"@id,
+		"非生物学的成分"@ja,
+		"非生物成分"@ja,
+		"人工成分"@ja,
+		"非生物部品"@ja,
+		"人工部品"@ja,
+		"非生物要素"@ja,
+		"人工要素"@ja,
+		"非生物学的部品"@ja .
+
+wd:Q1310239 a wikibase:Item ;
+	rdfs:label "component"@en ;
+	skos:prefLabel "component"@en ;
+	schema:name "component"@en ;
+	schema:description "smaller, self-contained part of technical entity consisting of components"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q22811462 a wikibase:Item ;
+	rdfs:label "type of manufactured good"@en ;
+	skos:prefLabel "type of manufactured good"@en ;
+	schema:name "type of manufactured good"@en ;
+	schema:description "first-order metaclass"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .

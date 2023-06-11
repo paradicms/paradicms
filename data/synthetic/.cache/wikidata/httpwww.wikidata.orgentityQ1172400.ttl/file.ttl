@@ -1,0 +1,1011 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q1172400 a schema:Dataset ;
+	schema:about wd:Q1172400 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1831607284"^^xsd:integer ;
+	schema:dateModified "2023-02-11T08:30:49Z"^^xsd:dateTime ;
+	wikibase:statements "14"^^xsd:integer ;
+	wikibase:sitelinks "19"^^xsd:integer ;
+	wikibase:identifiers "4"^^xsd:integer .
+
+wd:Q1172400 a wikibase:Item .
+
+<https://fi.wikipedia.org/wiki/P%C3%A4%C3%A4telaite> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "fi" ;
+	schema:isPartOf <https://fi.wikipedia.org/> ;
+	schema:name "Päätelaite"@fi .
+
+<https://fi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/%C3%89quipement_terminal_de_traitement_de_donn%C3%A9es> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Équipement terminal de traitement de données"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E3%83%87%E3%83%BC%E3%82%BF%E7%AB%AF%E6%9C%AB%E8%A3%85%E7%BD%AE> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "データ端末装置"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eu.wikipedia.org/wiki/DTE> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "eu" ;
+	schema:isPartOf <https://eu.wikipedia.org/> ;
+	schema:name "DTE"@eu .
+
+<https://eu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Datenendeinrichtung> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Datenendeinrichtung"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Data_Terminal_Equipment> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Data Terminal Equipment"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/Data_terminal_equipment> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Data terminal equipment"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Equipo_terminal_de_datos> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Equipo terminal de datos"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Data_Terminal_Equipment> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Data Terminal Equipment"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%9A%D1%96%D0%BD%D1%86%D0%B5%D0%B2%D0%B5_%D0%BE%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F_%D0%B4%D0%B0%D0%BD%D0%B8%D1%85> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Кінцеве обладнання даних"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://kk.wikipedia.org/wiki/%D0%94%D0%B5%D1%80%D0%B5%D0%BA%D1%82%D0%B5%D1%80%D0%B4%D1%96_%D3%A9%D2%A3%D0%B4%D0%B5%D1%83%D0%B4%D1%96%D2%A3_%D1%81%D0%BE%D2%A3%D2%93%D1%8B_%D0%B6%D0%B0%D0%B1%D0%B4%D1%8B%D2%93%D1%8B> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "kk" ;
+	schema:isPartOf <https://kk.wikipedia.org/> ;
+	schema:name "Деректерді өңдеудің соңғы жабдығы"@kk .
+
+<https://kk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%9E%D0%BA%D0%BE%D0%BD%D0%B5%D1%87%D0%BD%D0%BE%D0%B5_%D0%BE%D0%B1%D0%BE%D1%80%D1%83%D0%B4%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Оконечное оборудование данных"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Equip_Terminal_de_Dades> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Equip Terminal de Dades"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EB%8D%B0%EC%9D%B4%ED%84%B0_%EB%8B%A8%EB%A7%90_%EC%9E%A5%EC%B9%98> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "데이터 단말 장치"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/DTE> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "DTE"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/Koncov%C3%A9_za%C5%99%C3%ADzen%C3%AD_p%C5%99enosu_dat> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Koncové zařízení přenosu dat"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D8%AC%D9%87%D8%A7%D8%B2_%D8%A8%D9%8A%D8%A7%D9%86%D8%A7%D8%AA_%D8%B7%D8%B1%D9%81%D9%8A> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "جهاز بيانات طرفي"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Veri_terminal_ekipman%C4%B1> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Veri terminal ekipmanı"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://az.wikipedia.org/wiki/M%C9%99lumat_terminal_avadanl%C4%B1%C4%9F%C4%B1> a schema:Article ;
+	schema:about wd:Q1172400 ;
+	schema:inLanguage "az" ;
+	schema:isPartOf <https://az.wikipedia.org/> ;
+	schema:name "Məlumat terminal avadanlığı"@az .
+
+<https://az.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q1172400 wdt:P646 "/m/0js_3" ;
+	wdt:P5398 "000000034" ;
+	wdt:P6366 "46106060" ;
+	wdtn:P6366 <http://ma-graph.org/entity/46106060> ;
+	wdt:P1813 "DTE"@en,
+		"DEE"@de,
+		"KZD"@cs,
+		"EDT"@es ;
+	wdt:P5555 <http://commons.wikimedia.org/wiki/Special:FilePath/RS-232%20POTS%20DTE%20DCE.svg> ;
+	wdt:P279 wd:Q1183543 ;
+	wdt:P1889 wd:Q1142912 ;
+	wdt:P1448 "Datenübertragungseinrichtung"@de,
+		"data processing terminal equipment"@en ;
+	wdt:P361 wd:Q115902703 ;
+	wdt:P227 "4148868-4" ;
+	wdtn:P227 <https://d-nb.info/gnd/4148868-4> ;
+	p:P646 s:Q1172400-679C9B03-7131-4C36-A92A-1FC3D4978F00 .
+
+s:Q1172400-679C9B03-7131-4C36-A92A-1FC3D4978F00 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/0js_3" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q1172400 p:P5398 s:Q1172400-fc8c0ee6-43fc-0f10-9ef8-906d0704ed3a .
+
+s:Q1172400-fc8c0ee6-43fc-0f10-9ef8-906d0704ed3a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P5398 "000000034" .
+
+wd:Q1172400 p:P6366 s:Q1172400-2A6F9E41-2180-446A-A023-3321ED84B069 .
+
+s:Q1172400-2A6F9E41-2180-446A-A023-3321ED84B069 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "46106060" ;
+	psn:P6366 <http://ma-graph.org/entity/46106060> .
+
+wd:Q1172400 p:P1813 s:Q1172400-844cb391-4c82-0ad7-95fc-e7fd97f325bf .
+
+s:Q1172400-844cb391-4c82-0ad7-95fc-e7fd97f325bf a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1813 "DTE"@en .
+
+wd:Q1172400 p:P1813 s:Q1172400-24e0e2c4-4c6d-f73b-06d7-dd8d45e6d235 .
+
+s:Q1172400-24e0e2c4-4c6d-f73b-06d7-dd8d45e6d235 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1813 "DEE"@de .
+
+wd:Q1172400 p:P1813 s:Q1172400-a4497507-4a4f-8656-9f1a-72154d53b37d .
+
+s:Q1172400-a4497507-4a4f-8656-9f1a-72154d53b37d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1813 "KZD"@cs .
+
+wd:Q1172400 p:P1813 s:Q1172400-5f44561a-4090-aa8a-371d-aa25942b92bd .
+
+s:Q1172400-5f44561a-4090-aa8a-371d-aa25942b92bd a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1813 "EDT"@es .
+
+wd:Q1172400 p:P5555 s:Q1172400-92393ce2-43f9-4e82-b507-48fe45edc7f2 .
+
+s:Q1172400-92393ce2-43f9-4e82-b507-48fe45edc7f2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P5555 <http://commons.wikimedia.org/wiki/Special:FilePath/RS-232%20POTS%20DTE%20DCE.svg> .
+
+wd:Q1172400 p:P279 s:Q1172400-cdc072e6-427a-dfee-e32a-6925e88515d8 .
+
+s:Q1172400-cdc072e6-427a-dfee-e32a-6925e88515d8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1183543 .
+
+wd:Q1172400 p:P1889 s:Q1172400-84f32d5e-488b-d31d-905a-171e92c04294 .
+
+s:Q1172400-84f32d5e-488b-d31d-905a-171e92c04294 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q1142912 .
+
+wd:Q1172400 p:P1448 s:Q1172400-dd4ac3bf-44e3-90f5-5b8d-c7be6c775233 .
+
+s:Q1172400-dd4ac3bf-44e3-90f5-5b8d-c7be6c775233 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1448 "Datenübertragungseinrichtung"@de ;
+	prov:wasDerivedFrom ref:52f38f0b1ea28aab5e39e16343c0dd290df773dd .
+
+wd:Q1172400 p:P1448 s:Q1172400-e200e00d-4606-8335-d413-898435b2f224 .
+
+s:Q1172400-e200e00d-4606-8335-d413-898435b2f224 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1448 "data processing terminal equipment"@en ;
+	prov:wasDerivedFrom ref:52f38f0b1ea28aab5e39e16343c0dd290df773dd .
+
+wd:Q1172400 p:P361 s:Q1172400-7b7df85e-4e26-5c9f-df26-5e9d37f9f91a .
+
+s:Q1172400-7b7df85e-4e26-5c9f-df26-5e9d37f9f91a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q115902703 .
+
+wd:Q1172400 p:P227 s:Q1172400-717c4a4e-45dd-1aad-f955-ca440d54fdea .
+
+s:Q1172400-717c4a4e-45dd-1aad-f955-ca440d54fdea a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P227 "4148868-4" ;
+	psn:P227 <https://d-nb.info/gnd/4148868-4> .
+
+wd:Q1172400 rdfs:label "Оконечное оборудование данных"@ru ;
+	skos:prefLabel "Оконечное оборудование данных"@ru ;
+	schema:name "Оконечное оборудование данных"@ru ;
+	rdfs:label "Équipement terminal de traitement de données"@fr ;
+	skos:prefLabel "Équipement terminal de traitement de données"@fr ;
+	schema:name "Équipement terminal de traitement de données"@fr ;
+	rdfs:label "data terminal equipment"@en ;
+	skos:prefLabel "data terminal equipment"@en ;
+	schema:name "data terminal equipment"@en ;
+	rdfs:label "Деректерді өңдеудің соңғы жабдығы"@kk ;
+	skos:prefLabel "Деректерді өңдеудің соңғы жабдығы"@kk ;
+	schema:name "Деректерді өңдеудің соңғы жабдығы"@kk ;
+	rdfs:label "Equip Terminal de Dades"@ca ;
+	skos:prefLabel "Equip Terminal de Dades"@ca ;
+	schema:name "Equip Terminal de Dades"@ca ;
+	rdfs:label "Datenendeinrichtung"@de ;
+	skos:prefLabel "Datenendeinrichtung"@de ;
+	schema:name "Datenendeinrichtung"@de ;
+	rdfs:label "데이터 단말 장치"@ko ;
+	skos:prefLabel "데이터 단말 장치"@ko ;
+	schema:name "데이터 단말 장치"@ko ;
+	rdfs:label "Data Terminal Equipment"@it ;
+	skos:prefLabel "Data Terminal Equipment"@it ;
+	schema:name "Data Terminal Equipment"@it ;
+	rdfs:label "equipo terminal de datos"@es ;
+	skos:prefLabel "equipo terminal de datos"@es ;
+	schema:name "equipo terminal de datos"@es ;
+	rdfs:label "Кінцеве обладнання"@uk ;
+	skos:prefLabel "Кінцеве обладнання"@uk ;
+	schema:name "Кінцеве обладнання"@uk ;
+	rdfs:label "DTE"@eu ;
+	skos:prefLabel "DTE"@eu ;
+	schema:name "DTE"@eu ;
+	rdfs:label "Päätelaite"@fi ;
+	skos:prefLabel "Päätelaite"@fi ;
+	schema:name "Päätelaite"@fi ;
+	rdfs:label "データ端末装置"@ja ;
+	skos:prefLabel "データ端末装置"@ja ;
+	schema:name "データ端末装置"@ja ;
+	rdfs:label "Data Terminal Equipment"@pl ;
+	skos:prefLabel "Data Terminal Equipment"@pl ;
+	schema:name "Data Terminal Equipment"@pl ;
+	rdfs:label "koncové zařízení přenosu dat"@cs ;
+	skos:prefLabel "koncové zařízení přenosu dat"@cs ;
+	schema:name "koncové zařízení přenosu dat"@cs ;
+	rdfs:label "DTE"@vi ;
+	skos:prefLabel "DTE"@vi ;
+	schema:name "DTE"@vi ;
+	rdfs:label "دي تي إي"@ar ;
+	skos:prefLabel "دي تي إي"@ar ;
+	schema:name "دي تي إي"@ar ;
+	rdfs:label "Veri terminal ekipmanı"@tr ;
+	skos:prefLabel "Veri terminal ekipmanı"@tr ;
+	schema:name "Veri terminal ekipmanı"@tr ;
+	rdfs:label "Məlumat terminal avadanlığı"@az ;
+	skos:prefLabel "Məlumat terminal avadanlığı"@az ;
+	schema:name "Məlumat terminal avadanlığı"@az ;
+	rdfs:label "Dataterminaludstyr"@da ;
+	skos:prefLabel "Dataterminaludstyr"@da ;
+	schema:name "Dataterminaludstyr"@da ;
+	schema:description "communications system equipment"@en,
+		"zařízení, které je připojeno k síti, zejména počítač nebo periferní zařízení"@cs,
+		"componente de un circuito de datos que hace de fuente o destino de la información"@es,
+		"Komponente des Kommunikationssystems"@de ;
+	skos:altLabel "Терминальное оборудование"@ru,
+		"Оконечное оборудование"@ru,
+		"DTE"@ru,
+		"DTE"@fr,
+		"ETTD"@fr,
+		"Equipement terminal de traitement de donnees"@fr,
+		"DTE"@kk,
+		"ETD"@ca,
+		"DTE"@ko,
+		"데이터 터미널 장비"@ko,
+		"Data terminaludstyr"@da,
+		"Data Terminal Equipment"@da,
+		"DTE"@da,
+		"Datavært"@da,
+		"Dataterminal"@da,
+		"ETD"@es,
+		"DTE"@uk,
+		"Data terminal equipment"@uk,
+		"Terminaali"@fi,
+		"DTE"@ja,
+		"DTE"@pl,
+		"Data Terminating Equipment"@pl,
+		"DE-Einrichtung"@de,
+		"DEE"@de,
+		"DTE"@de,
+		"DTE"@en,
+		"data processing terminal equipment"@en .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P5398 a wikibase:Property ;
+	rdfs:label "TDKIV term ID"@en ;
+	skos:prefLabel "TDKIV term ID"@en ;
+	schema:name "TDKIV term ID"@en ;
+	schema:description "identifier for a term used by the Czech Terminology Database of Library and Information Science (TDKIV) produced by the National Library of the Czech Republic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P5398 ;
+	wikibase:claim p:P5398 ;
+	wikibase:statementProperty ps:P5398 ;
+	wikibase:statementValue psv:P5398 ;
+	wikibase:qualifier pq:P5398 ;
+	wikibase:qualifierValue pqv:P5398 ;
+	wikibase:reference pr:P5398 ;
+	wikibase:referenceValue prv:P5398 ;
+	wikibase:novalue wdno:P5398 ;
+	wikibase:directClaimNormalized wdtn:P5398 ;
+	wikibase:statementValueNormalized psn:P5398 ;
+	wikibase:qualifierValueNormalized pqn:P5398 ;
+	wikibase:referenceValueNormalized prn:P5398 .
+
+p:P5398 a owl:ObjectProperty .
+
+psv:P5398 a owl:ObjectProperty .
+
+pqv:P5398 a owl:ObjectProperty .
+
+prv:P5398 a owl:ObjectProperty .
+
+wdt:P5398 a owl:DatatypeProperty .
+
+ps:P5398 a owl:DatatypeProperty .
+
+pq:P5398 a owl:DatatypeProperty .
+
+pr:P5398 a owl:DatatypeProperty .
+
+psn:P5398 a owl:ObjectProperty .
+
+pqn:P5398 a owl:ObjectProperty .
+
+prn:P5398 a owl:ObjectProperty .
+
+wdtn:P5398 a owl:ObjectProperty .
+
+wdno:P5398 a owl:Class ;
+	owl:complementOf _:1b5f02cd026e25300db47f144957f61e .
+
+_:1b5f02cd026e25300db47f144957f61e a owl:Restriction ;
+	owl:onProperty wdt:P5398 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1813 a wikibase:Property ;
+	rdfs:label "short name"@en ;
+	skos:prefLabel "short name"@en ;
+	schema:name "short name"@en ;
+	schema:description "short name of a place, organisation, person, journal, Wikidata property, etc."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Monolingualtext> ;
+	wikibase:directClaim wdt:P1813 ;
+	wikibase:claim p:P1813 ;
+	wikibase:statementProperty ps:P1813 ;
+	wikibase:statementValue psv:P1813 ;
+	wikibase:qualifier pq:P1813 ;
+	wikibase:qualifierValue pqv:P1813 ;
+	wikibase:reference pr:P1813 ;
+	wikibase:referenceValue prv:P1813 ;
+	wikibase:novalue wdno:P1813 .
+
+p:P1813 a owl:ObjectProperty .
+
+psv:P1813 a owl:ObjectProperty .
+
+pqv:P1813 a owl:ObjectProperty .
+
+prv:P1813 a owl:ObjectProperty .
+
+wdt:P1813 a owl:DatatypeProperty .
+
+ps:P1813 a owl:DatatypeProperty .
+
+pq:P1813 a owl:DatatypeProperty .
+
+pr:P1813 a owl:DatatypeProperty .
+
+wdno:P1813 a owl:Class ;
+	owl:complementOf _:4a7b6a517307eeaf8a892e11937a0f7f .
+
+_:4a7b6a517307eeaf8a892e11937a0f7f a owl:Restriction ;
+	owl:onProperty wdt:P1813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P5555 a wikibase:Property ;
+	rdfs:label "schematic"@en ;
+	skos:prefLabel "schematic"@en ;
+	schema:name "schematic"@en ;
+	schema:description "illustration of the structure or operation of an object, system, or process"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#CommonsMedia> ;
+	wikibase:directClaim wdt:P5555 ;
+	wikibase:claim p:P5555 ;
+	wikibase:statementProperty ps:P5555 ;
+	wikibase:statementValue psv:P5555 ;
+	wikibase:qualifier pq:P5555 ;
+	wikibase:qualifierValue pqv:P5555 ;
+	wikibase:reference pr:P5555 ;
+	wikibase:referenceValue prv:P5555 ;
+	wikibase:novalue wdno:P5555 .
+
+p:P5555 a owl:ObjectProperty .
+
+psv:P5555 a owl:ObjectProperty .
+
+pqv:P5555 a owl:ObjectProperty .
+
+prv:P5555 a owl:ObjectProperty .
+
+wdt:P5555 a owl:ObjectProperty .
+
+ps:P5555 a owl:ObjectProperty .
+
+pq:P5555 a owl:ObjectProperty .
+
+pr:P5555 a owl:ObjectProperty .
+
+wdno:P5555 a owl:Class ;
+	owl:complementOf _:f9ccf294dd812579ea153180dc3d651a .
+
+_:f9ccf294dd812579ea153180dc3d651a a owl:Restriction ;
+	owl:onProperty wdt:P5555 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1183543 a wikibase:Item ;
+	rdfs:label "appliance"@en ;
+	skos:prefLabel "appliance"@en ;
+	schema:name "appliance"@en ;
+	schema:description "object with which something can be worked on, manufactured or effected"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1142912 a wikibase:Item ;
+	rdfs:label "Data circuit-terminating equipment"@en ;
+	skos:prefLabel "Data circuit-terminating equipment"@en ;
+	schema:name "Data circuit-terminating equipment"@en ;
+	schema:description "communications system component"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1448 a wikibase:Property ;
+	rdfs:label "official name"@en ;
+	skos:prefLabel "official name"@en ;
+	schema:name "official name"@en ;
+	schema:description "official name of the subject in its official language(s)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Monolingualtext> ;
+	wikibase:directClaim wdt:P1448 ;
+	wikibase:claim p:P1448 ;
+	wikibase:statementProperty ps:P1448 ;
+	wikibase:statementValue psv:P1448 ;
+	wikibase:qualifier pq:P1448 ;
+	wikibase:qualifierValue pqv:P1448 ;
+	wikibase:reference pr:P1448 ;
+	wikibase:referenceValue prv:P1448 ;
+	wikibase:novalue wdno:P1448 .
+
+p:P1448 a owl:ObjectProperty .
+
+psv:P1448 a owl:ObjectProperty .
+
+pqv:P1448 a owl:ObjectProperty .
+
+prv:P1448 a owl:ObjectProperty .
+
+wdt:P1448 a owl:DatatypeProperty .
+
+ps:P1448 a owl:DatatypeProperty .
+
+pq:P1448 a owl:DatatypeProperty .
+
+pr:P1448 a owl:DatatypeProperty .
+
+wdno:P1448 a owl:Class ;
+	owl:complementOf _:262ace7888163a9086c18611df9f3893 .
+
+_:262ace7888163a9086c18611df9f3893 a owl:Restriction ;
+	owl:onProperty wdt:P1448 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q115902703 a wikibase:Item .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P227 a wikibase:Property ;
+	rdfs:label "GND ID"@en ;
+	skos:prefLabel "GND ID"@en ;
+	schema:name "GND ID"@en ;
+	schema:description "identifier from an international authority file of names, subjects, and organizations (please don't use type n = name, disambiguation) - Deutsche Nationalbibliothek"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P227 ;
+	wikibase:claim p:P227 ;
+	wikibase:statementProperty ps:P227 ;
+	wikibase:statementValue psv:P227 ;
+	wikibase:qualifier pq:P227 ;
+	wikibase:qualifierValue pqv:P227 ;
+	wikibase:reference pr:P227 ;
+	wikibase:referenceValue prv:P227 ;
+	wikibase:novalue wdno:P227 ;
+	wikibase:directClaimNormalized wdtn:P227 ;
+	wikibase:statementValueNormalized psn:P227 ;
+	wikibase:qualifierValueNormalized pqn:P227 ;
+	wikibase:referenceValueNormalized prn:P227 .
+
+p:P227 a owl:ObjectProperty .
+
+psv:P227 a owl:ObjectProperty .
+
+pqv:P227 a owl:ObjectProperty .
+
+prv:P227 a owl:ObjectProperty .
+
+wdt:P227 a owl:DatatypeProperty .
+
+ps:P227 a owl:DatatypeProperty .
+
+pq:P227 a owl:DatatypeProperty .
+
+pr:P227 a owl:DatatypeProperty .
+
+psn:P227 a owl:ObjectProperty .
+
+pqn:P227 a owl:ObjectProperty .
+
+prn:P227 a owl:ObjectProperty .
+
+wdtn:P227 a owl:ObjectProperty .
+
+wdno:P227 a owl:Class ;
+	owl:complementOf _:286c7ee15bc3c86b8eb6b23547b34d68 .
+
+_:286c7ee15bc3c86b8eb6b23547b34d68 a owl:Restriction ;
+	owl:onProperty wdt:P227 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P356 a wikibase:Property ;
+	rdfs:label "DOI"@en ;
+	skos:prefLabel "DOI"@en ;
+	schema:name "DOI"@en ;
+	schema:description "serial code used to uniquely identify digital objects like academic papers (use upper case letters only)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P356 ;
+	wikibase:claim p:P356 ;
+	wikibase:statementProperty ps:P356 ;
+	wikibase:statementValue psv:P356 ;
+	wikibase:qualifier pq:P356 ;
+	wikibase:qualifierValue pqv:P356 ;
+	wikibase:reference pr:P356 ;
+	wikibase:referenceValue prv:P356 ;
+	wikibase:novalue wdno:P356 ;
+	wikibase:directClaimNormalized wdtn:P356 ;
+	wikibase:statementValueNormalized psn:P356 ;
+	wikibase:qualifierValueNormalized pqn:P356 ;
+	wikibase:referenceValueNormalized prn:P356 .
+
+p:P356 a owl:ObjectProperty .
+
+psv:P356 a owl:ObjectProperty .
+
+pqv:P356 a owl:ObjectProperty .
+
+prv:P356 a owl:ObjectProperty .
+
+wdt:P356 a owl:DatatypeProperty .
+
+ps:P356 a owl:DatatypeProperty .
+
+pq:P356 a owl:DatatypeProperty .
+
+pr:P356 a owl:DatatypeProperty .
+
+psn:P356 a owl:ObjectProperty .
+
+pqn:P356 a owl:ObjectProperty .
+
+prn:P356 a owl:ObjectProperty .
+
+wdtn:P356 a owl:ObjectProperty .
+
+wdno:P356 a owl:Class ;
+	owl:complementOf _:7c656241912b24503f517964814479d9 .
+
+_:7c656241912b24503f517964814479d9 a owl:Restriction ;
+	owl:onProperty wdt:P356 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q13783841 owl:sameAs wd:Q1172400 .
+
+wd:Q12212242 owl:sameAs wd:Q1172400 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:52f38f0b1ea28aab5e39e16343c0dd290df773dd a wikibase:Reference ;
+	pr:P356 "10.1524/itit.1966.8.16.244" ;
+	prn:P356 <http://dx.doi.org/10.1524/itit.1966.8.16.244> .

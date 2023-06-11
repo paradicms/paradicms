@@ -1,0 +1,258 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q28542014 a schema:Dataset ;
+	schema:about wd:Q28542014 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1791228683"^^xsd:integer ;
+	schema:dateModified "2022-12-17T01:10:05Z"^^xsd:dateTime ;
+	wikibase:statements "4"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q28542014 a wikibase:Item ;
+	wdt:P279 wd:Q68,
+		wd:Q207977 ;
+	wdt:P910 wd:Q7023431 ;
+	wdt:P1552 wd:Q17548110 ;
+	p:P279 s:Q28542014-9e6d0a45-497c-6a5e-e082-623ff8e9afd8 .
+
+s:Q28542014-9e6d0a45-497c-6a5e-e082-623ff8e9afd8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q68 .
+
+wd:Q28542014 p:P279 s:Q28542014-2aa581c3-4f3e-b6f2-f379-c273060ef14b .
+
+s:Q28542014-2aa581c3-4f3e-b6f2-f379-c273060ef14b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q207977 .
+
+wd:Q28542014 p:P910 s:Q28542014-fafb49da-4f91-645e-1d6c-c22911eccc7c .
+
+s:Q28542014-fafb49da-4f91-645e-1d6c-c22911eccc7c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P910 wd:Q7023431 .
+
+wd:Q28542014 p:P1552 s:Q28542014-20e0f47d-4c30-2c1a-2ae7-e63e39d5b795 .
+
+s:Q28542014-20e0f47d-4c30-2c1a-2ae7-e63e39d5b795 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q17548110 .
+
+wd:Q28542014 rdfs:label "one-of-a-kind computer"@en ;
+	skos:prefLabel "one-of-a-kind computer"@en ;
+	schema:name "one-of-a-kind computer"@en ;
+	rdfs:label "ordinador d'un únic exemplar"@ca ;
+	skos:prefLabel "ordinador d'un únic exemplar"@ca ;
+	schema:name "ordinador d'un únic exemplar"@ca ;
+	rdfs:label "einmaliger Computer"@de ;
+	skos:prefLabel "einmaliger Computer"@de ;
+	schema:name "einmaliger Computer"@de ;
+	rdfs:label "єдиний у своєму роді комп'ютер"@uk ;
+	skos:prefLabel "єдиний у своєму роді комп'ютер"@uk ;
+	schema:name "єдиний у своєму роді комп'ютер"@uk ;
+	rdfs:label "computador único"@pt ;
+	skos:prefLabel "computador único"@pt ;
+	schema:name "computador único"@pt ;
+	rdfs:label "единственный в своём роде компьютер"@ru ;
+	skos:prefLabel "единственный в своём роде компьютер"@ru ;
+	schema:name "единственный в своём роде компьютер"@ru ;
+	rdfs:label "særligegnet computer"@da ;
+	skos:prefLabel "særligegnet computer"@da ;
+	schema:name "særligegnet computer"@da ;
+	rdfs:label "prototype d'ordinateur"@fr ;
+	skos:prefLabel "prototype d'ordinateur"@fr ;
+	schema:name "prototype d'ordinateur"@fr ;
+	rdfs:label "حاسوب فريد من نوعه"@ar ;
+	skos:prefLabel "حاسوب فريد من نوعه"@ar ;
+	schema:name "حاسوب فريد من نوعه"@ar ;
+	rdfs:label "unieke computer"@nl ;
+	skos:prefLabel "unieke computer"@nl ;
+	schema:name "unieke computer"@nl ;
+	rdfs:label "computadora única"@es ;
+	skos:prefLabel "computadora única"@es ;
+	schema:name "computadora única"@es ;
+	schema:description "model of computer of which only a single instance was ever produced"@en,
+		"Computer-Model, von dem nur ein einziges jemals produziert wurde"@de,
+		"модель комп'ютера, яка була вироблена тільки в одному примірнику"@uk,
+		"نموذج لحاسوب أُنتج منه منتج واحد فقط"@ar,
+		"modelo de computadora del cual solo se produjo un ejemplar único"@es ;
+	skos:altLabel "Unikaler Computer"@de,
+		"Computer-Unikat"@de,
+		"Einzigartiger Computer"@de,
+		"компьютер, единственный в своём роде"@ru,
+		"eenmalige computer"@nl .
+
+wd:Q68 a wikibase:Item ;
+	rdfs:label "computer"@en ;
+	skos:prefLabel "computer"@en ;
+	schema:name "computer"@en ;
+	schema:description "general-purpose device for performing arithmetic or logical operations"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q207977 a wikibase:Item ;
+	rdfs:label "prototype"@en ;
+	skos:prefLabel "prototype"@en ;
+	schema:name "prototype"@en ;
+	schema:description "early sample or model built to test a concept or process, generally used to evaluate a new design by system analysts and advanced users"@en .
+
+wd:Q7023431 a wikibase:Item ;
+	rdfs:label "Category:One-of-a-kind computers"@en ;
+	skos:prefLabel "Category:One-of-a-kind computers"@en ;
+	schema:name "Category:One-of-a-kind computers"@en ;
+	schema:description "Wikimedia category"@en .
+
+wd:P910 a wikibase:Property ;
+	rdfs:label "topic's main category"@en ;
+	skos:prefLabel "topic's main category"@en ;
+	schema:name "topic's main category"@en ;
+	schema:description "main Wikimedia category"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P910 ;
+	wikibase:claim p:P910 ;
+	wikibase:statementProperty ps:P910 ;
+	wikibase:statementValue psv:P910 ;
+	wikibase:qualifier pq:P910 ;
+	wikibase:qualifierValue pqv:P910 ;
+	wikibase:reference pr:P910 ;
+	wikibase:referenceValue prv:P910 ;
+	wikibase:novalue wdno:P910 .
+
+p:P910 a owl:ObjectProperty .
+
+psv:P910 a owl:ObjectProperty .
+
+pqv:P910 a owl:ObjectProperty .
+
+prv:P910 a owl:ObjectProperty .
+
+wdt:P910 a owl:ObjectProperty .
+
+ps:P910 a owl:ObjectProperty .
+
+pq:P910 a owl:ObjectProperty .
+
+pr:P910 a owl:ObjectProperty .
+
+wdno:P910 a owl:Class ;
+	owl:complementOf _:06be9361e78d041ce01df69013cf6906 .
+
+_:06be9361e78d041ce01df69013cf6906 a owl:Restriction ;
+	owl:onProperty wdt:P910 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q17548110 a wikibase:Item ;
+	rdfs:label "uniqueness"@en ;
+	skos:prefLabel "uniqueness"@en ;
+	schema:name "uniqueness"@en ;
+	schema:description "philosophical category, opposite of multiplicity; state or condition wherein something is unlike anything else in comparison"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
