@@ -18,6 +18,13 @@ logger = logging.getLogger(__name__)
 
 
 class WikibaseItem(ResourceBackedNamedModel):
+    __IGNORE_PREDICATES = {
+        URIRef(SDOHTTP.description),
+        URIRef(SDOHTTP.name),
+        RDF.type,
+        RDFS.label,
+    }
+
     def __init__(
         self,
         resource: Resource,
@@ -27,12 +34,10 @@ class WikibaseItem(ResourceBackedNamedModel):
     ):
         ResourceBackedNamedModel.__init__(self, resource)
 
-        IGNORE_PREDICATES = {
-            URIRef(SDOHTTP.description),
-            URIRef(SDOHTTP.name),
-            RDF.type,
-            RDFS.label,
-        }
+        if property_definitions is None:
+            property_definitions = WikibasePropertyDefinition.from_rdf(
+                graph=resource.graph
+            )
 
         alt_labels = []
         articles = []
@@ -75,7 +80,7 @@ class WikibaseItem(ResourceBackedNamedModel):
                     description = object_.value
                     continue
 
-            if predicate in IGNORE_PREDICATES:
+            if predicate in self.__IGNORE_PREDICATES:
                 logger.debug(
                     "item %s: ignoring predicate %s", resource.identifier, predicate
                 )
