@@ -164,6 +164,10 @@ export class CachingModelSet implements ModelSet {
     return this.modelByIri(this.imagesByIriIndex, imageIri);
   }
 
+  imageByIriOptional(imageIri: string): Image | null {
+    return this.modelByIriOptional(this.imagesByIriIndex, imageIri);
+  }
+
   @Memoize()
   private get images(): readonly Image[] {
     return sortModelsArray(this.modelReader.readImages({modelSet: this}));

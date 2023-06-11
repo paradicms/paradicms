@@ -26,6 +26,7 @@ export interface ModelSet {
   readonly concepts: readonly Concept[];
   imageByIri(imageIri: string): Image;
   imagesByDepictsIri(depictsIri: string): readonly Image[];
+  imageByIriOptional(imageIri: string): Image | null;
   imagesByOriginalImageIri(originalImageIri: string): readonly Image[];
   licenseByIri(licenseIri: string): License;
   locationByIri(locationIri: string): Location;
