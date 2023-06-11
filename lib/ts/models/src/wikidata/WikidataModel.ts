@@ -113,6 +113,11 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
       if (statement.value.termType !== "NamedNode") {
         return null;
       }
+      // Here we've got a wdt:P18 <image URI> statement.
+      // The image may not be in the model set if e.g., another thumbnail was selected, but we'll still have the wdt:P18
+      // statement pointing out it.
+      // Thus imageByIriOptional.
+      // The modelSet.imagesByDepictsUri doesn't have this problem, since it only pulls images that are in the dataset.
       return this.modelSet.imageByIriOptional(statement.value.value);
     });
     // Traversing wdt:P18 will only get the original image
