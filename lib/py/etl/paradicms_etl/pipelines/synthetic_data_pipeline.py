@@ -1,11 +1,12 @@
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple, Dict
+from typing import Optional, Tuple, Dict, List
 from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
 
+from paradicms_etl.enricher import Enricher
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractors.nop_extractor import nop_extractor
@@ -538,17 +539,18 @@ class SyntheticDataPipeline(Pipeline):
                 )
             )
 
+        # Help mypy out
+        enrichers: List[Enricher] = [
+            WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
+            WikimediaCommonsEnricher(
+                cache_dir_path=cache_dir_path / "wikimedia_commons"
+            ),
+        ]
+        enrichers.extend(Pipeline.ENRICHERS_DEFAULT)
+
         Pipeline.__init__(
             self,
-            enrichers=tuple(
-                [
-                    WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
-                    WikimediaCommonsEnricher(
-                        cache_dir_path=cache_dir_path / "wikimedia_commons"
-                    ),
-                ]
-                + list(Pipeline.ENRICHERS_DEFAULT)
-            ),
+            enrichers=tuple(enrichers),
             extractor=nop_extractor,
             id=self.ID,
             loader=loader,

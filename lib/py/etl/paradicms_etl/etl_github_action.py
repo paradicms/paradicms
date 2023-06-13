@@ -1,7 +1,7 @@
 import dataclasses
 from abc import ABC
 from pathlib import Path
-from typing import Type, Optional, Tuple
+from typing import Type, Optional, Tuple, List
 
 from configargparse import ArgParser
 from more_itertools import consume
@@ -72,15 +72,14 @@ class EtlGitHubAction(GitHubAction, ABC):
         loader: Optional[Loader] = None
     ):
         if enrichers is None:
-            enrichers = tuple(
-                [
-                    WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
-                    WikimediaCommonsEnricher(
-                        cache_dir_path=self._cache_dir_path / "wikimedia_commons"
-                    ),
-                ]
-                + list(Pipeline.ENRICHERS_DEFAULT)
-            )
+            enrichers_list: List[Enricher] = [
+                WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
+                WikimediaCommonsEnricher(
+                    cache_dir_path=self._cache_dir_path / "wikimedia_commons"
+                ),
+            ]
+            enrichers_list.extend(Pipeline.ENRICHERS_DEFAULT)
+            enrichers = tuple(enrichers_list)
 
         if loader is None:
             loader = RdfFileLoader(

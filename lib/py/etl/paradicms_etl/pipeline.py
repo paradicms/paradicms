@@ -26,11 +26,11 @@ from paradicms_etl.validators.reference_validator import ReferenceValidator
 
 
 class Pipeline(ABC):
-    ENRICHERS_DEFAULT = (
+    ENRICHERS_DEFAULT: Tuple[Enricher, ...] = (
         creative_commons_licenses_enricher,
         rights_statements_dot_org_rights_statements_enricher,
     )
-    VALIDATORS_DEFAULT = (ReferenceValidator(),)
+    VALIDATORS_DEFAULT: Tuple[Validator, ...] = (ReferenceValidator(),)
 
     def __init__(
         self,
