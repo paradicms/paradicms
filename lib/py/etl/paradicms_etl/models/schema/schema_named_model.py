@@ -1,6 +1,6 @@
 from abc import abstractmethod
 
-from rdflib import URIRef
+from rdflib import URIRef, SDO
 
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.schema.schema_thing_mixin import SchemaThingMixin
@@ -21,6 +21,11 @@ class SchemaNamedModel(ResourceBackedNamedModel, SchemaThingMixin):
             ResourceBackedNamedModel.json_ld_context(),
             SchemaThingMixin.json_ld_context(),
         )
+
+    @classmethod
+    def rdf_type_uri(cls) -> URIRef:
+        assert cls.__name__.startswith("Schema")
+        return getattr(SDO, cls.__name__[len("Schema") :])
 
     @abstractmethod
     @property

@@ -10,6 +10,12 @@ class SchemaThingMixin(ABC):
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError
 
+        def add_alternate_name(
+            self, alternate_name: Union[str, Text]
+        ) -> "SchemaThingMixin.Builder":
+            self.add(SDO.alternateName, alternate_name)
+            return self
+
         def add_description(
             self, description: Union[str, Text]
         ) -> "SchemaThingMixin.Builder":
