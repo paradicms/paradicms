@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-from typing import Any
+from typing import Any, Text, Union
 
 from rdflib import URIRef, SDO
 
@@ -9,6 +9,12 @@ class SchemaThingMixin(ABC):
         @abstractmethod
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError
+
+        def add_description(
+            self, description: Union[str, Text]
+        ) -> "SchemaThingMixin.Builder":
+            self.add(SDO.description, description)
+            return self
 
         def add_same_as(self, same_as: URIRef) -> "SchemaThingMixin.Builder":
             self.add(SDO.sameAs, same_as)
