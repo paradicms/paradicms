@@ -30,7 +30,6 @@ class Pipeline(ABC):
         creative_commons_licenses_enricher,
         rights_statements_dot_org_rights_statements_enricher,
     )
-    VALIDATORS_DEFAULT: Tuple[Validator, ...] = (ReferenceValidator(),)
 
     def __init__(
         self,
@@ -61,7 +60,7 @@ class Pipeline(ABC):
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
         if validators is None:
-            validators = self.VALIDATORS_DEFAULT
+            validators = (ReferenceValidator(),)
         self.__validators = validators
 
     @classmethod
