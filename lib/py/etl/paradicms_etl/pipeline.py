@@ -7,8 +7,11 @@ from configargparse import ArgParser
 from more_itertools import consume
 
 from paradicms_etl.enricher import Enricher
-from paradicms_etl.enrichers.ambient_reference_enricher import (
-    ambient_reference_enricher,
+from paradicms_etl.enrichers.creative_commons_licenses_enricher import (
+    creative_commons_licenses_enricher,
+)
+from paradicms_etl.enrichers.rights_statements_dot_org_rights_statements_enricher import (
+    rights_statements_dot_org_rights_statements_enricher,
 )
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
@@ -23,6 +26,12 @@ from paradicms_etl.validators.reference_validator import ReferenceValidator
 
 
 class Pipeline(ABC):
+    ENRICHERS_DEFAULT = (
+        creative_commons_licenses_enricher,
+        rights_statements_dot_org_rights_statements_enricher,
+    )
+    VALIDATORS_DEFAULT = (ReferenceValidator(),)
+
     def __init__(
         self,
         *,
@@ -44,7 +53,7 @@ class Pipeline(ABC):
         """
 
         if enrichers is None:
-            enrichers = (ambient_reference_enricher,)
+            enrichers = self.ENRICHERS_DEFAULT
         self.__enrichers = enrichers
         self.__extractor = extractor
         self.__id = id
@@ -52,7 +61,7 @@ class Pipeline(ABC):
         self.__logger = logging.getLogger(self.__class__.__name__)
         self.__transformer = transformer
         if validators is None:
-            validators = (ReferenceValidator(),)
+            validators = self.VALIDATORS_DEFAULT
         self.__validators = validators
 
     @classmethod

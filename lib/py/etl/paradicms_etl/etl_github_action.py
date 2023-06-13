@@ -7,9 +7,6 @@ from configargparse import ArgParser
 from more_itertools import consume
 
 from paradicms_etl.enricher import Enricher
-from paradicms_etl.enrichers.ambient_reference_enricher import (
-    ambient_reference_enricher,
-)
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractor import Extractor
@@ -75,12 +72,14 @@ class EtlGitHubAction(GitHubAction, ABC):
         loader: Optional[Loader] = None
     ):
         if enrichers is None:
-            enrichers = (
-                WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
-                WikimediaCommonsEnricher(
-                    cache_dir_path=self._cache_dir_path / "wikimedia_commons"
-                ),
-                ambient_reference_enricher,  # Should be last
+            enrichers = tuple(
+                [
+                    WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
+                    WikimediaCommonsEnricher(
+                        cache_dir_path=self._cache_dir_path / "wikimedia_commons"
+                    ),
+                ]
+                + list(Pipeline.ENRICHERS_DEFAULT)
             )
 
         if loader is None:

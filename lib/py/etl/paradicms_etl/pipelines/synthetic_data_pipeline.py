@@ -6,9 +6,6 @@ from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
 
-from paradicms_etl.enrichers.ambient_reference_enricher import (
-    ambient_reference_enricher,
-)
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractors.nop_extractor import nop_extractor
@@ -543,12 +540,14 @@ class SyntheticDataPipeline(Pipeline):
 
         Pipeline.__init__(
             self,
-            enrichers=(
-                WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
-                WikimediaCommonsEnricher(
-                    cache_dir_path=cache_dir_path / "wikimedia_commons"
-                ),
-                ambient_reference_enricher,  # Should be last
+            enrichers=tuple(
+                [
+                    WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
+                    WikimediaCommonsEnricher(
+                        cache_dir_path=cache_dir_path / "wikimedia_commons"
+                    ),
+                ]
+                + list(Pipeline.ENRICHERS_DEFAULT)
             ),
             extractor=nop_extractor,
             id=self.ID,
