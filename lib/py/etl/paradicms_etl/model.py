@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Any, Dict
 
 from rdflib import Graph, URIRef
 from rdflib.resource import Resource
@@ -10,6 +10,10 @@ class Model(ABC):
     @abstractmethod
     def from_rdf(cls, resource: Resource):
         raise NotImplementedError
+
+    @classmethod
+    def json_ld_context(cls) -> Dict[str, Any]:
+        return {"@version": 1.1}
 
     @property
     def label(self) -> Optional[str]:
