@@ -167,7 +167,7 @@ class ReferenceValidator:
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_cms_named_model(organization)
         if organization.uri is not None:
-            assert organization.uri not in self.__organization_uris
+            assert organization.uri not in self.__organization_uris, organization.uri
             self.__organization_uris.add(organization.uri)
 
     def _validate_cms_organization_references(self) -> Iterable[ValidationResult]:
