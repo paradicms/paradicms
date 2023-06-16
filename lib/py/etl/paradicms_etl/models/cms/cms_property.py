@@ -70,11 +70,11 @@ class CmsProperty(CmsNamedModel, Property):
 
     @property
     def label(self) -> str:
-        return self._required_str_value(RDFS.label)
+        return self._required_value(RDFS.label, self._map_str_value)
 
     @property
     def range(self) -> Optional[URIRef]:
-        return self._optional_uri_value(RDFS.range)
+        return self._optional_value(RDFS.range, self._map_uri_value)
 
     @property
     def uri(self) -> URIRef:

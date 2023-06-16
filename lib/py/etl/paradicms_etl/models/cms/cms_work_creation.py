@@ -34,7 +34,7 @@ class CmsWorkCreation(CmsWorkEvent, WorkCreation):
 
     @property
     def creator_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._uri_values(DCTERMS.creator))
+        return tuple(self._values(DCTERMS.creator, self._map_uri_value))
 
     @classmethod
     def json_ld_context(cls):

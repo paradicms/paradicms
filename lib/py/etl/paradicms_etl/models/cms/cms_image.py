@@ -100,12 +100,12 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
 
     @property
     def copyable(self) -> bool:
-        copyable = self._optional_bool_value(CMS.imageCopyable)
+        copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
         return copyable if copyable is not None else True
 
     @property
     def depicts_uri(self) -> URIRef:
-        return self._required_uri_value(FOAF.depicts)
+        return self._required_value(FOAF.depicts, self._map_uri_value)
 
     @classmethod
     def json_ld_context(cls):
@@ -191,7 +191,7 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
 
     @property
     def title(self):
-        return self._optional_str_value(DCTERMS.title)
+        return self._optional_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

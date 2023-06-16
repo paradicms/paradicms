@@ -53,4 +53,4 @@ class CmsAgent(CmsModel, Agent):
 
     @property
     def name(self) -> str:
-        return self._required_str_value(FOAF.name)
+        return self._required_value(FOAF.name, self._map_str_value)

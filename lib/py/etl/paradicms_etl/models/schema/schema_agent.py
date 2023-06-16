@@ -23,4 +23,4 @@ class SchemaAgent(SchemaModel, Agent):
 
     @property
     def name(self) -> str:
-        return self._required_str_value(SDO.name)
+        return self._required_value(SDO.name, self._map_str_value)

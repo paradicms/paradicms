@@ -66,11 +66,11 @@ class CmsConcept(CmsNamedModel, Concept):
 
     @property
     def pref_label(self) -> str:
-        return self._required_str_value(SKOS.prefLabel)
+        return self._required_value(SKOS.prefLabel, self._map_str_value)
 
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._uri_values(RDF.type))
+        return tuple(self._values(RDF.type, self._map_uri_value))
 
     @property
     def uri(self) -> URIRef:

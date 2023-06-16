@@ -51,7 +51,7 @@ class CmsCollection(CmsNamedModel, Collection):
 
     @property
     def title(self) -> str:
-        return self._required_str_value(DCTERMS.title)
+        return self._required_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

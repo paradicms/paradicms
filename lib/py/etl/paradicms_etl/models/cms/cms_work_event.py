@@ -24,4 +24,4 @@ class CmsWorkEvent(CmsEvent, WorkEvent):
 
     @property
     def work_uri(self) -> URIRef:
-        return self._required_uri_value(CMS.work)
+        return self._required_value(CMS.work, self._map_uri_value)

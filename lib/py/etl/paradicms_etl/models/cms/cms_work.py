@@ -66,7 +66,7 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
 
     @property
     def description(self) -> Union[str, Text, None]:
-        return self._optional_str_or_text_value(DCTERMS.description)
+        return self._optional_value(DCTERMS.description, self._map_str_or_text_value)
 
     @property
     def collection_uris(self) -> Tuple[URIRef, ...]:
@@ -106,7 +106,7 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
 
     @property
     def title(self) -> str:
-        return self._required_str_value(DCTERMS.title)
+        return self._required_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

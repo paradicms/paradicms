@@ -40,7 +40,7 @@ class Image(NamedModel, RightsMixin):
 
     @property
     @abstractmethod
-    def depicts_uri(self) -> URIRef:
+    def depicts_uri(self) -> Optional[URIRef]:
         raise NotImplementedError
 
     @property

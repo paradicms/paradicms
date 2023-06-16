@@ -1,15 +1,12 @@
-from abc import abstractmethod, ABC
-from typing import Any, Text, Union
+from typing import Text, Union
 
 from rdflib import URIRef, SDO
 
+from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
 
-class SchemaThingMixin(ABC):
-    class Builder(ABC):
-        @abstractmethod
-        def add(self, p: URIRef, o: Any):
-            raise NotImplementedError
 
+class SchemaThingMixin(ResourceBackedModelMixin):
+    class Builder(ResourceBackedModelMixin.Builder):
         def add_alternate_name(
             self, alternate_name: Union[str, Text]
         ) -> "SchemaThingMixin.Builder":

@@ -45,7 +45,7 @@ class CmsRightsStatement(CmsModel, RightsStatement):
 
     @property
     def identifier(self) -> str:
-        return self._required_str_value(DCTERMS.identifier)
+        return self._required_value(DCTERMS.identifier, self._map_str_value)
 
     @classmethod
     def json_ld_context(cls):
@@ -71,4 +71,4 @@ class CmsRightsStatement(CmsModel, RightsStatement):
 
     @property
     def pref_label(self) -> str:
-        return self._required_str_value(SKOS.prefLabel)
+        return self._required_value(SKOS.prefLabel, self._map_str_value)

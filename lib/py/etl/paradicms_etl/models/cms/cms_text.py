@@ -36,4 +36,4 @@ class CmsText(CmsModel, CmsRightsMixin, Text):
 
     @property
     def value(self) -> str:
-        return self._required_str_value(RDF.value)
+        return self._required_value(RDF.value, self._map_str_value)

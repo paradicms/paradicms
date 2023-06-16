@@ -1,4 +1,4 @@
-from typing import Generator, Tuple, Union, TypeVar, Any
+from typing import Generator, Tuple, Union, TypeVar, Any, Callable
 from typing import Optional
 
 from rdflib import ConjunctiveGraph, Literal, RDF, URIRef
@@ -9,6 +9,8 @@ from rdflib.term import Node
 from paradicms_etl.model import Model
 from paradicms_etl.namespaces import CMS
 
+_Predicates = Union[URIRef, Tuple[URIRef, ...]]
+_StatementObject = Union[Literal, Resource]
 _ValueT = TypeVar("_ValueT")
 
 
@@ -53,101 +55,93 @@ class ResourceBackedModel(Model):
         graph += resource.graph
         return cls(graph.resource(resource.identifier))
 
-    def __literal_values(
-        self, p: Union[URIRef, Tuple[URIRef, ...]], expected_type=None
-    ) -> Generator[_ValueT, None, None]:
-        value: _ValueT
-        for value in self.__values(p):
-            if not isinstance(value, Literal):
-                continue
-            literal: Literal = value
-            python_value = literal.toPython()
-            if expected_type is not None and not isinstance(
-                python_value, expected_type
-            ):
-                raise TypeError(
-                    f"expected {p} to have a {expected_type} value, was {type(python_value)}"
-                )
-            yield python_value
+    @staticmethod
+    def _map_bool_value(value: _StatementObject) -> Optional[bool]:
+        if isinstance(value, Literal):
+            py_value = value.toPython()
+            if isinstance(py_value, bool):
+                return py_value
+        return None
 
-    def _optional_bool_value(
-        self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Optional[bool]:
-        return self.__optional_value(self.__literal_values(p, bool))
+    @staticmethod
+    def _map_bytes_value(value: _StatementObject) -> Optional[bytes]:
+        if isinstance(value, Literal):
+            py_value = value.toPython()
+            if isinstance(py_value, bytes):
+                return py_value
+        return None
 
-    def _optional_str_value(
-        self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Optional[str]:
-        return self.__optional_value(self.__literal_values(p, str))
+    @staticmethod
+    def _map_literal_value(value: _StatementObject) -> Any:
+        if isinstance(value, Literal):
+            return value.toPython()
+        return None
 
-    def _optional_str_or_text_value(
-        self, p: Union[URIRef, Tuple[URIRef, ...]]
+    @staticmethod
+    def _map_str_value(value: _StatementObject) -> Optional[str]:
+        if isinstance(value, Literal):
+            py_value = value.toPython()
+            if isinstance(py_value, str):
+                return py_value
+        return None
+
+    @staticmethod
+    def _map_str_or_text_value(
+        value: _StatementObject,
     ) -> Union[str, "Text", None]:  # type: ignore # noqa
-        value: Union[Literal, Resource]
-        for value in self.__values(p):
-            if isinstance(value, Literal):
-                literal: Literal = value
-                python_value = literal.toPython()
-                if not isinstance(python_value, str):
-                    raise TypeError(
-                        f"expected {p} literal to be a string, not a {type(python_value)}"
-                    )
-            elif isinstance(value, Resource):
-                resource: Resource = value
-                value_type = resource.value(RDF.type)
-                if (
-                    not isinstance(value_type, Resource)
-                    or value_type.identifier != CMS.Text
-                ):
-                    raise TypeError(
-                        f"expected {p} node to be a Text, not a {value_type}"
-                    )
-                from paradicms_etl.models.cms.cms_text import CmsText
+        if isinstance(value, Literal):
+            literal: Literal = value
+            py_value = literal.toPython()
+            if isinstance(py_value, str):
+                return py_value
+        elif isinstance(value, Resource):
+            resource: Resource = value
+            value_type = resource.value(RDF.type)
+            if isinstance(value_type, Resource):
+                if value_type.identifier == CMS.Text:
+                    from paradicms_etl.models.cms.cms_text import CmsText
 
-                return CmsText(value)
+                    return CmsText(value)
         return None
 
-    def _optional_uri_value(
-        self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Optional[URIRef]:
-        return self.__optional_value(self._uri_values(p))
+    @staticmethod
+    def _map_str_or_uri_value(value: _StatementObject) -> Union[str, URIRef, None]:
+        if isinstance(value, Literal):
+            py_value = value.toPython()
+            if isinstance(py_value, str):
+                return py_value
+        elif isinstance(value, Resource):
+            if isinstance(value.identifier, URIRef):
+                return value.identifier
+        return None
 
     @staticmethod
-    def __optional_value(values: Generator[_ValueT, None, None]) -> Optional[_ValueT]:
-        for value in values:
+    def _map_uri_value(value: _StatementObject) -> Optional[URIRef]:
+        if isinstance(value, Resource):
+            if isinstance(value.identifier, URIRef):
+                return value.identifier
+        return None
+
+    def _optional_value(
+        self,
+        p: _Predicates,
+        mapper: Callable[
+            [_StatementObject], Union[_ValueT, None]
+        ] = lambda value: value,  # type: ignore
+    ) -> Optional[_ValueT]:
+        for value in self._values(p, mapper):
             return value
         return None
 
-    def _required_bool_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bool:
-        return self.__required_value(self.__literal_values(p, bool))
-
-    def _required_bytes_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> bytes:
-        return self.__required_value(self.__literal_values(p, bytes))
-
-    def _required_str_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> str:
-        return self.__required_value(self.__literal_values(p, str))
-
-    def _required_uri_value(self, p: Union[URIRef, Tuple[URIRef, ...]]) -> URIRef:
-        return self.__required_value(self._uri_values(p))
-
-    def _required_uri_values(
-        self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Tuple[URIRef, ...]:
-        return self.__required_values(self._uri_values(p))
-
-    @staticmethod
-    def __required_value(values: Generator[_ValueT, None, None]) -> _ValueT:
-        for value in values:
+    def _required_value(
+        self,
+        p: _Predicates,
+        mapper: Callable[
+            [_StatementObject], Union[_ValueT, None]
+        ] = lambda value: value,  # type: ignore
+    ) -> _ValueT:
+        for value in self._values(p, mapper):
             return value
-        raise KeyError
-
-    @staticmethod
-    def __required_values(
-        values: Generator[_ValueT, None, None],
-    ) -> Tuple[_ValueT, ...]:
-        values_tuple = tuple(values)
-        if values_tuple:
-            return values_tuple
         raise KeyError
 
     @property
@@ -163,14 +157,6 @@ class ResourceBackedModel(Model):
             graph += self._resource.graph
             return graph.resource(self._resource.identifier)
 
-    def _uri_values(
-        self, p: Union[URIRef, Tuple[URIRef, ...]]
-    ) -> Generator[URIRef, None, None]:
-        value: Any
-        for value in self.__values(p):
-            if isinstance(value, Resource) and isinstance(value.identifier, URIRef):
-                yield value.identifier
-
     @property
     def uri(self) -> Optional[URIRef]:
         return (
@@ -179,11 +165,21 @@ class ResourceBackedModel(Model):
             else None
         )
 
-    def __values(
-        self, p: Union[URIRef, Tuple[URIRef, ...]]
+    def _values(
+        self,
+        predicates: _Predicates,
+        mapper: Callable[
+            [_StatementObject], Union[_ValueT, None]
+        ] = lambda value: value,  # type: ignore
     ) -> Generator[_ValueT, None, None]:
-        if isinstance(p, URIRef):
-            yield from self.__resource.objects(p)
+        predicates_tuple: Tuple[URIRef, ...]
+        if isinstance(predicates, URIRef):
+            predicates_tuple = (predicates,)
         else:
-            for p in p:
-                yield from self.__resource.objects(p)
+            predicates_tuple = predicates
+
+        for predicate in predicates_tuple:
+            for value in self.__resource.objects(predicate):
+                mapped_value = mapper(value)
+                if mapped_value is not None:
+                    yield mapped_value
