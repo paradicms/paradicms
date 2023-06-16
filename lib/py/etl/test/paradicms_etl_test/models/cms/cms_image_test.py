@@ -15,7 +15,6 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 def test_image() -> CmsImage:
     return (
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com/work"),
             uri=URIRef("http://example.com/image"),
         )
         .set_created(datetime.now())

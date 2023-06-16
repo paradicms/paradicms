@@ -93,9 +93,7 @@ class WikidataEnricher:
             image_uri = statement.value
             if image_uri in yielded_image_uris:
                 continue
-            yield CmsImage.builder(
-                depicts_uri=wikidata_entity.uri, uri=image_uri
-            ).build()
+            yield CmsImage.builder(uri=image_uri).build()
             yielded_image_uris.add(image_uri)
 
     def __get_wikidata_entity_with_related(

@@ -32,7 +32,6 @@ from paradicms_etl.models.image import Image
 def test_enrich(data_dir_path: Path, source: str):
     unenriched_image = (
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com/Work"),
             uri=URIRef("http://example.com/Image"),
         )
         .set_source(URIRef(source))

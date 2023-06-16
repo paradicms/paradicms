@@ -24,7 +24,6 @@ def test_cache_original_image_data(test_image_file_path: Path, tmp_path: Path):
         cache_dir_path=tmp_path
     ).cache_original_image(
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com"),
             uri=URIRef("http://example.com/image"),
         )
         .set_src(
@@ -42,7 +41,6 @@ def test_cache_original_image_file_absent(tmp_path):
     try:
         OriginalImageFileCache(cache_dir_path=tmp_path).cache_original_image(
             CmsImage.builder(
-                depicts_uri=URIRef("http://example.com"),
                 uri=URIRef(downloaded_image_file_path.as_uri()),
             ).build()
         )
@@ -62,7 +60,6 @@ def test_cache_original_image_file_present(tmp_path):
         cache_dir_path=tmp_path
     ).cache_original_image(
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com"),
             uri=URIRef(downloaded_image_file_path.as_uri()),
         ).build()
     )
@@ -75,7 +72,6 @@ def test_cache_original_image_http_present(tmp_path):
         cache_dir_path=tmp_path
     ).cache_original_image(
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com"),
             uri=URIRef(PLACEHOLDER_IMAGE_URL),
         ).build()
     )
@@ -86,7 +82,6 @@ def test_cache_original_image_http_absent(tmp_path):
     try:
         OriginalImageFileCache(cache_dir_path=tmp_path).cache_original_image(
             CmsImage.builder(
-                depicts_uri=URIRef("http://example.com"),
                 uri=URIRef("https://minorgordon.net/nonextant"),
             ).build()
         )
@@ -100,7 +95,6 @@ def test_cache_original_image_with_url_src(tmp_path):
         cache_dir_path=tmp_path
     ).cache_original_image(
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com"),
             uri=URIRef("urn:example:nonextant"),
         )
         .set_src(PLACEHOLDER_IMAGE_URL)
@@ -114,7 +108,6 @@ def test_cache_original_image_with_relative_src(tmp_path):
         cache_dir_path=tmp_path
     ).cache_original_image(
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com"),
             uri=URIRef(PLACEHOLDER_IMAGE_URL),
         )
         .set_src("/nonextant")
