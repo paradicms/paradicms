@@ -1,4 +1,4 @@
-from typing import Union, Optional
+from typing import Union, Optional, Tuple
 
 from rdflib import URIRef, Graph, SDO, Literal
 
@@ -15,6 +15,10 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Image.Builder
     ):
+        def add_thumbnail(self, thumbnail: Union[Image, URIRef]) -> "CmsImage.Builder":
+            self.add(SDO.thumbnail, thumbnail)
+            return self
+
         def build(self) -> "SchemaImage":
             return SchemaImage(self._resource)
 
@@ -68,6 +72,10 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
         return self._optional_value(
             SDO.contentUrl, self._map_image_data_or_str_or_uri_value
         )
+
+    @property
+    def thumbnail_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(SDO.thumbnail, self._map_uri_value))
 
     @property
     def uri(self) -> URIRef:

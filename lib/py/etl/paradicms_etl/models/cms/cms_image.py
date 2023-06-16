@@ -20,7 +20,7 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
         def build(self) -> "CmsImage":
             return CmsImage(self._resource)
 
-        def add_thumbnail(self, thumbnail: [Image, URIRef]) -> "CmsImage.Builder":
+        def add_thumbnail(self, thumbnail: Union[Image, URIRef]) -> "CmsImage.Builder":
             self.add(FOAF.thumbnail, thumbnail)
             return self
 
