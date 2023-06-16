@@ -1,11 +1,16 @@
 from rdflib import URIRef, Graph, SDO
 
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.schema.schema_creative_work_mixin import (
+    SchemaCreativeWorkMixin,
+)
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 
 
-class SchemaImage(SchemaNamedModel, Image):
-    class Builder(SchemaNamedModel.Builder, Image.Builder):
+class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
+    class Builder(
+        SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Image.Builder
+    ):
         def build(self) -> "SchemaImage":
             return SchemaImage(self._resource)
 
