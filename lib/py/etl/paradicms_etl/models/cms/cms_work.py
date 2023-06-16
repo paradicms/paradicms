@@ -70,20 +70,19 @@ class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            safe_dict_update(
-                CmsNamedModel.json_ld_context(),
-                {
-                    "description": {"@id": str(DCTERMS.description)},
-                    "collection": {"@id": str(CMS.collection), "@type": "@id"},
-                    "page": {"@id": str(FOAF.page)},
-                    "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
-                    "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},
-                    "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
-                    "title": {"@id": str(DCTERMS.title)},
-                    "type": {"@id": str(DCTERMS.type), "@type": "@id"},
-                },
-            ),
+            CmsNamedModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             CmsRightsMixin.json_ld_context(),
+            {
+                "description": {"@id": str(DCTERMS.description)},
+                "collection": {"@id": str(CMS.collection), "@type": "@id"},
+                "page": {"@id": str(FOAF.page)},
+                "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
+                "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},
+                "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
+                "title": {"@id": str(DCTERMS.title)},
+                "type": {"@id": str(DCTERMS.type), "@type": "@id"},
+            },
         )
 
     @property

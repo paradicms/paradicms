@@ -35,6 +35,7 @@ class CmsAgent(CmsModel, CmsImagesMixin, Agent):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             {
                 "name": {"@id": str(FOAF.name)},
                 "page": {"@id": str(FOAF.page)},

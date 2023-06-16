@@ -12,5 +12,9 @@ class CmsImagesMixin(ResourceBackedModelMixin, ImagesMixin):
             self.add(FOAF.depiction, image_uri)
             return self
 
+    @classmethod
+    def json_ld_context(cls):
+        return {"image": {"@id": str(FOAF.depiction), "@type": "@id"}}
+
     def image_uris(self) -> Tuple[URIRef, ...]:
         return tuple(self._values(FOAF.depiction, self._map_uri_value))

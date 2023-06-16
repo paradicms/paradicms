@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Union
+from typing import Union, Tuple
 
 from rdflib import URIRef, Literal
 
@@ -51,3 +51,8 @@ class Image(NamedModel, RightsMixin):
     @abstractmethod
     def src(self) -> Union[ImageData, str, None]:
         raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def thumbnail_uris(self) -> Tuple[URIRef, ...]:
+        pass

@@ -235,6 +235,8 @@ class ReferenceValidator:
         yield from self.__validate_named_model(image)
         yield from self.__validate_rights(image)
         self.__image_uris.add(image.uri)
+        for thumbnail_uri in image.thumbnail_uris:
+            self.__referenced_image_uris.add(thumbnail_uri)
 
     def __validate_image_references(self) -> Iterable[ValidationResult]:
         yield from self.__validate_uri_references(

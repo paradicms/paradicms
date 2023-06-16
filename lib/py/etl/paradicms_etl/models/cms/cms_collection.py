@@ -41,6 +41,7 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             {
                 "description": {"@id": str(DCTERMS.description)},
                 "page": {"@id": str(FOAF.page), "@type": "@id"},
