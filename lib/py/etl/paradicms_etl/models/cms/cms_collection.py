@@ -1,16 +1,23 @@
-from typing import Union
+from typing import Union, Tuple
 
 from rdflib import URIRef, FOAF, Graph
 from rdflib.namespace import DCTERMS
+from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.text import Text
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsCollection(CmsNamedModel, Collection):
-    class Builder(CmsNamedModel.Builder):
+class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
+    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
+        def add_work_uri(self, work_uri: URIRef) -> "CmsCollection.Builder":
+            self.add(CMS.work, work_uri)
+            return self
+
         def build(self) -> "CmsCollection":
             return CmsCollection(self._resource)
 
@@ -56,3 +63,12 @@ class CmsCollection(CmsNamedModel, Collection):
     @property
     def uri(self) -> URIRef:
         return super().uri
+
+    @property
+    def work_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(
+            resource.identifier
+            for resource in self._resource.objects(CMS.work)
+            if isinstance(resource, Resource)
+            and isinstance(resource.identifier, URIRef)
+        )

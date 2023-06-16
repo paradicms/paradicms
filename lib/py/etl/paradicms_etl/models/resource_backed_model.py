@@ -4,7 +4,7 @@ from typing import Optional
 from rdflib import ConjunctiveGraph, Literal, RDF, URIRef
 from rdflib import Graph
 from rdflib.resource import Resource
-from rdflib.term import Node
+from rdflib.term import Node, BNode
 
 from paradicms_etl.model import Model
 from paradicms_etl.namespaces import CMS
@@ -69,6 +69,24 @@ class ResourceBackedModel(Model):
             py_value = value.toPython()
             if isinstance(py_value, bytes):
                 return py_value
+        return None
+
+    @staticmethod
+    def _map_image_data_or_str_or_uri_value(
+        value: _StatementObject,
+    ) -> Union["ImageData", str, URIRef, None]:  # type: ignore
+        if isinstance(value, Literal):
+            py_value = value.toPython()
+            if isinstance(py_value, str):
+                return py_value
+        elif isinstance(value, Resource):
+            if isinstance(value.identifier, BNode):
+                from paradicms_etl.models.cms.cms_image_data import CmsImageData
+
+                return CmsImageData(value)
+            else:
+                assert isinstance(value.identifier, URIRef)
+                return value.identifier
         return None
 
     @staticmethod

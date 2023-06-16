@@ -7,7 +7,6 @@ class CMS(DefinedNamespace):
     _NS = Namespace("http://www.paradicms.org/ns/cms#")
 
     # Properties
-    collection: URIRef
     imageCopyable: URIRef
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
@@ -17,7 +16,6 @@ class CMS(DefinedNamespace):
     propertyHidden: URIRef
     propertyOrder: URIRef
     propertySearchable: URIRef
-    thumbnailOf: URIRef
     work: URIRef
 
     # Resources

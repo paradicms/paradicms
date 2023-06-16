@@ -5,7 +5,6 @@ from rdflib import Literal, URIRef, Graph, XSD
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.image import Image
@@ -27,9 +26,6 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
             return self
 
         def set_copyable(self, copyable: bool) -> "CmsImage.Builder":
-            """
-            Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
-            """
             self.set(CMS.imageCopyable, copyable)
             return self
 
@@ -76,11 +72,8 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
             return self
 
         def set_src(
-            self, src: Union[str, CmsImageData, Literal, URIRef]
+            self, src: Union[str, ImageData, Literal, URIRef]
         ) -> "CmsImage.Builder":
-            """
-            src that can be used in an <img> tag; if not specified, defaults to URI
-            """
             self.set(CMS.imageSrc, src)
             return self
 
@@ -173,21 +166,10 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
         )
 
     @property
-    def src(self) -> Union[ImageData, str, None]:
-        for o in self._resource.objects(CMS.imageSrc):
-            if isinstance(o, Literal):
-                o_python = o.toPython()
-                if isinstance(o_python, str):
-                    return o_python
-                else:
-                    raise TypeError(
-                        f"expected {CMS.imageSrc} literal to be a bytes or string, not a {type(o_python)}"
-                    )
-            elif isinstance(o, Resource):
-                return CmsImageData(o)
-            else:
-                continue
-        return None
+    def src(self) -> Union[ImageData, str, URIRef, None]:
+        return self._optional_value(
+            CMS.imageSrc, self._map_image_data_or_str_or_uri_value
+        )
 
     @property
     def title(self):

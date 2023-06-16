@@ -4,6 +4,8 @@ from typing import TypeVar, Union, Tuple, Callable, Optional, Generator, Any
 from rdflib import URIRef, Literal
 from rdflib.resource import Resource
 
+from paradicms_etl.models.image_data import ImageData
+
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
 _StatementObject = Union[Literal, Resource]
 _ValueT = TypeVar("_ValueT")
@@ -14,6 +16,13 @@ class ResourceBackedModelMixin(ABC):
         @abstractmethod
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError
+
+    @abstractmethod
+    @staticmethod
+    def _map_image_data_or_str_or_uri_value(
+        value: _StatementObject,
+    ) -> Union[ImageData, str, URIRef, None]:
+        raise NotImplementedError
 
     @abstractmethod
     @staticmethod

@@ -5,14 +5,15 @@ from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
 
+from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsConcept(CmsNamedModel, Concept):
-    class Builder(CmsNamedModel.Builder):
+class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
+    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
         def add_alt_label(self, alt_label: Union[str, Literal]) -> "CmsConcept.Builder":
             self.add(SKOS.altLabel, alt_label)
             return self

@@ -1,9 +1,10 @@
-from typing import Tuple, Union
+from typing import Union
 
 from rdflib import URIRef, Graph, OWL
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.location import Location
@@ -13,14 +14,12 @@ from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
-    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
+class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
+    class Builder(
+        CmsNamedModel.Builder, CmsImagesMixin.Builder, CmsRightsMixin.Builder
+    ):
         def add_alternative_title(self, alternative_title: str) -> "CmsWork.Builder":
             self.add(DCTERMS.alternative, alternative_title)
-            return self
-
-        def add_collection_uri(self, collection_uri: URIRef) -> "CmsWork.Builder":
-            self.add(CMS.collection, collection_uri)
             return self
 
         def add_identifier(self, identifier: str) -> "CmsWork.Builder":
@@ -67,15 +66,6 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
     @property
     def description(self) -> Union[str, Text, None]:
         return self._optional_value(DCTERMS.description, self._map_str_or_text_value)
-
-    @property
-    def collection_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(
-            resource.identifier
-            for resource in self._resource.objects(CMS.collection)
-            if isinstance(resource, Resource)
-            and isinstance(resource.identifier, URIRef)
-        )
 
     @classmethod
     def json_ld_context(cls):

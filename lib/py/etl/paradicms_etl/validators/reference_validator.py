@@ -5,6 +5,15 @@ from rdflib import URIRef
 from stringcase import snakecase
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.cms.cms_collection import CmsCollection
+from paradicms_etl.models.cms.cms_concept import CmsConcept
+from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_license import CmsLicense
+from paradicms_etl.models.cms.cms_location import CmsLocation
+from paradicms_etl.models.cms.cms_organization import CmsOrganization
+from paradicms_etl.models.cms.cms_person import CmsPerson
+from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
+from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
@@ -32,7 +41,7 @@ from paradicms_etl.validation_result import ValidationResult
 class ReferenceValidator:
     def __init__(self):
         self.__collection_uris = set()
-        self.__image_depicts_uris = set()
+        self.__image_uris = set()
         self.__license_uris = set()
         self.__location_uris = set()
         self.__logger = logging.getLogger(__name__)
@@ -40,8 +49,8 @@ class ReferenceValidator:
         self.__organization_uris = set()
         self.__person_uris = set()
         self.__referenced_agent_uris = set()
-        self.__referenced_collection_uris = set()
         self.__referenced_license_uris = set()
+        self.__referenced_image_uris = set()
         self.__referenced_rights_statement_uris = set()
         self.__referenced_work_uris = set()
         self.__rights_statement_uris = set()
@@ -100,84 +109,52 @@ class ReferenceValidator:
         )
 
     def _validate_cms_collection(
-        self, collection: Collection
+        self, collection: CmsCollection
     ) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(collection)
-        assert collection.uri not in self.__collection_uris
-        self.__collection_uris.add(collection.uri)
+        yield from self.__validate_collection(collection)
 
     def _validate_cms_collection_references(self) -> Iterable[ValidationResult]:
-        yield from self.__validate_uri_references(
-            referenced_uris=self.__referenced_collection_uris,
-            universe_uris=self.__collection_uris,
-            uri_type="collection",
-        )
+        pass
 
-    def __validate_cms_event(self, event: Event) -> Iterable[ValidationResult]:
-        return ()
-
-    def _validate_cms_image(self, image: Image) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(image)
-        self.__image_depicts_uris.add(image.depicts_uri)
-        yield from self.__validate_cms_rights(image)
-
-    def _validate_cms_image_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def _validate_cms_license(self, license: License) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(license)
-        if license.uri is not None:
-            assert license.uri not in self.__license_uris
-            self.__license_uris.add(license.uri)
-
-    def _validate_cms_license_references(self) -> Iterable[ValidationResult]:
-        yield from self.__validate_uri_references(
-            referenced_uris=self.__referenced_license_uris,
-            universe_uris=self.__license_uris,
-            uri_type="license",
-        )
-
-    def _validate_cms_location(self, location: Location) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(location)
-        if location.uri is not None:
-            self.__location_uris.add(location.uri)
-
-    def _validate_cms_location_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def __validate_cms_named_model(self, model: Model) -> Iterable[ValidationResult]:
-        if model.uri is None:
-            return
-        if model.uri not in self.__model_uris:
-            self.__model_uris.add(model.uri)
-        else:
-            yield ValidationResult(
-                message=f"duplicate model URI: {model.uri}",
-                severity=ValidationResult.Severity.INFO,
-            )
-
-    def _validate_cms_concept(self, concept: Concept) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(concept)
+    def _validate_cms_concept(self, concept: CmsConcept) -> Iterable[ValidationResult]:
+        yield from self.__validate_concept(concept)
 
     def _validate_cms_concept_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_organization(
-        self, organization: Organization
+    def __validate_cms_event(self, event: Event) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_cms_image(self, image: CmsImage) -> Iterable[ValidationResult]:
+        yield from self.__validate_image(image)
+
+    def _validate_cms_image_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_cms_license(self, license: CmsLicense) -> Iterable[ValidationResult]:
+        yield from self.__validate_license(license)
+
+    def _validate_cms_license_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_license_references()
+
+    def _validate_cms_location(
+        self, location: CmsLocation
     ) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(organization)
-        if organization.uri is not None:
-            assert organization.uri not in self.__organization_uris, organization.uri
-            self.__organization_uris.add(organization.uri)
+        yield from self.__validate_location(location)
+
+    def _validate_cms_location_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_cms_organization(
+        self, organization: CmsOrganization
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_organization(organization)
 
     def _validate_cms_organization_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_person(self, person: Person) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(person)
-        if person.uri is not None:
-            assert person.uri not in self.__person_uris
-            self.__person_uris.add(person.uri)
+    def _validate_cms_person(self, person: CmsPerson) -> Iterable[ValidationResult]:
+        yield from self.__validate_person(person)
 
     def _validate_cms_person_references(self) -> Iterable[ValidationResult]:
         return ()
@@ -196,39 +173,16 @@ class ReferenceValidator:
     def _validate_cms_property_group_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def __validate_cms_rights(self, rights: RightsMixin) -> Iterable[ValidationResult]:
-        for agents in (rights.contributors, rights.creators, rights.rights_holders):
-            for agent in agents:
-                if isinstance(agent, URIRef):
-                    self.__referenced_agent_uris.add(agent)
-        if isinstance(rights.license, URIRef):
-            self.__referenced_license_uris.add(rights.license)
-        if isinstance(rights.rights_statement, URIRef):
-            self.__referenced_rights_statement_uris.add(rights.rights_statement)
-        return ()
-
     def _validate_cms_rights_statement(
-        self, rights_statement: RightsStatement
+        self, rights_statement: CmsRightsStatement
     ) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(rights_statement)
-        if rights_statement.uri is not None:
-            assert rights_statement.uri not in self.__rights_statement_uris
-            self.__rights_statement_uris.add(rights_statement.uri)
+        yield from self.__validate_rights_statement(rights_statement)
 
     def _validate_cms_rights_statement_references(self) -> Iterable[ValidationResult]:
-        yield from self.__validate_uri_references(
-            referenced_uris=self.__referenced_rights_statement_uris,
-            universe_uris=self.__rights_statement_uris,
-            uri_type="rights statement",
-        )
+        yield from self.__validate_rights_statement_references()
 
-    def _validate_cms_work(self, work: Work) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_named_model(work)
-        for collection_uri in work.collection_uris:
-            self.__referenced_collection_uris.add(collection_uri)
-        assert work.uri not in self.__work_uris
-        self.__work_uris.add(work.uri)
-        yield from self.__validate_cms_rights(work)
+    def _validate_cms_work(self, work: CmsWork) -> Iterable[ValidationResult]:
+        yield from self.__validate_work(work)
 
     def _validate_cms_work_closing(
         self, work_closing: WorkClosing
@@ -261,10 +215,105 @@ class ReferenceValidator:
         return ()
 
     def _validate_cms_work_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_work_references()
+
+    def __validate_collection(self, collection: Collection):
+        yield from self.__validate_named_model(collection)
+        assert collection.uri not in self.__collection_uris
+        self.__collection_uris.add(collection.uri)
+        for image_uri in collection.image_uris:
+            self.__referenced_image_uris.add(image_uri)
+        for work_uri in collection.work_uris:
+            self.__referenced_work_uris.add(work_uri)
+
+    def __validate_concept(self, concept: Concept) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(concept)
+        for image_uri in concept.image_uris:
+            self.__referenced_image_uris.add(image_uri)
+
+    def __validate_image(self, image: Image) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(image)
+        yield from self.__validate_rights(image)
+        self.__image_uris.add(image.uri)
+
+    def __validate_image_references(self) -> Iterable[ValidationResult]:
         yield from self.__validate_uri_references(
-            referenced_uris=self.__referenced_work_uris,
-            universe_uris=self.__work_uris,
-            uri_type="work",
+            referenced_uris=self.__referenced_image_uris,
+            universe_uris=self.__image_uris,
+            uri_type="image",
+        )
+
+    def __validate_license(self, license: License) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(license)
+        if license.uri is not None:
+            assert license.uri not in self.__license_uris
+            self.__license_uris.add(license.uri)
+
+    def __validate_license_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_uri_references(
+            referenced_uris=self.__referenced_license_uris,
+            universe_uris=self.__license_uris,
+            uri_type="license",
+        )
+
+    def __validate_location(self, location: Location) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(location)
+        if location.uri is not None:
+            self.__location_uris.add(location.uri)
+
+    def __validate_named_model(self, model: Model) -> Iterable[ValidationResult]:
+        if model.uri is None:
+            return
+        if model.uri not in self.__model_uris:
+            self.__model_uris.add(model.uri)
+        else:
+            yield ValidationResult(
+                message=f"duplicate model URI: {model.uri}",
+                severity=ValidationResult.Severity.INFO,
+            )
+
+    def __validate_organization(
+        self, organization: Organization
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(organization)
+        if organization.uri is not None:
+            assert organization.uri not in self.__organization_uris, organization.uri
+            self.__organization_uris.add(organization.uri)
+        for image_uri in organization.image_uris:
+            self.__referenced_image_uris.add(image_uri)
+
+    def __validate_person(self, person: Person) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(person)
+        if person.uri is not None:
+            assert person.uri not in self.__person_uris
+            self.__person_uris.add(person.uri)
+        for image_uri in person.image_uris:
+            self.__referenced_image_uris.add(image_uri)
+
+    def __validate_rights(self, rights: RightsMixin) -> Iterable[ValidationResult]:
+        for agents in (rights.contributors, rights.creators, rights.rights_holders):
+            for agent in agents:
+                if isinstance(agent, URIRef):
+                    self.__referenced_agent_uris.add(agent)
+        if isinstance(rights.license, URIRef):
+            self.__referenced_license_uris.add(rights.license)
+        if isinstance(rights.rights_statement, URIRef):
+            self.__referenced_rights_statement_uris.add(rights.rights_statement)
+        return ()
+
+    def __validate_rights_statement(
+        self, rights_statement: RightsStatement
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(rights_statement)
+        if rights_statement.uri is not None:
+            assert rights_statement.uri not in self.__rights_statement_uris
+            self.__rights_statement_uris.add(rights_statement.uri)
+
+    def __validate_rights_statement_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_uri_references(
+            referenced_uris=self.__referenced_rights_statement_uris,
+            universe_uris=self.__rights_statement_uris,
+            uri_type="rights statement",
         )
 
     def __validate_uri_references(
@@ -295,3 +344,17 @@ class ReferenceValidator:
 
     def _validate_wikibase_item_references(self) -> Iterable[ValidationResult]:
         return ()
+
+    def __validate_work(self, work: Work) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(work)
+        yield from self.__validate_rights(work)
+        assert work.uri not in self.__work_uris
+        self.__work_uris.add(work.uri)
+        self.__image_uris.add(work.image_uris)
+
+    def __validate_work_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_uri_references(
+            referenced_uris=self.__referenced_work_uris,
+            universe_uris=self.__work_uris,
+            uri_type="work",
+        )
