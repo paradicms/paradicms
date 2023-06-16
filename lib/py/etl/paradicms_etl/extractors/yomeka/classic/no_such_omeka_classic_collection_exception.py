@@ -1,2 +1,0 @@
-class NoSuchOmekaClassicCollectionException(Exception):
-    pass
