@@ -48,7 +48,6 @@ def test_enrich(data_dir_path: Path, source: str):
     enriched_image = enriched_models[0]
     assert isinstance(enriched_image, Image)
     assert enriched_image.uri == unenriched_image.uri
-    assert enriched_image.depicts_uri == unenriched_image.depicts_uri
     assert enriched_image.creators
     assert enriched_image.license
     # assert (

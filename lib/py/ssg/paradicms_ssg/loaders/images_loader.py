@@ -122,7 +122,6 @@ class ImagesLoader:
 
             archived_thumbnail_images.append(
                 CmsImage.builder(
-                    depicts_uri=original_image.depicts_uri,
                     uri=archived_thumbnail_uri,
                 )
                 .copy_rights(original_image)
