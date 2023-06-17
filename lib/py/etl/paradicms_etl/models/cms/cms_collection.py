@@ -9,14 +9,13 @@ from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
     class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
         def add_work(self, work: Union[Work, URIRef]) -> "CmsCollection.Builder":
-            self.add(CMS.work, work)
+            self.add(DCTERMS.hasPart, work)
             return self
 
         def build(self) -> "CmsCollection":
@@ -45,6 +44,7 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
             CmsImagesMixin.json_ld_context(),
             {
                 "description": {"@id": str(DCTERMS.description)},
+                "hasPart": {"@id": str(DCTERMS.hasPart)},
                 "page": {"@id": str(FOAF.page), "@type": "@id"},
                 "title": {"@id": str(DCTERMS.title)},
             },
@@ -70,7 +70,7 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
     def work_uris(self) -> Tuple[URIRef, ...]:
         return tuple(
             resource.identifier
-            for resource in self._resource.objects(CMS.work)
+            for resource in self._resource.objects(DCTERMS.hasPart)
             if isinstance(resource, Resource)
             and isinstance(resource.identifier, URIRef)
         )

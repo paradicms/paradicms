@@ -53,6 +53,7 @@ class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             {
                 "altLabel": {"@id": str(SKOS.altLabel)},
                 "definition": {"@id": str(SKOS.definition)},

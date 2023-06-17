@@ -9,7 +9,7 @@ class ImagesMixin(ABC):
     Mixin for models that have images of them e.g., Agent, Work.
     """
 
-    @abstractmethod
     @property
+    @abstractmethod
     def image_uris(self) -> Tuple[URIRef, ...]:
         raise NotImplementedError

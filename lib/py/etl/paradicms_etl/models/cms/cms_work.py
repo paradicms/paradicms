@@ -80,7 +80,6 @@ class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
             CmsRightsMixin.json_ld_context(),
             {
                 "description": {"@id": str(DCTERMS.description)},
-                "collection": {"@id": str(CMS.collection), "@type": "@id"},
                 "page": {"@id": str(FOAF.page)},
                 "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                 "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},

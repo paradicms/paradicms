@@ -113,7 +113,6 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
                 "source": {"@id": str(DCTERMS.source), "@type": "@id"},
                 "src": {"@id": str(CMS.imageSrc)},
                 "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
-                "thumbnailOf": {"@id": str(CMS.thumbnailOf), "@type": "@id"},
                 "title": {"@id": str(DCTERMS.title), "@type": "@id"},
                 "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
             },

@@ -17,26 +17,26 @@ class ResourceBackedModelMixin(ABC):
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError
 
-    @abstractmethod
     @staticmethod
+    @abstractmethod
     def _map_image_data_or_str_or_uri_value(
         value: _StatementObject,
     ) -> Union[ImageData, str, URIRef, None]:
         raise NotImplementedError
 
-    @abstractmethod
     @staticmethod
+    @abstractmethod
     def _map_str_or_uri_value(value: _StatementObject) -> Union[str, URIRef, None]:
         raise NotImplementedError
 
-    @abstractmethod
     @staticmethod
+    @abstractmethod
     def _map_uri_value(value: _StatementObject) -> Optional[URIRef]:
         raise NotImplementedError
 
+    @staticmethod
     @abstractmethod
     def _optional_value(
-        self,
         p: _Predicates,
         mapper: Callable[
             [_StatementObject], Union[_ValueT, None]
@@ -44,9 +44,9 @@ class ResourceBackedModelMixin(ABC):
     ) -> Optional[_ValueT]:
         raise NotImplementedError
 
+    @staticmethod
     @abstractmethod
     def _required_value(
-        self,
         p: _Predicates,
         mapper: Callable[
             [_StatementObject], Union[_ValueT, None]
@@ -54,9 +54,9 @@ class ResourceBackedModelMixin(ABC):
     ) -> _ValueT:
         raise NotImplementedError
 
+    @staticmethod
     @abstractmethod
     def _values(
-        self,
         predicates: _Predicates,
         mapper: Callable[
             [_StatementObject], Union[_ValueT, None]

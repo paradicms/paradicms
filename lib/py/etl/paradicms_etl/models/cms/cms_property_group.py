@@ -36,7 +36,12 @@ class CmsPropertyGroup(CmsNamedModel, CmsImagesMixin, PropertyGroup):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
-            {"comment": {"@id": str(RDFS.comment)}, "label": {"@id": str(RDFS.label)}},
+            CmsImagesMixin.json_ld_context(),
+            {
+                "comment": {"@id": str(RDFS.comment)},
+                "hasPart": {"@id": str(DCTERMS.hasPart)},
+                "label": {"@id": str(RDFS.label)},
+            },
         )
 
     @property

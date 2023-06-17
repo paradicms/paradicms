@@ -114,7 +114,7 @@ class ReferenceValidator:
         yield from self.__validate_collection(collection)
 
     def _validate_cms_collection_references(self) -> Iterable[ValidationResult]:
-        pass
+        return ()
 
     def _validate_cms_concept(self, concept: CmsConcept) -> Iterable[ValidationResult]:
         yield from self.__validate_concept(concept)
@@ -204,7 +204,6 @@ class ReferenceValidator:
         self, work_event: WorkEvent
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_cms_event(work_event)
-        self.__referenced_work_uris.add(work_event.work_uri)
 
     def _validate_cms_work_opening(
         self, work_opening: WorkClosing

@@ -48,6 +48,7 @@ class CmsProperty(CmsNamedModel, CmsImagesMixin, Property):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             {
                 "comment": {"@id": str(RDFS.comment)},
                 "filterable": {
