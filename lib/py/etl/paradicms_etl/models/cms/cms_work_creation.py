@@ -5,7 +5,6 @@ from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_work_event import CmsWorkEvent
 from paradicms_etl.models.work_creation import WorkCreation
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -23,10 +22,8 @@ class CmsWorkCreation(CmsWorkEvent, WorkCreation):
             return CmsWorkCreation(self._resource)
 
     @classmethod
-    def builder(cls, *, work_uri: URIRef, uri: Optional[URIRef] = None):
-        builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
-        builder.set(CMS.work, work_uri)
-        return builder
+    def builder(cls, *, uri: Optional[URIRef] = None):
+        return cls.Builder(Graph().resource(uri if uri is not None else BNode()))
 
     def __init__(self, resource: Resource):
         CmsWorkEvent.__init__(self, resource)

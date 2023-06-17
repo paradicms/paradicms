@@ -10,6 +10,7 @@ from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -20,6 +21,10 @@ class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
     ):
         def add_alternative_title(self, alternative_title: str) -> "CmsWork.Builder":
             self.add(DCTERMS.alternative, alternative_title)
+            return self
+
+        def add_event(self, event: Union[URIRef, WorkEvent]) -> "CmsWork.Builder":
+            self.add(CMS.event, event)
             return self
 
         def add_identifier(self, identifier: str) -> "CmsWork.Builder":

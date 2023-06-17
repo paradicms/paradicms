@@ -2,18 +2,15 @@ from typing import Union, Text, Optional
 
 from rdflib import URIRef, RDFS, SH, XSD, Graph
 
+from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsProperty(CmsNamedModel, Property):
-    class Builder(CmsNamedModel.Builder):
-        def add_group_uri(self, group_uri: URIRef) -> "CmsProperty.Builder":
-            self.add(CMS.propertyGroup, group_uri)
-            return self
-
+class CmsProperty(CmsNamedModel, CmsImagesMixin, Property):
+    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
         def build(self) -> "CmsProperty":
             return CmsProperty(self._resource)
 
@@ -57,7 +54,6 @@ class CmsProperty(CmsNamedModel, Property):
                     "@id": str(CMS.propertyFilterable),
                     "@type": str(XSD.boolean),
                 },
-                "group": {"@id": str(CMS.propertyGroup), "@type": "@id"},
                 "label": {"@id": str(RDFS.label)},
                 "order": {"@id": str(SH.order)},
                 "range": {"@id": str(RDFS.range), "@type": "@id"},

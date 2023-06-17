@@ -8,14 +8,15 @@ from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.text import Text
+from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
     class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
-        def add_work_uri(self, work_uri: URIRef) -> "CmsCollection.Builder":
-            self.add(CMS.work, work_uri)
+        def add_work(self, work: Union[Work, URIRef]) -> "CmsCollection.Builder":
+            self.add(CMS.work, work)
             return self
 
         def build(self) -> "CmsCollection":

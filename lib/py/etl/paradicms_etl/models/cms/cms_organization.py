@@ -8,6 +8,10 @@ from paradicms_etl.models.organization import Organization
 
 class CmsOrganization(CmsAgent, Organization):
     class Builder(CmsAgent.Builder):
+        def add_page(self, page: URIRef) -> "CmsOrganization.Builder":
+            super().add_page(page)
+            return self
+
         def build(self):
             return CmsOrganization(self._resource)
 

@@ -44,6 +44,10 @@ class ResourceBackedModel(Model):
             self._resource.remove(p)
             return self.add(p, o)
 
+        @property
+        def uri(self) -> URIRef:
+            return self._resource.identifier
+
     def __init__(self, resource: Resource):
         Model.__init__(self)
         resource.add(RDF.type, self.rdf_type_uri())
