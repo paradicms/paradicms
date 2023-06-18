@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Union
+from typing import Tuple, Union
 
 from rdflib import URIRef
 
@@ -29,6 +29,11 @@ class Work(NamedModel, ImagesMixin, RightsMixin):  # type: ignore
     @property
     @abstractmethod
     def description(self) -> Union[str, Text, None]:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def event_uris(self) -> Tuple[URIRef, ...]:
         raise NotImplementedError
 
     @property

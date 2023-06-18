@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Tuple
 
 from rdflib import URIRef, Graph, OWL
 from rdflib.namespace import DCTERMS, FOAF
@@ -74,6 +74,10 @@ class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
     @property
     def description(self) -> Union[str, Text, None]:
         return self._optional_value(DCTERMS.description, self._map_str_or_text_value)
+
+    @property
+    def event_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(CMS.event, self._map_uri_value))
 
     @classmethod
     def json_ld_context(cls):
