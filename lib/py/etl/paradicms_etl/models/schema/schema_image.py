@@ -70,8 +70,8 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
     def source(self) -> Optional[URIRef]:
         return self._optional_value(SDO.url, self._map_uri_value)
 
-    def src(self) -> Union[ImageData, str, None]:
-        return self._optional_value(
+    def src(self) -> Union[ImageData, str, URIRef, None]:
+        return self._optional_value(  # type:ignore
             SDO.contentUrl, self._map_image_data_or_str_or_uri_value
         )
 

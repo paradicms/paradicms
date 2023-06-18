@@ -141,7 +141,7 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
 
     @property
     def src(self) -> Union[ImageData, str, URIRef, None]:
-        return self._optional_value(
+        return self._optional_value(  # type: ignore
             CMS.imageSrc, self._map_image_data_or_str_or_uri_value
         )
 

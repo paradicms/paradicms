@@ -7,6 +7,7 @@ from rdflib.resource import Resource
 from rdflib.term import Node, BNode
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.namespaces import CMS
 
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
@@ -78,7 +79,7 @@ class ResourceBackedModel(Model):
     @staticmethod
     def _map_image_data_or_str_or_uri_value(
         value: _StatementObject,
-    ) -> Union["ImageData", str, URIRef, None]:  # type: ignore
+    ) -> Union[ImageData, str, URIRef, None]:
         if isinstance(value, Literal):
             py_value = value.toPython()
             if isinstance(py_value, str):
