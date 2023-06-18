@@ -1,8 +1,14 @@
 import pytest
 from rdflib import URIRef
 
+from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+    RightsStatementsDotOrgRightsStatements,
+)
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_image import SchemaImage
+from paradicms_etl.models.schema.schema_organization import SchemaOrganization
+from paradicms_etl.models.schema.schema_person import SchemaPerson
 
 
 @pytest.fixture
@@ -21,5 +27,29 @@ def schema_collection(schema_image) -> SchemaCollection:
 
 
 @pytest.fixture
-def schema_image() -> SchemaImage:
-    return SchemaImage.builder(uri=URIRef("http://example.com/image")).build()
+def schema_organization() -> SchemaOrganization:
+    return SchemaOrganization.builder(
+        name="Test organization", uri="http://example.com/organization"
+    ).build()
+
+
+@pytest.fixture
+def schema_person() -> SchemaPerson:
+    return SchemaPerson.builder(
+        name="Test person", uri="http://example.com/person"
+    ).build()
+
+
+@pytest.fixture
+def schema_image(
+    schema_organization: SchemaOrganization, schema_person: SchemaPerson
+) -> SchemaImage:
+    return (
+        SchemaImage.builder(uri=URIRef("http://example.com/image"))
+        .add_creator(schema_person)
+        .add_contributor(schema_organization)
+        .add_license(CreativeCommonsLicenses.BY_4_0)
+        .add_rights_holder("Test rights holder")
+        .add_rights_statement(RightsStatementsDotOrgRightsStatements.InC)
+        .build()
+    )
