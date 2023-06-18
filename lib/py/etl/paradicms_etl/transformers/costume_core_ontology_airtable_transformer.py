@@ -29,12 +29,17 @@ from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
+from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 
 _RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=CmsRightsMixin.Builder)
@@ -99,6 +104,7 @@ class CostumeCoreOntologyAirtableTransformer:
         self.__available_rights_statement_uris = frozenset(
             self.__available_rights_statements_by_uri.keys()
         )
+        # Track which licenses and rights statements we want to yield as we see references to them
         self.__referenced_license_uris: Set[URIRef] = set()
         self.__referenced_rights_statement_uris: Set[URIRef] = set()
 
@@ -161,47 +167,154 @@ class CostumeCoreOntologyAirtableTransformer:
         #     if "Nickname" in record["fields"]
         # )
         variant_term_records = tuple(records_by_table["AAT_variant_terms"])
+        variant_term_records_by_feature_value_id: Dict[str, List[Any]] = {}
+        for variant_term_record in variant_term_records:
+            assert len(variant_term_record["fields"]["feature_values_id"]) == 1
+            variant_term_records_by_feature_value_id.setdefault(
+                variant_term_record["fields"]["feature_values_id"][0], []
+            ).append(variant_term_record)
 
-        # Track which licenses and rights statements we want to yield as we see references to them
+        # Track the outputs of various transformations to use in other transformatios
 
-        costume_core_ontology_terms_by_features: Dict[
+        # Feature values
+        costume_core_ontology_terms_by_feature: Dict[
             str, List[CostumeCoreOntology.Term]
         ] = {}
-        for model in self.__transform_feature_value_records(
-            feature_records=feature_records,
-            feature_value_records=feature_value_records,
-            image_records_by_id=image_records_by_id,
-            variant_term_records=variant_term_records,
-        ):
-            yield model
+        works_by_feature_record_id: Dict[str, List[Work]] = {}
+        for feature_value_record in feature_value_records:
+            feature_value_record_fields = feature_value_record["fields"]
+            feature_value_id = feature_value_record_fields["id"]
 
-            if isinstance(model, CostumeCoreOntology.Term) and model.features:
-                for feature in model.features:
-                    costume_core_ontology_terms_by_features.setdefault(
-                        feature, []
-                    ).append(model)
+            if not feature_value_id.startswith("CC"):
+                continue
 
-        yield from self.__transform_feature_records(
-            costume_core_ontology_terms_by_features=costume_core_ontology_terms_by_features,
-            feature_records=feature_records,
-            feature_set_records=feature_set_records,
-            image_records_by_id=image_records_by_id,
-        )
+            if "display_name_en" not in feature_value_record_fields:
+                continue
 
-        if costume_core_ontology_terms_by_features:
+            costume_core_ontology_term = (
+                self.__transform_feature_value_record_to_costume_core_ontology_term(
+                    feature_records=feature_records,
+                    feature_value_record=feature_value_record,
+                )
+            )
+            if costume_core_ontology_term:
+                yield costume_core_ontology_term
+
+                if costume_core_ontology_term.features:
+                    for (
+                        costume_core_ontology_term_feature
+                    ) in costume_core_ontology_term.features:
+                        costume_core_ontology_terms_by_feature.setdefault(
+                            costume_core_ontology_term_feature, []
+                        ).append(costume_core_ontology_term)
+
+            feature_value_image_records = []
+            for feature_value_image in feature_value_record["fields"].get("images", []):
+                feature_value_image_record = None
+                for image_record in image_records_by_id.values():
+                    if (
+                        image_record["fields"]["image"][0]["id"]
+                        == feature_value_image["id"]
+                    ):
+                        feature_value_image_record = image_record
+                        break
+                if feature_value_image_record is not None:
+                    feature_value_image_records.append(feature_value_image_record)
+                else:
+                    self.__logger.warning(
+                        "no image record found for feature value image %s",
+                        feature_value_image,
+                    )
+
+            yield from self.__transform_feature_value_record_to_concept(
+                feature_records=feature_records,
+                feature_value_image_records=feature_value_image_records,
+                feature_value_record=feature_value_record,
+                variant_term_records_by_feature_value_id=variant_term_records_by_feature_value_id,
+            )
+
+            for feature_value_model in self.__transform_feature_value_record_to_work(
+                feature_value_image_records=feature_value_image_records,
+                feature_value_record=feature_value_record,
+            ):
+                yield feature_value_model
+                if isinstance(feature_value_model, CmsWork):
+                    for feature_record_id in feature_value_record_fields.get(
+                        "features", []
+                    ):
+                        works_by_feature_record_id.setdefault(
+                            feature_record_id, []
+                        ).append(feature_value_model)
+
+        # Features
+        properties_by_feature_record_id: Dict[str, Property] = {}
+        for feature_record in feature_records:
+            feature_record_fields = feature_record["fields"]
+
+            if "display_name_en" not in feature_record_fields:
+                continue
+            if "URI" not in feature_record_fields:
+                continue
+
+            if feature_record_fields["URI"].startswith(str(COCO)):
+                collection = self.__transform_feature_record_to_collection(
+                    feature_record=feature_record,
+                    feature_works=tuple(
+                        works_by_feature_record_id.get(feature_record["id"], [])
+                    ),
+                )
+                if collection:
+                    yield collection
+
+                yield self.__transform_feature_record_to_costume_core_ontology_predicate(
+                    costume_core_ontology_terms_by_feature=costume_core_ontology_terms_by_feature,
+                    feature_record=feature_record,
+                )
+
+            for feature_model in self.__transform_feature_record_to_property(
+                feature_image_records=tuple(
+                    image_records_by_id[image_record_id]
+                    for image_record_id in feature_record_fields.get("images", [])
+                ),
+                feature_record=feature_record,
+            ):
+                yield feature_model
+                if isinstance(feature_model, CmsProperty):
+                    assert feature_record["id"] not in properties_by_feature_record_id
+                    properties_by_feature_record_id[
+                        feature_record["id"]
+                    ] = feature_model
+
+        # Feature sets
+        for feature_set_record in feature_set_records:
+            feature_set_properties: List[Property] = []
+            for feature_set_feature_record_id in feature_set_record["fields"].get(
+                "features", []
+            ):
+                for feature_record in feature_records:
+                    if feature_set_feature_record_id == feature_record["id"]:
+                        feature_set_properties.append(
+                            properties_by_feature_record_id[
+                                feature_set_feature_record_id
+                            ]
+                        )
+                        break
+
+            yield from self.__transform_feature_set_record_to_property_group(
+                feature_set_properties=tuple(feature_set_properties),
+                feature_set_record=feature_set_record,
+                image_records_by_id=image_records_by_id,
+            )
+
+        if costume_core_ontology_terms_by_feature:
             print(
                 "Terms that have a 'features' that doesn't correspond to a predicate:"
             )
             for (
                 predicate_id,
                 predicate_terms,
-            ) in costume_core_ontology_terms_by_features.items():
+            ) in costume_core_ontology_terms_by_feature.items():
                 print(predicate_id, ", ".join(term.id for term in predicate_terms))
-
-        yield from self.__transform_feature_set_records(
-            feature_set_records=feature_set_records,
-            image_records_by_id=image_records_by_id,
-        )
 
         # Yield referenced licenses and rights statements once
         for license_uri in self.__referenced_license_uris:
@@ -223,22 +336,26 @@ class CostumeCoreOntologyAirtableTransformer:
             model_builder=CmsText.builder(description_text_en),
         ).build()
 
+    @staticmethod
     def __transform_feature_record_to_collection(
-        self, feature_record
+        feature_record, feature_works: Tuple[Work, ...]
     ) -> Optional[CmsCollection]:
         fields = feature_record["fields"]
         if not fields.get("feature_values_labels", []):
             # Don't yield Collections that won't have any associated Works
             return None
-        return CmsCollection.builder(
+        collection_builder = CmsCollection.builder(
             title=fields["display_name_en"],
             uri=URIRef(fields["URI"]),
-        ).build()
+        )
+        for work in feature_works:
+            collection_builder.add_work(work)
+        return collection_builder.build()
 
+    @staticmethod
     def __transform_feature_record_to_costume_core_ontology_predicate(
-        self,
         *,
-        costume_core_ontology_terms_by_features: Dict[
+        costume_core_ontology_terms_by_feature: Dict[
             str, List[CostumeCoreOntology.Term]
         ],
         feature_record,
@@ -250,21 +367,14 @@ class CostumeCoreOntologyAirtableTransformer:
             display_name_en=fields["display_name_en"],
             id=id_,
             sub_property_of_uri=fields.get("sub_property_of"),
-            terms=tuple(costume_core_ontology_terms_by_features.pop(id_, tuple())),
+            terms=tuple(costume_core_ontology_terms_by_feature.pop(id_, tuple())),
             _uri=URIRef(fields["URI"]),
         )
 
     def __transform_feature_record_to_property(
-        self, *, feature_record, feature_set_records
-    ) -> Optional[CmsProperty]:
+        self, *, feature_image_records, feature_record
+    ) -> Iterable[Union[Image, Property]]:
         fields = feature_record["fields"]
-
-        feature_set_uris = set()
-        for feature_set_record in feature_set_records:
-            for feature_record_id in feature_set_record["fields"].get("features", []):
-                if feature_record_id == feature_record["id"]:
-                    feature_set_uris.add(self.__feature_set_uri(feature_set_record))
-                    break
 
         feature_uri = URIRef(fields["URI"])
 
@@ -274,8 +384,13 @@ class CostumeCoreOntologyAirtableTransformer:
             .set_range(self.__feature_range_uri(feature_record))
         )
 
-        for feature_set_uri in feature_set_uris:
-            property_builder.add_group_uri(feature_set_uri)
+        for image in self.__transform_image_records_to_images(
+            depicts_type=self.__ImageDepictsType.FEATURE,
+            depicts_uri=property_builder.uri,
+            image_records=feature_image_records,
+        ):
+            yield image
+            property_builder.add_image(image)
 
         feature_description = self.__transform_description_fields_to_text(
             record_fields=fields,
@@ -296,88 +411,50 @@ class CostumeCoreOntologyAirtableTransformer:
         else:
             assert fields["Searchable"] == "N"
 
-        return property_builder.build()
+        yield property_builder.build()
 
-    def __transform_feature_records(
+    def __transform_feature_set_record_to_property_group(
         self,
-        *,
-        costume_core_ontology_terms_by_features: Dict[
-            str, List[CostumeCoreOntology.Term]
-        ],
-        feature_records,
-        feature_set_records,
+        feature_set_properties: Tuple[Property, ...],
+        feature_set_record,
         image_records_by_id,
-    ) -> Iterable[Model]:
-        for feature_record in feature_records:
-            fields = feature_record["fields"]
+    ) -> Iterable[Union[Image, PropertyGroup]]:
+        feature_set_uri = self.__feature_set_uri(feature_set_record)
 
-            if "display_name_en" not in fields:
-                continue
-            if "URI" not in fields:
-                continue
+        property_group_builder = CmsPropertyGroup.builder(
+            label=feature_set_record["fields"]["display_name_en"],
+            uri=feature_set_uri,
+        )
+        feature_set_description = self.__transform_description_fields_to_text(
+            record_fields=feature_set_record["fields"],
+        )
+        if feature_set_description:
+            property_group_builder.set_comment(feature_set_description)
 
-            if fields["URI"].startswith(str(COCO)):
-                collection = self.__transform_feature_record_to_collection(
-                    feature_record=feature_record
-                )
-                if collection:
-                    yield collection
+        for image in self.__transform_image_records_to_images(
+            depicts_type=self.__ImageDepictsType.FEATURE_SET,
+            depicts_uri=property_group_builder.uri,
+            image_records=tuple(
+                image_records_by_id[image_record_id]
+                for image_record_id in feature_set_record["fields"].get("images", [])
+            ),
+        ):
+            yield image
+            property_group_builder.add_image(image)
 
-                yield self.__transform_feature_record_to_costume_core_ontology_predicate(
-                    costume_core_ontology_terms_by_features=costume_core_ontology_terms_by_features,
-                    feature_record=feature_record,
-                )
+        for property_ in feature_set_properties:
+            property_group_builder.add_property(property_)
 
-            property_ = self.__transform_feature_record_to_property(
-                feature_record=feature_record, feature_set_records=feature_set_records
-            )
-            if property_:
-                yield property_
-
-                yield from self.__transform_image_records_to_images(
-                    depicts_type=self.__ImageDepictsType.FEATURE,
-                    depicts_uri=property_.uri,
-                    image_records=tuple(
-                        image_records_by_id[image_record_id]
-                        for image_record_id in fields.get("images", [])
-                    ),
-                )
-
-    def __transform_feature_set_records(
-        self, *, feature_set_records, image_records_by_id
-    ) -> Iterable[Model]:
-        for feature_set_record in feature_set_records:
-            feature_set_uri = self.__feature_set_uri(feature_set_record)
-
-            property_group_builder = CmsPropertyGroup.builder(
-                label=feature_set_record["fields"]["display_name_en"],
-                uri=feature_set_uri,
-            )
-            feature_set_description = self.__transform_description_fields_to_text(
-                record_fields=feature_set_record["fields"],
-            )
-            if feature_set_description:
-                property_group_builder.set_comment(feature_set_description)
-            yield property_group_builder.build()
-
-            yield from self.__transform_image_records_to_images(
-                depicts_type=self.__ImageDepictsType.FEATURE_SET,
-                depicts_uri=feature_set_uri,
-                image_records=tuple(
-                    image_records_by_id[image_record_id]
-                    for image_record_id in feature_set_record["fields"].get(
-                        "images", []
-                    )
-                ),
-            )
+        yield property_group_builder.build()
 
     def __transform_feature_value_record_to_concept(
         self,
         *,
         feature_records,
+        feature_value_image_records,
         feature_value_record,
         variant_term_records_by_feature_value_id,
-    ) -> Optional[CmsConcept]:
+    ) -> Iterable[Union[Concept, Image]]:
         fields = feature_value_record["fields"]
         id_ = feature_value_record["id"]
 
@@ -450,10 +527,18 @@ class CostumeCoreOntologyAirtableTransformer:
         if feature_value_description:
             concept_builder.set_definition(feature_value_description)
 
-        return concept_builder.build()
+        for image in self.__transform_image_records_to_images(
+            depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+            depicts_uri=concept_uri,
+            image_records=feature_value_image_records,
+        ):
+            yield image
+            concept_builder.add_image(image)
+
+        yield concept_builder.build()
 
     def __transform_feature_value_record_to_costume_core_ontology_term(
-        self, *, feature_records, feature_value_record, image_records_by_id
+        self, *, feature_records, feature_value_record
     ) -> Optional[CostumeCoreOntology.Term]:
         fields = feature_value_record["fields"]
 
@@ -496,8 +581,8 @@ class CostumeCoreOntologyAirtableTransformer:
         )
 
     def __transform_feature_value_record_to_work(
-        self, *, feature_records, feature_value_record
-    ) -> Optional[CmsWork]:
+        self, *, feature_value_image_records, feature_value_record
+    ) -> Iterable[Union[Image, Work]]:
         fields = feature_value_record["fields"]
 
         work_builder = CmsWork.builder(
@@ -508,104 +593,26 @@ class CostumeCoreOntologyAirtableTransformer:
         if description:
             work_builder.set_description(description)
 
-        for feature_record_id in fields.get("features", []):
-            for feature_record in feature_records:
-                if feature_record["id"] == feature_record_id:
-                    work_builder.add_collection_uri(
-                        URIRef(feature_record["fields"]["URI"])
-                    )
+        # for feature_record_id in fields.get("features", []):
+        #     for feature_record in feature_records:
+        #         if feature_record["id"] == feature_record_id:
+        #             work_builder.add_collection_uri(
+        #                 URIRef(feature_record["fields"]["URI"])
+        #             )
 
-        return work_builder.build()
+        for image in self.__transform_image_records_to_images(
+            depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+            depicts_uri=work_builder.uri,
+            image_records=feature_value_image_records,
+        ):
+            yield image
+            work_builder.add_image(image)
 
-    def __transform_feature_value_records(
-        self,
-        *,
-        feature_records,
-        feature_value_records,
-        image_records_by_id,
-        variant_term_records,
-    ) -> Iterable[Model]:
-        variant_term_records_by_feature_value_id: Dict[str, List[Any]] = {}
-        for variant_term_record in variant_term_records:
-            assert len(variant_term_record["fields"]["feature_values_id"]) == 1
-            variant_term_records_by_feature_value_id.setdefault(
-                variant_term_record["fields"]["feature_values_id"][0], []
-            ).append(variant_term_record)
-
-        for feature_value_record in feature_value_records:
-            fields = feature_value_record["fields"]
-            id_ = fields["id"]
-
-            if not id_.startswith("CC"):
-                continue
-
-            if "display_name_en" not in fields:
-                continue
-
-            costume_core_ontology_term = (
-                self.__transform_feature_value_record_to_costume_core_ontology_term(
-                    feature_records=feature_records,
-                    feature_value_record=feature_value_record,
-                    image_records_by_id=image_records_by_id,
-                )
-            )
-            if costume_core_ontology_term:
-                yield costume_core_ontology_term
-
-            image_depicts_uris: Set[URIRef] = set()
-
-            concept = self.__transform_feature_value_record_to_concept(
-                feature_records=feature_records,
-                feature_value_record=feature_value_record,
-                variant_term_records_by_feature_value_id=variant_term_records_by_feature_value_id,
-            )
-            if concept is not None:
-                yield concept
-                image_depicts_uris.add(concept.uri)
-
-            work = self.__transform_feature_value_record_to_work(
-                feature_records=feature_records,
-                feature_value_record=feature_value_record,
-            )
-            if work is not None:
-                yield work
-
-                if concept is not None:
-                    assert concept.uri == work.uri
-                else:
-                    image_depicts_uris.add(work.uri)
-
-            if not image_depicts_uris:
-                continue
-
-            feature_value_image_records = []
-            for feature_value_image in feature_value_record["fields"].get("images", []):
-                feature_value_image_record = None
-                for image_record in image_records_by_id.values():
-                    if (
-                        image_record["fields"]["image"][0]["id"]
-                        == feature_value_image["id"]
-                    ):
-                        feature_value_image_record = image_record
-                        break
-                if feature_value_image_record is not None:
-                    feature_value_image_records.append(feature_value_image_record)
-                else:
-                    self.__logger.warning(
-                        "no image record found for feature value image %s",
-                        feature_value_image,
-                    )
-
-            for image_depicts_uri in image_depicts_uris:
-                yield from self.__transform_image_records_to_images(
-                    depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
-                    depicts_uri=image_depicts_uri,
-                    image_records=feature_value_image_records,
-                )
+        yield work_builder.build()
 
     def __transform_image_records_to_images(
         self, *, depicts_type: __ImageDepictsType, depicts_uri: URIRef, image_records
-    ) -> Iterable[CmsImage]:
+    ) -> Iterable[Image]:
         # yield from self.__transform_image_records(
         #     depicts_uri=feature_set_uri,
         #     image_records=tuple(
@@ -639,7 +646,6 @@ class CostumeCoreOntologyAirtableTransformer:
                     key_prefix="image",
                     record_fields=image_record["fields"],
                     model_builder=CmsImage.builder(
-                        depicts_uri=depicts_uri,
                         uri=URIRef(
                             ":".join(
                                 (
@@ -663,8 +669,9 @@ class CostumeCoreOntologyAirtableTransformer:
                     .set_src(image_data),
                 ).build()
 
+    @staticmethod
     def __transform_rights_fields_to_costume_core_rights(
-        self, *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
+        *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
     ) -> CostumeCoreOntology.Rights:
         def get_first_list_element(list_: Union[str, List[str], None]):
             if list_ is None:
