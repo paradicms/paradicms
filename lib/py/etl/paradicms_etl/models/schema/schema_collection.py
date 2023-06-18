@@ -1,6 +1,7 @@
 from typing import Union, Tuple
 
 from rdflib import URIRef, Graph, SDO
+from rdflib.resource import Resource
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
@@ -21,6 +22,10 @@ class SchemaCollection(SchemaNamedModel, Collection):
             super().set_label(label)
             return self
 
+    def __init__(self, resource: Resource):
+        SchemaNamedModel.__init__(self, resource)
+        self.name
+
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:
         builder = cls.Builder(Graph().resource(uri))
@@ -36,9 +41,11 @@ class SchemaCollection(SchemaNamedModel, Collection):
 
     @property
     def label(self) -> str:
-        label = SchemaNamedModel.label.fget(self)
-        assert label is not None
-        return label
+        return self.name
+
+    @property
+    def name(self) -> str:
+        return self._required_value(SDO.name, self._map_str_value)
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
