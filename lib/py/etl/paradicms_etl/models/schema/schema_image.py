@@ -15,7 +15,9 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Image.Builder
     ):
-        def add_thumbnail(self, thumbnail: Union[Image, URIRef]) -> "CmsImage.Builder":
+        def add_thumbnail(
+            self, thumbnail: Union[Image, URIRef]
+        ) -> "SchemaImage.Builder":
             self.add(SDO.thumbnail, thumbnail)
             return self
 
