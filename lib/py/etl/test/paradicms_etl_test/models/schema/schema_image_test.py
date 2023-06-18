@@ -1,4 +1,4 @@
-from rdflib import URIRef
+from rdflib import URIRef, SDO
 
 from paradicms_etl.models.schema.schema_image import SchemaImage
 
@@ -14,6 +14,10 @@ def test_copyable(schema_image: SchemaImage):
 def test_replacer(schema_image: SchemaImage):
     assert schema_image.src is None
     assert schema_image.replacer().set_src("/img.jpg").build().src == "/img.jpg"
+
+
+def test_rdf_type_uri(schema_image: SchemaImage):
+    assert schema_image.rdf_type_uri() == SDO.ImageObject
 
 
 def test_source(schema_image: SchemaImage):
