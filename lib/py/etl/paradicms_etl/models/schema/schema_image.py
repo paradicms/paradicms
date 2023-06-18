@@ -51,13 +51,13 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
         return self._optional_value(SDO.caption, self._map_str_value)
 
     @property
-    def label(self) -> Optional[str]:
-        return self.caption
-
-    @property
     def copyable(self) -> bool:
         copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
         return copyable if copyable is not None else True
+
+    @property
+    def label(self) -> Optional[str]:
+        return self.caption
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
@@ -70,6 +70,7 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
     def source(self) -> Optional[URIRef]:
         return self._optional_value(SDO.url, self._map_uri_value)
 
+    @property
     def src(self) -> Union[ImageData, str, URIRef, None]:
         return self._optional_value(  # type:ignore
             SDO.contentUrl, self._map_image_data_or_str_or_uri_value

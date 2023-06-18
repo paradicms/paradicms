@@ -42,7 +42,9 @@ def schema_person() -> SchemaPerson:
 
 @pytest.fixture
 def schema_image(
-    schema_organization: SchemaOrganization, schema_person: SchemaPerson
+    schema_organization: SchemaOrganization,
+    schema_person: SchemaPerson,
+    schema_thumbnail: SchemaImage,
 ) -> SchemaImage:
     return (
         SchemaImage.builder(uri=URIRef("http://example.com/image"))
@@ -51,5 +53,14 @@ def schema_image(
         .add_license(CreativeCommonsLicenses.BY_4_0)
         .add_rights_holder("Test rights holder")
         .add_rights_statement(RightsStatementsDotOrgRightsStatements.InC)
+        .add_thumbnail(schema_thumbnail)
+        .set_copyable(False)
+        .set_source(URIRef("http://example.com/imagesource"))
+        .set_title("Test image title")
         .build()
     )
+
+
+@pytest.fixture
+def schema_thumbnail() -> SchemaImage:
+    return SchemaImage.builder(uri=URIRef("http://example.com/thumbnail")).build()
