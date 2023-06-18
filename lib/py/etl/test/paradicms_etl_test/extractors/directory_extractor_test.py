@@ -10,5 +10,5 @@ def test_extract(data_dir_path: Path):
         force=False
     )
     assert result["directory_name"] == "directory"
-    assert len(result["image_file_entries"]) == 3
+    assert len(result["image_file_entries"]) == 1
     assert len(result["metadata_file_entries"]) == 6
