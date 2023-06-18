@@ -19,21 +19,25 @@ from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransf
 
 def __check_test_data_models(models: Tuple[Model, ...]):
     assert len(models) == 4
+
     person = next(person for person in models if isinstance(person, Person))
+    assert person.name == "Minor Gordon"
+
     image = next(image for image in models if isinstance(image, Image))
+    assert isinstance(image.src, ImageData)
+
     work = next(work for work in models if isinstance(work, Work))
     work_creation = next(
         work_creation
         for work_creation in models
         if isinstance(work_creation, WorkCreation)
     )
-    assert person.name == "Minor Gordon"
-    assert isinstance(image.src, ImageData)
-    assert work_creation.work_uri == work.uri
+    assert work.event_uris == (work_creation.uri,)
     work_creation_date = (
         work_creation.to_rdf(graph=Graph()).value(DCTERMS.date).toPython()
     )
     assert isinstance(work_creation_date, datetime)
+    assert work.image_uris == (image.uri,)
 
 
 def test_transform_excel_2010(excel_2010_test_data_file_path: Path):
@@ -56,7 +60,7 @@ def test_transform_google_sheets(google_sheets_spreadsheet_id: str, tmp_path: Pa
                 **GoogleSheetsExtractor(
                     cache_dir_path=tmp_path,
                     spreadsheet_id=google_sheets_spreadsheet_id,
-                )(force=False)
+                )(force=True)
             )
         )
     )
