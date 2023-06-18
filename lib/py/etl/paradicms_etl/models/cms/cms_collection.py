@@ -13,7 +13,7 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
-    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
+    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder, Collection.Builder):
         def add_work(self, work: Union[Work, URIRef]) -> "CmsCollection.Builder":
             self.add(DCTERMS.hasPart, work)
             return self
@@ -57,6 +57,9 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
     @classmethod
     def label_property_uri(cls):
         return DCTERMS.title
+
+    def replacer(self) -> Builder:
+        return self.Builder(self._resource)
 
     @property
     def title(self) -> str:
