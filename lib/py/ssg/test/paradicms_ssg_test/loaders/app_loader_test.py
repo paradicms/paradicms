@@ -7,7 +7,7 @@ from rdflib import Graph, BNode, RDF, Literal
 
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.image import Image
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
@@ -51,9 +51,9 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
     original_images = []
     other_models = [app_configuration]
     for model in synthetic_data_models:
-        if isinstance(model, CmsImage):
+        if isinstance(model, Image):
             image = model
-            if image.original_image_uri is None:
+            if image.thumbnail_uris:
                 original_images.append(image)
         else:
             other_models.append(model)
