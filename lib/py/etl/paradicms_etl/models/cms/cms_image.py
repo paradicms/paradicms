@@ -119,18 +119,6 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
         )
 
     @property
-    def original_image_uri(self) -> Optional[URIRef]:
-        graph = self._resource.graph
-        original_image_uri = graph.value(
-            None, FOAF.thumbnail, self._resource.identifier
-        )
-        if original_image_uri is not None and not isinstance(
-            original_image_uri, URIRef
-        ):
-            raise TypeError("expected original image URI to be a URIRef")
-        return original_image_uri
-
-    @property
     def label(self) -> Optional[str]:
         return self.title
 
