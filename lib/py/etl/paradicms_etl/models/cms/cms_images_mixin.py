@@ -8,7 +8,7 @@ from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModel
 
 
 class CmsImagesMixin(ResourceBackedModelMixin, ImagesMixin):
-    class Builder(ResourceBackedModelMixin.Builder):
+    class Builder(ResourceBackedModelMixin.Builder, ImagesMixin.Builder):
         def add_image(self, image: Union[Image, URIRef]) -> "CmsImagesMixin.Builder":
             self.add(FOAF.depiction, image)
             return self

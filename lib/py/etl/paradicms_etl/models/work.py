@@ -7,7 +7,7 @@ from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.text import Text
 
 
-class Work(NamedModel, ImagesMixin, RightsMixin):
+class Work(NamedModel, ImagesMixin, RightsMixin):  # type: ignore
     """
     Model of a work such as a painting or a garment.
 
