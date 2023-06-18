@@ -12,9 +12,7 @@ from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_ssg.image_archiver import ImageArchiver
-from paradicms_ssg.original_image_file_cache import (
-    OriginalImageFileCache,
-)
+from paradicms_ssg.image_file_cache import ImageFileCache
 from paradicms_ssg.utils.thumbnail_image import thumbnail_image
 
 
@@ -50,7 +48,7 @@ class ImagesLoader:
         self.__image_archiver = image_archiver
         self.__logger = logging.getLogger(__name__)
 
-        self.__original_image_file_cache = OriginalImageFileCache(
+        self.__original_image_file_cache = ImageFileCache(
             cache_dir_path=loaded_data_dir_path / "original_image_cache",
             sleep_s_after_download=sleep_s_after_image_download,
         )
@@ -153,13 +151,11 @@ class ImagesLoader:
                 )
 
             try:
-                original_image_file_path = (
-                    self.__original_image_file_cache.cache_original_image(
-                        original_image
-                    )
+                original_image_file_path = self.__original_image_file_cache.cache_image(
+                    original_image
                 )
                 assert original_image_file_path
-            except OriginalImageFileCache.CacheOriginalImageException:
+            except ImageFileCache.ImageFileCacheException:
                 self.__logger.info(
                     "unable to cache original image %s, dropping image from GUI",
                     original_image.uri,
