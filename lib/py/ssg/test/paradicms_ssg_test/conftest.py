@@ -37,9 +37,7 @@ def synthetic_data_images(
 def synthetic_data_original_images(
     synthetic_data_images: Tuple[Image, ...]
 ) -> Tuple[Image, ...]:
-    return tuple(
-        image for image in synthetic_data_images if image.original_image_uri is None
-    )
+    return tuple(image for image in synthetic_data_images if image.thumbnail_uris)
 
 
 @pytest.fixture

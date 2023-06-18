@@ -125,7 +125,6 @@ class ImagesLoader:
                 .copy_rights(original_image)
                 .set_exact_dimensions(thumbnail_exact_dimensions)
                 .set_max_dimensions(thumbnail_max_dimensions)
-                .set_original_image_uri(original_image.uri)
                 .set_src(archived_thumbnail_src)
                 .build()
             )
@@ -135,20 +134,16 @@ class ImagesLoader:
     def __call__(self, *, models, **kwds) -> Generator[Image, None, None]:
         """
         Archive an original image and its thumbnails.
+
         :return a generator of (1) a copy of image with the archived image URL and (2) new Images for the thumbnails
         """
 
-        self.__logger.info("loading GUI images")
+        self.__logger.info("loading images")
         for model in tqdm(models):
             if not isinstance(model, Image):
                 raise TypeError("model is not an Image: " + type(model))
 
             original_image = model
-
-            if original_image.original_image_uri is not None:
-                raise ValueError(
-                    f"non-original images should not be archived: {original_image.uri}"
-                )
 
             try:
                 original_image_file_path = self.__original_image_file_cache.cache_image(
@@ -206,4 +201,4 @@ class ImagesLoader:
 
             yield from archived_images
 
-        self.__logger.info("loaded GUI images")
+        self.__logger.info("loaded images")
