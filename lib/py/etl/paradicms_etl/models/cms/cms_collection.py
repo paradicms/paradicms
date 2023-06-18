@@ -27,6 +27,10 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
             self.set(DCTERMS.description, description)
             return self
 
+        def set_label(self, label: str) -> "CmsCollection.Builder":
+            self.set(DCTERMS.title, label)
+            return self
+
     def __init__(self, *args, **kwds):
         CmsNamedModel.__init__(self, *args, **kwds)
         self.title
@@ -53,10 +57,6 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
     @property
     def label(self) -> str:
         return self.title
-
-    @classmethod
-    def label_property_uri(cls):
-        return DCTERMS.title
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)

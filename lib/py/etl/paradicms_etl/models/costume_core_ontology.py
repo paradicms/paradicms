@@ -44,10 +44,6 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
             return self.display_name_en
 
         @classmethod
-        def label_property_uri(cls):
-            return RDFS.label
-
-        @classmethod
         def rdf_type_uri(cls):
             return OWL.NamedIndividual
 
@@ -116,10 +112,6 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         @property
         def label(self):
             return self.display_name_en
-
-        @classmethod
-        def label_property_uri(cls):
-            return RDFS.label
 
         @classmethod
         def rdf_type_uri(cls):

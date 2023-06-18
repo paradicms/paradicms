@@ -49,10 +49,6 @@ class CmsAgent(CmsModel, CmsImagesMixin, Agent):
     def label(self) -> str:
         return self.name
 
-    @classmethod
-    def label_property_uri(cls):
-        return FOAF.name
-
     @property
     def name(self) -> str:
         return self._required_value(FOAF.name, self._map_str_value)

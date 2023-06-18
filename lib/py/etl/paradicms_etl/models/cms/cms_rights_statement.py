@@ -65,10 +65,6 @@ class CmsRightsStatement(CmsModel, RightsStatement):
     def label(self) -> str:
         return self.pref_label
 
-    @classmethod
-    def label_property_uri(cls):
-        return SKOS.prefLabel
-
     @property
     def pref_label(self) -> str:
         return self._required_value(SKOS.prefLabel, self._map_str_value)

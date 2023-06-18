@@ -17,10 +17,6 @@ class SchemaAgent(SchemaModel, Agent):
     def label(self) -> str:
         return self.name
 
-    @classmethod
-    def label_property_uri(cls):
-        return SDO.name
-
     @property
     def name(self) -> str:
         return self._required_value(SDO.name, self._map_str_value)

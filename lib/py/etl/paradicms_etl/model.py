@@ -20,10 +20,6 @@ class Model(ABC):
         return None
 
     @classmethod
-    def label_property_uri(cls) -> Optional[URIRef]:
-        return None
-
-    @classmethod
     @abstractmethod
     def rdf_type_uri(cls) -> URIRef:
         raise NotImplementedError

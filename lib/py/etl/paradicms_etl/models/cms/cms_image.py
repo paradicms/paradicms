@@ -134,10 +134,6 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     def label(self) -> Optional[str]:
         return self.title
 
-    @classmethod
-    def label_property_uri(cls):
-        return DCTERMS.title
-
     def replacer(self) -> Builder:
         return self.Builder(
             clone_graph(self._resource.graph).resource(self._resource.identifier)

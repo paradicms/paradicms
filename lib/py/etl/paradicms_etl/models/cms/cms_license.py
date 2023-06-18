@@ -50,10 +50,6 @@ class CmsLicense(CmsModel, License):
     def label(self) -> str:
         return self.title
 
-    @classmethod
-    def label_property_uri(cls):
-        return DC.title
-
     @property
     def title(self) -> str:
         return self._required_value(DC.title, self._map_str_value)

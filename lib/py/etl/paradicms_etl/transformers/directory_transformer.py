@@ -5,8 +5,7 @@ from typing import Dict, Optional, Tuple, Type, List, Union
 from urllib.parse import quote
 
 import yaml
-from rdflib import FOAF, Graph, Literal, URIRef, Namespace
-from rdflib.resource import Resource
+from rdflib import Graph, URIRef, Namespace
 from stringcase import spinalcase, snakecase
 from yaml import FullLoader
 
@@ -14,7 +13,6 @@ from paradicms_etl.extractors.directory_extractor import DirectoryExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -24,6 +22,7 @@ from paradicms_etl.models.root_model_classes_by_name import (
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
+from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.models.work_opening import WorkOpening
 from paradicms_etl.utils.markdown_to_dict_transformer import (
     MarkdownToDictTransformer,
@@ -175,12 +174,12 @@ class DirectoryTransformer:
 
         def __call__(self) -> Tuple[Model, ...]:
             # Order is important
+            self.__transform_work_event_metadata_file_entries()
             self.__transform_work_metadata_file_entries()
             self.__transform_collection_metadata_file_entries()
-            self.__transform_work_event_metadata_file_entries()
             self.__transform_other_metadata_file_entries()
             self.__transform_image_metadata_file_entries()
-            self.__transform_image_file_entries()
+            # self.__transform_image_file_entries()
             return tuple(self.__transformed_models)
 
         def __model_type_namespace(self, *, model_class: Type[Model]) -> Namespace:
@@ -201,22 +200,6 @@ class DirectoryTransformer:
             else:
                 return self.__root_model_classes_by_alias[model_class.__name__]
 
-        def __set_resource_label(
-            self,
-            *,
-            model_id: str,
-            model_class: Type[Model],
-            resource: Resource,
-        ) -> None:
-            label_property_uri = model_class.label_property_uri()
-            if label_property_uri is None:
-                return
-            if resource.value(label_property_uri) is None:
-                resource.add(
-                    label_property_uri,
-                    Literal(model_id),
-                )
-
         def __transform_collection_metadata_file_entries(self) -> None:
             transformed_collections_by_id: Dict[str, Collection] = {}
             root_model_class = self.__root_model_class(Collection)
@@ -225,26 +208,15 @@ class DirectoryTransformer:
             ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
                 root_model_class, tuple()
             ):
-                collection_resource = self.__transform_metadata_file_entry_to_resource(
+                collection: Collection = self.__transform_metadata_file_entry_to_model(
                     metadata_file_entry=metadata_file_entry
-                )
-
-                self.__set_resource_label(
-                    model_class=root_model_class,
-                    model_id=metadata_file_entry.model_id,
-                    resource=collection_resource,
-                )
-
-                collection: Collection = self.__transform_resource_to_model(
-                    model_class=root_model_class,
-                    model_resource=collection_resource,
                 )  # type: ignore
                 transformed_collections_by_id[metadata_file_entry.model_id] = collection
 
             transformed_works_by_id: Dict[
-                str, CmsWork
+                str, Work
             ] = self.__transformed_models_by_class.get(
-                CmsWork, {}  # type: ignore
+                self.__root_model_class(Work), {}  # type: ignore
             )  # type: ignore
             if not transformed_works_by_id:
                 return
@@ -295,43 +267,41 @@ class DirectoryTransformer:
             ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
                 image_root_model_class, tuple()
             ):
-                image_resource = self.__transform_metadata_file_entry_to_resource(
+                image: Image = self.__transform_metadata_file_entry_to_model(
                     metadata_file_entry=metadata_file_entry
-                )
+                )  # type: ignore
 
-                if image_resource.value(FOAF.depicts) is None:
-                    # If the .md image metadata has no depicts but its model_id corresponds with a model_id of another type,
-                    # synthesize a depicts.
-                    added_depicts = False
-                    for (
-                        model_class,
-                        transformed_models_by_id,
-                    ) in self.__transformed_models_by_class.items():
-                        if model_class == image_root_model_class:
-                            continue
-                        transformed_model = transformed_models_by_id.get(
-                            metadata_file_entry.model_id
-                        )
-
-                        if transformed_model is None or transformed_model.uri is None:
-                            continue
-
-                        image_resource.add(FOAF.depicts, transformed_model.uri)
-                        self.__logger.debug(
-                            "image file entry %s has no depicts statement but corresponds to the model %s, adding depicts statement",
-                            metadata_file_entry.model_id,
-                            transformed_model.uri,
-                        )
-                        added_depicts = True
-                        break
-
-                    if not added_depicts:
-                        self.__logger.warning(
-                            "image file entry %s has no depicts statement and does not correspond to another model",
-                            metadata_file_entry.model_id,
-                        )
-
-                image = image_root_model_class.from_rdf(resource=image_resource)
+                # if image_resource.value(FOAF.depicts) is None:
+                #     # If the .md image metadata has no depicts but its model_id corresponds with a model_id of another type,
+                #     # synthesize a depicts.
+                #     added_depicts = False
+                #     for (
+                #         model_class,
+                #         transformed_models_by_id,
+                #     ) in self.__transformed_models_by_class.items():
+                #         if model_class == image_root_model_class:
+                #             continue
+                #         transformed_model = transformed_models_by_id.get(
+                #             metadata_file_entry.model_id
+                #         )
+                #
+                #         if transformed_model is None or transformed_model.uri is None:
+                #             continue
+                #
+                #         image_resource.add(FOAF.depicts, transformed_model.uri)
+                #         self.__logger.debug(
+                #             "image file entry %s has no depicts statement but corresponds to the model %s, adding depicts statement",
+                #             metadata_file_entry.model_id,
+                #             transformed_model.uri,
+                #         )
+                #         added_depicts = True
+                #         break
+                #
+                #     if not added_depicts:
+                #         self.__logger.warning(
+                #             "image file entry %s has no depicts statement and does not correspond to another model",
+                #             metadata_file_entry.model_id,
+                #         )
 
                 # If the image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the metadata file,
                 # use that image file as the src.
@@ -357,59 +327,58 @@ class DirectoryTransformer:
                     transformed_model=image,
                 )
 
-        def __transform_image_file_entries(self) -> None:
-            # Transform any image files (.jpg, etc.) that are siblings to an .md file of any model type
-            # For example:
-            # collection/somecollection.md
-            # collection/somecollection.jpg
-            # will synthesize an Image that depicts some-collection's URI.
-            # This implies that all other models must be transformed first.
+        # def __transform_image_file_entries(self) -> None:
+        #     # Transform any image files (.jpg, etc.) that are siblings to an .md file of any model type
+        #     # For example:
+        #     # collection/somecollection.md
+        #     # collection/somecollection.jpg
+        #     # will synthesize an Image that depicts some-collection's URI.
+        #     # This implies that all other models must be transformed first.
+        #
+        #     for (
+        #         root_model_class,
+        #         image_file_entries_by_model_id,
+        #     ) in self.__untransformed_image_file_entries_by_root_model_class.items():
+        #         transformed_models_of_class = self.__transformed_models_by_class.get(
+        #             root_model_class, {}
+        #         )
+        #
+        #         for (
+        #             model_id,
+        #             image_file_entry,
+        #         ) in image_file_entries_by_model_id.items():
+        #             transformed_model = transformed_models_of_class.get(model_id)
+        #             if transformed_model is None or transformed_model.uri is None:
+        #                 self.__logger.warning(
+        #                     "image file %s does not have a sibling .md file",
+        #                     image_file_entry.path,
+        #                 )
+        #                 continue
+        #
+        #             # Image file corresponds to a model metadata file
+        #             # Synthesize an Image model
+        #             self.__logger.debug(
+        #                 "synthesizing an Image model for the model %s",
+        #                 transformed_model.uri,
+        #             )
+        #             assert transformed_model.uri
+        #             self.__buffer_transformed_model(
+        #                 model_id=image_file_entry.model_id,
+        #                 transformed_model=CmsImage.builder(
+        #                     uri=self.__model_uri(
+        #                         model_class=CmsImage,
+        #                         model_id=image_file_entry.model_id,
+        #                     ),
+        #                 )
+        #                 .set_src(
+        #                     image_file_entry.path.as_uri(),
+        #                 )
+        #                 .build(),
+        #             )
 
-            for (
-                root_model_class,
-                image_file_entries_by_model_id,
-            ) in self.__untransformed_image_file_entries_by_root_model_class.items():
-                transformed_models_of_class = self.__transformed_models_by_class.get(
-                    root_model_class, {}
-                )
-
-                for (
-                    model_id,
-                    image_file_entry,
-                ) in image_file_entries_by_model_id.items():
-                    transformed_model = transformed_models_of_class.get(model_id)
-                    if transformed_model is None or transformed_model.uri is None:
-                        self.__logger.warning(
-                            "image file %s does not have a sibling .md file",
-                            image_file_entry.path,
-                        )
-                        continue
-
-                    # Image file corresponds to a model metadata file
-                    # Synthesize an Image model
-                    self.__logger.debug(
-                        "synthesizing an Image model for the model %s",
-                        transformed_model.uri,
-                    )
-                    assert transformed_model.uri
-                    self.__buffer_transformed_model(
-                        model_id=image_file_entry.model_id,
-                        transformed_model=CmsImage.builder(
-                            depicts_uri=transformed_model.uri,
-                            uri=self.__model_uri(
-                                model_class=CmsImage,
-                                model_id=image_file_entry.model_id,
-                            ),
-                        )
-                        .set_src(
-                            image_file_entry.path.as_uri(),
-                        )
-                        .build(),
-                    )
-
-        def __transform_metadata_file_entry_to_resource(
+        def __transform_metadata_file_entry_to_model(
             self, metadata_file_entry: DirectoryExtractor.MetadataFileEntry
-        ) -> Resource:
+        ) -> Model:
             root_model_class = self.__root_model_class(metadata_file_entry.model_type)
 
             graph = Graph()
@@ -475,7 +444,16 @@ class DirectoryTransformer:
             #             f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
             #         )
 
-            return resource
+            model = root_model_class.from_rdf(resource)
+
+            if model.label is None:
+                if hasattr(model, "replacer"):
+                    model_replacer = model.replacer()
+                    if hasattr(model_replacer, "set_label"):
+                        model_replacer.set_label(metadata_file_entry.model_id)
+                    model = model_replacer.build()
+
+            return model
 
         def __transform_other_metadata_file_entries(self) -> None:
             image_root_model_class = self.__root_model_class(Image)
@@ -486,60 +464,55 @@ class DirectoryTransformer:
                 if root_model_class == image_root_model_class:
                     continue
                 for metadata_file_entry in metadata_file_entries:
-                    model_resource = self.__transform_metadata_file_entry_to_resource(
-                        metadata_file_entry
-                    )
-                    self.__set_resource_label(
-                        model_id=metadata_file_entry.model_id,
-                        model_class=root_model_class,
-                        resource=model_resource,
-                    )
                     self.__buffer_transformed_model(
                         model_id=metadata_file_entry.model_id,
-                        transformed_model=self.__transform_resource_to_model(
-                            model_class=root_model_class,
-                            model_resource=model_resource,
+                        transformed_model=self.__transform_metadata_file_entry_to_model(
+                            metadata_file_entry
                         ),
                     )
-
-        def __transform_resource_to_model(
-            self, *, model_class: Type[Model], model_resource: Resource
-        ) -> Model:
-            return model_class.from_rdf(model_resource)
 
         def __transform_work_metadata_file_entries(
             self,
         ):
+            transformed_work_events_by_id: Dict[str, List[WorkEvent]] = {}
+            for work_event_model_class in (WorkClosing, WorkCreation, WorkOpening):
+                for (
+                    work_event_model_id,
+                    work_event,
+                ) in self.__transformed_models_by_class.get(
+                    self.__root_model_class(work_event_model_class), {}
+                ).items():
+                    transformed_work_events_by_id.setdefault(
+                        work_event_model_id, []
+                    ).append(work_event)
+
             root_model_class = self.__root_model_class(Work)
             for (
                 metadata_file_entry
             ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
                 root_model_class, tuple()
             ):
-                work_resource = self.__transform_metadata_file_entry_to_resource(
+                work: Work = self.__transform_metadata_file_entry_to_model(
                     metadata_file_entry
                 )
-                self.__set_resource_label(
-                    model_class=root_model_class,
-                    model_id=metadata_file_entry.model_id,
-                    resource=work_resource,
+
+                transformed_work_events = transformed_work_events_by_id.get(
+                    metadata_file_entry.model_id
                 )
+                if transformed_work_events:
+                    work_replacer = work.replacer()
+                    for transformed_work_event in transformed_work_events:
+                        work_replacer.add_event(transformed_work_event)
+                    work = work_replacer.build()
 
                 self.__buffer_transformed_model(
                     model_id=metadata_file_entry.model_id,
-                    transformed_model=self.__transform_resource_to_model(
-                        model_class=root_model_class,
-                        model_resource=work_resource,
-                    ),
+                    transformed_model=work,
                 )
 
         def __transform_work_event_metadata_file_entries(
             self,
         ):
-            # transformed_works_by_id = self.__transformed_models_by_class.get(
-            #     self.__root_model_class(Work), {}
-            # )
-
             for model_class in (WorkClosing, WorkCreation, WorkOpening):
                 root_model_class = self.__root_model_class(model_class)
                 for (
@@ -547,35 +520,10 @@ class DirectoryTransformer:
                 ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
                     root_model_class, tuple()
                 ):
-                    work_event_resource = (
-                        self.__transform_metadata_file_entry_to_resource(
-                            metadata_file_entry
-                        )
-                    )
-
-                    # if work_event_resource.value(CMS.work) is None:
-                    #     # If the .md does not refer to a work but its model_id corresponds with a model_id of a work,
-                    #     # synthesize the reference
-                    #     work = transformed_works_by_id.get(metadata_file_entry.model_id)
-                    #     if work is None:
-                    #         self.__logger.warning(
-                    #             "work event file entry %s has no work statement and its id does not correspond to a Work",
-                    #             metadata_file_entry.model_id,
-                    #         )
-                    #         continue
-                    #
-                    #     work_event_resource.add(CMS.work, work.uri)
-                    #     self.__logger.debug(
-                    #         "work event file entry %s has no work statement but corresponds to the model %s, adding work statement",
-                    #         metadata_file_entry.model_id,
-                    #         work.uri,
-                    #     )
-
                     self.__buffer_transformed_model(
                         model_id=metadata_file_entry.model_id,
-                        transformed_model=self.__transform_resource_to_model(
-                            model_resource=work_event_resource,
-                            model_class=root_model_class,
+                        transformed_model=self.__transform_metadata_file_entry_to_model(
+                            metadata_file_entry
                         ),
                     )
 
