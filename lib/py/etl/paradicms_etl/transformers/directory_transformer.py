@@ -156,14 +156,18 @@ class DirectoryTransformer:
                     )
                     if transformed_image is None:
                         continue
-                    if transformed_image.uri in self.__referenced_image_uris:
+                    if (
+                        transformed_image.uri is not None
+                        and transformed_image.uri in self.__referenced_image_uris
+                    ):
                         continue
                     transformed_models_by_id[transformed_model_id] = (
-                        transformed_model.replacer()
+                        transformed_model.replacer()  # type: ignore
                         .add_image(transformed_image)
                         .build()
                     )
-                    self.__referenced_image_uris.add(transformed_image.uri)
+                    if transformed_image.uri is not None:
+                        self.__referenced_image_uris.add(transformed_image.uri)
 
         def __buffer_transformed_model(
             self,
