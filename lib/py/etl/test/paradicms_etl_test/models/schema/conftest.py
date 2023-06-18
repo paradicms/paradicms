@@ -35,9 +35,12 @@ def schema_organization() -> SchemaOrganization:
 
 @pytest.fixture
 def schema_person() -> SchemaPerson:
-    return SchemaPerson.builder(
-        name="Test person", uri="http://example.com/person"
-    ).build()
+    return (
+        SchemaPerson.builder(name="Test person", uri="http://example.com/person")
+        .set_family_name("Person")
+        .set_given_name("Test")
+        .build()
+    )
 
 
 @pytest.fixture
