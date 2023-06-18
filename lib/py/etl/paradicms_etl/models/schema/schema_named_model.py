@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import Optional
 
 from rdflib import URIRef, SDO
 
@@ -27,7 +28,11 @@ class SchemaNamedModel(ResourceBackedNamedModel, SchemaThingMixin):
         assert cls.__name__.startswith("Schema")
         return getattr(SDO, cls.__name__[len("Schema") :])
 
-    @abstractmethod
     @property
+    def label(self) -> Optional[str]:
+        return SchemaThingMixin.label.fget(self)
+
+    @property
+    @abstractmethod
     def uri(self) -> URIRef:
-        pass
+        return super().uri

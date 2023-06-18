@@ -2,7 +2,6 @@ from typing import Union, Tuple
 
 from rdflib import URIRef, FOAF, Graph
 from rdflib.namespace import DCTERMS
-from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
@@ -71,9 +70,4 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
 
     @property
     def work_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(
-            resource.identifier
-            for resource in self._resource.objects(DCTERMS.hasPart)
-            if isinstance(resource, Resource)
-            and isinstance(resource.identifier, URIRef)
-        )
+        return tuple(self._values(DCTERMS.hasPart, self._map_uri_value))
