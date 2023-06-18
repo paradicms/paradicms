@@ -14,6 +14,7 @@ from paradicms_etl.extractors.directory_extractor import DirectoryExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -44,12 +45,10 @@ class DirectoryTransformer:
         self,
         *,
         pipeline_id: str,
-        default_collection: Optional[Collection] = None,
         root_model_classes_by_name: Optional[
             Dict[str, Type[ResourceBackedModel]]
         ] = None,
     ):
-        self.__default_collection = default_collection
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
         if root_model_classes_by_name is None:
@@ -73,7 +72,6 @@ class DirectoryTransformer:
         def __init__(
             self,
             *,
-            default_collection: Optional[Collection],
             directory_name: str,
             image_file_entries: Tuple[DirectoryExtractor.ImageFileEntry, ...],
             metadata_file_entries: Tuple[DirectoryExtractor.MetadataFileEntry, ...],
@@ -81,7 +79,6 @@ class DirectoryTransformer:
             pipeline_id: str,
             root_model_classes_by_name: Dict[str, Type[ResourceBackedModel]],
         ):
-            self.__default_collection = default_collection
             self.__directory_name = directory_name
             self.__logger = logger
             self.__pipeline_id = pipeline_id
@@ -179,30 +176,13 @@ class DirectoryTransformer:
 
         def __call__(self) -> Tuple[Model, ...]:
             # Order is important
-            self.__transform_collection_metadata_file_entries()
             self.__transform_work_metadata_file_entries()
+            self.__transform_collection_metadata_file_entries()
             self.__transform_work_event_metadata_file_entries()
             self.__transform_other_metadata_file_entries()
             self.__transform_image_metadata_file_entries()
             self.__transform_image_file_entries()
             return tuple(self.__transformed_models)
-
-        def __get_or_synthesize_default_collection(self) -> Collection:
-            if self.__default_collection is None:
-                model_id = self.__directory_name
-                self.__default_collection = CmsCollection.builder(
-                    title=self.__directory_name,
-                    uri=self.__model_uri(
-                        model_class=CmsCollection,
-                        model_id=model_id,
-                    ),
-                ).build()
-                self.__buffer_transformed_model(
-                    model_id=model_id,
-                    transformed_model=self.__default_collection,
-                )
-                self.__logger.info("synthesized default collection %s", model_id)
-            return self.__default_collection
 
         def __model_type_namespace(self, *, model_class: Type[Model]) -> Namespace:
             return Namespace(
@@ -239,6 +219,7 @@ class DirectoryTransformer:
                 )
 
         def __transform_collection_metadata_file_entries(self) -> None:
+            transformed_collections_by_id: Dict[str, Collection] = {}
             root_model_class = self.__root_model_class(Collection)
             for (
                 metadata_file_entry
@@ -259,16 +240,53 @@ class DirectoryTransformer:
                     model_class=root_model_class,
                     model_resource=collection_resource,
                 )  # type: ignore
-                if self.__default_collection is None:
-                    self.__default_collection = collection
-                    self.__logger.debug(
-                        "using first collection %s as the default collection",
-                        self.__default_collection.uri,
-                    )
+                transformed_collections_by_id[metadata_file_entry.model_id] = collection
 
+            transformed_works_by_id: Dict[
+                str, CmsWork
+            ] = self.__transformed_models_by_class.get(
+                CmsWork, {}  # type: ignore
+            )  # type: ignore
+            if not transformed_works_by_id:
+                return
+
+            if not transformed_collections_by_id:
+                # No collections transformed
+                # Synthesize a default collection and put all the works in it
+                default_collection_model_id = self.__directory_name
+                transformed_collections_by_id[
+                    default_collection_model_id
+                ] = CmsCollection.builder(
+                    title=self.__directory_name,
+                    uri=self.__model_uri(
+                        model_class=CmsCollection,
+                        model_id=default_collection_model_id,
+                    ),
+                ).build()
+                self.__logger.info(
+                    "synthesized default collection %s", default_collection_model_id
+                )
+
+            if len(transformed_collections_by_id) == 1:
+                transformed_collection_model_id, transformed_collection = tuple(
+                    transformed_collections_by_id.items()
+                )[0]
+                if not transformed_collection.work_uris:
+                    # Put all the works in the single collection
+                    transformed_collection_replacer = transformed_collection.replacer()
+                    for work in transformed_works_by_id.values():
+                        transformed_collection_replacer.add_work(work)
+                    transformed_collections_by_id[
+                        transformed_collection_model_id
+                    ] = transformed_collection_replacer.build()
+
+            for (
+                transformed_collection_model_id,
+                transformed_collection,
+            ) in transformed_collections_by_id.items():
                 self.__buffer_transformed_model(
-                    model_id=metadata_file_entry.model_id,
-                    transformed_model=collection,
+                    model_id=transformed_collection_model_id,
+                    transformed_model=transformed_collection,
                 )
 
         def __transform_image_metadata_file_entries(self) -> None:
@@ -507,12 +525,6 @@ class DirectoryTransformer:
                     model_id=metadata_file_entry.model_id,
                     resource=work_resource,
                 )
-
-                if work_resource.value(CMS.collection) is None:
-                    work_resource.add(
-                        CMS.collection,
-                        self.__get_or_synthesize_default_collection().uri,
-                    )
 
                 self.__buffer_transformed_model(
                     model_id=metadata_file_entry.model_id,
