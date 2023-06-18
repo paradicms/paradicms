@@ -25,7 +25,6 @@ from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
 from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.models.work_opening import WorkOpening
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.markdown_to_dict_transformer import (
     MarkdownToDictTransformer,
 )
@@ -537,9 +536,9 @@ class DirectoryTransformer:
         def __transform_work_event_metadata_file_entries(
             self,
         ):
-            transformed_works_by_id = self.__transformed_models_by_class.get(
-                self.__root_model_class(Work), {}
-            )
+            # transformed_works_by_id = self.__transformed_models_by_class.get(
+            #     self.__root_model_class(Work), {}
+            # )
 
             for model_class in (WorkClosing, WorkCreation, WorkOpening):
                 root_model_class = self.__root_model_class(model_class)
@@ -554,23 +553,23 @@ class DirectoryTransformer:
                         )
                     )
 
-                    if work_event_resource.value(CMS.work) is None:
-                        # If the .md does not refer to a work but its model_id corresponds with a model_id of a work,
-                        # synthesize the reference
-                        work = transformed_works_by_id.get(metadata_file_entry.model_id)
-                        if work is None:
-                            self.__logger.warning(
-                                "work event file entry %s has no work statement and its id does not correspond to a Work",
-                                metadata_file_entry.model_id,
-                            )
-                            continue
-
-                        work_event_resource.add(CMS.work, work.uri)
-                        self.__logger.debug(
-                            "work event file entry %s has no work statement but corresponds to the model %s, adding work statement",
-                            metadata_file_entry.model_id,
-                            work.uri,
-                        )
+                    # if work_event_resource.value(CMS.work) is None:
+                    #     # If the .md does not refer to a work but its model_id corresponds with a model_id of a work,
+                    #     # synthesize the reference
+                    #     work = transformed_works_by_id.get(metadata_file_entry.model_id)
+                    #     if work is None:
+                    #         self.__logger.warning(
+                    #             "work event file entry %s has no work statement and its id does not correspond to a Work",
+                    #             metadata_file_entry.model_id,
+                    #         )
+                    #         continue
+                    #
+                    #     work_event_resource.add(CMS.work, work.uri)
+                    #     self.__logger.debug(
+                    #         "work event file entry %s has no work statement but corresponds to the model %s, adding work statement",
+                    #         metadata_file_entry.model_id,
+                    #         work.uri,
+                    #     )
 
                     self.__buffer_transformed_model(
                         model_id=metadata_file_entry.model_id,
@@ -588,7 +587,6 @@ class DirectoryTransformer:
         metadata_file_entries: Tuple[DirectoryExtractor.MetadataFileEntry, ...],
     ):
         yield from self.__TransformInvocation(
-            default_collection=self.__default_collection,
             directory_name=directory_name,
             image_file_entries=image_file_entries,
             metadata_file_entries=metadata_file_entries,
