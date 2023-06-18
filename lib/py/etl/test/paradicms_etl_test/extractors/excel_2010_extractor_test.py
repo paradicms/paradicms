@@ -21,9 +21,9 @@ def test_extract(excel_2010_test_data_file_path):
     image_rows = image_sheet["rows"]
     assert len(image_rows) == 2
     image_header_row = image_rows[0]
-    assert image_header_row == (None, "depicts", "src")
+    assert image_header_row == ("@id", "src")
     image_data_row = image_rows[1]
-    assert len(image_data_row) == 3
+    assert len(image_data_row) == 2
     image_data_dict = {
         header: value
         for header, value in zip(image_header_row, image_data_row)
@@ -36,14 +36,14 @@ def test_extract(excel_2010_test_data_file_path):
     work_rows = work_sheet["rows"]
     assert len(work_rows) == 2
     work_header_row = work_rows[0]
-    assert work_header_row == ("@id", "title")
+    assert work_header_row == ("@id", "event", "image", "title")
     work_data_row = work_rows[1]
-    assert len(work_data_row) == 2
+    assert len(work_data_row) == 4
 
     work_creation_sheet = sheets["WorkCreation"]
     work_creation_rows = work_creation_sheet["rows"]
     assert len(work_creation_rows) == 2
     work_creation_header_row = work_creation_rows[0]
-    assert work_creation_header_row == (None, "creator", "date", "work")
+    assert work_creation_header_row == ("@id", "creator", "date")
     work_creation_data_row = work_creation_rows[1]
-    assert len(work_creation_data_row) == 4
+    assert len(work_creation_data_row) == 3
