@@ -14,7 +14,7 @@ from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SchemaWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
+class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Work.Builder
     ):
@@ -22,8 +22,8 @@ class SchemaWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
             self.add(CMS.event, event)
             return self
 
-        def build(self) -> "SchemaWork":
-            return SchemaWork(self._resource)
+        def build(self) -> "SchemaCreativeWork":
+            return SchemaCreativeWork(self._resource)
 
     def __init__(self, resource: Resource):
         SchemaNamedModel.__init__(self, resource)
@@ -61,10 +61,6 @@ class SchemaWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
-
-    @classmethod
-    def rdf_type_uri(cls) -> URIRef:
-        return SDO.CreativeWork
 
     @property
     def uri(self) -> URIRef:

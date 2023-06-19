@@ -12,30 +12,30 @@ from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
+class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Image.Builder
     ):
         def add_thumbnail(
             self, thumbnail: Union[Image, URIRef]
-        ) -> "SchemaImage.Builder":
+        ) -> "SchemaImageObject.Builder":
             self.add(SDO.thumbnail, thumbnail)
             return self
 
-        def build(self) -> "SchemaImage":
-            return SchemaImage(self._resource)
+        def build(self) -> "SchemaImageObject":
+            return SchemaImageObject(self._resource)
 
-        def set_copyable(self, copyable: bool) -> "SchemaImage.Builder":
+        def set_copyable(self, copyable: bool) -> "SchemaImageObject.Builder":
             self.set(CMS.imageCopyable, copyable)
             return self
 
         def set_src(
             self, src: Union[str, ImageData, Literal, URIRef]
-        ) -> "SchemaImage.Builder":
+        ) -> "SchemaImageObject.Builder":
             self.set(SDO.contentUrl, src)
             return self
 
-        def set_title(self, title: str) -> "SchemaImage.Builder":
+        def set_title(self, title: str) -> "SchemaImageObject.Builder":
             self.set(SDO.caption, title)
             return self
 
@@ -84,10 +84,6 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
-
-    @classmethod
-    def rdf_type_uri(cls) -> URIRef:
-        return SDO.ImageObject
 
     @property
     def src(self) -> Union[ImageData, str, URIRef, None]:
