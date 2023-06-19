@@ -9,10 +9,13 @@ from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_image import SchemaImage
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_work import SchemaWork
 
 
 @pytest.fixture
-def schema_collection(schema_image) -> SchemaCollection:
+def schema_collection(
+    schema_image: SchemaImage, schema_work: SchemaWork
+) -> SchemaCollection:
     return (
         SchemaCollection.builder(
             name="Test collection", uri=URIRef("http://example.com/collection")
@@ -21,7 +24,7 @@ def schema_collection(schema_image) -> SchemaCollection:
         .add_description("Test collection description")
         .add_same_as(URIRef("http://example.com/other"))
         .add_image(schema_image)
-        .add_work(URIRef("http://example.com/work"))
+        .add_work(schema_work)
         .build()
     )
 
@@ -67,3 +70,12 @@ def schema_image(
 @pytest.fixture
 def schema_thumbnail() -> SchemaImage:
     return SchemaImage.builder(uri=URIRef("http://example.com/thumbnail")).build()
+
+
+@pytest.fixture
+def schema_work(schema_image: SchemaImage) -> SchemaWork:
+    return (
+        SchemaWork.builder(name="Test work", uri=URIRef("http://example.com/work"))
+        .add_image(schema_image)
+        .build()
+    )

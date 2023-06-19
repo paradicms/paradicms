@@ -5,6 +5,7 @@ from rdflib import URIRef, Literal
 from rdflib.resource import Resource
 
 from paradicms_etl.models.image_data import ImageData
+from paradicms_etl.models.text import Text
 
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
 _StatementObject = Union[Literal, Resource]
@@ -31,6 +32,11 @@ class ResourceBackedModelMixin(ABC):
     @staticmethod
     @abstractmethod
     def _map_str_or_uri_value(value: _StatementObject) -> Union[str, URIRef, None]:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def _map_str_or_text_value(value: _StatementObject) -> Union[str, Text, None]:
         raise NotImplementedError
 
     @staticmethod

@@ -1,6 +1,6 @@
 from typing import Union, Optional, Tuple
 
-from rdflib import URIRef, Graph, SDO, Literal
+from rdflib import URIRef, Graph, SDO, Literal, XSD
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
@@ -9,6 +9,7 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
 )
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
@@ -26,10 +27,6 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
 
         def set_copyable(self, copyable: bool) -> "SchemaImage.Builder":
             self.set(CMS.imageCopyable, copyable)
-            return self
-
-        def set_source(self, source: URIRef) -> "SchemaImage.Builder":
-            self.set(SDO.url, source)
             return self
 
         def set_src(
@@ -55,6 +52,19 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
         copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
         return copyable if copyable is not None else True
 
+    @classmethod
+    def json_ld_context(cls):
+        return safe_dict_update(
+            SchemaNamedModel.json_ld_context(),
+            SchemaCreativeWorkMixin.json_ld_context(),
+            {
+                "copyable": {
+                    "@id": str(CMS.imageCopyable),
+                    "@type": str(XSD.boolean),
+                },
+            },
+        )
+
     @property
     def label(self) -> Optional[str]:
         return self.caption
@@ -65,10 +75,6 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return SDO.ImageObject
-
-    @property
-    def source(self) -> Optional[URIRef]:
-        return self._optional_value(SDO.url, self._map_uri_value)
 
     @property
     def src(self) -> Union[ImageData, str, URIRef, None]:

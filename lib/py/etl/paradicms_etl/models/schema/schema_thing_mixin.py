@@ -36,6 +36,14 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
             self.set(SDO.name, name)
             return self
 
+        def set_url(self, url: URIRef) -> "SchemaThingMixin.Builder":
+            self.set(SDO.url, url)
+            return self
+
+    @property
+    def description(self) -> Union[str, Text, None]:
+        return self._optional_value(SDO.description, self._map_str_or_text_value)
+
     @classmethod
     def json_ld_context(cls):
         return {
@@ -57,3 +65,7 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
     @property
     def name(self) -> Optional[str]:
         return self._optional_value(SDO.name, self._map_str_value)
+
+    @property
+    def url(self) -> Optional[URIRef]:
+        return self._optional_value(SDO.url, self._map_uri_value)

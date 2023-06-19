@@ -1,4 +1,4 @@
-from typing import Any, Union, Tuple
+from typing import Any, Union, Tuple, Optional
 
 from rdflib import SDO, URIRef
 
@@ -33,6 +33,10 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             self.add(SDO.usageInfo, statement)
             return self
 
+        def set_source(self, source: URIRef) -> "SchemaCreativeWorkMixin.Builder":
+            self.set_url(source)
+            return self
+
     @property
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:
         return tuple(self._values(SDO.contributor, self._map_str_or_uri_value))
@@ -40,6 +44,10 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
     @property
     def creators(self) -> Tuple[Union[str, URIRef], ...]:
         return tuple(self._values(SDO.creator, self._map_str_or_uri_value))
+
+    @classmethod
+    def json_ld_context(cls):
+        return {"url": {"@id": str(SDO.url), "@type": "@id"}}
 
     @property
     def license(self) -> Union[str, URIRef, None]:
@@ -52,3 +60,7 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
     @property
     def rights_statement(self) -> Union[str, URIRef, None]:
         return self._optional_value(SDO.usageInfo, self._map_str_or_uri_value)
+
+    @property
+    def source(self) -> Optional[URIRef]:
+        return self.url

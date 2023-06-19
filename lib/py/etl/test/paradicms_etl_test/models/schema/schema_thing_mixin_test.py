@@ -2,6 +2,10 @@ from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_image import SchemaImage
 
 
+def test_description(schema_collection: SchemaCollection):
+    assert schema_collection.description == "Test collection description"
+
+
 def test_image_uris(schema_collection: SchemaCollection, schema_image: SchemaImage):
     assert schema_collection.image_uris == (schema_image.uri,)
 
