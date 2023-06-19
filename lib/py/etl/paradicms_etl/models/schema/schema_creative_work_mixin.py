@@ -1,6 +1,6 @@
 from typing import Any, Union, Tuple, Optional
 
-from rdflib import SDO, URIRef
+from rdflib import SDO, URIRef, XSD
 
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_thing_mixin import SchemaThingMixin
@@ -47,7 +47,17 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
 
     @classmethod
     def json_ld_context(cls):
-        return {"url": {"@id": str(SDO.url), "@type": "@id"}}
+        return {
+            "dateCreated": {
+                "@id": str(SDO.dateCreated),
+                "@type": str(XSD.dateTime),
+            },
+            "dateModified": {
+                "@id": str(SDO.dateModified),
+                "@type": str(XSD.dateTime),
+            },
+            "url": {"@id": str(SDO.url), "@type": "@id"},
+        }
 
     @property
     def license(self) -> Union[str, URIRef, None]:

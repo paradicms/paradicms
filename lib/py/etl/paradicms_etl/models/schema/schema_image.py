@@ -62,6 +62,19 @@ class SchemaImage(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
                     "@id": str(CMS.imageCopyable),
                     "@type": str(XSD.boolean),
                 },
+                # TODO: handle DistanceValue's
+                # "height": {"@id": str(EXIF.height), "@type": str(XSD.integer)},
+                # "maxHeight": {
+                #     "@id": str(CMS.imageMaxHeight),
+                #     "@type": str(XSD.integer),
+                # },
+                # "maxWidth": {
+                #     "@id": str(CMS.imageMaxWidth),
+                #     "@type": str(XSD.integer),
+                # },
+                # "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
+                "src": {"@id": str(CMS.imageSrc)},
+                "thumbnail": {"@id": str(SDO.thumbnail), "@type": "@id"},
             },
         )
 
