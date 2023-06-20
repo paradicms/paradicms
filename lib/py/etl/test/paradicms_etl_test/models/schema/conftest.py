@@ -1,5 +1,5 @@
 import pytest
-from rdflib import URIRef
+from rdflib import URIRef, Literal
 
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
@@ -10,6 +10,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
@@ -45,18 +46,16 @@ def schema_creative_work(schema_image_object: SchemaImageObject) -> SchemaCreati
 
 
 @pytest.fixture
-def schema_organization() -> SchemaOrganization:
-    return SchemaOrganization.builder(
-        name="Test organization", uri="http://example.com/organization"
-    ).build()
-
-
-@pytest.fixture
-def schema_person() -> SchemaPerson:
+def schema_defined_term(schema_image_object: SchemaImageObject) -> SchemaDefinedTerm:
     return (
-        SchemaPerson.builder(name="Test person", uri="http://example.com/person")
-        .set_family_name("Person")
-        .set_given_name("Test")
+        SchemaDefinedTerm.builder(
+            name="Test defined term", uri=URIRef("http://example.com/definedTerm")
+        )
+        .add_image(schema_image_object)
+        .add_alternate_name("Test defined term alternate name")
+        .add_type_uri(URIRef("http://example.com/type1"))
+        .add_type_uri(URIRef("http://example.com/type2"))
+        .set_value(Literal("testvalue"))
         .build()
     )
 
@@ -81,6 +80,23 @@ def schema_image_object(
         .set_max_dimensions(ImageDimensions(height=800, width=800))
         .set_source(URIRef("http://example.com/imagesource"))
         .set_title("Test image title")
+        .build()
+    )
+
+
+@pytest.fixture
+def schema_organization() -> SchemaOrganization:
+    return SchemaOrganization.builder(
+        name="Test organization", uri="http://example.com/organization"
+    ).build()
+
+
+@pytest.fixture
+def schema_person() -> SchemaPerson:
+    return (
+        SchemaPerson.builder(name="Test person", uri="http://example.com/person")
+        .set_family_name("Person")
+        .set_given_name("Test")
         .build()
     )
 
