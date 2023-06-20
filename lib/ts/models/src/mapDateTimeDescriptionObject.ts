@@ -1,23 +1,38 @@
 import {Term} from "@rdfjs/types";
 import anyDateParser from "any-date-parser";
-import {DateTimeDescription} from "../DateTimeDescription";
-import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
-import {CmsDateTimeDescription} from "../cms/CmsDateTimeDescription";
+import {DateTimeDescription} from "./DateTimeDescription";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {OwlTimeDateTimeDescription} from "./owl-time/OwlTimeDateTimeDescription";
+import {rdf, time} from "@paradicms/vocabularies";
 
 /**
- * Map a term in a modelSet to a PartialDateTime.
+ * Map a term in a modelSet to a DateTimeDescription.
  */
-export const mapCmsDateTimeDescriptionObject = (
+export const mapDateTimeDescriptionObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): DateTimeDescription | null => {
   switch (term.termType) {
     case "BlankNode":
     case "NamedNode":
-      return new CmsDateTimeDescription({
-        ...modelParameters,
-        identifier: term,
-      });
+      for (const rdfTypeQuad of modelParameters.dataset.match(
+        term,
+        rdf.type,
+        null,
+        modelParameters.graph
+      )) {
+        if (rdfTypeQuad.object.equals(time.DateTimeDescription)) {
+          return new OwlTimeDateTimeDescription({
+            ...modelParameters,
+            identifier: term,
+          });
+        } else {
+          throw new RangeError(
+            "unknown DateTimeDescription rdf:type: " + rdfTypeQuad.object.value
+          );
+        }
+      }
+      throw new RangeError("DateTimeDescription node has no rdf:type");
     case "Literal": {
       const parsed = anyDateParser.attempt(term.value);
       const partialDateTime = {

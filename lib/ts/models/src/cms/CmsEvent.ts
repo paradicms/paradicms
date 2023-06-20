@@ -6,9 +6,9 @@ import {Event} from "../Event";
 import {Location} from "../Location";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
-import {mapCmsDateTimeDescriptionObject} from "./mapCmsDateTimeDescriptionObject";
 import {mapCmsLocationObject} from "./mapCmsLocationObject";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {mapDateTimeDescriptionObject} from "../mapDateTimeDescriptionObject";
 
 export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   implements Event {
@@ -74,14 +74,14 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   @Memoize()
   get date(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.date, term =>
-      mapCmsDateTimeDescriptionObject(this, term)
+      mapDateTimeDescriptionObject(this, term)
     );
   }
 
   @Memoize()
   get endDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.endDate, term =>
-      mapCmsDateTimeDescriptionObject(this, term)
+      mapDateTimeDescriptionObject(this, term)
     );
   }
 
@@ -121,7 +121,7 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   @Memoize()
   get startDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.startDate, term =>
-      mapCmsDateTimeDescriptionObject(this, term)
+      mapDateTimeDescriptionObject(this, term)
     );
   }
 

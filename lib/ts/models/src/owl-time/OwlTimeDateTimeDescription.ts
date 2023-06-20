@@ -3,9 +3,9 @@ import {Literal} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
-import {CmsModel} from "./CmsModel";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
-export class CmsDateTimeDescription extends Mixin(CmsModel) implements DateTimeDescription {
+export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) implements DateTimeDescription {
   /**
    * Day of the month, 1..31 inclusive.
    */
