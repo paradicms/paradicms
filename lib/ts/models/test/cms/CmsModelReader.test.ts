@@ -23,8 +23,8 @@ describe("CmsModelReader", () => {
     expect(sut.readImages({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
-  it("should read at least one named License", () => {
-    expect(sut.readNamedLicenses({modelSet: dummyModelSet})).not.to.be.empty;
+  it("should read no named Licenses", () => {
+    expect(sut.readNamedLicenses({modelSet: dummyModelSet})).to.be.empty;
   });
 
   it("should read at least one named Location", () => {
@@ -48,8 +48,8 @@ describe("CmsModelReader", () => {
     expect(sut.readPropertyGroups({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
-  it("should read at least one named RightsStatement", () => {
-    expect(sut.readNamedRightsStatements({modelSet: dummyModelSet})).not.to.be
+  it("should read at least no named RightsStatements", () => {
+    expect(sut.readNamedRightsStatements({modelSet: dummyModelSet})).to.be
       .empty;
   });
 
