@@ -9,6 +9,10 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class SchemaProperty(SchemaNamedModel, Property):
+    """
+    Schema.org implementation of the Property interface using schema:Property properties.
+    """
+
     class Builder(SchemaNamedModel.Builder):
         def build(self) -> "SchemaProperty":
             return SchemaProperty(self._resource)

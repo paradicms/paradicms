@@ -15,6 +15,12 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
+    """
+    Schema.org implementation of the Work interface using schema:CreativeWork properties.
+
+    See note in SchemaCreativeWorkMixin re: why the two are separate.
+    """
+
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Work.Builder
     ):

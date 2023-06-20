@@ -9,6 +9,10 @@ from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 
 
 class SchemaDefinedTerm(SchemaNamedModel, Concept):
+    """
+    Schema.org implementation of the Concept interface using schema:DefinedTerm properties.
+    """
+
     class Builder(SchemaNamedModel.Builder):
         def add_type_uri(self, type_uri: URIRef):
             self.add(RDF.type, type_uri)

@@ -10,6 +10,10 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class SchemaCollection(SchemaNamedModel, Collection):
+    """
+    Schema.org implementation of the Collection interface using schema:Collection properties.
+    """
+
     class Builder(SchemaNamedModel.Builder, Collection.Builder):
         def add_work(self, work: Union[URIRef, Work]) -> "SchemaCollection.Builder":
             self.add(SDO.hasPart, work)

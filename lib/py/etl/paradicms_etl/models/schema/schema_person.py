@@ -7,6 +7,10 @@ from paradicms_etl.models.schema.schema_agent import SchemaAgent
 
 
 class SchemaPerson(SchemaAgent, Person):
+    """
+    Schema.org implementation of the Person interface using schema:Person properties.
+    """
+
     class Builder(SchemaAgent.Builder):
         def build(self):
             return SchemaPerson(self._resource)

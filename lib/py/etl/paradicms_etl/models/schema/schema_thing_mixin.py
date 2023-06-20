@@ -9,6 +9,14 @@ from paradicms_etl.models.text import Text
 
 
 class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
+    """
+    Mixin that supplies schema:Thing properties to other models.
+
+    This is not part of SchemaModel because SchemaNamedModel does not inherit SchemaModel.
+    SchemaModel inherits ResourceBackedModel and SchemaNamedModel inherits ResourceBackedNamedModel.
+    This mixin supplies schema:Thing properties to both SchemaModel and SchemaNamedModel and all of their descendants.
+    """
+
     class Builder(ResourceBackedModelMixin.Builder, ImagesMixin.Builder):
         def add_alternate_name(
             self, alternate_name: Union[str, Text]

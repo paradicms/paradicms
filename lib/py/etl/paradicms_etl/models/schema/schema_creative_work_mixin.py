@@ -9,6 +9,14 @@ from paradicms_etl.models.schema.schema_thing_mixin import SchemaThingMixin
 
 
 class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
+    """
+    Mixin for models such as SchemaImageObject that have schema:CreativeWork properties.
+
+    In schema.org, schema:ImageObject is a subclass of schema:CreativeWork.
+    However, we don't want SchemaImageObject to be a subclass of SchemaCreativeWork, since the latter implements the
+    Work model interface and the former should not.
+    """
+
     class Builder(SchemaThingMixin.Builder, RightsMixin.Builder):
         def add_contributor(
             self, contributor: Any

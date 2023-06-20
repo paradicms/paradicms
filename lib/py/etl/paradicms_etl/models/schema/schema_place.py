@@ -2,11 +2,16 @@ from typing import Optional
 
 from rdflib import URIRef, Graph, BNode, SDO, XSD
 
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SchemaPlace(SchemaModel):
+class SchemaPlace(SchemaModel, Location):
+    """
+    Schema.org implementation of the Location interface using schema:Place properties.
+    """
+
     class Builder(SchemaModel.Builder):
         def build(self) -> "SchemaPlace":
             return SchemaPlace(self._resource)

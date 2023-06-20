@@ -5,6 +5,13 @@ from paradicms_etl.models.schema.schema_model import SchemaModel
 
 
 class SchemaAgent(SchemaModel, Agent):
+    """
+    Abstract base class for properties shared between schema:Organization and schema:Person.
+
+    There is no concept of an "agent" in schema.org; both schema:Organization and schema:Person inherit schema:Thing
+    directly.
+    """
+
     class Builder(SchemaModel.Builder):
         pass
 

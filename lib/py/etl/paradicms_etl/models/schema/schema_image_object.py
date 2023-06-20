@@ -16,6 +16,13 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
+    """
+    Schema.org implementation of the Image interface using schema:ImageObject properties.
+
+    See note in SchemaCreativeWorkMixin re: why this uses SchemaCreativeWorkMixin and doesn't inherit
+    SchemaCreativeWork.
+    """
+
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Image.Builder
     ):

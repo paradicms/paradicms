@@ -7,6 +7,10 @@ from paradicms_etl.models.schema.schema_agent import SchemaAgent
 
 
 class SchemaOrganization(SchemaAgent, Organization):
+    """
+    Schema.org implementation of the Organization interface using schema:Organization properties.
+    """
+
     class Builder(SchemaAgent.Builder):
         def build(self):
             return SchemaOrganization(self._resource)
