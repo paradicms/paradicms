@@ -61,11 +61,15 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
 
     @property
     def label(self) -> Optional[str]:
-        pass
+        return self.name
 
     @property
     def name(self) -> Optional[str]:
         return self._optional_value(SDO.name, self._map_str_value)
+
+    @property
+    def _required_name(self) -> str:
+        return self._required_value(SDO.name, self._map_str_value)
 
     @property
     def url(self) -> Optional[URIRef]:

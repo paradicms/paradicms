@@ -21,6 +21,10 @@ class SchemaDefinedTerm(SchemaNamedModel, Concept):
             self.set(RDF.value, value)
             return self
 
+    def __init__(self, resource: Resource):
+        SchemaNamedModel.__init__(self, resource)
+        self.name
+
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:
         builder = cls.Builder(Graph().resource(uri))
@@ -33,7 +37,7 @@ class SchemaDefinedTerm(SchemaNamedModel, Concept):
 
     @property
     def name(self) -> str:
-        return self._required_value(SDO.name, self._map_str_value)
+        return self._required_name
 
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:

@@ -45,7 +45,7 @@ class SchemaCollection(SchemaNamedModel, Collection):
 
     @property
     def name(self) -> str:
-        return self._required_value(SDO.name, self._map_str_value)
+        return self._required_name
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)

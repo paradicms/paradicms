@@ -1,4 +1,3 @@
-from rdflib import SDO
 from rdflib.resource import Resource
 
 from paradicms_etl.models.agent import Agent
@@ -19,4 +18,4 @@ class SchemaAgent(SchemaModel, Agent):
 
     @property
     def name(self) -> str:
-        return self._required_value(SDO.name, self._map_str_value)
+        return self._required_name
