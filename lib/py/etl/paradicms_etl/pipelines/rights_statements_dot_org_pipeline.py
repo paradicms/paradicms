@@ -7,8 +7,10 @@ from zipfile import ZipFile
 from rdflib import DCTERMS, Graph, Literal
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
+    RightsStatementsDotOrgRightsStatement,
+)
 from paradicms_etl.namespaces import bind_namespaces
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.utils.download_file import download_file
@@ -58,6 +60,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
             (
                 Path(__file__).parent.parent
                 / "models"
+                / "rights_statements_dot_org"
                 / "rights_statements_dot_org_rights_statements.py"
             ),
             "w+",
@@ -68,12 +71,12 @@ class RightsStatementsDotOrgPipeline(Pipeline):
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
-from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import RightsStatementsDotOrgRightsStatement
 from paradicms_etl.models.model_singletons import ModelSingletons
 
 
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):
-    _MODEL_CLASS = CmsRightsStatement
+    _MODEL_CLASS = RightsStatementsDotOrgRightsStatement
 
 {rights_statement_reprs_str}
 """
@@ -88,7 +91,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
             assert len(graph_subjects) == 1, graph_subjects
             uri = graph_subjects[0]
             graph.add((uri, DCTERMS.identifier, Literal(entry_id)))
-            yield CmsRightsStatement.from_rdf(graph.resource(uri))
+            yield RightsStatementsDotOrgRightsStatement.from_rdf(graph.resource(uri))
 
     def __init__(self, **kwds):
         Pipeline.__init__(

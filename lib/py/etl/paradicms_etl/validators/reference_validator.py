@@ -32,6 +32,9 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
+    RightsStatementsDotOrgRightsStatement,
+)
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -236,14 +239,14 @@ class ReferenceValidator:
             self.__referenced_image_uris.add(image_uri)
 
     def _validate_creative_commons_license(
-        self, creative_commons_license: CreativeCommonsLicense
+        self, license: CreativeCommonsLicense
     ) -> Iterable[ValidationResult]:
-        return ()
+        yield from self.__validate_license(license)
 
     def _validate_creative_commons_license_references(
         self,
     ) -> Iterable[ValidationResult]:
-        return ()
+        yield from self.__validate_license_references()
 
     def __validate_image(self, image: Image) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(image)
@@ -324,6 +327,16 @@ class ReferenceValidator:
         if rights_statement.uri is not None:
             assert rights_statement.uri not in self.__rights_statement_uris
             self.__rights_statement_uris.add(rights_statement.uri)
+
+    def _validate_rights_statements_dot_org_rights_statement(
+        self, rights_statement: RightsStatementsDotOrgRightsStatement
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_rights_statement(rights_statement)
+
+    def _validate_rights_statements_dot_org_rights_statement_references(
+        self,
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_rights_statement_references()
 
     def __validate_rights_statement_references(self) -> Iterable[ValidationResult]:
         yield from self.__validate_uri_references(
