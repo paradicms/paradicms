@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
-from paradicms_etl.models.creative_commons.creative_commons_license import CreativeCommonsLicense
+from paradicms_etl.models.creative_commons.creative_commons_license import (
+    CreativeCommonsLicense,
+)
 from paradicms_etl.models.model_singletons import ModelSingletons
 
 
 class CreativeCommonsLicenses(ModelSingletons):
     _MODEL_CLASS = CreativeCommonsLicense
 
-    BSD = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+    BSD = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 <http://creativecommons.org/licenses/BSD/> a cc:License ;
@@ -22,8 +27,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dc:title "BSD License",
         "BSD"@en .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/BSD/')))
-    GPL_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/BSD/"))
+    )
+    GPL_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -43,8 +55,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dcterms:hasVersion "2.0" ;
     foaf:logo <http://i.creativecommons.org/l/GPL/2.0/88x62.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/GPL/2.0/')))
-    LGPL_2_1 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/GPL/2.0/"))
+    )
+    LGPL_2_1 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -64,8 +83,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dcterms:hasVersion "2.1" ;
     foaf:logo <http://i.creativecommons.org/l/LGPL/2.1/88x62.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/LGPL/2.1/')))
-    MIT = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/LGPL/2.1/"))
+    )
+    MIT = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 
 <http://creativecommons.org/licenses/MIT/> a cc:License ;
@@ -79,8 +105,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dc:title "MIT License",
         "MIT"@en .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/MIT/')))
-    BY_NC_ND_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/MIT/"))
+    )
+    BY_NC_ND_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -101,8 +134,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-nd/2.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-nd/2.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-nd/2.0/')))
-    BY_NC_ND_2_5 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-nd/2.0/"))
+    )
+    BY_NC_ND_2_5 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -123,8 +163,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-nd/2.5/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-nd/2.5/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-nd/2.5/')))
-    BY_NC_ND_3_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-nd/2.5/"))
+    )
+    BY_NC_ND_3_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -144,8 +191,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-nd/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-nd/3.0/')))
-    BY_NC_ND_4_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-nd/3.0/"))
+    )
+    BY_NC_ND_4_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -165,8 +219,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-nd/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-nd/4.0/')))
-    BY_NC_SA_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-nd/4.0/"))
+    )
+    BY_NC_SA_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -189,8 +250,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-sa/1.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-sa/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-sa/1.0/')))
-    BY_NC_SA_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-sa/1.0/"))
+    )
+    BY_NC_SA_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -213,8 +281,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-sa/2.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-sa/2.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-sa/2.0/')))
-    BY_NC_SA_2_5 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-sa/2.0/"))
+    )
+    BY_NC_SA_2_5 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -237,8 +312,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-sa/2.5/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-sa/2.5/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-sa/2.5/')))
-    BY_NC_SA_3_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-sa/2.5/"))
+    )
+    BY_NC_SA_3_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -260,8 +342,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-sa/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-sa/3.0/')))
-    BY_NC_SA_4_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-sa/3.0/"))
+    )
+    BY_NC_SA_4_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -283,8 +372,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc-sa/4.0/')))
-    BY_NC_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc-sa/4.0/"))
+    )
+    BY_NC_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -306,8 +402,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc/1.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc/1.0/')))
-    BY_NC_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc/1.0/"))
+    )
+    BY_NC_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -329,8 +432,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc/2.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc/2.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc/2.0/')))
-    BY_NC_2_5 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc/2.0/"))
+    )
+    BY_NC_2_5 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -352,8 +462,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc/2.5/80x15.png>,
         <http://i.creativecommons.org/l/by-nc/2.5/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc/2.5/')))
-    BY_NC_3_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc/2.5/"))
+    )
+    BY_NC_3_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -374,8 +491,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc/3.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc/3.0/')))
-    BY_NC_4_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc/3.0/"))
+    )
+    BY_NC_4_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -396,8 +520,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nc/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nc/4.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nc/4.0/')))
-    BY_ND_NC_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nc/4.0/"))
+    )
+    BY_ND_NC_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -418,8 +549,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nd-nc/1.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nd-nc/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nd-nc/1.0/')))
-    BY_ND_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nd-nc/1.0/"))
+    )
+    BY_ND_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -439,8 +577,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nd/1.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nd/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nd/1.0/')))
-    BY_ND_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nd/1.0/"))
+    )
+    BY_ND_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -460,8 +605,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nd/2.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nd/2.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nd/2.0/')))
-    BY_ND_2_5 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nd/2.0/"))
+    )
+    BY_ND_2_5 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -481,8 +633,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nd/2.5/80x15.png>,
         <http://i.creativecommons.org/l/by-nd/2.5/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nd/2.5/')))
-    BY_ND_3_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nd/2.5/"))
+    )
+    BY_ND_3_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -501,8 +660,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nd/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nd/3.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nd/3.0/')))
-    BY_ND_4_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nd/3.0/"))
+    )
+    BY_ND_4_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -521,8 +687,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-nd/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by-nd/4.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-nd/4.0/')))
-    BY_SA_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-nd/4.0/"))
+    )
+    BY_SA_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -544,8 +717,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-sa/1.0/80x15.png>,
         <http://i.creativecommons.org/l/by-sa/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-sa/1.0/')))
-    BY_SA_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-sa/1.0/"))
+    )
+    BY_SA_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -567,8 +747,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-sa/2.0/80x15.png>,
         <http://i.creativecommons.org/l/by-sa/2.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-sa/2.0/')))
-    BY_SA_2_5 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-sa/2.0/"))
+    )
+    BY_SA_2_5 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -590,8 +777,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-sa/2.5/80x15.png>,
         <http://i.creativecommons.org/l/by-sa/2.5/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-sa/2.5/')))
-    BY_SA_3_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-sa/2.5/"))
+    )
+    BY_SA_3_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -612,8 +806,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-sa/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by-sa/3.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-sa/3.0/')))
-    BY_SA_4_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-sa/3.0/"))
+    )
+    BY_SA_4_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -634,8 +835,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by-sa/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by-sa/4.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by-sa/4.0/')))
-    BY_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by-sa/4.0/"))
+    )
+    BY_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -656,8 +864,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by/1.0/80x15.png>,
         <http://i.creativecommons.org/l/by/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by/1.0/')))
-    BY_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by/1.0/"))
+    )
+    BY_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -678,8 +893,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by/2.0/80x15.png>,
         <http://i.creativecommons.org/l/by/2.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by/2.0/')))
-    BY_2_5 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by/2.0/"))
+    )
+    BY_2_5 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -700,8 +922,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by/2.5/80x15.png>,
         <http://i.creativecommons.org/l/by/2.5/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by/2.5/')))
-    BY_3_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by/2.5/"))
+    )
+    BY_3_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -721,8 +950,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by/3.0/80x15.png>,
         <http://i.creativecommons.org/l/by/3.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by/3.0/')))
-    BY_4_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by/3.0/"))
+    )
+    BY_4_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -742,8 +978,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/by/4.0/80x15.png>,
         <http://i.creativecommons.org/l/by/4.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/by/4.0/')))
-    DEVNATIONS_2_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/by/4.0/"))
+    )
+    DEVNATIONS_2_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -764,8 +1007,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/devnations/2.0/80x15.png>,
         <http://i.creativecommons.org/l/devnations/2.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/devnations/2.0/')))
-    NC_SA_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/devnations/2.0/"))
+    )
+    NC_SA_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -786,8 +1036,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dcterms:hasVersion "1.0" ;
     foaf:logo <http://i.creativecommons.org/l/nc-sa/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/nc-sa/1.0/')))
-    NC_SAMPLING_PLUS_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/nc-sa/1.0/"))
+    )
+    NC_SAMPLING_PLUS_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -809,8 +1066,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/nc-sampling+/1.0/80x15.png>,
         <http://i.creativecommons.org/l/nc-sampling+/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/nc-sampling+/1.0/')))
-    NC_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/nc-sampling+/1.0/"))
+    )
+    NC_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -830,8 +1094,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dcterms:hasVersion "1.0" ;
     foaf:logo <http://i.creativecommons.org/l/nc/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/nc/1.0/')))
-    ND_NC_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/nc/1.0/"))
+    )
+    ND_NC_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -850,8 +1121,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dcterms:hasVersion "1.0" ;
     foaf:logo <http://i.creativecommons.org/l/nd-nc/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/nd-nc/1.0/')))
-    ND_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/nd-nc/1.0/"))
+    )
+    ND_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -869,8 +1147,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dcterms:hasVersion "1.0" ;
     foaf:logo <http://i.creativecommons.org/l/nd/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/nd/1.0/')))
-    PUBLICDOMAIN = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/nd/1.0/"))
+    )
+    PUBLICDOMAIN = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 
@@ -886,8 +1171,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/publicdomain/80x15.png>,
         <http://i.creativecommons.org/l/publicdomain/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/publicdomain/')))
-    SA_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/publicdomain/"))
+    )
+    SA_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -907,8 +1199,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     dcterms:hasVersion "1.0" ;
     foaf:logo <http://i.creativecommons.org/l/sa/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/sa/1.0/')))
-    SAMPLING_PLUS_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/sa/1.0/"))
+    )
+    SAMPLING_PLUS_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -929,8 +1228,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/sampling+/1.0/80x15.png>,
         <http://i.creativecommons.org/l/sampling+/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/sampling+/1.0/')))
-    SAMPLING_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/sampling+/1.0/"))
+    )
+    SAMPLING_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -950,8 +1256,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/l/sampling/1.0/80x15.png>,
         <http://i.creativecommons.org/l/sampling/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/licenses/sampling/1.0/')))
-    MARK_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/licenses/sampling/1.0/"))
+    )
+    MARK_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -968,8 +1281,15 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/p/mark/1.0/80x15.png>,
         <http://i.creativecommons.org/p/mark/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/publicdomain/mark/1.0/')))
-    CC0_1_0 = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''@prefix cc: <http://creativecommons.org/ns#> .
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/publicdomain/mark/1.0/"))
+    )
+    CC0_1_0 = _MODEL_CLASS.from_rdf(
+        Graph()
+        .parse(
+            data=r"""@prefix cc: <http://creativecommons.org/ns#> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
@@ -986,4 +1306,8 @@ class CreativeCommonsLicenses(ModelSingletons):
     foaf:logo <http://i.creativecommons.org/p/zero/1.0/80x15.png>,
         <http://i.creativecommons.org/p/zero/1.0/88x31.png> .
 
-''', format='ttl').resource(URIRef('http://creativecommons.org/publicdomain/zero/1.0/')))
+""",
+            format="ttl",
+        )
+        .resource(URIRef("http://creativecommons.org/publicdomain/zero/1.0/"))
+    )
