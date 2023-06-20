@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple, Dict, List
+from typing import Optional, Tuple, Dict, List, Iterable, Union
 from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef
@@ -14,10 +14,10 @@ from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_agent import CmsAgent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
-from paradicms_etl.models.cms.cms_date_time_description import CmsDateTimeDescription
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
@@ -29,11 +29,22 @@ from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
 from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
 from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+from paradicms_etl.models.location import Location
+from paradicms_etl.models.owl_time.owl_time_date_time_description import (
+    OwlTimeDateTimeDescription,
+)
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
@@ -143,7 +154,7 @@ class SyntheticDataPipeline(Pipeline):
         def __call__(self):
             yield from self.__generate_properties()
 
-            concepts_by_value = {}
+            concepts_by_value: Dict[str, Concept] = {}
             for model in self.__generate_concepts():
                 yield model
                 if isinstance(model, CmsConcept):
@@ -153,44 +164,48 @@ class SyntheticDataPipeline(Pipeline):
                     assert concept_str not in concepts_by_value
                     concepts_by_value[concept_str] = concept
 
-            agents = []
+            agents_list: List[Agent] = []
             for model in self.__generate_agents():
                 yield model
                 if isinstance(model, CmsAgent):
-                    agents.append(model)
-            agents = tuple(agents)
+                    agents_list.append(model)
+            agents = tuple(agents_list)
 
             yield from self.__generate_collections(
                 agents=agents, concepts_by_value=concepts_by_value
             )
 
-            yield from self.__generate_freestanding_works(
-                agents=agents, concepts_by_value=concepts_by_value
-            )
-
-        def __generate_agents(self):
-            agents = []
-            for organization_i in range(5):
-                agents.append(
-                    CmsOrganization.builder(
-                        name=f"CmsOrganization {organization_i}",
-                        uri=URIRef(f"http://example.com/organization{organization_i}"),
-                    )
-                    .add_page(
-                        URIRef(f"http://example.com/organization{organization_i}page"),
-                    )
-                    .build()
+            for work_i in range(self.__freestanding_works):
+                yield from self.__generate_work(
+                    agents=agents,
+                    concepts_by_value=concepts_by_value,
+                    title_prefix="FreestandingWork",
+                    uri_prefix="http://example.com/freestandingwork",
                 )
 
+        def __generate_agents(self) -> Iterable[Union[Agent, Image]]:
+            for organization_i in range(5):
+                organization_builder: CmsOrganization.Builder = CmsOrganization.builder(
+                    name=f"CmsOrganization {organization_i}",
+                    uri=URIRef(f"http://example.com/organization{organization_i}"),
+                ).add_page(
+                    URIRef(f"http://example.com/organization{organization_i}page"),
+                )
+                for image in self.__generate_images(
+                    base_uri=organization_builder.uri, text_prefix="CmsOrganization"
+                ):
+                    organization_builder.add_image(image)
+                    yield image
+                yield organization_builder.build()
+
             for person_i in range(5):
-                person_builder = (
+                person_builder: CmsPerson.Builder = (
                     CmsPerson.builder(
                         name=f"CmsPerson {person_i}",
                         uri=URIRef(f"http://example.com/person{person_i}"),
                     )
                     .set_family_name(str(person_i))
                     .set_given_name("CmsPerson")
-                    .set_sort_name(f"{person_i}, CmsPerson")
                 )
                 if person_i % 2 == 0:
                     person_builder.add_page(
@@ -201,53 +216,21 @@ class SyntheticDataPipeline(Pipeline):
                         # Wikidata concept for Alan Turing
                         URIRef("http://www.wikidata.org/entity/Q7251"),
                     )
-                agents.append(person_builder.build())
+                for image in self.__generate_images(
+                    base_uri=person_builder.uri, text_prefix="CmsPerson"
+                ):
+                    yield image
+                    person_builder.add_image(image)
+                yield person_builder.build()
 
-            for agent in agents:
-                yield agent
-
-                yield from self.__generate_images(
-                    depicts_uri=agent.uri, text_prefix=agent.name
-                )
-
-        def __generate_collection_works(
-            self,
-            *,
-            agents: Tuple[CmsAgent, ...],
-            collection: CmsCollection,
-            concepts_by_value: Dict[str, CmsConcept],
-        ):
-            for work_i in range(self.__works_per_collection):
-                yield from self.__generate_work(
-                    agents=agents,
-                    collection_uris=(collection.uri,),
-                    concepts_by_value=concepts_by_value,
-                    title_prefix=collection.title + "CmsWork",
-                    uri_prefix=str(collection.uri) + "/work",
-                )
-
-        def __generate_freestanding_works(
-            self,
-            *,
-            agents: Tuple[CmsAgent, ...],
-            concepts_by_value: Dict[str, CmsConcept],
-        ):
-            for work_i in range(self.__freestanding_works):
-                yield from self.__generate_work(
-                    agents=agents,
-                    collection_uris=(),
-                    concepts_by_value=concepts_by_value,
-                    title_prefix="FreestandingWork",
-                    uri_prefix="http://example.com/freestandingwork",
-                )
-
-        def __generate_images(self, *, depicts_uri: URIRef, text_prefix: str):
+        def __generate_images(
+            self, *, base_uri: URIRef, text_prefix: str
+        ) -> Iterable[Image]:
             for image_i in range(self.__images_per_work):
                 title = f"{text_prefix} image {image_i}"
                 original_image_builder = (
                     CmsImage.builder(
-                        depicts_uri=depicts_uri,
-                        uri=URIRef(str(depicts_uri) + f":CmsImage{image_i}"),
+                        uri=URIRef(str(base_uri) + f":CmsImage{image_i}"),
                     )
                     .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
                     .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
@@ -258,8 +241,6 @@ class SyntheticDataPipeline(Pipeline):
                 ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
                     RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
                 )
-                original_image = original_image_builder.build()
-                yield original_image
 
                 for thumbnail_dimensions in (
                     ImageDimensions(200, 200),
@@ -267,17 +248,15 @@ class SyntheticDataPipeline(Pipeline):
                     ImageDimensions(600, 600),
                     ImageDimensions(800, 800),
                 ):
-                    yield (
+                    thumbnail = (
                         CmsImage.builder(
-                            depicts_uri=depicts_uri,
                             uri=URIRef(
-                                str(original_image.uri)
+                                str(original_image_builder.uri)
                                 + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                             ),
                         )
-                        .copy_rights(original_image)
+                        .copy_rights(original_image_builder.build())
                         .set_exact_dimensions(thumbnail_dimensions)
-                        .set_original_image_uri(original_image.uri)
                         .set_src(
                             f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
                         )
@@ -286,13 +265,17 @@ class SyntheticDataPipeline(Pipeline):
                         )
                         .build()
                     )
+                    yield thumbnail
+                    original_image_builder.add_thumbnail(thumbnail)
+
+                yield original_image_builder.build()
 
         def __generate_collections(
             self,
             *,
-            agents: Tuple[CmsAgent, ...],
-            concepts_by_value: Dict[str, CmsConcept],
-        ):
+            agents: Tuple[Agent, ...],
+            concepts_by_value: Dict[str, Concept],
+        ) -> Iterable[Union[Collection, Image, Location, Work, WorkEvent]]:
             for collection_i in range(self.__collections):
                 collection_title = f"CmsCollection{collection_i}"
                 collection_builder = CmsCollection.builder(
@@ -309,113 +292,125 @@ class SyntheticDataPipeline(Pipeline):
                         RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                     )
                     collection_builder.set_description(description_builder.build())
-                collection = collection_builder.build()
-                yield collection
-
                 if collection_i > 0:
-                    yield from self.__generate_images(
-                        depicts_uri=collection.uri,
-                        text_prefix=collection.title,
-                    )
-                # For collection 0, force the GUI to use an work image
+                    for image in self.__generate_images(
+                        base_uri=collection_builder.uri,
+                        text_prefix=collection_title,
+                    ):
+                        yield image
+                        collection_builder.add_image(image)
 
-                yield from self.__generate_collection_works(
-                    agents=agents,
-                    collection=collection,
-                    concepts_by_value=concepts_by_value,
-                )
+                # For collection 0, force the GUI to use a work image
 
-        def __generate_concepts(self):
+                for work_i in range(self.__works_per_collection):
+                    for model in self.__generate_work(
+                        agents=agents,
+                        concepts_by_value=concepts_by_value,
+                        title_prefix=collection_title + "CmsWork",
+                        uri_prefix=str(collection_builder.uri) + "/work",
+                    ):
+                        yield model
+                        if isinstance(model, Work):
+                            collection_builder.add_work(model)
+
+                yield collection_builder.build()
+
+        def __generate_concepts(self) -> Iterable[Union[Concept, Image]]:
             concept_urn_i = 0
             for property_ in self.__PROPERTIES:
                 if property_.uri == DCTERMS.creator:
                     continue
                 for property_value in property_.values:
-                    concept = (
+                    concept_builder = (
                         CmsConcept.builder(
+                            pref_label=f"CmsConcept {concept_urn_i}",
                             uri=URIRef(
                                 f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
-                            )
+                            ),
                         )
                         .add_type_uri(property_.range)
-                        .set_pref_label(f"CmsConcept {concept_urn_i}")
                         .set_value(Literal(property_value))
-                        .build()
                     )
-                    yield concept
 
-                    yield from self.__generate_images(
-                        depicts_uri=concept.uri,
+                    for image in self.__generate_images(
+                        base_uri=concept_builder.uri,
                         text_prefix=property_value,
-                    )
+                    ):
+                        yield image
+                        concept_builder.add_image(image)
+
+                    yield concept_builder.build()
 
                     concept_urn_i += 1
 
         def __generate_properties(self):
-            property_group = CmsPropertyGroup.builder(
+            property_group_builder = CmsPropertyGroup.builder(
                 label="Synthetic data properties",
                 uri=URIRef(
                     f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:property_group"
                 ),
-            ).build()
-            yield property_group
-            yield from self.__generate_images(
-                depicts_uri=property_group.uri, text_prefix=property_group.label
             )
+            for image in self.__generate_images(
+                base_uri=property_group_builder.uri,
+                text_prefix="Synthetic data properties",
+            ):
+                yield image
+                property_group_builder.add_image(image)
 
             for property_ in self.__PROPERTIES:
-                yield CmsProperty.builder(
-                    label=property_.label, uri=property_.uri
-                ).add_group_uri(property_group.uri).set_filterable(
-                    property_.filterable
-                ).set_range(
-                    property_.range
-                ).set_searchable(
-                    property_.searchable
-                ).build()
-                yield from self.__generate_images(
-                    depicts_uri=property_.uri, text_prefix=property_.label
+                property_model_builder = (
+                    CmsProperty.builder(label=property_.label, uri=property_.uri)
+                    .set_filterable(property_.filterable)
+                    .set_range(property_.range)
+                    .set_searchable(property_.searchable)
                 )
+                for image in self.__generate_images(
+                    base_uri=property_model_builder.uri, text_prefix=property_.label
+                ):
+                    yield image
+                    property_model_builder.add_image(image)
+
+                property_model = property_model_builder.build()
+                yield property_model
+                property_group_builder.add_property(property_model)
+
+            yield property_group_builder.build()
 
         def __generate_work(
             self,
             *,
-            agents: Tuple[CmsAgent, ...],
-            collection_uris: Tuple[URIRef, ...],
-            concepts_by_value: Dict[str, CmsConcept],
+            agents: Tuple[Agent, ...],
+            concepts_by_value: Dict[str, Concept],
             title_prefix: str,
             uri_prefix: str,
-        ):
+        ) -> Iterable[Union[Image, Location, Work, WorkEvent]]:
             work_i = self.__next_work_i
             self.__next_work_i += 1
 
             work_uri = URIRef(uri_prefix + str(work_i))
 
-            title = title_prefix + str(work_i)
-            work_builder = CmsWork.builder(title=title, uri=work_uri)
-
-            for collection_uri in collection_uris:
-                work_builder.add_collection_uri(collection_uri)
+            work_title = title_prefix + str(work_i)
+            work_builder = CmsWork.builder(title=work_title, uri=work_uri)
 
             include_description = work_i % 2 == 0
 
             # Properties that depend on the work title
             for i in range(2):
                 work_builder.add_alternative_title(
-                    f"{title} alternative title {i}",
+                    f"{work_title} alternative title {i}",
                 )
-                work_builder.add_identifier(f"{title}Id{i}")
-                work_builder.add_provenance(f"{title} provenance {i}")
+                work_builder.add_identifier(f"{work_title}Id{i}")
+                work_builder.add_provenance(f"{work_title} provenance {i}")
 
-                work_builder.add_rights_holder(f"{title} rights holder").add_license(
-                    CreativeCommonsLicenses.NC_1_0.uri
-                ).add_rights_statement(
+                work_builder.add_rights_holder(
+                    f"{work_title} rights holder"
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
                     RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                 )
 
             destruction_date = date(day=1, month=1, year=2022)
             creation_date = destruction_date - timedelta(days=work_i)
-            creation_date_time_description = CmsDateTimeDescription.from_date(
+            creation_date_time_description = OwlTimeDateTimeDescription.from_date(
                 creation_date
             )
 
@@ -433,7 +428,9 @@ class SyntheticDataPipeline(Pipeline):
 
             # dcterms:contributor
             contributors = [
-                CmsPerson.builder(name=f"{title} contributor {contributor_i}").build()
+                CmsPerson.builder(
+                    name=f"{work_title} contributor {contributor_i}"
+                ).build()
                 for contributor_i in range(2)
             ]
             for contributor in contributors:
@@ -455,7 +452,7 @@ class SyntheticDataPipeline(Pipeline):
                     self.__LOREM_IPSUM,
                 )
                 description_builder.add_rights_holder(
-                    f"{title} description rights holder"
+                    f"{work_title} description rights holder"
                 ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
                     RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                 )
@@ -480,43 +477,50 @@ class SyntheticDataPipeline(Pipeline):
             if work_i % 2 == 0:
                 work_builder.add_page(URIRef("http://example.com/work/" + str(work_i)))
 
-            work = work_builder.build()
-            yield work
-
-            yield from self.__generate_images(
-                depicts_uri=work.uri,
-                text_prefix=work.title,
-            )
+            for image in self.__generate_images(
+                base_uri=work_uri,
+                text_prefix=work_title,
+            ):
+                yield image
+                work_builder.add_image(image)
 
             # Anonymous event
-            yield CmsWorkClosing.builder(work_uri=work.uri).set_description(
-                description
-            ).set_date(destruction_date).set_location(anonymous_location).set_title(
-                f"{work.title} closing"
-            ).build()
+            work_builder.add_event(
+                CmsWorkClosing.builder()
+                .set_description(description)
+                .set_date(destruction_date)
+                .set_location(anonymous_location)
+                .set_title(f"{work_title} closing")
+                .build()
+            )
 
             work_creation_builder: CmsWorkCreation.Builder = (
-                CmsWorkCreation.builder(
-                    uri=URIRef(str(work.uri) + "Creation"), work_uri=work.uri
-                )
+                CmsWorkCreation.builder(uri=URIRef(str(work_uri) + "Creation"))
                 .set_date(creation_date_time_description)
                 .set_description(description)
                 .set_location(named_location)
-                .set_title(f"{work.title} creation")
+                .set_title(f"{work_title} creation")
             )
             # for contributor in contributor_uris:
             #     work_creation_builder.add_contributor_uri(contributor_uri)
             for creator_uri in creator_uris:
                 work_creation_builder.add_creator(creator_uri)
-            yield work_creation_builder.build()
+            work_creation = work_creation_builder.build()
+            yield work_creation
+            work_builder.add_event(work_creation)
 
-            yield CmsWorkOpening.builder(
-                uri=URIRef(str(work.uri) + "Opening"), work_uri=work.uri
-            ).set_description(description).set_date(creation_date).set_location(
-                anonymous_location
-            ).set_title(
-                f"{work.title} opening"
-            ).build()
+            work_opening = (
+                CmsWorkOpening.builder(uri=URIRef(str(work_uri) + "Opening"))
+                .set_description(description)
+                .set_date(creation_date)
+                .set_location(anonymous_location)
+                .set_title(f"{work_title} opening")
+                .build()
+            )
+            yield work_opening
+            work_builder.add_event(work_opening)
+
+            yield work_builder.build()
 
     def __init__(self, loader: Optional[Loader] = None):
         root_dir_path = (

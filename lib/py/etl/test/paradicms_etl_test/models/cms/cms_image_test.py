@@ -4,9 +4,11 @@ import pytest
 from rdflib import Graph, URIRef
 
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 
@@ -15,14 +17,12 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
 def test_image() -> CmsImage:
     return (
         CmsImage.builder(
-            depicts_uri=URIRef("http://example.com/work"),
             uri=URIRef("http://example.com/image"),
         )
         .set_created(datetime.now())
         .set_exact_dimensions(ImageDimensions(height=300, width=300))
         .set_format("image/gif")
         .set_modified(datetime.now())
-        .set_original_image_uri(URIRef("http://example.com/originalImage"))
         .add_creator("Test creator")
         .add_rights_holder("Test holder")
         .add_license(CreativeCommonsLicenses.BY_1_0.uri)

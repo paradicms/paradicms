@@ -33,7 +33,7 @@ class CmsLicense(CmsModel, License):
 
     @property
     def identifier(self) -> str:
-        return self._required_str_value(DC.identifier)
+        return self._required_value(DC.identifier, self._map_str_value)
 
     @classmethod
     def json_ld_context(cls):
@@ -50,14 +50,10 @@ class CmsLicense(CmsModel, License):
     def label(self) -> str:
         return self.title
 
-    @classmethod
-    def label_property_uri(cls):
-        return DC.title
-
     @property
     def title(self) -> str:
-        return self._required_str_value(DC.title)
+        return self._required_value(DC.title, self._map_str_value)
 
     @property
     def version(self) -> Optional[str]:
-        return self._optional_str_value(DCTERMS.hasVersion)
+        return self._optional_value(DCTERMS.hasVersion, self._map_str_value)

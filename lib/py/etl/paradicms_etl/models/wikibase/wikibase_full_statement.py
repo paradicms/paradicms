@@ -6,7 +6,9 @@ from typing import Optional, Tuple
 from rdflib import Graph, Literal, PROV, RDF, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_date_time_description import CmsDateTimeDescription
+from paradicms_etl.models.owl_time.owl_time_date_time_description import (
+    OwlTimeDateTimeDescription,
+)
 from paradicms_etl.models.wikibase.wikibase_property_definition import (
     WikibasePropertyDefinition,
 )
@@ -194,7 +196,7 @@ class WikibaseFullStatement(WikibaseStatement):
                 second = time_value.second
 
             parsed_value = (
-                CmsDateTimeDescription.builder()
+                OwlTimeDateTimeDescription.builder()
                 .set_year(year)
                 .set_month(month)
                 .set_day(day)

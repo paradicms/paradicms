@@ -12,9 +12,7 @@ from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_ssg.image_archiver import ImageArchiver
-from paradicms_ssg.original_image_file_cache import (
-    OriginalImageFileCache,
-)
+from paradicms_ssg.image_file_cache import ImageFileCache
 from paradicms_ssg.utils.thumbnail_image import thumbnail_image
 
 
@@ -50,7 +48,7 @@ class ImagesLoader:
         self.__image_archiver = image_archiver
         self.__logger = logging.getLogger(__name__)
 
-        self.__original_image_file_cache = OriginalImageFileCache(
+        self.__original_image_file_cache = ImageFileCache(
             cache_dir_path=loaded_data_dir_path / "original_image_cache",
             sleep_s_after_download=sleep_s_after_image_download,
         )
@@ -122,13 +120,11 @@ class ImagesLoader:
 
             archived_thumbnail_images.append(
                 CmsImage.builder(
-                    depicts_uri=original_image.depicts_uri,
                     uri=archived_thumbnail_uri,
                 )
                 .copy_rights(original_image)
                 .set_exact_dimensions(thumbnail_exact_dimensions)
                 .set_max_dimensions(thumbnail_max_dimensions)
-                .set_original_image_uri(original_image.uri)
                 .set_src(archived_thumbnail_src)
                 .build()
             )
@@ -138,29 +134,23 @@ class ImagesLoader:
     def __call__(self, *, models, **kwds) -> Generator[Image, None, None]:
         """
         Archive an original image and its thumbnails.
+
         :return a generator of (1) a copy of image with the archived image URL and (2) new Images for the thumbnails
         """
 
-        self.__logger.info("loading GUI images")
+        self.__logger.info("loading images")
         for model in tqdm(models):
             if not isinstance(model, Image):
                 raise TypeError("model is not an Image: " + type(model))
 
             original_image = model
 
-            if original_image.original_image_uri is not None:
-                raise ValueError(
-                    f"non-original images should not be archived: {original_image.uri}"
-                )
-
             try:
-                original_image_file_path = (
-                    self.__original_image_file_cache.cache_original_image(
-                        original_image
-                    )
+                original_image_file_path = self.__original_image_file_cache.cache_image(
+                    original_image
                 )
                 assert original_image_file_path
-            except OriginalImageFileCache.CacheOriginalImageException:
+            except ImageFileCache.ImageFileCacheException:
                 self.__logger.info(
                     "unable to cache original image %s, dropping image from GUI",
                     original_image.uri,
@@ -211,4 +201,4 @@ class ImagesLoader:
 
             yield from archived_images
 
-        self.__logger.info("loaded GUI images")
+        self.__logger.info("loaded images")

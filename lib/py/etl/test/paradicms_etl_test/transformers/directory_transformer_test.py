@@ -39,6 +39,12 @@ def test_transform(data_dir_path: Path):
     work1 = works[URIRef("urn:directory:test:cms-work:test_work1")]
     work2 = works[URIRef("urn:directory:test:cms-work:test_work2")]
 
+    assert work1.event_uris == (
+        URIRef("urn:directory:test:cms-work-creation:test_work1"),
+    )
+
+    assert work2.image_uris == (URIRef("urn:directory:test:cms-image:test_work2"),)
+
     work1_description = work1.description
     assert work1_description is not None
     assert isinstance(work1_description, Text)
@@ -47,16 +53,7 @@ def test_transform(data_dir_path: Path):
     )
 
     images = {model.uri: model for model in models if isinstance(model, Image)}
-    assert len(images) == 2
-    assert (
-        images[URIRef("urn:directory:test:cms-image:test_work1")].depicts_uri
-        == work1.uri
-    )
-    assert (
-        images[URIRef("urn:directory:test:cms-image:test_work2")].depicts_uri
-        == work2.uri
-    )
-    assert images[URIRef("urn:directory:test:cms-image:test_work2")].src
+    assert len(images) == 1
 
     people = [model for model in models if isinstance(model, Person)]
     assert len(people) == 1

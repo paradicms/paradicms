@@ -30,6 +30,10 @@ def test_enrich(data_dir_path: Path, synthetic_data_models):
         for model in enriched_models
     )
     assert any(
-        isinstance(model, Image) and model.depicts_uri == wikidata_entity_uri
+        isinstance(model, Image)
+        and model.uri
+        == URIRef(
+            "http://commons.wikimedia.org/wiki/Special:FilePath/Alan%20Turing%20Aged%2016.jpg"
+        )
         for model in enriched_models
     )

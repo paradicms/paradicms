@@ -7,25 +7,21 @@ class CMS(DefinedNamespace):
     _NS = Namespace("http://www.paradicms.org/ns/cms#")
 
     # Properties
-    collection: URIRef
+    event: URIRef
     imageCopyable: URIRef
     imageMaxHeight: URIRef
     imageMaxWidth: URIRef
     imageSrc: URIRef
     propertyFilterable: URIRef
-    propertyGroup: URIRef
     propertyHidden: URIRef
     propertyOrder: URIRef
     propertySearchable: URIRef
-    thumbnailOf: URIRef
-    work: URIRef
 
     # Resources
     Agent: URIRef
     Collection: URIRef
     Configuration: URIRef
     Concept: URIRef
-    DateTimeDescription: URIRef
     Event: URIRef
     Image: URIRef
     ImageData: URIRef
@@ -37,7 +33,6 @@ class CMS(DefinedNamespace):
     PropertyGroup: URIRef
     RightsStatement: URIRef
     Text: URIRef
-    WikibaseItem: URIRef
     Work: URIRef
     WorkClosing: URIRef
     WorkCreation: URIRef

@@ -1,11 +1,9 @@
 from datetime import datetime
-from typing import Optional, Union
+from typing import Optional, Union, Tuple
 
 from rdflib import Literal, URIRef, Graph, XSD
 from rdflib.namespace import DCTERMS, FOAF
-from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.image import Image
@@ -19,6 +17,10 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder, Image.Builder):
+        def add_thumbnail(self, thumbnail: Union[Image, URIRef]) -> "CmsImage.Builder":
+            self.add(FOAF.thumbnail, thumbnail)
+            return self
+
         def build(self) -> "CmsImage":
             return CmsImage(self._resource)
 
@@ -27,9 +29,6 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
             return self
 
         def set_copyable(self, copyable: bool) -> "CmsImage.Builder":
-            """
-            Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
-            """
             self.set(CMS.imageCopyable, copyable)
             return self
 
@@ -59,28 +58,13 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
             self.set(DCTERMS.modified, modified)
             return self
 
-        def set_original_image_uri(
-            self, original_image_uri: URIRef
-        ) -> "CmsImage.Builder":
-            # (original, foaf:thumbnail, derived)
-            self._resource.graph.add(
-                (original_image_uri, FOAF.thumbnail, self._resource.identifier)
-            )
-            # (derived, cms:thumbnailOf, original)
-            # These quads are faster to query than the foaf:thumbnail ones.
-            self.add(CMS.thumbnailOf, original_image_uri)
-            return self
-
         def set_source(self, source: URIRef) -> "CmsImage.Builder":
             self.set(DCTERMS.source, source)
             return self
 
         def set_src(
-            self, src: Union[str, CmsImageData, Literal, URIRef]
+            self, src: Union[str, ImageData, Literal, URIRef]
         ) -> "CmsImage.Builder":
-            """
-            src that can be used in an <img> tag; if not specified, defaults to URI
-            """
             self.set(CMS.imageSrc, src)
             return self
 
@@ -88,84 +72,55 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
             self.set(DCTERMS.title, title)
             return self
 
-    def __init__(self, resource: Resource):
-        CmsNamedModel.__init__(self, resource)
-        self.depicts_uri
-
     @classmethod
-    def builder(cls, *, depicts_uri: URIRef, uri: URIRef) -> Builder:
+    def builder(cls, *, uri: URIRef) -> Builder:
         builder = cls.Builder(Graph().resource(uri))
-        builder.set(FOAF.depicts, depicts_uri)
         return builder
 
     @property
     def copyable(self) -> bool:
-        copyable = self._optional_bool_value(CMS.imageCopyable)
+        copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
         return copyable if copyable is not None else True
-
-    @property
-    def depicts_uri(self) -> URIRef:
-        return self._required_uri_value(FOAF.depicts)
 
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            safe_dict_update(
-                CmsNamedModel.json_ld_context(),
-                {
-                    "copyable": {
-                        "@id": str(CMS.imageCopyable),
-                        "@type": str(XSD.boolean),
-                    },
-                    "created": {
-                        "@id": str(DCTERMS.created),
-                        "@type": str(XSD.dateTime),
-                    },
-                    "depicts": {"@id": str(FOAF.depicts), "@type": "@id"},
-                    "format": {"@id": str(DCTERMS.format)},
-                    "height": {"@id": str(EXIF.height), "@type": str(XSD.integer)},
-                    "maxHeight": {
-                        "@id": str(CMS.imageMaxHeight),
-                        "@type": str(XSD.integer),
-                    },
-                    "maxWidth": {
-                        "@id": str(CMS.imageMaxWidth),
-                        "@type": str(XSD.integer),
-                    },
-                    "modified": {
-                        "@id": str(DCTERMS.modified),
-                        "@type": str(XSD.dateTime),
-                    },
-                    "source": {"@id": str(DCTERMS.source), "@type": "@id"},
-                    "src": {"@id": str(CMS.imageSrc)},
-                    "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
-                    "thumbnailOf": {"@id": str(CMS.thumbnailOf), "@type": "@id"},
-                    "title": {"@id": str(DCTERMS.title), "@type": "@id"},
-                    "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
-                },
-            ),
+            CmsNamedModel.json_ld_context(),
             CmsRightsMixin.json_ld_context(),
+            {
+                "copyable": {
+                    "@id": str(CMS.imageCopyable),
+                    "@type": str(XSD.boolean),
+                },
+                "created": {
+                    "@id": str(DCTERMS.created),
+                    "@type": str(XSD.dateTime),
+                },
+                "format": {"@id": str(DCTERMS.format)},
+                "height": {"@id": str(EXIF.height), "@type": str(XSD.integer)},
+                "maxHeight": {
+                    "@id": str(CMS.imageMaxHeight),
+                    "@type": str(XSD.integer),
+                },
+                "maxWidth": {
+                    "@id": str(CMS.imageMaxWidth),
+                    "@type": str(XSD.integer),
+                },
+                "modified": {
+                    "@id": str(DCTERMS.modified),
+                    "@type": str(XSD.dateTime),
+                },
+                "source": {"@id": str(DCTERMS.source), "@type": "@id"},
+                "src": {"@id": str(CMS.imageSrc)},
+                "thumbnail": {"@id": str(FOAF.thumbnail), "@type": "@id"},
+                "title": {"@id": str(DCTERMS.title)},
+                "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
+            },
         )
-
-    @property
-    def original_image_uri(self) -> Optional[URIRef]:
-        graph = self._resource.graph
-        original_image_uri = graph.value(
-            None, FOAF.thumbnail, self._resource.identifier
-        )
-        if original_image_uri is not None and not isinstance(
-            original_image_uri, URIRef
-        ):
-            raise TypeError("expected original image URI to be a URIRef")
-        return original_image_uri
 
     @property
     def label(self) -> Optional[str]:
         return self.title
-
-    @classmethod
-    def label_property_uri(cls):
-        return DCTERMS.title
 
     def replacer(self) -> Builder:
         return self.Builder(
@@ -173,25 +128,18 @@ class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
         )
 
     @property
-    def src(self) -> Union[ImageData, str, None]:
-        for o in self._resource.objects(CMS.imageSrc):
-            if isinstance(o, Literal):
-                o_python = o.toPython()
-                if isinstance(o_python, str):
-                    return o_python
-                else:
-                    raise TypeError(
-                        f"expected {CMS.imageSrc} literal to be a bytes or string, not a {type(o_python)}"
-                    )
-            elif isinstance(o, Resource):
-                return CmsImageData(o)
-            else:
-                continue
-        return None
+    def src(self) -> Union[ImageData, str, URIRef, None]:
+        return self._optional_value(  # type: ignore
+            CMS.imageSrc, self._map_image_data_or_str_or_uri_value
+        )
+
+    @property
+    def thumbnail_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(FOAF.thumbnail, self._map_uri_value))
 
     @property
     def title(self):
-        return self._optional_str_value(DCTERMS.title)
+        return self._optional_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

@@ -2,13 +2,14 @@ from rdflib import FOAF, RDF, DCTERMS, URIRef, OWL
 from rdflib.resource import Resource
 
 from paradicms_etl.models.agent import Agent
+from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.namespaces import CMS, CONTACT
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsAgent(CmsModel, Agent):
-    class Builder(CmsModel.Builder):
+class CmsAgent(CmsModel, CmsImagesMixin, Agent):
+    class Builder(CmsModel.Builder, CmsImagesMixin.Builder):
         def add_page(self, page: URIRef) -> "CmsAgent.Builder":
             self.add(FOAF.page, page)
             return self
@@ -34,6 +35,7 @@ class CmsAgent(CmsModel, Agent):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             {
                 "name": {"@id": str(FOAF.name)},
                 "page": {"@id": str(FOAF.page)},
@@ -47,10 +49,6 @@ class CmsAgent(CmsModel, Agent):
     def label(self) -> str:
         return self.name
 
-    @classmethod
-    def label_property_uri(cls):
-        return FOAF.name
-
     @property
     def name(self) -> str:
-        return self._required_str_value(FOAF.name)
+        return self._required_value(FOAF.name, self._map_str_value)

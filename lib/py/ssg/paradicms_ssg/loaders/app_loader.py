@@ -1,8 +1,9 @@
 import logging
 from pathlib import Path
-from typing import Optional, Tuple, Iterable, List
+from typing import Optional, Tuple, Iterable, List, Set
 
 from more_itertools import consume
+from rdflib import URIRef
 
 import paradicms_ssg.namespaces
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
@@ -58,8 +59,7 @@ class AppLoader:
         """
 
         self.__buffered_app_configuration: Optional[AppConfiguration] = None
-        self.__buffered_copyable_original_images: List[Image] = []
-        self.__buffered_non_copyable_images: List[Image] = []
+        self.__buffered_images: List[Image] = []
         self.__buffered_other_models: List[Model] = []
         self.__cache_dir_path = cache_dir_path
         self.__deployer = deployer
@@ -69,6 +69,7 @@ class AppLoader:
         self.__pipeline_id = pipeline_id
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
+        self.__thumbnail_uris: Set[URIRef] = set()
 
     def __call__(self, *, flush: bool, models: Iterable[Model]):
         # Iterate over models once, buffering into different lists
@@ -77,11 +78,10 @@ class AppLoader:
                 self.__buffered_app_configuration = model
             elif isinstance(model, Image):
                 image = model
-                if image.copyable:
-                    if image.original_image_uri is None:
-                        self.__buffered_copyable_original_images.append(image)
-                else:
-                    self.__buffered_non_copyable_images.append(image)
+                self.__buffered_images.append(image)
+                # Keep track of which images are referenced as thumbnails
+                for thumbnail_uri in image.thumbnail_uris:
+                    self.__thumbnail_uris.add(thumbnail_uri)
             else:
                 self.__buffered_other_models.append(model)
 
@@ -124,10 +124,21 @@ class AppLoader:
         if self.__buffered_app_configuration is not None:
             models.append(self.__buffered_app_configuration)
 
-        if self.__buffered_copyable_original_images:
+        if self.__buffered_images:
+            copyable_original_images: List[Image] = []
+            other_images: List[Image] = []
+
+            for image in self.__buffered_images:
+                if image.copyable and (
+                    image.uri is not None and image.uri not in self.__thumbnail_uris
+                ):
+                    copyable_original_images.append(image)
+                else:
+                    other_images.append(image)
+
             self.__logger.info(
                 "thumbnailing and archiving %d copyable original images",
-                len(self.__buffered_copyable_original_images),
+                len(copyable_original_images),
             )
             models.extend(
                 ImagesLoader(
@@ -135,15 +146,15 @@ class AppLoader:
                     loaded_data_dir_path=self.__cache_dir_path / "images",
                     sleep_s_after_image_download=self.__sleep_s_after_image_download,
                     thumbnail_max_dimensions=self.__thumbnail_max_dimensions,
-                )(flush=True, models=self.__buffered_copyable_original_images)
+                )(flush=True, models=copyable_original_images)
             )
 
-        if self.__buffered_non_copyable_images:
-            self.__logger.info(
-                "using %d non-copyable images as-is",
-                len(self.__buffered_non_copyable_images),
-            )
-            models.extend(self.__buffered_non_copyable_images)
+            if other_images:
+                self.__logger.info(
+                    "using %d non-copyable/thumbnail images as-is",
+                    len(other_images),
+                )
+                models.extend(other_images)
 
         models.extend(self.__buffered_other_models)
 

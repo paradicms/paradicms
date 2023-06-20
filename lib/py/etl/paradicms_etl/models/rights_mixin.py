@@ -31,6 +31,19 @@ class RightsMixin(ABC):
         def add_rights_statement(self, statement: Any) -> "RightsMixin.Builder":
             raise NotImplementedError
 
+        def copy_rights(self, other: "RightsMixin") -> "RightsMixin.Builder":
+            for contributor in other.contributors:
+                self.add_contributor(contributor)
+            for creator in other.creators:
+                self.add_creator(creator)
+            for holder in other.rights_holders:
+                self.add_rights_holder(holder)
+            if other.license:
+                self.add_license(other.license)
+            if other.rights_statement:
+                self.add_rights_statement(other.rights_statement)
+            return self
+
     @property
     @abstractmethod
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:

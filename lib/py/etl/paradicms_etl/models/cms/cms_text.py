@@ -25,15 +25,13 @@ class CmsText(CmsModel, CmsRightsMixin, Text):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            safe_dict_update(
-                CmsModel.json_ld_context(),
-                {
-                    "value": {"@id": str(RDF.value)},
-                },
-            ),
+            CmsModel.json_ld_context(),
             CmsRightsMixin.json_ld_context(),
+            {
+                "value": {"@id": str(RDF.value)},
+            },
         )
 
     @property
     def value(self) -> str:
-        return self._required_str_value(RDF.value)
+        return self._required_value(RDF.value, self._map_str_value)

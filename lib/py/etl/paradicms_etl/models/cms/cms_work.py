@@ -1,26 +1,33 @@
-from typing import Tuple, Union
+from typing import Union, Tuple
 
 from rdflib import URIRef, Graph, OWL
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
+from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
+from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
-    class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder):
+class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
+    class Builder(
+        CmsNamedModel.Builder,
+        CmsImagesMixin.Builder,
+        CmsRightsMixin.Builder,
+        Work.Builder,
+    ):
         def add_alternative_title(self, alternative_title: str) -> "CmsWork.Builder":
             self.add(DCTERMS.alternative, alternative_title)
             return self
 
-        def add_collection_uri(self, collection_uri: URIRef) -> "CmsWork.Builder":
-            self.add(CMS.collection, collection_uri)
+        def add_event(self, event: Union[URIRef, WorkEvent]) -> "CmsWork.Builder":
+            self.add(CMS.event, event)
             return self
 
         def add_identifier(self, identifier: str) -> "CmsWork.Builder":
@@ -66,47 +73,40 @@ class CmsWork(CmsNamedModel, CmsRightsMixin, Work):
 
     @property
     def description(self) -> Union[str, Text, None]:
-        return self._optional_str_or_text_value(DCTERMS.description)
+        return self._optional_value(DCTERMS.description, self._map_str_or_text_value)
 
     @property
-    def collection_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(
-            resource.identifier
-            for resource in self._resource.objects(CMS.collection)
-            if isinstance(resource, Resource)
-            and isinstance(resource.identifier, URIRef)
-        )
+    def event_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(CMS.event, self._map_uri_value))
 
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            safe_dict_update(
-                CmsNamedModel.json_ld_context(),
-                {
-                    "description": {"@id": str(DCTERMS.description)},
-                    "collection": {"@id": str(CMS.collection), "@type": "@id"},
-                    "page": {"@id": str(FOAF.page)},
-                    "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
-                    "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},
-                    "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
-                    "title": {"@id": str(DCTERMS.title)},
-                    "type": {"@id": str(DCTERMS.type), "@type": "@id"},
-                },
-            ),
+            CmsNamedModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             CmsRightsMixin.json_ld_context(),
+            {
+                "description": {"@id": str(DCTERMS.description)},
+                "event": {"@id": str(CMS.event), "@type": "@id"},
+                "page": {"@id": str(FOAF.page)},
+                "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
+                "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},
+                "spatial": {"@id": str(DCTERMS.spatial), "@type": "@id"},
+                "title": {"@id": str(DCTERMS.title)},
+                "type": {"@id": str(DCTERMS.type), "@type": "@id"},
+            },
         )
 
     @property
     def label(self) -> str:
         return self.title
 
-    @classmethod
-    def label_property_uri(cls):
-        return DCTERMS.title
+    def replacer(self) -> Builder:
+        return self.Builder(self._resource)
 
     @property
     def title(self) -> str:
-        return self._required_str_value(DCTERMS.title)
+        return self._required_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

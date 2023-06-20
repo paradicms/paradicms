@@ -11,7 +11,7 @@ from paradicms_ssg.namespaces import CONFIGURATION
 class AppConfiguration(ResourceBackedModel):
     @property
     def app(self) -> Optional[str]:
-        return self._optional_str_value(CONFIGURATION.app)
+        return self._optional_value(CONFIGURATION.app, self._map_str_value)
 
     @classmethod
     def from_rdf_file(cls, rdf_file_path: Path):

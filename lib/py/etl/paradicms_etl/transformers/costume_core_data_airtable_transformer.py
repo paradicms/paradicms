@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Any
+from typing import Dict, Any, Iterable, Union
 
 from rdflib import URIRef
 
@@ -10,7 +10,11 @@ from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_work import CmsWork
+from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
     CostumeCoreOntologyAirtablePipeline,
@@ -36,8 +40,8 @@ class CostumeCoreDataAirtableTransformer:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, *, base: Dict[str, Any], records_by_table, **kwds):
-        concepts_by_uri: Dict[URIRef, CmsConcept] = {}
-        properties_by_label: Dict[str, CmsProperty] = {}
+        concepts_by_uri: Dict[URIRef, Concept] = {}
+        properties_by_label: Dict[str, Property] = {}
 
         for ontology_model in CostumeCoreOntologyAirtablePipeline(
             airtable_access_token="neverused",
@@ -52,32 +56,34 @@ class CostumeCoreDataAirtableTransformer:
                 properties_by_label[property_.label] = property_
                 yield property_
 
-        collection = CmsCollection.builder(
+        collection_builder = CmsCollection.builder(
             title=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
-        ).build()
-        yield collection
+        )
 
-        yield from self.__transform_object_records(
+        for model in self.__transform_object_records(
             base_id=base["id"],
-            collection_uri=collection.uri,
             concepts_by_uri=concepts_by_uri,
             name_records=records_by_table["Names"],
             object_records=records_by_table["Objects"],
             properties_by_label=properties_by_label,
             term_records=records_by_table["Terms"],
-        )
+        ):
+            yield model
+            if isinstance(model, CmsWork):
+                collection_builder.add_work(model)
+
+        yield collection_builder.build()
 
     def __transform_object_records(
         self,
         *,
         base_id: str,
-        collection_uri: URIRef,
-        concepts_by_uri: Dict[URIRef, CmsConcept],
+        concepts_by_uri: Dict[URIRef, Concept],
         name_records,
         object_records,
-        properties_by_label: Dict[str, CmsProperty],
+        properties_by_label: Dict[str, Property],
         term_records,
-    ):
+    ) -> Iterable[Union[Image, Work]]:
         name_records_by_id = {
             name_record["id"]: name_record for name_record in name_records
         }
@@ -99,7 +105,7 @@ class CostumeCoreDataAirtableTransformer:
                 # rights=Rights.from_properties(properties),
                 title=object_record["fields"]["Title"],
                 uri=work_uri,
-            ).add_collection_uri(collection_uri)
+            )
 
             for field_key, field_value in object_record["fields"].items():
                 try:
@@ -109,10 +115,11 @@ class CostumeCoreDataAirtableTransformer:
                         continue
 
                     if field_key == "Images":
-                        yield from self.__transform_object_images(
+                        for image in self.__transform_object_images(
                             object_images=field_value,
-                            work_uri=work_uri,
-                        )
+                        ):
+                            yield image
+                            work_builder.add_image(image)
                         continue
 
                     self.__logger.warning(
@@ -153,23 +160,27 @@ class CostumeCoreDataAirtableTransformer:
 
             yield work_builder.build()
 
-    def __transform_object_images(self, *, object_images, work_uri: URIRef):
+    @staticmethod
+    def __transform_object_images(*, object_images) -> Iterable[Image]:
         for object_image in object_images:
-            original_image = CmsImage.builder(
-                depicts_uri=work_uri,
+            original_image_builder = CmsImage.builder(
                 uri=URIRef(object_image["url"]),
-            ).build()
-            yield original_image
+            )
 
             for thumbnail in object_image["thumbnails"].values():
-                yield CmsImage.builder(
-                    depicts_uri=work_uri,
-                    uri=URIRef(thumbnail["url"]),
-                ).set_exact_dimensions(
-                    ImageDimensions(
-                        height=thumbnail["height"],
-                        width=thumbnail["width"],
+                thumbnail_image = (
+                    CmsImage.builder(
+                        uri=URIRef(thumbnail["url"]),
                     )
-                ).set_original_image_uri(
-                    original_image.uri
-                ).build()
+                    .set_exact_dimensions(
+                        ImageDimensions(
+                            height=thumbnail["height"],
+                            width=thumbnail["width"],
+                        )
+                    )
+                    .build()
+                )
+                yield thumbnail_image
+                original_image_builder.add_thumbnail(thumbnail_image)
+
+            yield original_image_builder.build()

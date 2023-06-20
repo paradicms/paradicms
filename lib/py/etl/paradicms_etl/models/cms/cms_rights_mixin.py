@@ -1,13 +1,13 @@
-from abc import abstractmethod
 from typing import Union, Tuple, Any, Optional
 
-from rdflib import URIRef, DCTERMS, Literal
-from rdflib.resource import Resource
+from rdflib import URIRef, DCTERMS
 
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
 from paradicms_etl.models.rights_mixin import RightsMixin
 
 
-class CmsRightsMixin(RightsMixin):
+class CmsRightsMixin(ResourceBackedModelMixin, RightsMixin):
     """
     Captures a group of properties that specify the rights of another model,
     such as the license and the rights statement.
@@ -21,11 +21,7 @@ class CmsRightsMixin(RightsMixin):
         DCTERMS.rightsHolder,
     }
 
-    class Builder(RightsMixin.Builder):
-        @abstractmethod
-        def add(self, p: URIRef, o: Any):
-            raise NotImplementedError
-
+    class Builder(ResourceBackedModelMixin.Builder, RightsMixin.Builder):
         def add_contributor(self, contributor: Any) -> "CmsRightsMixin.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
@@ -46,26 +42,17 @@ class CmsRightsMixin(RightsMixin):
             self.add(DCTERMS.rights, statement)
             return self
 
-        def copy_rights(self, other: RightsMixin) -> "CmsRightsMixin.Builder":
-            for contributor in other.contributors:
-                self.add_contributor(contributor)
-            for creator in other.creators:
-                self.add_creator(creator)
-            for holder in other.rights_holders:
-                self.add_rights_holder(holder)
-            if other.license:
-                self.add_license(other.license)
-            if other.rights_statement:
-                self.add_rights_statement(other.rights_statement)
-            return self
+    @property
+    def contributors(self) -> Tuple[Union[str, URIRef], ...]:
+        return tuple(
+            self._values(DCTERMS.contributor, ResourceBackedModel._map_str_or_uri_value)
+        )
 
     @property
-    def contributors(self) -> Tuple[Any, ...]:
-        return self.__plural_values(DCTERMS.contributor)
-
-    @property
-    def creators(self) -> Tuple[Any, ...]:
-        return self.__plural_values(DCTERMS.creator)
+    def creators(self) -> Tuple[Union[str, URIRef], ...]:
+        return tuple(
+            self._values(DCTERMS.creator, ResourceBackedModel._map_str_or_uri_value)
+        )
 
     @classmethod
     def json_ld_context(cls):
@@ -85,42 +72,16 @@ class CmsRightsMixin(RightsMixin):
 
     @property
     def license(self) -> Union[str, URIRef, None]:
-        return self.__singular_value(DCTERMS.license)
-
-    def __plural_values(self, p: URIRef) -> Tuple[Any, ...]:
-        values = []
-        for o in self._resource.objects(p):
-            if isinstance(o, Literal):
-                py_o = o.toPython()
-                if isinstance(py_o, str):
-                    values.append(py_o)
-            elif isinstance(o, Resource):
-                if isinstance(o.identifier, URIRef):
-                    values.append(o.identifier)
-                else:
-                    # raise NotImplementedError("blank node")
-                    continue
-        return tuple(values)
+        return self._optional_value(DCTERMS.license, self._map_uri_value)
 
     @property
-    @abstractmethod
-    def _resource(self) -> Resource:
-        raise NotImplementedError
-
-    @property
-    def rights_holders(self) -> Tuple[Any, ...]:
-        return self.__plural_values(DCTERMS.rightsHolder)
+    def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
+        return tuple(self._values(DCTERMS.rightsHolder, self._map_str_or_uri_value))
 
     @property
     def rights_statement(self) -> Union[str, URIRef, None]:
-        return self.__singular_value(DCTERMS.rights)
-
-    def __singular_value(self, p: URIRef) -> Union[str, URIRef, None]:
-        values = self.__plural_values(p)
-        return values[0] if values else None
+        return self._optional_value(DCTERMS.rights, self._map_str_or_uri_value)
 
     @property
     def source(self) -> Optional[URIRef]:
-        value = self.__singular_value(DCTERMS.source)
-        assert value is None or isinstance(value, URIRef)
-        return value
+        return self._optional_value(DCTERMS.source, self._map_uri_value)

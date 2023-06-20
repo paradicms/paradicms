@@ -48,8 +48,8 @@ class RdfFileLoader:
                     self.__logger.warning(
                         "model graphs with same identifier (%s) that are not isomorphic:\nexisting graph:\n%s\nnew graph:\n%s",
                         model_resource.identifier,
-                        existing_model_graph.serialize("ttl"),
-                        model_graph.serialize("ttl"),
+                        existing_model_graph.serialize(),
+                        model_graph.serialize(),
                     )
                 else:
                     self.__logger.debug(

@@ -5,14 +5,15 @@ from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
 
+from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsConcept(CmsNamedModel, Concept):
-    class Builder(CmsNamedModel.Builder):
+class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
+    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
         def add_alt_label(self, alt_label: Union[str, Literal]) -> "CmsConcept.Builder":
             self.add(SKOS.altLabel, alt_label)
             return self
@@ -28,12 +29,6 @@ class CmsConcept(CmsNamedModel, Concept):
             self.set(SKOS.definition, definition)
             return self
 
-        def set_pref_label(
-            self, pref_label: Union[str, Literal]
-        ) -> "CmsConcept.Builder":
-            self.set(SKOS.prefLabel, pref_label)
-            return self
-
         def set_value(self, value: Node) -> "CmsConcept.Builder":
             self.set(RDF.value, value)
             return self
@@ -42,16 +37,18 @@ class CmsConcept(CmsNamedModel, Concept):
         resource.add(RDF.type, SKOS.Concept)
         CmsNamedModel.__init__(self, resource)
         self.pref_label
-        self.value
 
     @classmethod
-    def builder(cls, *, uri: URIRef):
-        return cls.Builder(Graph().resource(uri))
+    def builder(cls, *, pref_label: str, uri: URIRef) -> Builder:
+        builder = cls.Builder(Graph().resource(uri))
+        builder.set(SKOS.prefLabel, pref_label)
+        return builder
 
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
+            CmsImagesMixin.json_ld_context(),
             {
                 "altLabel": {"@id": str(SKOS.altLabel)},
                 "definition": {"@id": str(SKOS.definition)},
@@ -66,11 +63,11 @@ class CmsConcept(CmsNamedModel, Concept):
 
     @property
     def pref_label(self) -> str:
-        return self._required_str_value(SKOS.prefLabel)
+        return self._required_value(SKOS.prefLabel, self._map_str_value)
 
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._uri_values(RDF.type))
+        return tuple(self._values(RDF.type, self._map_uri_value))
 
     @property
     def uri(self) -> URIRef:

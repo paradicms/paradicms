@@ -1,9 +1,8 @@
 from abc import abstractmethod
-from typing import Optional, Union
+from typing import Union, Tuple
 
 from rdflib import URIRef, Literal
 
-from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.rights_mixin import RightsMixin
@@ -17,6 +16,9 @@ class Image(NamedModel, RightsMixin):
 
         @abstractmethod
         def set_copyable(self, copyable: bool) -> "Image.Builder":
+            """
+            Can this image be copied from its source (for GUI building), or does it have to be hot linked in order to use it?
+            """
             raise NotImplementedError
 
         @abstractmethod
@@ -25,8 +27,11 @@ class Image(NamedModel, RightsMixin):
 
         @abstractmethod
         def set_src(
-            self, src: Union[str, CmsImageData, Literal, URIRef]
+            self, src: Union[str, ImageData, Literal, URIRef]
         ) -> "Image.Builder":
+            """
+            src that can be used in an <img> tag; if not specified, defaults to URI
+            """
             raise NotImplementedError
 
         @abstractmethod
@@ -38,16 +43,6 @@ class Image(NamedModel, RightsMixin):
     def copyable(self) -> bool:
         raise NotImplementedError
 
-    @property
-    @abstractmethod
-    def depicts_uri(self) -> URIRef:
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def original_image_uri(self) -> Optional[URIRef]:
-        raise NotImplementedError
-
     @abstractmethod
     def replacer(self) -> Builder:
         raise NotImplementedError
@@ -56,3 +51,8 @@ class Image(NamedModel, RightsMixin):
     @abstractmethod
     def src(self) -> Union[ImageData, str, None]:
         raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def thumbnail_uris(self) -> Tuple[URIRef, ...]:
+        pass

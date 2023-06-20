@@ -55,7 +55,3 @@ class CmsEvent(CmsModel, Event):
                 "title": {"@id": str(DCTERMS.title)},
             },
         )
-
-    @classmethod
-    def label_property_uri(cls):
-        return DCTERMS.title
