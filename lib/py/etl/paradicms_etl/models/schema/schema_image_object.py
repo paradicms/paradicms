@@ -7,24 +7,24 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_mixin import RightsMixin
-from paradicms_etl.models.schema.schema_creative_work_mixin import (
-    SchemaCreativeWorkMixin,
+from paradicms_etl.models.schema.schema_media_object_mixin import (
+    SchemaMediaObjectMixin,
 )
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
+class SchemaImageObject(SchemaNamedModel, SchemaMediaObjectMixin, Image):
     """
     Schema.org implementation of the Image interface using schema:ImageObject properties.
 
-    See note in SchemaCreativeWorkMixin re: why this uses SchemaCreativeWorkMixin and doesn't inherit
+    See note in SchemaMediaObjectMixin re: why this uses SchemaMediaObjectMixin and doesn't inherit
     SchemaCreativeWork.
     """
 
     class Builder(
-        SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Image.Builder
+        SchemaNamedModel.Builder, SchemaMediaObjectMixin.Builder, Image.Builder
     ):
         def add_thumbnail(
             self, thumbnail: Union[Image, URIRef]
@@ -36,7 +36,7 @@ class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
             return SchemaImageObject(self._resource)
 
         def copy_rights(self, other: RightsMixin) -> "SchemaImageObject.Builder":
-            SchemaCreativeWorkMixin.Builder.copy_rights(self, other)
+            SchemaMediaObjectMixin.Builder.copy_rights(self, other)
             return self
 
         def __create_quantitative_value_resource(
@@ -57,12 +57,6 @@ class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
 
         def set_copyable(self, copyable: bool) -> "SchemaImageObject.Builder":
             self.set(CMS.imageCopyable, copyable)
-            return self
-
-        def set_encoding_format(
-            self, encoding_format: str
-        ) -> "SchemaImageObject.Builder":
-            self.set(SDO.encodingFormat, encoding_format)
             return self
 
         def set_exact_dimensions(
@@ -127,7 +121,7 @@ class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
     def json_ld_context(cls):
         return safe_dict_update(
             SchemaNamedModel.json_ld_context(),
-            SchemaCreativeWorkMixin.json_ld_context(),
+            SchemaMediaObjectMixin.json_ld_context(),
             {
                 "copyable": {
                     "@id": str(CMS.imageCopyable),
