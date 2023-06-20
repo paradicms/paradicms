@@ -6,10 +6,11 @@ from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
-from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_place import SchemaPlace
 
 
 @pytest.fixture
@@ -25,6 +26,17 @@ def schema_collection(
         .add_same_as(URIRef("http://example.com/other"))
         .add_image(schema_image_object)
         .add_work(schema_creative_work)
+        .build()
+    )
+
+
+@pytest.fixture
+def schema_creative_work(schema_image_object: SchemaImageObject) -> SchemaCreativeWork:
+    return (
+        SchemaCreativeWork.builder(
+            name="Test work", uri=URIRef("http://example.com/work")
+        )
+        .add_image(schema_image_object)
         .build()
     )
 
@@ -73,11 +85,11 @@ def schema_thumbnail() -> SchemaImageObject:
 
 
 @pytest.fixture
-def schema_creative_work(schema_image_object: SchemaImageObject) -> SchemaCreativeWork:
+def schema_place() -> SchemaPlace:
     return (
-        SchemaCreativeWork.builder(
-            name="Test work", uri=URIRef("http://example.com/work")
-        )
-        .add_image(schema_image_object)
+        SchemaPlace.builder(uri=URIRef("http://example.com/place"))
+        .set_latitude(42.728104)
+        .set_longitude(-73.687576)
+        .set_name("Test place")
         .build()
     )

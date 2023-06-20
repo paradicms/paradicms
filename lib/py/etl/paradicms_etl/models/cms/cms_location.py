@@ -29,8 +29,8 @@ class CmsLocation(CmsModel, Location):
     def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
         return cls.Builder(Graph().resource(uri if uri is not None else BNode()))
 
-    @staticmethod
-    def json_ld_context():
+    @classmethod
+    def json_ld_context(cls):
         return safe_dict_update(
             CmsModel.json_ld_context(),
             {
