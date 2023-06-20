@@ -321,12 +321,12 @@ class SyntheticDataPipeline(Pipeline):
                 for property_value in property_.values:
                     concept_builder = (
                         CmsConcept.builder(
+                            pref_label=f"CmsConcept {concept_urn_i}",
                             uri=URIRef(
                                 f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
-                            )
+                            ),
                         )
                         .add_type_uri(property_.range)
-                        .set_pref_label(f"CmsConcept {concept_urn_i}")
                         .set_value(Literal(property_value))
                     )
 

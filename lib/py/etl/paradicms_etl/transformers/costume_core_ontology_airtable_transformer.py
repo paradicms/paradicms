@@ -464,7 +464,10 @@ class CostumeCoreOntologyAirtableTransformer:
         #     wikidata_id=fields.get("WikidataID"),
 
         concept_uri = COCO[fields["id"]]
+        pref_label = fields["display_name_en"]
+
         concept_builder = CmsConcept.builder(
+            pref_label=pref_label,
             uri=concept_uri,
         )
 
@@ -483,9 +486,6 @@ class CostumeCoreOntologyAirtableTransformer:
                 id_,
             )
             return None
-
-        pref_label = fields["display_name_en"]
-        concept_builder.set_pref_label(pref_label)
 
         alt_labels = set()
         inflector = Inflector()

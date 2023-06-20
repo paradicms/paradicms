@@ -29,12 +29,6 @@ class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
             self.set(SKOS.definition, definition)
             return self
 
-        def set_pref_label(
-            self, pref_label: Union[str, Literal]
-        ) -> "CmsConcept.Builder":
-            self.set(SKOS.prefLabel, pref_label)
-            return self
-
         def set_value(self, value: Node) -> "CmsConcept.Builder":
             self.set(RDF.value, value)
             return self
@@ -43,11 +37,12 @@ class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
         resource.add(RDF.type, SKOS.Concept)
         CmsNamedModel.__init__(self, resource)
         self.pref_label
-        self.value
 
     @classmethod
-    def builder(cls, *, uri: URIRef):
-        return cls.Builder(Graph().resource(uri))
+    def builder(cls, *, pref_label: str, uri: URIRef) -> Builder:
+        builder = cls.Builder(Graph().resource(uri))
+        builder.set(SKOS.prefLabel, pref_label)
+        return builder
 
     @classmethod
     def json_ld_context(cls):
