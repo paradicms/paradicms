@@ -16,18 +16,21 @@ from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
+from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 
 
 @pytest.fixture
 def schema_collection(
-    schema_image_object: SchemaImageObject, schema_creative_work: SchemaCreativeWork
+    schema_image_object: SchemaImageObject,
+    schema_creative_work: SchemaCreativeWork,
+    schema_text_object: SchemaTextObject,
 ) -> SchemaCollection:
     return (
         SchemaCollection.builder(
             name="Test collection", uri=URIRef("http://example.com/collection")
         )
         .add_alternate_name("Test collection alternate name")
-        .add_description("Test collection description")
+        .add_description(schema_text_object)
         .add_same_as(URIRef("http://example.com/other"))
         .add_image(schema_image_object)
         .add_work(schema_creative_work)
@@ -128,3 +131,8 @@ def schema_property() -> SchemaProperty:
         .set_range(URIRef("http://example.com/propertyRange"))
         .set_searchable(True)
     ).build()
+
+
+@pytest.fixture
+def schema_text_object() -> SchemaTextObject:
+    return SchemaTextObject.builder(text="Test text").build()

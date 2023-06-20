@@ -1,7 +1,7 @@
 from typing import Generator, Tuple, Union, TypeVar, Any, Callable
 from typing import Optional
 
-from rdflib import ConjunctiveGraph, Literal, RDF, URIRef
+from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO
 from rdflib import Graph
 from rdflib.resource import Resource
 from rdflib.term import Node, BNode
@@ -125,6 +125,13 @@ class ResourceBackedModel(Model):
                     from paradicms_etl.models.cms.cms_text import CmsText
 
                     return CmsText(value)
+                elif value_type.identifier == SDO.TextObject:
+                    from paradicms_etl.models.schema.schema_text_object import (
+                        SchemaTextObject,
+                    )
+
+                    return SchemaTextObject(value)
+
         return None
 
     @staticmethod
