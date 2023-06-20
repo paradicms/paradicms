@@ -1,13 +1,6 @@
 import logging
 from typing import Set, Iterable, Union
 
-from paradicms_etl.models.cms.cms_license import CmsLicense
-from paradicms_etl.models.creative_commons.creative_commons_license import (
-    CreativeCommonsLicense,
-)
-from paradicms_etl.models.creative_commons.creative_commons_licenses import (
-    CreativeCommonsLicenses,
-)
 from rdflib import URIRef
 from stringcase import snakecase
 
@@ -15,6 +8,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
 from paradicms_etl.models.cms.cms_person import CmsPerson
@@ -22,6 +16,12 @@ from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.creative_commons.creative_commons_license import (
+    CreativeCommonsLicense,
+)
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
@@ -32,7 +32,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem

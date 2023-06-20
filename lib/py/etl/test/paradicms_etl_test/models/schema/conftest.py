@@ -1,10 +1,10 @@
 import pytest
+from rdflib import URIRef
+
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
-from rdflib import URIRef
-
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection

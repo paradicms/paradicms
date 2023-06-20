@@ -2,7 +2,7 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
 
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject

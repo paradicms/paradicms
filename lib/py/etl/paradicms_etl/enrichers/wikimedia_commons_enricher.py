@@ -7,15 +7,15 @@ from typing import Iterable, Optional, Tuple, Dict, Any
 from urllib.parse import urlparse, quote, unquote
 
 from bs4 import BeautifulSoup
-from paradicms_etl.models.creative_commons.creative_commons_licenses import (
-    CreativeCommonsLicenses,
-)
 from rdflib import URIRef
 from stringcase import snakecase
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.utils.file_cache import FileCache
