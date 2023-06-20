@@ -1,8 +1,8 @@
-from typing import Union, Tuple
+from typing import Tuple
 
 from rdflib import URIRef, Graph, SDO, RDF
 from rdflib.resource import Resource
-from rdflib.term import Node, Literal
+from rdflib.term import Node
 
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
@@ -10,12 +10,6 @@ from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 
 class SchemaDefinedTerm(SchemaNamedModel, Concept):
     class Builder(SchemaNamedModel.Builder):
-        def add_alternate_name(
-            self, alternate_name: Union[str, Literal]
-        ) -> "SchemaDefinedTerm.Builder":
-            self.add(SDO.alternateName, alternate_name)
-            return self
-
         def add_type_uri(self, type_uri: URIRef):
             self.add(RDF.type, type_uri)
             return self
