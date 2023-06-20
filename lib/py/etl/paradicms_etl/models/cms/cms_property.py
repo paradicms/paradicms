@@ -1,6 +1,6 @@
 from typing import Union, Text, Optional
 
-from rdflib import URIRef, RDFS, SH, XSD, Graph
+from rdflib import URIRef, RDFS, XSD, Graph
 
 from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
@@ -56,7 +56,7 @@ class CmsProperty(CmsNamedModel, CmsImagesMixin, Property):
                     "@type": str(XSD.boolean),
                 },
                 "label": {"@id": str(RDFS.label)},
-                "order": {"@id": str(SH.order)},
+                "order": {"@id": str(CMS.propertyOrder)},
                 "range": {"@id": str(RDFS.range), "@type": "@id"},
                 "searchable": {
                     "@id": str(CMS.propertySearchable),
