@@ -5,6 +5,7 @@ import {CmsModelReader} from "./cms/CmsModelReader";
 import {WikidataModelReader} from "./wikidata/WikidataModelReader";
 import {DatasetBackedModelSet} from "./DatasetBackedModelSet";
 import {ModelSet} from "./ModelSet";
+import {RightsStatementsDotOrgModelReader} from "./rights-statements-dot-org/RightsStatementsDotOrgModelReader";
 
 export class ModelSetFactory {
   static fromFastRdfString(fastRdfString: string): ModelSet {
@@ -16,6 +17,7 @@ export class ModelSetFactory {
       dataset,
       new SameAsModelReader([
         new CmsModelReader(dataset),
+        new RightsStatementsDotOrgModelReader(dataset),
         new WikidataModelReader(dataset),
       ])
     );
