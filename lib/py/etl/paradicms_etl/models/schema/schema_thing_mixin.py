@@ -24,12 +24,6 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
             self.add(SDO.alternateName, alternate_name)
             return self
 
-        def add_description(
-            self, description: Union[str, Text]
-        ) -> "SchemaThingMixin.Builder":
-            self.add(SDO.description, description)
-            return self
-
         def add_image(self, image: Union[Image, URIRef]) -> "SchemaThingMixin.Builder":
             self.add(SDO.image, image)
             return self
@@ -40,6 +34,12 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
 
         def set_label(self, label: str) -> "SchemaThingMixin.Builder":
             return self.set_name(label)
+
+        def set_description(
+            self, description: Union[str, Text]
+        ) -> "SchemaThingMixin.Builder":
+            self.set(SDO.description, description)
+            return self
 
         def set_name(self, name: str) -> "SchemaThingMixin.Builder":
             self.set(SDO.name, name)
