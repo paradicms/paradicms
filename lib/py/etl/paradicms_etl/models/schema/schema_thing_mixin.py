@@ -1,10 +1,11 @@
-from typing import Text, Union, Tuple, Optional
+from typing import Union, Tuple, Optional
 
 from rdflib import URIRef, SDO
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
+from paradicms_etl.models.text import Text
 
 
 class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
@@ -42,7 +43,7 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
 
     @property
     def description(self) -> Union[str, Text, None]:
-        return self._optional_value(SDO.description, self._map_str_or_text_value)
+        return self._optional_value(SDO.description, self._map_str_or_text_value)  # type: ignore
 
     @classmethod
     def json_ld_context(cls):

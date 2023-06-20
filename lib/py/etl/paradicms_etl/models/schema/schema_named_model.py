@@ -30,7 +30,7 @@ class SchemaNamedModel(ResourceBackedNamedModel, SchemaThingMixin):
 
     @property
     def label(self) -> Optional[str]:
-        return SchemaThingMixin.label.fget(self)
+        return SchemaThingMixin.label.fget(self)  # type: ignore
 
     @property
     @abstractmethod

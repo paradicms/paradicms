@@ -25,5 +25,9 @@ class CreativeCommonsLicense(ResourceBackedNamedModel, License):
         return self._required_value(DC.title, self._map_str_value)
 
     @property
+    def uri(self) -> URIRef:
+        return super().uri
+
+    @property
     def version(self) -> Optional[str]:
         return self._optional_value(DCTERMS.hasVersion, self._map_str_value)

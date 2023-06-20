@@ -37,7 +37,7 @@ class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
 
     @property
     def description(self) -> Union[str, Text, None]:
-        return SchemaNamedModel.description.fget(self)
+        return SchemaNamedModel.description.fget(self)  # type: ignore
 
     @property
     def event_uris(self) -> Tuple[URIRef, ...]:

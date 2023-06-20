@@ -20,10 +20,14 @@ class RightsStatementsDotOrgRightsStatement(ResourceBackedNamedModel, RightsStat
     def label(self) -> str:
         return self.pref_label
 
+    @property
+    def pref_label(self) -> str:
+        return self._required_value(SKOS.prefLabel, self._map_str_value)
+
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return DCTERMS.RightsStatement
 
     @property
-    def pref_label(self) -> str:
-        return self._required_value(SKOS.prefLabel, self._map_str_value)
+    def uri(self) -> URIRef:
+        return super().uri

@@ -88,8 +88,9 @@ class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
             )
             return self
 
-        def set_source(self, source: URIRef) -> "SchemaCreativeWorkMixin.Builder":
-            return self.set_url(source)
+        def set_source(self, source: URIRef) -> "SchemaImageObject.Builder":
+            self.set_url(source)
+            return self
 
         def set_src(
             self, src: Union[str, ImageData, Literal, URIRef]
