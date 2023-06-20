@@ -1,9 +1,12 @@
 from typing import Union, Optional, Tuple
 
 from rdflib import URIRef, Graph, SDO, Literal, XSD
+from rdflib.resource import Resource
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
+from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
@@ -25,9 +28,68 @@ class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
         def build(self) -> "SchemaImageObject":
             return SchemaImageObject(self._resource)
 
+        def copy_rights(self, other: RightsMixin) -> "SchemaImageObject.Builder":
+            SchemaCreativeWorkMixin.Builder.copy_rights(self, other)
+            return self
+
+        def __create_quantitative_value_resource(
+            self, *, max_value: Optional[int] = None, value: Optional[int] = None
+        ) -> Resource:
+            quantitative_value_resource: Resource = self._resource.graph.resource()
+            if max_value is not None:
+                quantitative_value_resource.set(SDO.maxValue, Literal(max_value))
+            if value is not None:
+                quantitative_value_resource.set(SDO.value, Literal(value))
+            return quantitative_value_resource
+
+        def set_caption(self, caption: str) -> "SchemaImageObject.Builder":
+            self.set(SDO.caption, caption)
+            return self
+
         def set_copyable(self, copyable: bool) -> "SchemaImageObject.Builder":
             self.set(CMS.imageCopyable, copyable)
             return self
+
+        def set_encoding_format(
+            self, encoding_format: str
+        ) -> "SchemaImageObject.Builder":
+            self.set(SDO.encodingFormat, encoding_format)
+            return self
+
+        def set_exact_dimensions(
+            self, exact_dimensions: ImageDimensions
+        ) -> "SchemaImageObject.Builder":
+            self.set(
+                SDO.height,
+                self.__create_quantitative_value_resource(
+                    value=exact_dimensions.height
+                ),
+            )
+            self.set(
+                SDO.width,
+                self.__create_quantitative_value_resource(value=exact_dimensions.width),
+            )
+            return self
+
+        def set_max_dimensions(
+            self, max_dimensions: ImageDimensions
+        ) -> "SchemaImageObject.Builder":
+            self.set(
+                SDO.height,
+                self.__create_quantitative_value_resource(
+                    max_value=max_dimensions.height
+                ),
+            )
+            self.set(
+                SDO.width,
+                self.__create_quantitative_value_resource(
+                    max_value=max_dimensions.width
+                ),
+            )
+            return self
+
+        def set_source(self, source: URIRef) -> "SchemaCreativeWorkMixin.Builder":
+            return self.set_url(source)
 
         def set_src(
             self, src: Union[str, ImageData, Literal, URIRef]
@@ -36,8 +98,7 @@ class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
             return self
 
         def set_title(self, title: str) -> "SchemaImageObject.Builder":
-            self.set(SDO.caption, title)
-            return self
+            return self.set_caption(title)
 
     @classmethod
     def builder(cls, *, uri: URIRef) -> Builder:

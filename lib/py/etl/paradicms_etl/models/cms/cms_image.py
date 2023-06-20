@@ -17,12 +17,12 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class CmsImage(CmsNamedModel, CmsRightsMixin, Image):
     class Builder(CmsNamedModel.Builder, CmsRightsMixin.Builder, Image.Builder):
-        def build(self) -> "CmsImage":
-            return CmsImage(self._resource)
-
         def add_thumbnail(self, thumbnail: Union[Image, URIRef]) -> "CmsImage.Builder":
             self.add(FOAF.thumbnail, thumbnail)
             return self
+
+        def build(self) -> "CmsImage":
+            return CmsImage(self._resource)
 
         def copy_rights(self, other: RightsMixin) -> "CmsImage.Builder":
             CmsRightsMixin.Builder.copy_rights(self, other)

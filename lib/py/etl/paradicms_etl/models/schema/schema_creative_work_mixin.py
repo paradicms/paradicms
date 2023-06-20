@@ -1,7 +1,9 @@
+from datetime import datetime, date
 from typing import Any, Union, Tuple, Optional
 
 from rdflib import SDO, URIRef, XSD
 
+from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_thing_mixin import SchemaThingMixin
 
@@ -33,8 +35,16 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             self.add(SDO.usageInfo, statement)
             return self
 
-        def set_source(self, source: URIRef) -> "SchemaCreativeWorkMixin.Builder":
-            self.set_url(source)
+        def set_date_created(
+            self, date_created: Union[date, datetime, DateTimeDescription]
+        ) -> "SchemaCreativeWorkMixin.Builder":
+            self.set(SDO.dateCreated, date_created)
+            return self
+
+        def set_date_modified(
+            self, date_modified: Union[date, datetime, DateTimeDescription]
+        ) -> "SchemaCreativeWorkMixin.Builder":
+            self.set(SDO.dateModified, date_modified)
             return self
 
     @property
