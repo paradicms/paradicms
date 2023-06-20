@@ -4,17 +4,22 @@ from rdflib import URIRef, Graph, SDO
 from rdflib.resource import Resource
 
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.schema.schema_creative_work_mixin import (
+    SchemaCreativeWorkMixin,
+)
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 from paradicms_etl.models.work import Work
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SchemaCollection(SchemaNamedModel, Collection):
+class SchemaCollection(SchemaNamedModel, SchemaCreativeWorkMixin, Collection):
     """
     Schema.org implementation of the Collection interface using schema:Collection properties.
     """
 
-    class Builder(SchemaNamedModel.Builder, Collection.Builder):
+    class Builder(
+        SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Collection.Builder
+    ):
         def add_work(self, work: Union[URIRef, Work]) -> "SchemaCollection.Builder":
             self.add(SDO.hasPart, work)
             return self
