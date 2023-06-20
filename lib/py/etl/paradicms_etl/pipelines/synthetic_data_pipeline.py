@@ -15,8 +15,6 @@ from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
-from paradicms_etl.models.cms.cms_agent import CmsAgent
-from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
@@ -43,6 +41,7 @@ from paradicms_etl.models.owl_time.owl_time_date_time_description import (
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import VRA
@@ -157,7 +156,7 @@ class SyntheticDataPipeline(Pipeline):
             concepts_by_value: Dict[str, Concept] = {}
             for model in self.__generate_concepts():
                 yield model
-                if isinstance(model, CmsConcept):
+                if isinstance(model, Concept):
                     concept = model
                     concept_str = concept.value.toPython()
                     assert isinstance(concept_str, str)
@@ -167,7 +166,7 @@ class SyntheticDataPipeline(Pipeline):
             agents_list: List[Agent] = []
             for model in self.__generate_agents():
                 yield model
-                if isinstance(model, CmsAgent):
+                if isinstance(model, Agent):
                     agents_list.append(model)
             agents = tuple(agents_list)
 
@@ -186,13 +185,13 @@ class SyntheticDataPipeline(Pipeline):
         def __generate_agents(self) -> Iterable[Union[Agent, Image]]:
             for organization_i in range(5):
                 organization_builder: CmsOrganization.Builder = CmsOrganization.builder(
-                    name=f"CmsOrganization {organization_i}",
+                    name=f"Organization {organization_i}",
                     uri=URIRef(f"http://example.com/organization{organization_i}"),
                 ).add_page(
                     URIRef(f"http://example.com/organization{organization_i}page"),
                 )
                 for image in self.__generate_images(
-                    base_uri=organization_builder.uri, text_prefix="CmsOrganization"
+                    base_uri=organization_builder.uri, text_prefix="Organization"
                 ):
                     organization_builder.add_image(image)
                     yield image
@@ -201,11 +200,11 @@ class SyntheticDataPipeline(Pipeline):
             for person_i in range(5):
                 person_builder: CmsPerson.Builder = (
                     CmsPerson.builder(
-                        name=f"CmsPerson {person_i}",
+                        name=f"Person {person_i}",
                         uri=URIRef(f"http://example.com/person{person_i}"),
                     )
                     .set_family_name(str(person_i))
-                    .set_given_name("CmsPerson")
+                    .set_given_name("Person")
                 )
                 if person_i % 2 == 0:
                     person_builder.add_page(
@@ -217,7 +216,7 @@ class SyntheticDataPipeline(Pipeline):
                         URIRef("http://www.wikidata.org/entity/Q7251"),
                     )
                 for image in self.__generate_images(
-                    base_uri=person_builder.uri, text_prefix="CmsPerson"
+                    base_uri=person_builder.uri, text_prefix="Person"
                 ):
                     yield image
                     person_builder.add_image(image)
@@ -230,7 +229,7 @@ class SyntheticDataPipeline(Pipeline):
                 title = f"{text_prefix} image {image_i}"
                 original_image_builder = (
                     CmsImage.builder(
-                        uri=URIRef(str(base_uri) + f":CmsImage{image_i}"),
+                        uri=URIRef(str(base_uri) + f":Image{image_i}"),
                     )
                     .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
                     .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
@@ -277,15 +276,15 @@ class SyntheticDataPipeline(Pipeline):
             concepts_by_value: Dict[str, Concept],
         ) -> Iterable[Union[Collection, Image, Location, Work, WorkEvent]]:
             for collection_i in range(self.__collections):
-                collection_title = f"CmsCollection{collection_i}"
-                collection_builder = CmsCollection.builder(
-                    title=collection_title,
+                collection_name = f"Collection{collection_i}"
+                collection_builder = SchemaCollection.builder(
+                    name=collection_name,
                     uri=URIRef(f"http://example.com/collection{collection_i}"),
                 )
                 if collection_i % 2 == 0:
                     description_builder = CmsText.builder(self.__LOREM_IPSUM)
                     description_builder.add_rights_holder(
-                        f"{collection_title} description rights holder"
+                        f"{collection_name} description rights holder"
                     ).add_license(
                         CreativeCommonsLicenses.NC_1_0.uri
                     ).add_rights_statement(
@@ -295,7 +294,7 @@ class SyntheticDataPipeline(Pipeline):
                 if collection_i > 0:
                     for image in self.__generate_images(
                         base_uri=collection_builder.uri,
-                        text_prefix=collection_title,
+                        text_prefix=collection_name,
                     ):
                         yield image
                         collection_builder.add_image(image)
@@ -306,7 +305,7 @@ class SyntheticDataPipeline(Pipeline):
                     for model in self.__generate_work(
                         agents=agents,
                         concepts_by_value=concepts_by_value,
-                        title_prefix=collection_title + "CmsWork",
+                        title_prefix=collection_name + "Work",
                         uri_prefix=str(collection_builder.uri) + "/work",
                     ):
                         yield model
@@ -323,7 +322,7 @@ class SyntheticDataPipeline(Pipeline):
                 for property_value in property_.values:
                     concept_builder = (
                         CmsConcept.builder(
-                            pref_label=f"CmsConcept {concept_urn_i}",
+                            pref_label=f"Concept {concept_urn_i}",
                             uri=URIRef(
                                 f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                             ),
