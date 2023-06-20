@@ -1,6 +1,13 @@
 import logging
 from typing import Set, Iterable, Union
 
+from paradicms_etl.models.cms.cms_license import CmsLicense
+from paradicms_etl.models.creative_commons.creative_commons_license import (
+    CreativeCommonsLicense,
+)
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from rdflib import URIRef
 from stringcase import snakecase
 
@@ -8,7 +15,6 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
 from paradicms_etl.models.cms.cms_person import CmsPerson
@@ -16,7 +22,6 @@ from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
@@ -229,6 +234,16 @@ class ReferenceValidator:
         yield from self.__validate_named_model(concept)
         for image_uri in concept.image_uris:
             self.__referenced_image_uris.add(image_uri)
+
+    def _validate_creative_commons_license(
+        self, creative_commons_license: CreativeCommonsLicense
+    ) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_creative_commons_license_references(
+        self,
+    ) -> Iterable[ValidationResult]:
+        return ()
 
     def __validate_image(self, image: Image) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(image)

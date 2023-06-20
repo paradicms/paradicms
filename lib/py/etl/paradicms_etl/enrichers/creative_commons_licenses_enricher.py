@@ -3,7 +3,9 @@ from typing import Iterable
 from rdflib import DCTERMS
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from paradicms_etl.models.license import License
 from paradicms_etl.utils.known_model_tracker import KnownModelTracker
 

@@ -16,6 +16,10 @@ from urllib.parse import quote_plus
 
 import PIL
 from inflector import Inflector
+from paradicms_etl.models.cms.cms_license import CmsLicense
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from rdflib import URIRef, Literal
 
 from paradicms_etl.model import Model
@@ -23,7 +27,6 @@ from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
-from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
@@ -31,7 +34,6 @@ from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property

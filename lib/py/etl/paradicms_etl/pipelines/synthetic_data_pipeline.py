@@ -4,6 +4,9 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict, List, Iterable, Union
 from urllib.parse import quote
 
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl.enricher import Enricher
@@ -32,7 +35,6 @@ from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
 from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.location import Location

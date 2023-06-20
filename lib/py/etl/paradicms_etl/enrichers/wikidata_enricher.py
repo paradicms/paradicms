@@ -2,13 +2,15 @@ import logging
 from pathlib import Path
 from typing import Iterable, Set, Tuple, List, Dict, Sequence
 
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from rdflib import Graph, URIRef, DCTERMS, OWL
 from rdflib.resource import Resource
 
 from paradicms_etl.extractors.wikidata_entity_extractor import WikidataEntityExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,

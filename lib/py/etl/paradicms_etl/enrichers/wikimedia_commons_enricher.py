@@ -7,11 +7,13 @@ from typing import Iterable, Optional, Tuple, Dict, Any
 from urllib.parse import urlparse, quote, unquote
 
 from bs4 import BeautifulSoup
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from rdflib import URIRef
 from stringcase import snakecase
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.creative_commons_licenses import CreativeCommonsLicenses
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
