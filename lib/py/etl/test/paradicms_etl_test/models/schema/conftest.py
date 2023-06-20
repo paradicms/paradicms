@@ -15,6 +15,7 @@ from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_place import SchemaPlace
+from paradicms_etl.models.schema.schema_property import SchemaProperty
 
 
 @pytest.fixture
@@ -115,3 +116,15 @@ def schema_place() -> SchemaPlace:
         .set_name("Test place")
         .build()
     )
+
+
+@pytest.fixture
+def schema_property() -> SchemaProperty:
+    return (
+        SchemaProperty.builder(
+            name="Test property", uri=URIRef("http://example.com/property")
+        )
+        .set_filterable(True)
+        .set_range(URIRef("http://example.com/propertyRange"))
+        .set_searchable(True)
+    ).build()
