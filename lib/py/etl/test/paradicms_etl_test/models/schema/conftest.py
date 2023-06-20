@@ -4,6 +4,7 @@ from rdflib import URIRef
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -75,6 +76,9 @@ def schema_image_object(
         .add_rights_statement(RightsStatementsDotOrgRightsStatements.InC)
         .add_thumbnail(schema_thumbnail)
         .set_copyable(False)
+        .set_exact_dimensions(ImageDimensions(height=200, width=200))
+        .set_encoding_format("image/jpeg")
+        .set_max_dimensions(ImageDimensions(height=800, width=800))
         .set_source(URIRef("http://example.com/imagesource"))
         .set_title("Test image title")
         .build()

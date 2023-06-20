@@ -1,6 +1,6 @@
 from typing import Union, Optional, Tuple
 
-from rdflib import URIRef, Graph, SDO, Literal, XSD
+from rdflib import URIRef, Graph, SDO, Literal, XSD, BNode
 from rdflib.resource import Resource
 
 from paradicms_etl.models.image import Image
@@ -35,7 +35,9 @@ class SchemaImageObject(SchemaNamedModel, SchemaCreativeWorkMixin, Image):
         def __create_quantitative_value_resource(
             self, *, max_value: Optional[int] = None, value: Optional[int] = None
         ) -> Resource:
-            quantitative_value_resource: Resource = self._resource.graph.resource()
+            quantitative_value_resource: Resource = self._resource.graph.resource(
+                BNode()
+            )
             if max_value is not None:
                 quantitative_value_resource.set(SDO.maxValue, Literal(max_value))
             if value is not None:
