@@ -1,21 +1,25 @@
 import datetime
 
-from rdflib import Literal, XSD, BNode, Graph
+from rdflib import Literal, XSD, BNode, Graph, URIRef
 
-from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.date_time_description import DateTimeDescription
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import TIME
 
 
-class CmsDateTimeDescription(CmsModel, DateTimeDescription):
-    class Builder(CmsModel.Builder):
-        def build(self) -> "CmsDateTimeDescription":
-            return CmsDateTimeDescription(self._resource)
+class OwlTimeDateTimeDescription(ResourceBackedModel, DateTimeDescription):
+    """
+    OWL-Time (https://www.w3.org/TR/owl-time/) implementation of DateTimeDescription.
+    """
 
-        def set_day(self, day: int) -> "CmsDateTimeDescription.Builder":
+    class Builder(ResourceBackedModel.Builder):
+        def build(self) -> "OwlTimeDateTimeDescription":
+            return OwlTimeDateTimeDescription(self._resource)
+
+        def set_day(self, day: int) -> "OwlTimeDateTimeDescription.Builder":
             self.add(
-                # https://www.w3.org/TR/owl-time/#time:CmsDateTimeDescription
-                # .add(RDF.type, TIME.CmsDateTimeDescription)
+                # https://www.w3.org/TR/owl-time/#time:OwlTimeDateTimeDescription
+                # .add(RDF.type, TIME.OwlTimeDateTimeDescription)
                 # https://www.w3.org/TR/owl-time/#time:day
                 # https://www.w3.org/TR/xmlschema11-2/#gDay
                 TIME.day,
@@ -23,7 +27,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
             )
             return self
 
-        def set_hour(self, hour: int) -> "CmsDateTimeDescription.Builder":
+        def set_hour(self, hour: int) -> "OwlTimeDateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:hour
                 TIME.hour,
@@ -31,7 +35,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
             )
             return self
 
-        def set_minute(self, minute: int) -> "CmsDateTimeDescription.Builder":
+        def set_minute(self, minute: int) -> "OwlTimeDateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:minute
                 TIME.minute,
@@ -39,7 +43,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
             )
             return self
 
-        def set_month(self, month: int) -> "CmsDateTimeDescription.Builder":
+        def set_month(self, month: int) -> "OwlTimeDateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:month
                 # https://www.w3.org/TR/xmlschema11-2/#gMonth
@@ -48,7 +52,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
             )
             return self
 
-        def set_second(self, second: int) -> "CmsDateTimeDescription.Builder":
+        def set_second(self, second: int) -> "OwlTimeDateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:second
                 TIME.second,
@@ -56,7 +60,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
             )
             return self
 
-        def set_year(self, year: int) -> "CmsDateTimeDescription.Builder":
+        def set_year(self, year: int) -> "OwlTimeDateTimeDescription.Builder":
             self.add(
                 # https://www.w3.org/TR/owl-time/#time:year
                 # https://www.w3.org/TR/xmlschema11-2/#gYear
@@ -70,7 +74,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
         return cls.Builder(Graph().resource(BNode()))
 
     @classmethod
-    def from_date(cls, date: datetime.date) -> "CmsDateTimeDescription":
+    def from_date(cls, date: datetime.date) -> "OwlTimeDateTimeDescription":
         return (
             cls.builder()
             .set_day(date.day)
@@ -78,3 +82,7 @@ class CmsDateTimeDescription(CmsModel, DateTimeDescription):
             .set_year(date.year)
             .build()
         )
+
+    @classmethod
+    def rdf_type_uri(cls) -> URIRef:
+        return TIME.DateTimeDescription

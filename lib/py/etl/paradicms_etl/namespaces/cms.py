@@ -22,7 +22,6 @@ class CMS(DefinedNamespace):
     Collection: URIRef
     Configuration: URIRef
     Concept: URIRef
-    DateTimeDescription: URIRef
     Event: URIRef
     Image: URIRef
     ImageData: URIRef
@@ -34,7 +33,6 @@ class CMS(DefinedNamespace):
     PropertyGroup: URIRef
     RightsStatement: URIRef
     Text: URIRef
-    WikibaseItem: URIRef
     Work: URIRef
     WorkClosing: URIRef
     WorkCreation: URIRef

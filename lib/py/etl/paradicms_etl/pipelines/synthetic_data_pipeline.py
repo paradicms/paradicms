@@ -18,7 +18,6 @@ from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_agent import CmsAgent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
-from paradicms_etl.models.cms.cms_date_time_description import CmsDateTimeDescription
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
@@ -38,6 +37,9 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.location import Location
+from paradicms_etl.models.owl_time.owl_time_date_time_description import (
+    OwlTimeDateTimeDescription,
+)
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -408,7 +410,7 @@ class SyntheticDataPipeline(Pipeline):
 
             destruction_date = date(day=1, month=1, year=2022)
             creation_date = destruction_date - timedelta(days=work_i)
-            creation_date_time_description = CmsDateTimeDescription.from_date(
+            creation_date_time_description = OwlTimeDateTimeDescription.from_date(
                 creation_date
             )
 
