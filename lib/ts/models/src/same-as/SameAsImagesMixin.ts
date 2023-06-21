@@ -12,11 +12,13 @@ export abstract class SameAsImagesMixin<ModelT extends Model & ImagesMixin>
     return this.getUniqueLinkedModels(model => model.images);
   }
 
-  get originalImages(): readonly Image[] {
-    return this.images.filter(image => image.originalImageIri === null);
-  }
-
   thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.images, selector);
+    for (const image of this.images) {
+      const thumbnail = selectThumbnail(image.thumbnails, selector);
+      if (thumbnail !== null) {
+        return thumbnail;
+      }
+    }
+    return null;
   }
 }
