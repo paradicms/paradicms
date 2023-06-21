@@ -107,23 +107,14 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      const thumbnailImage = collection.thumbnail(joinSelector.thumbnail);
-      if (thumbnailImage) {
-        this.addImage(thumbnailImage, joinSelector.thumbnail);
-        if (
-          !collection.iris.some(
-            collectionIri => collectionIri === thumbnailImage.depictsIri
-          )
-        ) {
-          // The thumbnail either depicts the collection or one of the collection's works.
-          // If the latter case we need to include the work in the modelSet.
-          for (const work of collection.works) {
-            if (
-              work.iris.some(workIri => thumbnailImage.depictsIri === workIri)
-            ) {
-              this.addWork(work);
-              break;
-            }
+      const collectionThumbnail = collection.thumbnail(joinSelector.thumbnail);
+      if (collectionThumbnail) {
+        this.addImage(collectionThumbnail, joinSelector.thumbnail);
+      } else {
+        for (const work of collection.works) {
+          const workThumbnail = work.thumbnail(joinSelector.thumbnail);
+          if (workThumbnail) {
+            this.addImage(workThumbnail, joinSelector.thumbnail);
           }
         }
       }
@@ -353,12 +344,6 @@ export class ModelSetBuilder {
       const thumbnailImage = work.thumbnail(joinSelector.thumbnail);
       if (thumbnailImage) {
         this.addImage(thumbnailImage, joinSelector.images);
-      }
-    }
-
-    if (joinSelector.collections) {
-      for (const collection of work.collections) {
-        this.addCollection(collection, joinSelector.collections);
       }
     }
 
