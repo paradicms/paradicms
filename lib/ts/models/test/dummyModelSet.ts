@@ -84,6 +84,9 @@ export const dummyModelSet: ModelSet = {
   propertyGroupByIriOptional(propertyGroupIri: string): PropertyGroup | null {
     throw new EvalError("not implemented");
   },
+  propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[] {
+    throw new EvalError("not implemented");
+  },
   rightsStatementByIri(rightsStatementIri: string): RightsStatement {
     throw new EvalError("not implemented");
   },
