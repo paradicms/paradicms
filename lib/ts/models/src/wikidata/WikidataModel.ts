@@ -109,7 +109,7 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
 
   @Memoize()
   get images(): readonly Image[] {
-    const p18Images = this.filterAndMapStatements(wdt["P18"], statement => {
+    return this.filterAndMapStatements(wdt["P18"], statement => {
       if (statement.value.termType !== "NamedNode") {
         return null;
       }
@@ -120,15 +120,6 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
       // The modelSet.imagesByDepictsUri doesn't have this problem, since it only pulls images that are in the dataset.
       return this.modelSet.imageByIriOptional(statement.value.value);
     });
-    // Traversing wdt:P18 will only get the original image
-    // We want every image that points at this item.
-    const depictsImages = this.modelSet.imagesByDepictsIri(this.iri);
-    return p18Images.concat(
-      depictsImages.filter(
-        depictsImage =>
-          !p18Images.some(p18Image => p18Image.key === depictsImage.key)
-      )
-    );
   }
 
   get label(): string {
@@ -141,10 +132,6 @@ export abstract class WikidataModel extends ResourceBackedNamedModel
     // return this.modelSet.licenseByIri(
     //   "http://creativecommons.org/licenses/by-sa/3.0/"
     // );
-  }
-
-  get originalImages(): readonly Image[] {
-    return this.images.filter(image => image.originalImageIri === null);
   }
 
   get page(): string | null {
