@@ -8,6 +8,7 @@ import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {dcterms} from "@paradicms/vocabularies";
 
 export class CmsCollection extends Mixin(
   CmsNamedModel,
@@ -20,9 +21,7 @@ export class CmsCollection extends Mixin(
   }
 
   override thumbnail(selector: ThumbnailSelector): Image | null {
-    const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsIri(
-      this.iri
-    );
+    const collectionImages: readonly Image[] = this.images;
     if (collectionImages.length > 0) {
       const thumbnail = selectThumbnail(collectionImages, selector);
       if (thumbnail) {
@@ -40,6 +39,6 @@ export class CmsCollection extends Mixin(
   }
 
   get works(): readonly Work[] {
-    return this.modelSet.worksByCollectionKey(this.key);
+    return this.filterAndMapObjects(dcterms.hasPart, term => term.termType === "NamedNode" ? this.modelSet.workByIri(term.value) : null);
   }
 }

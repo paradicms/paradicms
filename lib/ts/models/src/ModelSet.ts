@@ -49,5 +49,4 @@ export interface ModelSet {
   workEventByIri(workEventIri: string): WorkEventUnion;
   readonly works: readonly Work[];
   worksByAgentIri(agentIri: string): readonly Work[];
-  worksByCollectionKey(collectionKey: string): readonly Work[];
 }

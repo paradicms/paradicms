@@ -1,4 +1,3 @@
-import {Collection} from "./Collection";
 import {ImagesMixin} from "./ImagesMixin";
 import {NamedModel} from "./NamedModel";
 import {PropertyValue} from "./PropertyValue";
@@ -17,7 +16,6 @@ export interface Work
     RightsMixin,
     SameAsMixin {
   readonly agents: readonly WorkAgent[];
-  readonly collections: readonly Collection[];
   readonly description: Text | null;
   readonly displayDate: string | null;
   readonly events: readonly WorkEventUnion[];

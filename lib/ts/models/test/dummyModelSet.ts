@@ -120,7 +120,4 @@ export const dummyModelSet: ModelSet = {
   worksByAgentIri(agentIri: string): readonly Work[] {
     throw new EvalError("not implemented");
   },
-  worksByCollectionKey(collectionIri: string): readonly Work[] {
-    throw new EvalError("not implemented");
-  },
 };

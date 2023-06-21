@@ -1,8 +1,7 @@
 import {DataFactory} from "@paradicms/rdf";
-import {cms, dcterms} from "@paradicms/vocabularies";
+import {dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {Collection} from "../Collection";
 import {PropertyValue} from "../PropertyValue";
 import {RightsMixin} from "../RightsMixin";
 import {Text} from "../Text";
@@ -78,10 +77,6 @@ export class CmsWork extends Mixin(
     }
 
     return result;
-  }
-
-  get collections(): readonly Collection[] {
-    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByIri(collection.value) : null);
   }
 
   @Memoize()

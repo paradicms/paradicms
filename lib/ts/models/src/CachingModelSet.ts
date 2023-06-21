@@ -426,19 +426,6 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
-  worksByCollectionKey(collectionKey: string): readonly Work[] {
-    return this.worksByCollectionKeyIndex[collectionKey] ?? [];
-  }
-
-  @Memoize()
-  private get worksByCollectionKeyIndex(): {
-    [index: string]: readonly Work[];
-  } {
-    return indexModelsByValues(this.works, work =>
-      work.collections.map(collection => collection.key)
-    );
-  }
-
   @Memoize()
   private get worksByIriIndex(): {[index: string]: Work} {
     return indexModelsByIri(this.works);

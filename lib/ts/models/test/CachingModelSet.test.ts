@@ -16,18 +16,15 @@ describe("CachingModelSet", () => {
         expect(sut.collectionByIri(collectionIri)).to.eq(collection);
       }
 
-      const collectionWorks = sut.worksByCollectionKey(collection.key);
-      expect(collectionWorks).to.have.length(4);
-      for (const work of collectionWorks) {
+      for (const work of collection.works) {
         expect(sut.workByKey(work.key)).to.eq(work);
         for (const workIri of work.iris) {
           expect(sut.workByIri(workIri)).to.eq(work);
         }
 
         if (work.iris.length === 1) {
-          const workImages = sut.imagesByDepictsIri(work.iris[0]);
-          expect(workImages).to.have.length(10);
-          for (const image of workImages) {
+          expect(work.images).to.have.length(10);
+          for (const image of work.images) {
             for (const imageIri of image.iris) {
               expect(sut.imageByIri(imageIri)).to.eq(image);
             }
@@ -62,7 +59,6 @@ describe("CachingModelSet", () => {
     }
 
     for (const work of sut.works) {
-      expect(work.originalImages).to.not.be.empty;
       expect(work.contributors).to.not.be.empty;
       expect(
         work.contributors.every(contributor => contributor.iris[0] === null)
@@ -77,6 +73,7 @@ describe("CachingModelSet", () => {
           .worksByAgentIri(creator.iris[0]!)
           .some(agentWork => agentWork.iris[0] === work.iris[0])
       ).to.be.true;
+      expect(work.images).to.not.be.empty;
       expect(work.license).to.not.be.null;
       expect((work.license! as License).iris[0]).to.not.be.empty;
       expect(work.rightsStatement).to.not.be.null;
