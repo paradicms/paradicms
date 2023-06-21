@@ -173,31 +173,6 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readImages({modelSet: this}));
   }
 
-  imagesByDepictsIri(depictsIri: string): readonly Image[] {
-    return this.imagesByDepictsIriIndex[depictsIri] ?? [];
-  }
-
-  @Memoize()
-  private get imagesByDepictsIriIndex(): {[index: string]: readonly Image[]} {
-    return indexModelsByValue(this.images, image => image.depictsIri);
-  }
-
-  imagesByOriginalImageIri(originalImageIri: string): readonly Image[] {
-    // Exclude the original image itself
-    return (this.imagesByOriginalImageIriIndex[originalImageIri] ?? []).filter(
-      image => image.originalImageIri === originalImageIri
-    );
-  }
-
-  @Memoize()
-  private get imagesByOriginalImageIriIndex(): {
-    [index: string]: readonly Image[];
-  } {
-    return indexModelsByValues(this.images, image =>
-      image.originalImageIri ? [image.originalImageIri] : image.iris
-    );
-  }
-
   @Memoize()
   private get imagesByIriIndex(): {[index: string]: Image} {
     return indexModelsByIri(this.images);
