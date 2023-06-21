@@ -1,5 +1,5 @@
-import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cms, rdfs} from "@paradicms/vocabularies";
+import {DataFactory, getRdfInstanceQuads} from "@paradicms/rdf";
+import {cms, dcterms, rdf, rdfs} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
@@ -28,10 +28,31 @@ export class CmsProperty
     );
   }
 
+  @Memoize()
   get groupIris(): readonly string[] {
-    return this.filterAndMapObjects(cms.propertyGroup, term =>
-      term.termType === "NamedNode" ? term.value : null
-    );
+    const groupIris: string[] = [];
+    for (const propertyGroupQuad of this.dataset.match(
+      null,
+      dcterms.hasPart,
+      this.identifier
+    )) {
+      if (propertyGroupQuad.subject.termType !== "NamedNode") {
+        continue;
+      }
+      if (
+        this.dataset.has(
+          DataFactory.quad(
+            propertyGroupQuad.subject,
+            rdf.type,
+            cms.PropertyGroup,
+            propertyGroupQuad.graph
+          )
+        )
+      ) {
+        groupIris.push(propertyGroupQuad.subject.value);
+      }
+    }
+    return groupIris;
   }
 
   get hidden(): boolean {
