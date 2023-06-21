@@ -57,23 +57,6 @@ const indexModelsByValues = <ModelT extends Model>(
   return sortModelsMultimap(modelsMultimap);
 };
 
-const indexModelsByValue = <ModelT extends Model>(
-  models: readonly ModelT[],
-  modelValue: (model: ModelT) => string
-): {[index: string]: readonly ModelT[]} => {
-  const modelsMultimap: {[index: string]: ModelT[]} = {};
-  for (const model of models) {
-    const modelValue_ = modelValue(model);
-    const modelsWithValue = modelsMultimap[modelValue_];
-    if (modelsWithValue) {
-      modelsWithValue.push(model);
-    } else {
-      modelsMultimap[modelValue_] = [model];
-    }
-  }
-  return sortModelsMultimap(modelsMultimap);
-};
-
 const sortModelsArray = <ModelT extends Model>(
   models: readonly ModelT[]
 ): readonly ModelT[] =>
@@ -309,17 +292,6 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readProperties({modelSet: this}));
   }
 
-  propertiesByGroupIri(propertyGroupIri: string): readonly Property[] {
-    return this.propertiesByGroupIriIndex[propertyGroupIri] ?? [];
-  }
-
-  @Memoize()
-  private get propertiesByGroupIriIndex(): {
-    [index: string]: readonly Property[];
-  } {
-    return indexModelsByValues(this.properties, property => property.groupIris);
-  }
-
   @Memoize()
   private get propertiesByIriIndex(): {[index: string]: Property} {
     return indexModelsByIri(this.properties);
@@ -381,17 +353,13 @@ export class CachingModelSet implements ModelSet {
     return this.modelByKey(this.worksByKeyIndex, workKey);
   }
 
+  workEventByIri(workEventIri: string): WorkEventUnion {
+    return this.modelByIri(this.workEventsByIriIndex, workEventIri);
+  }
+
   @Memoize()
   get workEvents(): readonly WorkEventUnion[] {
     return sortModelsArray(this.modelReader.readWorkEvents({modelSet: this}));
-  }
-
-  workEventsByWorkIri(workIri: string): readonly WorkEventUnion[] {
-    return this.workEventsByWorkIriIndex[workIri] ?? [];
-  }
-
-  workEventByIri(workEventIri: string): WorkEventUnion {
-    return this.modelByIri(this.workEventsByIriIndex, workEventIri);
   }
 
   @Memoize()
@@ -399,13 +367,6 @@ export class CachingModelSet implements ModelSet {
     [index: string]: WorkEventUnion;
   } {
     return indexModelsByIri(this.workEvents);
-  }
-
-  @Memoize()
-  private get workEventsByWorkIriIndex(): {
-    [index: string]: readonly WorkEventUnion[];
-  } {
-    return indexModelsByValue(this.workEvents, workEvent => workEvent.workIri);
   }
 
   @Memoize()

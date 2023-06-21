@@ -75,9 +75,6 @@ export const dummyModelSet: ModelSet = {
   get properties(): readonly Property[] {
     throw new EvalError("not implemented");
   },
-  propertiesByGroupIri(propertyGroupIri: string): readonly Property[] {
-    throw new EvalError("not implemented");
-  },
   propertyByIri(propertyIri: string): Property {
     throw new EvalError("not implemented");
   },
@@ -109,9 +106,6 @@ export const dummyModelSet: ModelSet = {
     throw new EvalError("not implemented");
   },
   get workEvents(): readonly WorkEventUnion[] {
-    throw new EvalError("not implemented");
-  },
-  workEventsByWorkIri(workIri: string): readonly WorkEventUnion[] {
     throw new EvalError("not implemented");
   },
   get works(): readonly Work[] {

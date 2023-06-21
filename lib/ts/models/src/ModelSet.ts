@@ -33,7 +33,6 @@ export interface ModelSet {
   personByIri(personIri: string): Person;
   personByIriOptional(personIri: string): Person | null;
   readonly properties: readonly Property[];
-  propertiesByGroupIri(propertyGroupIri: string): readonly Property[];
   propertyByIri(propertyIri: string): Property;
   propertyGroupByIri(propertyGroupIri: string): PropertyGroup;
   propertyGroupByIriOptional(propertyGroupIri: string): PropertyGroup | null;
@@ -45,7 +44,6 @@ export interface ModelSet {
   workByIriOptional(workIri: string): Work | null;
   workByKey(workKey: string): Work;
   get workEvents(): readonly WorkEventUnion[];
-  workEventsByWorkIri(workIri: string): readonly WorkEventUnion[];
   workEventByIri(workEventIri: string): WorkEventUnion;
   readonly works: readonly Work[];
   worksByAgentIri(agentIri: string): readonly Work[];
