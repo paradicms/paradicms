@@ -36,6 +36,7 @@ export interface ModelSet {
   propertyByIri(propertyIri: string): Property;
   propertyGroupByIri(propertyGroupIri: string): PropertyGroup;
   propertyGroupByIriOptional(propertyGroupIri: string): PropertyGroup | null;
+  propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[];
   readonly propertyGroups: readonly PropertyGroup[];
   rightsStatementByIri(rightsStatementIri: string): RightsStatement;
   toFastRdfString(): string;

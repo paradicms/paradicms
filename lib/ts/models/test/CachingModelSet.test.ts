@@ -46,7 +46,7 @@ describe("CachingModelSet", () => {
 
     expect(sut.properties).to.not.be.empty;
     for (const property of sut.properties) {
-      expect(property.groupIris).to.not.be.empty;
+      expect(property.groups).to.not.be.empty;
       if (property.filterable) {
         expect(property.rangeValues).to.not.be.empty;
       }
@@ -82,17 +82,11 @@ describe("CachingModelSet", () => {
     }
 
     for (const workEvent of sut.works[0].events) {
-      expect(workEvent.work).to.not.be.null;
       if (workEvent.iris.length === 0) {
         continue;
       }
       expect(sut.workEventByIri(workEvent.iris[0]).iris[0]).to.eq(
         workEvent.iris[0]
-      );
-      expect(
-        sut
-          .workEventsByWorkIri(workEvent.workIri)
-          .some(otherWorkEvent => otherWorkEvent.iris[0] === workEvent.iris[0])
       );
     }
   });

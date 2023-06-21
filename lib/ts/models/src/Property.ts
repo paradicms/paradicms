@@ -11,7 +11,6 @@ export interface Property extends NamedModel, ImagesMixin {
   readonly hidden: boolean;
   readonly label: string;
   readonly groups: readonly PropertyGroup[];
-  readonly groupIris: readonly string[];
   readonly order: number;
   readonly range: NamedNode | null;
   readonly rangeValues: readonly PropertyValue[];

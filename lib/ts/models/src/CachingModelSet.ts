@@ -324,6 +324,19 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.propertyGroups);
   }
 
+  propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[] {
+    return this.propertyGroupsByPropertyKeyIndex[propertyKey] ?? [];
+  }
+
+  @Memoize()
+  private get propertyGroupsByPropertyKeyIndex(): {
+    [index: string]: readonly PropertyGroup[];
+  } {
+    return indexModelsByValues(this.propertyGroups, propertyGroup =>
+      propertyGroup.properties.map(property => property.key)
+    );
+  }
+
   rightsStatementByIri(rightsStatementIri: string): RightsStatement {
     return this.modelByIri(this.rightsStatementsByIriIndex, rightsStatementIri);
   }
