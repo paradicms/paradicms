@@ -3,6 +3,7 @@ import {dcterms, skos} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {RightsStatement} from "../RightsStatement";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {rightsStatementFactories} from "../rightsStatementFactories";
 
 export class RightsStatementsDotOrgRightsStatement
   extends Mixin(ResourceBackedNamedModel)
@@ -31,3 +32,8 @@ export class RightsStatementsDotOrgRightsStatement
     );
   }
 }
+
+rightsStatementFactories.register(
+  dcterms.RightsStatement,
+  RightsStatementsDotOrgRightsStatement
+);

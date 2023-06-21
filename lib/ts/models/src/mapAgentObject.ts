@@ -2,9 +2,8 @@ import {Term} from "@rdfjs/types";
 import {AgentUnion} from "./AgentUnion";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {LiteralAgent} from "./literal/LiteralAgent";
-import {cms, rdf} from "@paradicms/vocabularies";
-import {CmsPerson} from "./cms/CmsPerson";
-import {CmsOrganization} from "./cms/CmsOrganization";
+import {rdf} from "@paradicms/vocabularies";
+import {agentFactories} from "./agentFactories";
 
 /**
  * Map a term in a modelSet to an Agent.
@@ -20,10 +19,12 @@ export const mapAgentObject = (
         rdf.type,
         null
       )) {
-        if (rdfTypeQuad.object.equals(cms.Organization)) {
-          return new CmsOrganization({...modelParameters, identifier: term});
-        } else if (rdfTypeQuad.object.equals(cms.Person)) {
-          return new CmsPerson({...modelParameters, identifier: term});
+        if (rdfTypeQuad.object.termType !== "NamedNode") {
+          continue;
+        }
+        const agentFactory = agentFactories.get(rdfTypeQuad.object);
+        if (agentFactory !== null) {
+          return new agentFactory({...modelParameters, identifier: term});
         }
       }
       throw new RangeError("unable to determine agent type from blank node");

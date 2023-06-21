@@ -1,13 +1,13 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {DatasetCore, NamedNode} from "@rdfjs/types";
-import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
-import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import * as RdfString from "rdf-string";
 import invariant from "ts-invariant";
 import {ModelIdentifier} from "./ModelIdentifier";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 import {PartialModelReader} from "./PartialModelReader";
+import {ResourceBackedModelFactory} from "./ResourceBackedModelFactory";
+import {Model} from "./Model";
 
 export abstract class DatasetModelReader extends PartialModelReader {
   constructor(protected readonly dataset: DatasetCore) {
@@ -37,7 +37,7 @@ export abstract class DatasetModelReader extends PartialModelReader {
 
   protected readNamedModels<NamedModelT extends Model>(kwds: {
     class_: NamedNode;
-    factory: {new (kwds: ResourceBackedModelParameters): NamedModelT};
+    factory: ResourceBackedModelFactory<NamedModelT>;
     modelSet: ModelSet;
     instanceOfPredicate?: NamedNode;
     subClassOfPredicate?: NamedNode;

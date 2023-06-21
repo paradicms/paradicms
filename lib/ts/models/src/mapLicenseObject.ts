@@ -1,9 +1,9 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
 import {License} from "./License";
-import {CmsLicense} from "./cms/CmsLicense";
 import {LiteralLicense} from "./literal/LiteralLicense";
+import {licenseFactories} from "./licenseFactories";
 
 /**
  * Map a term in a modelSet to a License.
@@ -19,8 +19,12 @@ export const mapLicenseObject = (
         rdf.type,
         null
       )) {
-        if (rdfTypeQuad.object.equals(cms.License)) {
-          return new CmsLicense({
+        if (rdfTypeQuad.object.termType !== "NamedNode") {
+          continue;
+        }
+        const licenseFactory = licenseFactories.get(rdfTypeQuad.object);
+        if (licenseFactory !== null) {
+          return new licenseFactory({
             ...modelParameters,
             identifier: term,
           });

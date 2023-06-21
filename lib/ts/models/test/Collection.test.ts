@@ -1,12 +1,7 @@
 import {expect} from "chai";
 import {Text} from "../src";
-import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
-
-const THUMBNAIL_SELECTOR: ThumbnailSelector = {
-  targetDimensions: {height: 200, width: 200},
-};
 
 describe("Collection", () => {
   const sut = testModelSet.collections[0];

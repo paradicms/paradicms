@@ -2,8 +2,8 @@ import {Term} from "@rdfjs/types";
 import anyDateParser from "any-date-parser";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {OwlTimeDateTimeDescription} from "./owl-time/OwlTimeDateTimeDescription";
-import {rdf, time} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
+import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
 
 /**
  * Map a term in a modelSet to a DateTimeDescription.
@@ -21,18 +21,22 @@ export const mapDateTimeDescriptionObject = (
         null,
         modelParameters.graph
       )) {
-        if (rdfTypeQuad.object.equals(time.DateTimeDescription)) {
-          return new OwlTimeDateTimeDescription({
+        if (rdfTypeQuad.object.termType !== "NamedNode") {
+          continue;
+        }
+        const dateTimeDescriptionFactory = dateTimeDescriptionFactories.get(
+          rdfTypeQuad.object
+        );
+        if (dateTimeDescriptionFactory) {
+          return new dateTimeDescriptionFactory({
             ...modelParameters,
             identifier: term,
           });
-        } else {
-          throw new RangeError(
-            "unknown DateTimeDescription rdf:type: " + rdfTypeQuad.object.value
-          );
         }
       }
-      throw new RangeError("DateTimeDescription node has no rdf:type");
+      throw new RangeError(
+        "unable to determine DateTimeDescription type from node"
+      );
     case "Literal": {
       const parsed = anyDateParser.attempt(term.value);
       const partialDateTime = {

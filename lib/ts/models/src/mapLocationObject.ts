@@ -2,8 +2,8 @@ import {Term} from "@rdfjs/types";
 import {Location} from "./Location";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {LiteralLocation} from "./literal/LiteralLocation";
-import {cms, rdf} from "@paradicms/vocabularies";
-import {CmsLocation} from "./cms/CmsLocation";
+import {rdf} from "@paradicms/vocabularies";
+import {locationFactories} from "./locationFactories";
 
 /**
  * Map a term in a modelSet to a Location.
@@ -19,8 +19,12 @@ export const mapLocationObject = (
         rdf.type,
         null
       )) {
-        if (rdfTypeQuad.object.equals(cms.Location)) {
-          return new CmsLocation({
+        if (rdfTypeQuad.object.termType !== "NamedNode") {
+          continue;
+        }
+        const locationFactory = locationFactories.get(rdfTypeQuad.object);
+        if (locationFactory !== null) {
+          return new locationFactory({
             ...modelParameters,
             identifier: term,
           });

@@ -2,8 +2,8 @@ import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {Text} from "./Text";
 import {LiteralText} from "./literal/LiteralText";
-import {CmsText} from "./cms/CmsText";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
+import {textFactories} from "./textFactories";
 
 /**
  * Map a term in a modelSet to a Text.
@@ -20,8 +20,12 @@ export const mapTextObject = (
         rdf.type,
         null
       )) {
-        if (rdfTypeQuad.object.equals(cms.Text)) {
-          return new CmsText({...modelParameters, identifier: term});
+        if (rdfTypeQuad.object.termType !== "NamedNode") {
+          continue;
+        }
+        const textFactory = textFactories.get(rdfTypeQuad.object);
+        if (textFactory !== null) {
+          return new textFactory({...modelParameters, identifier: term});
         }
       }
       throw new RangeError(

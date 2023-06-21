@@ -1,9 +1,9 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
 import {RightsStatement} from "./RightsStatement";
-import {CmsRightsStatement} from "./cms/CmsRightsStatement";
 import {LiteralRightsStatement} from "./literal/LiteralRightsStatement";
+import {rightsStatementFactories} from "./rightsStatementFactories";
 
 /**
  * Map a term in a modelSet to a RightsStatement.
@@ -19,8 +19,14 @@ export const mapRightsStatementObject = (
         rdf.type,
         null
       )) {
-        if (rdfTypeQuad.object.equals(cms.RightsStatement)) {
-          return new CmsRightsStatement({
+        if (rdfTypeQuad.object.termType !== "NamedNode") {
+          continue;
+        }
+        const rightsStatementFactory = rightsStatementFactories.get(
+          rdfTypeQuad.object
+        );
+        if (rightsStatementFactory !== null) {
+          return new rightsStatementFactory({
             ...modelParameters,
             identifier: term,
           });

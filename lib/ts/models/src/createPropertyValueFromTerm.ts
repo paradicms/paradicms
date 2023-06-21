@@ -1,4 +1,4 @@
-import {cms, dcmitype, rdf} from "@paradicms/vocabularies";
+import {dcmitype} from "@paradicms/vocabularies";
 import {DatasetCore, Quad_Graph, Term} from "@rdfjs/types";
 import {AgentPropertyValue} from "./AgentPropertyValue";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
@@ -7,9 +7,10 @@ import {LiteralPropertyValue} from "./LiteralPropertyValue";
 import {ModelSet} from "./ModelSet";
 import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
-import {CmsText} from "./cms/CmsText";
 import {Property} from "./Property";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
+import {mapTextObject} from "./mapTextObject";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 
 export const createPropertyValueFromTerm = (kwds: {
   dataset: DatasetCore;
@@ -20,21 +21,23 @@ export const createPropertyValueFromTerm = (kwds: {
 }): PropertyValue | null => {
   const {dataset, modelSet, property, term, termGraph} = kwds;
 
+  const modelParameters: Omit<ResourceBackedModelParameters, "identifier"> = {
+    dataset,
+    graph: termGraph as ModelGraphIdentifier, // Blank node must be in the same graph as the current node
+    modelSet,
+  };
+
   switch (term.termType) {
-    case "BlankNode": {
-      if (dataset.match(term, rdf.type, cms.Text, termGraph).size === 0) {
-        return null;
+    case "BlankNode":
+      {
+        const text = mapTextObject(modelParameters, term);
+        if (text !== null) {
+          return new TextPropertyValue(property, text);
+        } else {
+          return null;
+        }
       }
-      return new TextPropertyValue(
-        property,
-        new CmsText({
-          dataset,
-          graph: termGraph as ModelGraphIdentifier, // Blank node must be in the same graph as the current node
-          identifier: term,
-          modelSet,
-        })
-      );
-    }
+      break;
     case "NamedNode": {
       // #78 index lookups take half as much time (amortized over multiple works)
       // as getting the rdf:type of the NamedNode and branching on its value.
@@ -59,6 +62,12 @@ export const createPropertyValueFromTerm = (kwds: {
       {
         if (term.value.startsWith(dcmitype[""].value)) {
           return new DcmiTypePropertyValue(term, property);
+        }
+      }
+      {
+        const text = mapTextObject(modelParameters, term);
+        if (text !== null) {
+          return new TextPropertyValue(property, text);
         }
       }
       return null;

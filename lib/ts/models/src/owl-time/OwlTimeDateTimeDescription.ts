@@ -4,6 +4,7 @@ import {Mixin} from "ts-mixer";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {ResourceBackedModel} from "../ResourceBackedModel";
+import {dateTimeDescriptionFactories} from "../dateTimeDescriptionFactories";
 
 export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) implements DateTimeDescription {
   /**
@@ -124,3 +125,5 @@ export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) imple
     });
   }
 }
+
+dateTimeDescriptionFactories.register(time.DateTimeDescription, OwlTimeDateTimeDescription);

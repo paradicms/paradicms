@@ -1,8 +1,9 @@
 import {requireNonNull} from "@paradicms/utilities";
-import {dcterms, skos} from "@paradicms/vocabularies";
+import {cms, dcterms, skos} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {RightsStatement} from "../RightsStatement";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {rightsStatementFactories} from "../rightsStatementFactories";
 
 export class CmsRightsStatement extends Mixin(CmsNamedModel)
   implements RightsStatement {
@@ -30,3 +31,5 @@ export class CmsRightsStatement extends Mixin(CmsNamedModel)
     );
   }
 }
+
+rightsStatementFactories.register(cms.RightsStatement, CmsRightsStatement);

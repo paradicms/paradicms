@@ -1,8 +1,9 @@
 import {requireNonNull} from "@paradicms/utilities";
-import {dc11} from "@paradicms/vocabularies";
+import {cc, dc11} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {License} from "../License";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {licenseFactories} from "../licenseFactories";
 
 export class CreativeCommonsLicense extends Mixin(ResourceBackedNamedModel)
   implements License {
@@ -32,3 +33,5 @@ export class CreativeCommonsLicense extends Mixin(ResourceBackedNamedModel)
     );
   }
 }
+
+licenseFactories.register(cc.License, CreativeCommonsLicense);
