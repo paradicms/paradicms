@@ -7,12 +7,13 @@ import {selectThumbnail} from "../selectThumbnail";
 import {SchemaNamedModel} from "./SchemaNamedModel";
 import {requireNonNull} from "@paradicms/utilities";
 import {SchemaCreativeWorkMixin} from "./SchemaCreativeWorkMixin";
+import {schema} from "@paradicms/vocabularies";
 
 export class SchemaCollection extends Mixin(
   SchemaNamedModel,
     SchemaCreativeWorkMixin
 ) implements Collection {
-  get label(): string {
+  override get label(): string {
     return this.name;
   }
 
@@ -21,11 +22,8 @@ export class SchemaCollection extends Mixin(
   }
 
   override thumbnail(selector: ThumbnailSelector): Image | null {
-    const collectionImages: readonly Image[] = this.modelSet.imagesByDepictsIri(
-      this.iri
-    );
-    if (collectionImages.length > 0) {
-      const thumbnail = selectThumbnail(collectionImages, selector);
+    if (this.images.length > 0) {
+      const thumbnail = selectThumbnail(this.images, selector);
       if (thumbnail) {
         return thumbnail;
       }
@@ -41,6 +39,6 @@ export class SchemaCollection extends Mixin(
   }
 
   get works(): readonly Work[] {
-    return this.modelSet.worksByCollectionKey(this.key);
+    return this.filterAndMapObjects(schema.hasPart, term => term.termType === "NamedNode" ? this.modelSet.workByIri(term.value) : null);
   }
 }
