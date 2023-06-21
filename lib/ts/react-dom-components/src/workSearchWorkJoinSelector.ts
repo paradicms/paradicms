@@ -10,9 +10,6 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
   events: {
     agents: {},
     location: true,
-    work: {
-      location: true,
-    },
   },
   license: true,
   location: true,

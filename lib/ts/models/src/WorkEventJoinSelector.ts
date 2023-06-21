@@ -1,5 +1,4 @@
 import {AgentJoinSelector} from "./AgentJoinSelector";
-import {WorkJoinSelector} from "./WorkJoinSelector";
 
 /**
  * See note in ModelSetBuilder re: the use of this interface.
@@ -7,5 +6,4 @@ import {WorkJoinSelector} from "./WorkJoinSelector";
 export interface WorkEventJoinSelector {
   agents?: AgentJoinSelector;
   location?: boolean;
-  work?: WorkJoinSelector;
 }

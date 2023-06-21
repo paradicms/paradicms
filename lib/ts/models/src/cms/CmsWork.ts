@@ -1,5 +1,5 @@
 import {DataFactory} from "@paradicms/rdf";
-import {dcterms} from "@paradicms/vocabularies";
+import {cms, dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {PropertyValue} from "../PropertyValue";
@@ -72,7 +72,7 @@ export class CmsWork extends Mixin(
       result.push(...getRightsWorkAgents(this.description, "Text"));
     }
 
-    for (const image of this.originalImages) {
+    for (const image of this.images) {
       result.push(...getRightsWorkAgents(image, "Image"));
     }
 
@@ -122,7 +122,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return this.modelSet.workEventsByWorkIri(this.iri);
+    return this.filterAndMapObjects(cms.event, term => term.termType === "NamedNode" ? this.modelSet.workEventByIri(term.value) : null);
   }
 
   get label(): string {

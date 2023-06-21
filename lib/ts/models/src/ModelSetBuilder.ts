@@ -392,10 +392,6 @@ export class ModelSetBuilder {
       this.addLocation(workEvent.location);
     }
 
-    if (joinSelector.work) {
-      this.addWork(workEvent.work, joinSelector.work);
-    }
-
     switch (workEvent.type) {
       case "WorkCreation": {
         if (joinSelector.agents) {

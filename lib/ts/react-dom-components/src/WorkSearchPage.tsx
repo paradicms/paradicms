@@ -220,7 +220,7 @@ export const WorkSearchPage: React.FunctionComponent<{
             offset: 0,
             requireDate: true,
             workEventJoinSelector: {
-              work: {},
+              // work: {},
             },
           },
           worksQuery

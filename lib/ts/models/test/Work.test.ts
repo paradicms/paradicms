@@ -34,8 +34,8 @@ describe("Work", () => {
     ).to.have.length(6); // 2 blank, 4 literal
   });
 
-  it("should get the work's collections", () => {
-    expect(sut.collections).to.not.be.empty;
+  it("should get the work's events", () => {
+    expect(sut.events).to.not.be.empty;
   });
 
   it("should get the work's images", () => {

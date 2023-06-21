@@ -9,6 +9,7 @@ import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
 import {mapDateTimeDescriptionObject} from "../mapDateTimeDescriptionObject";
 import {mapLocationObject} from "../mapLocationObject";
+import {requireNonNull} from "@paradicms/utilities";
 
 export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   implements Event {
@@ -85,8 +86,6 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
     );
   }
 
-  abstract readonly label: string;
-
   @Memoize()
   get location(): Location | null {
     return this.findAndMapObject(dcterms.spatial, term =>
@@ -125,7 +124,11 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
     );
   }
 
-  get title(): string | null {
+  get label(): string {
+    return requireNonNull(this.title);
+  }
+
+  protected get title(): string | null {
     return this.findAndMapObject(dcterms.title, this.mapStringObject);
   }
 }

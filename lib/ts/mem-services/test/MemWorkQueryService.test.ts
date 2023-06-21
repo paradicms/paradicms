@@ -94,7 +94,6 @@ describe("MemWorkQueryService", () => {
     expect(result.modelSet.works).to.not.be.empty;
     for (const workEvent of result.modelSet.workEvents) {
       expect(workEvent.location).to.not.be.null;
-      expect(workEvent.work).to.not.be.null;
       switch (workEvent.type) {
           case "WorkCreation":
               expect(workEvent.creators).to.not.be.empty;
