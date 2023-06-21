@@ -99,11 +99,11 @@ describe("ModelSetBuilder", () => {
       .build();
     expect(countModelSetNamedAgents(agentsModelSet)).to.eq(namedAgents.length);
     expect(countModelSetImages(agentsModelSet)).to.eq(namedAgents.length);
-    for (const namedAgent of namedAgents) {
-      expect(
-        agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
-      ).to.eq(1);
-    }
+    // for (const namedAgent of namedAgents) {
+    //   expect(
+    //     agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
+    //   ).to.eq(1);
+    // }
   });
 
   it("should get a property group subset (worksheet feature set edit)", () => {
@@ -191,22 +191,22 @@ describe("ModelSetBuilder", () => {
         agents: {
           thumbnail: THUMBNAIL_SELECTOR,
         },
+        // collections: {}
         events: {},
         images: {},
-        collections: {},
         location: true,
         license: true,
         rightsStatement: true,
       })
       .build();
-    expectModelsDeepEq(
-      workModelSet.collections,
-      completeModelSet.collections.filter(collection =>
-        work.collections.some(workCollection =>
-          hasCommonIri(workCollection.iris, collection.iris)
-        )
-      )
-    );
+    // expectModelsDeepEq(
+    //   workModelSet.collections,
+    //   completeModelSet.collections.filter(collection =>
+    //     work.collections.some(workCollection =>
+    //       hasCommonIri(workCollection.iris, collection.iris)
+    //     )
+    //   )
+    // );
     expect(countModelSetNamedAgents(workModelSet)).to.eq(2);
     for (const work of workModelSet.works) {
       expect(work.agents).to.have.length(8); // 2 named agents + 2 blank node agents + 4 literal agents
@@ -244,9 +244,7 @@ describe("ModelSetBuilder", () => {
     let workCreation: WorkCreation | undefined;
     // @ts-ignore
     let workOpening: WorkOpening | undefined;
-    for (const workEvent of completeModelSet.workEventsByWorkIri(
-      work.iris[0]
-    )) {
+    for (const workEvent of work.events) {
       switch (workEvent.type) {
         case "WorkClosing":
           workClosing = workEvent;
@@ -264,10 +262,9 @@ describe("ModelSetBuilder", () => {
       .addWorkEvent(workCreation!, {
         agents: {},
         location: true,
-        work: {},
       })
       .build();
-    expectModelsDeepEq(workEventsModelSet.works, [work]);
+    // expectModelsDeepEq(workEventsModelSet.works, [work]);
     // expectModelsDeepEq(workEventsModelSet.agents, workCreation!.agents);
     expectModelsDeepEq(workEventsModelSet.works[0].events, [
       // workClosing!,

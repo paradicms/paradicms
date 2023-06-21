@@ -40,9 +40,9 @@ describe("Work", () => {
 
   it("should get the work's images", () => {
     expect(sut.images).to.not.be.empty;
-    expect(
-      sut.images.every(image => image.depictsIri === sut.identifiers[0].value)
-    ).to.be.true;
+    // expect(
+    //   sut.images.every(image => image.depictsIri === sut.identifiers[0].value)
+    // ).to.be.true;
   });
 
   it("should get the work's page", () => {

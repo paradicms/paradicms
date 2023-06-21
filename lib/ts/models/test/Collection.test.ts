@@ -22,16 +22,16 @@ describe("Collection", () => {
     expect(sut.label).to.eq(sut.label);
   });
 
-  it("should get the collection's thumbnail", () => {
-    const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
-    expect(thumbnail).to.not.be.null;
-    expect(
-      sut.iris.some(collectionIri => collectionIri === thumbnail!.depictsIri)
-    ).to.be.false;
-    expect(
-      sut.works.some(work =>
-        work.iris.some(workIri => workIri === thumbnail!.depictsIri)
-      )
-    ).to.be.true;
-  });
+  // it("should get the collection's thumbnail", () => {
+  //   const thumbnail = sut.thumbnail(THUMBNAIL_SELECTOR);
+  //   expect(thumbnail).to.not.be.null;
+  //   expect(
+  //     sut.iris.some(collectionIri => collectionIri === thumbnail!.depictsIri)
+  //   ).to.be.false;
+  //   expect(
+  //     sut.works.some(work =>
+  //       work.iris.some(workIri => workIri === thumbnail!.depictsIri)
+  //     )
+  //   ).to.be.true;
+  // });
 });

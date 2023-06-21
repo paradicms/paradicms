@@ -5,10 +5,9 @@ import {describe} from "mocha";
 
 describe("WorkCreation", () => {
   const work = testModelSet.works[0];
-
-  const sut: WorkCreation = testModelSet
-    .workEventsByWorkIri(work.iris[0])
-    .find(workEvent => workEvent.type === "WorkCreation") as WorkCreation;
+  const sut: WorkCreation = work.events.find(
+    workEvent => workEvent.type === "WorkCreation"
+  ) as WorkCreation;
 
   before(() => {
     expect(sut).is.not.undefined;

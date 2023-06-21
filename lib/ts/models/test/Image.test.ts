@@ -5,19 +5,9 @@ import {describe} from "mocha";
 
 describe("Image", () => {
   // sut should be an original image
-  const sut = testModelSet.works[0].images.find(image => image.isOriginal)!;
-
-  it("should get the image's original image", () => {
-    expect(sut.originalImage.iris).to.eq(sut.iris);
-  });
-
-  it("should get derived images", () => {
-    expect(sut.derivedImages).to.not.be.empty;
-    for (const derivedImage of sut.derivedImages) {
-      expect(derivedImage.originalImageIri).to.eq(sut.iris[0]);
-      expect(derivedImage.derivedImages).to.be.empty;
-    }
-  });
+  const sut = testModelSet.works[0].images.find(
+    image => image.thumbnails.length === 0
+  )!;
 
   it("should get image's dimensions", () => {
     expect(sut.exactDimensions).to.not.be.null;
@@ -39,6 +29,13 @@ describe("Image", () => {
   it("should get a thumbnail", () => {
     expect(sut.thumbnail({targetDimensions: {height: 200, width: 200}})).to.not
       .be.null;
+  });
+
+  it("should get all thumbnails", () => {
+    expect(sut.thumbnails).to.not.be.empty;
+    for (const thumbnail of sut.thumbnails) {
+      expect(thumbnail.thumbnails).to.be.empty;
+    }
   });
 
   it("should get the label", () => {

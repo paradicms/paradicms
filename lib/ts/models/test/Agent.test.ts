@@ -7,7 +7,6 @@ describe("Agent", () => {
 
   it("should get the agent's images", () => {
     expect(sut.images).to.not.be.empty;
-    expect(sut.originalImages).to.not.be.empty;
     expect(sut.thumbnail({targetDimensions: {height: 600, width: 600}})).to.not
       .be.null;
   });
