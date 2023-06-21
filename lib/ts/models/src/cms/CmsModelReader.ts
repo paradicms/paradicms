@@ -33,6 +33,8 @@ import {CmsWorkOpening} from "./CmsWorkOpening";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
 
+require("./CmsText"); // To force factory registration
+
 const workEventClassesByRdfType = (() => {
   const result: {
     [index: string]: {
