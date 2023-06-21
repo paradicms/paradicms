@@ -1,15 +1,15 @@
 import {Term} from "@rdfjs/types";
-import {AgentUnion} from "../AgentUnion";
-import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
-import {LiteralAgent} from "../literal/LiteralAgent";
+import {AgentUnion} from "./AgentUnion";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {LiteralAgent} from "./literal/LiteralAgent";
 import {cms, rdf} from "@paradicms/vocabularies";
-import {CmsPerson} from "./CmsPerson";
-import {CmsOrganization} from "./CmsOrganization";
+import {CmsPerson} from "./cms/CmsPerson";
+import {CmsOrganization} from "./cms/CmsOrganization";
 
 /**
  * Map a term in a modelSet to an Agent.
  */
-export const mapCmsAgentObject = (
+export const mapAgentObject = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): AgentUnion | null => {

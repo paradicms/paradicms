@@ -6,9 +6,9 @@ import {Event} from "../Event";
 import {Location} from "../Location";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
-import {mapCmsLocationObject} from "./mapCmsLocationObject";
 import {CmsNamedModel} from "./CmsNamedModel";
 import {mapDateTimeDescriptionObject} from "../mapDateTimeDescriptionObject";
+import {mapLocationObject} from "../mapLocationObject";
 
 export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   implements Event {
@@ -90,7 +90,7 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   @Memoize()
   get location(): Location | null {
     return this.findAndMapObject(dcterms.spatial, term =>
-      mapCmsLocationObject(this, term)
+      mapLocationObject(this, term)
     );
   }
 

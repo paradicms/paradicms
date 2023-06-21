@@ -16,10 +16,10 @@ import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsRelationsMixin} from "./CmsRelationsMixin";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
-import {mapCmsLocationObject} from "./mapCmsLocationObject";
-import {mapCmsTextObject} from "./mapCmsTextObject";
 import {Property} from "../Property";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {mapTextObject} from "../mapTextObject";
+import {mapLocationObject} from "../mapLocationObject";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -87,7 +87,7 @@ export class CmsWork extends Mixin(
   @Memoize()
   override get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
-      mapCmsTextObject(this, term)
+      mapTextObject(this, term)
     );
   }
 
@@ -136,7 +136,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get location(): WorkLocation | null {
-    const location = this.findAndMapObject(dcterms.spatial, term => mapCmsLocationObject(this, term));
+    const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
     if (location) {
       return {
         label: this.title,
