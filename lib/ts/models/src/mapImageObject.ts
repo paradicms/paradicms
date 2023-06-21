@@ -2,7 +2,8 @@ import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {Image} from "./Image";
 import {CmsImage} from "./cms/CmsImage";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {cms, rdf, schema} from "@paradicms/vocabularies";
+import {SchemaImageObject} from "./schema/SchemaImageObject";
 
 /**
  * Map a term in a modelSet to an Image.
@@ -20,6 +21,11 @@ export const mapImageObject = (
       )) {
         if (rdfTypeQuad.object.equals(cms.Image)) {
           return new CmsImage({
+            ...modelParameters,
+            identifier: term,
+          });
+        } else if (rdfTypeQuad.object.equals(schema.ImageObject)) {
+          return new SchemaImageObject({
             ...modelParameters,
             identifier: term,
           });

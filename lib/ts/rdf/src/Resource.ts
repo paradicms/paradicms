@@ -79,12 +79,20 @@ export abstract class Resource {
     if (term.termType !== "Literal") {
       return null;
     }
-    const parsedFloat = parseFloat(term.value);
-    if (!isNaN(parsedFloat)) {
-      return parsedFloat;
-    } else {
-      return null;
+    if (
+      !term.datatype ||
+      term.datatype.equals(xsd.float) ||
+      term.datatype.equals(xsd.double) ||
+      term.datatype.equals(xsd.decimal)
+    ) {
+      const parsedFloat = parseFloat(term.value);
+      if (!isNaN(parsedFloat)) {
+        return parsedFloat;
+      } else {
+        return null;
+      }
     }
+    return null;
   }
 
   protected mapIntObject(term: Term): number | null {
