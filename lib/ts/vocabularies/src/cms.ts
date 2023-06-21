@@ -5,21 +5,18 @@ interface Cms {
   "": NamedNode<"http://www.paradicms.org/ns/cms#">;
 
   // Properties
-  collection: NamedNode<"http://www.paradicms.org/ns/cms#collection">;
+  event: NamedNode<"http://www.paradicms.org/ns/cms#event">;
   imageMaxHeight: NamedNode<"http://www.paradicms.org/ns/cms#imageMaxHeight">;
   imageMaxWidth: NamedNode<"http://www.paradicms.org/ns/cms#imageMaxWidth">;
   imageSrc: NamedNode<"http://www.paradicms.org/ns/cms#imageSrc">;
-  thumbnailOf: NamedNode<"http://www.paradicms.org/ns/cms#thumbnailOf">;
   propertyFilterable: NamedNode<
     "http://www.paradicms.org/ns/cms#propertyFilterable"
   >;
-  propertyGroup: NamedNode<"http://www.paradicms.org/ns/cms#propertyGroup">;
   propertyHidden: NamedNode<"http://www.paradicms.org/ns/cms#propertyHidden">;
   propertyOrder: NamedNode<"http://www.paradicms.org/ns/cms#propertyOrder">;
   propertySearchable: NamedNode<
     "http://www.paradicms.org/ns/cms#propertySearchable"
   >;
-  work: NamedNode<"http://www.paradicms.org/ns/cms#work">;
 
   // Resources
   Agent: NamedNode<"http://www.paradicms.org/ns/cms#Agent">;
