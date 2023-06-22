@@ -5,9 +5,9 @@ import {describe} from "mocha";
 import {SchemaCollection} from "../../src/schema/SchemaCollection";
 
 describe("SchemaCollection", () => {
-  const sut: SchemaCollection = testModelSet.collections.find(
-    collection => collection instanceof SchemaCollection
-  )! as SchemaCollection;
+  const sut: SchemaCollection = testModelSet.collectionByIri(
+    "http://example.com/collection0"
+  ) as SchemaCollection;
 
   it("should get the collection's description", () => {
     expect(sut.description).not.to.be.null;
