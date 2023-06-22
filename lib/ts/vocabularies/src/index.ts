@@ -1,6 +1,5 @@
 export {strict as cms} from "./cms";
 export {strict as configuration} from "./configuration";
-export {strict as contact} from "./contact";
 export {strict as schema} from "./schema";
 export {strict as vra} from "./vra";
 export {loose as wd} from "./wd";

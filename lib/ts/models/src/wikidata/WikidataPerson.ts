@@ -14,7 +14,6 @@ export class WikidataPerson extends WikidataModel implements Person {
   }
 
   readonly sameAs: readonly Person[] = [];
-  readonly sortName = null;
   readonly type = "Person";
   readonly works: readonly Work[] = [];
 }

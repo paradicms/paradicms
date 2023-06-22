@@ -18,8 +18,4 @@ describe("Person", () => {
     expect(sut.thumbnail({targetDimensions: {height: 600, width: 600}})).to.not
       .be.null;
   });
-
-  it("should get the person's sort name", () => {
-    expect(sut.sortName).to.not.be.empty;
-  });
 });
