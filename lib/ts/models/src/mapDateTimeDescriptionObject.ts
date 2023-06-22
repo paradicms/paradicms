@@ -5,8 +5,6 @@ import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {rdf} from "@paradicms/vocabularies";
 import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
 
-require("./owl-time/OwlTimeDateTimeDescription"); // Force registration
-
 /**
  * Map a term in a modelSet to a DateTimeDescription.
  */

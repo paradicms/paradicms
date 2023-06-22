@@ -8,6 +8,7 @@ import {ModelSet} from "./ModelSet";
 import {RightsStatementsDotOrgModelReader} from "./rights-statements-dot-org/RightsStatementsDotOrgModelReader";
 import {CreativeCommonsModelReader} from "./creative-commons/CreativeCommonsModelReader";
 import {SchemaModelReader} from "./schema/SchemaModelReader";
+import {registerResourceBackedModelFactories} from "./registerResourceBackedModelFactories";
 
 export class ModelSetFactory {
   static fromFastRdfString(fastRdfString: string): ModelSet {
@@ -27,3 +28,5 @@ export class ModelSetFactory {
     );
   }
 }
+
+registerResourceBackedModelFactories();

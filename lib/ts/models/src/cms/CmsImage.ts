@@ -9,7 +9,6 @@ import {selectThumbnail} from "../selectThumbnail";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
 import {mapImageObject} from "../mapImageObject";
-import {imageFactories} from "../imageFactories";
 
 export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
   implements Image {
@@ -81,5 +80,3 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
     return this.findAndMapObject(dcterms.title, this.mapStringObject);
   }
 }
-
-imageFactories.register(cms.Image, CmsImage);

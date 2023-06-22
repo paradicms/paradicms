@@ -1,9 +1,8 @@
 import {requireNonNull} from "@paradicms/utilities";
-import {cms, rdf} from "@paradicms/vocabularies";
+import {rdf} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsModel} from "./CmsModel";
-import {textFactories} from "../textFactories";
 
 export class CmsText extends Mixin(CmsModel, CmsRightsMixin) {
   override toString(): string {
@@ -17,4 +16,4 @@ export class CmsText extends Mixin(CmsModel, CmsRightsMixin) {
   }
 }
 
-textFactories.register(cms.Text, CmsText);
+

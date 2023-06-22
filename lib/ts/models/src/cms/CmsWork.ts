@@ -72,10 +72,6 @@ export class CmsWork extends Mixin(
       result.push(...getRightsWorkAgents(this.description, "Text"));
     }
 
-    for (const image of this.images) {
-      result.push(...getRightsWorkAgents(image, "Image"));
-    }
-
     return result;
   }
 
@@ -122,7 +118,16 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return this.filterAndMapObjects(cms.event, term => term.termType === "NamedNode" ? this.modelSet.workEventByIri(term.value) : null);
+    return this.filterAndMapObjects(cms.event, term => {
+      switch (term.termType) {
+        case "BlankNode":
+
+        case "NamedNode":
+          return this.modelSet.workEventByIri(term.value);
+        default:
+          return null;
+      }
+    });
   }
 
   get label(): string {

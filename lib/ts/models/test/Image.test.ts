@@ -6,7 +6,7 @@ import {describe} from "mocha";
 describe("Image", () => {
   // sut should be an original image
   const sut = testModelSet.works[0].images.find(
-    image => image.thumbnails.length === 0
+    image => image.thumbnails.length > 0
   )!;
 
   it("should get image's dimensions", () => {

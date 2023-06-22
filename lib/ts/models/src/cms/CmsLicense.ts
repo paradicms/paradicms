@@ -1,9 +1,8 @@
 import {requireNonNull} from "@paradicms/utilities";
-import {cms, dc11} from "@paradicms/vocabularies";
+import {dc11} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {License} from "../License";
 import {CmsNamedModel} from "./CmsNamedModel";
-import {licenseFactories} from "../licenseFactories";
 
 export class CmsLicense extends Mixin(CmsNamedModel) implements License {
   // get identifier(): string {
@@ -32,5 +31,3 @@ export class CmsLicense extends Mixin(CmsNamedModel) implements License {
     );
   }
 }
-
-licenseFactories.register(cms.License, CmsLicense);

@@ -1,8 +1,7 @@
-import {cms, contact, foaf} from "@paradicms/vocabularies";
+import {contact, foaf} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Person} from "../Person";
 import {CmsAgent} from "./CmsAgent";
-import {agentFactories} from "../agentFactories";
 
 export class CmsPerson extends Mixin(CmsAgent) implements Person {
   get familyName(): string | null {
@@ -19,5 +18,3 @@ export class CmsPerson extends Mixin(CmsAgent) implements Person {
 
   readonly type: "Person" = "Person";
 }
-
-agentFactories.register(cms.Person, CmsPerson);

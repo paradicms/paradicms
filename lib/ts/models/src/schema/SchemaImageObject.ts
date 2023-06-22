@@ -7,7 +7,6 @@ import {Memoize} from "typescript-memoize";
 import {mapImageObject} from "../mapImageObject";
 import {ImageDimensions} from "../ImageDimensions";
 import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
-import {imageFactories} from "../imageFactories";
 
 export class SchemaImageObject
   extends Mixin(SchemaNamedModel, SchemaMediaObjectMixin)
@@ -72,5 +71,3 @@ export class SchemaImageObject
     );
   }
 }
-
-imageFactories.register(schema.ImageObject, SchemaImageObject);

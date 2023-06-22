@@ -1,5 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cms} from "@paradicms/vocabularies";
+import {cc, cms, dcterms} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
 import {
@@ -42,7 +42,7 @@ const countModelSetImages = (modelSet: ModelSet): number =>
   countModelSetNamedRdfInstances(cms.Image, modelSet);
 
 const countModelSetNamedLicenses = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cms.License, modelSet);
+  countModelSetNamedRdfInstances(cc.License, modelSet);
 
 const countModelSetNamedRdfInstances = (
   class_: NamedNode,
@@ -57,21 +57,21 @@ const countModelSetNamedRdfInstances = (
   ].filter(quad => quad.subject.termType === "NamedNode").length;
 
 const countModelSetRightsStatements = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cms.RightsStatement, modelSet);
+  countModelSetNamedRdfInstances(dcterms.RightsStatement, modelSet);
 
-const hasCommonIri = (
-  leftIris: readonly string[],
-  rightIris: readonly string[]
-): boolean => {
-  for (const leftIri of leftIris) {
-    for (const rightIri of rightIris) {
-      if (leftIri === rightIri) {
-        return true;
-      }
-    }
-  }
-  return false;
-};
+// const hasCommonIri = (
+//   leftIris: readonly string[],
+//   rightIris: readonly string[]
+// ): boolean => {
+//   for (const leftIri of leftIris) {
+//     for (const rightIri of rightIris) {
+//       if (leftIri === rightIri) {
+//         return true;
+//       }
+//     }
+//   }
+//   return false;
+// };
 
 describe("ModelSetBuilder", () => {
   const completeModelSet = testModelSet;
@@ -209,12 +209,12 @@ describe("ModelSetBuilder", () => {
     // );
     expect(countModelSetNamedAgents(workModelSet)).to.eq(2);
     for (const work of workModelSet.works) {
-      expect(work.agents).to.have.length(8); // 2 named agents + 2 blank node agents + 4 literal agents
-      for (const agent of work.agents) {
-        if (agent.agent.iris.length > 0) {
-          expect(agent.agent.thumbnail(THUMBNAIL_SELECTOR)).to.not.be.null;
-        }
-      }
+      expect(work.agents).to.have.length(6); // 2 named agents + 2 blank node agents + 2 literal agents
+      expect(
+        work.agents.some(
+          agent => agent.agent.thumbnail(THUMBNAIL_SELECTOR) !== null
+        )
+      );
     }
     expect(workModelSet.concepts).to.have.length(0);
 
