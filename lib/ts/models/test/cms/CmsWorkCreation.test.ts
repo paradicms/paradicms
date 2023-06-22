@@ -1,13 +1,13 @@
 import {expect} from "chai";
-import {WorkCreation} from "../src/WorkCreation";
-import {testModelSet} from "./testModelSet";
+import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
+import {CmsWorkCreation} from "../../src/cms/CmsWorkCreation";
 
-describe("WorkCreation", () => {
+describe("CmsWorkCreation", () => {
   const work = testModelSet.works[0];
-  const sut: WorkCreation = work.events.find(
+  const sut: CmsWorkCreation = work.events.find(
     workEvent => workEvent.type === "WorkCreation"
-  ) as WorkCreation;
+  ) as CmsWorkCreation;
 
   before(() => {
     expect(sut).is.not.undefined;
