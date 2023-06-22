@@ -5,6 +5,8 @@ import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {rdf} from "@paradicms/vocabularies";
 import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
 
+require("./owl-time/OwlTimeDateTimeDescription"); // Force registration
+
 /**
  * Map a term in a modelSet to a DateTimeDescription.
  */
@@ -35,7 +37,7 @@ export const mapDateTimeDescriptionObject = (
         }
       }
       throw new RangeError(
-        "unable to determine DateTimeDescription type from node"
+        "unable to determine DateTimeDescription type from blank/named node"
       );
     case "Literal": {
       const parsed = anyDateParser.attempt(term.value);
