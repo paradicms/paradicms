@@ -19,6 +19,7 @@ import {Property} from "../Property";
 import {CmsNamedModel} from "./CmsNamedModel";
 import {mapTermToText} from "../mapTermToText";
 import {mapTermToLocation} from "../mapTermToLocation";
+import {mapTermToWorkEvent} from "../mapTermToWorkEvent";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -118,16 +119,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return this.filterAndMapObjects(cms.event, term => {
-      switch (term.termType) {
-        case "BlankNode":
-
-        case "NamedNode":
-          return this.modelSet.workEventByIri(term.value);
-        default:
-          return null;
-      }
-    });
+    return this.filterAndMapObjects(cms.event, term => mapTermToWorkEvent(this, term));
   }
 
   get label(): string {

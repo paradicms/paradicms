@@ -266,12 +266,12 @@ describe("ModelSetBuilder", () => {
       .build();
     // expectModelsDeepEq(workEventsModelSet.works, [work]);
     // expectModelsDeepEq(workEventsModelSet.agents, workCreation!.agents);
-    expectModelsDeepEq(workEventsModelSet.works[0].events, [
+    expectModelsDeepEq(workEventsModelSet.workEvents, [
       // workClosing!,
       workCreation!,
       // workOpening!,
     ]);
-    for (const event of workEventsModelSet.works[0].events) {
+    for (const event of workEventsModelSet.workEvents) {
       expect(event.location).not.to.be.null;
       expect(event.location).not.to.be.instanceof(String);
       const location: Location = event.location! as Location;
