@@ -155,6 +155,11 @@ export class CmsModelReader extends DatasetModelReader {
       class_: cms.WorkEvent,
       dataset: this.dataset,
     }).values()) {
+      if (!quad.subject.equals(quad.graph)) {
+        continue;
+      }
+
+      // Get the concrete type of the WorkEvent.
       for (const rdfTypeQuad of this.dataset.match(
         quad.subject,
         rdf.type,
@@ -162,7 +167,6 @@ export class CmsModelReader extends DatasetModelReader {
         quad.graph
       )) {
         if (
-          rdfTypeQuad.object.termType !== "NamedNode" ||
           rdfTypeQuad.object.equals(cms.Event) ||
           rdfTypeQuad.object.equals(cms.WorkEvent)
         ) {
