@@ -1,20 +1,18 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {Text} from "./Text";
-import {LiteralText} from "./literal/LiteralText";
 import {rdf} from "@paradicms/vocabularies";
-import {textFactories} from "./textFactories";
+import {workEventFactories} from "./workEventFactories";
+import {WorkEventUnion} from "./WorkEventUnion";
 
 /**
- * Map a term in a modelSet to a Text.
+ * Map a term in a modelSet to an WorkEvent.
  */
-export const mapTextObject = (
+export const mapTermToWorkEvent = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
-): Text | null => {
+): WorkEventUnion | null => {
   switch (term.termType) {
     case "BlankNode":
-    case "NamedNode":
       for (const rdfTypeQuad of modelParameters.dataset.match(
         term,
         rdf.type,
@@ -23,16 +21,19 @@ export const mapTextObject = (
         if (rdfTypeQuad.object.termType !== "NamedNode") {
           continue;
         }
-        const textFactory = textFactories.get(rdfTypeQuad.object);
-        if (textFactory !== null) {
-          return new textFactory({...modelParameters, identifier: term});
+        const workEventFactory = workEventFactories.get(rdfTypeQuad.object);
+        if (workEventFactory !== null) {
+          return new workEventFactory({
+            ...modelParameters,
+            identifier: term,
+          });
         }
       }
       throw new RangeError(
-        "unable to determine Text type from blank/named node"
+        "unable to determine WorkEvent type from blank node"
       );
-    case "Literal":
-      return new LiteralText(term);
+    case "NamedNode":
+      return modelParameters.modelSet.workEventByIri(term.value);
     default:
       return null;
   }

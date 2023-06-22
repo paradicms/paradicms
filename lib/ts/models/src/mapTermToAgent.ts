@@ -8,7 +8,7 @@ import {agentFactories} from "./agentFactories";
 /**
  * Map a term in a modelSet to an Agent.
  */
-export const mapAgentObject = (
+export const mapTermToAgent = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): AgentUnion | null => {

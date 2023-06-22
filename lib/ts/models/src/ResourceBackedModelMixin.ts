@@ -17,7 +17,4 @@ export abstract class ResourceBackedModelMixin {
     property: NamedNode,
     callback: (value: Term) => NonNullable<T> | null
   ): NonNullable<T> | null;
-  protected abstract hasObject(property: NamedNode): boolean;
-  protected abstract mapStringObject(term: Term): string | null;
-  protected abstract mapIriObject(term: Term): string | null;
 }

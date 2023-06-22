@@ -17,6 +17,10 @@ import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
 import {OwlTimeDateTimeDescription} from "./owl-time/OwlTimeDateTimeDescription";
 import {RightsStatementsDotOrgRightsStatement} from "./rights-statements-dot-org/RightsStatementsDotOrgRightsStatement";
 import {SchemaImageObject} from "./schema/SchemaImageObject";
+import {workEventFactories} from "./workEventFactories";
+import {CmsWorkClosing} from "./cms/CmsWorkClosing";
+import {CmsWorkCreation} from "./cms/CmsWorkCreation";
+import {CmsWorkOpening} from "./cms/CmsWorkOpening";
 
 export const registerResourceBackedModelFactories = () => {
   agentFactories.register(cms.Organization, CmsOrganization);
@@ -42,4 +46,8 @@ export const registerResourceBackedModelFactories = () => {
   );
 
   textFactories.register(cms.Text, CmsText);
+
+  workEventFactories.register(cms.WorkClosing, CmsWorkClosing);
+  workEventFactories.register(cms.WorkCreation, CmsWorkCreation);
+  workEventFactories.register(cms.WorkOpening, CmsWorkOpening);
 };

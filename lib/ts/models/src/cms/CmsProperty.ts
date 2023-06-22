@@ -1,4 +1,8 @@
-import {getRdfInstanceQuads} from "@paradicms/rdf";
+import {
+  getRdfInstanceQuads,
+  mapTermToBoolean,
+  mapTermToNumber,
+} from "@paradicms/rdf";
 import {cms, rdfs} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
@@ -17,8 +21,7 @@ export class CmsProperty
   implements Property {
   get filterable(): boolean {
     return (
-      this.findAndMapObject(cms.propertyFilterable, this.mapBooleanObject) ??
-      false
+      this.findAndMapObject(cms.propertyFilterable, mapTermToBoolean) ?? false
     );
   }
 
@@ -27,10 +30,7 @@ export class CmsProperty
   }
 
   get hidden(): boolean {
-    const hidden = this.findAndMapObject(
-      cms.propertyHidden,
-      this.mapBooleanObject
-    );
+    const hidden = this.findAndMapObject(cms.propertyHidden, mapTermToBoolean);
     if (hidden !== null) {
       return hidden;
     }
@@ -38,7 +38,7 @@ export class CmsProperty
   }
 
   get order(): number {
-    return this.findAndMapObject(cms.propertyOrder, this.mapIntObject) ?? 0;
+    return this.findAndMapObject(cms.propertyOrder, mapTermToNumber) ?? 0;
   }
 
   @Memoize()
@@ -70,8 +70,7 @@ export class CmsProperty
 
   get searchable(): boolean {
     return (
-      this.findAndMapObject(cms.propertySearchable, this.mapBooleanObject) ??
-      false
+      this.findAndMapObject(cms.propertySearchable, mapTermToBoolean) ?? false
     );
   }
 }

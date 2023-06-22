@@ -8,7 +8,7 @@ import {locationFactories} from "./locationFactories";
 /**
  * Map a term in a modelSet to a Location.
  */
-export const mapLocationObject = (
+export const mapTermToLocation = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): Location | null => {

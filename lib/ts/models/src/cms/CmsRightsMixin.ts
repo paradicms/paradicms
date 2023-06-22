@@ -8,9 +8,9 @@ import {RightsMixin} from "../RightsMixin";
 import {RightsStatement} from "../RightsStatement";
 import {CmsContributorsMixin} from "./CmsContributorsMixin";
 import {CmsCreatorsMixin} from "./CmsCreatorsMixin";
-import {mapAgentObject} from "../mapAgentObject";
-import {mapRightsStatementObject} from "../mapRightsStatementObject";
-import {mapLicenseObject} from "../mapLicenseObject";
+import {mapTermToAgent} from "../mapTermToAgent";
+import {mapTermToRightsStatement} from "../mapTermToRightsStatement";
+import {mapTermToLicense} from "../mapTermToLicense";
 
 export abstract class CmsRightsMixin
   extends Mixin(
@@ -22,7 +22,7 @@ export abstract class CmsRightsMixin
   @Memoize()
   get license(): License | null {
     return this.findAndMapObject(dcterms.license, term =>
-      mapLicenseObject(this, term)
+      mapTermToLicense(this, term)
     );
   }
 
@@ -33,14 +33,14 @@ export abstract class CmsRightsMixin
   @Memoize()
   get rightsHolders(): readonly AgentUnion[] {
     return this.filterAndMapObjects(dcterms.rightsHolder, term =>
-      mapAgentObject(this, term)
+      mapTermToAgent(this, term)
     );
   }
 
   @Memoize()
   get rightsStatement(): RightsStatement | null {
     return this.findAndMapObject(dcterms.rights, term =>
-      mapRightsStatementObject(this, term)
+      mapTermToRightsStatement(this, term)
     );
   }
 }

@@ -17,8 +17,8 @@ import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
 import {Property} from "../Property";
 import {CmsNamedModel} from "./CmsNamedModel";
-import {mapTextObject} from "../mapTextObject";
-import {mapLocationObject} from "../mapLocationObject";
+import {mapTermToText} from "../mapTermToText";
+import {mapTermToLocation} from "../mapTermToLocation";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -78,7 +78,7 @@ export class CmsWork extends Mixin(
   @Memoize()
   override get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
-      mapTextObject(this, term)
+      mapTermToText(this, term)
     );
   }
 
@@ -136,7 +136,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get location(): WorkLocation | null {
-    const location = this.findAndMapObject(dcterms.spatial, term => mapLocationObject(this, term));
+    const location = this.findAndMapObject(dcterms.spatial, term => mapTermToLocation(this, term));
     if (location) {
       return {
         label: this.title,

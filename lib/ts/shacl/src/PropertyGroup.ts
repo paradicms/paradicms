@@ -2,6 +2,7 @@ import {NamedNode} from "@rdfjs/types";
 import {ShapesGraph} from "./ShapesGraph";
 import {rdfs} from "@paradicms/vocabularies";
 import {ShaclModel} from "./ShaclModel";
+import {mapTermToString} from "@paradicms/rdf";
 
 export class PropertyGroup extends ShaclModel {
   constructor(kwds: {node: NamedNode; shapesGraph: ShapesGraph}) {
@@ -9,6 +10,6 @@ export class PropertyGroup extends ShaclModel {
   }
 
   get label(): string | null {
-    return this.findAndMapObject(rdfs.label, this.mapStringObject);
+    return this.findAndMapObject(rdfs.label, mapTermToString);
   }
 }

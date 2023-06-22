@@ -1,16 +1,17 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {Image} from "./Image";
 import {rdf} from "@paradicms/vocabularies";
-import {imageFactories} from "./imageFactories";
+import {License} from "./License";
+import {LiteralLicense} from "./literal/LiteralLicense";
+import {licenseFactories} from "./licenseFactories";
 
 /**
- * Map a term in a modelSet to an Image.
+ * Map a term in a modelSet to a License.
  */
-export const mapImageObject = (
+export const mapTermToLicense = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
-): Image | null => {
+): License | null => {
   switch (term.termType) {
     case "BlankNode":
       for (const rdfTypeQuad of modelParameters.dataset.match(
@@ -21,19 +22,19 @@ export const mapImageObject = (
         if (rdfTypeQuad.object.termType !== "NamedNode") {
           continue;
         }
-        const imageFactory = imageFactories.get(rdfTypeQuad.object);
-        if (imageFactory !== null) {
-          return new imageFactory({
+        const licenseFactory = licenseFactories.get(rdfTypeQuad.object);
+        if (licenseFactory !== null) {
+          return new licenseFactory({
             ...modelParameters,
             identifier: term,
           });
         }
       }
-      throw new RangeError("unable to determine Image type from blank node");
+      throw new RangeError("unable to determine License type from blank node");
+    case "Literal":
+      return new LiteralLicense(term);
     case "NamedNode":
-      // The Image may not be in the modelSet if e.g., a Work points to all of its Images but only one (like a
-      // thumbnail) is included in the data.
-      return modelParameters.modelSet.imageByIriOptional(term.value);
+      return modelParameters.modelSet.licenseByIri(term.value);
     default:
       return null;
   }

@@ -7,9 +7,10 @@ import {Location} from "../Location";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
-import {mapDateTimeDescriptionObject} from "../mapDateTimeDescriptionObject";
-import {mapLocationObject} from "../mapLocationObject";
+import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {mapTermToLocation} from "../mapTermToLocation";
 import {requireNonNull} from "@paradicms/utilities";
+import {mapTermToString} from "@paradicms/rdf";
 
 export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   implements Event {
@@ -75,21 +76,21 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   @Memoize()
   get date(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.date, term =>
-      mapDateTimeDescriptionObject(this, term)
+      mapTermToDateTimeDescription(this, term)
     );
   }
 
   @Memoize()
   get endDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.endDate, term =>
-      mapDateTimeDescriptionObject(this, term)
+      mapTermToDateTimeDescription(this, term)
     );
   }
 
   @Memoize()
   get location(): Location | null {
     return this.findAndMapObject(dcterms.spatial, term =>
-      mapLocationObject(this, term)
+      mapTermToLocation(this, term)
     );
   }
 
@@ -120,7 +121,7 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   @Memoize()
   get startDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.startDate, term =>
-      mapDateTimeDescriptionObject(this, term)
+      mapTermToDateTimeDescription(this, term)
     );
   }
 
@@ -129,6 +130,6 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   }
 
   protected get title(): string | null {
-    return this.findAndMapObject(dcterms.title, this.mapStringObject);
+    return this.findAndMapObject(dcterms.title, mapTermToString);
   }
 }

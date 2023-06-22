@@ -5,28 +5,29 @@ import {selectThumbnail} from "../selectThumbnail";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {schema} from "@paradicms/vocabularies";
 import {Text} from "../Text";
-import {mapImageObject} from "../mapImageObject";
-import {mapTextObject} from "../mapTextObject";
+import {mapTermToImage} from "../mapTermToImage";
+import {mapTermToText} from "../mapTermToText";
 import {Memoize} from "typescript-memoize";
+import {mapTermToString} from "@paradicms/rdf";
 
 export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   implements ImagesMixin {
   @Memoize()
   get alternateNames(): readonly string[] {
-    return this.filterAndMapObjects(schema.alternateName, this.mapStringObject);
+    return this.filterAndMapObjects(schema.alternateName, mapTermToString);
   }
 
   @Memoize()
   get description(): Text | null {
     return this.findAndMapObject(schema.description, term =>
-      mapTextObject(this, term)
+      mapTermToText(this, term)
     );
   }
 
   @Memoize()
   get images(): readonly Image[] {
     return this.filterAndMapObjects(schema.image, term =>
-      mapImageObject(this, term)
+      mapTermToImage(this, term)
     );
   }
 
@@ -36,7 +37,7 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
 
   @Memoize()
   get name(): string | null {
-    return this.findAndMapObject(schema.name, this.mapStringObject);
+    return this.findAndMapObject(schema.name, mapTermToString);
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
@@ -45,6 +46,8 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
 
   @Memoize()
   get url(): string | null {
-    return this.findAndMapObject(schema.url, this.mapIriObject);
+    return this.findAndMapObject(schema.url, term =>
+      term.termType === "NamedNode" ? term.value : null
+    );
   }
 }

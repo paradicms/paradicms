@@ -8,7 +8,7 @@ import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
 /**
  * Map a term in a modelSet to a DateTimeDescription.
  */
-export const mapDateTimeDescriptionObject = (
+export const mapTermToDateTimeDescription = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): DateTimeDescription | null => {

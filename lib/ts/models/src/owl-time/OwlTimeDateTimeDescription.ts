@@ -4,6 +4,7 @@ import {Mixin} from "ts-mixer";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {ResourceBackedModel} from "../ResourceBackedModel";
+import {mapTermToNumber} from "@paradicms/rdf";
 
 export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) implements DateTimeDescription {
   /**
@@ -37,14 +38,14 @@ export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) imple
    * Hour of the day, 0..23 inclusive
    */
   get hour(): number | null {
-    return this.findAndMapObject(time.hour, this.mapIntObject);
+    return this.findAndMapObject(time.hour, mapTermToNumber);
   }
 
   /**
    * Minute of the day, 0..59 inclusive
    */
   get minute(): number | null {
-    return this.findAndMapObject(time.minute, this.mapIntObject);
+    return this.findAndMapObject(time.minute, mapTermToNumber);
   }
 
   /**

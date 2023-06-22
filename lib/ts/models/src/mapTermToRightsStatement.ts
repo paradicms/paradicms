@@ -8,7 +8,7 @@ import {rightsStatementFactories} from "./rightsStatementFactories";
 /**
  * Map a term in a modelSet to a RightsStatement.
  */
-export const mapRightsStatementObject = (
+export const mapTermToRightsStatement = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): RightsStatement | null => {

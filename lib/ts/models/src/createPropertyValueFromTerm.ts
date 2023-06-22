@@ -9,7 +9,7 @@ import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
 import {Property} from "./Property";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
-import {mapTextObject} from "./mapTextObject";
+import {mapTermToText} from "./mapTermToText";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 
 export const createPropertyValueFromTerm = (kwds: {
@@ -30,7 +30,7 @@ export const createPropertyValueFromTerm = (kwds: {
   switch (term.termType) {
     case "BlankNode":
       {
-        const text = mapTextObject(modelParameters, term);
+        const text = mapTermToText(modelParameters, term);
         if (text !== null) {
           return new TextPropertyValue(property, text);
         } else {
@@ -65,7 +65,7 @@ export const createPropertyValueFromTerm = (kwds: {
         }
       }
       {
-        const text = mapTextObject(modelParameters, term);
+        const text = mapTermToText(modelParameters, term);
         if (text !== null) {
           return new TextPropertyValue(property, text);
         }

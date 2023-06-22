@@ -6,6 +6,7 @@ import {AgentType} from "../AgentType";
 import {CmsModel} from "./CmsModel";
 import {requireNonNull} from "@paradicms/utilities";
 import {foaf} from "@paradicms/vocabularies";
+import {mapTermToString} from "@paradicms/rdf";
 
 export abstract class CmsAgent
   extends Mixin(CmsModel, CmsImagesMixin, CmsRelationsMixin)
@@ -15,9 +16,7 @@ export abstract class CmsAgent
   }
 
   get name(): string {
-    return requireNonNull(
-      this.findAndMapObject(foaf.name, this.mapStringObject)
-    );
+    return requireNonNull(this.findAndMapObject(foaf.name, mapTermToString));
   }
 
   abstract readonly type: AgentType;

@@ -8,7 +8,8 @@ import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
-import {mapImageObject} from "../mapImageObject";
+import {mapTermToImage} from "../mapTermToImage";
+import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
 
 export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
   implements Image {
@@ -21,8 +22,8 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
     heightProperty: NamedNode,
     widthProperty: NamedNode
   ): ImageDimensions | null {
-    const height = this.findAndMapObject(heightProperty, this.mapIntObject);
-    const width = this.findAndMapObject(widthProperty, this.mapIntObject);
+    const height = this.findAndMapObject(heightProperty, mapTermToNumber);
+    const width = this.findAndMapObject(widthProperty, mapTermToNumber);
 
     if (height !== null && width !== null) {
       return {height, width};
@@ -71,12 +72,12 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
 
   get thumbnails(): readonly Image[] {
     return this.filterAndMapObjects(foaf.thumbnail, term =>
-      mapImageObject(this, term)
+      mapTermToImage(this, term)
     );
   }
 
   @Memoize()
   get title(): string | null {
-    return this.findAndMapObject(dcterms.title, this.mapStringObject);
+    return this.findAndMapObject(dcterms.title, mapTermToString);
   }
 }

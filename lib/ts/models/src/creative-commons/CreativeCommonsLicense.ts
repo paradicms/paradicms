@@ -3,12 +3,13 @@ import {dc11} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {License} from "../License";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {mapTermToString} from "@paradicms/rdf";
 
 export class CreativeCommonsLicense extends Mixin(ResourceBackedNamedModel)
   implements License {
   // get identifier(): string {
   //   return requireNonNull(
-  //     this.findAndMapObject(dc11.identifier, this.mapStringObject)
+  //     this.findAndMapObject(dc11.identifier, mapTermToString)
   //   );
   // }
 
@@ -27,8 +28,6 @@ export class CreativeCommonsLicense extends Mixin(ResourceBackedNamedModel)
   }
 
   get title(): string {
-    return requireNonNull(
-      this.findAndMapObject(dc11.title, this.mapStringObject)
-    );
+    return requireNonNull(this.findAndMapObject(dc11.title, mapTermToString));
   }
 }

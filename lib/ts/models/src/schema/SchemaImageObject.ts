@@ -4,7 +4,7 @@ import {Mixin} from "ts-mixer";
 import {Image} from "../Image";
 import {cms, schema} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
-import {mapImageObject} from "../mapImageObject";
+import {mapTermToImage} from "../mapTermToImage";
 import {ImageDimensions} from "../ImageDimensions";
 import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
 
@@ -67,7 +67,7 @@ export class SchemaImageObject
   @Memoize()
   get thumbnails(): readonly Image[] {
     return this.filterAndMapObjects(schema.thumbnail, term =>
-      mapImageObject(this, term)
+      mapTermToImage(this, term)
     );
   }
 }
