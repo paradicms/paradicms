@@ -10,6 +10,7 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
+import {requireNonNull} from "@paradicms/utilities";
 
 interface StaticProps {
   readonly collectionKey: string;
@@ -27,7 +28,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
-  const collection = modelSet.collectionByKey(collectionKey);
+  const collection = requireNonNull(modelSet.collectionByKey(collectionKey));
   const configuration = modelSet.appConfiguration;
 
   React.useEffect(() => {
