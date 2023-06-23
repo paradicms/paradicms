@@ -6,7 +6,6 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
   agents: {
     thumbnail: galleryThumbnailSelector,
   },
-  collections: {},
   events: {
     agents: {},
     location: true,

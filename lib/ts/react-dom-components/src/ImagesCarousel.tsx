@@ -20,7 +20,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   images,
   onShowImage,
 }) => {
-  const originalImages = images.filter(image => image.isOriginal);
+  const originalImages = images.filter(image => image.thumbnails.length > 0);
 
   const renderOriginalImage = (originalImage: Image) => {
     if (!originalImage.src) {

@@ -525,7 +525,7 @@ export class MemWorkQueryService implements WorkQueryService {
           workWorkLocations.push(summarizeWorkLocation(work, work.location));
         }
         for (const event of work.events) {
-          if (event.workLocation) {
+          if (event.location) {
             workWorkLocations.push(
               summarizeWorkLocation(work, event.workLocation)
             );
