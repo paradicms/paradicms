@@ -19,6 +19,7 @@ import {useRouter} from "next/router";
 import * as React from "react";
 import {useMemo} from "react";
 import path from "path";
+import {requireNonNull} from "@paradicms/utilities";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -46,7 +47,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     [modelSetString]
   );
   const router = useRouter();
-  const work = modelSet.workByKey(workKey);
+  const work = requireNonNull(modelSet.workByKey(workKey));
 
   return (
     <Layout
@@ -115,7 +116,10 @@ export const getStaticProps: GetStaticProps = async ({
           : null,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
-        .addWork(completeModelSet.workByKey(workKey), workPageWorkJoinSelector)
+        .addWork(
+          requireNonNull(completeModelSet.workByKey(workKey)),
+          workPageWorkJoinSelector
+        )
         .build()
         .toFastRdfString(),
       workKey: workKey,
