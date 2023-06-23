@@ -28,3 +28,7 @@ class SchemaPerson(SchemaAgent, Person):
         builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
         builder.set(SDO.name, name)
         return builder
+
+    @property
+    def label(self) -> str:
+        return self.name

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Any, Dict
+from typing import Optional, Any, Dict, Tuple
 
 from rdflib import Graph, URIRef
 from rdflib.resource import Resource
@@ -23,6 +23,10 @@ class Model(ABC):
     @abstractmethod
     def rdf_type_uri(cls) -> URIRef:
         raise NotImplementedError
+
+    @property
+    def same_as_uris(self) -> Tuple[URIRef, ...]:
+        return ()
 
     @abstractmethod
     def to_rdf(self, graph: Graph) -> Resource:

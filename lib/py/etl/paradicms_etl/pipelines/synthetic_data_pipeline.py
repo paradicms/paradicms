@@ -7,6 +7,7 @@ from urllib.parse import quote
 from rdflib import DCTERMS, Literal, URIRef
 
 from paradicms_etl.enricher import Enricher
+from paradicms_etl.enrichers.ncsu_enricher import NcsuEnricher
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractors.nop_extractor import nop_extractor
@@ -445,6 +446,10 @@ class SyntheticDataPipeline(Pipeline):
                 work_builder.add_same_as(
                     URIRef("http://www.wikidata.org/entity/Q937690"),
                 )
+            elif work_i == 1:
+                work_builder.add_same_as(
+                    URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
+                )
 
             if include_description:
                 description_builder = CmsText.builder(
@@ -544,6 +549,7 @@ class SyntheticDataPipeline(Pipeline):
 
         # Help mypy out
         enrichers: List[Enricher] = [
+            NcsuEnricher(cache_dir_path=cache_dir_path / "ncsu"),
             WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
             WikimediaCommonsEnricher(
                 cache_dir_path=cache_dir_path / "wikimedia_commons"

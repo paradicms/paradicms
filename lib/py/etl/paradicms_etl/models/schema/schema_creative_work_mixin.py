@@ -74,7 +74,6 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
                 "@id": str(SDO.dateModified),
                 "@type": str(XSD.dateTime),
             },
-            "url": {"@id": str(SDO.url), "@type": "@id"},
         }
 
     @property

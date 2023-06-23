@@ -2,8 +2,7 @@ import logging
 from pathlib import Path
 from typing import Iterable, Set, Tuple, List, Dict, Sequence
 
-from rdflib import Graph, URIRef, DCTERMS, OWL
-from rdflib.resource import Resource
+from rdflib import Graph, URIRef
 
 from paradicms_etl.extractors.wikidata_entity_extractor import WikidataEntityExtractor
 from paradicms_etl.model import Model
@@ -40,10 +39,8 @@ class WikidataEnricher:
         yielded_wikidata_rights_models = False
         yielded_wikidata_entity_uris: Set[URIRef] = set()
         for model in models:
-            model_graph = Graph()
-            model_resource = model.to_rdf(model_graph)
             referenced_wikidata_entity_uris = (
-                self.__get_model_wikidata_entity_references(model_resource)
+                self.__get_model_wikidata_entity_references(model)
             )
             for wikidata_entity_uri in referenced_wikidata_entity_uris:
                 if wikidata_entity_uri in yielded_wikidata_entity_uris:
@@ -62,29 +59,19 @@ class WikidataEnricher:
             yield model
 
     def __get_model_wikidata_entity_references(
-        self, model_resource: Resource
+        self, model: Model
     ) -> Tuple[URIRef, ...]:
         """
         Get a list of Wikidata entity URIs referenced by the given model.
         """
         wikidata_entity_uris: List[URIRef] = []
-        for predicate in (DCTERMS.relation, OWL.sameAs):
-            for object_ in model_resource.objects(predicate):
-                if not isinstance(object_, Resource):
-                    continue
-                elif not isinstance(object_.identifier, URIRef):
-                    continue
-                try:
-                    wikidata_entity_uris.append(
-                        canonicalize_wikidata_entity_uri(object_.identifier)
-                    )
-                except ValueError:
-                    self.__logger.debug(
-                        "encountered %s for non-Wikidata URI %s",
-                        predicate,
-                        object_.identifier,
-                    )
-                    continue
+        for same_as_uri in model.same_as_uris:
+            try:
+                wikidata_entity_uris.append(
+                    canonicalize_wikidata_entity_uri(same_as_uri)
+                )
+            except ValueError:
+                continue
         return tuple(wikidata_entity_uris)
 
     @staticmethod
@@ -131,7 +118,7 @@ class WikidataEnricher:
             for property_label in ("same as", "subclass of", "instance of"):
                 related_wikidata_entity_uris: Sequence[URIRef]
                 if property_label == "same as":
-                    related_wikidata_entity_uris = wikidata_entity.same_as
+                    related_wikidata_entity_uris = wikidata_entity.same_as_uris
                 else:
                     related_wikidata_entity_uris = []
                     for statement in wikidata_entity.statements_by_property_label.get(

@@ -1,3 +1,5 @@
+from typing import Tuple, Optional
+
 from rdflib import URIRef, SDO
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -20,7 +22,15 @@ class SchemaModel(ResourceBackedModel, SchemaThingMixin):
             SchemaThingMixin.json_ld_context(),
         )
 
+    @property
+    def label(self) -> Optional[str]:
+        return SchemaThingMixin.label.fget(self)  # type: ignore
+
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         assert cls.__name__.startswith("Schema")
         return getattr(SDO, cls.__name__[len("Schema") :])
+
+    @property
+    def same_as_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(SDO.sameAs, self._map_uri_value))

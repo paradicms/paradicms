@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Optional
+from typing import Optional, Tuple
 
 from rdflib import URIRef, SDO
 
@@ -31,6 +31,10 @@ class SchemaNamedModel(ResourceBackedNamedModel, SchemaThingMixin):
     @property
     def label(self) -> Optional[str]:
         return SchemaThingMixin.label.fget(self)  # type: ignore
+
+    @property
+    def same_as_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(SDO.sameAs, self._map_uri_value))
 
     @property
     @abstractmethod
