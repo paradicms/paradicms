@@ -6,7 +6,7 @@ import {RightsStatementsDotOrgRightsStatement} from "../../src/rights-statements
 describe("RightsStatementsDotOrgRightsStatement", () => {
   const sut: RightsStatementsDotOrgRightsStatement = testModelSet.rightsStatementByIri(
     "http://rightsstatements.org/vocab/InC-EDU/1.0/"
-  ) as RightsStatementsDotOrgRightsStatement;
+  )! as RightsStatementsDotOrgRightsStatement;
 
   it("should get the statement's definition", () => {
     expect(sut.definition).to.not.be.empty;

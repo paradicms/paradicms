@@ -162,6 +162,10 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
-    return this.propertyValuesByProperty(this.modelSet.propertyByIri(propertyIri), propertyIri);
+    const property = this.modelSet.propertyByIri(propertyIri);
+    if (!property) {
+      return [];
+    }
+    return this.propertyValuesByProperty(property, propertyIri);
   }
 }

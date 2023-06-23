@@ -3,11 +3,15 @@ import {Text} from "../../src";
 import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
 import {SchemaCollection} from "../../src/schema/SchemaCollection";
+import {modelIdentifiersToKey} from "../../src/modelIdentifiersToKey";
+import {DataFactory} from "@paradicms/rdf";
 
 describe("SchemaCollection", () => {
-  const sut: SchemaCollection = testModelSet.collectionByIri(
-    "http://example.com/collection0"
-  ) as SchemaCollection;
+  const sut: SchemaCollection = testModelSet.collectionByKey(
+    modelIdentifiersToKey([
+      DataFactory.namedNode("http://example.com/collection0"),
+    ])
+  )! as SchemaCollection;
 
   it("should get the collection's description", () => {
     expect(sut.description).not.to.be.null;

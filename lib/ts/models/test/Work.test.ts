@@ -5,7 +5,7 @@ import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 
 describe("Work", () => {
-  const sut = testModelSet.workByIri("http://example.com/collection0/work2");
+  const sut = testModelSet.workByIri("http://example.com/collection0/work2")!;
 
   it("should get the work's description", () => {
     expect(sut.description).not.to.be.null;
@@ -87,7 +87,7 @@ describe("Work", () => {
 
   it("should get the work's Wikidata concept IRI", () => {
     expect(
-      testModelSet.workByIri("http://example.com/collection0/work0")
+      testModelSet.workByIri("http://example.com/collection0/work0")!
         .wikidataConceptIri
     ).to.eq("http://www.wikidata.org/entity/Q937690");
   });

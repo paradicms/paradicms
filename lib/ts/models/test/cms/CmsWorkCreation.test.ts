@@ -15,7 +15,7 @@ describe("CmsWorkCreation", () => {
 
   it("should expose the creator", () => {
     const creator = sut.creators[0];
-    testModelSet.agentByIri(creator.iris[0]!);
+    testModelSet.agentByIri(creator.iris[0]!)!;
     expect(work.agents.some(agent => agent.agent.iris[0] === creator.iris[0]))
       .to.be.true;
   });

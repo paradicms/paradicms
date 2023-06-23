@@ -75,24 +75,24 @@ const sortModelsMultimap = <ModelT extends Model>(models: {
 export class CachingModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
 
-  agentByIri(agentIri: string): AgentUnion {
+  agentByIri(agentIri: string): AgentUnion | null {
     for (const index of [this.organizationsByIriIndex, this.peopleByIriIndex]) {
       const agent = index[agentIri];
       if (agent) {
         return agent;
       }
     }
-    throw new RangeError("no such agent " + agentIri);
+    return null;
   }
 
-  agentByKey(agentKey: string): AgentUnion {
+  agentByKey(agentKey: string): AgentUnion | null {
     for (const index of [this.organizationsByKeyIndex, this.peopleByKeyIndex]) {
       const agent = index[agentKey];
       if (agent) {
         return agent;
       }
     }
-    throw new RangeError("no such agent " + agentKey);
+    return null;
   }
 
   @Memoize()
@@ -107,11 +107,11 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readCollections({modelSet: this}));
   }
 
-  collectionByIri(collectionIri: string): Collection {
+  collectionByIri(collectionIri: string): Collection | null {
     return this.modelByIri(this.collectionsByIriIndex, collectionIri);
   }
 
-  collectionByKey(collectionKey: string): Collection {
+  collectionByKey(collectionKey: string): Collection | null {
     return this.modelByKey(this.collectionsByKeyIndex, collectionKey);
   }
 
@@ -125,12 +125,8 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByKey(this.collections);
   }
 
-  conceptByIri(conceptIri: string): Concept {
+  conceptByIri(conceptIri: string): Concept | null {
     return this.modelByIri(this.conceptsByIriIndex, conceptIri);
-  }
-
-  conceptByIriOptional(conceptIri: string): Concept | null {
-    return this.modelByIriOptional(this.conceptsByIriIndex, conceptIri);
   }
 
   @Memoize()
@@ -143,12 +139,8 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.concepts);
   }
 
-  imageByIri(imageIri: string): Image {
+  imageByIri(imageIri: string): Image | null {
     return this.modelByIri(this.imagesByIriIndex, imageIri);
-  }
-
-  imageByIriOptional(imageIri: string): Image | null {
-    return this.modelByIriOptional(this.imagesByIriIndex, imageIri);
   }
 
   @Memoize()
@@ -161,7 +153,7 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.images);
   }
 
-  licenseByIri(licenseIri: string): License {
+  licenseByIri(licenseIri: string): License | null {
     return this.modelByIri(this.licensesByIriIndex, licenseIri);
   }
 
@@ -170,7 +162,7 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.namedLicenses);
   }
 
-  locationByIri(locationIri: string): Location {
+  locationByIri(locationIri: string): Location | null {
     return this.modelByIri(this.locationsByIriIndex, locationIri);
   }
 
@@ -182,33 +174,11 @@ export class CachingModelSet implements ModelSet {
   private modelByIri<ModelT>(
     index: {[index: string]: ModelT},
     iri: string
-  ): ModelT {
-    const model = this.modelByIriOptional(index, iri);
-    if (!model) {
-      throw new RangeError("no such model " + iri);
-    }
-    return model;
-  }
-
-  private modelByIriOptional<ModelT>(
-    index: {[index: string]: ModelT},
-    iri: string
   ): ModelT | null {
     return index[iri] ?? null;
   }
 
   private modelByKey<ModelT>(
-    index: {[index: string]: ModelT},
-    key: string
-  ): ModelT {
-    const model = this.modelByKeyOptional(index, key);
-    if (!model) {
-      throw new RangeError("no such model " + key);
-    }
-    return model;
-  }
-
-  private modelByKeyOptional<ModelT>(
     index: {[index: string]: ModelT},
     key: string
   ): ModelT | null {
@@ -248,15 +218,8 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
-  organizationByIri(organizationIri: string): Organization {
+  organizationByIri(organizationIri: string): Organization | null {
     return this.modelByIri(this.organizationsByIriIndex, organizationIri);
-  }
-
-  organizationByIriOptional(organizationIri: string): Organization | null {
-    return this.modelByIriOptional(
-      this.organizationsByIriIndex,
-      organizationIri
-    );
   }
 
   @Memoize()
@@ -279,12 +242,8 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByKey(this.namedPeople);
   }
 
-  personByIri(personIri: string): Person {
+  personByIri(personIri: string): Person | null {
     return this.modelByIri(this.peopleByIriIndex, personIri);
-  }
-
-  personByIriOptional(personIri: string): Person | null {
-    return this.modelByIriOptional(this.peopleByIriIndex, personIri);
   }
 
   @Memoize()
@@ -297,19 +256,12 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.properties);
   }
 
-  propertyByIri(propertyIri: string): Property {
+  propertyByIri(propertyIri: string): Property | null {
     return this.modelByIri(this.propertiesByIriIndex, propertyIri);
   }
 
-  propertyGroupByIri(propertyGroupIri: string): PropertyGroup {
+  propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null {
     return this.modelByIri(this.propertyGroupsByIriIndex, propertyGroupIri);
-  }
-
-  propertyGroupByIriOptional(propertyGroupIri: string): PropertyGroup | null {
-    return this.modelByIriOptional(
-      this.propertyGroupsByIriIndex,
-      propertyGroupIri
-    );
   }
 
   @Memoize()
@@ -337,7 +289,7 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
-  rightsStatementByIri(rightsStatementIri: string): RightsStatement {
+  rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
     return this.modelByIri(this.rightsStatementsByIriIndex, rightsStatementIri);
   }
 
@@ -354,19 +306,15 @@ export class CachingModelSet implements ModelSet {
     throw new EvalError("use model.toRdf to serialize");
   }
 
-  workByIri(workIri: string): Work {
+  workByIri(workIri: string): Work | null {
     return this.modelByIri(this.worksByIriIndex, workIri);
   }
 
-  workByIriOptional(workIri: string): Work | null {
-    return this.modelByIriOptional(this.worksByIriIndex, workIri);
-  }
-
-  workByKey(workKey: string): Work {
+  workByKey(workKey: string): Work | null {
     return this.modelByKey(this.worksByKeyIndex, workKey);
   }
 
-  workEventByIri(workEventIri: string): WorkEventUnion {
+  workEventByIri(workEventIri: string): WorkEventUnion | null {
     return this.modelByIri(this.workEventsByIriIndex, workEventIri);
   }
 

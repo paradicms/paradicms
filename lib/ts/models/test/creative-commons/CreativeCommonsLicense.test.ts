@@ -6,10 +6,10 @@ import {CreativeCommonsLicense} from "../../src/creative-commons/CreativeCommons
 describe("CreativeCommonsLicense", () => {
   const nc_1_0: CreativeCommonsLicense = testModelSet.licenseByIri(
     "http://creativecommons.org/licenses/nc/1.0/"
-  ) as CreativeCommonsLicense;
+  )! as CreativeCommonsLicense;
   const pd: CreativeCommonsLicense = testModelSet.licenseByIri(
     "http://creativecommons.org/publicdomain/mark/1.0/"
-  ) as CreativeCommonsLicense;
+  )! as CreativeCommonsLicense;
 
   // it("should get the license's identifier", () => {
   //   expect(sut.identifier).to.not.be.empty;

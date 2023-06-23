@@ -7,7 +7,7 @@ import {CmsWork} from "../../src/cms/CmsWork";
 describe("CmsRightsMixin", () => {
   const sut: CmsRightsMixin = testModelSet.workByIri(
     "http://example.com/collection0/work0"
-  ) as CmsWork;
+  )! as CmsWork;
 
   it("should have a contributor", () => {
     expect(sut.contributors).to.not.be.empty;

@@ -24,7 +24,7 @@ export class CsvWorksheetStateExporter
         }
       }
 
-      const featureSetDefinition = worksheetDefinition.featureSetByIriOptional(
+      const featureSetDefinition = worksheetDefinition.featureSetByIri(
         featureSetIri
       );
       if (!featureSetDefinition) {
@@ -109,7 +109,7 @@ export class CsvWorksheetStateExporter
             if (!featureValueState.selected) {
               continue;
             }
-            const featureValueDefinition = worksheetDefinition.featureValueByIriOptional(
+            const featureValueDefinition = worksheetDefinition.featureValueByIri(
               featureValueState.uri
             );
             if (!featureValueDefinition) {

@@ -3,7 +3,7 @@ import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 
 describe("Agent", () => {
-  const sut = testModelSet.personByIri("http://example.com/person4");
+  const sut = testModelSet.personByIri("http://example.com/person4")!;
 
   it("should get the agent's images", () => {
     expect(sut.images).to.not.be.empty;
@@ -21,7 +21,7 @@ describe("Agent", () => {
 
   it("should get the agent's Wikidata concept IRI", () => {
     expect(
-      testModelSet.personByIri("http://example.com/person0").wikidataConceptIri
+      testModelSet.personByIri("http://example.com/person0")!.wikidataConceptIri
     ).to.eq("http://www.wikidata.org/entity/Q7251");
   });
 

@@ -5,7 +5,7 @@ import {describe} from "mocha";
 describe("Organization", () => {
   const sut = testModelSet.organizationByIri(
     "http://example.com/organization4"
-  );
+  )!;
 
   it("should get the organization's images", () => {
     expect(sut.images).to.not.be.empty;

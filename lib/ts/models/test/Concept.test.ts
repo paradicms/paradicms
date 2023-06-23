@@ -5,7 +5,7 @@ import {describe} from "mocha";
 describe("Concept", () => {
   const sut = testModelSet.conceptByIri(
     "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
-  );
+  )!;
 
   it("should get the prefLabel", () => {
     expect(sut.prefLabel).to.not.be.empty;

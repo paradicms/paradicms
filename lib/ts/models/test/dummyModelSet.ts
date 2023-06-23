@@ -18,16 +18,16 @@ import {
 import {DatasetCore} from "@rdfjs/types";
 
 export const dummyModelSet: ModelSet = {
-  agentByIri(agentIri: string): AgentUnion {
+  agentByIri(agentIri: string): AgentUnion | null {
     throw new EvalError("not implemented");
   },
-  agentByKey(agentKey: string): AgentUnion {
+  agentByKey(agentKey: string): AgentUnion | null {
     throw new EvalError("not implemented");
   },
   get appConfiguration(): AppConfiguration | null {
     throw new EvalError("not implemented");
   },
-  collectionByKey(collectionKey: string): Collection {
+  collectionByKey(collectionKey: string): Collection | null {
     throw new EvalError("not implemented");
   },
   get collections(): readonly Collection[] {
@@ -36,37 +36,22 @@ export const dummyModelSet: ModelSet = {
   get concepts(): readonly Concept[] {
     throw new EvalError("not implemented");
   },
-  collectionByIri(collectionIri: string): Collection {
+  conceptByIri(conceptIri: string): Concept | null {
     throw new EvalError("not implemented");
   },
-  conceptByIri(conceptIri: string): Concept {
+  imageByIri(imageIri: string): Image | null {
     throw new EvalError("not implemented");
   },
-  conceptByIriOptional(conceptIri: string): Concept | null {
+  licenseByIri(licenseIri: string): License | null {
     throw new EvalError("not implemented");
   },
-  imageByIri(imageIri: string): Image {
+  locationByIri(locationIri: string): Location | null {
     throw new EvalError("not implemented");
   },
-  imageByIriOptional(imageIri: string): Image | null {
+  organizationByIri(organizationIri: string): Organization | null {
     throw new EvalError("not implemented");
   },
-  licenseByIri(licenseIri: string): License {
-    throw new EvalError("not implemented");
-  },
-  locationByIri(locationIri: string): Location {
-    throw new EvalError("not implemented");
-  },
-  organizationByIri(organizationIri: string): Organization {
-    throw new EvalError("not implemented");
-  },
-  organizationByIriOptional(organizationIri: string): Organization | null {
-    throw new EvalError("not implemented");
-  },
-  personByIri(personIri: string): Person {
-    throw new EvalError("not implemented");
-  },
-  personByIriOptional(personIri: string): Person | null {
+  personByIri(personIri: string): Person | null {
     throw new EvalError("not implemented");
   },
   get propertyGroups(): readonly PropertyGroup[] {
@@ -75,19 +60,16 @@ export const dummyModelSet: ModelSet = {
   get properties(): readonly Property[] {
     throw new EvalError("not implemented");
   },
-  propertyByIri(propertyIri: string): Property {
+  propertyByIri(propertyIri: string): Property | null {
     throw new EvalError("not implemented");
   },
-  propertyGroupByIri(propertyGroupIri: string): PropertyGroup {
-    throw new EvalError("not implemented");
-  },
-  propertyGroupByIriOptional(propertyGroupIri: string): PropertyGroup | null {
+  propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null {
     throw new EvalError("not implemented");
   },
   propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[] {
     throw new EvalError("not implemented");
   },
-  rightsStatementByIri(rightsStatementIri: string): RightsStatement {
+  rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
     throw new EvalError("not implemented");
   },
   toFastRdfString(): string {
@@ -96,16 +78,13 @@ export const dummyModelSet: ModelSet = {
   toRdf(): DatasetCore {
     throw new EvalError("not implemented");
   },
-  workByIri(workIri: string): Work {
+  workByIri(workIri: string): Work | null {
     throw new EvalError("not implemented");
   },
-  workByIriOptional(workIri: string): Work | null {
+  workByKey(workKey: string): Work | null {
     throw new EvalError("not implemented");
   },
-  workByKey(workKey: string): Work {
-    throw new EvalError("not implemented");
-  },
-  workEventByIri(workEventIri: string): WorkEventUnion {
+  workEventByIri(workEventIri: string): WorkEventUnion | null {
     throw new EvalError("not implemented");
   },
   get workEvents(): readonly WorkEventUnion[] {

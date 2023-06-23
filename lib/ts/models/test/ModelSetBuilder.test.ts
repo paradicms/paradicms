@@ -185,17 +185,29 @@ describe("ModelSetBuilder", () => {
   });
 
   it("should get a work subset (work page)", () => {
-    const work = completeModelSet.works[0];
+    const work = completeModelSet.workByIri(
+      "http://example.com/collection0/work0"
+    )!;
     const workModelSet = sut
       .addWork(work, {
         agents: {
           thumbnail: THUMBNAIL_SELECTOR,
         },
-        // collections: {}
-        events: {},
-        images: {},
-        location: true,
+        events: {
+          location: true,
+        },
+        images: {
+          agents: {},
+          license: true,
+          rightsStatement: true,
+        },
         license: true,
+        location: true,
+        propertyValues: {
+          property: {
+            groups: {},
+          },
+        },
         rightsStatement: true,
       })
       .build();
@@ -216,12 +228,18 @@ describe("ModelSetBuilder", () => {
         )
       );
     }
-    expect(workModelSet.concepts).to.have.length(0);
+    expect(workModelSet.concepts).to.have.length(20);
 
     expect(countModelSetImages(workModelSet)).to.eq(13);
 
     expect(work.license).to.not.be.null;
-    expect(countModelSetNamedLicenses(workModelSet)).to.eq(1);
+    expect(countModelSetNamedLicenses(workModelSet)).to.eq(2);
+
+    expectModelsDeepEq(workModelSet.properties, completeModelSet.properties);
+    expectModelsDeepEq(
+      workModelSet.propertyGroups,
+      completeModelSet.propertyGroups
+    );
 
     expect(work.rightsStatement).to.not.be.null;
     expect(countModelSetRightsStatements(workModelSet)).to.eq(1);

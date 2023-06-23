@@ -11,6 +11,7 @@ import {Property} from "./Property";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 import {mapTermToText} from "./mapTermToText";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {mapTermToAgent} from "./mapTermToAgent";
 
 export const createPropertyValueFromTerm = (kwds: {
   dataset: DatasetCore;
@@ -27,54 +28,30 @@ export const createPropertyValueFromTerm = (kwds: {
     modelSet,
   };
 
-  switch (term.termType) {
-    case "BlankNode":
-      {
-        const text = mapTermToText(modelParameters, term);
-        if (text !== null) {
-          return new TextPropertyValue(property, text);
-        } else {
-          return null;
-        }
-      }
-      break;
-    case "NamedNode": {
-      // #78 index lookups take half as much time (amortized over multiple works)
-      // as getting the rdf:type of the NamedNode and branching on its value.
-      {
-        const concept = modelSet.conceptByIriOptional(term.value);
-        if (concept) {
-          return new ConceptPropertyValue(concept, property);
-        }
-      }
-      {
-        const organization = modelSet.organizationByIriOptional(term.value);
-        if (organization) {
-          return new AgentPropertyValue(organization, property);
-        }
-      }
-      {
-        const person = modelSet.personByIriOptional(term.value);
-        if (person) {
-          return new AgentPropertyValue(person, property);
-        }
-      }
-      {
-        if (term.value.startsWith(dcmitype[""].value)) {
-          return new DcmiTypePropertyValue(term, property);
-        }
-      }
-      {
-        const text = mapTermToText(modelParameters, term);
-        if (text !== null) {
-          return new TextPropertyValue(property, text);
-        }
-      }
-      return null;
+  if (term.termType === "BlankNode" || term.termType === "NamedNode") {
+    const agent = mapTermToAgent(modelParameters, term);
+    if (agent) {
+      return new AgentPropertyValue(agent, property);
     }
-    case "Literal":
-      return new LiteralPropertyValue(term, property);
-    default:
-      return null;
+
+    const text = mapTermToText(modelParameters, term);
+    if (text !== null) {
+      return new TextPropertyValue(property, text);
+    }
+
+    if (term.termType === "NamedNode") {
+      const concept = modelSet.conceptByIri(term.value);
+      if (concept) {
+        return new ConceptPropertyValue(concept, property);
+      }
+
+      if (term.value.startsWith(dcmitype[""].value)) {
+        return new DcmiTypePropertyValue(term, property);
+      }
+    }
+  } else if (term.termType === "Literal") {
+    return new LiteralPropertyValue(term, property);
   }
+
+  return null;
 };

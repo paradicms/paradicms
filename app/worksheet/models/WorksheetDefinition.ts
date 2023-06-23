@@ -15,8 +15,8 @@ export class WorksheetDefinition {
   }
 
   @Memoize()
-  featureSetByIriOptional(iri: string): WorksheetFeatureSetDefinition | null {
-    const propertyGroup = this.modelSet.propertyGroupByIriOptional(iri);
+  featureSetByIri(iri: string): WorksheetFeatureSetDefinition | null {
+    const propertyGroup = this.modelSet.propertyGroupByIri(iri);
     return propertyGroup
       ? new WorksheetFeatureSetDefinition(propertyGroup)
       : null;
@@ -26,14 +26,6 @@ export class WorksheetDefinition {
   get featureSets(): readonly WorksheetFeatureSetDefinition[] {
     return this.modelSet.propertyGroups.map(
       propertyGroup => new WorksheetFeatureSetDefinition(propertyGroup)
-    );
-  }
-
-  featureValueByIriOptional(
-    iri: string
-  ): WorksheetFeatureValueDefinition | null {
-    return (
-      this.featureValues.find(featureValue => featureValue.iri === iri) ?? null
     );
   }
 
