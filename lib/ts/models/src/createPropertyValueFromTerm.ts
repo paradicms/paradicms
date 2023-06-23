@@ -35,7 +35,7 @@ export const createPropertyValueFromTerm = (kwds: {
     }
 
     const text = mapTermToText(modelParameters, term);
-    if (text !== null) {
+    if (text) {
       return new TextPropertyValue(property, text);
     }
 
