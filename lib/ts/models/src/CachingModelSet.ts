@@ -57,23 +57,6 @@ const indexModelsByValues = <ModelT extends Model>(
   return sortModelsMultimap(modelsMultimap);
 };
 
-const indexModelsByValue = <ModelT extends Model>(
-  models: readonly ModelT[],
-  modelValue: (model: ModelT) => string
-): {[index: string]: readonly ModelT[]} => {
-  const modelsMultimap: {[index: string]: ModelT[]} = {};
-  for (const model of models) {
-    const modelValue_ = modelValue(model);
-    const modelsWithValue = modelsMultimap[modelValue_];
-    if (modelsWithValue) {
-      modelsWithValue.push(model);
-    } else {
-      modelsMultimap[modelValue_] = [model];
-    }
-  }
-  return sortModelsMultimap(modelsMultimap);
-};
-
 const sortModelsArray = <ModelT extends Model>(
   models: readonly ModelT[]
 ): readonly ModelT[] =>
@@ -92,24 +75,24 @@ const sortModelsMultimap = <ModelT extends Model>(models: {
 export class CachingModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
 
-  agentByIri(agentIri: string): AgentUnion {
+  agentByIri(agentIri: string): AgentUnion | null {
     for (const index of [this.organizationsByIriIndex, this.peopleByIriIndex]) {
       const agent = index[agentIri];
       if (agent) {
         return agent;
       }
     }
-    throw new RangeError("no such agent " + agentIri);
+    return null;
   }
 
-  agentByKey(agentKey: string): AgentUnion {
+  agentByKey(agentKey: string): AgentUnion | null {
     for (const index of [this.organizationsByKeyIndex, this.peopleByKeyIndex]) {
       const agent = index[agentKey];
       if (agent) {
         return agent;
       }
     }
-    throw new RangeError("no such agent " + agentKey);
+    return null;
   }
 
   @Memoize()
@@ -124,11 +107,11 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readCollections({modelSet: this}));
   }
 
-  collectionByIri(collectionIri: string): Collection {
+  collectionByIri(collectionIri: string): Collection | null {
     return this.modelByIri(this.collectionsByIriIndex, collectionIri);
   }
 
-  collectionByKey(collectionKey: string): Collection {
+  collectionByKey(collectionKey: string): Collection | null {
     return this.modelByKey(this.collectionsByKeyIndex, collectionKey);
   }
 
@@ -142,12 +125,8 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByKey(this.collections);
   }
 
-  conceptByIri(conceptIri: string): Concept {
+  conceptByIri(conceptIri: string): Concept | null {
     return this.modelByIri(this.conceptsByIriIndex, conceptIri);
-  }
-
-  conceptByIriOptional(conceptIri: string): Concept | null {
-    return this.modelByIriOptional(this.conceptsByIriIndex, conceptIri);
   }
 
   @Memoize()
@@ -160,12 +139,8 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.concepts);
   }
 
-  imageByIri(imageIri: string): Image {
+  imageByIri(imageIri: string): Image | null {
     return this.modelByIri(this.imagesByIriIndex, imageIri);
-  }
-
-  imageByIriOptional(imageIri: string): Image | null {
-    return this.modelByIriOptional(this.imagesByIriIndex, imageIri);
   }
 
   @Memoize()
@@ -173,37 +148,12 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readImages({modelSet: this}));
   }
 
-  imagesByDepictsIri(depictsIri: string): readonly Image[] {
-    return this.imagesByDepictsIriIndex[depictsIri] ?? [];
-  }
-
-  @Memoize()
-  private get imagesByDepictsIriIndex(): {[index: string]: readonly Image[]} {
-    return indexModelsByValue(this.images, image => image.depictsIri);
-  }
-
-  imagesByOriginalImageIri(originalImageIri: string): readonly Image[] {
-    // Exclude the original image itself
-    return (this.imagesByOriginalImageIriIndex[originalImageIri] ?? []).filter(
-      image => image.originalImageIri === originalImageIri
-    );
-  }
-
-  @Memoize()
-  private get imagesByOriginalImageIriIndex(): {
-    [index: string]: readonly Image[];
-  } {
-    return indexModelsByValues(this.images, image =>
-      image.originalImageIri ? [image.originalImageIri] : image.iris
-    );
-  }
-
   @Memoize()
   private get imagesByIriIndex(): {[index: string]: Image} {
     return indexModelsByIri(this.images);
   }
 
-  licenseByIri(licenseIri: string): License {
+  licenseByIri(licenseIri: string): License | null {
     return this.modelByIri(this.licensesByIriIndex, licenseIri);
   }
 
@@ -212,7 +162,7 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.namedLicenses);
   }
 
-  locationByIri(locationIri: string): Location {
+  locationByIri(locationIri: string): Location | null {
     return this.modelByIri(this.locationsByIriIndex, locationIri);
   }
 
@@ -224,33 +174,11 @@ export class CachingModelSet implements ModelSet {
   private modelByIri<ModelT>(
     index: {[index: string]: ModelT},
     iri: string
-  ): ModelT {
-    const model = this.modelByIriOptional(index, iri);
-    if (!model) {
-      throw new RangeError("no such model " + iri);
-    }
-    return model;
-  }
-
-  private modelByIriOptional<ModelT>(
-    index: {[index: string]: ModelT},
-    iri: string
   ): ModelT | null {
     return index[iri] ?? null;
   }
 
   private modelByKey<ModelT>(
-    index: {[index: string]: ModelT},
-    key: string
-  ): ModelT {
-    const model = this.modelByKeyOptional(index, key);
-    if (!model) {
-      throw new RangeError("no such model " + key);
-    }
-    return model;
-  }
-
-  private modelByKeyOptional<ModelT>(
     index: {[index: string]: ModelT},
     key: string
   ): ModelT | null {
@@ -290,15 +218,8 @@ export class CachingModelSet implements ModelSet {
     );
   }
 
-  organizationByIri(organizationIri: string): Organization {
+  organizationByIri(organizationIri: string): Organization | null {
     return this.modelByIri(this.organizationsByIriIndex, organizationIri);
-  }
-
-  organizationByIriOptional(organizationIri: string): Organization | null {
-    return this.modelByIriOptional(
-      this.organizationsByIriIndex,
-      organizationIri
-    );
   }
 
   @Memoize()
@@ -321,12 +242,8 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByKey(this.namedPeople);
   }
 
-  personByIri(personIri: string): Person {
+  personByIri(personIri: string): Person | null {
     return this.modelByIri(this.peopleByIriIndex, personIri);
-  }
-
-  personByIriOptional(personIri: string): Person | null {
-    return this.modelByIriOptional(this.peopleByIriIndex, personIri);
   }
 
   @Memoize()
@@ -334,35 +251,17 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readProperties({modelSet: this}));
   }
 
-  propertiesByGroupIri(propertyGroupIri: string): readonly Property[] {
-    return this.propertiesByGroupIriIndex[propertyGroupIri] ?? [];
-  }
-
-  @Memoize()
-  private get propertiesByGroupIriIndex(): {
-    [index: string]: readonly Property[];
-  } {
-    return indexModelsByValues(this.properties, property => property.groupIris);
-  }
-
   @Memoize()
   private get propertiesByIriIndex(): {[index: string]: Property} {
     return indexModelsByIri(this.properties);
   }
 
-  propertyByIri(propertyIri: string): Property {
+  propertyByIri(propertyIri: string): Property | null {
     return this.modelByIri(this.propertiesByIriIndex, propertyIri);
   }
 
-  propertyGroupByIri(propertyGroupIri: string): PropertyGroup {
+  propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null {
     return this.modelByIri(this.propertyGroupsByIriIndex, propertyGroupIri);
-  }
-
-  propertyGroupByIriOptional(propertyGroupIri: string): PropertyGroup | null {
-    return this.modelByIriOptional(
-      this.propertyGroupsByIriIndex,
-      propertyGroupIri
-    );
   }
 
   @Memoize()
@@ -377,7 +276,20 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.propertyGroups);
   }
 
-  rightsStatementByIri(rightsStatementIri: string): RightsStatement {
+  propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[] {
+    return this.propertyGroupsByPropertyKeyIndex[propertyKey] ?? [];
+  }
+
+  @Memoize()
+  private get propertyGroupsByPropertyKeyIndex(): {
+    [index: string]: readonly PropertyGroup[];
+  } {
+    return indexModelsByValues(this.propertyGroups, propertyGroup =>
+      propertyGroup.properties.map(property => property.key)
+    );
+  }
+
+  rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
     return this.modelByIri(this.rightsStatementsByIriIndex, rightsStatementIri);
   }
 
@@ -394,16 +306,16 @@ export class CachingModelSet implements ModelSet {
     throw new EvalError("use model.toRdf to serialize");
   }
 
-  workByIri(workIri: string): Work {
+  workByIri(workIri: string): Work | null {
     return this.modelByIri(this.worksByIriIndex, workIri);
   }
 
-  workByIriOptional(workIri: string): Work | null {
-    return this.modelByIriOptional(this.worksByIriIndex, workIri);
+  workByKey(workKey: string): Work | null {
+    return this.modelByKey(this.worksByKeyIndex, workKey);
   }
 
-  workByKey(workKey: string): Work {
-    return this.modelByKey(this.worksByKeyIndex, workKey);
+  workEventByIri(workEventIri: string): WorkEventUnion | null {
+    return this.modelByIri(this.workEventsByIriIndex, workEventIri);
   }
 
   @Memoize()
@@ -411,26 +323,11 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readWorkEvents({modelSet: this}));
   }
 
-  workEventsByWorkIri(workIri: string): readonly WorkEventUnion[] {
-    return this.workEventsByWorkIriIndex[workIri] ?? [];
-  }
-
-  workEventByIri(workEventIri: string): WorkEventUnion {
-    return this.modelByIri(this.workEventsByIriIndex, workEventIri);
-  }
-
   @Memoize()
   private get workEventsByIriIndex(): {
     [index: string]: WorkEventUnion;
   } {
     return indexModelsByIri(this.workEvents);
-  }
-
-  @Memoize()
-  private get workEventsByWorkIriIndex(): {
-    [index: string]: readonly WorkEventUnion[];
-  } {
-    return indexModelsByValue(this.workEvents, workEvent => workEvent.workIri);
   }
 
   @Memoize()
@@ -448,19 +345,6 @@ export class CachingModelSet implements ModelSet {
   } {
     return indexModelsByValues(this.works, work =>
       work.agents.flatMap(agent => agent.agent.iris)
-    );
-  }
-
-  worksByCollectionKey(collectionKey: string): readonly Work[] {
-    return this.worksByCollectionKeyIndex[collectionKey] ?? [];
-  }
-
-  @Memoize()
-  private get worksByCollectionKeyIndex(): {
-    [index: string]: readonly Work[];
-  } {
-    return indexModelsByValues(this.works, work =>
-      work.collections.map(collection => collection.key)
     );
   }
 

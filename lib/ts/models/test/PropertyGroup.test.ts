@@ -3,7 +3,7 @@ import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 
 describe("PropertyGroup", () => {
-  const sut = testModelSet.propertyGroupByIriOptional(
+  const sut = testModelSet.propertyGroupByIri(
     "urn:paradicms_etl:pipeline:synthetic_data:property_group"
   )!;
 

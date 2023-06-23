@@ -16,6 +16,7 @@ import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {useRouter} from "next/router";
 import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
+import {requireNonNull} from "@paradicms/utilities";
 
 interface StaticProps {
   readonly featureSetIri: string;
@@ -159,11 +160,14 @@ export const getStaticProps: GetStaticProps = async ({
       featureIri,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
-        .addProperty(completeModelSet.propertyByIri(featureIri), {
-          rangeValues: {
-            thumbnail: galleryThumbnailSelector,
-          },
-        })
+        .addProperty(
+          requireNonNull(completeModelSet.propertyByIri(featureIri)),
+          {
+            rangeValues: {
+              thumbnail: galleryThumbnailSelector,
+            },
+          }
+        )
         .addPropertyGroups(completeModelSet.propertyGroups, {
           properties: {
             rangeValues: {},

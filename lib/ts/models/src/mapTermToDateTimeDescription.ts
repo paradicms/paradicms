@@ -1,22 +1,24 @@
 import {Term} from "@rdfjs/types";
 import anyDateParser from "any-date-parser";
-import {DateTimeDescription} from "../DateTimeDescription";
-import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
-import {CmsDateTimeDescription} from "../cms/CmsDateTimeDescription";
+import {DateTimeDescription} from "./DateTimeDescription";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
+import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
- * Map a term in a modelSet to a PartialDateTime.
+ * Map a term in a modelSet to a DateTimeDescription.
  */
-export const mapCmsDateTimeDescriptionObject = (
+export const mapTermToDateTimeDescription = (
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
   term: Term
 ): DateTimeDescription | null => {
   switch (term.termType) {
     case "BlankNode":
     case "NamedNode":
-      return new CmsDateTimeDescription({
-        ...modelParameters,
-        identifier: term,
+      return mapTermToResourceBackedModel({
+        factories: dateTimeDescriptionFactories,
+        modelParameters,
+        term,
       });
     case "Literal": {
       const parsed = anyDateParser.attempt(term.value);

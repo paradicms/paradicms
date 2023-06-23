@@ -20,6 +20,7 @@ import * as React from "react";
 import {useCallback, useMemo} from "react";
 import Hammer from "react-hammerjs";
 import path from "path";
+import {requireNonNull} from "@paradicms/utilities";
 
 const WorkLocationsMap = dynamic<{
   readonly collectionKey: string;
@@ -51,9 +52,9 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
-  const collection = modelSet.collectionByKey(collectionKey);
+  const collection = requireNonNull(modelSet.collectionByKey(collectionKey));
   const configuration = modelSet.appConfiguration;
-  const currentWork = modelSet.workByKey(currentWorkKey);
+  const currentWork = requireNonNull(modelSet.workByKey(currentWorkKey));
   const router = useRouter();
 
   const onGoToNextWork = useCallback(() => {
@@ -167,8 +168,11 @@ export const getStaticProps: GetStaticProps = async ({
     readFile,
   });
 
-  const currentWork = completeModelSet.workByKey(workKey);
-  const collectionWorks = completeModelSet.collectionByKey(collectionKey).works;
+  const collection = requireNonNull(
+    completeModelSet.collectionByKey(collectionKey)
+  );
+  const collectionWorks = collection.works;
+  const currentWork = requireNonNull(completeModelSet.workByKey(workKey));
 
   const currentWorkI = collectionWorks.findIndex(
     work => work.key === currentWork.key
@@ -200,8 +204,11 @@ export const getStaticProps: GetStaticProps = async ({
       currentWorkKey: workKey,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
+        .addCollection(collection)
         .addWorks(
-          workKeys.map(workKey => completeModelSet.workByKey(workKey)),
+          workKeys.map(workKey =>
+            requireNonNull(completeModelSet.workByKey(workKey))
+          ),
           workPageWorkJoinSelector
         )
         .build()

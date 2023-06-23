@@ -3,7 +3,6 @@ import {Work} from "../Work";
 import {Mixin} from "ts-mixer";
 import {SameAsRightsMixin} from "./SameAsRightsMixin";
 import {WorkAgent} from "../WorkAgent";
-import {Collection} from "../Collection";
 import {Text} from "../Text";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {WorkLocation} from "../WorkLocation";
@@ -15,10 +14,6 @@ import {SameAsRelationsMixin} from "./SameAsRelationsMixin";
 export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<Work>, SameAsRelationsMixin, SameAsRightsMixin<Work>) implements Work {
     get agents(): readonly WorkAgent[] {
         return this.getAllValues(model => model.agents);
-    }
-
-    get collections(): readonly Collection[] {
-        return this.getUniqueLinkedModels(model => model.collections);
     }
 
     get description(): Text | null {

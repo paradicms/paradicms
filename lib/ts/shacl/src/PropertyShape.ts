@@ -3,7 +3,7 @@ import {BlankNode, Literal, NamedNode, Term} from "@rdfjs/types";
 import {dash, sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
 import {requireNonNull} from "@paradicms/utilities";
-import {getRdfList} from "@paradicms/rdf";
+import {getRdfList, mapTermToNumber} from "@paradicms/rdf";
 import {NodeShape} from "./NodeShape";
 
 type PropertyShapeValue = BlankNode | Literal | NamedNode;
@@ -74,11 +74,11 @@ export class PropertyShape extends Shape {
   }
 
   get maxCount(): number | null {
-    return this.findAndMapObject(sh.maxCount, this.mapIntObject);
+    return this.findAndMapObject(sh.maxCount, mapTermToNumber);
   }
 
   get minCount(): number | null {
-    return this.findAndMapObject(sh.minCount, this.mapIntObject);
+    return this.findAndMapObject(sh.minCount, mapTermToNumber);
   }
 
   get nodeShapes(): readonly NodeShape[] {
@@ -128,7 +128,7 @@ export class PropertyShape extends Shape {
   }
 
   get order(): number | null {
-    return this.findAndMapObject(sh.maxCount, this.mapFloatObject);
+    return this.findAndMapObject(sh.maxCount, mapTermToNumber);
   }
 
   get path(): NamedNode {

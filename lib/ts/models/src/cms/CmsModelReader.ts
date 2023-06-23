@@ -1,5 +1,5 @@
-import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cms, configuration, rdf} from "@paradicms/vocabularies";
+import {getNamedRdfTypes, getRdfInstanceQuads} from "@paradicms/rdf";
+import {cms, configuration} from "@paradicms/vocabularies";
 import {AppConfiguration} from "../AppConfiguration";
 import {Collection} from "../Collection";
 import {Concept} from "../Concept";
@@ -32,6 +32,7 @@ import {CmsWorkCreation} from "./CmsWorkCreation";
 import {CmsWorkOpening} from "./CmsWorkOpening";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
+import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 
 const workEventClassesByRdfType = (() => {
   const result: {
@@ -46,7 +47,7 @@ const workEventClassesByRdfType = (() => {
 })();
 
 export class CmsModelReader extends DatasetModelReader {
-  readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null {
+  override readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null {
     for (const quad of getRdfInstanceQuads({
       class_: configuration.AppConfiguration,
       dataset: this.dataset,
@@ -65,7 +66,7 @@ export class CmsModelReader extends DatasetModelReader {
     return null;
   }
 
-  readCollections(kwds: {modelSet: ModelSet}): readonly Collection[] {
+  override readCollections(kwds: {modelSet: ModelSet}): readonly Collection[] {
     return this.readNamedModels({
       class_: cms.Collection,
       factory: CmsCollection,
@@ -73,7 +74,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[] {
+  override readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[] {
     return this.readNamedModels({
       class_: cms.Concept,
       factory: CmsConcept,
@@ -81,7 +82,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readImages(kwds: {modelSet: ModelSet}): readonly Image[] {
+  override readImages(kwds: {modelSet: ModelSet}): readonly Image[] {
     return this.readNamedModels({
       class_: cms.Image,
       factory: CmsImage,
@@ -89,7 +90,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
+  override readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
     return this.readNamedModels({
       class_: cms.License,
       factory: CmsLicense,
@@ -97,7 +98,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
+  override readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
     return this.readNamedModels({
       class_: cms.Location,
       factory: CmsLocation,
@@ -105,7 +106,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
+  override readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
     return this.readNamedModels({
       class_: cms.Organization,
       factory: CmsOrganization,
@@ -113,7 +114,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
+  override readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
     return this.readNamedModels({
       class_: cms.Person,
       factory: CmsPerson,
@@ -121,7 +122,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readProperties(kwds: {modelSet: ModelSet}): readonly Property[] {
+  override readProperties(kwds: {modelSet: ModelSet}): readonly Property[] {
     return this.readNamedModels({
       class_: cms.Property,
       factory: CmsProperty,
@@ -129,7 +130,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readPropertyGroups(kwds: {modelSet: ModelSet}): readonly PropertyGroup[] {
+  override readPropertyGroups(kwds: {modelSet: ModelSet}): readonly PropertyGroup[] {
     return this.readNamedModels({
       class_: cms.PropertyGroup,
       factory: CmsPropertyGroup,
@@ -137,7 +138,7 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readNamedRightsStatements(kwds: {
+  override readNamedRightsStatements(kwds: {
     modelSet: ModelSet;
   }): readonly RightsStatement[] {
     return this.readNamedModels({
@@ -147,22 +148,21 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
+  override readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
     const workEvents: WorkEventUnion[] = [];
     for (const quad of getRdfInstanceQuads({
       class_: cms.WorkEvent,
       dataset: this.dataset,
     }).values()) {
-      for (const rdfTypeQuad of this.dataset.match(
-        quad.subject,
-        rdf.type,
-        null,
-        quad.graph
-      )) {
+      if (!quad.subject.equals(quad.graph)) {
+        continue;
+      }
+
+      // Get the concrete type of the WorkEvent.
+      for (const rdfType of getNamedRdfTypes({dataset: this.dataset, graph: quad.graph as BlankNode | DefaultGraph | NamedNode, subject: quad.subject as BlankNode | NamedNode})) {
         if (
-          rdfTypeQuad.object.termType !== "NamedNode" ||
-          rdfTypeQuad.object.equals(cms.Event) ||
-          rdfTypeQuad.object.equals(cms.WorkEvent)
+          rdfType.equals(cms.Event) ||
+          rdfType.equals(cms.WorkEvent)
         ) {
           continue;
         }
@@ -171,7 +171,7 @@ export class CmsModelReader extends DatasetModelReader {
           modelIdentifier: quad.subject as ModelIdentifier,
         });
         const workEventClass =
-          workEventClassesByRdfType[rdfTypeQuad.object.value];
+          workEventClassesByRdfType[rdfType.value];
         if (workEventClass) {
           workEvents.push(
             new workEventClass({
@@ -188,7 +188,7 @@ export class CmsModelReader extends DatasetModelReader {
     return workEvents;
   }
 
-  readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
+  override readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
     return this.readNamedModels({
       class_: cms.Work,
       factory: CmsWork,

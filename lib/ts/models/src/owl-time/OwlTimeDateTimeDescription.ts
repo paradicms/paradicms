@@ -3,9 +3,10 @@ import {Literal} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
-import {CmsModel} from "./CmsModel";
+import {ResourceBackedModel} from "../ResourceBackedModel";
+import {mapTermToNumber} from "@paradicms/rdf";
 
-export class CmsDateTimeDescription extends Mixin(CmsModel) implements DateTimeDescription {
+export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) implements DateTimeDescription {
   /**
    * Day of the month, 1..31 inclusive.
    */
@@ -37,14 +38,14 @@ export class CmsDateTimeDescription extends Mixin(CmsModel) implements DateTimeD
    * Hour of the day, 0..23 inclusive
    */
   get hour(): number | null {
-    return this.findAndMapObject(time.hour, this.mapIntObject);
+    return this.findAndMapObject(time.hour, mapTermToNumber);
   }
 
   /**
    * Minute of the day, 0..59 inclusive
    */
   get minute(): number | null {
-    return this.findAndMapObject(time.minute, this.mapIntObject);
+    return this.findAndMapObject(time.minute, mapTermToNumber);
   }
 
   /**

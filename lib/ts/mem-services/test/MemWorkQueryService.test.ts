@@ -9,6 +9,8 @@ import {syntheticData} from "@paradicms/test";
 import {vra} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {MemWorkQueryService} from "../src/MemWorkQueryService";
+import {requireNonNull} from "@paradicms/utilities";
+import {describe} from "mocha";
 
 describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDataset(syntheticData);
@@ -47,7 +49,7 @@ describe("MemWorkQueryService", () => {
 
     expect(result.workAgentKeys).to.not.be.empty;
     let haveAgentWorks = false;
-    for (const agent of result.workAgentKeys.map(workAgentKey => result.modelSet.agentByKey(workAgentKey))) {
+    for (const agent of result.workAgentKeys.map(workAgentKey => requireNonNull(result.modelSet.agentByKey(workAgentKey)))) {
       const agentWorks: Work[] = [];
       for (const agentIri of agent.iris) {
           agentWorks.push(...result.modelSet.worksByAgentIri(agentIri));
@@ -72,7 +74,7 @@ describe("MemWorkQueryService", () => {
     );
 
     expect(result.totalWorkEventsCount).to.be.gt(0);
-    expect(result.modelSet.workEvents).to.have.length(result.totalWorkEventsCount);
+    expect(result.modelSet.workEvents).to.have.length.lte(result.totalWorkEventsCount); // modelSet.workEvents = only named
   });
 
   it("getWorkEvents returns the other models associated with an event", async () => {
@@ -82,8 +84,7 @@ describe("MemWorkQueryService", () => {
         offset: 0,
         workEventJoinSelector: {
           agents: {},
-          location: true,
-          work: {}
+          location: true
         }
       },
       {
@@ -91,10 +92,9 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.modelSet.works).to.not.be.empty;
+    expect(result.modelSet.works).to.be.empty;
     for (const workEvent of result.modelSet.workEvents) {
       expect(workEvent.location).to.not.be.null;
-      expect(workEvent.work).to.not.be.null;
       switch (workEvent.type) {
           case "WorkCreation":
               expect(workEvent.creators).to.not.be.empty;
@@ -250,7 +250,7 @@ describe("MemWorkQueryService", () => {
       },
       {
         filters: []!,
-        text: "CmsCollection0CmsWork2",
+        text: "Collection0Work2",
       }
     );
 

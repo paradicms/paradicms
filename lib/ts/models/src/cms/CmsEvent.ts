@@ -6,9 +6,11 @@ import {Event} from "../Event";
 import {Location} from "../Location";
 import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
-import {mapCmsDateTimeDescriptionObject} from "./mapCmsDateTimeDescriptionObject";
-import {mapCmsLocationObject} from "./mapCmsLocationObject";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {mapTermToLocation} from "../mapTermToLocation";
+import {requireNonNull} from "@paradicms/utilities";
+import {mapTermToString} from "@paradicms/rdf";
 
 export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   implements Event {
@@ -74,23 +76,21 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   @Memoize()
   get date(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.date, term =>
-      mapCmsDateTimeDescriptionObject(this, term)
+      mapTermToDateTimeDescription(this, term)
     );
   }
 
   @Memoize()
   get endDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.endDate, term =>
-      mapCmsDateTimeDescriptionObject(this, term)
+      mapTermToDateTimeDescription(this, term)
     );
   }
-
-  abstract readonly label: string;
 
   @Memoize()
   get location(): Location | null {
     return this.findAndMapObject(dcterms.spatial, term =>
-      mapCmsLocationObject(this, term)
+      mapTermToLocation(this, term)
     );
   }
 
@@ -121,11 +121,15 @@ export abstract class CmsEvent extends Mixin(CmsNamedModel, CmsDescriptionMixin)
   @Memoize()
   get startDate(): DateTimeDescription | null {
     return this.findAndMapObject(vra.startDate, term =>
-      mapCmsDateTimeDescriptionObject(this, term)
+      mapTermToDateTimeDescription(this, term)
     );
   }
 
-  get title(): string | null {
-    return this.findAndMapObject(dcterms.title, this.mapStringObject);
+  get label(): string {
+    return requireNonNull(this.title);
+  }
+
+  protected get title(): string | null {
+    return this.findAndMapObject(dcterms.title, mapTermToString);
   }
 }

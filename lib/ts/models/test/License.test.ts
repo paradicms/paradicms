@@ -5,7 +5,7 @@ import {describe} from "mocha";
 describe("License", () => {
   const sut = testModelSet.licenseByIri(
     "http://creativecommons.org/licenses/nc/1.0/"
-  );
+  )!;
 
   // it("should get the license's identifier", () => {
   //   expect(sut.identifier).to.not.be.empty;

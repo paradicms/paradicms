@@ -14,10 +14,6 @@ export class SameAsPerson extends Mixin(SameAsModel<Person>, SameAsAgentMixin<Pe
         return this.getBestValue(model => model.givenName);
     }
 
-    get sortName(): string | null {
-        return this.getBestValue(model => model.sortName);
-    }
-
     get type(): "Person" {
         return "Person";
     }

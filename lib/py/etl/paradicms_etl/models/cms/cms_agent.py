@@ -4,7 +4,7 @@ from rdflib.resource import Resource
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_model import CmsModel
-from paradicms_etl.namespaces import CMS, CONTACT
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -22,10 +22,6 @@ class CmsAgent(CmsModel, CmsImagesMixin, Agent):
             self.add(OWL.sameAs, same_as)
             return self
 
-        def set_sort_name(self, sort_name: str) -> "CmsAgent.Builder":
-            self.set(CONTACT.sortName, sort_name)
-            return self
-
     def __init__(self, resource: Resource):
         resource.add(RDF.type, CMS.Agent)
         CmsModel.__init__(self, resource)
@@ -41,7 +37,6 @@ class CmsAgent(CmsModel, CmsImagesMixin, Agent):
                 "page": {"@id": str(FOAF.page)},
                 "relation": {"@id": str(DCTERMS.relation), "@type": "@id"},
                 "sameAs": {"@id": str(OWL.sameAs), "@type": "@id"},
-                "sortName": {"@id": str(CONTACT.sortName)},
             },
         )
 

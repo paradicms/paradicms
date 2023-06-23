@@ -3,11 +3,12 @@ import {dc11} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {License} from "../License";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {mapTermToString} from "@paradicms/rdf";
 
 export class CmsLicense extends Mixin(CmsNamedModel) implements License {
   // get identifier(): string {
   //   return requireNonNull(
-  //     this.findAndMapObject(dc11.identifier, this.mapStringObject)
+  //     this.findAndMapObject(dc11.identifier, mapTermToString)
   //   );
   // }
 
@@ -26,8 +27,6 @@ export class CmsLicense extends Mixin(CmsNamedModel) implements License {
   }
 
   get title(): string {
-    return requireNonNull(
-      this.findAndMapObject(dc11.title, this.mapStringObject)
-    );
+    return requireNonNull(this.findAndMapObject(dc11.title, mapTermToString));
   }
 }

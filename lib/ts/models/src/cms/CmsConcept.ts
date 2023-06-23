@@ -6,6 +6,7 @@ import {Concept} from "../Concept";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
 import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {mapTermToString} from "@paradicms/rdf";
 
 export class CmsConcept
   extends Mixin(CmsNamedModel, CmsDescriptionMixin, CmsImagesMixin)
@@ -29,7 +30,7 @@ export class CmsConcept
 
   @Memoize()
   get prefLabel(): string | null {
-    return this.findAndMapObject(skos.prefLabel, this.mapStringObject);
+    return this.findAndMapObject(skos.prefLabel, mapTermToString);
   }
 
   @Memoize()

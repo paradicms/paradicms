@@ -6,20 +6,23 @@ import {requireDefined} from "@paradicms/utilities";
 
 const groupWorkProperties = (workProperties: readonly WorkProperty[]) => {
   const ungroupedWorkProperties: WorkProperty[] = [];
-  const workPropertiesByGroupIri: {[index: string]: WorkProperty[]} = {};
+  const workPropertiesByGroupKey: {[index: string]: WorkProperty[]} = {};
   for (const workProperty of workProperties) {
-    if (workProperty.property.groupIris.length === 0) {
+    if (workProperty.property.groups.length === 0) {
       ungroupedWorkProperties.push(workProperty);
     } else {
-      for (const propertyGroupIri of workProperty.property.groupIris) {
-        if (!workPropertiesByGroupIri[propertyGroupIri]) {
-          workPropertiesByGroupIri[propertyGroupIri] = [];
+      for (const propertyGroup of workProperty.property.groups) {
+        if (!workPropertiesByGroupKey[propertyGroup.key]) {
+          workPropertiesByGroupKey[propertyGroup.key] = [];
         }
-        workPropertiesByGroupIri[propertyGroupIri].push(workProperty);
+        workPropertiesByGroupKey[propertyGroup.key].push(workProperty);
       }
     }
   }
-  return {ungroupedWorkProperties, workPropertiesByGroupIri};
+  return {
+    ungroupedWorkProperties,
+    workPropertiesByGroupKey,
+  };
 };
 
 const WorkPropertiesTable: React.FunctionComponent<{
@@ -65,30 +68,28 @@ export const WorkPropertiesContainer: React.FunctionComponent<{
 }> = ({propertyGroups, workProperties}) => {
   const {
     ungroupedWorkProperties,
-    workPropertiesByGroupIri,
+    workPropertiesByGroupKey,
   } = groupWorkProperties(workProperties);
 
-  const propertyGroupsByIri = propertyGroups.reduce((map, propertyGroup) => {
-    for (const propertyGroupIri of propertyGroup.iris) {
-      map[propertyGroupIri] = propertyGroup;
-    }
+  const propertyGroupsByKey = propertyGroups.reduce((map, propertyGroup) => {
+    map[propertyGroup.key] = propertyGroup;
     return map;
   }, {} as {[index: string]: PropertyGroup});
 
   return (
     <Container className="px-2" fluid>
-      {Object.keys(workPropertiesByGroupIri)
+      {Object.keys(workPropertiesByGroupKey)
         .sort((left, right) =>
-          requireDefined(propertyGroupsByIri[left]).label.localeCompare(
-            requireDefined(propertyGroupsByIri[right]).label
+          requireDefined(propertyGroupsByKey[left]).label.localeCompare(
+            requireDefined(propertyGroupsByKey[right]).label
           )
         )
-        .map(propertyGroupIri => (
-          <Row key={propertyGroupIri}>
+        .map(propertyGroupKey => (
+          <Row key={propertyGroupKey}>
             <Col className="px-0" xs={12}>
               <WorkPropertiesTable
                 propertyGroupLabel={
-                  requireDefined(propertyGroupsByIri[propertyGroupIri]).label
+                  requireDefined(propertyGroupsByKey[propertyGroupKey]).label
                 }
                 workProperties={workProperties}
               />

@@ -14,7 +14,6 @@ export const selectThumbnail = <
     readonly exactDimensions: ImageDimensions | null;
     readonly iris: readonly string[];
     readonly maxDimensions: ImageDimensions | null;
-    readonly originalImageIri: string | null;
   }
 >(
   images: readonly ImageT[],
@@ -27,111 +26,94 @@ export const selectThumbnail = <
 
   const {minDimensions, maxDimensions, targetDimensions} = selector;
 
-  const imagesByOriginalImageIri: {[index: string]: ImageT[]} = {};
+  const candidateImages: {
+    image: ImageT;
+    imageDimensions: ImageDimensions;
+  }[] = [];
   for (const image of images) {
-    for (const originalImageIri of image.originalImageIri
-      ? [image.originalImageIri]
-      : image.iris) {
-      (
-        imagesByOriginalImageIri[originalImageIri] ||
-        (imagesByOriginalImageIri[originalImageIri] = [])
-      ).push(image);
+    let imageDimensions: ImageDimensions;
+    if (image.exactDimensions) {
+      imageDimensions = image.exactDimensions;
+    } else if (image.maxDimensions) {
+      imageDimensions = image.maxDimensions;
+    } else {
+      continue;
     }
-  }
 
-  for (const originalImageIri of Object.keys(imagesByOriginalImageIri)) {
-    const candidateImages: {
-      image: ImageT;
-      imageDimensions: ImageDimensions;
-    }[] = [];
-    for (const image of imagesByOriginalImageIri[originalImageIri]) {
-      let imageDimensions: ImageDimensions;
-      if (image.exactDimensions) {
-        imageDimensions = image.exactDimensions;
-      } else if (image.maxDimensions) {
-        imageDimensions = image.maxDimensions;
-      } else {
+    if (maxDimensions) {
+      if (imageDimensions.height > maxDimensions.height) {
         continue;
       }
-
-      if (maxDimensions) {
-        if (imageDimensions.height > maxDimensions.height) {
-          continue;
-        }
-        if (imageDimensions.width > maxDimensions.width) {
-          continue;
-        }
+      if (imageDimensions.width > maxDimensions.width) {
+        continue;
       }
-
-      if (minDimensions) {
-        if (imageDimensions.height < minDimensions.height) {
-          continue;
-        }
-        if (imageDimensions.width < minDimensions.width) {
-          continue;
-        }
-      }
-
-      candidateImages.push({
-        image,
-        imageDimensions,
-      });
     }
 
-    if (candidateImages.length === 0) {
-      // console.debug("no candidate images, returning null");
-      continue; // On to the next set of images derived from an original image
-    } else if (candidateImages.length === 1) {
-      // console.debug("single candidate image");
-      return candidateImages[0].image;
+    if (minDimensions) {
+      if (imageDimensions.height < minDimensions.height) {
+        continue;
+      }
+      if (imageDimensions.width < minDimensions.width) {
+        continue;
+      }
     }
 
-    const contains = (
-      leftDimensions: ImageDimensions,
-      rightDimensions: ImageDimensions
-    ) =>
-      leftDimensions.width >= rightDimensions.width &&
-      leftDimensions.height >= rightDimensions.height;
-
-    // Sort images smallest to largest
-    // An image A is considered larger than another image B if A's dimensions contain B's dimensions
-    // Otherwise the images are considered equal.
-    candidateImages.sort((left, right) => {
-      if (contains(left.imageDimensions, right.imageDimensions)) {
-        return 1;
-      } else if (contains(right.imageDimensions, left.imageDimensions)) {
-        return -1;
-      } else {
-        return 0;
-      }
+    candidateImages.push({
+      image,
+      imageDimensions,
     });
-
-    // Find the smallest image that contains the target dimensions.
-    // We prefer to scale an image down instead of up.
-    // This may lead to choosing very large images. In that case maxDimensions should be used to exclude very large images as candidates.
-    for (const candidateImage of candidateImages) {
-      if (contains(candidateImage.imageDimensions, targetDimensions)) {
-        // console.debug(
-        //   "choosing smallest candidate image that's larger than target dimensions"
-        // );
-        return candidateImage.image;
-      }
-    }
-
-    // All candidate images are smaller than the target, return the largest of them
-    // console.debug(
-    //   "choosing largest candidate image that's smaller than target dimensions"
-    // );
-    return candidateImages[candidateImages.length - 1].image;
   }
 
-  console.warn(
-    "no acceptable thumbnail for selector",
-    JSON.stringify(selector),
-    "found in",
-    images.length,
-    "images"
-  );
+  if (candidateImages.length === 0) {
+    // console.debug("no candidate images, returning null");
+    console.warn(
+      "no acceptable thumbnail for selector",
+      JSON.stringify(selector),
+      "found in",
+      images.length,
+      "images"
+    );
+    return null;
+  } else if (candidateImages.length === 1) {
+    // console.debug("single candidate image");
+    return candidateImages[0].image;
+  }
 
-  return null;
+  const contains = (
+    leftDimensions: ImageDimensions,
+    rightDimensions: ImageDimensions
+  ) =>
+    leftDimensions.width >= rightDimensions.width &&
+    leftDimensions.height >= rightDimensions.height;
+
+  // Sort images smallest to largest
+  // An image A is considered larger than another image B if A's dimensions contain B's dimensions
+  // Otherwise the images are considered equal.
+  candidateImages.sort((left, right) => {
+    if (contains(left.imageDimensions, right.imageDimensions)) {
+      return 1;
+    } else if (contains(right.imageDimensions, left.imageDimensions)) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+
+  // Find the smallest image that contains the target dimensions.
+  // We prefer to scale an image down instead of up.
+  // This may lead to choosing very large images. In that case maxDimensions should be used to exclude very large images as candidates.
+  for (const candidateImage of candidateImages) {
+    if (contains(candidateImage.imageDimensions, targetDimensions)) {
+      // console.debug(
+      //   "choosing smallest candidate image that's larger than target dimensions"
+      // );
+      return candidateImage.image;
+    }
+  }
+
+  // All candidate images are smaller than the target, return the largest of them
+  // console.debug(
+  //   "choosing largest candidate image that's smaller than target dimensions"
+  // );
+  return candidateImages[candidateImages.length - 1].image;
 };

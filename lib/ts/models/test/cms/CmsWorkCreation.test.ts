@@ -1,14 +1,13 @@
 import {expect} from "chai";
-import {WorkCreation} from "../src/WorkCreation";
-import {testModelSet} from "./testModelSet";
+import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
+import {CmsWorkCreation} from "../../src/cms/CmsWorkCreation";
 
-describe("WorkCreation", () => {
+describe("CmsWorkCreation", () => {
   const work = testModelSet.works[0];
-
-  const sut: WorkCreation = testModelSet
-    .workEventsByWorkIri(work.iris[0])
-    .find(workEvent => workEvent.type === "WorkCreation") as WorkCreation;
+  const sut: CmsWorkCreation = work.events.find(
+    workEvent => workEvent.type === "WorkCreation"
+  ) as CmsWorkCreation;
 
   before(() => {
     expect(sut).is.not.undefined;
@@ -16,7 +15,7 @@ describe("WorkCreation", () => {
 
   it("should expose the creator", () => {
     const creator = sut.creators[0];
-    testModelSet.agentByIri(creator.iris[0]!);
+    testModelSet.agentByIri(creator.iris[0]!)!;
     expect(work.agents.some(agent => agent.agent.iris[0] === creator.iris[0]))
       .to.be.true;
   });

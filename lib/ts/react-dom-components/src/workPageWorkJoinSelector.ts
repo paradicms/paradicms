@@ -13,7 +13,6 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
     license: true,
     rightsStatement: true,
   },
-  collections: {},
   license: true,
   location: true,
   propertyValues: {

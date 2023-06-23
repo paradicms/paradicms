@@ -1,4 +1,3 @@
-import {requireNonNull} from "@paradicms/utilities";
 import {cms, dcterms, exif, foaf} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
@@ -9,24 +8,11 @@ import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {mapTermToImage} from "../mapTermToImage";
+import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
 
 export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
   implements Image {
-  @Memoize()
-  get depictsIri(): string {
-    return requireNonNull(
-      this.findAndMapObject(foaf.depicts, this.mapIriObject)
-    );
-  }
-
-  get derivedImages(): readonly Image[] {
-    if (this.originalImageIri !== null) {
-      // This is a derived image
-      return [];
-    }
-    return this.modelSet.imagesByOriginalImageIri(this.iri);
-  }
-
   @Memoize()
   get exactDimensions(): ImageDimensions | null {
     return this.imageDimensions(exif.height, exif.width);
@@ -36,8 +22,8 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
     heightProperty: NamedNode,
     widthProperty: NamedNode
   ): ImageDimensions | null {
-    const height = this.findAndMapObject(heightProperty, this.mapIntObject);
-    const width = this.findAndMapObject(widthProperty, this.mapIntObject);
+    const height = this.findAndMapObject(heightProperty, mapTermToNumber);
+    const width = this.findAndMapObject(widthProperty, mapTermToNumber);
 
     if (height !== null && width !== null) {
       return {height, width};
@@ -50,10 +36,6 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
     }
   }
 
-  get isOriginal(): boolean {
-    return this.originalImageIri === null;
-  }
-
   get label(): string | null {
     return this.title;
   }
@@ -61,16 +43,6 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
   @Memoize()
   get maxDimensions(): ImageDimensions | null {
     return this.imageDimensions(cms.imageMaxHeight, cms.imageMaxWidth);
-  }
-
-  @Memoize()
-  get originalImageIri(): string | null {
-    return this.findAndMapObject(cms.thumbnailOf, this.mapIriObject);
-  }
-
-  get originalImage(): Image {
-    const originalImageIri = this.originalImageIri;
-    return originalImageIri ? this.modelSet.imageByIri(originalImageIri) : this;
   }
 
   static placeholderSrc(dimensions: ImageDimensions) {
@@ -95,15 +67,17 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    const originalImage = this.originalImage;
-    return selectThumbnail(
-      [originalImage].concat(originalImage.derivedImages),
-      selector
+    return selectThumbnail(this.thumbnails, selector);
+  }
+
+  get thumbnails(): readonly Image[] {
+    return this.filterAndMapObjects(foaf.thumbnail, term =>
+      mapTermToImage(this, term)
     );
   }
 
   @Memoize()
   get title(): string | null {
-    return this.findAndMapObject(dcterms.title, this.mapStringObject);
+    return this.findAndMapObject(dcterms.title, mapTermToString);
   }
 }

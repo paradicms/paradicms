@@ -2,7 +2,6 @@ import {DataFactory} from "@paradicms/rdf";
 import {cms, dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {Collection} from "../Collection";
 import {PropertyValue} from "../PropertyValue";
 import {RightsMixin} from "../RightsMixin";
 import {Text} from "../Text";
@@ -16,10 +15,11 @@ import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsRelationsMixin} from "./CmsRelationsMixin";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
-import {mapCmsLocationObject} from "./mapCmsLocationObject";
-import {mapCmsTextObject} from "./mapCmsTextObject";
 import {Property} from "../Property";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {mapTermToText} from "../mapTermToText";
+import {mapTermToLocation} from "../mapTermToLocation";
+import {mapTermToWorkEvent} from "../mapTermToWorkEvent";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -73,21 +73,13 @@ export class CmsWork extends Mixin(
       result.push(...getRightsWorkAgents(this.description, "Text"));
     }
 
-    for (const image of this.originalImages) {
-      result.push(...getRightsWorkAgents(image, "Image"));
-    }
-
     return result;
-  }
-
-  get collections(): readonly Collection[] {
-    return this.filterAndMapObjects(cms.collection, collection => collection.termType === "NamedNode" ? this.modelSet.collectionByIri(collection.value) : null);
   }
 
   @Memoize()
   override get description(): Text | null {
     return this.findAndMapObject(dcterms.description, term =>
-      mapCmsTextObject(this, term)
+      mapTermToText(this, term)
     );
   }
 
@@ -127,7 +119,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return this.modelSet.workEventsByWorkIri(this.iri);
+    return this.filterAndMapObjects(cms.event, term => mapTermToWorkEvent(this, term));
   }
 
   get label(): string {
@@ -136,7 +128,7 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   get location(): WorkLocation | null {
-    const location = this.findAndMapObject(dcterms.spatial, term => mapCmsLocationObject(this, term));
+    const location = this.findAndMapObject(dcterms.spatial, term => mapTermToLocation(this, term));
     if (location) {
       return {
         label: this.title,
@@ -170,6 +162,10 @@ export class CmsWork extends Mixin(
 
   @Memoize()
   propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
-    return this.propertyValuesByProperty(this.modelSet.propertyByIri(propertyIri), propertyIri);
+    const property = this.modelSet.propertyByIri(propertyIri);
+    if (!property) {
+      return [];
+    }
+    return this.propertyValuesByProperty(property, propertyIri);
   }
 }

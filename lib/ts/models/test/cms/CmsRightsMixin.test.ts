@@ -1,9 +1,13 @@
 import {expect} from "chai";
-import {testModelSet} from "./testModelSet";
+import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
+import {CmsRightsMixin} from "../../src/cms/CmsRightsMixin";
+import {CmsWork} from "../../src/cms/CmsWork";
 
 describe("CmsRightsMixin", () => {
-  const sut = testModelSet.works[0];
+  const sut: CmsRightsMixin = testModelSet.workByIri(
+    "http://example.com/collection0/work0"
+  )! as CmsWork;
 
   it("should have a contributor", () => {
     expect(sut.contributors).to.not.be.empty;

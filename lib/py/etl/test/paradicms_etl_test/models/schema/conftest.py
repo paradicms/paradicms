@@ -30,10 +30,10 @@ def schema_collection(
             name="Test collection", uri=URIRef("http://example.com/collection")
         )
         .add_alternate_name("Test collection alternate name")
-        .add_description(schema_text_object)
         .add_same_as(URIRef("http://example.com/other"))
         .add_image(schema_image_object)
         .add_work(schema_creative_work)
+        .set_description(schema_text_object)
         .build()
     )
 

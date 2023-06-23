@@ -15,6 +15,7 @@ import path from "path";
 import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
+import {requireNonNull} from "@paradicms/utilities";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -42,7 +43,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   const configuration = modelSet.appConfiguration;
 
   const pages: React.ReactElement[] = useMemo(() => {
-    const collection = modelSet.collectionByKey(collectionKey);
+    const collection = requireNonNull(modelSet.collectionByKey(collectionKey));
     const pages: React.ReactElement[] = [];
 
     pages.push(
