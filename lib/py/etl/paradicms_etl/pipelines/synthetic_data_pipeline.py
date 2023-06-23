@@ -445,6 +445,10 @@ class SyntheticDataPipeline(Pipeline):
                 work_builder.add_same_as(
                     URIRef("http://www.wikidata.org/entity/Q937690"),
                 )
+            elif work_i == 1:
+                work_builder.add_same_as(
+                    URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
+                )
 
             if include_description:
                 description_builder = CmsText.builder(
