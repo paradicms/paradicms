@@ -41,6 +41,7 @@ import {
 } from "@paradicms/services";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
+import {requireNonNull} from "@paradicms/utilities";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -320,7 +321,7 @@ export class MemWorkQueryService implements WorkQueryService {
       // Anything matching the fulltext search
       return this.index
         .search(query.text)
-        .map(({ref}) => this.modelSet.workByKey(ref));
+        .map(({ref}) => requireNonNull(this.modelSet.workByKey(ref)));
     } else {
       // All works
       return this.modelSet.works;
@@ -525,7 +526,7 @@ export class MemWorkQueryService implements WorkQueryService {
           workWorkLocations.push(summarizeWorkLocation(work, work.location));
         }
         for (const event of work.events) {
-          if (event.location) {
+          if (event.workLocation) {
             workWorkLocations.push(
               summarizeWorkLocation(work, event.workLocation)
             );
