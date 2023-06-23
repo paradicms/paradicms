@@ -235,14 +235,23 @@ describe("ModelSetBuilder", () => {
     expect(work.license).to.not.be.null;
     expect(countModelSetNamedLicenses(workModelSet)).to.eq(2);
 
-    expectModelsDeepEq(workModelSet.properties, completeModelSet.properties);
+    // There is no LocationPropertyValue, so exclude dcterms:spatial.
+    expectModelsDeepEq(
+      workModelSet.properties,
+      completeModelSet.properties.filter(
+        property =>
+          !property.iris.some(
+            propertyIri => propertyIri === dcterms.spatial.value
+          )
+      )
+    );
     expectModelsDeepEq(
       workModelSet.propertyGroups,
       completeModelSet.propertyGroups
     );
 
     expect(work.rightsStatement).to.not.be.null;
-    expect(countModelSetRightsStatements(workModelSet)).to.eq(1);
+    expect(countModelSetRightsStatements(workModelSet)).to.eq(2);
 
     expectModelsDeepEq(workModelSet.works, [work]);
     for (const work of workModelSet.works) {
