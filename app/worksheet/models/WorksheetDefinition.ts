@@ -29,6 +29,12 @@ export class WorksheetDefinition {
     );
   }
 
+  featureValueByIri(iri: string): WorksheetFeatureValueDefinition | null {
+    return (
+      this.featureValues.find(featureValue => featureValue.iri === iri) ?? null
+    );
+  }
+
   @Memoize()
   get featureValues(): readonly WorksheetFeatureValueDefinition[] {
     return this.modelSet.concepts.map(

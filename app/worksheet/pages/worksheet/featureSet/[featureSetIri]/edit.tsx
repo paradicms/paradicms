@@ -19,6 +19,7 @@ import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
+import {requireNonNull} from "@paradicms/utilities";
 
 const WorksheetFeatureSelectsTable: React.FunctionComponent<{
   dispatchFeatureSet: () => void;
@@ -205,12 +206,15 @@ export const getStaticProps: GetStaticProps = async ({
       featureSetIri,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
-        .addPropertyGroup(completeModelSet.propertyGroupByIri(featureSetIri), {
-          properties: {
-            rangeValues: {},
-            thumbnail: galleryThumbnailSelector,
-          },
-        })
+        .addPropertyGroup(
+          requireNonNull(completeModelSet.propertyGroupByIri(featureSetIri)),
+          {
+            properties: {
+              rangeValues: {},
+              thumbnail: galleryThumbnailSelector,
+            },
+          }
+        )
         // Add other property groups in order to determine where this page is in the workflow and how many more pages there ares
         .addPropertyGroups(
           completeModelSet.propertyGroups.filter(
