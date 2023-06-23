@@ -2,7 +2,7 @@ import {ShaclModel} from "./ShaclModel";
 import {rdf, rdfs, sh} from "@paradicms/vocabularies";
 import {Literal, NamedNode} from "@rdfjs/types";
 import {NodeKind} from "./NodeKind";
-import {hasRdfSuperClass} from "@paradicms/rdf";
+import {hasRdfSuperClass, mapTermToString} from "@paradicms/rdf";
 
 export class Shape extends ShaclModel {
   get description(): string | null {

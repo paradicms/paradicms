@@ -3,7 +3,7 @@ import {BlankNode, Literal, NamedNode, Term} from "@rdfjs/types";
 import {dash, sh, xsd} from "@paradicms/vocabularies";
 import {PropertyGroup} from "./PropertyGroup";
 import {requireNonNull} from "@paradicms/utilities";
-import {getRdfList} from "@paradicms/rdf";
+import {getRdfList, mapTermToNumber} from "@paradicms/rdf";
 import {NodeShape} from "./NodeShape";
 
 type PropertyShapeValue = BlankNode | Literal | NamedNode;
