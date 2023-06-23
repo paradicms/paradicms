@@ -1,5 +1,7 @@
+from typing import Tuple
+
 import rdflib
-from rdflib import URIRef
+from rdflib import URIRef, OWL
 
 import paradicms_etl
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -29,3 +31,7 @@ class CmsModel(ResourceBackedModel):
     def rdf_type_uri(cls) -> URIRef:
         assert cls.__name__.startswith("Cms")
         return getattr(CMS, cls.__name__[len("Cms") :])
+
+    @property
+    def same_as_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(OWL.sameAs, self._map_uri_value))
