@@ -1,8 +1,8 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {rdf} from "@paradicms/vocabularies";
 import {workEventFactories} from "./workEventFactories";
 import {WorkEventUnion} from "./WorkEventUnion";
+import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
  * Map a term in a modelSet to an WorkEvent.
@@ -13,25 +13,11 @@ export const mapTermToWorkEvent = (
 ): WorkEventUnion | null => {
   switch (term.termType) {
     case "BlankNode":
-      for (const rdfTypeQuad of modelParameters.dataset.match(
+      return mapTermToResourceBackedModel({
+        factories: workEventFactories,
+        modelParameters,
         term,
-        rdf.type,
-        null
-      )) {
-        if (rdfTypeQuad.object.termType !== "NamedNode") {
-          continue;
-        }
-        const workEventFactory = workEventFactories.get(rdfTypeQuad.object);
-        if (workEventFactory !== null) {
-          return new workEventFactory({
-            ...modelParameters,
-            identifier: term,
-          });
-        }
-      }
-      throw new RangeError(
-        "unable to determine WorkEvent type from blank node"
-      );
+      });
     case "NamedNode":
       return modelParameters.modelSet.workEventByIri(term.value);
     default:

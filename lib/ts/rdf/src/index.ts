@@ -4,6 +4,7 @@ export * from "./createDataset";
 export {DataFactory, Store} from "n3";
 export * from "./datasetToFastRdfString";
 export * from "./fastRdfStringToDataset";
+export * from "./getNamedRdfTypes";
 export * from "./getRdfInstanceQuads";
 export * from "./getRdfInstances";
 export * from "./getRdfNodeLabel";

@@ -1,9 +1,9 @@
 import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {rdf} from "@paradicms/vocabularies";
 import {License} from "./License";
 import {LiteralLicense} from "./literal/LiteralLicense";
 import {licenseFactories} from "./licenseFactories";
+import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
  * Map a term in a modelSet to a License.
@@ -14,23 +14,11 @@ export const mapTermToLicense = (
 ): License | null => {
   switch (term.termType) {
     case "BlankNode":
-      for (const rdfTypeQuad of modelParameters.dataset.match(
+      return mapTermToResourceBackedModel({
+        factories: licenseFactories,
+        modelParameters,
         term,
-        rdf.type,
-        null
-      )) {
-        if (rdfTypeQuad.object.termType !== "NamedNode") {
-          continue;
-        }
-        const licenseFactory = licenseFactories.get(rdfTypeQuad.object);
-        if (licenseFactory !== null) {
-          return new licenseFactory({
-            ...modelParameters,
-            identifier: term,
-          });
-        }
-      }
-      throw new RangeError("unable to determine License type from blank node");
+      });
     case "Literal":
       return new LiteralLicense(term);
     case "NamedNode":

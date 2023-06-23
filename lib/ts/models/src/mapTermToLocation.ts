@@ -2,8 +2,8 @@ import {Term} from "@rdfjs/types";
 import {Location} from "./Location";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {LiteralLocation} from "./literal/LiteralLocation";
-import {rdf} from "@paradicms/vocabularies";
 import {locationFactories} from "./locationFactories";
+import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
  * Map a term in a modelSet to a Location.
@@ -14,23 +14,11 @@ export const mapTermToLocation = (
 ): Location | null => {
   switch (term.termType) {
     case "BlankNode":
-      for (const rdfTypeQuad of modelParameters.dataset.match(
+      return mapTermToResourceBackedModel({
+        factories: locationFactories,
+        modelParameters,
         term,
-        rdf.type,
-        null
-      )) {
-        if (rdfTypeQuad.object.termType !== "NamedNode") {
-          continue;
-        }
-        const locationFactory = locationFactories.get(rdfTypeQuad.object);
-        if (locationFactory !== null) {
-          return new locationFactory({
-            ...modelParameters,
-            identifier: term,
-          });
-        }
-      }
-      throw new RangeError("unable to determine Location type from blank node");
+      });
     case "NamedNode":
       return modelParameters.modelSet.locationByIri(term.value);
     case "Literal":

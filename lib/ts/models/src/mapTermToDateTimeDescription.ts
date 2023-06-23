@@ -2,8 +2,8 @@ import {Term} from "@rdfjs/types";
 import anyDateParser from "any-date-parser";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {rdf} from "@paradicms/vocabularies";
 import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
+import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
  * Map a term in a modelSet to a DateTimeDescription.
@@ -15,28 +15,11 @@ export const mapTermToDateTimeDescription = (
   switch (term.termType) {
     case "BlankNode":
     case "NamedNode":
-      for (const rdfTypeQuad of modelParameters.dataset.match(
+      return mapTermToResourceBackedModel({
+        factories: dateTimeDescriptionFactories,
+        modelParameters,
         term,
-        rdf.type,
-        null,
-        modelParameters.graph
-      )) {
-        if (rdfTypeQuad.object.termType !== "NamedNode") {
-          continue;
-        }
-        const dateTimeDescriptionFactory = dateTimeDescriptionFactories.get(
-          rdfTypeQuad.object
-        );
-        if (dateTimeDescriptionFactory) {
-          return new dateTimeDescriptionFactory({
-            ...modelParameters,
-            identifier: term,
-          });
-        }
-      }
-      throw new RangeError(
-        "unable to determine DateTimeDescription type from blank/named node"
-      );
+      });
     case "Literal": {
       const parsed = anyDateParser.attempt(term.value);
       const partialDateTime = {

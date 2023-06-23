@@ -1,5 +1,5 @@
-import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cms, configuration, rdf} from "@paradicms/vocabularies";
+import {getNamedRdfTypes, getRdfInstanceQuads} from "@paradicms/rdf";
+import {cms, configuration} from "@paradicms/vocabularies";
 import {AppConfiguration} from "../AppConfiguration";
 import {Collection} from "../Collection";
 import {Concept} from "../Concept";
@@ -32,6 +32,7 @@ import {CmsWorkCreation} from "./CmsWorkCreation";
 import {CmsWorkOpening} from "./CmsWorkOpening";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
+import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 
 const workEventClassesByRdfType = (() => {
   const result: {
@@ -158,15 +159,10 @@ export class CmsModelReader extends DatasetModelReader {
       }
 
       // Get the concrete type of the WorkEvent.
-      for (const rdfTypeQuad of this.dataset.match(
-        quad.subject,
-        rdf.type,
-        null,
-        quad.graph
-      )) {
+      for (const rdfType of getNamedRdfTypes({dataset: this.dataset, graph: quad.graph as BlankNode | DefaultGraph | NamedNode, subject: quad.subject as BlankNode | NamedNode})) {
         if (
-          rdfTypeQuad.object.equals(cms.Event) ||
-          rdfTypeQuad.object.equals(cms.WorkEvent)
+          rdfType.equals(cms.Event) ||
+          rdfType.equals(cms.WorkEvent)
         ) {
           continue;
         }
@@ -175,7 +171,7 @@ export class CmsModelReader extends DatasetModelReader {
           modelIdentifier: quad.subject as ModelIdentifier,
         });
         const workEventClass =
-          workEventClassesByRdfType[rdfTypeQuad.object.value];
+          workEventClassesByRdfType[rdfType.value];
         if (workEventClass) {
           workEvents.push(
             new workEventClass({
