@@ -12,7 +12,7 @@ import {
   WorksQuery,
   WorksSort,
 } from "@paradicms/services";
-import {calculatePageMax} from "@paradicms/utilities";
+import {calculatePageMax, requireNonNull} from "@paradicms/utilities";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {
@@ -369,8 +369,10 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
         <Row>
           <AgentsGallery
-            agents={getWorkAgentsResult.workAgentKeys.map(workAgentIri =>
-              getWorkAgentsResult.modelSet.agentByIri(workAgentIri)
+            agents={getWorkAgentsResult.workAgentKeys.map(workAgentKeys =>
+              requireNonNull(
+                getWorkAgentsResult.modelSet.agentByKey(workAgentKeys)
+              )
             )}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
           />
