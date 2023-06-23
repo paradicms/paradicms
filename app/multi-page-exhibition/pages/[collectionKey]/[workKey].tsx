@@ -167,8 +167,9 @@ export const getStaticProps: GetStaticProps = async ({
     readFile,
   });
 
+  const collection = completeModelSet.collectionByKey(collectionKey);
+  const collectionWorks = collection.works;
   const currentWork = completeModelSet.workByKey(workKey);
-  const collectionWorks = completeModelSet.collectionByKey(collectionKey).works;
 
   const currentWorkI = collectionWorks.findIndex(
     work => work.key === currentWork.key
@@ -200,6 +201,7 @@ export const getStaticProps: GetStaticProps = async ({
       currentWorkKey: workKey,
       modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
+        .addCollection(collection)
         .addWorks(
           workKeys.map(workKey => completeModelSet.workByKey(workKey)),
           workPageWorkJoinSelector
