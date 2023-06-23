@@ -14,7 +14,22 @@ from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
 from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
 from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
+from paradicms_etl.models.creative_commons.creative_commons_license import (
+    CreativeCommonsLicense,
+)
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
+    RightsStatementsDotOrgRightsStatement,
+)
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.schema.schema_organization import SchemaOrganization
+from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_place import SchemaPlace
+from paradicms_etl.models.schema.schema_property import SchemaProperty
+from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
@@ -32,6 +47,17 @@ __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     CmsWorkClosing,
     CmsWorkCreation,
     CmsWorkOpening,
+    CreativeCommonsLicense,
+    RightsStatementsDotOrgRightsStatement,
+    SchemaCollection,
+    SchemaCreativeWork,
+    SchemaDefinedTerm,
+    SchemaImageObject,
+    SchemaOrganization,
+    SchemaPerson,
+    SchemaPlace,
+    SchemaProperty,
+    SchemaTextObject,
     WikibaseItem,
 )
 
