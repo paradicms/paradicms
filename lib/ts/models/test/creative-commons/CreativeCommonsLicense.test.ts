@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
 import {CreativeCommonsLicense} from "../../src/creative-commons/CreativeCommonsLicense";
+import {behavesLikeLicense} from "../behavesLikeLicense";
 
 describe("CreativeCommonsLicense", () => {
   const nc_1_0: CreativeCommonsLicense = testModelSet.licenseByIri(
@@ -23,4 +24,6 @@ describe("CreativeCommonsLicense", () => {
   it("should get the license's title", () => {
     expect(nc_1_0.title).to.not.be.empty;
   });
+
+  behavesLikeLicense(nc_1_0);
 });
