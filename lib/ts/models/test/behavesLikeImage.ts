@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import {Image, imagePlaceholderSrc} from "../src";
 import {it} from "mocha";
+import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 
 export const behavesLikeImage = (image: Image) => {
   it("should get image's dimensions", () => {
@@ -35,4 +36,6 @@ export const behavesLikeImage = (image: Image) => {
   it("should get the label", () => {
     expect(image.label).to.not.be.empty;
   });
+
+  behavesLikeNamedModel(image);
 };

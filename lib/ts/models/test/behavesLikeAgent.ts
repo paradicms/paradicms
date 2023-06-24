@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import {Agent} from "../src";
 import {it} from "mocha";
+import {behavesLikeModel} from "./behavesLikeModel";
 
 export const behavesLikeAgent = (agent: Agent) => {
   it("should get the agent's images", () => {
@@ -23,4 +24,6 @@ export const behavesLikeAgent = (agent: Agent) => {
   // it("should get the agent's IRIs", () => {
   //   expect(agent.iris).to.not.be.empty;
   // });
+
+  behavesLikeModel(agent);
 };

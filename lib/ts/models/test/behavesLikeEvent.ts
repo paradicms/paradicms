@@ -3,6 +3,7 @@ import {Event} from "../src/Event";
 import {Location} from "../src/Location";
 import {testModelSet} from "./testModelSet";
 import {it} from "mocha";
+import {behavesLikeModel} from "./behavesLikeModel";
 
 export const behavesLikeEvent = (event: Event) => {
   it("should get the description", () => {
@@ -38,4 +39,6 @@ export const behavesLikeEvent = (event: Event) => {
   it("should get the label", () => {
     expect(event.label).to.not.be.empty;
   });
+
+  behavesLikeModel(event);
 };

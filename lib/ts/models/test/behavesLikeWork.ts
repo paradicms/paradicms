@@ -2,6 +2,7 @@ import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {Text, Work} from "../src";
 import {it} from "mocha";
+import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 
 export const behavesLikeWork = (work: Work) => {
   it("should get the work's description", () => {
@@ -83,4 +84,6 @@ export const behavesLikeWork = (work: Work) => {
   it("should get the work's rights statement", () => {
     expect(work.rightsStatement).to.not.be.null;
   });
+
+  behavesLikeNamedModel(work);
 };

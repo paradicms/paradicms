@@ -1,6 +1,7 @@
 import {expect} from "chai";
 import {Concept} from "../src";
 import {it} from "mocha";
+import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 
 export const behavesLikeConcept = (concept: Concept) => {
   it("should get the prefLabel", () => {
@@ -19,4 +20,6 @@ export const behavesLikeConcept = (concept: Concept) => {
     expect(concept.thumbnail({targetDimensions: {height: 200, width: 200}})).to
       .not.be.null;
   });
+
+  behavesLikeNamedModel(concept);
 };
