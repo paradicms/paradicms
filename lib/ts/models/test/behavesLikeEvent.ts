@@ -2,15 +2,10 @@ import {expect} from "chai";
 import {Event} from "../src/Event";
 import {Location} from "../src/Location";
 import {testModelSet} from "./testModelSet";
-import {describe} from "mocha";
+import {it} from "mocha";
+import {behavesLikeModel} from "./behavesLikeModel";
 
-describe("Event", () => {
-  const sut: Event = testModelSet.works[0].events[0];
-
-  before(() => {
-    expect(sut).is.not.undefined;
-  });
-
+export const behavesLikeEvent = (event: Event) => {
   it("should get the description", () => {
     expect(
       testModelSet.works.some(work =>
@@ -26,7 +21,7 @@ describe("Event", () => {
   });
 
   it("should get the date", () => {
-    const date = sut.date;
+    const date = event.date;
     expect(date).to.not.be.null;
     expect(date!.year!).to.eq(2022);
     expect(date!.month!).to.eq(1);
@@ -34,7 +29,7 @@ describe("Event", () => {
   });
 
   it("should get the location", () => {
-    const location = sut.location;
+    const location = event.location;
     expect(location).not.to.be.null;
     expect(location).not.to.be.instanceof(String);
     expect((location as Location).lat).to.not.eq(0);
@@ -42,6 +37,8 @@ describe("Event", () => {
   });
 
   it("should get the label", () => {
-    expect(sut.label).to.not.be.empty;
+    expect(event.label).to.not.be.empty;
   });
-});
+
+  behavesLikeModel(event);
+};

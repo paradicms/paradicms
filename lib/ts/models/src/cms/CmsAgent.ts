@@ -7,9 +7,10 @@ import {CmsModel} from "./CmsModel";
 import {requireNonNull} from "@paradicms/utilities";
 import {foaf} from "@paradicms/vocabularies";
 import {mapTermToString} from "@paradicms/rdf";
+import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 
 export abstract class CmsAgent
-  extends Mixin(CmsModel, CmsImagesMixin, CmsRelationsMixin)
+  extends Mixin(CmsModel, CmsImagesMixin, CmsRelationsMixin, OwlSameAsMixin)
   implements Agent {
   get label(): string {
     return this.name;

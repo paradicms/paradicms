@@ -20,6 +20,7 @@ import {CmsNamedModel} from "./CmsNamedModel";
 import {mapTermToText} from "../mapTermToText";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {mapTermToWorkEvent} from "../mapTermToWorkEvent";
+import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 
 const getRightsWorkAgents = (
   rights: RightsMixin | null,
@@ -61,7 +62,8 @@ export class CmsWork extends Mixin(
   CmsImagesMixin,
   CmsTitleMixin,
   CmsRelationsMixin,
-  CmsRightsMixin
+  CmsRightsMixin,
+  OwlSameAsMixin
 ) implements Work {
   @Memoize()
   get agents(): readonly WorkAgent[] {

@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
 import {RightsStatementsDotOrgRightsStatement} from "../../src/rights-statements-dot-org/RightsStatementsDotOrgRightsStatement";
+import {behavesLikeRightsStatement} from "../behavesLikeRightsStatement";
 
 describe("RightsStatementsDotOrgRightsStatement", () => {
   const sut: RightsStatementsDotOrgRightsStatement = testModelSet.rightsStatementByIri(
@@ -20,7 +21,5 @@ describe("RightsStatementsDotOrgRightsStatement", () => {
   //   expect(sut.identifier).to.not.be.empty;
   // });
 
-  it("should get the statement's label", () => {
-    expect(sut.label).to.not.be.empty;
-  });
+  behavesLikeRightsStatement(sut);
 });

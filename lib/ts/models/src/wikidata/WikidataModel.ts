@@ -18,8 +18,11 @@ import {RightsStatement} from "../RightsStatement";
 import {AgentUnion} from "../AgentUnion";
 import {Memoize} from "typescript-memoize";
 import {wdt} from "@paradicms/vocabularies";
+import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
+import {Mixin} from "ts-mixer";
 
-export abstract class WikidataModel extends ResourceBackedNamedModel
+export abstract class WikidataModel
+  extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin)
   implements
     ImagesMixin,
     RelationsMixin,
