@@ -43,6 +43,10 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             self.add(SDO.usageInfo, statement)
             return self
 
+        def add_spatial(self, spatial: Any):
+            self.add(SDO.spatial, spatial)
+            return self
+
         def set_date_created(
             self, date_created: Union[date, datetime, DateTimeDescription]
         ) -> "SchemaCreativeWorkMixin.Builder":

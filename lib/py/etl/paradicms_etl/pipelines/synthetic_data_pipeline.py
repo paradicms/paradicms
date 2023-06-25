@@ -44,6 +44,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
@@ -464,26 +465,42 @@ class SyntheticDataPipeline(Pipeline):
             work_i = self.__next_work_i
             self.__next_work_i += 1
 
+            include_description = work_i % 3 == 0
+            work_title = title_prefix + str(work_i)
+            work_alternative_titles = [
+                f"{work_title} alternative title {i}" for i in range(2)
+            ]
+            work_identifiers = [f"{work_title}Id{i}" for i in range(2)]
+            work_license = CreativeCommonsLicenses.NC_1_0.uri
+            work_page = URIRef("http://example.com/work/" + str(work_i))
+            work_provenance = f"{work_title} provenance"
+            work_rights_holder = f"{work_title} rights holder"
+            work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU.uri
             work_uri = URIRef(uri_prefix + str(work_i))
 
-            work_title = title_prefix + str(work_i)
-            work_builder = CmsWork.builder(title=work_title, uri=work_uri)
-
-            include_description = work_i % 2 == 0
-
-            # Properties that depend on the work title
-            for i in range(2):
-                work_builder.add_alternative_title(
-                    f"{work_title} alternative title {i}",
-                )
-                work_builder.add_identifier(f"{work_title}Id{i}")
-                work_builder.add_provenance(f"{work_title} provenance {i}")
-
-                work_builder.add_rights_holder(
-                    f"{work_title} rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-                )
+            work_builder: Union[CmsWork.Builder, SchemaCreativeWork.Builder]
+            if work_i % 2 == 0:
+                work_builder = CmsWork.builder(title=work_title, uri=work_uri)
+                for work_alternative_title in work_alternative_titles:
+                    work_builder.add_alternative_title(work_alternative_title)
+                for work_identifier in work_identifiers:
+                    work_builder.add_identifier(work_identifier)
+                work_builder.add_license(work_license)
+                work_builder.add_page(work_page)
+                work_builder.add_provenance(work_provenance)
+                work_builder.add_rights_holder(work_rights_holder)
+                work_builder.add_rights_statement(work_rights_statement)
+            else:
+                work_builder = SchemaCreativeWork.builder(name=work_title, uri=work_uri)
+                for work_alternative_title in work_alternative_titles:
+                    work_builder.add_alternate_name(work_alternative_title)
+                # for work_identifier in work_identifiers:
+                #     work_builder.add_identifier(work_identifier)
+                work_builder.add_license(work_license)
+                # work_builder.add_provenance(work_provenance)
+                work_builder.set_url(work_page)
+                work_builder.add_rights_holder(work_rights_holder)
+                work_builder.add_rights_statement(work_rights_statement)
 
             destruction_date = date(day=1, month=1, year=2022)
             creation_date = destruction_date - timedelta(days=work_i)
@@ -492,16 +509,17 @@ class SyntheticDataPipeline(Pipeline):
             )
 
             # Faceted literal properties, which are the same across works
-            for property_ in self.__PROPERTIES:
-                if not property_.values:
-                    continue
-                for i in range(2):
-                    work_builder.add(
-                        property_.uri,
-                        concepts_by_value[
-                            property_.values[(work_i + i) % len(property_.values)]
-                        ].uri,
-                    )
+            if isinstance(work_builder, CmsWork.Builder):
+                for property_ in self.__PROPERTIES:
+                    if not property_.values:
+                        continue
+                    for i in range(2):
+                        work_builder.add(
+                            property_.uri,
+                            concepts_by_value[
+                                property_.values[(work_i + i) % len(property_.values)]
+                            ].uri,
+                        )
 
             # dcterms:contributor
             contributors = [
@@ -553,10 +571,10 @@ class SyntheticDataPipeline(Pipeline):
                 .build()
             )
             yield named_location
-            work_builder.set_location(named_location)
-
-            if work_i % 2 == 0:
-                work_builder.add_page(URIRef("http://example.com/work/" + str(work_i)))
+            if isinstance(work_builder, CmsWork.Builder):
+                work_builder.set_location(named_location)
+            else:
+                work_builder.add_spatial(named_location)
 
             for image in self.__generate_images(
                 base_uri=work_uri,
