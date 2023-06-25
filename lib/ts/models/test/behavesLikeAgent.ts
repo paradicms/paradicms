@@ -2,14 +2,9 @@ import {expect} from "chai";
 import {Agent} from "../src";
 import {it} from "mocha";
 import {behavesLikeModel} from "./behavesLikeModel";
+import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
 
 export const behavesLikeAgent = (agent: Agent) => {
-  it("should get the agent's images", () => {
-    expect(agent.images).to.not.be.empty;
-    expect(agent.thumbnail({targetDimensions: {height: 600, width: 600}})).to
-      .not.be.null;
-  });
-
   it("should get the agent's label", () => {
     expect(agent.label).to.not.be.empty;
   });
@@ -26,4 +21,5 @@ export const behavesLikeAgent = (agent: Agent) => {
   // });
 
   behavesLikeModel(agent);
+  behavesLikeImagesMixin(agent);
 };

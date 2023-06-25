@@ -3,6 +3,8 @@ import {expect} from "chai";
 import {Text, Work} from "../src";
 import {it} from "mocha";
 import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
+import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
 
 export const behavesLikeWork = (work: Work) => {
   it("should get the work's description", () => {
@@ -36,15 +38,7 @@ export const behavesLikeWork = (work: Work) => {
     expect(work.events).to.not.be.empty;
   });
 
-  it("should get the work's images", () => {
-    expect(work.images).to.not.be.empty;
-    // expect(
-    //   work.images.every(image => image.depictsIri === work.identifiers[0].value)
-    // ).to.be.true;
-  });
-
   it("should get the work's label", () => {
-    expect(work.label).to.not.be.empty;
     expect(work.label).to.not.be.empty;
   });
 
@@ -81,9 +75,13 @@ export const behavesLikeWork = (work: Work) => {
     expect(propertyValue.value).to.eq((work.description as Text).value);
   });
 
-  it("should get the work's rights statement", () => {
-    expect(work.rightsStatement).to.not.be.null;
-  });
-
   behavesLikeNamedModel(work);
+  behavesLikeImagesMixin(work);
+  behavesLikeRightsMixin(work, {
+    requireContributors: true,
+    requireCreators: true,
+    requireLicense: true,
+    requireRightsHolders: true,
+    requireRightsStatement: true,
+  });
 };

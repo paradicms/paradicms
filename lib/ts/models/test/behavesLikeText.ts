@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {Text} from "../src";
 import {it} from "mocha";
 import {behavesLikeModel} from "./behavesLikeModel";
+import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
 
 export const behavesLikeText = (text: Text) => {
   it("should provide the value", () => {
@@ -14,4 +15,5 @@ export const behavesLikeText = (text: Text) => {
   });
 
   behavesLikeModel(text);
+  behavesLikeRightsMixin(text);
 };

@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {Image, imagePlaceholderSrc} from "../src";
 import {it} from "mocha";
 import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
 
 export const behavesLikeImage = (image: Image) => {
   it("should get image's dimensions", () => {
@@ -38,4 +39,9 @@ export const behavesLikeImage = (image: Image) => {
   });
 
   behavesLikeNamedModel(image);
+  behavesLikeRightsMixin(image, {
+    requireLicense: true,
+    requireRightsHolders: true,
+    requireRightsStatement: true,
+  });
 };
