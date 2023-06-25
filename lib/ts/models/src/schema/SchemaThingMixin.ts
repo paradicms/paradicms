@@ -9,6 +9,7 @@ import {mapTermToImage} from "../mapTermToImage";
 import {mapTermToText} from "../mapTermToText";
 import {Memoize} from "typescript-memoize";
 import {mapTermToString} from "@paradicms/rdf";
+import {ModelIdentifier} from "../ModelIdentifier";
 
 export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   implements ImagesMixin {
@@ -38,6 +39,19 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   @Memoize()
   get name(): string | null {
     return this.findAndMapObject(schema.name, mapTermToString);
+  }
+
+  @Memoize()
+  get sameAsIdentifiers(): readonly ModelIdentifier[] {
+    return this.filterAndMapObjects(schema.sameAs, term => {
+      switch (term.termType) {
+        case "BlankNode":
+        case "NamedNode":
+          return term as ModelIdentifier;
+        default:
+          return null;
+      }
+    });
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
