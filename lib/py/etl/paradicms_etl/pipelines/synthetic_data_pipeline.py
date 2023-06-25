@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict, List, Iterable, Union
 from urllib.parse import quote
 
-from rdflib import DCTERMS, Literal, URIRef
+from rdflib import DCTERMS, Literal, URIRef, SDO
 
 from paradicms_etl.enricher import Enricher
 from paradicms_etl.enrichers.ncsu_enricher import NcsuEnricher
@@ -45,12 +45,12 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
 
@@ -75,38 +75,38 @@ class SyntheticDataPipeline(Pipeline):
                 )
 
         __PROPERTIES = (
-            __Property(
-                label="Cultural context",
-                uri=VRA.culturalContext,
-                values=tuple(f"Cultural context {i}" for i in range(10)),
-            ),
+            # __Property(
+            #     label="Cultural context",
+            #     uri=VRA.culturalContext,
+            #     values=tuple(f"Cultural context {i}" for i in range(10)),
+            # ),
             __Property(
                 filterable=False,
-                label="Description",
+                label="DC Description",
                 uri=DCTERMS.description,
             ),
             __Property(
-                label="Extent",
+                label="DC Extent",
                 uri=DCTERMS.extent,
                 values=tuple(f"Extent {i}" for i in range(10)),
             ),
             __Property(
-                label="Language",
+                label="DC Language",
                 uri=DCTERMS.language,
                 values=tuple(f"Language {i}" for i in range(10)),
             ),
+            # __Property(
+            #     label="Material",
+            #     uri=VRA.material,
+            #     values=tuple(f"Material {i}" for i in range(10)),
+            # ),
             __Property(
-                label="Material",
-                uri=VRA.material,
-                values=tuple(f"Material {i}" for i in range(10)),
-            ),
-            __Property(
-                label="Medium",
+                label="DC Medium",
                 uri=DCTERMS.medium,
                 values=tuple(f"Medium {i}" for i in range(10)),
             ),
             __Property(
-                label="Publisher",
+                label="DC Publisher",
                 uri=DCTERMS.publisher,
                 values=tuple(f"Publisher {i}" for i in range(10)),
             ),
@@ -116,29 +116,34 @@ class SyntheticDataPipeline(Pipeline):
                 values=tuple(f"Source {i}" for i in range(10)),
             ),
             __Property(
-                label="Spatial",
+                label="DC Spatial",
                 uri=DCTERMS.spatial,
-                values=tuple(f"Spatial {i}" for i in range(10)),
+                values=tuple(f"DC Spatial {i}" for i in range(10)),
             ),
             __Property(
-                label="Subject",
+                label="DC Subject",
                 uri=DCTERMS.subject,
                 values=tuple(f"Subject {i}" for i in range(10)),
             ),
-            __Property(
-                label="Technique",
-                uri=VRA.technique,
-                values=tuple(f"Technique {i}" for i in range(10)),
-            ),
+            # __Property(
+            #     label="Technique",
+            #     uri=VRA.technique,
+            #     values=tuple(f"Technique {i}" for i in range(10)),
+            # ),
             __Property(
                 filterable=False,
-                label="Title",
+                label="DC Title",
                 uri=DCTERMS.title,
             ),
             __Property(
-                label="Type",
+                label="DC Type",
                 uri=DCTERMS.type,
                 values=tuple(f"Type {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Schema Spatial",
+                uri=SDO.spatial,
+                values=tuple(f"Schema Spatial {i}" for i in range(10)),
             ),
         )
 
@@ -165,7 +170,7 @@ class SyntheticDataPipeline(Pipeline):
                 if isinstance(model, Concept):
                     concept = model
                     concept_str = concept.value.toPython()
-                    assert isinstance(concept_str, str)
+                    assert isinstance(concept_str, str), concept_str
                     assert concept_str not in concepts_by_value
                     concepts_by_value[concept_str] = concept
 
@@ -399,16 +404,34 @@ class SyntheticDataPipeline(Pipeline):
                 if property_.uri == DCTERMS.creator:
                     continue
                 for property_value in property_.values:
-                    concept_builder = (
-                        CmsConcept.builder(
-                            pref_label=f"Concept {concept_urn_i}",
-                            uri=URIRef(
-                                f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
-                            ),
-                        )
-                        .add_type_uri(property_.range)
-                        .set_value(Literal(property_value))
+                    concept_pref_label = f"Concept {concept_urn_i}"
+                    concept_uri = URIRef(
+                        f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                     )
+
+                    concept_builder: Union[
+                        CmsConcept.Builder, SchemaDefinedTerm.Builder
+                    ]
+                    if str(property_.uri).startswith(str(DCTERMS)):
+                        concept_builder = (
+                            CmsConcept.builder(
+                                pref_label=concept_pref_label,
+                                uri=concept_uri,
+                            )
+                            .add_type_uri(property_.range)
+                            .set_value(Literal(property_value))
+                        )
+                    elif str(property_.uri).startswith(str(SDO)):
+                        concept_builder = (
+                            SchemaDefinedTerm.builder(
+                                name=concept_pref_label,
+                                uri=concept_uri,
+                            )
+                            .add_type_uri(property_.range)
+                            .set_value(Literal(property_value))
+                        )
+                    else:
+                        raise NotImplementedError(str(property_.uri))
 
                     for image in self.__generate_images(
                         base_uri=concept_builder.uri,
@@ -510,16 +533,30 @@ class SyntheticDataPipeline(Pipeline):
 
             # Faceted literal properties, which are the same across works
             if isinstance(work_builder, CmsWork.Builder):
-                for property_ in self.__PROPERTIES:
-                    if not property_.values:
-                        continue
-                    for i in range(2):
-                        work_builder.add(
-                            property_.uri,
-                            concepts_by_value[
-                                property_.values[(work_i + i) % len(property_.values)]
-                            ].uri,
-                        )
+                properties = tuple(
+                    property_
+                    for property_ in self.__PROPERTIES
+                    if str(property_.uri).startswith(str(DCTERMS))
+                )
+            elif isinstance(work_builder, SchemaCreativeWork.Builder):
+                properties = tuple(
+                    property_
+                    for property_ in self.__PROPERTIES
+                    if str(property_.uri).startswith(str(SDO))
+                )
+            else:
+                raise NotImplementedError
+
+            for property_ in properties:
+                if not property_.values:
+                    continue
+                for i in range(2):
+                    work_builder.add(
+                        property_.uri,
+                        concepts_by_value[
+                            property_.values[(work_i + i) % len(property_.values)]
+                        ].uri,
+                    )
 
             # dcterms:contributor
             contributors = [
