@@ -1,9 +1,12 @@
 import {describe} from "mocha";
 import {behavesLikePerson} from "../behavesLikePerson";
-import {testModelSet} from "../testModelSet";
+import {testCmsModelSet} from "./testCmsModelSet";
+import {requireNonNull} from "@paradicms/utilities";
 
 describe("CmsPerson", () => {
-  const person = testModelSet.personByIri("http://example.com/person4")!;
+  const person = requireNonNull(
+    testCmsModelSet.personByIri("http://example.com/person4")
+  );
 
   behavesLikePerson(person);
 });
