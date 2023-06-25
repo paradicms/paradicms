@@ -290,16 +290,13 @@ class SyntheticDataPipeline(Pipeline):
                         title=collection_name, uri=collection_uri
                     )
 
-                if collection_i % 2 == 0:
-                    description_builder = CmsText.builder(self.__LOREM_IPSUM)
-                    description_builder.add_rights_holder(
-                        f"{collection_name} description rights holder"
-                    ).add_license(
-                        CreativeCommonsLicenses.NC_1_0.uri
-                    ).add_rights_statement(
-                        RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-                    )
-                    collection_builder.set_description(description_builder.build())
+                description_builder = CmsText.builder(self.__LOREM_IPSUM)
+                description_builder.add_rights_holder(
+                    f"{collection_name} description rights holder"
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                )
+                collection_builder.set_description(description_builder.build())
 
                 if collection_i > 0:
                     for image in self.__generate_images(
