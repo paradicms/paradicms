@@ -49,6 +49,7 @@ from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.pipeline import Pipeline
@@ -357,13 +358,13 @@ class SyntheticDataPipeline(Pipeline):
                     CmsCollection.Builder, SchemaCollection.Builder
                 ]
                 if collection_i % 2 == 0:
+                    collection_builder = CmsCollection.builder(
+                        title=collection_name, uri=collection_uri
+                    )
+                else:
                     collection_builder = SchemaCollection.builder(
                         name=collection_name,
                         uri=collection_uri,
-                    )
-                else:
-                    collection_builder = CmsCollection.builder(
-                        title=collection_name, uri=collection_uri
                     )
 
                 description_builder = CmsText.builder(self.__LOREM_IPSUM)
@@ -459,12 +460,24 @@ class SyntheticDataPipeline(Pipeline):
                 property_group_builder.add_image(image)
 
             for property_ in self.__PROPERTIES:
-                property_model_builder = (
-                    CmsProperty.builder(label=property_.label, uri=property_.uri)
-                    .set_filterable(property_.filterable)
-                    .set_range(property_.range)
-                    .set_searchable(property_.searchable)
-                )
+                property_model_builder: Union[
+                    CmsProperty.Builder, SchemaProperty.Builder
+                ]
+                if str(property_.uri).startswith(str(DCTERMS)):
+                    property_model_builder = CmsProperty.builder(
+                        label=property_.label, uri=property_.uri
+                    )
+                elif str(property_.uri).startswith(str(SDO)):
+                    property_model_builder = SchemaProperty.builder(
+                        name=property_.label, uri=property_.uri
+                    )
+                else:
+                    raise NotImplementedError(str(property_.uri))
+
+                property_model_builder.set_filterable(property_.filterable).set_range(
+                    property_.range
+                ).set_searchable(property_.searchable)
+
                 for image in self.__generate_images(
                     base_uri=property_model_builder.uri, text_prefix=property_.label
                 ):
