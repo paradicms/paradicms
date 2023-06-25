@@ -2,9 +2,10 @@ import {expect} from "chai";
 import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
 import {CmsWorkCreation} from "../../src/cms/CmsWorkCreation";
+import {testCmsModelSet} from "./testCmsModelSet";
 
 describe("CmsWorkCreation", () => {
-  const work = testModelSet.works[0];
+  const work = testCmsModelSet.works[0];
   const sut: CmsWorkCreation = work.events.find(
     workEvent => workEvent.type === "WorkCreation"
   ) as CmsWorkCreation;

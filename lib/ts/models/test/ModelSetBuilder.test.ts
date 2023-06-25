@@ -2,13 +2,7 @@ import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cc, cms, dcterms} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {
-  Location,
-  ModelSet,
-  ModelSetBuilder,
-  WorkClosing,
-  WorkOpening,
-} from "../src";
+import {ModelSet, ModelSetBuilder, WorkClosing, WorkOpening} from "../src";
 import {NamedModel} from "../src/NamedModel";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
@@ -300,9 +294,8 @@ describe("ModelSetBuilder", () => {
     ]);
     for (const event of workEventsModelSet.workEvents) {
       expect(event.location).not.to.be.null;
-      expect(event.location).not.to.be.instanceof(String);
-      const location: Location = event.location! as Location;
-      expect(location.lat).not.to.be.undefined;
+      expect(event.location!.lat).not.to.eq(0);
+      expect(event.location!.long).not.to.eq(0);
     }
   });
 });

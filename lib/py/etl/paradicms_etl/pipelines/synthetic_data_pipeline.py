@@ -16,6 +16,7 @@ from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
+from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
@@ -278,20 +279,25 @@ class SyntheticDataPipeline(Pipeline):
         ) -> Iterable[Union[Collection, Image, Location, Work, WorkEvent]]:
             for collection_i in range(self.__collections):
                 collection_name = f"Collection{collection_i}"
-                collection_builder = SchemaCollection.builder(
-                    name=collection_name,
-                    uri=URIRef(f"http://example.com/collection{collection_i}"),
-                )
+                collection_uri = URIRef(f"http://example.com/collection{collection_i}")
                 if collection_i % 2 == 0:
-                    description_builder = CmsText.builder(self.__LOREM_IPSUM)
-                    description_builder.add_rights_holder(
-                        f"{collection_name} description rights holder"
-                    ).add_license(
-                        CreativeCommonsLicenses.NC_1_0.uri
-                    ).add_rights_statement(
-                        RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                    collection_builder = SchemaCollection.builder(
+                        name=collection_name,
+                        uri=collection_uri,
                     )
-                    collection_builder.set_description(description_builder.build())
+                else:
+                    collection_builder = CmsCollection.builder(
+                        title=collection_name, uri=collection_uri
+                    )
+
+                description_builder = CmsText.builder(self.__LOREM_IPSUM)
+                description_builder.add_rights_holder(
+                    f"{collection_name} description rights holder"
+                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                )
+                collection_builder.set_description(description_builder.build())
+
                 if collection_i > 0:
                     for image in self.__generate_images(
                         base_uri=collection_builder.uri,

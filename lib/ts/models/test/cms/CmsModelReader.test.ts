@@ -11,8 +11,8 @@ describe("CmsModelReader", () => {
     expect(sut.readAppConfiguration({modelSet: dummyModelSet})).to.be.null;
   });
 
-  it("should read no Collection's", () => {
-    expect(sut.readCollections({modelSet: dummyModelSet})).to.be.empty;
+  it("should read at least one Collection", () => {
+    expect(sut.readCollections({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
   it("should read at least one Concept", () => {
