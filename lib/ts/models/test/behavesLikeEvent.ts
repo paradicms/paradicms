@@ -1,6 +1,5 @@
 import {expect} from "chai";
 import {Event} from "../src/Event";
-import {Location} from "../src/Location";
 import {testModelSet} from "./testModelSet";
 import {it} from "mocha";
 import {behavesLikeModel} from "./behavesLikeModel";
@@ -31,9 +30,8 @@ export const behavesLikeEvent = (event: Event) => {
   it("should get the location", () => {
     const location = event.location;
     expect(location).not.to.be.null;
-    expect(location).not.to.be.instanceof(String);
-    expect((location as Location).lat).to.not.eq(0);
-    expect((location as Location).long).to.not.eq(0);
+    expect(location!.lat).to.not.eq(0);
+    expect(location!.long).to.not.eq(0);
   });
 
   it("should get the label", () => {

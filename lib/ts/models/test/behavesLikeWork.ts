@@ -9,9 +9,7 @@ import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
 export const behavesLikeWork = (work: Work) => {
   it("should get the work's description", () => {
     expect(work.description).not.to.be.null;
-    expect(work.description).not.to.be.instanceof(String);
-    const description: Text = work.description as Text;
-    expect(description.value).to.not.be.empty;
+    expect(work.description!.value).to.not.be.empty;
   });
 
   it("should get the work's agents", () => {
