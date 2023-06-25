@@ -176,6 +176,7 @@ class SyntheticDataPipeline(Pipeline):
                 agents=agents, concepts_by_value=concepts_by_value
             )
 
+            assert self.__freestanding_works >= 2
             for work_i in range(self.__freestanding_works):
                 yield from self.__generate_work(
                     agents=agents,
@@ -277,9 +278,13 @@ class SyntheticDataPipeline(Pipeline):
             agents: Tuple[Agent, ...],
             concepts_by_value: Dict[str, Concept],
         ) -> Iterable[Union[Collection, Image, Location, Work, WorkEvent]]:
+            assert self.__collections >= 2
             for collection_i in range(self.__collections):
                 collection_name = f"Collection{collection_i}"
                 collection_uri = URIRef(f"http://example.com/collection{collection_i}")
+                collection_builder: Union[
+                    CmsCollection.Builder, SchemaCollection.Builder
+                ]
                 if collection_i % 2 == 0:
                     collection_builder = SchemaCollection.builder(
                         name=collection_name,
@@ -308,6 +313,7 @@ class SyntheticDataPipeline(Pipeline):
 
                 # For collection 0, force the GUI to use a work image
 
+                assert self.__works_per_collection >= 2
                 for work_i in range(self.__works_per_collection):
                     for model in self.__generate_work(
                         agents=agents,
