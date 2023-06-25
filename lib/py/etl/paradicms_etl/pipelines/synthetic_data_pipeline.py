@@ -44,6 +44,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.work import Work
@@ -260,21 +261,53 @@ class SyntheticDataPipeline(Pipeline):
         def __generate_images(
             self, *, base_uri: URIRef, text_prefix: str
         ) -> Iterable[Image]:
+            assert self.__images_per_work >= 2
             for image_i in range(self.__images_per_work):
-                title = f"{text_prefix} image {image_i}"
-                original_image_builder = (
-                    CmsImage.builder(
-                        uri=URIRef(str(base_uri) + f":Image{image_i}"),
+                original_image_title = f"{text_prefix} image {image_i}"
+                original_image_exact_dimensions = ImageDimensions(
+                    height=1000, width=1000
+                )
+                original_image_license = CreativeCommonsLicenses.NC_1_0.uri
+                original_image_rights_holder = f"{original_image_title} rights holder"
+                original_image_rights_statement = (
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                )
+                original_image_src = (
+                    "https://paradicms.org/img/placeholder/1000x1000.png"
+                )
+                original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
+
+                original_image_builder: Union[
+                    CmsImage.Builder, SchemaImageObject.Builder
+                ]
+                if image_i % 2 == 0:
+                    original_image_builder = (
+                        CmsImage.builder(
+                            uri=original_image_uri,
+                        )
+                        .set_exact_dimensions(original_image_exact_dimensions)
+                        .set_src(original_image_src)
+                        .set_title(original_image_title)
                     )
-                    .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
-                    .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
-                    .set_title(title)
-                )
-                original_image_builder.add_rights_holder(
-                    f"{title} rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                )
+                    original_image_builder.add_rights_holder(
+                        original_image_rights_holder
+                    ).add_license(original_image_license).add_rights_statement(
+                        original_image_rights_statement
+                    )
+                else:
+                    original_image_builder = (
+                        SchemaImageObject.builder(
+                            uri=original_image_uri,
+                        )
+                        .set_exact_dimensions(original_image_exact_dimensions)
+                        .set_src(original_image_src)
+                        .set_title(original_image_title)
+                    )
+                    original_image_builder.add_rights_holder(
+                        original_image_rights_holder
+                    ).add_license(original_image_license).add_rights_statement(
+                        original_image_rights_statement
+                    )
 
                 for thumbnail_dimensions in (
                     ImageDimensions(200, 200),
