@@ -44,6 +44,8 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_organization import SchemaOrganization
+from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import VRA
@@ -186,13 +188,28 @@ class SyntheticDataPipeline(Pipeline):
                 )
 
         def __generate_agents(self) -> Iterable[Union[Agent, Image]]:
-            for organization_i in range(5):
-                organization_builder: CmsOrganization.Builder = CmsOrganization.builder(
-                    name=f"Organization {organization_i}",
-                    uri=URIRef(f"http://example.com/organization{organization_i}"),
-                ).add_page(
-                    URIRef(f"http://example.com/organization{organization_i}page"),
+            for organization_i in range(6):
+                organization_name = f"Organization {organization_i}"
+                organization_page = URIRef(
+                    f"http://example.com/organization{organization_i}page"
                 )
+                organization_uri = URIRef(
+                    f"http://example.com/organization{organization_i}"
+                )
+
+                organization_builder: Union[
+                    CmsOrganization.Builder, SchemaOrganization.Builder
+                ]
+                if organization_i % 2 == 0:
+                    organization_builder = CmsOrganization.builder(
+                        name=organization_name, uri=organization_uri
+                    ).add_page(organization_page)
+                else:
+                    organization_builder = SchemaOrganization.builder(
+                        name=organization_name, uri=organization_uri
+                    )
+                    organization_builder.set_url(organization_page)
+
                 for image in self.__generate_images(
                     base_uri=organization_builder.uri, text_prefix="Organization"
                 ):
@@ -200,29 +217,44 @@ class SyntheticDataPipeline(Pipeline):
                     yield image
                 yield organization_builder.build()
 
-            for person_i in range(5):
-                person_builder: CmsPerson.Builder = (
-                    CmsPerson.builder(
-                        name=f"Person {person_i}",
-                        uri=URIRef(f"http://example.com/person{person_i}"),
-                    )
-                    .set_family_name(str(person_i))
-                    .set_given_name("Person")
-                )
+            for person_i in range(6):
+                person_family_name = str(person_i)
+                person_given_name = "Person"
+                person_name = f"Person {person_i}"
+                person_page = URIRef(f"http://example.com/person{person_i}page")
+                person_uri = URIRef(f"http://example.com/person{person_i}")
+
+                person_builder: Union[CmsPerson.Builder, SchemaPerson.Builder]
                 if person_i % 2 == 0:
-                    person_builder.add_page(
-                        URIRef(f"http://example.com/person{person_i}page")
+                    person_builder = (
+                        CmsPerson.builder(
+                            name=person_name,
+                            uri=person_uri,
+                        )
+                        .set_family_name(person_family_name)
+                        .set_given_name(person_given_name)
                     )
+                    person_builder.add_page(person_page)
+                else:
+                    person_builder = (
+                        SchemaPerson.builder(name=person_name, uri=person_uri)
+                        .set_family_name(person_family_name)
+                        .set_given_name(person_given_name)
+                    )
+                    person_builder.set_url(person_page)
+
                 if person_i == 0:
                     person_builder.add_same_as(
                         # Wikidata concept for Alan Turing
                         URIRef("http://www.wikidata.org/entity/Q7251"),
                     )
+
                 for image in self.__generate_images(
                     base_uri=person_builder.uri, text_prefix="Person"
                 ):
                     yield image
                     person_builder.add_image(image)
+
                 yield person_builder.build()
 
         def __generate_images(
