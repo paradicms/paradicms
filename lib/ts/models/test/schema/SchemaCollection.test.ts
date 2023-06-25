@@ -11,7 +11,7 @@ describe("SchemaCollection", () => {
   const collection: SchemaCollection = requireNonNull(
     testSchemaModelSet.collectionByKey(
       modelIdentifiersToKey([
-        DataFactory.namedNode("http://example.com/collection0"),
+        DataFactory.namedNode("http://example.com/collection1"),
       ])
     )
   ) as SchemaCollection;
