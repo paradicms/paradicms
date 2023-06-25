@@ -10,4 +10,8 @@ describe("SchemaModelReader", () => {
   it("should read at least one Collection", () => {
     expect(sut.readCollections({modelSet: dummyModelSet})).not.to.be.empty;
   });
+
+  it("should read at least one Work", () => {
+    expect(sut.readWorks({modelSet: dummyModelSet})).not.to.be.empty;
+  });
 });
