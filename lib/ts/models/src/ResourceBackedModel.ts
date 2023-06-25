@@ -1,4 +1,4 @@
-import {Resource} from "@paradicms/rdf";
+import {DataFactory, Resource} from "@paradicms/rdf";
 import {DatasetCore} from "@rdfjs/types";
 import {Model} from "./Model";
 import {ModelSet} from "./ModelSet";
@@ -7,6 +7,9 @@ import {ModelIdentifier} from "./ModelIdentifier";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 import {Memoize} from "typescript-memoize";
 import {modelIdentifiersToKey} from "./modelIdentifiersToKey";
+import {PropertyValue} from "./PropertyValue";
+import {Property} from "./Property";
+import {createPropertyValuesFromQuadObjects} from "./createPropertyValuesFromQuadObjects";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: DatasetCore;
@@ -34,6 +37,35 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     return this.identifiers
         .filter(identifier => identifier.termType === "NamedNode")
         .map(identifier => identifier.value);
+  }
+
+  @Memoize()
+  get propertyValues(): readonly PropertyValue[] {
+    return this.modelSet.properties.flatMap(property => property.iris.flatMap(propertyIri => this.propertyValuesByProperty(property, propertyIri)));
+  }
+
+  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValue[] {
+    return createPropertyValuesFromQuadObjects({
+      dataset: this.dataset,
+      modelSet: this.modelSet,
+      property,
+      quads: [...this.dataset
+          .match(
+              this.identifier,
+              DataFactory.namedNode(propertyIri),
+              null,
+              this.graph
+          )]
+    });
+  }
+
+  @Memoize()
+  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+    const property = this.modelSet.propertyByIri(propertyIri);
+    if (!property) {
+      return [];
+    }
+    return this.propertyValuesByProperty(property, propertyIri);
   }
 
   toRdf(addToDataset: DatasetCore) {
