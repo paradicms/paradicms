@@ -1,5 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cc, cms, dcterms} from "@paradicms/vocabularies";
+import {cc, cms, dcterms, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
 import {ModelSet, ModelSetBuilder, WorkClosing, WorkOpening} from "../src";
@@ -8,6 +8,7 @@ import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
+import {requireNonNull} from "@paradicms/utilities";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -30,10 +31,13 @@ const expectModelsDeepEq = <ModelT extends NamedModel>(
   );
 
 const countModelSetNamedAgents = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cms.Agent, modelSet);
+  countModelSetNamedRdfInstances(cms.Agent, modelSet) +
+  countModelSetNamedRdfInstances(schema.Organization, modelSet) +
+  countModelSetNamedRdfInstances(schema.Person, modelSet);
 
 const countModelSetImages = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cms.Image, modelSet);
+  countModelSetNamedRdfInstances(cms.Image, modelSet) +
+  countModelSetNamedRdfInstances(schema.ImageObject, modelSet);
 
 const countModelSetNamedLicenses = (modelSet: ModelSet): number =>
   countModelSetNamedRdfInstances(cc.License, modelSet);
@@ -179,9 +183,9 @@ describe("ModelSetBuilder", () => {
   });
 
   it("should get a work subset (work page)", () => {
-    const work = completeModelSet.workByIri(
-      "http://example.com/collection0/work0"
-    )!;
+    const work = requireNonNull(
+      completeModelSet.workByIri("http://example.com/collection0/work0")
+    );
     const workModelSet = sut
       .addWork(work, {
         agents: {
@@ -222,7 +226,7 @@ describe("ModelSetBuilder", () => {
         )
       );
     }
-    expect(workModelSet.concepts).to.have.length(20);
+    expect(workModelSet.concepts).to.have.length(14);
 
     expect(countModelSetImages(workModelSet)).to.eq(13);
 
@@ -232,11 +236,12 @@ describe("ModelSetBuilder", () => {
     // There is no LocationPropertyValue, so exclude dcterms:spatial.
     expectModelsDeepEq(
       workModelSet.properties,
-      completeModelSet.properties.filter(
-        property =>
-          !property.iris.some(
-            propertyIri => propertyIri === dcterms.spatial.value
-          )
+      completeModelSet.properties.filter(property =>
+        property.iris.some(
+          propertyIri =>
+            propertyIri.startsWith(dcterms[""].value) &&
+            propertyIri !== dcterms.spatial.value
+        )
       )
     );
     expectModelsDeepEq(
