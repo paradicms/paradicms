@@ -1,7 +1,6 @@
 import {ImagesMixin} from "../ImagesMixin";
 import {Image} from "../Image";
 import {ThumbnailSelector} from "../ThumbnailSelector";
-import {selectThumbnail} from "../selectThumbnail";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {schema} from "@paradicms/vocabularies";
 import {Text} from "../Text";
@@ -55,7 +54,13 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.images, selector);
+    for (const image of this.images) {
+      const thumbnail = image.thumbnail(selector);
+      if (thumbnail) {
+        return thumbnail;
+      }
+    }
+    return null;
   }
 
   @Memoize()
