@@ -21,6 +21,7 @@ import {workEventFactories} from "./workEventFactories";
 import {CmsWorkClosing} from "./cms/CmsWorkClosing";
 import {CmsWorkCreation} from "./cms/CmsWorkCreation";
 import {CmsWorkOpening} from "./cms/CmsWorkOpening";
+import {SchemaTextObject} from "./schema/SchemaTextObject";
 
 export const registerResourceBackedModelFactories = () => {
   agentFactories.register(cms.Organization, CmsOrganization);
@@ -46,6 +47,7 @@ export const registerResourceBackedModelFactories = () => {
   );
 
   textFactories.register(cms.Text, CmsText);
+  textFactories.register(schema.TextObject, SchemaTextObject);
 
   workEventFactories.register(cms.WorkClosing, CmsWorkClosing);
   workEventFactories.register(cms.WorkCreation, CmsWorkCreation);

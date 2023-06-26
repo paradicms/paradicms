@@ -51,6 +51,7 @@ from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
+from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.pipeline import Pipeline
@@ -611,9 +612,16 @@ class SyntheticDataPipeline(Pipeline):
                     URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
                 )
 
-            description_builder = CmsText.builder(
-                self.__LOREM_IPSUM,
-            )
+            description_builder: Union[CmsText.Builder, SchemaTextObject.Builder]
+            if isinstance(work_builder, CmsWork.Builder):
+                description_builder = CmsText.builder(
+                    self.__LOREM_IPSUM,
+                )
+            elif isinstance(work_builder, SchemaCreativeWork.Builder):
+                description_builder = SchemaTextObject.builder(self.__LOREM_IPSUM)
+            else:
+                raise NotImplementedError
+
             description_builder.add_rights_holder(
                 f"{work_title} description rights holder"
             ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
