@@ -4,8 +4,8 @@ import {it} from "mocha";
 import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 
 export const behavesLikeConcept = (concept: Concept) => {
-  it("should get the prefLabel", () => {
-    expect(concept.prefLabel).to.not.be.empty;
+  it("should get the label", () => {
+    expect(concept.label).to.not.be.empty;
   });
 
   it("should get the value", () => {

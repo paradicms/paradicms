@@ -9,10 +9,16 @@ import {Property} from "../Property";
 import {SchemaProperty} from "./SchemaProperty";
 import {Image} from "../Image";
 import {SchemaImageObject} from "./SchemaImageObject";
+import {Concept} from "../Concept";
+import {SchemaDefinedTerm} from "./SchemaDefinedTerm";
 
 export class SchemaModelReader extends DatasetModelReader {
     override readCollections(kwds: { modelSet: ModelSet }): readonly Collection[] {
         return this.readNamedModels<Collection>({class_: schema.Collection, factory: SchemaCollection, modelSet: kwds.modelSet})
+    }
+
+    override readConcepts(kwds: { modelSet: ModelSet }): readonly Concept[] {
+        return this.readNamedModels<Concept>({class_: schema.DefinedTerm, factory: SchemaDefinedTerm, modelSet: kwds.modelSet})
     }
 
     override readImages(kwds: { modelSet: ModelSet }): readonly Image[] {
