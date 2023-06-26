@@ -256,7 +256,7 @@ describe("ModelSetBuilder", () => {
     for (const work of workModelSet.works) {
       expect(work.location).not.to.be.null;
       expect(work.location!.location.iris).to.not.be.empty;
-      expect(work.location!.location.lat).not.to.be.undefined;
+      expect(work.location!.location.latitude).not.to.be.undefined;
     }
 
     // expectModelsDeepEq(workModelSet.workEvents, work.events);
@@ -299,8 +299,8 @@ describe("ModelSetBuilder", () => {
     ]);
     for (const event of workEventsModelSet.workEvents) {
       expect(event.location).not.to.be.null;
-      expect(event.location!.lat).not.to.eq(0);
-      expect(event.location!.long).not.to.eq(0);
+      expect(event.location!.latitude).not.to.eq(0);
+      expect(event.location!.longitude).not.to.eq(0);
     }
   });
 });

@@ -29,8 +29,8 @@ export const behavesLikeEvent = (event: Event) => {
   it("should get the location", () => {
     const location = event.location;
     expect(location).not.to.be.null;
-    expect(location!.lat).to.not.eq(0);
-    expect(location!.long).to.not.eq(0);
+    expect(location!.latitude).to.not.eq(0);
+    expect(location!.longitude).to.not.eq(0);
   });
 
   it("should get the label", () => {

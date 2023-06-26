@@ -164,7 +164,7 @@ describe("MemWorkQueryService", () => {
     expect(result.workLocations).to.have.length(expectedWorkLocations.length);
     for (const work of modelSet.works) {
       for (const expectedWorkLocation of expectedWorkLocations) {
-        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.key === work.key && resultWorkLocation.location.lat === expectedWorkLocation.location.lat && resultWorkLocation.location.long === expectedWorkLocation.location.long);
+        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.key === work.key && resultWorkLocation.location.latitude === expectedWorkLocation.location.latitude && resultWorkLocation.location.longitude === expectedWorkLocation.location.longitude);
         expect(resultWorkLocation).to.not.be.undefined;
         expect(resultWorkLocation!.work.label).to.eq(work.label);
       }
