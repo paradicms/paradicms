@@ -11,6 +11,7 @@ import {WorkLocation} from "../WorkLocation";
 import {schema} from "@paradicms/vocabularies";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {requireNonNull} from "@paradicms/utilities";
+import {SyntheticWorkCreation} from "../synthetic/SyntheticWorkCreation";
 
 export class SchemaCreativeWork
   extends Mixin(SchemaNamedModel, SchemaCreativeWorkMixin)
@@ -28,7 +29,21 @@ export class SchemaCreativeWork
   @Memoize()
   get events(): readonly WorkEventUnion[] {
     const events: WorkEventUnion[] = [];
-    // if (this.dateCr)
+
+    if (this.dateCreated) {
+      events.push(new SyntheticWorkCreation({
+        contributors: this.contributors,
+        creators: this.creators,
+        date: this.dateCreated,
+        description: null,
+        endDate: null,
+        label: `${this.label} creation`,
+        key: `${this.key} creation`,
+        location: null,
+        startDate: null,
+      }));
+    }
+
     return events;
   }
 
