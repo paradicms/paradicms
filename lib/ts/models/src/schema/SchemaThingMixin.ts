@@ -9,6 +9,8 @@ import {mapTermToText} from "../mapTermToText";
 import {Memoize} from "typescript-memoize";
 import {mapTermToString} from "@paradicms/rdf";
 import {ModelIdentifier} from "../ModelIdentifier";
+import {isWikipediaUrl} from "../isWikipediaUrl";
+import {isWikidataConceptIri} from "../isWikidataConceptIri";
 
 export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   implements ImagesMixin {
@@ -40,6 +42,10 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
     return this.findAndMapObject(schema.name, mapTermToString);
   }
 
+  get page(): string | null {
+    return this.url;
+  }
+
   @Memoize()
   get sameAsIdentifiers(): readonly ModelIdentifier[] {
     return this.filterAndMapObjects(schema.sameAs, term => {
@@ -67,6 +73,24 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   get url(): string | null {
     return this.findAndMapObject(schema.url, term =>
       term.termType === "NamedNode" ? term.value : null
+    );
+  }
+
+  @Memoize()
+  get wikipediaUrl(): string | null {
+    return this.findAndMapObject(schema.sameAs, term =>
+      term.termType === "NamedNode" && isWikipediaUrl(term.value)
+        ? term.value
+        : null
+    );
+  }
+
+  @Memoize()
+  get wikidataConceptIri(): string | null {
+    return this.findAndMapObject(schema.sameAs, term =>
+      term.termType === "NamedNode" && isWikidataConceptIri(term.value)
+        ? term.value
+        : null
     );
   }
 }
