@@ -13,6 +13,8 @@ import {Concept} from "../Concept";
 import {SchemaDefinedTerm} from "./SchemaDefinedTerm";
 import {Person} from "../Person";
 import {SchemaPerson} from "./SchemaPerson";
+import {Organization} from "../Organization";
+import {SchemaOrganization} from "./SchemaOrganization";
 
 export class SchemaModelReader extends DatasetModelReader {
     override readCollections(kwds: { modelSet: ModelSet }): readonly Collection[] {
@@ -25,6 +27,10 @@ export class SchemaModelReader extends DatasetModelReader {
 
     override readImages(kwds: { modelSet: ModelSet }): readonly Image[] {
         return this.readNamedModels<Image>({class_: schema.ImageObject, factory: SchemaImageObject, modelSet: kwds.modelSet})
+    }
+
+    override readNamedOrganizations(kwds: { modelSet: ModelSet }): readonly Organization[] {
+        return this.readNamedModels<Organization>({class_: schema.Organization, factory: SchemaOrganization, modelSet: kwds.modelSet})
     }
 
     override readNamedPeople(kwds: { modelSet: ModelSet }): readonly Person[] {
