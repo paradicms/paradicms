@@ -1,12 +1,19 @@
-import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {Text, Work} from "../src";
 import {it} from "mocha";
 import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
 import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
+import {NamedNode} from "@rdfjs/types";
 
-export const behavesLikeWork = (work: Work) => {
+export const behavesLikeWork = (
+  work: Work,
+  options: {
+    literalProperty: NamedNode;
+    namedProperty: NamedNode;
+    textProperty: NamedNode;
+  }
+) => {
   it("should get the work's description", () => {
     expect(work.description).not.to.be.null;
     expect(work.description!.value).to.not.be.empty;
@@ -50,7 +57,7 @@ export const behavesLikeWork = (work: Work) => {
 
   it("should get the work's property values (literal)", () => {
     const propertyValues = work.propertyValuesByPropertyIri(
-      dcterms.title.value
+      options.literalProperty.value
     );
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
@@ -59,7 +66,7 @@ export const behavesLikeWork = (work: Work) => {
 
   it("should get the work's property values (named)", () => {
     const propertyValues = work.propertyValuesByPropertyIri(
-      dcterms.subject.value
+      options.namedProperty.value
     );
     expect(propertyValues).to.have.length(2);
     const propertyValue = propertyValues[0];
@@ -70,7 +77,7 @@ export const behavesLikeWork = (work: Work) => {
 
   it("should get the work's property values (Text)", () => {
     const propertyValues = work.propertyValuesByPropertyIri(
-      dcterms.description.value
+      options.textProperty.value
     );
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];

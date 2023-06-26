@@ -4,6 +4,7 @@ import {behavesLikeWork} from "../behavesLikeWork";
 import {requireNonNull} from "@paradicms/utilities";
 import {testModelSet} from "../testModelSet";
 import {CmsWork} from "../../src/cms/CmsWork";
+import {dcterms} from "@paradicms/vocabularies";
 
 describe("CmsWork", () => {
   const work = requireNonNull(
@@ -21,5 +22,9 @@ describe("CmsWork", () => {
     ).to.eq("http://www.wikidata.org/entity/Q937690");
   });
 
-  behavesLikeWork(work);
+  behavesLikeWork(work, {
+    literalProperty: dcterms.title,
+    namedProperty: dcterms.subject,
+    textProperty: dcterms.description,
+  });
 });

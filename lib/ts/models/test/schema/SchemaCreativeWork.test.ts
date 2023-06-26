@@ -4,6 +4,7 @@ import {requireNonNull} from "@paradicms/utilities";
 import {testModelSet} from "../testModelSet";
 import {SchemaCreativeWork} from "../../src/schema/SchemaCreativeWork";
 import {expect} from "chai";
+import {schema} from "@paradicms/vocabularies";
 
 describe("SchemaCreativeWork", () => {
   const work = requireNonNull(
@@ -14,5 +15,9 @@ describe("SchemaCreativeWork", () => {
     expect(work).to.be.instanceof(SchemaCreativeWork);
   });
 
-  behavesLikeWork(work);
+  behavesLikeWork(work, {
+    literalProperty: schema.name,
+    namedProperty: schema.creator,
+    textProperty: schema.description,
+  });
 });
