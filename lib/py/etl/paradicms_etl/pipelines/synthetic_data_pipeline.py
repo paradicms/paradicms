@@ -501,7 +501,6 @@ class SyntheticDataPipeline(Pipeline):
             work_i = self.__next_work_i
             self.__next_work_i += 1
 
-            include_description = work_i % 3 == 0
             work_title = title_prefix + str(work_i)
             work_alternative_titles = [
                 f"{work_title} alternative title {i}" for i in range(2)
@@ -596,20 +595,17 @@ class SyntheticDataPipeline(Pipeline):
                     URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
                 )
 
-            if include_description:
-                description_builder = CmsText.builder(
-                    self.__LOREM_IPSUM,
-                )
-                description_builder.add_rights_holder(
-                    f"{work_title} description rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-                )
-                description = description_builder.build()
+            description_builder = CmsText.builder(
+                self.__LOREM_IPSUM,
+            )
+            description_builder.add_rights_holder(
+                f"{work_title} description rights holder"
+            ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
+                RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+            )
+            description = description_builder.build()
 
-                work_builder.set_description(description)
-            else:
-                description = None
+            work_builder.set_description(description)
 
             anonymous_location = (
                 CmsLocation.builder().set_lat(42.728104).set_long(-73.687576).build()
