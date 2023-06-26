@@ -1,14 +1,18 @@
 import {expect} from "chai";
-import {testModelSet} from "../testModelSet";
 import {describe} from "mocha";
 import {behavesLikeWork} from "../behavesLikeWork";
 import {requireNonNull} from "@paradicms/utilities";
-import {testCmsModelSet} from "./testCmsModelSet";
+import {testModelSet} from "../testModelSet";
+import {CmsWork} from "../../src/cms/CmsWork";
 
 describe("CmsWork", () => {
   const work = requireNonNull(
-    testCmsModelSet.workByIri("http://example.com/collection0/work2")
+    testModelSet.workByIri("http://example.com/collection0/work2")
   );
+
+  before(() => {
+    expect(work).to.be.instanceof(CmsWork);
+  });
 
   it("should get the work's Wikidata concept IRI", () => {
     expect(

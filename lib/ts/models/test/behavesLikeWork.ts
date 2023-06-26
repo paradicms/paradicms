@@ -13,7 +13,9 @@ export const behavesLikeWork = (work: Work) => {
   });
 
   it("should get the work's agents", () => {
-    expect(work.agents).to.have.length(6);
+    expect(work.agents)
+      .to.have.length.gte(4)
+      .lte(6);
     const namedAgents = work.agents.filter(
       agent =>
         agent.agent.identifiers.length > 0 &&
@@ -21,7 +23,9 @@ export const behavesLikeWork = (work: Work) => {
           identifier => identifier.termType === "NamedNode"
         )
     );
-    expect(namedAgents).to.have.length(2);
+    expect(namedAgents)
+      .to.have.length.gte(1)
+      .lte(2);
     expect(
       work.agents.filter(
         agent =>

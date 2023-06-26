@@ -1,12 +1,18 @@
 import {describe} from "mocha";
 import {behavesLikeOrganization} from "../behavesLikeOrganization";
-import {testCmsModelSet} from "./testCmsModelSet";
 import {requireNonNull} from "@paradicms/utilities";
+import {expect} from "chai";
+import {testModelSet} from "../testModelSet";
+import {CmsOrganization} from "../../src/cms/CmsOrganization";
 
 describe("CmsOrganization", () => {
   const organization = requireNonNull(
-    testCmsModelSet.organizationByIri("http://example.com/organization4")
+    testModelSet.organizationByIri("http://example.com/organization4")
   );
+
+  before(() => {
+    expect(organization).to.be.instanceof(CmsOrganization);
+  });
 
   behavesLikeOrganization(organization);
 });
