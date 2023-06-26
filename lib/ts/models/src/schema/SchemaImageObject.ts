@@ -11,6 +11,7 @@ import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
 export class SchemaImageObject
   extends Mixin(SchemaNamedModel, SchemaMediaObjectMixin)
   implements Image {
+  @Memoize()
   get exactDimensions(): ImageDimensions | null {
     const heightValue = this.findAndMapObject(schema.height, term =>
       mapSchemaQuantitativeValue(this, term)
@@ -28,6 +29,7 @@ export class SchemaImageObject
     }
   }
 
+  @Memoize()
   get maxDimensions(): ImageDimensions | null {
     const heightMaxValue =
       this.findAndMapObject(schema.height, term =>

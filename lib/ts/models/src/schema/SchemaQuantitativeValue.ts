@@ -9,7 +9,7 @@ import {
 
 export class SchemaQuantitativeValue extends Mixin(ResourceBackedModel) {
   get maxValue(): number | null {
-    return this.findAndMapObject(schema.value, mapTermToNumber);
+    return this.findAndMapObject(schema.maxValue, mapTermToNumber);
   }
 
   get value(): boolean | number | string | null {
