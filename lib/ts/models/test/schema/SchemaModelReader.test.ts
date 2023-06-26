@@ -19,6 +19,10 @@ describe("SchemaModelReader", () => {
     expect(sut.readImages({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
+  it("should read at least one Person", () => {
+    expect(sut.readNamedPeople({modelSet: dummyModelSet})).not.to.be.empty;
+  });
+
   it("should read at least one Property", () => {
     expect(sut.readProperties({modelSet: dummyModelSet})).not.to.be.empty;
   });

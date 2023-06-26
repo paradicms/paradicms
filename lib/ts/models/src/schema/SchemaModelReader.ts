@@ -11,6 +11,8 @@ import {Image} from "../Image";
 import {SchemaImageObject} from "./SchemaImageObject";
 import {Concept} from "../Concept";
 import {SchemaDefinedTerm} from "./SchemaDefinedTerm";
+import {Person} from "../Person";
+import {SchemaPerson} from "./SchemaPerson";
 
 export class SchemaModelReader extends DatasetModelReader {
     override readCollections(kwds: { modelSet: ModelSet }): readonly Collection[] {
@@ -23,6 +25,10 @@ export class SchemaModelReader extends DatasetModelReader {
 
     override readImages(kwds: { modelSet: ModelSet }): readonly Image[] {
         return this.readNamedModels<Image>({class_: schema.ImageObject, factory: SchemaImageObject, modelSet: kwds.modelSet})
+    }
+
+    override readNamedPeople(kwds: { modelSet: ModelSet }): readonly Person[] {
+        return this.readNamedModels<Person>({class_: schema.Person, factory: SchemaPerson, modelSet: kwds.modelSet})
     }
 
     override readProperties(kwds: { modelSet: ModelSet }): readonly Property[] {
