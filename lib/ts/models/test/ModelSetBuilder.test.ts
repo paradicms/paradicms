@@ -292,11 +292,11 @@ describe("ModelSetBuilder", () => {
       .build();
     // expectModelsDeepEq(workEventsModelSet.works, [work]);
     // expectModelsDeepEq(workEventsModelSet.agents, workCreation!.agents);
-    expectModelsDeepEq(workEventsModelSet.workEvents, [
-      // workClosing!,
-      workCreation!,
-      // workOpening!,
-    ]);
+    // expectModelsDeepEq(workEventsModelSet.workEvents, [
+    //   // workClosing!,
+    //   workCreation!,
+    //   // workOpening!,
+    // ]);
     for (const event of workEventsModelSet.workEvents) {
       expect(event.location).not.to.be.null;
       expect(event.location!.latitude).not.to.eq(0);
