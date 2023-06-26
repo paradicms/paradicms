@@ -13,6 +13,10 @@ import {Location} from "../Location";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {ThumbnailSelector} from "../ThumbnailSelector";
+import {Image} from "../Image";
+import {selectThumbnail} from "../selectThumbnail";
+import {mapTermToImage} from "../mapTermToImage";
 
 export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   implements RightsMixin {
@@ -73,6 +77,17 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   get spatial(): readonly Location[] {
     return this.filterAndMapObjects(schema.spatial, term =>
       mapTermToLocation(this, term)
+    );
+  }
+
+  override thumbnail(selector: ThumbnailSelector): Image | null {
+    return selectThumbnail(this.thumbnails, selector);
+  }
+
+  @Memoize()
+  get thumbnails(): readonly Image[] {
+    return this.filterAndMapObjects(schema.thumbnail, term =>
+      mapTermToImage(this, term)
     );
   }
 }
