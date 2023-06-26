@@ -19,6 +19,10 @@ describe("SchemaModelReader", () => {
     expect(sut.readImages({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
+  it("should read at least one Location", () => {
+    expect(sut.readNamedLocations({modelSet: dummyModelSet})).not.to.be.empty;
+  });
+
   it("should read at least one Organization", () => {
     expect(sut.readNamedOrganizations({modelSet: dummyModelSet})).not.to.be
       .empty;
