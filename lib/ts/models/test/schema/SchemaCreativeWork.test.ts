@@ -17,7 +17,7 @@ describe("SchemaCreativeWork", () => {
 
   behavesLikeWork(work, {
     literalProperty: schema.name,
-    namedProperty: schema.creator,
+    namedProperty: schema.spatial,
     textProperty: schema.description,
   });
 });
