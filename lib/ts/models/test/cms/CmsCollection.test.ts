@@ -11,7 +11,7 @@ describe("CmsCollection", () => {
   const collection: CmsCollection = requireNonNull(
     testModelSet.collectionByKey(
       modelIdentifiersToKey([
-        DataFactory.namedNode("http://example.com/collection1"),
+        DataFactory.namedNode("http://example.com/collection0"),
       ])
     )
   ) as CmsCollection;

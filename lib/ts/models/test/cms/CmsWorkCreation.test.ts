@@ -10,7 +10,7 @@ describe("CmsWorkCreation", () => {
   ) as CmsWorkCreation;
 
   before(() => {
-    expect(work).to.be.instanceof(CmsWorkCreation);
+    expect(workCreation).to.be.instanceof(CmsWorkCreation);
   });
 
   it("should expose the creator", () => {

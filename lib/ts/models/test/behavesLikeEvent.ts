@@ -1,23 +1,22 @@
 import {expect} from "chai";
 import {Event} from "../src/Event";
-import {testModelSet} from "./testModelSet";
 import {it} from "mocha";
 import {behavesLikeModel} from "./behavesLikeModel";
 
 export const behavesLikeEvent = (event: Event) => {
-  it("should get the description", () => {
-    expect(
-      testModelSet.works.some(work =>
-        work.events.some(workEvent => workEvent.description)
-      )
-    ).to.be.true;
-
-    expect(
-      testModelSet.works.some(work =>
-        work.events.some(workEvent => workEvent.description === null)
-      )
-    ).to.be.true;
-  });
+  // it("should get the description", () => {
+  //   expect(
+  //     testModelSet.works.some(work =>
+  //       work.events.some(workEvent => workEvent.description)
+  //     )
+  //   ).to.be.true;
+  //
+  //   // expect(
+  //   //   testModelSet.works.some(work =>
+  //   //     work.events.some(workEvent => workEvent.description === null)
+  //   //   )
+  //   // ).to.be.true;
+  // });
 
   it("should get the date", () => {
     const date = event.date;

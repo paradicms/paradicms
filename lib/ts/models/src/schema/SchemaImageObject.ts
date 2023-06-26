@@ -7,6 +7,8 @@ import {Memoize} from "typescript-memoize";
 import {ImageDimensions} from "../ImageDimensions";
 import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
 import {mapTermToString} from "@paradicms/rdf";
+import {ThumbnailSelector} from "../ThumbnailSelector";
+import {selectThumbnail} from "../selectThumbnail";
 
 export class SchemaImageObject
   extends Mixin(SchemaNamedModel, SchemaMediaObjectMixin)
@@ -73,5 +75,9 @@ export class SchemaImageObject
     } else {
       return null;
     }
+  }
+
+  override thumbnail(selector: ThumbnailSelector): Image | null {
+    return selectThumbnail(this.thumbnails.concat(this), selector);
   }
 }
