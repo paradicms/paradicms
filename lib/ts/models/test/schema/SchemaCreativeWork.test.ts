@@ -7,7 +7,7 @@ import {expect} from "chai";
 
 describe("SchemaCreativeWork", () => {
   const work = requireNonNull(
-    testModelSet.workByIri("http://example.com/collection0/work1")
+    testModelSet.workByIri("http://example.com/collection0/work3")
   );
 
   before(() => {
