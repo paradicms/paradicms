@@ -44,10 +44,12 @@ export abstract class CmsEvent
   }
 
   get label(): string {
-    return requireNonNull(this.title);
+    return this.title;
   }
 
-  get title(): string | null {
-    return this.findAndMapObject(dcterms.title, mapTermToString);
+  get title(): string {
+    return requireNonNull(
+      this.findAndMapObject(dcterms.title, mapTermToString)
+    );
   }
 }

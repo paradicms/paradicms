@@ -6,6 +6,7 @@ import {Location} from "../Location";
 import {DatasetCore} from "@rdfjs/types";
 import {EventMixin} from "../EventMixin";
 import {Mixin} from "ts-mixer";
+import {SyntheticEventParameters} from "./SyntheticEventParameters";
 
 export class SyntheticEvent extends Mixin(EventMixin) implements Event {
   readonly date: DateTimeDescription | null;
@@ -16,15 +17,7 @@ export class SyntheticEvent extends Mixin(EventMixin) implements Event {
   readonly location: Location | null;
   readonly startDate: DateTimeDescription | null;
 
-  constructor(kwds: {
-    date: DateTimeDescription | null;
-    description: Text | null;
-    endDate: DateTimeDescription | null;
-    key: string;
-    label: string;
-    location: Location | null;
-    startDate: DateTimeDescription | null;
-  }) {
+  constructor(kwds: SyntheticEventParameters) {
     super();
     this.date = kwds.date;
     this.description = kwds.description;

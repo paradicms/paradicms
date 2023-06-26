@@ -1,11 +1,11 @@
 import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
+import {SyntheticEvent} from "./SyntheticEvent";
 import {WorkEvent} from "../WorkEvent";
 import {WorkLocation} from "../WorkLocation";
 import {WorkLocationRole} from "../WorkLocationRole";
-import {CmsEvent} from "./CmsEvent";
+import {Memoize} from "typescript-memoize";
 
-export abstract class CmsWorkEvent extends Mixin(CmsEvent)
+export abstract class SyntheticWorkEvent extends Mixin(SyntheticEvent)
   implements WorkEvent {
   @Memoize()
   get workLocation(): WorkLocation | null {

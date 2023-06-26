@@ -27,7 +27,9 @@ export class SchemaCreativeWork
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return [];
+    const events: WorkEventUnion[] = [];
+    // if (this.dateCr)
+    return events;
   }
 
   override get label(): string {
