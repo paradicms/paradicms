@@ -8,7 +8,7 @@ import {schema} from "@paradicms/vocabularies";
 
 export class SchemaCollection extends Mixin(
   SchemaNamedModel,
-    SchemaCreativeWorkMixin
+  SchemaCreativeWorkMixin
 ) implements Collection {
   override get label(): string {
     return this.name;
