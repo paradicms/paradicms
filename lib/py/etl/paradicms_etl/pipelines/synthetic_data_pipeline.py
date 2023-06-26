@@ -518,6 +518,11 @@ class SyntheticDataPipeline(Pipeline):
             work_i = self.__next_work_i
             self.__next_work_i += 1
 
+            work_destruction_date = date(day=1, month=1, year=2022)
+            work_creation_date = work_destruction_date - timedelta(days=work_i)
+            work_creation_date_time_description = OwlTimeDateTimeDescription.from_date(
+                work_creation_date
+            )
             work_title = title_prefix + str(work_i)
             work_alternative_titles = [
                 f"{work_title} alternative title {i}" for i in range(2)
@@ -537,6 +542,7 @@ class SyntheticDataPipeline(Pipeline):
                     work_builder.add_alternative_title(work_alternative_title)
                 for work_identifier in work_identifiers:
                     work_builder.add_identifier(work_identifier)
+                # work_builder.set_date_created(work_creation_date)
                 work_builder.add_license(work_license)
                 work_builder.add_page(work_page)
                 work_builder.add_provenance(work_provenance)
@@ -550,15 +556,10 @@ class SyntheticDataPipeline(Pipeline):
                 #     work_builder.add_identifier(work_identifier)
                 work_builder.add_license(work_license)
                 # work_builder.add_provenance(work_provenance)
-                work_builder.set_url(work_page)
+                work_builder.set_date_created(work_creation_date)
                 work_builder.add_rights_holder(work_rights_holder)
                 work_builder.add_rights_statement(work_rights_statement)
-
-            destruction_date = date(day=1, month=1, year=2022)
-            creation_date = destruction_date - timedelta(days=work_i)
-            creation_date_time_description = OwlTimeDateTimeDescription.from_date(
-                creation_date
-            )
+                work_builder.set_url(work_page)
 
             # Faceted literal properties, which are the same across works
             if isinstance(work_builder, CmsWork.Builder):
@@ -675,7 +676,7 @@ class SyntheticDataPipeline(Pipeline):
             work_builder.add_event(
                 CmsWorkClosing.builder()
                 .set_description(description)
-                .set_date(destruction_date)
+                .set_date(work_destruction_date)
                 .set_location(anonymous_location)
                 .set_title(f"{work_title} closing")
                 .build()
@@ -683,7 +684,7 @@ class SyntheticDataPipeline(Pipeline):
 
             work_creation_builder: CmsWorkCreation.Builder = (
                 CmsWorkCreation.builder(uri=URIRef(str(work_uri) + "Creation"))
-                .set_date(creation_date_time_description)
+                .set_date(work_creation_date_time_description)
                 .set_description(description)
                 .set_location(named_location)
                 .set_title(f"{work_title} creation")
@@ -699,7 +700,7 @@ class SyntheticDataPipeline(Pipeline):
             work_opening = (
                 CmsWorkOpening.builder(uri=URIRef(str(work_uri) + "Opening"))
                 .set_description(description)
-                .set_date(creation_date)
+                .set_date(work_creation_date)
                 .set_location(anonymous_location)
                 .set_title(f"{work_title} opening")
                 .build()
