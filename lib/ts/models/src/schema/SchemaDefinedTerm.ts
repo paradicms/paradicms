@@ -2,11 +2,16 @@ import {Mixin} from "ts-mixer";
 import {SchemaNamedModel} from "./SchemaNamedModel";
 import {Concept} from "../Concept";
 import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
-import {rdf} from "@paradicms/vocabularies";
+import {rdf, schema} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 
 export class SchemaDefinedTerm extends Mixin(SchemaNamedModel)
   implements Concept {
+  @Memoize()
+  get altLabels(): readonly Literal[] {
+    return this.filterAndMapObjects(schema.alternateName, term => term.termType === "Literal" ? term as Literal : null);
+  }
+
   override get label(): string {
     if (this.name) {
       return this.name;
