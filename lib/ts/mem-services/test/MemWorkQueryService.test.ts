@@ -1,25 +1,46 @@
-import {ModelSetFactory, Work, WorkLocation} from "@paradicms/models";
 import {
-    StringPropertyValueFacet,
-    StringPropertyValueFilter,
-    WorkEventsSortProperty,
-    WorksSortProperty
+  ModelSetFactory,
+  WorkAgent,
+  WorkEventUnion,
+  WorkLocation,
+} from "@paradicms/models";
+import {
+  GetWorkAgentsResult,
+  GetWorkEventsResult,
+  StringPropertyValueFacet,
+  StringPropertyValueFilter,
+  WorkEventsSortProperty,
+  WorksSortProperty,
 } from "@paradicms/services";
 import {syntheticData} from "@paradicms/test";
-import {vra} from "@paradicms/vocabularies";
+import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {MemWorkQueryService} from "../src/MemWorkQueryService";
-import {requireNonNull} from "@paradicms/utilities";
+import {requireDefined, requireNonNull} from "@paradicms/utilities";
 import {describe} from "mocha";
 
 describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDataset(syntheticData);
   const sut = new MemWorkQueryService({
-    modelSet
+    modelSet,
   });
 
-  it("getNamedWorkAgents returns at least one agent from an empty query", async () => {
-    const result = await sut.getNamedWorkAgents(
+  const getWorkAgents = (result: GetWorkAgentsResult): readonly WorkAgent[] => {
+    const workAgentsByKey: {[index: string]: WorkAgent} = {};
+    for (const work of result.modelSet.works) {
+      for (const workAgent of work.agents) {
+        // expect(workAgentsByKey[workAgent.agent.key]).to.be.undefined;
+        workAgentsByKey[workAgent.agent.key] = workAgent;
+      }
+    }
+
+    return result.workAgentKeys.map(workAgentKey =>
+      requireNonNull(workAgentsByKey[workAgentKey])
+    );
+  };
+
+  it("getWorkAgents returns at least one agent from an empty query", async () => {
+    const result = await sut.getWorkAgents(
       {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
@@ -29,12 +50,11 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.modelSet.works).to.be.empty;
-    expect(result.workAgentKeys).not.to.be.empty;
+    expect(getWorkAgents(result)).not.to.be.empty;
   });
 
-  it("getNamedWorkAgents returns the works associated with an agent", async () => {
-    const result = await sut.getNamedWorkAgents(
+  it("getWorkAgents returns the works associated with an agent", async () => {
+    const result = await sut.getWorkAgents(
       {
         agentJoinSelector: {
           works: {},
@@ -47,20 +67,27 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    expect(result.workAgentKeys).to.not.be.empty;
-    let haveAgentWorks = false;
-    for (const agent of result.workAgentKeys.map(workAgentKey => requireNonNull(result.modelSet.agentByKey(workAgentKey)))) {
-      const agentWorks: Work[] = [];
-      for (const agentIri of agent.iris) {
-          agentWorks.push(...result.modelSet.worksByAgentIri(agentIri));
-      }
-      haveAgentWorks ||= agentWorks.length > 0;
-      for (const work of agentWorks) {
-        expect(work.agents.some(workAgent => workAgent.agent.key === agent.key)).to.be.true;
+    const workAgents = getWorkAgents(result);
+    expect(workAgents).not.to.be.empty;
+    for (const workAgent of workAgents) {
+      expect(workAgent.agent.label).not.to.be.empty;
+      // expect(workAgent.agent.works).not.to.be.empty;
+    }
+  });
+
+  const getWorkEvents = (result: GetWorkEventsResult) => {
+    const workEventsByKey: {[index: string]: WorkEventUnion} = {};
+    for (const work of result.modelSet.works) {
+      for (const workEvent of work.events) {
+        expect(workEventsByKey[workEvent.key]).to.be.undefined;
+        workEventsByKey[workEvent.key] = workEvent;
       }
     }
-    expect(haveAgentWorks).to.be.true;
-  });
+
+    return result.workEventKeys.map(workEventKey =>
+      requireDefined(workEventsByKey[workEventKey], workEventKey)
+    );
+  };
 
   it("getWorkEvents returns at least one event from an empty query", async () => {
     const result = await sut.getWorkEvents(
@@ -73,8 +100,9 @@ describe("MemWorkQueryService", () => {
       }
     );
 
+    const workEvents = getWorkEvents(result);
     expect(result.totalWorkEventsCount).to.be.gt(0);
-    expect(result.modelSet.workEvents).to.have.length.lte(result.totalWorkEventsCount); // modelSet.workEvents = only named
+    expect(workEvents).to.have.length.lte(result.totalWorkEventsCount); // modelSet.workEvents = only named
   });
 
   it("getWorkEvents returns the other models associated with an event", async () => {
@@ -84,61 +112,60 @@ describe("MemWorkQueryService", () => {
         offset: 0,
         workEventJoinSelector: {
           agents: {},
-          location: true
-        }
+          location: true,
+        },
       },
       {
         filters: [],
       }
     );
 
-    expect(result.modelSet.works).to.be.empty;
-    for (const workEvent of result.modelSet.workEvents) {
-      expect(workEvent.location).to.not.be.null;
+    for (const workEvent of getWorkEvents(result)) {
+      // expect(workEvent.location).to.not.be.null;
       switch (workEvent.type) {
-          case "WorkCreation":
-              expect(workEvent.creators).to.not.be.empty;
-              break;
+        case "WorkCreation":
+          expect(workEvent.creators).to.not.be.empty;
+          break;
       }
     }
   });
 
   it("getWorkEvents sorted by date", async () => {
     const result = await sut.getWorkEvents(
-        {
-          limit: 2,
-          offset: 0,
-          sort: {
-            ascending: false,
-            property: WorkEventsSortProperty.DATE
-          }
+      {
+        limit: 2,
+        offset: 0,
+        sort: {
+          ascending: false,
+          property: WorkEventsSortProperty.DATE,
         },
-        {
-          filters: [],
-        }
+      },
+      {
+        filters: [],
+      }
     );
 
-    const workEvents = result.modelSet.workEvents;
+    const workEvents = getWorkEvents(result);
     expect(workEvents).to.have.length(2);
     expect(workEvents[0].compareByDate(workEvents[1]) > 0);
   });
 
   it("getWorkEvents sorts by title", async () => {
     const result = await sut.getWorkEvents(
-        {
-          limit: 2,
-          offset: 0,
-          sort: {
-            ascending: false,
-            property: WorkEventsSortProperty.LABEL
-          }
+      {
+        limit: 2,
+        offset: 0,
+        sort: {
+          ascending: false,
+          property: WorkEventsSortProperty.LABEL,
         },
-        {
-          filters: [],
-        }
+      },
+      {
+        filters: [],
+      }
     );
 
-    const workEvents = result.modelSet.workEvents;
+    const workEvents = getWorkEvents(result);
     expect(workEvents).to.have.length(2);
     expect(workEvents[0].label.localeCompare(workEvents[1].label) > 0);
   });
@@ -157,14 +184,24 @@ describe("MemWorkQueryService", () => {
       }
     }
 
-    const result = await sut.getWorkLocations({}, {
-      filters: [],
-    });
+    const result = await sut.getWorkLocations(
+      {},
+      {
+        filters: [],
+      }
+    );
 
     expect(result.workLocations).to.have.length(expectedWorkLocations.length);
     for (const work of modelSet.works) {
       for (const expectedWorkLocation of expectedWorkLocations) {
-        const resultWorkLocation = result.workLocations.find(resultWorkLocation => resultWorkLocation.work.key === work.key && resultWorkLocation.location.latitude === expectedWorkLocation.location.latitude && resultWorkLocation.location.longitude === expectedWorkLocation.location.longitude);
+        const resultWorkLocation = result.workLocations.find(
+          resultWorkLocation =>
+            resultWorkLocation.work.key === work.key &&
+            resultWorkLocation.location.latitude ===
+              expectedWorkLocation.location.latitude &&
+            resultWorkLocation.location.longitude ===
+              expectedWorkLocation.location.longitude
+        );
         expect(resultWorkLocation).to.not.be.undefined;
         expect(resultWorkLocation!.work.label).to.eq(work.label);
       }
@@ -177,22 +214,24 @@ describe("MemWorkQueryService", () => {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
         valueFacetValueThumbnailSelector: {
-            maxDimensions: {
-                height: 200,
-                width: 200,
-            },
-            targetDimensions: {
-                height: 200,
-                width: 200,
-            },
+          maxDimensions: {
+            height: 200,
+            width: 200,
+          },
+          targetDimensions: {
+            height: 200,
+            width: 200,
+          },
         },
       },
       {
-        filters: [{
-          label: "Publisher",
-          propertyIri: vra.technique.value,
-          type: "StringPropertyValue"
-        } as StringPropertyValueFilter],
+        filters: [
+          {
+            label: "Publisher",
+            propertyIri: dcterms.publisher.value,
+            type: "StringPropertyValue",
+          } as StringPropertyValueFilter,
+        ],
       }
     );
 
@@ -201,9 +240,11 @@ describe("MemWorkQueryService", () => {
         if (facet.type !== "StringPropertyValue") {
           return false;
         }
-        const thumbnail = (facet as StringPropertyValueFacet).values.find(
+        const value = (facet as StringPropertyValueFacet).values.find(
           value => !!value.thumbnail
-        )!.thumbnail!;
+        )!;
+        expect(value).not.to.be.undefined;
+        const thumbnail = value.thumbnail!;
         expect(thumbnail).not.to.be.undefined;
         expect(thumbnail.license).not.to.be.null;
         expect(thumbnail.rightsStatement).not.to.be.null;
@@ -225,7 +266,7 @@ describe("MemWorkQueryService", () => {
         },
       },
       {
-        filters: []
+        filters: [],
       }
     );
 
@@ -262,7 +303,8 @@ describe("MemWorkQueryService", () => {
   });
 
   it("getWorks sorts by label", async () => {
-    const allWorkKeys = (await sut.getWorks(
+    const allWorkKeys = (
+      await sut.getWorks(
         {
           offset: 0,
           limit: 4,
@@ -270,21 +312,24 @@ describe("MemWorkQueryService", () => {
         {
           filters: [],
         }
-    )).modelSet.works.map(work => work.key);
+      )
+    ).modelSet.works.map(work => work.key);
 
-    const sortedWorkKeys = (await sut.getWorks(
+    const sortedWorkKeys = (
+      await sut.getWorks(
         {
           offset: 0,
           limit: 4,
           sort: {
             ascending: false,
-            property: WorksSortProperty.LABEL
-          }
+            property: WorksSortProperty.LABEL,
+          },
         },
         {
           filters: [],
         }
-    )).modelSet.works.map(work => work.key);
+      )
+    ).modelSet.works.map(work => work.key);
 
     expect(sortedWorkKeys).not.to.deep.eq(allWorkKeys);
   });

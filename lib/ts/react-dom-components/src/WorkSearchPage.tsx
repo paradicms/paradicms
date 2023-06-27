@@ -2,7 +2,7 @@ import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   FilterUnion,
-  GetNamedWorkAgentsResult,
+  GetWorkAgentsResult,
   GetWorkEventsResult,
   GetWorkLocationsResult,
   GetWorksResult,
@@ -46,7 +46,7 @@ import {Work} from "@paradicms/models";
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
 const workAgentsPageMax = (kwds: {
-  getWorkAgentsResult: GetNamedWorkAgentsResult;
+  getWorkAgentsResult: GetWorkAgentsResult;
   objectsPerPage: number;
 }) =>
   calculatePageMax({
@@ -111,7 +111,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   const [
     getWorkAgentsResult,
     setGetWorkAgentsResult,
-  ] = useState<GetNamedWorkAgentsResult | null>(null);
+  ] = useState<GetWorkAgentsResult | null>(null);
 
   const [
     getWorkEventsResult,
@@ -178,7 +178,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       // console.debug("getWorkAgents");
       setLoadingWorkAgents(true);
       workQueryService
-        .getNamedWorkAgents(
+        .getWorkAgents(
           {
             agentJoinSelector: {
               thumbnail: galleryThumbnailSelector,

@@ -1,12 +1,12 @@
 import {
-  AgentUnion,
   defaultProperties,
   Image,
   ModelSet,
   ModelSetBuilder,
   ThumbnailSelector,
   Work,
-  WorkEventUnion,
+  WorkAgent,
+  WorkEvent,
 } from "@paradicms/models";
 import {
   defaultWorkAgentsSort,
@@ -15,7 +15,7 @@ import {
   FacetUnion,
   FilterUnion,
   GetNamedWorkAgentsOptions,
-  GetNamedWorkAgentsResult,
+  GetWorkAgentsResult,
   GetWorkEventsOptions,
   GetWorkEventsResult,
   GetWorkLocationsOptions,
@@ -64,6 +64,9 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
   extends Omit<ValueFacetValue<ValueT>, "count"> {
   count: number;
 }
+
+type WorkAgentWithWorkKey = {workAgent: WorkAgent; workKey: string};
+type WorkEventWithWorkKey = {workEvent: WorkEvent; workKey: string};
 
 export class MemWorkQueryService implements WorkQueryService {
   private readonly index: Index;
@@ -196,10 +199,10 @@ export class MemWorkQueryService implements WorkQueryService {
     return filteredWorks;
   }
 
-  getNamedWorkAgents(
+  getWorkAgents(
     options: GetNamedWorkAgentsOptions,
     query: WorksQuery
-  ): Promise<GetNamedWorkAgentsResult> {
+  ): Promise<GetWorkAgentsResult> {
     const {agentJoinSelector, limit, offset} = options;
 
     invariant(!!query, "query must be defined");
@@ -212,38 +215,35 @@ export class MemWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const agentsByIri: {[index: string]: AgentUnion} = {};
-      for (const work of works) {
-        for (const agent of work.agents) {
-          for (const agentIri of agent.agent.iris) {
-            if (!agentIri) {
-              continue;
-            }
-            if (agentsByIri[agentIri]) {
-              continue;
-            }
-            agentsByIri[agentIri] = agent.agent;
-          }
-        }
-      }
-      const agents = Object.values(agentsByIri);
-
-      const sortedAgents = agents;
-      MemWorkQueryService.sortWorkAgentsInPlace(
-        options.sort ?? defaultWorkAgentsSort,
-        sortedAgents
+      const workAgents: WorkAgentWithWorkKey[] = works.flatMap(work =>
+        work.agents.map(workAgent => ({workAgent, workKey: work.key}))
       );
 
-      const slicedAgents = sortedAgents.slice(offset, offset + limit);
+      const sortedWorkAgents = workAgents;
+      MemWorkQueryService.sortWorkAgentsInPlace(
+        options.sort ?? defaultWorkAgentsSort,
+        workAgents
+      );
 
-      const slicedAgentsModelSet = new ModelSetBuilder()
-        .addAgents(slicedAgents, agentJoinSelector)
-        .build();
+      const slicedWorkAgents = sortedWorkAgents.slice(offset, offset + limit);
+
+      const slicedWorkAgentsModelSetBuilder = new ModelSetBuilder();
+      for (const workKey of new Set(
+        slicedWorkAgents.map(workAgent => workAgent.workKey)
+      )) {
+        // Add all of a work's agents
+        slicedWorkAgentsModelSetBuilder.addWork(
+          requireNonNull(this.modelSet.workByKey(workKey)),
+          {agents: agentJoinSelector ?? {}}
+        );
+      }
 
       resolve({
-        modelSet: slicedAgentsModelSet,
-        totalWorkAgentsCount: agents.length,
-        workAgentKeys: slicedAgents.map(agent => agent.key),
+        modelSet: slicedWorkAgentsModelSetBuilder.build(),
+        totalWorkAgentsCount: workAgents.length,
+        workAgentKeys: slicedWorkAgents.map(
+          workAgent => workAgent.workAgent.agent.key
+        ),
       });
     });
   }
@@ -330,14 +330,17 @@ export class MemWorkQueryService implements WorkQueryService {
 
   private static sortWorkAgentsInPlace(
     sort: WorkAgentsSort,
-    workAgents: AgentUnion[]
+    workAgents: WorkAgentWithWorkKey[]
   ): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {
       case WorkAgentsSortProperty.NAME:
         workAgents.sort(
           (left, right) =>
-            compareMultiplier * left.label.localeCompare(right.label)
+            compareMultiplier *
+            left.workAgent.agent.label.localeCompare(
+              right.workAgent.agent.label
+            )
         );
         return;
       default:
@@ -351,19 +354,21 @@ export class MemWorkQueryService implements WorkQueryService {
 
   private static sortWorkEventsInPlace(
     sort: WorkEventsSort,
-    workEvents: WorkEventUnion[]
+    workEvents: WorkEventWithWorkKey[]
   ): void {
     const compareMultiplier = sort.ascending ? 1 : -1;
     switch (sort.property) {
       case WorkEventsSortProperty.DATE:
         workEvents.sort(
-          (left, right) => compareMultiplier * left.compareByDate(right)
+          (left, right) =>
+            compareMultiplier * left.workEvent.compareByDate(right.workEvent)
         );
         return;
       case WorkEventsSortProperty.LABEL:
         workEvents.sort(
           (left, right) =>
-            compareMultiplier * left.label.localeCompare(right.label)
+            compareMultiplier *
+            left.workEvent.label.localeCompare(right.workEvent.label)
         );
         return;
       default:
@@ -477,17 +482,15 @@ export class MemWorkQueryService implements WorkQueryService {
         works: this.searchWorks(query),
       });
 
-      const workEvents = works.flatMap(work =>
-        work.events.filter(workEvent => {
+      const workEvents: WorkEventWithWorkKey[] = [];
+      for (const work of works) {
+        for (const workEvent of work.events) {
           if (requireDate && workEvent.sortDate === null) {
-            return false;
+            continue;
           }
-          // if (requireLocation && !(workEvent.location instanceof Location)) {
-          //   return false;
-          // }
-          return true;
-        })
-      );
+          workEvents.push({workEvent, workKey: work.key});
+        }
+      }
 
       const sortedWorkEvents = workEvents;
       MemWorkQueryService.sortWorkEventsInPlace(
@@ -497,13 +500,23 @@ export class MemWorkQueryService implements WorkQueryService {
 
       const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
 
-      const slicedWorkEventsModelSet = new ModelSetBuilder()
-        .addWorkEvents(slicedWorkEvents, workEventJoinSelector)
-        .build();
+      const slicedWorkEventsModelSetBuilder = new ModelSetBuilder();
+      for (const workKey of new Set(
+        slicedWorkEvents.map(workEvent => workEvent.workKey)
+      )) {
+        // Add all of a work's events
+        slicedWorkEventsModelSetBuilder.addWork(
+          requireNonNull(this.modelSet.workByKey(workKey)),
+          {events: workEventJoinSelector ?? {}}
+        );
+      }
 
       resolve({
-        modelSet: slicedWorkEventsModelSet,
+        modelSet: slicedWorkEventsModelSetBuilder.build(),
         totalWorkEventsCount: workEvents.length,
+        workEventKeys: slicedWorkEvents.map(
+          workEvent => workEvent.workEvent.key
+        ),
       });
     });
   }

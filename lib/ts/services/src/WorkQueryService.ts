@@ -2,7 +2,7 @@ import {WorksQuery} from "./WorksQuery";
 import {GetWorksResult} from "./GetWorksResult";
 import {GetWorksOptions} from "./GetWorksOptions";
 import {GetNamedWorkAgentsOptions} from "./GetNamedWorkAgentsOptions";
-import {GetNamedWorkAgentsResult} from "./GetNamedWorkAgentsResult";
+import {GetWorkAgentsResult} from "./GetWorkAgentsResult";
 import {GetWorkEventsOptions} from "./GetWorkEventsOptions";
 import {GetWorkEventsResult} from "./GetWorkEventsResult";
 import {GetWorkLocationsOptions} from "./GetWorkLocationsOptions";
@@ -12,10 +12,10 @@ export interface WorkQueryService {
   /**
    * Get agents associated with any of the works matched by the query.
    */
-  getNamedWorkAgents(
+  getWorkAgents(
     options: GetNamedWorkAgentsOptions,
     query: WorksQuery
-  ): Promise<GetNamedWorkAgentsResult>;
+  ): Promise<GetWorkAgentsResult>;
 
   /**
    * Get events associated with any of the works matched by the query. Limit + offset is applied after the events are sorted by date ascending.
