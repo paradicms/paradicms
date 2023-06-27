@@ -85,16 +85,6 @@ export class CachingModelSet implements ModelSet {
     return null;
   }
 
-  agentByKey(agentKey: string): AgentUnion | null {
-    for (const index of [this.organizationsByKeyIndex, this.peopleByKeyIndex]) {
-      const agent = index[agentKey];
-      if (agent) {
-        return agent;
-      }
-    }
-    return null;
-  }
-
   @Memoize()
   get appConfiguration(): AppConfiguration | null {
     return this.modelReader.readAppConfiguration({
@@ -319,7 +309,7 @@ export class CachingModelSet implements ModelSet {
   }
 
   @Memoize()
-  get workEvents(): readonly WorkEventUnion[] {
+  private get workEvents(): readonly WorkEventUnion[] {
     return sortModelsArray(this.modelReader.readWorkEvents({modelSet: this}));
   }
 

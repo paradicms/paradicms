@@ -12,7 +12,7 @@ import {
   WorksQuery,
   WorksSort,
 } from "@paradicms/services";
-import {calculatePageMax, requireNonNull} from "@paradicms/utilities";
+import {calculatePageMax} from "@paradicms/utilities";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {
@@ -108,15 +108,13 @@ export const WorkSearchPage: React.FunctionComponent<{
   );
   const activeTabKey: TabKey = activeTabKeyQueryParam ?? "works";
 
-  const [
-    getWorkAgentsResult,
-    setGetWorkAgentsResult,
-  ] = useState<GetWorkAgentsResult | null>(null);
+  const [getWorkAgentsResult, setGetWorkAgentsResult] = useState<
+    (GetWorkAgentsResult & {workAgentKeysSet: Set<string>}) | null
+  >(null);
 
-  const [
-    getWorkEventsResult,
-    setGetWorkEventsResult,
-  ] = useState<GetWorkEventsResult | null>(null);
+  const [getWorkEventsResult, setGetWorkEventsResult] = useState<
+    (GetWorkEventsResult & {workEventKeysSet: Set<string>}) | null
+  >(null);
 
   const [
     // @ts-ignore
@@ -195,7 +193,10 @@ export const WorkSearchPage: React.FunctionComponent<{
           //   "getWorkAgents result:",
           //   getWorkAgentsResult.totalWorkAgentsCount
           // );
-          setGetWorkAgentsResult(getWorkAgentsResult);
+          setGetWorkAgentsResult({
+            ...getWorkAgentsResult,
+            workAgentKeysSet: new Set(getWorkAgentsResult.workAgentKeys),
+          });
           setLoadingWorkAgents(false);
         });
     }
@@ -230,7 +231,10 @@ export const WorkSearchPage: React.FunctionComponent<{
           //   "getWorkEvents result:",
           //   getWorkEventsResult.totalWorkEventsCount
           // );
-          setGetWorkEventsResult(getWorkEventsResult);
+          setGetWorkEventsResult({
+            ...getWorkEventsResult,
+            workEventKeysSet: new Set(getWorkEventsResult.workEventKeys),
+          });
           setLoadingWorkEvents(false);
         });
     }
@@ -369,11 +373,13 @@ export const WorkSearchPage: React.FunctionComponent<{
         </Row>
         <Row>
           <AgentsGallery
-            agents={getWorkAgentsResult.workAgentKeys.map(workAgentKeys =>
-              requireNonNull(
-                getWorkAgentsResult.modelSet.agentByKey(workAgentKeys)
+            agents={getWorkAgentsResult.modelSet.works
+              .flatMap(work =>
+                work.agents.filter(agent =>
+                  getWorkAgentsResult.workAgentKeysSet.has(agent.agent.key)
+                )
               )
-            )}
+              .map(agent => agent.agent)}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
           />
         </Row>
@@ -404,7 +410,11 @@ export const WorkSearchPage: React.FunctionComponent<{
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
         setPage={setWorkEventsPage}
-        workEvents={getWorkEventsResult.modelSet.workEvents}
+        workEvents={getWorkEventsResult.modelSet.works.flatMap(work =>
+          work.events.filter(workEvent =>
+            getWorkEventsResult.workEventKeysSet.has(workEvent.key)
+          )
+        )}
       />
     ) : null,
   });

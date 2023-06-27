@@ -21,9 +21,6 @@ export const dummyModelSet: ModelSet = {
   agentByIri(agentIri: string): AgentUnion | null {
     throw new EvalError("not implemented");
   },
-  agentByKey(agentKey: string): AgentUnion | null {
-    throw new EvalError("not implemented");
-  },
   get appConfiguration(): AppConfiguration | null {
     throw new EvalError("not implemented");
   },
@@ -85,9 +82,6 @@ export const dummyModelSet: ModelSet = {
     throw new EvalError("not implemented");
   },
   workEventByIri(workEventIri: string): WorkEventUnion | null {
-    throw new EvalError("not implemented");
-  },
-  get workEvents(): readonly WorkEventUnion[] {
     throw new EvalError("not implemented");
   },
   get works(): readonly Work[] {
