@@ -218,18 +218,8 @@ export class CachingModelSet implements ModelSet {
   }
 
   @Memoize()
-  private get organizationsByKeyIndex(): {[index: string]: Organization} {
-    return indexModelsByKey(this.namedOrganizations);
-  }
-
-  @Memoize()
   private get peopleByIriIndex(): {[index: string]: Person} {
     return indexModelsByIri(this.namedPeople);
-  }
-
-  @Memoize()
-  private get peopleByKeyIndex(): {[index: string]: Person} {
-    return indexModelsByKey(this.namedPeople);
   }
 
   personByIri(personIri: string): Person | null {
