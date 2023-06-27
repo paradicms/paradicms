@@ -25,7 +25,7 @@ class SchemaPlace(SchemaModel, Location):
             return self
 
     @classmethod
-    def builder(cls, *, uri: Optional[URIRef]) -> Builder:
+    def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
         return cls.Builder(Graph().resource(uri if uri is not None else BNode()))
 
     @classmethod

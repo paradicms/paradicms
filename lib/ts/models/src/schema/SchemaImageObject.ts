@@ -4,13 +4,21 @@ import {Mixin} from "ts-mixer";
 import {Image} from "../Image";
 import {cms, schema} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
-import {mapTermToImage} from "../mapTermToImage";
 import {ImageDimensions} from "../ImageDimensions";
 import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
+import {mapTermToString} from "@paradicms/rdf";
+import {ThumbnailSelector} from "../ThumbnailSelector";
+import {selectThumbnail} from "../selectThumbnail";
 
 export class SchemaImageObject
   extends Mixin(SchemaNamedModel, SchemaMediaObjectMixin)
   implements Image {
+  @Memoize()
+  get caption(): string | null {
+    return this.findAndMapObject(schema.caption, mapTermToString);
+  }
+
+  @Memoize()
   get exactDimensions(): ImageDimensions | null {
     const heightValue = this.findAndMapObject(schema.height, term =>
       mapSchemaQuantitativeValue(this, term)
@@ -28,6 +36,11 @@ export class SchemaImageObject
     }
   }
 
+  override get label(): string | null {
+    return this.caption;
+  }
+
+  @Memoize()
   get maxDimensions(): ImageDimensions | null {
     const heightMaxValue =
       this.findAndMapObject(schema.height, term =>
@@ -64,10 +77,7 @@ export class SchemaImageObject
     }
   }
 
-  @Memoize()
-  get thumbnails(): readonly Image[] {
-    return this.filterAndMapObjects(schema.thumbnail, term =>
-      mapTermToImage(this, term)
-    );
+  override thumbnail(selector: ThumbnailSelector): Image | null {
+    return selectThumbnail(this.thumbnails.concat(this), selector);
   }
 }

@@ -5,7 +5,7 @@ export * from "./FacetUnion";
 export * from "./FilterUnion";
 export * from "./filterUnionSchema";
 export * from "./FilterVisitor";
-export * from "./GetNamedWorkAgentsResult";
+export * from "./GetWorkAgentsResult";
 export * from "./GetNamedWorkAgentsOptions";
 export * from "./GetWorkEventsOptions";
 export * from "./GetWorkEventsResult";

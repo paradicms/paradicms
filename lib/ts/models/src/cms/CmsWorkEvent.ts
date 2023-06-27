@@ -15,17 +15,14 @@ export abstract class CmsWorkEvent extends Mixin(CmsEvent)
 
     return {
       role: this.workLocationRole,
-      label: this.title
+      label: this.label
         ? this.displayDate
-          ? `${this.displayDate}: ${this.title}`
-          : this.title
+          ? `${this.displayDate}: ${this.label}`
+          : this.label
         : null,
       location: this.location,
     };
   }
 
-  protected get workLocationRole(): WorkLocationRole {
-    // This class can't be abstract since it's used as a mixin.
-    throw new EvalError("not implemented");
-  }
+  protected abstract readonly workLocationRole: WorkLocationRole;
 }

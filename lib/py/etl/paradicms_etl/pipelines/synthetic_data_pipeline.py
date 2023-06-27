@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict, List, Iterable, Union
 from urllib.parse import quote
 
-from rdflib import DCTERMS, Literal, URIRef
+from rdflib import DCTERMS, Literal, URIRef, SDO
 
 from paradicms_etl.enricher import Enricher
 from paradicms_etl.enrichers.ncsu_enricher import NcsuEnricher
@@ -44,9 +44,16 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.schema.schema_organization import SchemaOrganization
+from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_place import SchemaPlace
+from paradicms_etl.models.schema.schema_property import SchemaProperty
+from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import VRA
 from paradicms_etl.pipeline import Pipeline
 
 
@@ -60,8 +67,8 @@ class SyntheticDataPipeline(Pipeline):
         class __Property:
             label: str
             uri: URIRef
-            searchable: bool = True
-            filterable: bool = True
+            searchable: bool = False
+            filterable: bool = False
             values: Tuple[str, ...] = ()
 
             @property
@@ -71,70 +78,90 @@ class SyntheticDataPipeline(Pipeline):
                 )
 
         __PROPERTIES = (
+            # __Property(
+            #     label="Cultural context",
+            #     uri=VRA.culturalContext,
+            #     values=tuple(f"Cultural context {i}" for i in range(10)),
+            # ),
             __Property(
-                label="Cultural context",
-                uri=VRA.culturalContext,
-                values=tuple(f"Cultural context {i}" for i in range(10)),
-            ),
-            __Property(
-                filterable=False,
-                label="Description",
+                label="DC Description",
+                searchable=True,
                 uri=DCTERMS.description,
             ),
             __Property(
-                label="Extent",
+                filterable=True,
+                label="DC Extent",
                 uri=DCTERMS.extent,
                 values=tuple(f"Extent {i}" for i in range(10)),
             ),
             __Property(
-                label="Language",
+                filterable=True,
+                label="DC Language",
                 uri=DCTERMS.language,
                 values=tuple(f"Language {i}" for i in range(10)),
             ),
+            # __Property(
+            #     label="Material",
+            #     uri=VRA.material,
+            #     values=tuple(f"Material {i}" for i in range(10)),
+            # ),
             __Property(
-                label="Material",
-                uri=VRA.material,
-                values=tuple(f"Material {i}" for i in range(10)),
-            ),
-            __Property(
-                label="Medium",
+                filterable=True,
+                label="DC Medium",
                 uri=DCTERMS.medium,
                 values=tuple(f"Medium {i}" for i in range(10)),
             ),
             __Property(
-                label="Publisher",
+                filterable=True,
+                label="DC Publisher",
                 uri=DCTERMS.publisher,
                 values=tuple(f"Publisher {i}" for i in range(10)),
             ),
             __Property(
+                filterable=True,
                 label="Source",
                 uri=DCTERMS.source,
                 values=tuple(f"Source {i}" for i in range(10)),
             ),
             __Property(
-                label="Spatial",
+                filterable=True,
+                label="DC Spatial",
                 uri=DCTERMS.spatial,
-                values=tuple(f"Spatial {i}" for i in range(10)),
+                values=tuple(f"DC Spatial {i}" for i in range(10)),
             ),
             __Property(
-                label="Subject",
+                filterable=True,
+                label="DC Subject",
                 uri=DCTERMS.subject,
                 values=tuple(f"Subject {i}" for i in range(10)),
             ),
+            # __Property(
+            #     label="Technique",
+            #     uri=VRA.technique,
+            #     values=tuple(f"Technique {i}" for i in range(10)),
+            # ),
             __Property(
-                label="Technique",
-                uri=VRA.technique,
-                values=tuple(f"Technique {i}" for i in range(10)),
-            ),
-            __Property(
-                filterable=False,
-                label="Title",
+                label="DC Title",
+                searchable=True,
                 uri=DCTERMS.title,
             ),
             __Property(
-                label="Type",
+                filterable=True,
+                label="DC Type",
                 uri=DCTERMS.type,
                 values=tuple(f"Type {i}" for i in range(10)),
+            ),
+            __Property(
+                label="Schema Description",
+                searchable=True,
+                uri=SDO.description,
+            ),
+            __Property(label="Schema Name", searchable=True, uri=SDO.name),
+            __Property(
+                filterable=True,
+                label="Schema Spatial",
+                uri=SDO.spatial,
+                values=tuple(f"Schema Spatial {i}" for i in range(10)),
             ),
         )
 
@@ -161,7 +188,7 @@ class SyntheticDataPipeline(Pipeline):
                 if isinstance(model, Concept):
                     concept = model
                     concept_str = concept.value.toPython()
-                    assert isinstance(concept_str, str)
+                    assert isinstance(concept_str, str), concept_str
                     assert concept_str not in concepts_by_value
                     concepts_by_value[concept_str] = concept
 
@@ -176,6 +203,7 @@ class SyntheticDataPipeline(Pipeline):
                 agents=agents, concepts_by_value=concepts_by_value
             )
 
+            assert self.__freestanding_works >= 2
             for work_i in range(self.__freestanding_works):
                 yield from self.__generate_work(
                     agents=agents,
@@ -185,13 +213,28 @@ class SyntheticDataPipeline(Pipeline):
                 )
 
         def __generate_agents(self) -> Iterable[Union[Agent, Image]]:
-            for organization_i in range(5):
-                organization_builder: CmsOrganization.Builder = CmsOrganization.builder(
-                    name=f"Organization {organization_i}",
-                    uri=URIRef(f"http://example.com/organization{organization_i}"),
-                ).add_page(
-                    URIRef(f"http://example.com/organization{organization_i}page"),
+            for organization_i in range(6):
+                organization_name = f"Organization {organization_i}"
+                organization_page = URIRef(
+                    f"http://example.com/organization{organization_i}page"
                 )
+                organization_uri = URIRef(
+                    f"http://example.com/organization{organization_i}"
+                )
+
+                organization_builder: Union[
+                    CmsOrganization.Builder, SchemaOrganization.Builder
+                ]
+                if organization_i % 2 == 0:
+                    organization_builder = CmsOrganization.builder(
+                        name=organization_name, uri=organization_uri
+                    ).add_page(organization_page)
+                else:
+                    organization_builder = SchemaOrganization.builder(
+                        name=organization_name, uri=organization_uri
+                    )
+                    organization_builder.set_url(organization_page)
+
                 for image in self.__generate_images(
                     base_uri=organization_builder.uri, text_prefix="Organization"
                 ):
@@ -199,49 +242,96 @@ class SyntheticDataPipeline(Pipeline):
                     yield image
                 yield organization_builder.build()
 
-            for person_i in range(5):
-                person_builder: CmsPerson.Builder = (
-                    CmsPerson.builder(
-                        name=f"Person {person_i}",
-                        uri=URIRef(f"http://example.com/person{person_i}"),
-                    )
-                    .set_family_name(str(person_i))
-                    .set_given_name("Person")
-                )
+            for person_i in range(6):
+                person_family_name = str(person_i)
+                person_given_name = "Person"
+                person_name = f"Person {person_i}"
+                person_page = URIRef(f"http://example.com/person{person_i}page")
+                person_uri = URIRef(f"http://example.com/person{person_i}")
+
+                person_builder: Union[CmsPerson.Builder, SchemaPerson.Builder]
                 if person_i % 2 == 0:
-                    person_builder.add_page(
-                        URIRef(f"http://example.com/person{person_i}page")
+                    person_builder = (
+                        CmsPerson.builder(
+                            name=person_name,
+                            uri=person_uri,
+                        )
+                        .set_family_name(person_family_name)
+                        .set_given_name(person_given_name)
                     )
+                    person_builder.add_page(person_page)
+                else:
+                    person_builder = (
+                        SchemaPerson.builder(name=person_name, uri=person_uri)
+                        .set_family_name(person_family_name)
+                        .set_given_name(person_given_name)
+                    )
+                    person_builder.set_url(person_page)
+
                 if person_i == 0:
                     person_builder.add_same_as(
                         # Wikidata concept for Alan Turing
                         URIRef("http://www.wikidata.org/entity/Q7251"),
                     )
+
                 for image in self.__generate_images(
                     base_uri=person_builder.uri, text_prefix="Person"
                 ):
                     yield image
                     person_builder.add_image(image)
+
                 yield person_builder.build()
 
         def __generate_images(
             self, *, base_uri: URIRef, text_prefix: str
         ) -> Iterable[Image]:
+            assert self.__images_per_work >= 2
             for image_i in range(self.__images_per_work):
-                title = f"{text_prefix} image {image_i}"
-                original_image_builder = (
-                    CmsImage.builder(
-                        uri=URIRef(str(base_uri) + f":Image{image_i}"),
+                original_image_title = f"{text_prefix} image {image_i}"
+                original_image_exact_dimensions = ImageDimensions(
+                    height=1000, width=1000
+                )
+                original_image_license = CreativeCommonsLicenses.NC_1_0.uri
+                original_image_rights_holder = f"{original_image_title} rights holder"
+                original_image_rights_statement = (
+                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                )
+                original_image_src = (
+                    "https://paradicms.org/img/placeholder/1000x1000.png"
+                )
+                original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
+
+                original_image_builder: Union[
+                    CmsImage.Builder, SchemaImageObject.Builder
+                ]
+                if image_i % 2 == 0:
+                    original_image_builder = (
+                        CmsImage.builder(
+                            uri=original_image_uri,
+                        )
+                        .set_exact_dimensions(original_image_exact_dimensions)
+                        .set_src(original_image_src)
+                        .set_title(original_image_title)
                     )
-                    .set_exact_dimensions(ImageDimensions(height=1000, width=1000))
-                    .set_src("https://paradicms.org/img/placeholder/1000x1000.png")
-                    .set_title(title)
-                )
-                original_image_builder.add_rights_holder(
-                    f"{title} rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri,
-                )
+                    original_image_builder.add_rights_holder(
+                        original_image_rights_holder
+                    ).add_license(original_image_license).add_rights_statement(
+                        original_image_rights_statement
+                    )
+                else:
+                    original_image_builder = (
+                        SchemaImageObject.builder(
+                            uri=original_image_uri,
+                        )
+                        .set_exact_dimensions(original_image_exact_dimensions)
+                        .set_src(original_image_src)
+                        .set_title(original_image_title)
+                    )
+                    original_image_builder.add_rights_holder(
+                        original_image_rights_holder
+                    ).add_license(original_image_license).add_rights_statement(
+                        original_image_rights_statement
+                    )
 
                 for thumbnail_dimensions in (
                     ImageDimensions(200, 200),
@@ -277,17 +367,21 @@ class SyntheticDataPipeline(Pipeline):
             agents: Tuple[Agent, ...],
             concepts_by_value: Dict[str, Concept],
         ) -> Iterable[Union[Collection, Image, Location, Work, WorkEvent]]:
+            assert self.__collections >= 2
             for collection_i in range(self.__collections):
                 collection_name = f"Collection{collection_i}"
                 collection_uri = URIRef(f"http://example.com/collection{collection_i}")
+                collection_builder: Union[
+                    CmsCollection.Builder, SchemaCollection.Builder
+                ]
                 if collection_i % 2 == 0:
+                    collection_builder = CmsCollection.builder(
+                        title=collection_name, uri=collection_uri
+                    )
+                else:
                     collection_builder = SchemaCollection.builder(
                         name=collection_name,
                         uri=collection_uri,
-                    )
-                else:
-                    collection_builder = CmsCollection.builder(
-                        title=collection_name, uri=collection_uri
                     )
 
                 description_builder = CmsText.builder(self.__LOREM_IPSUM)
@@ -308,6 +402,7 @@ class SyntheticDataPipeline(Pipeline):
 
                 # For collection 0, force the GUI to use a work image
 
+                assert self.__works_per_collection >= 2
                 for work_i in range(self.__works_per_collection):
                     for model in self.__generate_work(
                         agents=agents,
@@ -327,16 +422,34 @@ class SyntheticDataPipeline(Pipeline):
                 if property_.uri == DCTERMS.creator:
                     continue
                 for property_value in property_.values:
-                    concept_builder = (
-                        CmsConcept.builder(
-                            pref_label=f"Concept {concept_urn_i}",
-                            uri=URIRef(
-                                f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
-                            ),
-                        )
-                        .add_type_uri(property_.range)
-                        .set_value(Literal(property_value))
+                    concept_pref_label = f"Concept {concept_urn_i}"
+                    concept_uri = URIRef(
+                        f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                     )
+
+                    concept_builder: Union[
+                        CmsConcept.Builder, SchemaDefinedTerm.Builder
+                    ]
+                    if str(property_.uri).startswith(str(DCTERMS)):
+                        concept_builder = (
+                            CmsConcept.builder(
+                                pref_label=concept_pref_label,
+                                uri=concept_uri,
+                            )
+                            .add_type_uri(property_.range)
+                            .set_value(Literal(property_value))
+                        )
+                    elif str(property_.uri).startswith(str(SDO)):
+                        concept_builder = (
+                            SchemaDefinedTerm.builder(
+                                name=concept_pref_label,
+                                uri=concept_uri,
+                            )
+                            .add_type_uri(property_.range)
+                            .set_value(Literal(property_value))
+                        )
+                    else:
+                        raise NotImplementedError(str(property_.uri))
 
                     for image in self.__generate_images(
                         base_uri=concept_builder.uri,
@@ -364,12 +477,24 @@ class SyntheticDataPipeline(Pipeline):
                 property_group_builder.add_image(image)
 
             for property_ in self.__PROPERTIES:
-                property_model_builder = (
-                    CmsProperty.builder(label=property_.label, uri=property_.uri)
-                    .set_filterable(property_.filterable)
-                    .set_range(property_.range)
-                    .set_searchable(property_.searchable)
-                )
+                property_model_builder: Union[
+                    CmsProperty.Builder, SchemaProperty.Builder
+                ]
+                if str(property_.uri).startswith(str(DCTERMS)):
+                    property_model_builder = CmsProperty.builder(
+                        label=property_.label, uri=property_.uri
+                    )
+                elif str(property_.uri).startswith(str(SDO)):
+                    property_model_builder = SchemaProperty.builder(
+                        name=property_.label, uri=property_.uri
+                    )
+                else:
+                    raise NotImplementedError(str(property_.uri))
+
+                property_model_builder.set_filterable(property_.filterable).set_range(
+                    property_.range
+                ).set_searchable(property_.searchable)
+
                 for image in self.__generate_images(
                     base_uri=property_model_builder.uri, text_prefix=property_.label
                 ):
@@ -393,35 +518,66 @@ class SyntheticDataPipeline(Pipeline):
             work_i = self.__next_work_i
             self.__next_work_i += 1
 
+            work_destruction_date = date(day=1, month=1, year=2022)
+            work_creation_date = work_destruction_date - timedelta(days=work_i)
+            work_creation_date_time_description = OwlTimeDateTimeDescription.from_date(
+                work_creation_date
+            )
+            work_title = title_prefix + str(work_i)
+            work_alternative_titles = [
+                f"{work_title} alternative title {i}" for i in range(2)
+            ]
+            work_identifiers = [f"{work_title}Id{i}" for i in range(2)]
+            work_license = CreativeCommonsLicenses.NC_1_0.uri
+            work_page = URIRef("http://example.com/work/" + str(work_i))
+            work_provenance = f"{work_title} provenance"
+            work_rights_holder = f"{work_title} rights holder"
+            work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU.uri
             work_uri = URIRef(uri_prefix + str(work_i))
 
-            work_title = title_prefix + str(work_i)
-            work_builder = CmsWork.builder(title=work_title, uri=work_uri)
-
-            include_description = work_i % 2 == 0
-
-            # Properties that depend on the work title
-            for i in range(2):
-                work_builder.add_alternative_title(
-                    f"{work_title} alternative title {i}",
-                )
-                work_builder.add_identifier(f"{work_title}Id{i}")
-                work_builder.add_provenance(f"{work_title} provenance {i}")
-
-                work_builder.add_rights_holder(
-                    f"{work_title} rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-                )
-
-            destruction_date = date(day=1, month=1, year=2022)
-            creation_date = destruction_date - timedelta(days=work_i)
-            creation_date_time_description = OwlTimeDateTimeDescription.from_date(
-                creation_date
-            )
+            work_builder: Union[CmsWork.Builder, SchemaCreativeWork.Builder]
+            if work_i % 2 == 0:
+                work_builder = CmsWork.builder(title=work_title, uri=work_uri)
+                for work_alternative_title in work_alternative_titles:
+                    work_builder.add_alternative_title(work_alternative_title)
+                for work_identifier in work_identifiers:
+                    work_builder.add_identifier(work_identifier)
+                # work_builder.set_date_created(work_creation_date)
+                work_builder.add_license(work_license)
+                work_builder.add_page(work_page)
+                work_builder.add_provenance(work_provenance)
+                work_builder.add_rights_holder(work_rights_holder)
+                work_builder.add_rights_statement(work_rights_statement)
+            else:
+                work_builder = SchemaCreativeWork.builder(name=work_title, uri=work_uri)
+                for work_alternative_title in work_alternative_titles:
+                    work_builder.add_alternate_name(work_alternative_title)
+                # for work_identifier in work_identifiers:
+                #     work_builder.add_identifier(work_identifier)
+                work_builder.add_license(work_license)
+                # work_builder.add_provenance(work_provenance)
+                work_builder.set_date_created(work_creation_date)
+                work_builder.add_rights_holder(work_rights_holder)
+                work_builder.add_rights_statement(work_rights_statement)
+                work_builder.set_url(work_page)
 
             # Faceted literal properties, which are the same across works
-            for property_ in self.__PROPERTIES:
+            if isinstance(work_builder, CmsWork.Builder):
+                properties = tuple(
+                    property_
+                    for property_ in self.__PROPERTIES
+                    if str(property_.uri).startswith(str(DCTERMS))
+                )
+            elif isinstance(work_builder, SchemaCreativeWork.Builder):
+                properties = tuple(
+                    property_
+                    for property_ in self.__PROPERTIES
+                    if str(property_.uri).startswith(str(SDO))
+                )
+            else:
+                raise NotImplementedError
+
+            for property_ in properties:
                 if not property_.values:
                     continue
                 for i in range(2):
@@ -457,35 +613,57 @@ class SyntheticDataPipeline(Pipeline):
                     URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
                 )
 
-            if include_description:
+            description_builder: Union[CmsText.Builder, SchemaTextObject.Builder]
+            if isinstance(work_builder, CmsWork.Builder):
                 description_builder = CmsText.builder(
                     self.__LOREM_IPSUM,
                 )
-                description_builder.add_rights_holder(
-                    f"{work_title} description rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-                )
-                description = description_builder.build()
-
-                work_builder.set_description(description)
+            elif isinstance(work_builder, SchemaCreativeWork.Builder):
+                description_builder = SchemaTextObject.builder(self.__LOREM_IPSUM)
             else:
-                description = None
+                raise NotImplementedError
 
-            anonymous_location = (
-                CmsLocation.builder().set_lat(42.728104).set_long(-73.687576).build()
+            description_builder.add_rights_holder(
+                f"{work_title} description rights holder"
+            ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
+                RightsStatementsDotOrgRightsStatements.InC_EDU.uri
             )
-            named_location = (
-                CmsLocation.builder(uri=URIRef(str(work_uri) + "Location"))
-                .set_lat(42.728104)
-                .set_long(-73.687576)
-                .build()
-            )
-            yield named_location
-            work_builder.set_location(named_location)
+            description = description_builder.build()
+
+            work_builder.set_description(description)
 
             if work_i % 2 == 0:
-                work_builder.add_page(URIRef("http://example.com/work/" + str(work_i)))
+                anonymous_location = (
+                    CmsLocation.builder()
+                    .set_lat(42.728104)
+                    .set_long(-73.687576)
+                    .build()
+                )
+                named_location = (
+                    CmsLocation.builder(uri=URIRef(str(work_uri) + "Location"))
+                    .set_lat(42.728104)
+                    .set_long(-73.687576)
+                    .build()
+                )
+            else:
+                anonymous_location = (
+                    SchemaPlace.builder()
+                    .set_latitude(42.728104)
+                    .set_longitude(-73.687576)
+                    .build()
+                )
+                named_location = (
+                    SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
+                    .set_latitude(42.728104)
+                    .set_longitude(-73.687576)
+                    .build()
+                )
+
+            yield named_location
+            if isinstance(work_builder, CmsWork.Builder):
+                work_builder.set_location(named_location)
+            else:
+                work_builder.add_spatial(named_location)
 
             for image in self.__generate_images(
                 base_uri=work_uri,
@@ -498,7 +676,7 @@ class SyntheticDataPipeline(Pipeline):
             work_builder.add_event(
                 CmsWorkClosing.builder()
                 .set_description(description)
-                .set_date(destruction_date)
+                .set_date(work_destruction_date)
                 .set_location(anonymous_location)
                 .set_title(f"{work_title} closing")
                 .build()
@@ -506,7 +684,7 @@ class SyntheticDataPipeline(Pipeline):
 
             work_creation_builder: CmsWorkCreation.Builder = (
                 CmsWorkCreation.builder(uri=URIRef(str(work_uri) + "Creation"))
-                .set_date(creation_date_time_description)
+                .set_date(work_creation_date_time_description)
                 .set_description(description)
                 .set_location(named_location)
                 .set_title(f"{work_title} creation")
@@ -522,7 +700,7 @@ class SyntheticDataPipeline(Pipeline):
             work_opening = (
                 CmsWorkOpening.builder(uri=URIRef(str(work_uri) + "Opening"))
                 .set_description(description)
-                .set_date(creation_date)
+                .set_date(work_creation_date)
                 .set_location(anonymous_location)
                 .set_title(f"{work_title} opening")
                 .build()

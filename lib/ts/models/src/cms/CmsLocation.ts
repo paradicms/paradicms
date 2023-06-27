@@ -4,13 +4,16 @@ import {Mixin} from "ts-mixer";
 import {Location} from "../Location";
 import {CmsModel} from "./CmsModel";
 import {mapTermToNumber} from "@paradicms/rdf";
+import {Memoize} from "typescript-memoize";
 
 export class CmsLocation extends Mixin(CmsModel) implements Location {
-  get lat(): number {
+  @Memoize()
+  get latitude(): number {
     return requireNonNull(this.findAndMapObject(wgs.lat, mapTermToNumber));
   }
 
-  get long(): number {
+  @Memoize()
+  get longitude(): number {
     return requireNonNull(this.findAndMapObject(wgs.long, mapTermToNumber));
   }
 }

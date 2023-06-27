@@ -1,12 +1,19 @@
 import {describe} from "mocha";
 import {behavesLikeImage} from "../behavesLikeImage";
-import {testCmsModelSet} from "./testCmsModelSet";
+import {testModelSet} from "../testModelSet";
+import {expect} from "chai";
+import {CmsImage} from "../../src/cms/CmsImage";
+import {requireNonNull} from "@paradicms/utilities";
 
 describe("CmsImage", () => {
   // sut should be an original image
-  const image = testCmsModelSet.works[0].images.find(
-    image => image.thumbnails.length > 0
-  )!;
+  const image = requireNonNull(
+    testModelSet.imageByIri("http://example.com/collection0/work2:Image0")
+  );
+
+  before(() => {
+    expect(image).to.be.instanceof(CmsImage);
+  });
 
   behavesLikeImage(image);
 });

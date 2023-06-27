@@ -31,6 +31,8 @@ class ResourceBackedModel(Model):
                     self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node):
                 self._resource.add(p, o)
+            elif isinstance(o, Resource):
+                self._resource.add(p, o)
             elif isinstance(o, (list, tuple)):
                 for sub_o in o:
                     self.add(p, sub_o)

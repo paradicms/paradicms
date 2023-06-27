@@ -6755,6 +6755,9 @@ interface Schema {
   yearlyRevenue: NamedNode<"https://schema.org/yearlyRevenue">;
   /** The age of the business. */
   yearsInOperation: NamedNode<"https://schema.org/yearsInOperation">;
+
+  /** MG: text file **/
+  TextObject: NamedNode<"https://schema.org/TextObject">;
 }
 
 const builder = namespace("https://schema.org/") as any;

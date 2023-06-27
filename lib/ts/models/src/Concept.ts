@@ -7,6 +7,5 @@ export interface Concept extends NamedModel, ImagesMixin {
   readonly altLabels: readonly Literal[];
   readonly description: Text | null;
   readonly label: string;
-  readonly prefLabel: string | null;
   readonly value: BlankNode | Literal | NamedNode;
 }

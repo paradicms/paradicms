@@ -33,7 +33,7 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
         self.value
 
     @classmethod
-    def builder(cls, *, text: str) -> Builder:
+    def builder(cls, text: str) -> Builder:
         builder = cls.Builder(Graph().resource(BNode()))
         builder.set(SDO.text, text)
         return builder

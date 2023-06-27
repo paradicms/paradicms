@@ -1,9 +1,9 @@
 import {DateTimeDescription} from "./DateTimeDescription";
 import {Location} from "./Location";
-import {NamedModel} from "./NamedModel";
 import {Text} from "./Text";
+import {Model} from "./Model";
 
-export interface Event extends NamedModel {
+export interface Event extends Model {
   compareByDate(other: Event): number;
   readonly date: DateTimeDescription | null;
   readonly description: Text | null;

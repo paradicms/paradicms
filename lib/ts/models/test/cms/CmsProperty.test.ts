@@ -1,12 +1,18 @@
 import {describe} from "mocha";
 import {behavesLikeProperty} from "../behavesLikeProperty";
-import {testCmsModelSet} from "./testCmsModelSet";
 import {requireDefined} from "@paradicms/utilities";
+import {expect} from "chai";
+import {CmsProperty} from "../../src/cms/CmsProperty";
+import {testModelSet} from "../testModelSet";
 
 describe("CmsProperty", () => {
   const property = requireDefined(
-    testCmsModelSet.properties.find(property => property.filterable)
+    testModelSet.properties.find(property => property.filterable)
   );
+
+  before(() => {
+    expect(property).to.be.instanceof(CmsProperty);
+  });
 
   behavesLikeProperty(property);
 });

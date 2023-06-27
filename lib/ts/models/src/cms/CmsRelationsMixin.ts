@@ -1,5 +1,7 @@
 import {dcterms, foaf, owl} from "@paradicms/vocabularies";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
+import {isWikidataConceptIri} from "../isWikidataConceptIri";
+import {isWikipediaUrl} from "../isWikipediaUrl";
 
 export abstract class CmsRelationsMixin extends ResourceBackedModelMixin {
   get page(): string | null {
@@ -16,8 +18,7 @@ export abstract class CmsRelationsMixin extends ResourceBackedModelMixin {
 
   get wikipediaUrl(): string | null {
     return this.findAndMapObject(dcterms.relation, term =>
-      term.termType === "NamedNode" &&
-      term.value.match(/^https?:\/\/([a-z]+)\.wikipedia\.org\/wiki\//)
+      term.termType === "NamedNode" && isWikipediaUrl(term.value)
         ? term.value
         : null
     );
@@ -25,8 +26,7 @@ export abstract class CmsRelationsMixin extends ResourceBackedModelMixin {
 
   get wikidataConceptIri(): string | null {
     return this.findAndMapObject(owl.sameAs, term =>
-      term.termType === "NamedNode" &&
-      term.value.match(/^https?:\/\/www\.wikidata\.org\/entity\//)
+      term.termType === "NamedNode" && isWikidataConceptIri(term.value)
         ? term.value
         : null
     );

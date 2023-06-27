@@ -9,6 +9,12 @@ import {License} from "../License";
 import {mapTermToLicense} from "../mapTermToLicense";
 import {RightsStatement} from "../RightsStatement";
 import {mapTermToRightsStatement} from "../mapTermToRightsStatement";
+import {Location} from "../Location";
+import {mapTermToLocation} from "../mapTermToLocation";
+import {DateTimeDescription} from "../DateTimeDescription";
+import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {Image} from "../Image";
+import {mapTermToImage} from "../mapTermToImage";
 
 export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   implements RightsMixin {
@@ -26,6 +32,21 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
     );
   }
 
+  @Memoize()
+  get dateCreated(): DateTimeDescription | null {
+    return this.findAndMapObject(schema.dateCreated, term =>
+      mapTermToDateTimeDescription(this, term)
+    );
+  }
+
+  @Memoize()
+  get dateModified(): DateTimeDescription | null {
+    return this.findAndMapObject(schema.dateModified, term =>
+      mapTermToDateTimeDescription(this, term)
+    );
+  }
+
+  @Memoize()
   get license(): License | null {
     return this.findAndMapObject(schema.license, term =>
       mapTermToLicense(this, term)
@@ -36,15 +57,31 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
     return this.license?.requiresAttribution ?? true;
   }
 
+  @Memoize()
   get rightsHolders(): readonly AgentUnion[] {
     return this.filterAndMapObjects(schema.copyrightHolder, term =>
       mapTermToAgent(this, term)
     );
   }
 
+  @Memoize()
   get rightsStatement(): RightsStatement | null {
     return this.findAndMapObject(schema.usageInfo, term =>
       mapTermToRightsStatement(this, term)
+    );
+  }
+
+  @Memoize()
+  get spatial(): readonly Location[] {
+    return this.filterAndMapObjects(schema.spatial, term =>
+      mapTermToLocation(this, term)
+    );
+  }
+
+  @Memoize()
+  get thumbnails(): readonly Image[] {
+    return this.filterAndMapObjects(schema.thumbnail, term =>
+      mapTermToImage(this, term)
     );
   }
 }

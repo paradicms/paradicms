@@ -13,7 +13,10 @@ export const WorkLocationsMap: React.FunctionComponent<{
 
   return (
     <MapContainer
-      center={[workLocations[0].location.lat, workLocations[0].location.long]}
+      center={[
+        workLocations[0].location.latitude,
+        workLocations[0].location.longitude,
+      ]}
       style={{height: "600px"}}
       zoom={13}
     >
@@ -27,7 +30,10 @@ export const WorkLocationsMap: React.FunctionComponent<{
           //   click: () => router.push(Hrefs.work(workLocation.work.iri)),
           // }}
           key={workLocationIndex}
-          position={[workLocation.location.lat, workLocation.location.long]}
+          position={[
+            workLocation.location.latitude,
+            workLocation.location.longitude,
+          ]}
         >
           <Tooltip
             direction="right"

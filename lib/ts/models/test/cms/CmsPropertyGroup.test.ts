@@ -1,14 +1,21 @@
 import {describe} from "mocha";
 import {behavesLikePropertyGroup} from "../behavesLikePropertyGroup";
-import {testCmsModelSet} from "./testCmsModelSet";
+import {testModelSet} from "../testModelSet";
 import {requireNonNull} from "@paradicms/utilities";
+import {expect} from "chai";
+import {CmsPropertyGroup} from "../../src/cms/CmsPropertyGroup";
+// import {CmsPropertyGroup} from "../../src/cms/CmsPropertyGroup";
 
 describe("CmsPropertyGroup", () => {
   const propertyGroup = requireNonNull(
-    testCmsModelSet.propertyGroupByIri(
+    testModelSet.propertyGroupByIri(
       "urn:paradicms_etl:pipeline:synthetic_data:property_group"
     )
   );
+
+  before(() => {
+    expect(propertyGroup).to.be.instanceof(CmsPropertyGroup);
+  });
 
   behavesLikePropertyGroup(propertyGroup);
 });

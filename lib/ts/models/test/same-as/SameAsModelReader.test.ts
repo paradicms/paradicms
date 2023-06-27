@@ -23,9 +23,9 @@ describe("SameAsModelReader", () => {
     const allPeople = concatenatingModelReader.readNamedPeople({
       modelSet,
     });
-    expect(allPeople).to.have.length(6);
+    expect(allPeople).to.have.length(4);
     const groupedPeople = sut.readNamedPeople({modelSet});
-    expect(groupedPeople).to.have.length(5);
+    expect(groupedPeople).to.have.length(3);
     expect(
       groupedPeople.filter(person => person instanceof SameAsPerson)
     ).to.have.length(1);
@@ -35,9 +35,9 @@ describe("SameAsModelReader", () => {
     const allWorks = concatenatingModelReader.readWorks({
       modelSet,
     });
-    expect(allWorks).to.have.length(13);
+    expect(allWorks).to.have.length(7);
     const groupedWorks = sut.readWorks({modelSet});
-    expect(groupedWorks).to.have.length(12);
+    expect(groupedWorks).to.have.length(6);
     expect(
       groupedWorks.filter(work => work instanceof SameAsWork)
     ).to.have.length(1);

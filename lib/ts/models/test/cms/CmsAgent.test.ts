@@ -1,16 +1,19 @@
 import {expect} from "chai";
 import {describe, it} from "mocha";
-import {testModelSet} from "../testModelSet";
 import {behavesLikeAgent} from "../behavesLikeAgent";
 import {CmsAgent} from "../../src/cms/CmsAgent";
 import {Agent} from "../../src";
-import {testCmsModelSet} from "./testCmsModelSet";
+import {testModelSet} from "../testModelSet";
 import {requireNonNull} from "@paradicms/utilities";
 
 describe("CmsAgent", () => {
   const agent: CmsAgent = (requireNonNull(
-    testCmsModelSet.personByIri("http://example.com/person4")
+    testModelSet.personByIri("http://example.com/person4")
   ) as Agent) as CmsAgent;
+
+  before(() => {
+    expect(agent).to.be.instanceof(CmsAgent);
+  });
 
   it("should get the agent's Wikidata concept IRI", () => {
     expect(

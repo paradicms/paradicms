@@ -5,16 +5,20 @@ import {DataFactory} from "@paradicms/rdf";
 import {behavesLikeCollection} from "../behavesLikeCollection";
 import {requireNonNull} from "@paradicms/utilities";
 import {CmsCollection} from "../../src/cms/CmsCollection";
-import {testCmsModelSet} from "./testCmsModelSet";
+import {testModelSet} from "../testModelSet";
 
 describe("CmsCollection", () => {
   const collection: CmsCollection = requireNonNull(
-    testCmsModelSet.collectionByKey(
+    testModelSet.collectionByKey(
       modelIdentifiersToKey([
-        DataFactory.namedNode("http://example.com/collection1"),
+        DataFactory.namedNode("http://example.com/collection0"),
       ])
     )
   ) as CmsCollection;
+
+  before(() => {
+    expect(collection).to.be.instanceof(CmsCollection);
+  });
 
   it("should get the collection's title", () => {
     expect(collection.title).to.eq(collection.title);

@@ -1,7 +1,8 @@
 import json
 import logging
 from pathlib import Path
-from typing import Iterable, Tuple, Optional
+from typing import Iterable, Tuple, Optional, Dict, Any
+from urllib.parse import urlparse
 
 from bs4 import BeautifulSoup
 from rdflib import URIRef, Graph, RDF, SDO
@@ -38,9 +39,11 @@ class NcsuEnricher:
         for json_ld_script_element in item_soup.find_all(
             "script", {"type": "application/ld+json"}
         ):
-            json_ld = json.loads(json_ld_script_element.text)
+            json_ld = self.__resolve_json_ld_contexts(
+                json.loads(json_ld_script_element.text)
+            )
             graph = Graph()
-            graph.parse(data=json_ld, format="json-ld")
+            graph.parse(data=json_ld, format="json-ld")  # type: ignore
             normalized_graph = normalize_sdo_graph(graph)
             for rdf_type_uri in normalized_graph.objects(item_uri, RDF.type):
                 if not isinstance(rdf_type_uri, URIRef):
@@ -61,3 +64,50 @@ class NcsuEnricher:
                 "https://d.lib.ncsu.edu/collections/catalog/"
             )
         )
+
+    def __resolve_json_ld_contexts(self, json_ld: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Resolve any JSON-LD @context URLs from the file cache.
+        :param json_ld:
+        :return: JSON-LD with @context URLs replaced with their contents
+        """
+
+        unresolved_context = json_ld.get("@context")
+        if not unresolved_context:
+            return json_ld
+        if isinstance(unresolved_context, list):
+            unresolved_contexts = unresolved_context
+        else:
+            unresolved_contexts = [unresolved_context]
+        resolved_contexts = []
+        for context in unresolved_contexts:
+            if not isinstance(context, str):
+                resolved_contexts.append(context)
+                continue
+
+            context_lower = context.lower()
+            if not context_lower.startswith("http://") and not context_lower.startswith(
+                "https://"
+            ):
+                resolved_contexts.append(context)
+                continue
+
+            parsed_context = urlparse(context_lower)
+            if parsed_context.hostname == "schema.org":
+                resolved_contexts.append(context)
+                continue
+
+            if not parsed_context.path.endswith(
+                ".json"
+            ) and not parsed_context.path.endswith(".jsonld"):
+                resolved_contexts.append(context)
+                continue
+
+            with open(
+                self.__file_cache.get_file(URIRef(context), file_extension=".jsonld")
+            ) as context_file:
+                resolved_contexts.append(json.load(context_file))
+
+        json_ld_copy = json_ld.copy()
+        json_ld_copy["@contexts"] = resolved_contexts
+        return json_ld_copy
