@@ -2,8 +2,13 @@ import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cc, cms, dcterms, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {ModelSet, ModelSetBuilder, WorkClosing, WorkOpening} from "../src";
-import {NamedModel} from "../src/NamedModel";
+import {
+  Model,
+  ModelSet,
+  ModelSetBuilder,
+  WorkClosing,
+  WorkOpening,
+} from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreation} from "../src/WorkCreation";
 import {testModelSet} from "./testModelSet";
@@ -14,18 +19,18 @@ const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
 };
 
-const expectModelsDeepEq = <ModelT extends NamedModel>(
+const expectModelsDeepEq = <ModelT extends Model>(
   leftModels: readonly ModelT[],
   rightModels: readonly ModelT[]
 ) =>
   expect(
     leftModels
-      .flatMap(model => model.iris)
+      .map(model => model.key)
       .concat()
       .sort()
   ).to.deep.eq(
     rightModels
-      .flatMap(model => model.iris)
+      .map(model => model.key)
       .concat()
       .sort()
   );
@@ -285,22 +290,22 @@ describe("ModelSetBuilder", () => {
     }
 
     const workEventsModelSet = sut
-      .addWorkEvent(workCreation!, {
-        agents: {},
-        location: true,
-      })
+      .addWork(work, {events: {agents: {}, location: true}})
       .build();
-    // expectModelsDeepEq(workEventsModelSet.works, [work]);
-    // expectModelsDeepEq(workEventsModelSet.agents, workCreation!.agents);
-    // expectModelsDeepEq(workEventsModelSet.workEvents, [
-    //   // workClosing!,
-    //   workCreation!,
-    //   // workOpening!,
-    // ]);
-    for (const event of workEventsModelSet.workEvents) {
-      expect(event.location).not.to.be.null;
-      expect(event.location!.latitude).not.to.eq(0);
-      expect(event.location!.longitude).not.to.eq(0);
+    expectModelsDeepEq(workEventsModelSet.works, [work]);
+    // const agents = workEventsModelSet.works.flatMap(work =>
+    //   work.agents.map(agent => agent.agent)
+    // );
+    const workEvents = workEventsModelSet.works.flatMap(work => work.events);
+    // expectModelsDeepEq(
+    //   agents,
+    //   workCreation!.agents.concat(work.agents.map(agent => agent.agent))
+    // );
+    expectModelsDeepEq(workEvents, [workClosing!, workCreation!, workOpening!]);
+    for (const workEvent of workEvents) {
+      expect(workEvent.location).not.to.be.null;
+      expect(workEvent.location!.latitude).not.to.eq(0);
+      expect(workEvent.location!.longitude).not.to.eq(0);
     }
   });
 });
