@@ -11,7 +11,7 @@ def test_extract(excel_2010_test_data_file_path):
     sheets = results["sheets"]
     assert len(sheets) == 4
 
-    person_sheet = sheets["Person"]
+    person_sheet = sheets["FoafPerson"]
     person_rows = person_sheet["rows"]
     assert len(person_rows) == 2
     person_header_row = person_rows[0]
