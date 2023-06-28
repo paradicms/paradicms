@@ -6,7 +6,6 @@ from rdflib import URIRef
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_work import CmsWork
@@ -14,6 +13,7 @@ from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
@@ -47,7 +47,7 @@ class CostumeCoreDataAirtableTransformer:
             airtable_access_token="neverused",
             loader=nop_loader,
         )(force_extract=False):
-            if isinstance(ontology_model, CmsConcept):
+            if isinstance(ontology_model, SkosConcept):
                 concept = ontology_model
                 concepts_by_uri[concept.uri] = concept
                 yield concept

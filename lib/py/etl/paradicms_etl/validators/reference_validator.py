@@ -6,7 +6,6 @@ from stringcase import snakecase
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
@@ -38,6 +37,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_closing import WorkClosing
@@ -124,7 +124,7 @@ class ReferenceValidator:
     def _validate_cms_collection_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_concept(self, concept: CmsConcept) -> Iterable[ValidationResult]:
+    def _validate_cms_concept(self, concept: SkosConcept) -> Iterable[ValidationResult]:
         yield from self.__validate_concept(concept)
 
     def _validate_cms_concept_references(self) -> Iterable[ValidationResult]:

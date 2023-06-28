@@ -21,7 +21,6 @@ class CMS(DefinedNamespace):
     Agent: URIRef
     Collection: URIRef
     Configuration: URIRef
-    Concept: URIRef
     Event: URIRef
     Image: URIRef
     ImageData: URIRef

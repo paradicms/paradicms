@@ -17,7 +17,6 @@ from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_organization import CmsOrganization
@@ -52,6 +51,7 @@ from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
+from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.pipeline import Pipeline
@@ -428,11 +428,11 @@ class SyntheticDataPipeline(Pipeline):
                     )
 
                     concept_builder: Union[
-                        CmsConcept.Builder, SchemaDefinedTerm.Builder
+                        SkosConcept.Builder, SchemaDefinedTerm.Builder
                     ]
                     if str(property_.uri).startswith(str(DCTERMS)):
                         concept_builder = (
-                            CmsConcept.builder(
+                            SkosConcept.builder(
                                 pref_label=concept_pref_label,
                                 uri=concept_uri,
                             )

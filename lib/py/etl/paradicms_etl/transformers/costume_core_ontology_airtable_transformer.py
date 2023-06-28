@@ -20,7 +20,6 @@ from rdflib import URIRef, Literal
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_license import CmsLicense
@@ -41,6 +40,7 @@ from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 
@@ -60,7 +60,7 @@ class CostumeCoreOntologyAirtableTransformer:
     - CmsCollection, CmsImage, and CmsWork to build a faceted browser for the Costume Core ontology itself
     - CostumeCoreOntology, CostumeCoreOntology.Predicate, and CostumeCoreOntology.Term to build an RDF/OWL version of the Costume Core
         ontology
-    - CmsConcept (formerly WorksheetFeatureValue), CmsImage, CmsProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
+    - SkosConcept (formerly WorksheetFeatureValue), CmsImage, CmsProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
 
@@ -466,7 +466,7 @@ class CostumeCoreOntologyAirtableTransformer:
         concept_uri = COCO[fields["id"]]
         pref_label = fields["display_name_en"]
 
-        concept_builder = CmsConcept.builder(
+        concept_builder = SkosConcept.builder(
             pref_label=pref_label,
             uri=concept_uri,
         )
