@@ -1,19 +1,19 @@
 import {describe} from "mocha";
-import {CmsConcept} from "../../src/cms/CmsConcept";
 import {behavesLikeConcept} from "../behavesLikeConcept";
 import {testModelSet} from "../testModelSet";
 import {requireNonNull} from "@paradicms/utilities";
 import {expect} from "chai";
+import {SkosConcept} from "../../src/skos/SkosConcept";
 
-describe("CmsConcept", () => {
-  const concept: CmsConcept = requireNonNull(
+describe("SkosConcept", () => {
+  const concept = requireNonNull(
     testModelSet.conceptByIri(
       "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
     )
-  ) as CmsConcept;
+  );
 
   before(() => {
-    expect(concept).to.be.instanceof(CmsConcept);
+    expect(concept).to.be.instanceof(SkosConcept);
   });
 
   behavesLikeConcept(concept);

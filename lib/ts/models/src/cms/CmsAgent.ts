@@ -1,6 +1,5 @@
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
-import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsRelationsMixin} from "./CmsRelationsMixin";
 import {AgentType} from "../AgentType";
 import {CmsModel} from "./CmsModel";
@@ -8,9 +7,10 @@ import {requireNonNull} from "@paradicms/utilities";
 import {foaf} from "@paradicms/vocabularies";
 import {mapTermToString} from "@paradicms/rdf";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
+import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 
 export abstract class CmsAgent
-  extends Mixin(CmsModel, CmsImagesMixin, CmsRelationsMixin, OwlSameAsMixin)
+  extends Mixin(CmsModel, FoafImagesMixin, CmsRelationsMixin, OwlSameAsMixin)
   implements Agent {
   get label(): string {
     return this.name;

@@ -2,7 +2,6 @@ import {getNamedRdfTypes, getRdfInstanceQuads} from "@paradicms/rdf";
 import {cms, configuration} from "@paradicms/vocabularies";
 import {AppConfiguration} from "../AppConfiguration";
 import {Collection} from "../Collection";
-import {Concept} from "../Concept";
 import {DatasetModelReader} from "../DatasetModelReader";
 import {Image} from "../Image";
 import {License} from "../License";
@@ -17,7 +16,6 @@ import {RightsStatement} from "../RightsStatement";
 import {Work} from "../Work";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {CmsCollection} from "./CmsCollection";
-import {CmsConcept} from "./CmsConcept";
 import {CmsImage} from "./CmsImage";
 import {CmsLicense} from "./CmsLicense";
 import {CmsLocation} from "./CmsLocation";
@@ -70,14 +68,6 @@ export class CmsModelReader extends DatasetModelReader {
     return this.readNamedModels({
       class_: cms.Collection,
       factory: CmsCollection,
-      ...kwds,
-    });
-  }
-
-  override readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[] {
-    return this.readNamedModels({
-      class_: cms.Concept,
-      factory: CmsConcept,
       ...kwds,
     });
   }

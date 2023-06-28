@@ -15,8 +15,8 @@ describe("CmsModelReader", () => {
     expect(sut.readCollections({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
-  it("should read at least one Concept", () => {
-    expect(sut.readConcepts({modelSet: dummyModelSet})).not.to.be.empty;
+  it("should read at least no Concepts", () => {
+    expect(sut.readConcepts({modelSet: dummyModelSet})).to.be.empty;
   });
 
   it("should read at least one Image", () => {

@@ -21,7 +21,6 @@ interface Cms {
   // Resources
   Agent: NamedNode<"http://www.paradicms.org/ns/cms#Agent">;
   Collection: NamedNode<"http://www.paradicms.org/ns/cms#Collection">;
-  Concept: NamedNode<"http://www.paradicms.org/ns/cms#Concept">;
   DateTimeDescription: NamedNode<
     "http://www.paradicms.org/ns/cms#DateTimeDescription"
   >;
