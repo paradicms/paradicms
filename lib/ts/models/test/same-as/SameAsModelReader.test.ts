@@ -8,18 +8,20 @@ import {expect} from "chai";
 import {SameAsWork} from "../../src/same-as/SameAsWork";
 import {SameAsPerson} from "../../src/same-as/SameAsPerson";
 import {DatasetBackedModelSet} from "../../src/DatasetBackedModelSet";
+import {FoafModelReader} from "../../src/foaf/FoafModelReader";
 
 describe("SameAsModelReader", () => {
   const dataset = syntheticData;
   const modelReaders = [
     new CmsModelReader(dataset),
+    new FoafModelReader(dataset),
     new WikidataModelReader(dataset),
   ];
   const concatenatingModelReader = new ConcatenatingModelReader(modelReaders);
   const sut = new SameAsModelReader(modelReaders);
   const modelSet = new DatasetBackedModelSet(dataset, concatenatingModelReader);
 
-  it("should group CmsPersons with Wikidata people", () => {
+  it("should group FoafPerson's with Wikidata people", () => {
     const allPeople = concatenatingModelReader.readNamedPeople({
       modelSet,
     });
