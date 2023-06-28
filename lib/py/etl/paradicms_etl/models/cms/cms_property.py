@@ -2,15 +2,15 @@ from typing import Union, Text, Optional
 
 from rdflib import URIRef, RDFS, XSD, Graph
 
-from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
+from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.property import Property
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsProperty(CmsNamedModel, CmsImagesMixin, Property):
-    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
+class CmsProperty(CmsNamedModel, FoafImagesMixin, Property):
+    class Builder(CmsNamedModel.Builder, FoafImagesMixin.Builder):
         def build(self) -> "CmsProperty":
             return CmsProperty(self._resource)
 
@@ -48,7 +48,7 @@ class CmsProperty(CmsNamedModel, CmsImagesMixin, Property):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
-            CmsImagesMixin.json_ld_context(),
+            FoafImagesMixin.json_ld_context(),
             {
                 "comment": {"@id": str(RDFS.comment)},
                 "filterable": {

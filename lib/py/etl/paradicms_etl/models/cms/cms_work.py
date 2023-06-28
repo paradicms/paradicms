@@ -4,9 +4,9 @@ from rdflib import URIRef, Graph, OWL
 from rdflib.namespace import DCTERMS, FOAF
 from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
+from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
@@ -15,10 +15,10 @@ from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
+class CmsWork(CmsNamedModel, FoafImagesMixin, CmsRightsMixin, Work):
     class Builder(
         CmsNamedModel.Builder,
-        CmsImagesMixin.Builder,
+        FoafImagesMixin.Builder,
         CmsRightsMixin.Builder,
         Work.Builder,
     ):
@@ -83,7 +83,7 @@ class CmsWork(CmsNamedModel, CmsImagesMixin, CmsRightsMixin, Work):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
-            CmsImagesMixin.json_ld_context(),
+            FoafImagesMixin.json_ld_context(),
             CmsRightsMixin.json_ld_context(),
             {
                 "description": {"@id": str(DCTERMS.description)},

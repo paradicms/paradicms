@@ -11,13 +11,13 @@ import {Property} from "../Property";
 import {PropertyValue} from "../PropertyValue";
 import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
 import {CmsCommentMixin} from "./CmsCommentMixin";
-import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsLabelMixin} from "./CmsLabelMixin";
 import {PropertyGroup} from "../PropertyGroup";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 
 export class CmsProperty
-  extends Mixin(CmsNamedModel, CmsCommentMixin, CmsImagesMixin, CmsLabelMixin)
+  extends Mixin(CmsNamedModel, CmsCommentMixin, FoafImagesMixin, CmsLabelMixin)
   implements Property {
   get filterable(): boolean {
     return (

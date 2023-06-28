@@ -1,12 +1,11 @@
 import {Image} from "../Image";
 import {ImagesMixin} from "../ImagesMixin";
-import {ResourceBackedNamedModelMixin} from "../ResourceBackedNamedModelMixin";
 import {ThumbnailSelector} from "../ThumbnailSelector";
-import {selectThumbnail} from "../selectThumbnail";
 import {foaf} from "@paradicms/vocabularies";
 import {mapTermToImage} from "../mapTermToImage";
+import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 
-export abstract class CmsImagesMixin extends ResourceBackedNamedModelMixin
+export abstract class FoafImagesMixin extends ResourceBackedModelMixin
   implements ImagesMixin {
   get images(): readonly Image[] {
     return this.filterAndMapObjects(foaf.depiction, term =>
@@ -15,6 +14,12 @@ export abstract class CmsImagesMixin extends ResourceBackedNamedModelMixin
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.images, selector);
+    for (const image of this.images) {
+      const thumbnail = image.thumbnail(selector);
+      if (thumbnail) {
+        return thumbnail;
+      }
+    }
+    return null;
   }
 }

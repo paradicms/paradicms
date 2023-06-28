@@ -2,16 +2,16 @@ import {Mixin} from "ts-mixer";
 import {Collection} from "../Collection";
 import {Work} from "../Work";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
-import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
 import {dcterms} from "@paradicms/vocabularies";
+import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 
 export class CmsCollection
   extends Mixin(
     CmsNamedModel,
     CmsDescriptionMixin,
-    CmsImagesMixin,
+    FoafImagesMixin,
     CmsTitleMixin
   )
   implements Collection {

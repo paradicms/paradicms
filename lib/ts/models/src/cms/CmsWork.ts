@@ -7,7 +7,6 @@ import {WorkAgent} from "../WorkAgent";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {WorkLocation} from "../WorkLocation";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
-import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsRelationsMixin} from "./CmsRelationsMixin";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
@@ -18,11 +17,12 @@ import {mapTermToWorkEvent} from "../mapTermToWorkEvent";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {getWorkAgents} from "../getWorkAgents";
 import {getWorkDisplayDate} from "../getWorkDisplayDate";
+import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 
 export class CmsWork extends Mixin(
   CmsNamedModel,
   CmsDescriptionMixin,
-  CmsImagesMixin,
+  FoafImagesMixin,
   CmsTitleMixin,
   CmsRelationsMixin,
   CmsRightsMixin,

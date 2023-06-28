@@ -4,12 +4,12 @@ import {Memoize} from "typescript-memoize";
 import {Property} from "../Property";
 import {PropertyGroup} from "../PropertyGroup";
 import {CmsCommentMixin} from "./CmsCommentMixin";
-import {CmsImagesMixin} from "./CmsImagesMixin";
 import {CmsLabelMixin} from "./CmsLabelMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
+import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 
 export class CmsPropertyGroup
-  extends Mixin(CmsNamedModel, CmsCommentMixin, CmsImagesMixin, CmsLabelMixin)
+  extends Mixin(CmsNamedModel, CmsCommentMixin, FoafImagesMixin, CmsLabelMixin)
   implements PropertyGroup {
   @Memoize()
   get properties(): readonly Property[] {

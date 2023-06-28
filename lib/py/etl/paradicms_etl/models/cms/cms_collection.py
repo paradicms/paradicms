@@ -3,16 +3,16 @@ from typing import Union, Tuple
 from rdflib import URIRef, FOAF, Graph
 from rdflib.namespace import DCTERMS
 
-from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
-    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder, Collection.Builder):
+class CmsCollection(CmsNamedModel, FoafImagesMixin, Collection):
+    class Builder(CmsNamedModel.Builder, FoafImagesMixin.Builder, Collection.Builder):
         def add_work(self, work: Union[Work, URIRef]) -> "CmsCollection.Builder":
             self.add(DCTERMS.hasPart, work)
             return self
@@ -44,7 +44,7 @@ class CmsCollection(CmsNamedModel, CmsImagesMixin, Collection):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
-            CmsImagesMixin.json_ld_context(),
+            FoafImagesMixin.json_ld_context(),
             {
                 "description": {"@id": str(DCTERMS.description)},
                 "hasPart": {"@id": str(DCTERMS.hasPart)},

@@ -5,16 +5,18 @@ from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
 
-from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
-    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
-        def add_alt_label(self, alt_label: Union[str, Literal]) -> "CmsConcept.Builder":
+class SkosConcept(CmsNamedModel, FoafImagesMixin, Concept):
+    class Builder(CmsNamedModel.Builder, FoafImagesMixin.Builder):
+        def add_alt_label(
+            self, alt_label: Union[str, Literal]
+        ) -> "SkosConcept.Builder":
             self.add(SKOS.altLabel, alt_label)
             return self
 
@@ -22,14 +24,14 @@ class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
             self.add(RDF.type, type_uri)
             return self
 
-        def build(self) -> "CmsConcept":
-            return CmsConcept(self._resource)
+        def build(self) -> "SkosConcept":
+            return SkosConcept(self._resource)
 
-        def set_definition(self, definition: Union[str, Text]) -> "CmsConcept.Builder":
+        def set_definition(self, definition: Union[str, Text]) -> "SkosConcept.Builder":
             self.set(SKOS.definition, definition)
             return self
 
-        def set_value(self, value: Node) -> "CmsConcept.Builder":
+        def set_value(self, value: Node) -> "SkosConcept.Builder":
             self.set(RDF.value, value)
             return self
 
@@ -48,7 +50,7 @@ class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
-            CmsImagesMixin.json_ld_context(),
+            FoafImagesMixin.json_ld_context(),
             {
                 "altLabel": {"@id": str(SKOS.altLabel)},
                 "definition": {"@id": str(SKOS.definition)},
@@ -64,6 +66,10 @@ class CmsConcept(CmsNamedModel, CmsImagesMixin, Concept):
     @property
     def pref_label(self) -> str:
         return self._required_value(SKOS.prefLabel, self._map_str_value)
+
+    @classmethod
+    def rdf_type_uri(cls) -> URIRef:
+        return SKOS.Concept
 
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:

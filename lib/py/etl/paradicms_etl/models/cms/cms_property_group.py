@@ -2,15 +2,15 @@ from typing import Union, Text
 
 from rdflib import URIRef, RDFS, Graph, DCTERMS
 
-from paradicms_etl.models.cms.cms_images_mixin import CmsImagesMixin
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
+from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsPropertyGroup(CmsNamedModel, CmsImagesMixin, PropertyGroup):
-    class Builder(CmsNamedModel.Builder, CmsImagesMixin.Builder):
+class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
+    class Builder(CmsNamedModel.Builder, FoafImagesMixin.Builder):
         def add_property(self, property_: Union[Property, URIRef]):
             self.add(DCTERMS.hasPart, property_)
             return self
@@ -36,7 +36,7 @@ class CmsPropertyGroup(CmsNamedModel, CmsImagesMixin, PropertyGroup):
     def json_ld_context(cls):
         return safe_dict_update(
             CmsNamedModel.json_ld_context(),
-            CmsImagesMixin.json_ld_context(),
+            FoafImagesMixin.json_ld_context(),
             {
                 "comment": {"@id": str(RDFS.comment)},
                 "hasPart": {"@id": str(DCTERMS.hasPart)},

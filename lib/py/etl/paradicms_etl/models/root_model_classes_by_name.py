@@ -1,7 +1,8 @@
 from typing import Type, Dict, Tuple
 
+from paradicms_etl.models.skos.skos_concept import SkosConcept
+
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_concept import CmsConcept
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
@@ -34,7 +35,7 @@ from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     CmsCollection,
-    CmsConcept,
+    SkosConcept,
     CmsImage,
     CmsLicense,
     CmsLocation,
