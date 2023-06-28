@@ -8,10 +8,6 @@ from paradicms_etl.models.organization import Organization
 
 class FoafOrganization(FoafAgent, Organization):
     class Builder(FoafAgent.Builder):
-        def add_page(self, page: URIRef) -> "FoafOrganization.Builder":
-            super().add_page(page)
-            return self
-
         def build(self):
             return FoafOrganization(self._resource)
 

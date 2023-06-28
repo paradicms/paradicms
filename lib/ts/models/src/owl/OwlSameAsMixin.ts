@@ -4,6 +4,7 @@ import {SameAsMixin} from "../SameAsMixin";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {owl} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
+import {isWikidataConceptIri} from "../isWikidataConceptIri";
 
 export abstract class OwlSameAsMixin extends Mixin(ResourceBackedModelMixin)
   implements SameAsMixin {
@@ -18,5 +19,13 @@ export abstract class OwlSameAsMixin extends Mixin(ResourceBackedModelMixin)
           return null;
       }
     });
+  }
+
+  get wikidataConceptIri(): string | null {
+    return this.findAndMapObject(owl.sameAs, term =>
+      term.termType === "NamedNode" && isWikidataConceptIri(term.value)
+        ? term.value
+        : null
+    );
   }
 }

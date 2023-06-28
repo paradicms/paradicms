@@ -31,13 +31,12 @@ describe("CmsModelReader", () => {
     expect(sut.readNamedLocations({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
-  it("should read at least one named Organization", () => {
-    expect(sut.readNamedOrganizations({modelSet: dummyModelSet})).not.to.be
-      .empty;
+  it("should read no Organizations", () => {
+    expect(sut.readNamedOrganizations({modelSet: dummyModelSet})).to.be.empty;
   });
 
-  it("should read at least one named Person", () => {
-    expect(sut.readNamedPeople({modelSet: dummyModelSet})).not.to.be.empty;
+  it("should read no People", () => {
+    expect(sut.readNamedPeople({modelSet: dummyModelSet})).to.be.empty;
   });
 
   it("should read at least one Property", () => {

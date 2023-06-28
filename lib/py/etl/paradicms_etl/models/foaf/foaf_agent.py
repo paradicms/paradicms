@@ -10,6 +10,10 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 class FoafAgent(FoafModel, FoafImagesMixin, Agent):
     class Builder(FoafModel.Builder, FoafImagesMixin.Builder):
+        def add_homepage(self, homepage: URIRef) -> "FoafAgent.Builder":
+            self.add(FOAF.homepage, homepage)
+            return self
+
         def add_page(self, page: URIRef) -> "FoafAgent.Builder":
             self.add(FOAF.page, page)
             return self

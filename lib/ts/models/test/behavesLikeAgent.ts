@@ -5,12 +5,12 @@ import {behavesLikeModel} from "./behavesLikeModel";
 import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
 
 export const behavesLikeAgent = (agent: Agent) => {
-  it("should get the agent's label", () => {
-    expect(agent.label).to.not.be.empty;
+  it("should get the agent's homepage", () => {
+    expect(agent.homepage).to.not.be.empty;
   });
 
-  it("should get the agent's page", () => {
-    expect(agent.page).to.not.be.empty;
+  it("should get the agent's label", () => {
+    expect(agent.label).to.not.be.empty;
   });
 
   // it("should get the agent's Wikipedia URL", () => {

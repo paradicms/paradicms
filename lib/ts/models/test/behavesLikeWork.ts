@@ -51,10 +51,6 @@ export const behavesLikeWork = (
     expect(work.label).to.not.be.empty;
   });
 
-  it("should get the work's page", () => {
-    expect(work.page).to.not.be.empty;
-  });
-
   it("should get the work's property values (literal)", () => {
     const propertyValues = work.propertyValuesByPropertyIri(
       options.literalProperty.value

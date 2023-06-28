@@ -1,5 +1,5 @@
 import {textFactories} from "./textFactories";
-import {cc, cms, dcterms, schema, time} from "@paradicms/vocabularies";
+import {cc, cms, dcterms, foaf, schema, time} from "@paradicms/vocabularies";
 import {CmsText} from "./cms/CmsText";
 import {imageFactories} from "./imageFactories";
 import {CmsImage} from "./cms/CmsImage";
@@ -8,8 +8,6 @@ import {CmsLicense} from "./cms/CmsLicense";
 import {locationFactories} from "./locationFactories";
 import {CmsLocation} from "./cms/CmsLocation";
 import {agentFactories} from "./agentFactories";
-import {CmsOrganization} from "./cms/CmsOrganization";
-import {CmsPerson} from "./cms/CmsPerson";
 import {rightsStatementFactories} from "./rightsStatementFactories";
 import {CmsRightsStatement} from "./cms/CmsRightsStatement";
 import {CreativeCommonsLicense} from "./creative-commons/CreativeCommonsLicense";
@@ -22,10 +20,12 @@ import {CmsWorkClosing} from "./cms/CmsWorkClosing";
 import {CmsWorkCreation} from "./cms/CmsWorkCreation";
 import {CmsWorkOpening} from "./cms/CmsWorkOpening";
 import {SchemaTextObject} from "./schema/SchemaTextObject";
+import {FoafOrganization} from "./foaf/FoafOrganization";
+import {FoafPerson} from "./foaf/FoafPerson";
 
 export const registerResourceBackedModelFactories = () => {
-  agentFactories.register(cms.Organization, CmsOrganization);
-  agentFactories.register(cms.Person, CmsPerson);
+  agentFactories.register(foaf.Organization, FoafOrganization);
+  agentFactories.register(foaf.Person, FoafPerson);
 
   dateTimeDescriptionFactories.register(
     time.DateTimeDescription,

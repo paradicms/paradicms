@@ -1,7 +1,6 @@
 import {ImagesMixin} from "./ImagesMixin";
 import {NamedModel} from "./NamedModel";
 import {PropertyValue} from "./PropertyValue";
-import {RelationsMixin} from "./RelationsMixin";
 import {RightsMixin} from "./RightsMixin";
 import {Text} from "./Text";
 import {WorkAgent} from "./WorkAgent";
@@ -12,7 +11,6 @@ import {SameAsMixin} from "./SameAsMixin";
 export interface Work
   extends NamedModel,
     ImagesMixin,
-    RelationsMixin,
     RightsMixin,
     SameAsMixin {
   readonly agents: readonly WorkAgent[];
@@ -23,4 +21,6 @@ export interface Work
   readonly location: WorkLocation | null;
   get propertyValues(): readonly PropertyValue[];
   propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[];
+  readonly wikipediaUrl: string | null;
+  readonly wikidataConceptIri: string | null;
 }

@@ -6,6 +6,10 @@ import {Organization} from "../Organization";
 export class SchemaOrganization extends Mixin(
   SchemaModel
 ) implements Organization {
+  get homepage(): string | null {
+    return this.urls.length > 0 ? this.urls[0] : null;
+  }
+
   override get label(): string {
     return this.name;
   }

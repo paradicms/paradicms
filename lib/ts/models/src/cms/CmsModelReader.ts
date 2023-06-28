@@ -7,8 +7,6 @@ import {Image} from "../Image";
 import {License} from "../License";
 import {Location} from "../Location";
 import {ModelSet} from "../ModelSet";
-import {Organization} from "../Organization";
-import {Person} from "../Person";
 import {Property} from "../Property";
 import {PropertyGroup} from "../PropertyGroup";
 import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
@@ -19,8 +17,6 @@ import {CmsCollection} from "./CmsCollection";
 import {CmsImage} from "./CmsImage";
 import {CmsLicense} from "./CmsLicense";
 import {CmsLocation} from "./CmsLocation";
-import {CmsOrganization} from "./CmsOrganization";
-import {CmsPerson} from "./CmsPerson";
 import {CmsProperty} from "./CmsProperty";
 import {CmsPropertyGroup} from "./CmsPropertyGroup";
 import {CmsRightsStatement} from "./CmsRightsStatement";
@@ -92,22 +88,6 @@ export class CmsModelReader extends DatasetModelReader {
     return this.readNamedModels({
       class_: cms.Location,
       factory: CmsLocation,
-      ...kwds,
-    });
-  }
-
-  override readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
-    return this.readNamedModels({
-      class_: cms.Organization,
-      factory: CmsOrganization,
-      ...kwds,
-    });
-  }
-
-  override readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
-    return this.readNamedModels({
-      class_: cms.Person,
-      factory: CmsPerson,
       ...kwds,
     });
   }

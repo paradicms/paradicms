@@ -9,8 +9,8 @@ import {mapTermToText} from "../mapTermToText";
 import {Memoize} from "typescript-memoize";
 import {mapTermToString} from "@paradicms/rdf";
 import {ModelIdentifier} from "../ModelIdentifier";
-import {isWikipediaUrl} from "../isWikipediaUrl";
 import {isWikidataConceptIri} from "../isWikidataConceptIri";
+import {isWikipediaUrl} from "../isWikipediaUrl";
 
 export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   implements ImagesMixin {
@@ -42,10 +42,6 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
     return this.findAndMapObject(schema.name, mapTermToString);
   }
 
-  get page(): string | null {
-    return this.url;
-  }
-
   @Memoize()
   get sameAsIdentifiers(): readonly ModelIdentifier[] {
     return this.filterAndMapObjects(schema.sameAs, term => {
@@ -70,27 +66,29 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
   }
 
   @Memoize()
-  get url(): string | null {
-    return this.findAndMapObject(schema.url, term =>
+  get urls(): readonly string[] {
+    return this.filterAndMapObjects(schema.url, term =>
       term.termType === "NamedNode" ? term.value : null
     );
   }
 
   @Memoize()
   get wikipediaUrl(): string | null {
-    return this.findAndMapObject(schema.sameAs, term =>
-      term.termType === "NamedNode" && isWikipediaUrl(term.value)
-        ? term.value
-        : null
-    );
+    return this.urls.find(url => isWikipediaUrl(url)) ?? null;
   }
 
   @Memoize()
   get wikidataConceptIri(): string | null {
-    return this.findAndMapObject(schema.sameAs, term =>
-      term.termType === "NamedNode" && isWikidataConceptIri(term.value)
-        ? term.value
-        : null
-    );
+    for (const p of [schema.sameAs, schema.url]) {
+      const wikidataConceptIri = this.findAndMapObject(p, term =>
+        term.termType === "NamedNode" && isWikidataConceptIri(term.value)
+          ? term.value
+          : null
+      );
+      if (wikidataConceptIri) {
+        return wikidataConceptIri;
+      }
+    }
+    return null;
   }
 }

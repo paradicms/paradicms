@@ -215,8 +215,8 @@ class SyntheticDataPipeline(Pipeline):
         def __generate_agents(self) -> Iterable[Union[Agent, Image]]:
             for organization_i in range(6):
                 organization_name = f"Organization {organization_i}"
-                organization_page = URIRef(
-                    f"http://example.com/organization{organization_i}page"
+                organization_homepage = URIRef(
+                    f"http://example.com/organization{organization_i}homepage"
                 )
                 organization_uri = URIRef(
                     f"http://example.com/organization{organization_i}"
@@ -228,12 +228,13 @@ class SyntheticDataPipeline(Pipeline):
                 if organization_i % 2 == 0:
                     organization_builder = FoafOrganization.builder(
                         name=organization_name, uri=organization_uri
-                    ).add_page(organization_page)
+                    )
+                    organization_builder.add_homepage(organization_homepage)
                 else:
                     organization_builder = SchemaOrganization.builder(
                         name=organization_name, uri=organization_uri
                     )
-                    organization_builder.set_url(organization_page)
+                    organization_builder.add_url(organization_homepage)
 
                 for image in self.__generate_images(
                     base_uri=organization_builder.uri, text_prefix="Organization"
@@ -246,7 +247,7 @@ class SyntheticDataPipeline(Pipeline):
                 person_family_name = str(person_i)
                 person_given_name = "Person"
                 person_name = f"Person {person_i}"
-                person_page = URIRef(f"http://example.com/person{person_i}page")
+                person_homepage = URIRef(f"http://example.com/person{person_i}homepage")
                 person_uri = URIRef(f"http://example.com/person{person_i}")
 
                 person_builder: Union[FoafPerson.Builder, SchemaPerson.Builder]
@@ -259,14 +260,14 @@ class SyntheticDataPipeline(Pipeline):
                         .set_family_name(person_family_name)
                         .set_given_name(person_given_name)
                     )
-                    person_builder.add_page(person_page)
+                    person_builder.add_homepage(person_homepage)
                 else:
                     person_builder = (
                         SchemaPerson.builder(name=person_name, uri=person_uri)
                         .set_family_name(person_family_name)
                         .set_given_name(person_given_name)
                     )
-                    person_builder.set_url(person_page)
+                    person_builder.add_url(person_homepage)
 
                 if person_i == 0:
                     person_builder.add_same_as(
@@ -544,7 +545,6 @@ class SyntheticDataPipeline(Pipeline):
                     work_builder.add_identifier(work_identifier)
                 # work_builder.set_date_created(work_creation_date)
                 work_builder.add_license(work_license)
-                work_builder.add_page(work_page)
                 work_builder.add_provenance(work_provenance)
                 work_builder.add_rights_holder(work_rights_holder)
                 work_builder.add_rights_statement(work_rights_statement)
@@ -559,7 +559,7 @@ class SyntheticDataPipeline(Pipeline):
                 work_builder.set_date_created(work_creation_date)
                 work_builder.add_rights_holder(work_rights_holder)
                 work_builder.add_rights_statement(work_rights_statement)
-                work_builder.set_url(work_page)
+                work_builder.add_url(work_page)
 
             # Faceted literal properties, which are the same across works
             if isinstance(work_builder, CmsWork.Builder):

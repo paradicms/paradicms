@@ -19,7 +19,6 @@ interface Cms {
   >;
 
   // Resources
-  Agent: NamedNode<"http://www.paradicms.org/ns/cms#Agent">;
   Collection: NamedNode<"http://www.paradicms.org/ns/cms#Collection">;
   DateTimeDescription: NamedNode<
     "http://www.paradicms.org/ns/cms#DateTimeDescription"
@@ -28,8 +27,6 @@ interface Cms {
   Image: NamedNode<"http://www.paradicms.org/ns/cms#Image">;
   License: NamedNode<"http://www.paradicms.org/ns/cms#License">;
   Location: NamedNode<"http://www.paradicms.org/ns/cms#Location">;
-  Organization: NamedNode<"http://www.paradicms.org/ns/cms#Organization">;
-  Person: NamedNode<"http://www.paradicms.org/ns/cms#Person">;
   Property: NamedNode<"http://www.paradicms.org/ns/cms#Property">;
   PropertyGroup: NamedNode<"http://www.paradicms.org/ns/cms#PropertyGroup">;
   RightsStatement: NamedNode<"http://www.paradicms.org/ns/cms#RightsStatement">;

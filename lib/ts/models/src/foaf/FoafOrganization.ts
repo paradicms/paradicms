@@ -1,7 +1,7 @@
 import {Mixin} from "ts-mixer";
 import {Organization} from "../Organization";
-import {CmsAgent} from "./CmsAgent";
+import {FoafAgent} from "./FoafAgent";
 
-export class CmsOrganization extends Mixin(CmsAgent) implements Organization {
+export class FoafOrganization extends Mixin(FoafAgent) implements Organization {
   readonly type: "Organization" = "Organization";
 }

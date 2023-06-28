@@ -92,7 +92,7 @@ class SchemaImageObject(SchemaNamedModel, SchemaMediaObjectMixin, Image):
             return self
 
         def set_source(self, source: URIRef) -> "SchemaImageObject.Builder":
-            self.set_url(source)
+            self.add_url(source)
             return self
 
         def set_src(

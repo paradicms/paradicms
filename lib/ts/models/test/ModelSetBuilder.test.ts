@@ -1,5 +1,5 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cc, cms, dcterms, schema} from "@paradicms/vocabularies";
+import {cc, cms, dcterms, foaf, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
 import {
@@ -36,7 +36,7 @@ const expectModelsDeepEq = <ModelT extends Model>(
   );
 
 const countModelSetNamedAgents = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cms.Agent, modelSet) +
+  countModelSetNamedRdfInstances(foaf.Agent, modelSet) +
   countModelSetNamedRdfInstances(schema.Organization, modelSet) +
   countModelSetNamedRdfInstances(schema.Person, modelSet);
 
