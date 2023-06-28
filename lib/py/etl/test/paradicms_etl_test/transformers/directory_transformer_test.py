@@ -49,7 +49,7 @@ def test_transform(data_dir_path: Path):
     assert work1_description is not None
     assert isinstance(work1_description, Text)
     assert work1_description.rights_holders == (
-        URIRef("urn:directory:test:cms-person:test_person"),
+        URIRef("urn:directory:test:foaf-person:test_person"),
     )
 
     images = {model.uri: model for model in models if isinstance(model, Image)}

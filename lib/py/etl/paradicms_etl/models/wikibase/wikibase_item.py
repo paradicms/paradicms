@@ -200,10 +200,6 @@ class WikibaseItem(ResourceBackedNamedModel):
         return WIKIBASE.Item
 
     @property
-    def same_as_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(OWL.sameAs, self._map_uri_value))
-
-    @property
     def statements(self) -> Tuple[WikibaseStatement, ...]:
         return self.__statements
 

@@ -1,10 +1,10 @@
 import {foaf} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Person} from "../Person";
-import {CmsAgent} from "./CmsAgent";
+import {FoafAgent} from "./FoafAgent";
 import {mapTermToString} from "@paradicms/rdf";
 
-export class CmsPerson extends Mixin(CmsAgent) implements Person {
+export class FoafPerson extends Mixin(FoafAgent) implements Person {
   get familyName(): string | null {
     return this.findAndMapObject(foaf.familyName, mapTermToString);
   }

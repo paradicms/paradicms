@@ -14,6 +14,10 @@ export class SchemaPerson extends Mixin(
     return this.findAndMapObject(schema.familyName, mapTermToString);
   }
 
+  get homepage(): string | null {
+    return this.urls.length > 0 ? this.urls[0] : null;
+  }
+
   @Memoize()
   get givenName(): string | null {
     return this.findAndMapObject(schema.familyName, mapTermToString);

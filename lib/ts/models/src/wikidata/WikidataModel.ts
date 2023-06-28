@@ -1,11 +1,6 @@
-import {
-  WikibaseArticle,
-  WikibaseItem,
-  WikibaseStatement,
-} from "@paradicms/wikibase";
+import {WikibaseArticle, WikibaseItem, WikibaseStatement,} from "@paradicms/wikibase";
 import {DatasetCore, Literal, NamedNode} from "@rdfjs/types";
 import {ModelSet} from "../ModelSet";
-import {RelationsMixin} from "../RelationsMixin";
 import {ImagesMixin} from "../ImagesMixin";
 import {Image} from "../Image";
 import {ThumbnailSelector} from "../ThumbnailSelector";
@@ -23,12 +18,7 @@ import {Mixin} from "ts-mixer";
 
 export abstract class WikidataModel
   extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin)
-  implements
-    ImagesMixin,
-    RelationsMixin,
-    RightsMixin,
-    NamedModel,
-    WikibaseItem {
+  implements ImagesMixin, RightsMixin, NamedModel, WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
 
   constructor(kwds: {
@@ -135,7 +125,7 @@ export abstract class WikidataModel
     // );
   }
 
-  get page(): string | null {
+  get homepage(): string | null {
     return null;
   }
 
@@ -177,7 +167,7 @@ export abstract class WikidataModel
     return selectThumbnail(this.images, selector);
   }
 
-  get wikidataConceptIri(): string | null {
+  override get wikidataConceptIri(): string | null {
     return this.identifier.value;
   }
 

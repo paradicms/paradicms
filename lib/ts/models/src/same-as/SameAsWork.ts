@@ -9,9 +9,8 @@ import {WorkLocation} from "../WorkLocation";
 import {PropertyValue} from "../PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {SameAsImagesMixin} from "./SameAsImagesMixin";
-import {SameAsRelationsMixin} from "./SameAsRelationsMixin";
 
-export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<Work>, SameAsRelationsMixin, SameAsRightsMixin<Work>) implements Work {
+export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<Work>, SameAsRightsMixin<Work>) implements Work {
     get agents(): readonly WorkAgent[] {
         return this.getAllValues(model => model.agents);
     }
@@ -49,5 +48,13 @@ export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<
             }
         }
         return propertyValues;
+    }
+
+    get wikidataConceptIri(): string | null {
+        return this.getBestValue(model => model.wikidataConceptIri);
+    }
+
+    get wikipediaUrl(): string | null {
+        return this.getBestValue(model => model.wikipediaUrl);
     }
 }

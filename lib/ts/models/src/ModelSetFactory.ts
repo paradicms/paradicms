@@ -10,6 +10,7 @@ import {CreativeCommonsModelReader} from "./creative-commons/CreativeCommonsMode
 import {SchemaModelReader} from "./schema/SchemaModelReader";
 import {registerResourceBackedModelFactories} from "./registerResourceBackedModelFactories";
 import {SkosModelReader} from "./skos/SkosModelReader";
+import {FoafModelReader} from "./foaf/FoafModelReader";
 
 export class ModelSetFactory {
   static fromFastRdfString(fastRdfString: string): ModelSet {
@@ -22,6 +23,7 @@ export class ModelSetFactory {
       new SameAsModelReader([
         new CmsModelReader(dataset),
         new CreativeCommonsModelReader(dataset),
+        new FoafModelReader(dataset),
         new RightsStatementsDotOrgModelReader(dataset),
         new SchemaModelReader(dataset),
         new SkosModelReader(dataset),

@@ -1,7 +1,7 @@
 from typing import Generator, Tuple, Union, TypeVar, Any, Callable
 from typing import Optional
 
-from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO
+from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO, OWL
 from rdflib import Graph
 from rdflib.resource import Resource
 from rdflib.term import Node, BNode
@@ -179,6 +179,10 @@ class ResourceBackedModel(Model):
     @property
     def _resource(self) -> Resource:
         return self.__resource
+
+    @property
+    def same_as_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(OWL.sameAs, self._map_uri_value))
 
     def to_rdf(self, graph: Graph) -> Resource:
         if isinstance(graph, ConjunctiveGraph):

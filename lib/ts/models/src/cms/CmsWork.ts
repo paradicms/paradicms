@@ -7,7 +7,6 @@ import {WorkAgent} from "../WorkAgent";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {WorkLocation} from "../WorkLocation";
 import {CmsDescriptionMixin} from "./CmsDescriptionMixin";
-import {CmsRelationsMixin} from "./CmsRelationsMixin";
 import {CmsRightsMixin} from "./CmsRightsMixin";
 import {CmsTitleMixin} from "./CmsTitleMixin";
 import {CmsNamedModel} from "./CmsNamedModel";
@@ -18,13 +17,13 @@ import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {getWorkAgents} from "../getWorkAgents";
 import {getWorkDisplayDate} from "../getWorkDisplayDate";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
+import {isWikipediaUrl} from "../isWikipediaUrl";
 
 export class CmsWork extends Mixin(
   CmsNamedModel,
   CmsDescriptionMixin,
   FoafImagesMixin,
   CmsTitleMixin,
-  CmsRelationsMixin,
   CmsRightsMixin,
   OwlSameAsMixin
 ) implements Work {
@@ -66,5 +65,13 @@ export class CmsWork extends Mixin(
     } else {
       return null;
     }
+  }
+
+  get wikipediaUrl(): string | null {
+    return this.findAndMapObject(dcterms.relation, term =>
+        term.termType === "NamedNode" && isWikipediaUrl(term.value)
+            ? term.value
+            : null
+    );
   }
 }

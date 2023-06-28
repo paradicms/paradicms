@@ -8,12 +8,13 @@ from rdflib.term import Node, URIRef, Literal
 from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
+from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SkosConcept(CmsNamedModel, FoafImagesMixin, Concept):
-    class Builder(CmsNamedModel.Builder, FoafImagesMixin.Builder):
+class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
+    class Builder(ResourceBackedNamedModel.Builder, FoafImagesMixin.Builder):
         def add_alt_label(
             self, alt_label: Union[str, Literal]
         ) -> "SkosConcept.Builder":
@@ -49,7 +50,7 @@ class SkosConcept(CmsNamedModel, FoafImagesMixin, Concept):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            CmsNamedModel.json_ld_context(),
+            ResourceBackedNamedModel.json_ld_context(),
             FoafImagesMixin.json_ld_context(),
             {
                 "altLabel": {"@id": str(SKOS.altLabel)},

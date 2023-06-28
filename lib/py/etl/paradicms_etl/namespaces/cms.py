@@ -18,7 +18,6 @@ class CMS(DefinedNamespace):
     propertySearchable: URIRef
 
     # Resources
-    Agent: URIRef
     Collection: URIRef
     Configuration: URIRef
     Event: URIRef
@@ -26,8 +25,6 @@ class CMS(DefinedNamespace):
     ImageData: URIRef
     License: URIRef
     Location: URIRef
-    Organization: URIRef
-    Person: URIRef
     Property: URIRef
     PropertyGroup: URIRef
     RightsStatement: URIRef
