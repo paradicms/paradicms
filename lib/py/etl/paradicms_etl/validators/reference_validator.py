@@ -9,8 +9,6 @@ from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
-from paradicms_etl.models.cms.cms_organization import CmsOrganization
-from paradicms_etl.models.cms.cms_person import CmsPerson
 from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
@@ -22,6 +20,8 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
 from paradicms_etl.models.event import Event
+from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
+from paradicms_etl.models.foaf.foaf_person import FoafPerson
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
@@ -124,12 +124,6 @@ class ReferenceValidator:
     def _validate_cms_collection_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_concept(self, concept: SkosConcept) -> Iterable[ValidationResult]:
-        yield from self.__validate_concept(concept)
-
-    def _validate_cms_concept_references(self) -> Iterable[ValidationResult]:
-        return ()
-
     def __validate_cms_event(self, event: Event) -> Iterable[ValidationResult]:
         return ()
 
@@ -151,20 +145,6 @@ class ReferenceValidator:
         yield from self.__validate_location(location)
 
     def _validate_cms_location_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def _validate_cms_organization(
-        self, organization: CmsOrganization
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_organization(organization)
-
-    def _validate_cms_organization_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def _validate_cms_person(self, person: CmsPerson) -> Iterable[ValidationResult]:
-        yield from self.__validate_person(person)
-
-    def _validate_cms_person_references(self) -> Iterable[ValidationResult]:
         return ()
 
     def _validate_cms_property(self, property_: Property) -> Iterable[ValidationResult]:
@@ -247,6 +227,20 @@ class ReferenceValidator:
         self,
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_license_references()
+
+    def _validate_foaf_organization(
+        self, organization: FoafOrganization
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_organization(organization)
+
+    def _validate_foaf_organization_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_foaf_person(self, person: FoafPerson) -> Iterable[ValidationResult]:
+        yield from self.__validate_person(person)
+
+    def _validate_foaf_person_references(self) -> Iterable[ValidationResult]:
+        return ()
 
     def __validate_image(self, image: Image) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(image)
@@ -344,6 +338,14 @@ class ReferenceValidator:
             universe_uris=self.__rights_statement_uris,
             uri_type="rights statement",
         )
+
+    def _validate_skos_concept(
+        self, concept: SkosConcept
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_concept(concept)
+
+    def _validate_skos_concept_references(self) -> Iterable[ValidationResult]:
+        return ()
 
     def __validate_uri_references(
         self, *, referenced_uris: Set[URIRef], universe_uris: Set[URIRef], uri_type: str

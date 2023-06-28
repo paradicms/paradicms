@@ -19,4 +19,7 @@ class FoafImagesMixin(ResourceBackedModelMixin, ImagesMixin):
 
     @classmethod
     def json_ld_context(cls):
-        return {"image": {"@id": str(FOAF.depiction), "@type": "@id"}}
+        return {
+            "depiction": {"@id": str(FOAF.depiction), "@type": "@id"},
+            "image": {"@id": str(FOAF.depiction), "@type": "@id"},
+        }

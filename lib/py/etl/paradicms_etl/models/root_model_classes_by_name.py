@@ -1,13 +1,9 @@
 from typing import Type, Dict, Tuple
 
-from paradicms_etl.models.skos.skos_concept import SkosConcept
-
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
-from paradicms_etl.models.cms.cms_organization import CmsOrganization
-from paradicms_etl.models.cms.cms_person import CmsPerson
 from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
@@ -18,6 +14,8 @@ from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
 from paradicms_etl.models.creative_commons.creative_commons_license import (
     CreativeCommonsLicense,
 )
+from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
+from paradicms_etl.models.foaf.foaf_person import FoafPerson
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
     RightsStatementsDotOrgRightsStatement,
@@ -31,16 +29,14 @@ from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
+from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     CmsCollection,
-    SkosConcept,
     CmsImage,
     CmsLicense,
     CmsLocation,
-    CmsOrganization,
-    CmsPerson,
     CmsProperty,
     CmsPropertyGroup,
     CmsRightsStatement,
@@ -49,6 +45,8 @@ __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     CmsWorkCreation,
     CmsWorkOpening,
     CreativeCommonsLicense,
+    FoafOrganization,
+    FoafPerson,
     RightsStatementsDotOrgRightsStatement,
     SchemaCollection,
     SchemaCreativeWork,
@@ -59,6 +57,7 @@ __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     SchemaPlace,
     SchemaProperty,
     SchemaTextObject,
+    SkosConcept,
     WikibaseItem,
 )
 

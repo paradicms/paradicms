@@ -21,4 +21,4 @@ def test_load(excel_2010_test_data_file_path: Path, tmp_path: Path):
     consume(loader(flush=True, models=models))
     assert out_excel_2010_file_path.is_file()
     workbook = load_workbook(str(out_excel_2010_file_path), data_only=True)
-    assert "CmsPerson" in workbook.sheetnames
+    assert "FoafPerson" in workbook.sheetnames
