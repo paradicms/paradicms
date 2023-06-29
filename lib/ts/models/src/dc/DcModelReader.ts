@@ -1,14 +1,16 @@
-import {dcterms, rdf} from "@paradicms/vocabularies";
+import {dcterms, skos} from "@paradicms/vocabularies";
 import {DatasetModelReader} from "../DatasetModelReader";
 import {License} from "../License";
 import {ModelSet} from "../ModelSet";
 import {RightsStatement} from "../RightsStatement";
 import {DcLicenseDocument} from "./DcLicenseDocument";
-import {DcRightsStatement} from "./DcRightsStatement";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {NamedNode} from "@rdfjs/types";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
-import {ModelIdentifier} from "../ModelIdentifier";
+import {
+  RightsStatementsDotOrgRightsStatement
+} from "../rights-statements-dot-org/RightsStatementsDotOrgRightsStatement";
+import {DcRightsStatement} from "./DcRightsStatement";
 
 export class DcModelReader extends DatasetModelReader {
   override readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
@@ -22,21 +24,9 @@ export class DcModelReader extends DatasetModelReader {
   override readNamedRightsStatements(kwds: {
     modelSet: ModelSet;
   }): readonly RightsStatement[] {
-    const hasOnlyDcStatements = (subject: ModelIdentifier, graph: ModelGraphIdentifier): boolean => {
-      for (const quad of this.dataset.match(subject, null, null, graph)) {
-        if (quad.predicate.equals(rdf.type)) {
-          continue;
-        }
-        if (!quad.predicate.value.startsWith(dcterms[""].value)) {
-          return false;
-        }
-      }
-      return true;
-    }
-
     // RightsStatementsDotOrgRightsStatement also has rdf:type dcterms:RightsStatement, but also has skos: statements.
-    // Filter out anything here with non-dcterms: predicates
-    const rightsStatements: DcRightsStatement[] = [];
+    // Distinguish RightsStatement.org rights statements from standard dcterms:RightsStatement's.
+    const rightsStatements: RightsStatement[] = [];
     for (const rdfInstanceQuad of getRdfInstanceQuads({
       class_: dcterms.RightsStatement,
       dataset: this.dataset,
@@ -45,14 +35,25 @@ export class DcModelReader extends DatasetModelReader {
       if (rdfInstanceQuad.subject.termType !== "NamedNode") {
         continue;
       }
-      if (!hasOnlyDcStatements(rdfInstanceQuad.subject, rdfInstanceQuad.graph as ModelGraphIdentifier)) {
-        continue;
-      }
 
       this.checkModelGraph({
         modelGraph: rdfInstanceQuad.graph as ModelGraphIdentifier,
         modelIdentifier: rdfInstanceQuad.subject,
       });
+
+      if (rdfInstanceQuad.subject.value.startsWith("http://rightsstatements.org/vocab/")) {
+        if (this.dataset.match(rdfInstanceQuad.subject, skos.prefLabel).size > 0) {
+          rightsStatements.push(
+              new RightsStatementsDotOrgRightsStatement({
+                dataset: this.dataset,
+                graph: rdfInstanceQuad.graph as ModelGraphIdentifier,
+                identifier: rdfInstanceQuad.subject as NamedNode,
+                modelSet: kwds.modelSet,
+              })
+          );
+          continue;
+        }
+      }
 
       rightsStatements.push(
           new DcRightsStatement({
