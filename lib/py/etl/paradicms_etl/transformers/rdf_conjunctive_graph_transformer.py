@@ -58,5 +58,8 @@ class RdfConjunctiveGraphTransformer:
                 )
                 continue
 
-            root_model = root_model_class(graph.resource(graph.identifier))
+            try:
+                root_model = root_model_class(graph.resource(graph.identifier))
+            except KeyError:
+                continue
             yield root_model
