@@ -65,6 +65,7 @@ export class SchemaProperty extends Mixin(SchemaNamedModel)
         ...getRdfInstanceQuads({
           class_: range,
           dataset: this.dataset,
+          includeSubclasses: true
         }),
       ],
     });

@@ -4,20 +4,16 @@ import {AppConfiguration} from "../AppConfiguration";
 import {Collection} from "../Collection";
 import {DatasetModelReader} from "../DatasetModelReader";
 import {Image} from "../Image";
-import {License} from "../License";
 import {Location} from "../Location";
 import {ModelSet} from "../ModelSet";
 import {PropertyGroup} from "../PropertyGroup";
 import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
-import {RightsStatement} from "../RightsStatement";
 import {Work} from "../Work";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {CmsCollection} from "./CmsCollection";
 import {CmsImage} from "./CmsImage";
-import {CmsLicense} from "./CmsLicense";
 import {CmsLocation} from "./CmsLocation";
 import {CmsPropertyGroup} from "./CmsPropertyGroup";
-import {CmsRightsStatement} from "./CmsRightsStatement";
 import {CmsWork} from "./CmsWork";
 import {CmsWorkClosing} from "./CmsWorkClosing";
 import {CmsWorkCreation} from "./CmsWorkCreation";
@@ -43,6 +39,7 @@ export class CmsModelReader extends DatasetModelReader {
     for (const quad of getRdfInstanceQuads({
       class_: configuration.AppConfiguration,
       dataset: this.dataset,
+      includeSubclasses: true
     }).values()) {
       this.checkModelGraph({
         modelGraph: quad.graph as ModelGraphIdentifier,
@@ -74,14 +71,6 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  override readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
-    return this.readNamedModels({
-      class_: cms.License,
-      factory: CmsLicense,
-      ...kwds,
-    });
-  }
-
   override readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
     return this.readNamedModels({
       class_: cms.Location,
@@ -98,21 +87,12 @@ export class CmsModelReader extends DatasetModelReader {
     });
   }
 
-  override readNamedRightsStatements(kwds: {
-    modelSet: ModelSet;
-  }): readonly RightsStatement[] {
-    return this.readNamedModels({
-      class_: cms.RightsStatement,
-      factory: CmsRightsStatement,
-      ...kwds,
-    });
-  }
-
   override readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
     const workEvents: WorkEventUnion[] = [];
     for (const quad of getRdfInstanceQuads({
       class_: cms.WorkEvent,
       dataset: this.dataset,
+      includeSubclasses: true
     }).values()) {
       if (!quad.subject.equals(quad.graph)) {
         continue;

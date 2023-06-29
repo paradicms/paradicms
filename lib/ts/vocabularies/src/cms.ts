@@ -25,11 +25,9 @@ interface Cms {
   >;
   Event: NamedNode<"http://www.paradicms.org/ns/cms#Event">;
   Image: NamedNode<"http://www.paradicms.org/ns/cms#Image">;
-  License: NamedNode<"http://www.paradicms.org/ns/cms#License">;
   Location: NamedNode<"http://www.paradicms.org/ns/cms#Location">;
   Property: NamedNode<"http://www.paradicms.org/ns/cms#Property">;
   PropertyGroup: NamedNode<"http://www.paradicms.org/ns/cms#PropertyGroup">;
-  RightsStatement: NamedNode<"http://www.paradicms.org/ns/cms#RightsStatement">;
   Text: NamedNode<"http://www.paradicms.org/ns/cms#Text">;
   Work: NamedNode<"http://www.paradicms.org/ns/cms#Work">;
   WorkClosing: NamedNode<"http://www.paradicms.org/ns/cms#WorkClosing">;

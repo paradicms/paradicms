@@ -42,6 +42,7 @@ export class WikidataModelReader extends DatasetModelReader {
     for (const instanceQuad of getRdfInstanceQuads({
       class_,
       dataset: this.dataset,
+      includeSubclasses: true,
       instanceOfPredicate: wdt["P31"],
       subClassOfPredicate: wdt["P279"],
     })) {

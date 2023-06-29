@@ -39,6 +39,7 @@ export abstract class DatasetModelReader extends PartialModelReader {
     class_: NamedNode;
     factory: ResourceBackedModelFactory<NamedModelT>;
     modelSet: ModelSet;
+    includeSubclasses?: boolean;
     instanceOfPredicate?: NamedNode;
     subClassOfPredicate?: NamedNode;
   }): readonly NamedModelT[] {
@@ -47,28 +48,30 @@ export abstract class DatasetModelReader extends PartialModelReader {
     for (const quad of getRdfInstanceQuads({
       class_: kwds.class_,
       dataset: this.dataset,
+      includeSubclasses: kwds.includeSubclasses ?? false,
       instanceOfPredicate: kwds.instanceOfPredicate,
       subClassOfPredicate: kwds.subClassOfPredicate,
     }).values()) {
-      if (quad.subject.termType === "NamedNode") {
-        // invariant(
-        //   !namedModelIris.has(quad.subject.value),
-        //   "duplicate named model instance: " + quad.subject.value
-        // );
-        this.checkModelGraph({
-          modelGraph: quad.graph as ModelGraphIdentifier,
-          modelIdentifier: quad.subject,
-        });
-        namedModels.push(
-          new kwds.factory({
-            dataset: this.dataset,
-            graph: quad.graph as ModelGraphIdentifier,
-            identifier: quad.subject as NamedNode,
-            modelSet: kwds.modelSet,
-          })
-        );
-        // namedModelIris.add(quad.subject.value);
+      if (quad.subject.termType !== "NamedNode") {
+        continue;
       }
+      // invariant(
+      //   !namedModelIris.has(quad.subject.value),
+      //   "duplicate named model instance: " + quad.subject.value
+      // );
+      this.checkModelGraph({
+        modelGraph: quad.graph as ModelGraphIdentifier,
+        modelIdentifier: quad.subject,
+      });
+      namedModels.push(
+        new kwds.factory({
+          dataset: this.dataset,
+          graph: quad.graph as ModelGraphIdentifier,
+          identifier: quad.subject as NamedNode,
+          modelSet: kwds.modelSet,
+        })
+      );
+      // namedModelIris.add(quad.subject.value);
     }
     return namedModels;
   }

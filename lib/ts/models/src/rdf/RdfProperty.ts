@@ -75,6 +75,7 @@ export class RdfProperty
         ...getRdfInstanceQuads({
           class_: range,
           dataset: this.dataset,
+          includeSubclasses: true,
         }),
       ],
     });

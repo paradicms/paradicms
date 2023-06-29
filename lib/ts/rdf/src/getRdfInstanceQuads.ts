@@ -10,6 +10,7 @@ import {rdf, rdfs} from "@tpluscode/rdf-ns-builders";
 export const getRdfInstanceQuads = (kwds: {
   class_: NamedNode;
   dataset: DatasetCore;
+  includeSubclasses: boolean;
   instanceOfPredicate?: NamedNode;
   subClassOfPredicate?: NamedNode;
 }): TermSet<Quad> => {
@@ -17,6 +18,7 @@ export const getRdfInstanceQuads = (kwds: {
   getRdfInstanceQuadsRecursive({
     class_: kwds.class_,
     dataset: kwds.dataset,
+    includeSubclasses: kwds.includeSubclasses,
     instanceOfPredicate: kwds.instanceOfPredicate ?? rdf.type,
     instanceQuads,
     subClassOfPredicate: kwds.subClassOfPredicate ?? rdfs.subClassOf,
@@ -28,6 +30,7 @@ export const getRdfInstanceQuads = (kwds: {
 const getRdfInstanceQuadsRecursive = (kwds: {
   class_: NamedNode;
   dataset: DatasetCore;
+  includeSubclasses: boolean;
   instanceOfPredicate: NamedNode;
   instanceQuads: TermSet<Quad>;
   subClassOfPredicate: NamedNode;
@@ -36,6 +39,7 @@ const getRdfInstanceQuadsRecursive = (kwds: {
   const {
     class_,
     dataset,
+    includeSubclasses,
     instanceOfPredicate,
     instanceQuads,
     subClassOfPredicate,
@@ -55,6 +59,10 @@ const getRdfInstanceQuadsRecursive = (kwds: {
   }
   visitedClasses.add(class_);
 
+  if (!includeSubclasses) {
+    return;
+  }
+
   // Recurse into class's sub-classes that haven't been visited yet.
   for (const quad of dataset.match(null, subClassOfPredicate, class_, null)) {
     if (quad.subject.termType !== "NamedNode") {
@@ -65,6 +73,7 @@ const getRdfInstanceQuadsRecursive = (kwds: {
     getRdfInstanceQuadsRecursive({
       class_: quad.subject,
       dataset,
+      includeSubclasses,
       instanceOfPredicate,
       instanceQuads,
       subClassOfPredicate,
