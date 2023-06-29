@@ -35,8 +35,15 @@ class DcRightsStatement(DcModel, RightsStatement):
 
     @property
     def label(self) -> str:
-        return self.identifier
+        return self.title
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return DCTERMS.RightsStatement
+
+    @property
+    def title(self) -> str:
+        title = DcModel.title.fget(self)  # type: ignore
+        if title is None:
+            raise KeyError
+        return title

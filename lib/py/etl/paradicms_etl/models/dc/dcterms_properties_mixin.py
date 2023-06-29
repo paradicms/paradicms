@@ -14,6 +14,10 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin):
             self.set(DCTERMS.description, description)
             return self
 
+        def set_identifier(self, identifier: str) -> "DctermsPropertiesMixin.Builder":
+            self.set(DCTERMS.identifier, identifier)
+            return self
+
         def set_title(self, title: str) -> "DctermsPropertiesMixin.Builder":
             self.set(DCTERMS.title, title)
             return self

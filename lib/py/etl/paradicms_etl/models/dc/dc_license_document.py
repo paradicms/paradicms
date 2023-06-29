@@ -16,6 +16,14 @@ class DcLicenseDocument(DcModel, License):
         def build(self) -> "DcLicenseDocument":
             return DcLicenseDocument(self._resource)
 
+        def set_identifier(self, identifier: str) -> "DcLicenseDocument.Builder":
+            super().set_identifier(identifier)
+            return self
+
+        def set_version(self, version: str) -> "DcLicenseDocument.Builder":
+            super().set_version(version)
+            return self
+
     def __init__(self, resource: Resource):
         DcModel.__init__(self, resource)
         self.title
@@ -25,13 +33,6 @@ class DcLicenseDocument(DcModel, License):
         builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
         builder.set_title(title)
         return builder
-
-    @property
-    def identifier(self) -> str:
-        identifier = DcModel.identifier.fget(self)
-        if identifier is None:
-            raise KeyError
-        return identifier
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
@@ -43,7 +44,7 @@ class DcLicenseDocument(DcModel, License):
 
     @property
     def title(self) -> str:
-        title = DcModel.title.fget(self)
+        title = DcModel.title.fget(self)  # type: ignore
         if title is None:
             raise KeyError
         return title

@@ -85,9 +85,11 @@ class CostumeCoreOntologyAirtableTransformer:
         }
         odc_by_license = (
             DcLicenseDocument.builder(
-                identifier="ODC-By",
                 title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
                 uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
+            )
+            .set_identifier(
+                "ODC-By",
             )
             .set_version(
                 version="1.0",
