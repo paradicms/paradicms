@@ -7,9 +7,7 @@ from stringcase import snakecase
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
-from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
@@ -19,6 +17,8 @@ from paradicms_etl.models.creative_commons.creative_commons_license import (
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
+from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
@@ -27,8 +27,8 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
+from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
@@ -133,21 +133,12 @@ class ReferenceValidator:
     def _validate_cms_image_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_license(self, license: CmsLicense) -> Iterable[ValidationResult]:
-        yield from self.__validate_license(license)
-
-    def _validate_cms_license_references(self) -> Iterable[ValidationResult]:
-        yield from self.__validate_license_references()
-
     def _validate_cms_location(
         self, location: CmsLocation
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_location(location)
 
     def _validate_cms_location_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def _validate_cms_property(self, property_: Property) -> Iterable[ValidationResult]:
         return ()
 
     def _validate_cms_property_group(
@@ -160,14 +151,6 @@ class ReferenceValidator:
 
     def _validate_cms_property_group_references(self) -> Iterable[ValidationResult]:
         return ()
-
-    def _validate_cms_rights_statement(
-        self, rights_statement: CmsRightsStatement
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_rights_statement(rights_statement)
-
-    def _validate_cms_rights_statement_references(self) -> Iterable[ValidationResult]:
-        yield from self.__validate_rights_statement_references()
 
     def _validate_cms_work(self, work: CmsWork) -> Iterable[ValidationResult]:
         yield from self.__validate_work(work)
@@ -227,6 +210,22 @@ class ReferenceValidator:
         self,
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_license_references()
+
+    def _validate_dc_license_document(
+        self, license: DcLicenseDocument
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_license(license)
+
+    def _validate_dc_license_document_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_license_references()
+
+    def _validate_dc_rights_statement(
+        self, rights_statement: DcRightsStatement
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_rights_statement(rights_statement)
+
+    def _validate_dc_rights_statement_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_rights_statement_references()
 
     def _validate_foaf_organization(
         self, organization: FoafOrganization
@@ -302,6 +301,11 @@ class ReferenceValidator:
             self.__person_uris.add(person.uri)
         for image_uri in person.image_uris:
             self.__referenced_image_uris.add(image_uri)
+
+    def _validate_rdf_property(
+        self, property_: RdfProperty
+    ) -> Iterable[ValidationResult]:
+        return ()
 
     def __validate_rights(self, rights: RightsMixin) -> Iterable[ValidationResult]:
         for agents in (rights.contributors, rights.creators, rights.rights_holders):

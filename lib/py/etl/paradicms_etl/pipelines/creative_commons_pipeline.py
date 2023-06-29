@@ -11,7 +11,6 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_license import (
     CreativeCommonsLicense,
 )
-from paradicms_etl.models.license import License
 from paradicms_etl.namespaces import bind_namespaces
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.utils.download_file import download_file
@@ -66,7 +65,7 @@ class CreativeCommonsPipeline(Pipeline):
         py_license_identifiers = set()
         py_license_reprs = []
         for license in models:
-            assert isinstance(license, License)
+            assert isinstance(license, CreativeCommonsLicense)
             py_license_identifier = (
                 license.identifier.replace("-", "_").replace("+", "_plus").upper()
             )

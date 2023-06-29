@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from typing import Optional
 
 from paradicms_etl.model import Model
 
@@ -11,15 +10,5 @@ class License(Model):
 
     @property
     @abstractmethod
-    def identifier(self) -> str:
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
     def label(self) -> str:
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def version(self) -> Optional[str]:
         raise NotImplementedError

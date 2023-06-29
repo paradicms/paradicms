@@ -1,18 +1,17 @@
 from rdflib import URIRef
 
-from paradicms_etl.models.cms.cms_license import CmsLicense
+from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 
 
 def test_init():
-    CmsLicense.builder(
-        identifier="testidentifier",
+    DcLicenseDocument.builder(
         title="Test title",
-        uri=URIRef("http://example.com"),
+        uri=URIRef("http://example.com/licencse"),
     ).build()
 
     # graph = Graph()
     # expected.to_rdf(graph=graph)
     # resource = graph.resource(expected.uri)
-    # actual = CmsLicense.from_rdf(resource=resource)
+    # actual = DcLicenseDocument.from_rdf(resource=resource)
     #
     # assert actual == expected

@@ -10,10 +10,5 @@ class RightsStatement(Model):
 
     @property
     @abstractmethod
-    def identifier(self) -> str:
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
     def label(self) -> str:
         raise NotImplementedError

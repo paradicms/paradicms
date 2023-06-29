@@ -7,7 +7,6 @@ from zipfile import ZipFile
 from rdflib import DCTERMS, Graph, Literal
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
     RightsStatementsDotOrgRightsStatement,
 )
@@ -48,7 +47,7 @@ class RightsStatementsDotOrgPipeline(Pipeline):
     def __load(*, models: Iterable[Model], **kwds):
         rights_statement_reprs = []
         for model in models:
-            if isinstance(model, RightsStatement):
+            if isinstance(model, RightsStatementsDotOrgRightsStatement):
                 rights_statement = model
                 rights_statement_reprs.append(
                     f"    {rights_statement.identifier.replace('-', '_')} = _MODEL_CLASS.from_rdf(Graph().parse(data=r'''{rights_statement.to_rdf(bind_namespaces(Graph())).graph.serialize(format='ttl')}''', format='ttl').resource(URIRef('{rights_statement.uri}')))"

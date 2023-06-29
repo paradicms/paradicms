@@ -23,11 +23,9 @@ class CMS(DefinedNamespace):
     Event: URIRef
     Image: URIRef
     ImageData: URIRef
-    License: URIRef
     Location: URIRef
     Property: URIRef
     PropertyGroup: URIRef
-    RightsStatement: URIRef
     Text: URIRef
     Work: URIRef
     WorkClosing: URIRef

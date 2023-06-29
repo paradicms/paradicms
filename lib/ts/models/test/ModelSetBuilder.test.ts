@@ -56,6 +56,7 @@ const countModelSetNamedRdfInstances = (
     ...getRdfInstanceQuads({
       class_,
       dataset: modelSet.toRdf(),
+      includeSubclasses: false,
     }).values(),
   ].filter(quad => quad.subject.termType === "NamedNode").length;
 

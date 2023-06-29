@@ -25,6 +25,7 @@ def test_transform(
             transformed_model.uri
         )
         assert synthetic_data_model.label == transformed_model.label
-    assert len(remaining_synthetic_data_models_by_uri) == 0, len(
+    # Ignore the RightsStatements.org rights statements
+    assert len(remaining_synthetic_data_models_by_uri) == 2, len(
         remaining_synthetic_data_models_by_uri
     )
