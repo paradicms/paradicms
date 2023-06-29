@@ -22,7 +22,6 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
-from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.cms.cms_text import CmsText
@@ -32,6 +31,7 @@ from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
@@ -84,9 +84,9 @@ class CostumeCoreOntologyAirtableTransformer:
             license.uri: license for license in CreativeCommonsLicenses.as_tuple()
         }
         odc_by_license = (
-            CmsLicense.builder(
+            DcLicenseDocument.builder(
                 identifier="ODC-By",
-                title="Open Data Commons Attribution CmsLicense (ODC-By) v1.0",
+                title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
                 uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
             )
             .set_version(

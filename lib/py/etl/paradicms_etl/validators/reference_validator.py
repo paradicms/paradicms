@@ -7,9 +7,7 @@ from stringcase import snakecase
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_license import CmsLicense
 from paradicms_etl.models.cms.cms_location import CmsLocation
-from paradicms_etl.models.cms.cms_rights_statement import CmsRightsStatement
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
@@ -19,6 +17,8 @@ from paradicms_etl.models.creative_commons.creative_commons_license import (
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
+from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
@@ -133,7 +133,9 @@ class ReferenceValidator:
     def _validate_cms_image_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_license(self, license: CmsLicense) -> Iterable[ValidationResult]:
+    def _validate_cms_license(
+        self, license: DcLicenseDocument
+    ) -> Iterable[ValidationResult]:
         yield from self.__validate_license(license)
 
     def _validate_cms_license_references(self) -> Iterable[ValidationResult]:
@@ -162,7 +164,7 @@ class ReferenceValidator:
         return ()
 
     def _validate_cms_rights_statement(
-        self, rights_statement: CmsRightsStatement
+        self, rights_statement: DcRightsStatement
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_rights_statement(rights_statement)
 
