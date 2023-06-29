@@ -7,7 +7,6 @@ import {Image} from "../Image";
 import {License} from "../License";
 import {Location} from "../Location";
 import {ModelSet} from "../ModelSet";
-import {Property} from "../Property";
 import {PropertyGroup} from "../PropertyGroup";
 import {ResourceBackedModelParameters} from "../ResourceBackedModelParameters";
 import {RightsStatement} from "../RightsStatement";
@@ -17,7 +16,6 @@ import {CmsCollection} from "./CmsCollection";
 import {CmsImage} from "./CmsImage";
 import {CmsLicense} from "./CmsLicense";
 import {CmsLocation} from "./CmsLocation";
-import {CmsProperty} from "./CmsProperty";
 import {CmsPropertyGroup} from "./CmsPropertyGroup";
 import {CmsRightsStatement} from "./CmsRightsStatement";
 import {CmsWork} from "./CmsWork";
@@ -88,14 +86,6 @@ export class CmsModelReader extends DatasetModelReader {
     return this.readNamedModels({
       class_: cms.Location,
       factory: CmsLocation,
-      ...kwds,
-    });
-  }
-
-  override readProperties(kwds: {modelSet: ModelSet}): readonly Property[] {
-    return this.readNamedModels({
-      class_: cms.Property,
-      factory: CmsProperty,
       ...kwds,
     });
   }
