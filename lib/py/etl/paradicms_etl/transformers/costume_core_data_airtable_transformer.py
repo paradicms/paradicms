@@ -7,12 +7,12 @@ from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
@@ -51,7 +51,7 @@ class CostumeCoreDataAirtableTransformer:
                 concept = ontology_model
                 concepts_by_uri[concept.uri] = concept
                 yield concept
-            elif isinstance(ontology_model, CmsProperty):
+            elif isinstance(ontology_model, RdfProperty):
                 property_ = ontology_model
                 properties_by_label[property_.label] = property_
                 yield property_

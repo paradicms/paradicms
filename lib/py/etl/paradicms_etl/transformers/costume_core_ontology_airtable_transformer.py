@@ -23,7 +23,6 @@ from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_license import CmsLicense
-from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.cms.cms_text import CmsText
@@ -37,6 +36,7 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
+from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -60,7 +60,7 @@ class CostumeCoreOntologyAirtableTransformer:
     - CmsCollection, CmsImage, and CmsWork to build a faceted browser for the Costume Core ontology itself
     - CostumeCoreOntology, CostumeCoreOntology.Predicate, and CostumeCoreOntology.Term to build an RDF/OWL version of the Costume Core
         ontology
-    - SkosConcept (formerly WorksheetFeatureValue), CmsImage, CmsProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
+    - SkosConcept (formerly WorksheetFeatureValue), CmsImage, RdfProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
 
@@ -281,7 +281,7 @@ class CostumeCoreOntologyAirtableTransformer:
                 feature_record=feature_record,
             ):
                 yield feature_model
-                if isinstance(feature_model, CmsProperty):
+                if isinstance(feature_model, RdfProperty):
                     assert feature_record["id"] not in properties_by_feature_record_id
                     properties_by_feature_record_id[
                         feature_record["id"]
@@ -381,7 +381,7 @@ class CostumeCoreOntologyAirtableTransformer:
         feature_uri = URIRef(fields["URI"])
 
         property_builder = (
-            CmsProperty.builder(label=fields["display_name_en"], uri=feature_uri)
+            RdfProperty.builder(label=fields["display_name_en"], uri=feature_uri)
             .set_order(int(fields["sort_order"]))
             .set_range(self.__feature_range_uri(feature_record))
         )

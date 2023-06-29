@@ -19,7 +19,6 @@ from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
-from paradicms_etl.models.cms.cms_property import CmsProperty
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
@@ -39,6 +38,7 @@ from paradicms_etl.models.location import Location
 from paradicms_etl.models.owl_time.owl_time_date_time_description import (
     OwlTimeDateTimeDescription,
 )
+from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -479,10 +479,10 @@ class SyntheticDataPipeline(Pipeline):
 
             for property_ in self.__PROPERTIES:
                 property_model_builder: Union[
-                    CmsProperty.Builder, SchemaProperty.Builder
+                    RdfProperty.Builder, SchemaProperty.Builder
                 ]
                 if str(property_.uri).startswith(str(DCTERMS)):
-                    property_model_builder = CmsProperty.builder(
+                    property_model_builder = RdfProperty.builder(
                         label=property_.label, uri=property_.uri
                     )
                 elif str(property_.uri).startswith(str(SDO)):
