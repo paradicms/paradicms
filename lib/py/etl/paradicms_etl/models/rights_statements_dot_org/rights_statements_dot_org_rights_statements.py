@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
+
+from paradicms_etl.models.model_singletons import ModelSingletons
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
     RightsStatementsDotOrgRightsStatement,
 )
-from paradicms_etl.models.model_singletons import ModelSingletons
 
 
 class RightsStatementsDotOrgRightsStatements(ModelSingletons):
@@ -17,7 +18,7 @@ class RightsStatementsDotOrgRightsStatements(ModelSingletons):
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
 <http://rightsstatements.org/vocab/CNE/1.0/> a dcterms:RightsStatement ;
-    dcterms:description "This Rights Statement indicates that the organization that has published the Item has not evaluated the copyright and related rights status of the Item."@en ;
+    dcterms:description "This Rights Statement indicates that the organizationt that has published the Item has not evaluated the copyright and related rights status of the Item."@en ;
     dcterms:identifier "CNE" ;
     skos:definition """The copyright and related rights status of this Item has not been evaluated.
 

@@ -5,7 +5,6 @@ from rdflib.namespace import RDF
 from rdflib.resource import Resource
 from rdflib.term import Node, URIRef, Literal
 
-from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
@@ -38,7 +37,7 @@ class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, SKOS.Concept)
-        CmsNamedModel.__init__(self, resource)
+        ResourceBackedNamedModel.__init__(self, resource)
         self.pref_label
 
     @classmethod
