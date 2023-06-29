@@ -2,6 +2,7 @@ import {
   getRdfInstanceQuads,
   mapTermToBoolean,
   mapTermToNumber,
+  mapTermToString,
 } from "@paradicms/rdf";
 import {cms, rdfs} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
@@ -10,15 +11,22 @@ import {Memoize} from "typescript-memoize";
 import {Property} from "../Property";
 import {PropertyValue} from "../PropertyValue";
 import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
-import {CmsCommentMixin} from "./CmsCommentMixin";
-import {CmsLabelMixin} from "./CmsLabelMixin";
 import {PropertyGroup} from "../PropertyGroup";
-import {CmsNamedModel} from "./CmsNamedModel";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
+import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
+import {requireNonNull} from "@paradicms/utilities";
+import {Text} from "../Text";
+import {mapTermToText} from "../mapTermToText";
 
-export class CmsProperty
-  extends Mixin(CmsNamedModel, CmsCommentMixin, FoafImagesMixin, CmsLabelMixin)
+export class RdfProperty
+  extends Mixin(ResourceBackedNamedModel, FoafImagesMixin)
   implements Property {
+  get comment(): Text | null {
+    return this.findAndMapObject(rdfs.comment, term =>
+      mapTermToText(this, term)
+    );
+  }
+
   get filterable(): boolean {
     return (
       this.findAndMapObject(cms.propertyFilterable, mapTermToBoolean) ?? false
@@ -35,6 +43,10 @@ export class CmsProperty
       return hidden;
     }
     return !this.filterable && !this.searchable;
+  }
+
+  get label(): string {
+    return requireNonNull(this.findAndMapObject(rdfs.label, mapTermToString));
   }
 
   get order(): number {
