@@ -12,6 +12,7 @@ import {registerResourceBackedModelFactories} from "./registerResourceBackedMode
 import {SkosModelReader} from "./skos/SkosModelReader";
 import {FoafModelReader} from "./foaf/FoafModelReader";
 import {RdfModelReader} from "./rdf/RdfModelReader";
+import {DcModelReader} from "./dc/DcModelReader";
 
 export class ModelSetFactory {
   static fromFastRdfString(fastRdfString: string): ModelSet {
@@ -24,6 +25,7 @@ export class ModelSetFactory {
       new SameAsModelReader([
         new CmsModelReader(dataset),
         new CreativeCommonsModelReader(dataset),
+        new DcModelReader(dataset),
         new FoafModelReader(dataset),
         new RdfModelReader(dataset),
         new RightsStatementsDotOrgModelReader(dataset),
