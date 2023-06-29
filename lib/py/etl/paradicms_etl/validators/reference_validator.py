@@ -27,7 +27,6 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.rights_mixin import RightsMixin
