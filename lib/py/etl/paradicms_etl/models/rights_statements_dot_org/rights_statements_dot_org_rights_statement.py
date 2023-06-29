@@ -1,14 +1,16 @@
 from rdflib import DCTERMS, SKOS, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
 from paradicms_etl.models.rights_statement import RightsStatement
 
 
 class RightsStatementsDotOrgRightsStatement(DcRightsStatement, RightsStatement):
+    class Builder(DcRightsStatement.Builder):
+        pass
+
     def __init__(self, resource: Resource):
-        CmsNamedModel.__init__(self, resource)
+        DcRightsStatement.__init__(self, resource)
         self.identifier
         self.pref_label
 
@@ -26,4 +28,6 @@ class RightsStatementsDotOrgRightsStatement(DcRightsStatement, RightsStatement):
 
     @property
     def uri(self) -> URIRef:
-        return super().uri
+        uri = super().uri
+        assert uri is not None
+        return uri

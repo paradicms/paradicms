@@ -2,7 +2,6 @@ from rdflib import FOAF, RDF, URIRef, OWL
 from rdflib.resource import Resource
 
 from paradicms_etl.models.agent import Agent
-from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.foaf.foaf_model import FoafModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
@@ -24,7 +23,7 @@ class FoafAgent(FoafModel, FoafImagesMixin, Agent):
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, FOAF.Agent)
-        CmsModel.__init__(self, resource)
+        FoafModel.__init__(self, resource)
         self.name
 
     @classmethod
