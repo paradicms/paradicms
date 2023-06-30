@@ -76,11 +76,17 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             self.add(OWL.sameAs, same_as)
             return self
 
+        def add_spatial(
+            self, spatial: Union[str, Location]
+        ) -> "DctermsPropertiesMixin.Builder":
+            self.add(DCTERMS.spatial, spatial)
+            return self
+
         def set_created(self, created: datetime) -> "DctermsPropertiesMixin.Builder":
             self.set(DCTERMS.created, created)
             return self
 
-        def set_date(self, date: DateTimeUnion) -> "CmsEvent.Builder":
+        def set_date(self, date: DateTimeUnion) -> "DctermsPropertiesMixin.Builder":
             self.set(DCTERMS.date, date)
             return self
 

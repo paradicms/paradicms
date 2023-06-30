@@ -11,7 +11,7 @@ class DcPhysicalObject(DcNamedModel, Work):
         DcNamedModel.Builder,
         Work.Builder,
     ):
-        def build(self) -> "DcPhysicalWork":
+        def build(self) -> "DcPhysicalObject":
             return DcPhysicalObject(self._resource)
 
     def __init__(self, resource: Resource):

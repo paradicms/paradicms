@@ -4,7 +4,6 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict, List, Iterable, Union
 from urllib.parse import quote
 
-from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from rdflib import DCTERMS, Literal, URIRef, SDO
 
 from paradicms_etl.enricher import Enricher
@@ -25,6 +24,7 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
 )
 from paradicms_etl.models.dc.dc_collection import DcCollection
 from paradicms_etl.models.dc.dc_image import DcImage
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from paradicms_etl.models.dc.dc_text import DcText
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
@@ -550,7 +550,7 @@ class SyntheticDataPipeline(Pipeline):
             if work_i % 2 == 0:
                 work_builder = DcPhysicalObject.builder(title=work_title, uri=work_uri)
                 for work_alternative_title in work_alternative_titles:
-                    work_builder.add_alternative_title(work_alternative_title)
+                    work_builder.add_alternative(work_alternative_title)
                 for work_identifier in work_identifiers:
                     work_builder.add_identifier(work_identifier)
                 # work_builder.set_date_created(work_creation_date)
@@ -635,10 +635,7 @@ class SyntheticDataPipeline(Pipeline):
 
             work_builder.set_description(description)
 
-            if isinstance(work_builder, DcPhysicalObject.Builder):
-                work_builder.set_location(named_location)
-            else:
-                work_builder.add_spatial(named_location)
+            work_builder.add_spatial(named_location)
 
             for image in self.__generate_images(
                 base_uri=work_uri,

@@ -1,4 +1,4 @@
-from typing import Union, Tuple
+from typing import Union
 
 from rdflib import URIRef, SDO, Graph
 from rdflib.resource import Resource
@@ -7,7 +7,6 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
-from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import CMS
@@ -40,14 +39,6 @@ class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
         builder = cls.Builder(Graph().resource(uri))
         builder.set(SDO.name, name)
         return builder
-
-    @property
-    def description(self) -> Union[str, Text, None]:
-        return SchemaNamedModel.description.fget(self)  # type: ignore
-
-    @property
-    def event_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(CMS.event, self._map_uri_value))
 
     @classmethod
     def json_ld_context(cls):

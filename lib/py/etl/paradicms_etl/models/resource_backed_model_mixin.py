@@ -18,6 +18,11 @@ class ResourceBackedModelMixin(ABC):
         def add(self, p: URIRef, o: Any):
             raise NotImplementedError
 
+        @property
+        @abstractmethod
+        def _resource(self) -> Resource:
+            pass
+
         @abstractmethod
         def set(self, p: URIRef, o: Any):
             raise NotImplementedError
@@ -68,6 +73,11 @@ class ResourceBackedModelMixin(ABC):
         ] = lambda value: value,  # type: ignore
     ) -> _ValueT:
         raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def _resource(self) -> Resource:
+        pass
 
     @staticmethod
     @abstractmethod

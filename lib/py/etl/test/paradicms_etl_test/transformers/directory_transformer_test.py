@@ -39,10 +39,6 @@ def test_transform(data_dir_path: Path):
     work1 = works[URIRef("urn:directory:test:cms-work:test_work1")]
     work2 = works[URIRef("urn:directory:test:cms-work:test_work2")]
 
-    assert work1.event_uris == (
-        URIRef("urn:directory:test:cms-work-creation:test_work1"),
-    )
-
     assert work2.image_uris == (URIRef("urn:directory:test:cms-image:test_work2"),)
 
     work1_description = work1.description

@@ -18,6 +18,10 @@ class DcCollection(DcNamedModel, Collection):
         def build(self) -> "DcCollection":
             return DcCollection(self._resource)
 
+        def set_label(self, label: str) -> "DcCollection.Builder":
+            super().set_label(label)
+            return self
+
     def __init__(self, *args, **kwds):
         DcNamedModel.__init__(self, *args, **kwds)
         self.title

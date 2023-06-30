@@ -17,9 +17,5 @@ class CMS(DefinedNamespace):
     propertySearchable: URIRef
 
     # Resources
-    Collection: URIRef
-    Event: URIRef
     ImageData: URIRef
-    Property: URIRef
     PropertyGroup: URIRef
-    Work: URIRef
