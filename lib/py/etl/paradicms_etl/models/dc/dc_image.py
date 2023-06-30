@@ -69,10 +69,6 @@ class DcImage(DcNamedModel, Image):
             super().set_modified(modified)
             return self
 
-        def set_source(self, source: URIRef) -> "DcImage.Builder":
-            super().set_source(source)
-            return self
-
         def set_src(
             self, src: Union[str, ImageData, Literal, URIRef]
         ) -> "DcImage.Builder":

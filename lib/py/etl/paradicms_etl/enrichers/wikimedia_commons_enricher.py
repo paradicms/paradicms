@@ -148,7 +148,7 @@ class WikimediaCommonsEnricher:
                 )
 
         if wikimedia_commons_image_extended_metadata.license_uri is not None:
-            if image.licenses is None:
+            if not image.licenses:
                 image_replacer.add_license(
                     wikimedia_commons_image_extended_metadata.license_uri
                 )

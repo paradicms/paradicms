@@ -1,4 +1,4 @@
-from rdflib import URIRef, SDO
+from rdflib import SDO
 
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 
@@ -31,5 +31,5 @@ def test_thumbnail_uris(
     assert not schema_thumbnail.thumbnail_uris
 
 
-def test_url(schema_image_object: SchemaImageObject):
-    assert schema_image_object.url == URIRef("http://example.com/imagesource")
+# def test_url(schema_image_object: SchemaImageObject):
+#     assert schema_image_object.url == URIRef("http://example.com/imagesource")

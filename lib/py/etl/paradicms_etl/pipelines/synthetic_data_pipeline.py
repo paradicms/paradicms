@@ -336,19 +336,19 @@ class SyntheticDataPipeline(Pipeline):
                     ImageDimensions(800, 800),
                 ):
                     thumbnail = (
-                        DcImage.builder(
+                        SchemaImageObject.builder(
                             uri=URIRef(
                                 str(original_image_builder.uri)
                                 + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                             ),
                         )
                         .copy_rights(original_image_builder.build())
+                        .set_caption(
+                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                        )
                         .set_exact_dimensions(thumbnail_dimensions)
                         .set_src(
                             f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
-                        )
-                        .set_title(
-                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                         )
                         .build()
                     )

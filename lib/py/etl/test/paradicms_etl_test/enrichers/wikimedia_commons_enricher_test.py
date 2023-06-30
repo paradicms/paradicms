@@ -4,8 +4,8 @@ import pytest
 from rdflib import URIRef
 
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
-from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 
 
 @pytest.mark.parametrize(
@@ -31,10 +31,10 @@ from paradicms_etl.models.image import Image
 )
 def test_enrich(data_dir_path: Path, source: str):
     unenriched_image = (
-        DcImage.builder(
+        SchemaImageObject.builder(
             uri=URIRef("http://example.com/Image"),
         )
-        .set_source(URIRef(source))
+        .set_src(URIRef(source))
         .build()
     )
     assert not unenriched_image.licenses

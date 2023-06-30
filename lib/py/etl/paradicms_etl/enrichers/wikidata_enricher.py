@@ -9,11 +9,11 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
-from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.namespaces import WDT
@@ -82,7 +82,7 @@ class WikidataEnricher:
             image_uri = statement.value
             if image_uri in yielded_image_uris:
                 continue
-            yield DcImage.builder(uri=image_uri).build()
+            yield SchemaImageObject.builder(uri=image_uri).build()
             yielded_image_uris.add(image_uri)
 
     def __get_wikidata_entity_with_related(
