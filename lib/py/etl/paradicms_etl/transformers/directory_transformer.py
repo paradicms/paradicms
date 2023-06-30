@@ -11,8 +11,8 @@ from yaml import FullLoader
 
 from paradicms_etl.extractors.directory_extractor import DirectoryExtractor
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.dc.dc_collection import DcCollection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -243,10 +243,10 @@ class DirectoryTransformer:
                 default_collection_model_id = self.__directory_name
                 transformed_collections_by_id[
                     default_collection_model_id
-                ] = CmsCollection.builder(
+                ] = DcCollection.builder(
                     title=self.__directory_name,
                     uri=self.__model_uri(
-                        model_class=CmsCollection,
+                        model_class=DcCollection,
                         model_id=default_collection_model_id,
                     ),
                 ).build()

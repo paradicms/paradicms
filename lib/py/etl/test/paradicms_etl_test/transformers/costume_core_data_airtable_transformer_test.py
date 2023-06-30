@@ -1,10 +1,11 @@
 from pathlib import Path
 
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
+
 from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
-from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_work import CmsWork
+from paradicms_etl.models.dc.dc_collection import DcCollection
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.skos.skos_concept import SkosConcept
@@ -27,8 +28,8 @@ def test_transform(data_dir_path: Path):
     assert models
     model_types = set(model.__class__ for model in models)
     assert len(model_types) == 5
-    assert CmsCollection in model_types
+    assert DcCollection in model_types
     assert SkosConcept in model_types
     assert DcImage in model_types
     assert RdfProperty in model_types
-    assert CmsWork in model_types
+    assert DcPhysicalObject in model_types

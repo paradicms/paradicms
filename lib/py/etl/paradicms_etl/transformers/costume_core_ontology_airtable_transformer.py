@@ -16,18 +16,18 @@ from urllib.parse import quote_plus
 
 import PIL
 from inflector import Inflector
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from rdflib import URIRef, Literal
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_collection import DcCollection
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.dc.dc_text import DcText
@@ -57,7 +57,7 @@ class CostumeCoreOntologyAirtableTransformer:
     coming out of this transformer.
 
     The different types of yielded models are:
-    - CmsCollection, DcImage, and CmsWork to build a faceted browser for the Costume Core ontology itself
+    - DcCollection, DcImage, and DcPhysicalObject to build a faceted browser for the Costume Core ontology itself
     - CostumeCoreOntology, CostumeCoreOntology.Predicate, and CostumeCoreOntology.Term to build an RDF/OWL version of the Costume Core
         ontology
     - SkosConcept (formerly WorksheetFeatureValue), DcImage, RdfProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
@@ -242,7 +242,7 @@ class CostumeCoreOntologyAirtableTransformer:
                 feature_value_record=feature_value_record,
             ):
                 yield feature_value_model
-                if isinstance(feature_value_model, CmsWork):
+                if isinstance(feature_value_model, DcPhysicalObject):
                     for feature_record_id in feature_value_record_fields.get(
                         "features", []
                     ):
@@ -343,12 +343,12 @@ class CostumeCoreOntologyAirtableTransformer:
     @staticmethod
     def __transform_feature_record_to_collection(
         feature_record, feature_works: Tuple[Work, ...]
-    ) -> Optional[CmsCollection]:
+    ) -> Optional[DcCollection]:
         fields = feature_record["fields"]
         if not fields.get("feature_values_labels", []):
             # Don't yield Collections that won't have any associated Works
             return None
-        collection_builder = CmsCollection.builder(
+        collection_builder = DcCollection.builder(
             title=fields["display_name_en"],
             uri=URIRef(fields["URI"]),
         )
@@ -589,7 +589,7 @@ class CostumeCoreOntologyAirtableTransformer:
     ) -> Iterable[Union[Image, Work]]:
         fields = feature_value_record["fields"]
 
-        work_builder = CmsWork.builder(
+        work_builder = DcPhysicalObject.builder(
             title=fields["display_name_en"], uri=URIRef(str(COCO[fields["id"]]))
         )
 

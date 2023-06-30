@@ -42,6 +42,10 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             )
             return self
 
+        def add_part(self, part: Any) -> "DctermsPropertiesMixin.Builder":
+            self.add(DCTERMS.hasPart, part)
+            return self
+
         def add_identifier(self, identifier: str) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.identifier, identifier)
             return self
@@ -94,6 +98,9 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             self.set(DCTERMS.identifier, identifier)
             return self
 
+        def set_label(self, label: str) -> "DctermsPropertiesMixin.Builder":
+            return self.set_title(label)
+
         def set_modified(self, modified: datetime) -> "DctermsPropertiesMixin.Builder":
             self.set(DCTERMS.modified, modified)
             return self
@@ -134,6 +141,7 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
                 "@id": str(DCTERMS.created),
                 "@type": str(XSD.dateTime),
             },
+            "hasPart": {"@id": str(DCTERMS.hasPart), "@type": "@id"},
             "modified": {
                 "@id": str(DCTERMS.modified),
                 "@type": str(XSD.dateTime),

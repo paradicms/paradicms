@@ -1,13 +1,13 @@
 import logging
 from typing import Dict, Any, Iterable, Union
 
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from rdflib import URIRef
 
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.loaders.nop_loader import nop_loader
-from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.dc.dc_collection import DcCollection
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -56,7 +56,7 @@ class CostumeCoreDataAirtableTransformer:
                 properties_by_label[property_.label] = property_
                 yield property_
 
-        collection_builder = CmsCollection.builder(
+        collection_builder = DcCollection.builder(
             title=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
         )
 
@@ -69,7 +69,7 @@ class CostumeCoreDataAirtableTransformer:
             term_records=records_by_table["Terms"],
         ):
             yield model
-            if isinstance(model, CmsWork):
+            if isinstance(model, DcPhysicalObject):
                 collection_builder.add_work(model)
 
         yield collection_builder.build()
@@ -101,7 +101,7 @@ class CostumeCoreDataAirtableTransformer:
                 )
             )
 
-            work_builder = CmsWork.builder(
+            work_builder = DcPhysicalObject.builder(
                 # rights=Rights.from_properties(properties),
                 title=object_record["fields"]["Title"],
                 uri=work_uri,

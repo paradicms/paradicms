@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Optional, Tuple, Dict, List, Iterable, Union
 from urllib.parse import quote
 
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from rdflib import DCTERMS, Literal, URIRef, SDO
 
 from paradicms_etl.enricher import Enricher
@@ -16,14 +17,13 @@ from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
-from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_collection import DcCollection
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_text import DcText
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
@@ -369,10 +369,10 @@ class SyntheticDataPipeline(Pipeline):
                 collection_name = f"Collection{collection_i}"
                 collection_uri = URIRef(f"http://example.com/collection{collection_i}")
                 collection_builder: Union[
-                    CmsCollection.Builder, SchemaCollection.Builder
+                    DcCollection.Builder, SchemaCollection.Builder
                 ]
                 if collection_i % 2 == 0:
-                    collection_builder = CmsCollection.builder(
+                    collection_builder = DcCollection.builder(
                         title=collection_name, uri=collection_uri
                     )
                 else:
@@ -546,9 +546,9 @@ class SyntheticDataPipeline(Pipeline):
             work_rights_holder = f"{work_title} rights holder"
             work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU.uri
 
-            work_builder: Union[CmsWork.Builder, SchemaCreativeWork.Builder]
+            work_builder: Union[DcPhysicalObject.Builder, SchemaCreativeWork.Builder]
             if work_i % 2 == 0:
-                work_builder = CmsWork.builder(title=work_title, uri=work_uri)
+                work_builder = DcPhysicalObject.builder(title=work_title, uri=work_uri)
                 for work_alternative_title in work_alternative_titles:
                     work_builder.add_alternative_title(work_alternative_title)
                 for work_identifier in work_identifiers:
@@ -617,7 +617,7 @@ class SyntheticDataPipeline(Pipeline):
                 )
 
             description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
-            if isinstance(work_builder, CmsWork.Builder):
+            if isinstance(work_builder, DcPhysicalObject.Builder):
                 description_builder = DcText.builder(
                     self.__LOREM_IPSUM,
                 )
@@ -635,7 +635,7 @@ class SyntheticDataPipeline(Pipeline):
 
             work_builder.set_description(description)
 
-            if isinstance(work_builder, CmsWork.Builder):
+            if isinstance(work_builder, DcPhysicalObject.Builder):
                 work_builder.set_location(named_location)
             else:
                 work_builder.add_spatial(named_location)

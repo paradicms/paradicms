@@ -5,9 +5,7 @@ from rdflib import URIRef
 from stringcase import snakecase
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons.creative_commons_license import (
@@ -16,10 +14,11 @@ from paradicms_etl.models.creative_commons.creative_commons_license import (
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_collection import DcCollection
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
-from paradicms_etl.models.event import Event
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
 from paradicms_etl.models.image import Image
@@ -112,39 +111,13 @@ class ReferenceValidator:
             uri_type="agent",
         )
 
-    def _validate_cms_collection(
-        self, collection: CmsCollection
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_collection(collection)
-
-    def _validate_cms_collection_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def __validate_cms_event(self, event: Event) -> Iterable[ValidationResult]:
-        return ()
-
-    def _validate_cms_image(self, image: DcImage) -> Iterable[ValidationResult]:
-        yield from self.__validate_image(image)
-
-    def _validate_cms_image_references(self) -> Iterable[ValidationResult]:
-        return ()
-
     def _validate_cms_property_group(
         self, property_group: CmsPropertyGroup
     ) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_property_references(self) -> Iterable[ValidationResult]:
-        return ()
-
     def _validate_cms_property_group_references(self) -> Iterable[ValidationResult]:
         return ()
-
-    def _validate_cms_work(self, work: CmsWork) -> Iterable[ValidationResult]:
-        yield from self.__validate_work(work)
-
-    def _validate_cms_work_references(self) -> Iterable[ValidationResult]:
-        yield from self.__validate_work_references()
 
     def __validate_collection(self, collection: Collection):
         yield from self.__validate_named_model(collection)
@@ -170,6 +143,20 @@ class ReferenceValidator:
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_license_references()
 
+    def _validate_dc_collection(
+        self, collection: DcCollection
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_collection(collection)
+
+    def _validate_dc_collection_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_dc_image(self, image: DcImage) -> Iterable[ValidationResult]:
+        yield from self.__validate_image(image)
+
+    def _validate_dc_image_references(self) -> Iterable[ValidationResult]:
+        return ()
+
     def _validate_dc_license_document(
         self, license: DcLicenseDocument
     ) -> Iterable[ValidationResult]:
@@ -177,6 +164,14 @@ class ReferenceValidator:
 
     def _validate_dc_license_document_references(self) -> Iterable[ValidationResult]:
         yield from self.__validate_license_references()
+
+    def _validate_dc_physical_object(
+        self, work: DcPhysicalObject
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_work(work)
+
+    def _validate_dc_physical_object_references(self) -> Iterable[ValidationResult]:
+        yield from self.__validate_work_references()
 
     def _validate_dc_rights_statement(
         self, rights_statement: DcRightsStatement
