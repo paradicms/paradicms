@@ -26,7 +26,7 @@ class DcImagesMixin(ResourceBackedModelMixin, ImagesMixin):
         return tuple(
             subject
             for subject in self._resource.graph.subjects(
-                object=DCTERMS.source, predicate=self._resource.identifier
+                object=self._resource.identifier, predicate=DCTERMS.source
             )
             if isinstance(subject, URIRef)
         )
