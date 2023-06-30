@@ -1,8 +1,8 @@
 ---
 creator: md:foaf-person:test_person
 description:
+    copyrightHolder: md-foaf-person:test_person
     creator: md-foaf-person:test_person
-    rightsHolder: md-foaf-person:test_person
 license: http://creativecommons.org/licenses/by-sa/2.0/
 name: Test work 1
 rights: http://rightsstatements.org/vocab/InC/1.0/
