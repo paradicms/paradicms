@@ -25,7 +25,9 @@ class RdfConjunctiveGraphTransformer:
         self.__logger = logging.getLogger(__name__)
         if root_model_classes_by_name is None:
             root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
-        self.__root_model_classes_by_rdf_type_uri = {}
+        self.__root_model_classes_by_rdf_type_uri: Dict[
+            URIRef, Type[ResourceBackedModel]
+        ] = {}
         for root_model_class in root_model_classes_by_name.values():
             if (
                 root_model_class.rdf_type_uri()
