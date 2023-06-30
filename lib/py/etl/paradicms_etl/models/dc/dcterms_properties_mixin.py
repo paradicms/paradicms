@@ -3,6 +3,7 @@ from typing import Optional, Union, Any, Tuple
 
 from rdflib import DCTERMS, DCMITYPE, URIRef, XSD, OWL
 
+from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.location import Location
@@ -73,6 +74,10 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
 
         def set_created(self, created: datetime) -> "DctermsPropertiesMixin.Builder":
             self.set(DCTERMS.created, created)
+            return self
+
+        def set_date(self, date: DateTimeUnion) -> "CmsEvent.Builder":
+            self.set(DCTERMS.date, date)
             return self
 
         def set_description(

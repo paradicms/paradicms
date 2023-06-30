@@ -1,4 +1,4 @@
-from rdflib import URIRef, Graph
+from rdflib import URIRef, Graph, DCMITYPE
 from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
 
@@ -27,6 +27,10 @@ class DcPhysicalObject(DcNamedModel, Work):
     @property
     def label(self) -> str:
         return self.title
+
+    @classmethod
+    def rdf_type_uri(cls) -> URIRef:
+        return DCMITYPE.PhysicalObject
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
