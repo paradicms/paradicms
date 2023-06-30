@@ -25,10 +25,18 @@ class RdfConjunctiveGraphTransformer:
         self.__logger = logging.getLogger(__name__)
         if root_model_classes_by_name is None:
             root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
-        self.__root_model_classes_by_rdf_type_uri = {
-            root_model_class.rdf_type_uri(): root_model_class
-            for root_model_class in root_model_classes_by_name.values()
-        }
+        self.__root_model_classes_by_rdf_type_uri = {}
+        for root_model_class in root_model_classes_by_name.values():
+            if (
+                root_model_class.rdf_type_uri()
+                in self.__root_model_classes_by_rdf_type_uri
+            ):
+                raise ValueError(
+                    f"root model class {root_model_class.__name__} has duplicate rdf:type {root_model_class.rdf_type_uri()}"
+                )
+            self.__root_model_classes_by_rdf_type_uri[
+                root_model_class.rdf_type_uri()
+            ] = root_model_class
 
     def __call__(self, *, conjunctive_graph: ConjunctiveGraph) -> Iterable[Model]:
         for graph in conjunctive_graph.contexts():
