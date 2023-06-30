@@ -17,7 +17,6 @@ from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
@@ -632,32 +631,18 @@ class SyntheticDataPipeline(Pipeline):
 
             work_builder.set_description(description)
 
-            if work_i % 2 == 0:
-                anonymous_location = (
-                    CmsLocation.builder()
-                    .set_lat(42.728104)
-                    .set_long(-73.687576)
-                    .build()
-                )
-                named_location = (
-                    CmsLocation.builder(uri=URIRef(str(work_uri) + "Location"))
-                    .set_lat(42.728104)
-                    .set_long(-73.687576)
-                    .build()
-                )
-            else:
-                anonymous_location = (
-                    SchemaPlace.builder()
-                    .set_latitude(42.728104)
-                    .set_longitude(-73.687576)
-                    .build()
-                )
-                named_location = (
-                    SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
-                    .set_latitude(42.728104)
-                    .set_longitude(-73.687576)
-                    .build()
-                )
+            anonymous_location = (
+                SchemaPlace.builder()
+                .set_latitude(42.728104)
+                .set_longitude(-73.687576)
+                .build()
+            )
+            named_location = (
+                SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
+                .set_latitude(42.728104)
+                .set_longitude(-73.687576)
+                .build()
+            )
 
             yield named_location
             if isinstance(work_builder, CmsWork.Builder):

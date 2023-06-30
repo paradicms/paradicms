@@ -1,7 +1,6 @@
 from typing import Type, Dict, Tuple
 
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
@@ -34,13 +33,12 @@ from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     CmsCollection,
-    DcImage,
-    CmsLocation,
     CmsPropertyGroup,
     CmsWork,
     CmsWorkClosing,
     CmsWorkCreation,
     CmsWorkOpening,
+    DcImage,
     DcLicenseDocument,
     DcRightsStatement,
     CreativeCommonsLicense,

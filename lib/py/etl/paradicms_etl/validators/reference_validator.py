@@ -6,7 +6,7 @@ from stringcase import snakecase
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_location import CmsLocation
+from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
@@ -27,7 +27,6 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
@@ -133,16 +132,8 @@ class ReferenceValidator:
     def _validate_cms_image_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_location(
-        self, location: CmsLocation
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_location(location)
-
-    def _validate_cms_location_references(self) -> Iterable[ValidationResult]:
-        return ()
-
     def _validate_cms_property_group(
-        self, property_group: PropertyGroup
+        self, property_group: CmsPropertyGroup
     ) -> Iterable[ValidationResult]:
         return ()
 
