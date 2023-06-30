@@ -124,9 +124,9 @@ class ResourceBackedModel(Model):
             value_type = resource.value(RDF.type)
             if isinstance(value_type, Resource):
                 if value_type.identifier == CMS.Text:
-                    from paradicms_etl.models.cms.cms_text import CmsText
+                    from paradicms_etl.models.dc.dc_text import DcText
 
-                    return CmsText(value)
+                    return DcText(value)
                 elif value_type.identifier == SDO.TextObject:
                     from paradicms_etl.models.schema.schema_text_object import (
                         SchemaTextObject,

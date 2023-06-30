@@ -22,7 +22,6 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
@@ -31,6 +30,7 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
 )
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
+from paradicms_etl.models.dc.dc_text import DcText
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
@@ -329,7 +329,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_description_fields_to_text(
         self, *, record_fields: Dict[str, Union[str, List[str], None]]
-    ) -> Optional[CmsText]:
+    ) -> Optional[DcText]:
         description_text_en = record_fields.get("description_text_en")
         if not description_text_en:
             return None
@@ -337,7 +337,7 @@ class CostumeCoreOntologyAirtableTransformer:
         return self.__transform_rights_fields_to_rights(
             key_prefix="description",
             record_fields=record_fields,
-            model_builder=CmsText.builder(description_text_en),
+            model_builder=DcText.builder(description_text_en),
         ).build()
 
     @staticmethod

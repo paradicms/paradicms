@@ -19,7 +19,6 @@ from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
 from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
@@ -30,6 +29,7 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
 from paradicms_etl.models.dc.dc_image import DcImage
+from paradicms_etl.models.dc.dc_text import DcText
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
 from paradicms_etl.models.image import Image
@@ -385,7 +385,7 @@ class SyntheticDataPipeline(Pipeline):
                         uri=collection_uri,
                     )
 
-                description_builder = CmsText.builder(self.__LOREM_IPSUM)
+                description_builder = DcText.builder(self.__LOREM_IPSUM)
                 description_builder.add_rights_holder(
                     f"{collection_name} description rights holder"
                 ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
@@ -613,9 +613,9 @@ class SyntheticDataPipeline(Pipeline):
                     URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
                 )
 
-            description_builder: Union[CmsText.Builder, SchemaTextObject.Builder]
+            description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
             if isinstance(work_builder, CmsWork.Builder):
-                description_builder = CmsText.builder(
+                description_builder = DcText.builder(
                     self.__LOREM_IPSUM,
                 )
             elif isinstance(work_builder, SchemaCreativeWork.Builder):

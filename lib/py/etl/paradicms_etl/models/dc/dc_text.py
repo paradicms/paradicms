@@ -1,19 +1,18 @@
-from rdflib import RDF, Graph, BNode
+from rdflib import RDF, Graph, BNode, URIRef, DCMITYPE
 from rdflib.resource import Resource
 
-from paradicms_etl.models.cms.cms_model import CmsModel
-from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
+from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsText(CmsModel, CmsRightsMixin, Text):
-    class Builder(CmsModel.Builder, CmsRightsMixin.Builder):
-        def build(self) -> "CmsText":
-            return CmsText(self._resource)
+class DcText(DcModel, Text):
+    class Builder(DcModel.Builder):
+        def build(self) -> "DcText":
+            return DcText(self._resource)
 
     def __init__(self, resource: Resource):
-        CmsModel.__init__(self, resource)
+        DcModel.__init__(self, resource)
         self.value
 
     @classmethod
@@ -25,12 +24,15 @@ class CmsText(CmsModel, CmsRightsMixin, Text):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            CmsModel.json_ld_context(),
-            CmsRightsMixin.json_ld_context(),
+            DcModel.json_ld_context(),
             {
                 "value": {"@id": str(RDF.value)},
             },
         )
+
+    @classmethod
+    def rdf_type_uri(cls) -> URIRef:
+        return DCMITYPE.Text
 
     @property
     def value(self) -> str:
