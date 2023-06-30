@@ -13,9 +13,6 @@ from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
-    RightsStatementsDotOrgRightsStatement,
-)
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
@@ -39,7 +36,6 @@ __ROOT_MODEL_CLASSES: Tuple[Type[ResourceBackedModel], ...] = (
     FoafOrganization,
     FoafPerson,
     RdfProperty,
-    RightsStatementsDotOrgRightsStatement,
     SchemaCollection,
     SchemaCreativeWork,
     SchemaDefinedTerm,
