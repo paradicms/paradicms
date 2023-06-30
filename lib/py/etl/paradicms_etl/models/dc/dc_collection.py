@@ -4,12 +4,13 @@ from rdflib import URIRef, Graph, DCMITYPE
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.collection import Collection
+from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
 from paradicms_etl.models.dc.dc_named_model import DcNamedModel
 from paradicms_etl.models.work import Work
 
 
-class DcCollection(DcNamedModel, Collection):
-    class Builder(DcNamedModel.Builder, Collection.Builder):
+class DcCollection(DcNamedModel, DcImagesMixin, Collection):
+    class Builder(DcNamedModel.Builder, DcImagesMixin.Builder, Collection.Builder):
         def add_work(self, work: Union[Work, URIRef]) -> "DcCollection.Builder":
             # dcterms:hasPart is only supposed to be for sub-collections, hi-jacking it here
             self.add_part(work)

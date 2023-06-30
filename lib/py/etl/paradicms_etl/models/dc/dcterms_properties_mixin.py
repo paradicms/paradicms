@@ -4,8 +4,6 @@ from typing import Optional, Union, Any, Tuple
 from rdflib import DCTERMS, DCMITYPE, URIRef, XSD, OWL
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
-from paradicms_etl.models.image import Image
-from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
 from paradicms_etl.models.rights_mixin import RightsMixin
@@ -13,9 +11,7 @@ from paradicms_etl.models.text import Text
 
 
 class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
-    class Builder(
-        ResourceBackedModelMixin.Builder, ImagesMixin.Builder, RightsMixin.Builder
-    ):
+    class Builder(ResourceBackedModelMixin.Builder, RightsMixin.Builder):
         def add_alternative(self, alternative: str) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.alternative, alternative)
             return self
@@ -26,20 +22,6 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
 
         def add_creator(self, creator: Any) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.creator, creator)
-            return self
-
-        def add_image(
-            self, image: Union[Image, URIRef]
-        ) -> "DctermsPropertiesMixin.Builder":
-            # (image, dcterms:source, this) in this graph.
-            # Dublin Core doesn't have an inverse of dcterms:source.
-            if isinstance(image, Image):
-                image_uri = image.uri
-            else:
-                image_uri = image
-            self._resource.graph.add(
-                (image_uri, DCTERMS.source, self._resource.identifier)
-            )
             return self
 
         def add_part(self, part: Any) -> "DctermsPropertiesMixin.Builder":
@@ -172,16 +154,6 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
                 "@id": str(getattr(DCTERMS, property_))
             }
         return json_ld_context
-
-    @property
-    def image_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(
-            subject
-            for subject in self._resource.graph.subjects(
-                object=DCTERMS.source, predicate=self._resource.identifier
-            )
-            if isinstance(subject, URIRef)
-        )
 
     @property
     def licenses(self) -> Tuple[Union[str, URIRef], ...]:
