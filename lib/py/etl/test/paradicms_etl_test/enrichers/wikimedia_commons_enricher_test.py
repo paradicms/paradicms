@@ -37,8 +37,8 @@ def test_enrich(data_dir_path: Path, source: str):
         .set_source(URIRef(source))
         .build()
     )
-    assert unenriched_image.license is None
-    assert unenriched_image.rights_statement is None
+    assert not unenriched_image.licenses
+    assert not unenriched_image.rights_statements
     enriched_models = tuple(
         WikimediaCommonsEnricher(
             cache_dir_path=data_dir_path / "test" / "wikimedia_commons"
@@ -49,7 +49,7 @@ def test_enrich(data_dir_path: Path, source: str):
     assert isinstance(enriched_image, Image)
     assert enriched_image.uri == unenriched_image.uri
     assert enriched_image.creators
-    assert enriched_image.license
+    assert enriched_image.licenses
     # assert (
     #     enriched_image.rights_statement
     #     == RightsStatementsDotOrgRightsStatements.InC.uri

@@ -6,7 +6,6 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
 )
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 from paradicms_etl.models.work import Work
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -38,7 +37,6 @@ class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
         return safe_dict_update(
             SchemaNamedModel.json_ld_context(),
             SchemaCreativeWorkMixin.json_ld_context(),
-            {"event": {"@id": str(CMS.event), "@type": "@id"}},
         )
 
     @property

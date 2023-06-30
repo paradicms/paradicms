@@ -20,16 +20,16 @@ def test_rdf_type_uri(schema_image_object: SchemaImageObject):
     assert schema_image_object.rdf_type_uri() == SDO.ImageObject
 
 
-def test_source(schema_image_object: SchemaImageObject):
-    assert schema_image_object.source == URIRef("http://example.com/imagesource")
-
-
 def test_src(schema_image_object: SchemaImageObject):
     assert schema_image_object.src is None
 
 
-def thumbnail_uris(
+def test_thumbnail_uris(
     schema_image_object: SchemaImageObject, schema_thumbnail: SchemaImageObject
 ):
     assert schema_image_object.thumbnail_uris == (schema_thumbnail.uri,)
     assert not schema_thumbnail.thumbnail_uris
+
+
+def test_url(schema_image_object: SchemaImageObject):
+    assert schema_image_object.url == URIRef("http://example.com/imagesource")
