@@ -69,7 +69,7 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
 
     @classmethod
     def json_ld_context(cls):
-        return {
+        json_ld_context = {
             "dateCreated": {
                 "@id": str(SDO.dateCreated),
                 "@type": str(XSD.dateTime),
@@ -79,6 +79,21 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
                 "@type": str(XSD.dateTime),
             },
         }
+        for property_ in (
+            "copyrightHolder",
+            "contributor",
+            "creator",
+            "license",
+            "usageInfo",
+        ):
+            json_ld_context[property_] = {
+                "@id": str(getattr(SDO, property_)),
+                "@type": "@id",
+            }
+            json_ld_context[property_ + "Literal"] = {
+                "@id": str(getattr(SDO, property_))
+            }
+        return json_ld_context
 
     @property
     def licenses(self) -> Tuple[Union[str, URIRef], ...]:
