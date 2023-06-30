@@ -6,9 +6,9 @@ from rdflib import URIRef
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
@@ -163,13 +163,13 @@ class CostumeCoreDataAirtableTransformer:
     @staticmethod
     def __transform_object_images(*, object_images) -> Iterable[Image]:
         for object_image in object_images:
-            original_image_builder = CmsImage.builder(
+            original_image_builder = DcImage.builder(
                 uri=URIRef(object_image["url"]),
             )
 
             for thumbnail in object_image["thumbnails"].values():
                 thumbnail_image = (
-                    CmsImage.builder(
+                    DcImage.builder(
                         uri=URIRef(thumbnail["url"]),
                     )
                     .set_exact_dimensions(

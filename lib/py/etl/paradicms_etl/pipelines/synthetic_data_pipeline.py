@@ -17,7 +17,6 @@ from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_text import CmsText
@@ -30,6 +29,7 @@ from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
 from paradicms_etl.models.image import Image
@@ -303,11 +303,11 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
                 original_image_builder: Union[
-                    CmsImage.Builder, SchemaImageObject.Builder
+                    DcImage.Builder, SchemaImageObject.Builder
                 ]
                 if image_i % 2 == 0:
                     original_image_builder = (
-                        CmsImage.builder(
+                        DcImage.builder(
                             uri=original_image_uri,
                         )
                         .set_exact_dimensions(original_image_exact_dimensions)
@@ -341,7 +341,7 @@ class SyntheticDataPipeline(Pipeline):
                     ImageDimensions(800, 800),
                 ):
                     thumbnail = (
-                        CmsImage.builder(
+                        DcImage.builder(
                             uri=URIRef(
                                 str(original_image_builder.uri)
                                 + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"

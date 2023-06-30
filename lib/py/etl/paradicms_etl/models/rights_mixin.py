@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-from typing import Union, Tuple, Any, Optional
+from typing import Union, Tuple, Any
 
 from rdflib import URIRef
 
@@ -36,12 +36,12 @@ class RightsMixin(ABC):
                 self.add_contributor(contributor)
             for creator in other.creators:
                 self.add_creator(creator)
-            for holder in other.rights_holders:
-                self.add_rights_holder(holder)
-            if other.license:
-                self.add_license(other.license)
-            if other.rights_statement:
-                self.add_rights_statement(other.rights_statement)
+            for license_ in other.licenses:
+                self.add_license(license_)
+            for rights_holder in other.rights_holders:
+                self.add_rights_holder(rights_holder)
+            for rights_statement in other.rights_statements:
+                self.add_rights_statement(rights_statement)
             return self
 
     @property
@@ -56,7 +56,7 @@ class RightsMixin(ABC):
 
     @property
     @abstractmethod
-    def license(self) -> Union[str, URIRef, None]:
+    def licenses(self) -> Tuple[Union[str, URIRef], ...]:
         raise NotImplementedError
 
     @property
@@ -66,10 +66,5 @@ class RightsMixin(ABC):
 
     @property
     @abstractmethod
-    def rights_statement(self) -> Union[str, URIRef, None]:
-        raise NotImplementedError
-
-    @property
-    @abstractmethod
-    def source(self) -> Optional[URIRef]:
+    def rights_statements(self) -> Tuple[Union[str, URIRef], ...]:
         raise NotImplementedError

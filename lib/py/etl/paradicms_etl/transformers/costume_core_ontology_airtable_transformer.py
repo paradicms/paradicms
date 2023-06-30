@@ -20,10 +20,8 @@ from rdflib import URIRef, Literal
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
 from paradicms_etl.models.cms.cms_text import CmsText
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
@@ -31,12 +29,14 @@ from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -44,7 +44,7 @@ from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 
-_RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=CmsRightsMixin.Builder)
+_RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=RightsMixin.Builder)
 
 
 class CostumeCoreOntologyAirtableTransformer:
@@ -57,10 +57,10 @@ class CostumeCoreOntologyAirtableTransformer:
     coming out of this transformer.
 
     The different types of yielded models are:
-    - CmsCollection, CmsImage, and CmsWork to build a faceted browser for the Costume Core ontology itself
+    - CmsCollection, DcImage, and CmsWork to build a faceted browser for the Costume Core ontology itself
     - CostumeCoreOntology, CostumeCoreOntology.Predicate, and CostumeCoreOntology.Term to build an RDF/OWL version of the Costume Core
         ontology
-    - SkosConcept (formerly WorksheetFeatureValue), CmsImage, RdfProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
+    - SkosConcept (formerly WorksheetFeatureValue), DcImage, RdfProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
 
@@ -649,7 +649,7 @@ class CostumeCoreOntologyAirtableTransformer:
                 yield self.__transform_rights_fields_to_rights(
                     key_prefix="image",
                     record_fields=image_record["fields"],
-                    model_builder=CmsImage.builder(
+                    model_builder=DcImage.builder(
                         uri=URIRef(
                             ":".join(
                                 (

@@ -4,8 +4,8 @@ from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
     CostumeCoreDataAirtableExtractor,
 )
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_work import CmsWork
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.transformers.costume_core_data_airtable_transformer import (
@@ -29,6 +29,6 @@ def test_transform(data_dir_path: Path):
     assert len(model_types) == 5
     assert CmsCollection in model_types
     assert SkosConcept in model_types
-    assert CmsImage in model_types
+    assert DcImage in model_types
     assert RdfProperty in model_types
     assert CmsWork in model_types

@@ -4,7 +4,7 @@ import pytest
 from rdflib import URIRef
 
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
-from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.image import Image
 
 
@@ -31,7 +31,7 @@ from paradicms_etl.models.image import Image
 )
 def test_enrich(data_dir_path: Path, source: str):
     unenriched_image = (
-        CmsImage.builder(
+        DcImage.builder(
             uri=URIRef("http://example.com/Image"),
         )
         .set_source(URIRef(source))

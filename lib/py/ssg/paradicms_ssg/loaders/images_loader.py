@@ -8,7 +8,7 @@ from pathvalidate import sanitize_filename
 from rdflib import URIRef
 from tqdm import tqdm
 
-from paradicms_etl.models.cms.cms_image import CmsImage
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_ssg.image_archiver import ImageArchiver
@@ -119,7 +119,7 @@ class ImagesLoader:
             )
 
             archived_thumbnail_images.append(
-                CmsImage.builder(
+                DcImage.builder(
                     uri=archived_thumbnail_uri,
                 )
                 .copy_rights(original_image)

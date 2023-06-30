@@ -6,7 +6,6 @@ from stringcase import snakecase
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.collection import Collection
@@ -17,6 +16,7 @@ from paradicms_etl.models.creative_commons.creative_commons_license import (
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
 from paradicms_etl.models.event import Event
@@ -127,7 +127,7 @@ class ReferenceValidator:
     def __validate_cms_event(self, event: Event) -> Iterable[ValidationResult]:
         return ()
 
-    def _validate_cms_image(self, image: CmsImage) -> Iterable[ValidationResult]:
+    def _validate_cms_image(self, image: DcImage) -> Iterable[ValidationResult]:
         yield from self.__validate_image(image)
 
     def _validate_cms_image_references(self) -> Iterable[ValidationResult]:
@@ -312,10 +312,12 @@ class ReferenceValidator:
             for agent in agents:
                 if isinstance(agent, URIRef):
                     self.__referenced_agent_uris.add(agent)
-        if isinstance(rights.license, URIRef):
-            self.__referenced_license_uris.add(rights.license)
-        if isinstance(rights.rights_statement, URIRef):
-            self.__referenced_rights_statement_uris.add(rights.rights_statement)
+        for license_ in rights.licenses:
+            if isinstance(license_, URIRef):
+                self.__referenced_license_uris.add(license_)
+        for rights_statement in rights.rights_statements:
+            if isinstance(rights_statement, URIRef):
+                self.__referenced_rights_statement_uris.add(rights_statement)
         return ()
 
     def __validate_rights_statement(
