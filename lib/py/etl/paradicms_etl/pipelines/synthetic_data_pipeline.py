@@ -19,9 +19,6 @@ from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.cms.cms_work import CmsWork
-from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
-from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
-from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
@@ -517,6 +514,21 @@ class SyntheticDataPipeline(Pipeline):
         ) -> Iterable[Union[Image, Location, Work, WorkEvent]]:
             work_i = self.__next_work_i
             self.__next_work_i += 1
+            work_uri = URIRef(uri_prefix + str(work_i))
+
+            anonymous_location = (
+                SchemaPlace.builder()
+                .set_latitude(42.728104)
+                .set_longitude(-73.687576)
+                .build()
+            )
+            named_location = (
+                SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
+                .set_latitude(42.728104)
+                .set_longitude(-73.687576)
+                .build()
+            )
+            yield named_location
 
             work_destruction_date = date(day=1, month=1, year=2022)
             work_creation_date = work_destruction_date - timedelta(days=work_i)
@@ -533,7 +545,6 @@ class SyntheticDataPipeline(Pipeline):
             work_provenance = f"{work_title} provenance"
             work_rights_holder = f"{work_title} rights holder"
             work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-            work_uri = URIRef(uri_prefix + str(work_i))
 
             work_builder: Union[CmsWork.Builder, SchemaCreativeWork.Builder]
             if work_i % 2 == 0:
@@ -543,39 +554,32 @@ class SyntheticDataPipeline(Pipeline):
                 for work_identifier in work_identifiers:
                     work_builder.add_identifier(work_identifier)
                 # work_builder.set_date_created(work_creation_date)
-                work_builder.add_license(work_license)
                 work_builder.add_provenance(work_provenance)
-                work_builder.add_rights_holder(work_rights_holder)
-                work_builder.add_rights_statement(work_rights_statement)
+                properties = tuple(
+                    property_
+                    for property_ in self.__PROPERTIES
+                    if str(property_.uri).startswith(str(DCTERMS))
+                )
             else:
                 work_builder = SchemaCreativeWork.builder(name=work_title, uri=work_uri)
                 for work_alternative_title in work_alternative_titles:
                     work_builder.add_alternate_name(work_alternative_title)
                 # for work_identifier in work_identifiers:
                 #     work_builder.add_identifier(work_identifier)
-                work_builder.add_license(work_license)
                 # work_builder.add_provenance(work_provenance)
                 work_builder.set_date_created(work_creation_date)
-                work_builder.add_rights_holder(work_rights_holder)
-                work_builder.add_rights_statement(work_rights_statement)
                 work_builder.add_url(work_page)
-
-            # Faceted literal properties, which are the same across works
-            if isinstance(work_builder, CmsWork.Builder):
-                properties = tuple(
-                    property_
-                    for property_ in self.__PROPERTIES
-                    if str(property_.uri).startswith(str(DCTERMS))
-                )
-            elif isinstance(work_builder, SchemaCreativeWork.Builder):
                 properties = tuple(
                     property_
                     for property_ in self.__PROPERTIES
                     if str(property_.uri).startswith(str(SDO))
                 )
-            else:
-                raise NotImplementedError
 
+            work_builder.add_license(work_license)
+            work_builder.add_rights_holder(work_rights_holder)
+            work_builder.add_rights_statement(work_rights_statement)
+
+            # Faceted literal properties, which are the same across works
             for property_ in properties:
                 if not property_.values:
                     continue
@@ -631,20 +635,6 @@ class SyntheticDataPipeline(Pipeline):
 
             work_builder.set_description(description)
 
-            anonymous_location = (
-                SchemaPlace.builder()
-                .set_latitude(42.728104)
-                .set_longitude(-73.687576)
-                .build()
-            )
-            named_location = (
-                SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
-                .set_latitude(42.728104)
-                .set_longitude(-73.687576)
-                .build()
-            )
-
-            yield named_location
             if isinstance(work_builder, CmsWork.Builder):
                 work_builder.set_location(named_location)
             else:
@@ -656,42 +646,6 @@ class SyntheticDataPipeline(Pipeline):
             ):
                 yield image
                 work_builder.add_image(image)
-
-            # Anonymous event
-            work_builder.add_event(
-                CmsWorkClosing.builder()
-                .set_description(description)
-                .set_date(work_destruction_date)
-                .set_location(anonymous_location)
-                .set_title(f"{work_title} closing")
-                .build()
-            )
-
-            work_creation_builder: CmsWorkCreation.Builder = (
-                CmsWorkCreation.builder(uri=URIRef(str(work_uri) + "Creation"))
-                .set_date(work_creation_date_time_description)
-                .set_description(description)
-                .set_location(named_location)
-                .set_title(f"{work_title} creation")
-            )
-            # for contributor in contributor_uris:
-            #     work_creation_builder.add_contributor_uri(contributor_uri)
-            for creator_uri in creator_uris:
-                work_creation_builder.add_creator(creator_uri)
-            work_creation = work_creation_builder.build()
-            yield work_creation
-            work_builder.add_event(work_creation)
-
-            work_opening = (
-                CmsWorkOpening.builder(uri=URIRef(str(work_uri) + "Opening"))
-                .set_description(description)
-                .set_date(work_creation_date)
-                .set_location(anonymous_location)
-                .set_title(f"{work_title} opening")
-                .build()
-            )
-            yield work_opening
-            work_builder.add_event(work_opening)
 
             yield work_builder.build()
 

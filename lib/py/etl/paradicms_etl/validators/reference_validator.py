@@ -39,9 +39,6 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_closing import WorkClosing
-from paradicms_etl.models.work_creation import WorkCreation
-from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.validation_result import ValidationResult
 
 
@@ -145,35 +142,6 @@ class ReferenceValidator:
 
     def _validate_cms_work(self, work: CmsWork) -> Iterable[ValidationResult]:
         yield from self.__validate_work(work)
-
-    def _validate_cms_work_closing(
-        self, work_closing: WorkClosing
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_work_event(work_closing)
-
-    def _validate_cms_work_closing_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def _validate_cms_work_creation(
-        self, work_creation: WorkCreation
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_work_event(work_creation)
-
-    def _validate_cms_work_creation_references(self) -> Iterable[ValidationResult]:
-        return ()
-
-    def __validate_cms_work_event(
-        self, work_event: WorkEvent
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_event(work_event)
-
-    def _validate_cms_work_opening(
-        self, work_opening: WorkClosing
-    ) -> Iterable[ValidationResult]:
-        yield from self.__validate_cms_work_event(work_opening)
-
-    def _validate_cms_work_opening_references(self) -> Iterable[ValidationResult]:
-        return ()
 
     def _validate_cms_work_references(self) -> Iterable[ValidationResult]:
         yield from self.__validate_work_references()

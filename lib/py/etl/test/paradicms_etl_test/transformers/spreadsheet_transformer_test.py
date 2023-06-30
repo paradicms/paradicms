@@ -32,7 +32,6 @@ def __check_test_data_models(models: Tuple[Model, ...]):
         for work_creation in models
         if isinstance(work_creation, WorkCreation)
     )
-    assert work.event_uris == (work_creation.uri,)
     work_creation_date = (
         work_creation.to_rdf(graph=Graph()).value(DCTERMS.date).toPython()
     )
