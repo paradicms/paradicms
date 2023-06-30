@@ -32,14 +32,16 @@ def test_transform(data_dir_path: Path):
     }
     assert len(collections) == 1
     collection = tuple(collections.values())[0]
-    assert collection.title == "Override default collection title"
+    assert collection.label == "Override default collection title"
 
     works = {model.uri: model for model in models if isinstance(model, Work)}
     assert len(works) == 2
-    work1 = works[URIRef("urn:directory:test:cms-work:test_work1")]
-    work2 = works[URIRef("urn:directory:test:cms-work:test_work2")]
+    work1 = works[URIRef("urn:directory:test:schema-creative-work:test_work1")]
+    work2 = works[URIRef("urn:directory:test:schema-creative-work:test_work2")]
 
-    assert work2.image_uris == (URIRef("urn:directory:test:cms-image:test_work2"),)
+    assert work2.image_uris == (
+        URIRef("urn:directory:test:schema-image-object:test_work2"),
+    )
 
     work1_description = work1.description
     assert work1_description is not None

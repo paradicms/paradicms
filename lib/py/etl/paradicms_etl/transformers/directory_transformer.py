@@ -143,7 +143,12 @@ class DirectoryTransformer:
             if not transformed_images_by_id:
                 return
 
-            for transformed_models_by_id in self.__transformed_models_by_class.values():
+            for (
+                transformed_model_class,
+                transformed_models_by_id,
+            ) in self.__transformed_models_by_class.items():
+                if issubclass(transformed_model_class, Image):
+                    continue
                 for transformed_model_id in tuple(transformed_models_by_id.keys()):
                     transformed_model = transformed_models_by_id[transformed_model_id]
                     if not isinstance(transformed_model, ImagesMixin):
@@ -241,58 +246,56 @@ class DirectoryTransformer:
                         metadata_file_entry.model_id
                     ] = collection
 
-                transformed_works_by_id: Dict[str, Work] = {}
-                for (
-                    work_root_model_class
-                ) in self.__root_model_classes_by_interface_type(Work):
-                    transformed_works_by_id.update(
-                        self.__transformed_models_by_class.get(
-                            work_root_model_class, {}  # type: ignore
-                        )
-                    )  # type: ignore
-                if not transformed_works_by_id:
-                    return
+            transformed_works_by_id: Dict[str, Work] = {}
+            for work_root_model_class in self.__root_model_classes_by_interface_type(
+                Work
+            ):
+                transformed_works_by_id.update(
+                    self.__transformed_models_by_class.get(
+                        work_root_model_class, {}  # type: ignore
+                    )
+                )  # type: ignore
+            if not transformed_works_by_id:
+                return
 
-                if not transformed_collections_by_id:
-                    # No collections transformed
-                    # Synthesize a default collection and put all the works in it
-                    default_collection_model_id = self.__directory_name
+            if not transformed_collections_by_id:
+                # No collections transformed
+                # Synthesize a default collection and put all the works in it
+                default_collection_model_id = self.__directory_name
+                transformed_collections_by_id[
+                    default_collection_model_id
+                ] = SchemaCollection.builder(
+                    name=self.__directory_name,
+                    uri=self.__model_uri(
+                        model_class=SchemaCollection,
+                        model_id=default_collection_model_id,
+                    ),
+                ).build()
+                self.__logger.info(
+                    "synthesized default collection %s", default_collection_model_id
+                )
+
+            if len(transformed_collections_by_id) == 1:
+                transformed_collection_model_id, transformed_collection = tuple(
+                    transformed_collections_by_id.items()
+                )[0]
+                if not transformed_collection.work_uris:
+                    # Put all the works in the single collection
+                    transformed_collection_replacer = transformed_collection.replacer()
+                    for work in transformed_works_by_id.values():
+                        transformed_collection_replacer.add_work(work)
                     transformed_collections_by_id[
-                        default_collection_model_id
-                    ] = SchemaCollection.builder(
-                        name=self.__directory_name,
-                        uri=self.__model_uri(
-                            model_class=SchemaCollection,
-                            model_id=default_collection_model_id,
-                        ),
-                    ).build()
-                    self.__logger.info(
-                        "synthesized default collection %s", default_collection_model_id
-                    )
+                        transformed_collection_model_id
+                    ] = transformed_collection_replacer.build()
 
-                if len(transformed_collections_by_id) == 1:
-                    transformed_collection_model_id, transformed_collection = tuple(
-                        transformed_collections_by_id.items()
-                    )[0]
-                    if not transformed_collection.work_uris:
-                        # Put all the works in the single collection
-                        transformed_collection_replacer = (
-                            transformed_collection.replacer()
-                        )
-                        for work in transformed_works_by_id.values():
-                            transformed_collection_replacer.add_work(work)
-                        transformed_collections_by_id[
-                            transformed_collection_model_id
-                        ] = transformed_collection_replacer.build()
-
-                for (
-                    transformed_collection_model_id,
-                    transformed_collection,
-                ) in transformed_collections_by_id.items():
-                    self.__buffer_transformed_model(
-                        model_id=transformed_collection_model_id,
-                        transformed_model=transformed_collection,
-                    )
+            for (
+                transformed_collection_model_id,
+                transformed_collection,
+            ) in transformed_collections_by_id.items():
+                self.__buffer_transformed_model(
+                    model_id=transformed_collection_model_id,
+                    transformed_model=transformed_collection,
+                )
 
         def __transform_image_metadata_file_entries(self) -> None:
             for image_root_model_class in self.__root_model_classes_by_interface_type(
