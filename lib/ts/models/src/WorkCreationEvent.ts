@@ -3,7 +3,7 @@ import {ContributorsMixin} from "./ContributorsMixin";
 import {CreatorsMixin} from "./CreatorsMixin";
 import {AgentUnion} from "./AgentUnion";
 
-export interface WorkCreation
+export interface WorkCreationEvent
   extends WorkEvent,
     ContributorsMixin,
     CreatorsMixin {

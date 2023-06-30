@@ -11,7 +11,6 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelReader {
   readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null;
@@ -27,6 +26,5 @@ export interface ModelReader {
   readNamedRightsStatements(kwds: {
     modelSet: ModelSet;
   }): readonly RightsStatement[];
-  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[];
   readWorks(kwds: {modelSet: ModelSet}): readonly Work[];
 }

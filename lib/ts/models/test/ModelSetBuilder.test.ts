@@ -6,11 +6,11 @@ import {
   Model,
   ModelSet,
   ModelSetBuilder,
-  WorkClosing,
-  WorkOpening,
+  WorkEndEvent,
+  WorkStartEvent,
 } from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {WorkCreation} from "../src/WorkCreation";
+import {WorkCreationEvent} from "../src/WorkCreationEvent";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";
@@ -272,10 +272,10 @@ describe("ModelSetBuilder", () => {
   it("should get a work events subset (work events timeline)", () => {
     const work = completeModelSet.works[0];
     // @ts-ignore
-    let workClosing: WorkClosing | undefined;
-    let workCreation: WorkCreation | undefined;
+    let workClosing: WorkEndEvent | undefined;
+    let workCreation: WorkCreationEvent | undefined;
     // @ts-ignore
-    let workOpening: WorkOpening | undefined;
+    let workOpening: WorkStartEvent | undefined;
     for (const workEvent of work.events) {
       switch (workEvent.type) {
         case "WorkClosing":

@@ -1,12 +1,12 @@
 import {SyntheticWorkEvent} from "./SyntheticWorkEvent";
-import {WorkCreation} from "../WorkCreation";
+import {WorkCreationEvent} from "../WorkCreationEvent";
 import {Mixin} from "ts-mixer";
 import {AgentUnion} from "../AgentUnion";
 import {SyntheticEventParameters} from "./SyntheticEventParameters";
 import {WorkLocationRole} from "../WorkLocationRole";
 
-export class SyntheticWorkCreation extends Mixin(SyntheticWorkEvent)
-  implements WorkCreation {
+export class SyntheticWorkCreationEvent extends Mixin(SyntheticWorkEvent)
+  implements WorkCreationEvent {
   readonly contributors: readonly AgentUnion[];
   readonly creators: readonly AgentUnion[];
 
