@@ -1,5 +1,3 @@
-from typing import Union
-
 from rdflib import URIRef, SDO, Graph
 from rdflib.resource import Resource
 
@@ -8,7 +6,6 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
 )
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
@@ -23,10 +20,6 @@ class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Work.Builder
     ):
-        def add_event(self, event: Union[WorkEvent, URIRef]):
-            self.add(CMS.event, event)
-            return self
-
         def build(self) -> "SchemaCreativeWork":
             return SchemaCreativeWork(self._resource)
 

@@ -49,7 +49,6 @@ from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.pipeline import Pipeline
 
 
@@ -363,7 +362,7 @@ class SyntheticDataPipeline(Pipeline):
             *,
             agents: Tuple[Agent, ...],
             concepts_by_value: Dict[str, Concept],
-        ) -> Iterable[Union[Collection, Image, Location, Work, WorkEvent]]:
+        ) -> Iterable[Union[Collection, Image, Location, Work]]:
             assert self.__collections >= 2
             for collection_i in range(self.__collections):
                 collection_name = f"Collection{collection_i}"
@@ -511,7 +510,7 @@ class SyntheticDataPipeline(Pipeline):
             concepts_by_value: Dict[str, Concept],
             title_prefix: str,
             uri_prefix: str,
-        ) -> Iterable[Union[Image, Location, Work, WorkEvent]]:
+        ) -> Iterable[Union[Image, Location, Work]]:
             work_i = self.__next_work_i
             self.__next_work_i += 1
             work_uri = URIRef(uri_prefix + str(work_i))

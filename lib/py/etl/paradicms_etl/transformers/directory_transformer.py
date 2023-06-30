@@ -20,10 +20,6 @@ from paradicms_etl.models.root_model_classes_by_name import (
     ROOT_MODEL_CLASSES_BY_NAME,
 )
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_closing import WorkClosing
-from paradicms_etl.models.work_creation import WorkCreation
-from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.models.work_opening import WorkOpening
 from paradicms_etl.utils.markdown_to_dict_transformer import (
     MarkdownToDictTransformer,
 )
@@ -190,7 +186,6 @@ class DirectoryTransformer:
         def __call__(self) -> Iterable[Model]:
             # Order is important
             self.__transform_image_metadata_file_entries()
-            self.__transform_work_event_metadata_file_entries()
             self.__transform_work_metadata_file_entries()
             self.__transform_collection_metadata_file_entries()
             self.__transform_other_metadata_file_entries()
@@ -414,18 +409,6 @@ class DirectoryTransformer:
         def __transform_work_metadata_file_entries(
             self,
         ):
-            transformed_work_events_by_id: Dict[str, List[WorkEvent]] = {}
-            for work_event_model_class in (WorkClosing, WorkCreation, WorkOpening):
-                for (
-                    work_event_model_id,
-                    work_event,
-                ) in self.__transformed_models_by_class.get(
-                    self.__root_model_class(work_event_model_class), {}
-                ).items():
-                    transformed_work_events_by_id.setdefault(
-                        work_event_model_id, []
-                    ).append(work_event)
-
             root_model_class = self.__root_model_class(Work)
             for (
                 metadata_file_entry
@@ -436,36 +419,10 @@ class DirectoryTransformer:
                     metadata_file_entry
                 )
 
-                transformed_work_events = transformed_work_events_by_id.get(
-                    metadata_file_entry.model_id
-                )
-                if transformed_work_events:
-                    work_replacer = work.replacer()
-                    for transformed_work_event in transformed_work_events:
-                        work_replacer.add_event(transformed_work_event)
-                    work = work_replacer.build()
-
                 self.__buffer_transformed_model(
                     model_id=metadata_file_entry.model_id,
                     transformed_model=work,
                 )
-
-        def __transform_work_event_metadata_file_entries(
-            self,
-        ):
-            for model_class in (WorkClosing, WorkCreation, WorkOpening):
-                root_model_class = self.__root_model_class(model_class)
-                for (
-                    metadata_file_entry
-                ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
-                    root_model_class, tuple()
-                ):
-                    self.__buffer_transformed_model(
-                        model_id=metadata_file_entry.model_id,
-                        transformed_model=self.__transform_metadata_file_entry_to_model(
-                            metadata_file_entry
-                        ),
-                    )
 
     def __call__(
         self,
