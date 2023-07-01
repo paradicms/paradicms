@@ -66,7 +66,7 @@ export const selectThumbnail = <
 
   if (candidateImages.length === 0) {
     // console.debug("no candidate images, returning null");
-    console.warn(
+    console.debug(
       "no acceptable thumbnail for selector",
       JSON.stringify(selector),
       "found in",
