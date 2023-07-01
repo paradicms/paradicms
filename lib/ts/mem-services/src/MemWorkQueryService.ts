@@ -457,11 +457,13 @@ export class MemWorkQueryService implements WorkQueryService {
 
     return {
       creators: image.creators.map(creator => creator.label),
-      license: image.license?.label ?? null,
+      licenses: image.licenses.map(license => license.label),
       exactDimensions: image.exactDimensions,
       maxDimensions: image.maxDimensions,
       rightsHolders: image.rightsHolders.map(holder => holder.label),
-      rightsStatement: image.rightsStatement?.label ?? null,
+      rightsStatements: image.rightsStatements.map(
+        rightsStatement => rightsStatement.label
+      ),
       src: imageSrc,
     };
   }

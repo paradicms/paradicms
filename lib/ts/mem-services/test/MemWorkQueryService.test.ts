@@ -246,8 +246,8 @@ describe("MemWorkQueryService", () => {
         expect(value).not.to.be.undefined;
         const thumbnail = value.thumbnail!;
         expect(thumbnail).not.to.be.undefined;
-        expect(thumbnail.license).not.to.be.null;
-        expect(thumbnail.rightsStatement).not.to.be.null;
+        expect(thumbnail.licenses).not.to.be.empty;
+        expect(thumbnail.rightsStatements).not.to.be.empty;
         return true;
       })
     ).to.be.true;
