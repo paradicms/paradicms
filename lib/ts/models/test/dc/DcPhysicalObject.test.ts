@@ -3,16 +3,16 @@ import {describe} from "mocha";
 import {behavesLikeWork} from "../behavesLikeWork";
 import {requireNonNull} from "@paradicms/utilities";
 import {testModelSet} from "../testModelSet";
-import {CmsWork} from "../../src/cms/CmsWork";
 import {dcterms} from "@paradicms/vocabularies";
+import {DcPhysicalObject} from "../../src/dc/DcPhysicalObject";
 
-describe("CmsWork", () => {
+describe("DcPhysicalObject", () => {
   const work = requireNonNull(
     testModelSet.workByIri("http://example.com/collection0/work2")
   );
 
   before(() => {
-    expect(work).to.be.instanceof(CmsWork);
+    expect(work).to.be.instanceof(DcPhysicalObject);
   });
 
   it("should get the work's Wikidata concept IRI", () => {

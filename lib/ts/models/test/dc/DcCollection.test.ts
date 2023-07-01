@@ -4,20 +4,20 @@ import {modelIdentifiersToKey} from "../../src/modelIdentifiersToKey";
 import {DataFactory} from "@paradicms/rdf";
 import {behavesLikeCollection} from "../behavesLikeCollection";
 import {requireNonNull} from "@paradicms/utilities";
-import {CmsCollection} from "../../src/cms/CmsCollection";
 import {testModelSet} from "../testModelSet";
+import {DcCollection} from "../../src/dc/DcCollection";
 
-describe("CmsCollection", () => {
-  const collection: CmsCollection = requireNonNull(
+describe("DcCollection", () => {
+  const collection: DcCollection = requireNonNull(
     testModelSet.collectionByKey(
       modelIdentifiersToKey([
         DataFactory.namedNode("http://example.com/collection0"),
       ])
     )
-  ) as CmsCollection;
+  ) as DcCollection;
 
   before(() => {
-    expect(collection).to.be.instanceof(CmsCollection);
+    expect(collection).to.be.instanceof(DcCollection);
   });
 
   it("should get the collection's title", () => {

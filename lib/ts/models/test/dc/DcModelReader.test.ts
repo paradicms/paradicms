@@ -7,6 +7,14 @@ import {DcModelReader} from "../../src/dc/DcModelReader";
 describe("DcModelReader", () => {
   const sut = new DcModelReader(syntheticData);
 
+  it("should read at least one Collection", () => {
+    expect(sut.readCollections({modelSet: dummyModelSet})).to.not.be.empty;
+  });
+
+  it("should read at least one Image", () => {
+    expect(sut.readImages({modelSet: dummyModelSet})).to.not.be.empty;
+  });
+
   it("should read no named Licenses", () => {
     expect(sut.readNamedLicenses({modelSet: dummyModelSet})).to.be.empty;
   });
@@ -20,5 +28,9 @@ describe("DcModelReader", () => {
       expect(rightsStatement.iris).not.to.be.empty;
       expect(rightsStatement.label).not.to.be.empty;
     }
+  });
+
+  it("should read at least one Work", () => {
+    expect(sut.readWorks({modelSet: dummyModelSet})).to.not.be.empty;
   });
 });
