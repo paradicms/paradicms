@@ -1,9 +1,9 @@
-from datetime import datetime
 from typing import Optional, Union, Tuple
 
 from rdflib import Literal, URIRef, Graph, XSD, DCMITYPE
 from rdflib.namespace import DCTERMS
 
+from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.dc.dc_named_model import DcNamedModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
@@ -43,7 +43,7 @@ class DcImage(DcNamedModel, Image):
             self.set(CMS.imageCopyable, copyable)
             return self
 
-        def set_created(self, created: datetime) -> "DcImage.Builder":
+        def set_created(self, created: DateTimeUnion) -> "DcImage.Builder":
             super().set_created(created)
             return self
 
@@ -65,7 +65,7 @@ class DcImage(DcNamedModel, Image):
             self.set(CMS.imageMaxWidth, max_dimensions.width)
             return self
 
-        def set_modified(self, modified: datetime) -> "DcImage.Builder":
+        def set_modified(self, modified: DateTimeUnion) -> "DcImage.Builder":
             super().set_modified(modified)
             return self
 
