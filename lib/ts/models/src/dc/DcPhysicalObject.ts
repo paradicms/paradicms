@@ -94,7 +94,7 @@ export class DcPhysicalObject
     }
   }
 
-  // @Memoize()
+  @Memoize()
   get modified(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.modified, term =>
       mapTermToDateTimeDescription(this, term)
