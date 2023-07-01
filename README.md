@@ -106,6 +106,17 @@ script/ts/test
 ```
 
 
+## Debugging
+
+### Enabling source maps in TypeScript
+
+Change `inlineSourceMap` to `true` in `tsconfig.base.json`, then `yarn rebuild-lib`.
+
+URL source maps (`sourceMap: true`) don't currently work between Next.js and the TypeScript libraries.
+
+Disable `inlineSourceMap` again before pushing to production.
+
+
 ## Continuous Integration
 
 This repository uses [GitHub Actions](https://github.com/features/actions) for Continuous Integration and Deployment (CI/CD). See the `.github/workflows` directory for GitHub Actions workflow specifications.

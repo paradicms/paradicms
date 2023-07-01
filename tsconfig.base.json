@@ -9,6 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "jsx": "react",
+    "inlineSourceMap": false,
     "lib": [
       "es2019.array"
     ],
@@ -21,7 +22,6 @@
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
     "target": "es2015"
