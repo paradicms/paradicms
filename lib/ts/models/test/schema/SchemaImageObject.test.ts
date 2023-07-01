@@ -1,5 +1,5 @@
 import {describe} from "mocha";
-import {behavesLikeImage} from "../behavesLikeImage";
+import {behavesLikeOriginalImage} from "../behavesLikeOriginalImage";
 import {testModelSet} from "../testModelSet";
 import {expect} from "chai";
 import {requireNonNull} from "@paradicms/utilities";
@@ -15,5 +15,5 @@ describe("SchemaImageObject", () => {
     expect(image).to.be.instanceof(SchemaImageObject);
   });
 
-  behavesLikeImage(image);
+  behavesLikeOriginalImage(image);
 });

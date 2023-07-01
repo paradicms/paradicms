@@ -234,7 +234,9 @@ class SyntheticDataPipeline(Pipeline):
                 for image in self.__generate_images(
                     base_uri=organization_builder.uri, text_prefix="Organization"
                 ):
-                    organization_builder.add_image(image)
+                    if image.thumbnail_uris:
+                        # Only add original images
+                        organization_builder.add_image(image)
                     yield image
                 yield organization_builder.build()
 
@@ -274,7 +276,9 @@ class SyntheticDataPipeline(Pipeline):
                     base_uri=person_builder.uri, text_prefix="Person"
                 ):
                     yield image
-                    person_builder.add_image(image)
+                    if image.thumbnail_uris:
+                        # Only add original images
+                        person_builder.add_image(image)
 
                 yield person_builder.build()
 
@@ -394,7 +398,9 @@ class SyntheticDataPipeline(Pipeline):
                         text_prefix=collection_name,
                     ):
                         yield image
-                        collection_builder.add_image(image)
+                        if image.thumbnail_uris:
+                            # Only add original images
+                            collection_builder.add_image(image)
 
                 # For collection 0, force the GUI to use a work image
 
@@ -452,7 +458,9 @@ class SyntheticDataPipeline(Pipeline):
                         text_prefix=property_value,
                     ):
                         yield image
-                        concept_builder.add_image(image)
+                        if image.thumbnail_uris:
+                            # Only add original images
+                            concept_builder.add_image(image)
 
                     yield concept_builder.build()
 
@@ -470,7 +478,9 @@ class SyntheticDataPipeline(Pipeline):
                 text_prefix="Synthetic data properties",
             ):
                 yield image
-                property_group_builder.add_image(image)
+                if image.thumbnail_uris:
+                    # Only add original images
+                    property_group_builder.add_image(image)
 
             for property_ in self.__PROPERTIES:
                 property_model_builder: Union[
@@ -495,7 +505,9 @@ class SyntheticDataPipeline(Pipeline):
                     base_uri=property_model_builder.uri, text_prefix=property_.label
                 ):
                     yield image
-                    property_model_builder.add_image(image)
+                    if image.thumbnail_uris:
+                        # Only add original images
+                        property_model_builder.add_image(image)
 
                 property_model = property_model_builder.build()
                 yield property_model
@@ -643,7 +655,9 @@ class SyntheticDataPipeline(Pipeline):
                 text_prefix=work_title,
             ):
                 yield image
-                work_builder.add_image(image)
+                if image.thumbnail_uris:
+                    # Only add original images
+                    work_builder.add_image(image)
 
             yield work_builder.build()
 

@@ -229,7 +229,7 @@ describe("ModelSetBuilder", () => {
     }
     expect(workModelSet.concepts).to.have.length(16);
 
-    expect(countModelSetImages(workModelSet)).to.eq(13);
+    expect(countModelSetImages(workModelSet)).to.eq(5);
 
     expect(work.licenses).not.to.be.empty;
     expect(countModelSetNamedLicenses(workModelSet)).to.eq(2);

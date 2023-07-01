@@ -1,10 +1,10 @@
 import {expect} from "chai";
-import {Image, imagePlaceholderSrc} from "../src";
+import {Image, ImageDimensions, imagePlaceholderSrc} from "../src";
 import {it} from "mocha";
 import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
 
-export const behavesLikeImage = (image: Image) => {
+export const behavesLikeOriginalImage = (image: Image) => {
   it("should get image's dimensions", () => {
     expect(image.exactDimensions).to.not.be.null;
     expect(image.maxDimensions).to.be.null;
@@ -23,12 +23,24 @@ export const behavesLikeImage = (image: Image) => {
   });
 
   it("should get a thumbnail", () => {
-    expect(image.thumbnail({targetDimensions: {height: 200, width: 200}})).to
-      .not.be.null;
+    const allTargetDimensions: ImageDimensions[] = [
+      {height: 200, width: 200},
+      {height: 400, width: 400},
+      {height: 600, width: 600},
+      {height: 800, width: 800},
+    ];
+    for (const targetDimensions of allTargetDimensions) {
+      const thumbnail = image.thumbnail({
+        maxDimensions: targetDimensions,
+        targetDimensions,
+      });
+      expect(thumbnail).not.to.be.null;
+      expect(thumbnail!.exactDimensions).to.deep.eq(targetDimensions);
+    }
   });
 
   it("should get all thumbnails", () => {
-    expect(image.thumbnails).to.not.be.empty;
+    expect(image.thumbnails).to.have.length(4);
     for (const thumbnail of image.thumbnails) {
       expect(thumbnail.thumbnails).to.be.empty;
     }

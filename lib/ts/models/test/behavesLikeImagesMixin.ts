@@ -1,13 +1,14 @@
 import {it} from "mocha";
 import {expect} from "chai";
 import {ImagesMixin} from "../src/ImagesMixin";
-import {behavesLikeImage} from "./behavesLikeImage";
+import {behavesLikeOriginalImage} from "./behavesLikeOriginalImage";
 
 export const behavesLikeImagesMixin = (imagesMixin: ImagesMixin) => {
-  it("should have images that behave like images", () => {
+  it("should have original images that behave like images", () => {
     expect(imagesMixin.images).to.not.be.empty;
     for (const image of imagesMixin.images) {
-      behavesLikeImage(image);
+      behavesLikeOriginalImage(image);
+      expect(image.thumbnails).to.not.be.empty; // Only "original" images
     }
   });
 
@@ -16,6 +17,5 @@ export const behavesLikeImagesMixin = (imagesMixin: ImagesMixin) => {
       targetDimensions: {height: 600, width: 600},
     });
     expect(thumbnail).to.not.be.null;
-    behavesLikeImage(thumbnail!);
   });
 };

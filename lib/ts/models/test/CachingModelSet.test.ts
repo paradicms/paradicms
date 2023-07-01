@@ -21,7 +21,7 @@ describe("CachingModelSet", () => {
         }
 
         if (work.iris.length === 1) {
-          expect(work.images).to.have.length(10);
+          expect(work.images).to.have.length(2);
           for (const image of work.images) {
             for (const imageIri of image.iris) {
               expect(sut.imageByIri(imageIri)).to.eq(image);
