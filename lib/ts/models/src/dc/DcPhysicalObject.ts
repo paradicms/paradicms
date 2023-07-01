@@ -17,6 +17,10 @@ import {DcImagesMixin} from "./DcImagesMixin";
 import {DcRightsMixin} from "./DcRightsMixin";
 import {requireNonNull} from "@paradicms/utilities";
 import {mapTermToString} from "@paradicms/rdf";
+import {DateTimeDescription} from "DateTimeDescription";
+import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
+import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
 
 export class DcPhysicalObject
   extends Mixin(DcNamedModel, DcImagesMixin, DcRightsMixin, OwlSameAsMixin)
@@ -24,6 +28,13 @@ export class DcPhysicalObject
   @Memoize()
   get agents(): readonly WorkAgent[] {
     return getWorkAgents(this);
+  }
+
+  @Memoize()
+  get created(): DateTimeDescription | null {
+    return this.findAndMapObject(dcterms.created, term =>
+      mapTermToDateTimeDescription(this, term)
+    );
   }
 
   @Memoize()
@@ -40,10 +51,27 @@ export class DcPhysicalObject
 
   @Memoize()
   get events(): readonly WorkEventUnion[] {
-    return [];
-    // return this.filterAndMapObjects(cms.event, term =>
-    //   mapTermToWorkEvent(this, term)
-    // );
+    const events: WorkEventUnion[] = [];
+
+    if (this.created) {
+      events.push(
+        SyntheticWorkCreationEvent.fromWork({
+          date: this.created,
+          work: this,
+        })
+      );
+    }
+
+    if (this.modified) {
+      events.push(
+        SyntheticWorkModificationEvent.fromWork({
+          date: this.modified,
+          work: this,
+        })
+      );
+    }
+
+    return events;
   }
 
   get label(): string {
@@ -64,6 +92,13 @@ export class DcPhysicalObject
     } else {
       return null;
     }
+  }
+
+  // @Memoize()
+  get modified(): DateTimeDescription | null {
+    return this.findAndMapObject(dcterms.modified, term =>
+      mapTermToDateTimeDescription(this, term)
+    );
   }
 
   @Memoize()

@@ -1,5 +1,5 @@
 import {expect} from "chai";
-import {Text, Work} from "../src";
+import {Text, Work, WorkCreationEvent} from "../src";
 import {it} from "mocha";
 import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
@@ -45,6 +45,14 @@ export const behavesLikeWork = (
 
   it("should get the work's events", () => {
     expect(work.events).to.not.be.empty;
+    const workCreationEvent = work.events.find(
+      workEvent => workEvent.type === "WorkCreation"
+    ) as WorkCreationEvent;
+    expect(workCreationEvent).not.to.be.undefined;
+    const workModificationEvent = work.events.find(
+      workEvent => workEvent.type === "WorkModification"
+    );
+    expect(workModificationEvent).not.to.be.undefined;
   });
 
   it("should get the work's label", () => {

@@ -1,19 +1,14 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cc, cms, dcterms, foaf, schema} from "@paradicms/vocabularies";
+import {cc, dcmitype, dcterms, foaf, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {
-  Model,
-  ModelSet,
-  ModelSetBuilder,
-  WorkEndEvent,
-  WorkStartEvent,
-} from "../src";
+import {Model, ModelSet, ModelSetBuilder} from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {WorkCreationEvent} from "../src/WorkCreationEvent";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";
+import {WorkModificationEvent} from "../src/WorkModificationEvent";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -41,7 +36,7 @@ const countModelSetNamedAgents = (modelSet: ModelSet): number =>
   countModelSetNamedRdfInstances(schema.Person, modelSet);
 
 const countModelSetImages = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cms.Image, modelSet) +
+  countModelSetNamedRdfInstances(dcmitype.Image, modelSet) +
   countModelSetNamedRdfInstances(schema.ImageObject, modelSet);
 
 const countModelSetNamedLicenses = (modelSet: ModelSet): number =>
@@ -232,21 +227,18 @@ describe("ModelSetBuilder", () => {
         )
       );
     }
-    expect(workModelSet.concepts).to.have.length(14);
+    expect(workModelSet.concepts).to.have.length(16);
 
     expect(countModelSetImages(workModelSet)).to.eq(13);
 
-    expect(work.license).to.not.be.null;
+    expect(work.licenses).not.to.be.empty;
     expect(countModelSetNamedLicenses(workModelSet)).to.eq(2);
 
-    // There is no LocationPropertyValue, so exclude dcterms:spatial.
     expectModelsDeepEq(
       workModelSet.properties,
       completeModelSet.properties.filter(property =>
-        property.iris.some(
-          propertyIri =>
-            propertyIri.startsWith(dcterms[""].value) &&
-            propertyIri !== dcterms.spatial.value
+        property.iris.some(propertyIri =>
+          propertyIri.startsWith(dcterms[""].value)
         )
       )
     );
@@ -255,7 +247,7 @@ describe("ModelSetBuilder", () => {
       completeModelSet.propertyGroups
     );
 
-    expect(work.rightsStatement).to.not.be.null;
+    expect(work.rightsStatements).to.not.be.empty;
     expect(countModelSetRightsStatements(workModelSet)).to.eq(2);
 
     expectModelsDeepEq(workModelSet.works, [work]);
@@ -265,27 +257,24 @@ describe("ModelSetBuilder", () => {
       expect(work.location!.location.latitude).not.to.be.undefined;
     }
 
-    // expectModelsDeepEq(workModelSet.workEvents, work.events);
-    expect(work.events).to.have.length(3);
+    expect(work.events).to.have.length(2);
+    expect(work.events.find(workEvent => workEvent.type === "WorkCreation")).not
+      .to.be.undefined;
+    expect(work.events.find(workEvent => workEvent.type === "WorkModification"))
+      .not.to.be.undefined;
   });
 
   it("should get a work events subset (work events timeline)", () => {
     const work = completeModelSet.works[0];
-    // @ts-ignore
-    let workClosing: WorkEndEvent | undefined;
     let workCreation: WorkCreationEvent | undefined;
-    // @ts-ignore
-    let workOpening: WorkStartEvent | undefined;
+    let workModification: WorkModificationEvent | undefined;
     for (const workEvent of work.events) {
       switch (workEvent.type) {
-        case "WorkClosing":
-          workClosing = workEvent;
-          break;
         case "WorkCreation":
           workCreation = workEvent;
           break;
-        case "WorkOpening":
-          workOpening = workEvent;
+        case "WorkModification":
+          workModification = workEvent;
           break;
       }
     }
@@ -302,11 +291,11 @@ describe("ModelSetBuilder", () => {
     //   agents,
     //   workCreation!.agents.concat(work.agents.map(agent => agent.agent))
     // );
-    expectModelsDeepEq(workEvents, [workClosing!, workCreation!, workOpening!]);
-    for (const workEvent of workEvents) {
-      expect(workEvent.location).not.to.be.null;
-      expect(workEvent.location!.latitude).not.to.eq(0);
-      expect(workEvent.location!.longitude).not.to.eq(0);
-    }
+    expectModelsDeepEq(workEvents, [workCreation!, workModification!]);
+    // for (const workEvent of workEvents) {
+    //   expect(workEvent.location).not.to.be.null;
+    //   expect(workEvent.location!.latitude).not.to.eq(0);
+    //   expect(workEvent.location!.longitude).not.to.eq(0);
+    // }
   });
 });

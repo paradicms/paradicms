@@ -9,11 +9,6 @@ export const behavesLikeText = (text: Text) => {
     expect(text.value).to.not.be.empty;
   });
 
-  it("should have a license", () => {
-    const license = text.license;
-    expect(license).to.not.be.null;
-  });
-
   behavesLikeModel(text);
   behavesLikeRightsMixin(text);
 };

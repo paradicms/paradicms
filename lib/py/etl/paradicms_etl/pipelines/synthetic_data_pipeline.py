@@ -531,7 +531,7 @@ class SyntheticDataPipeline(Pipeline):
 
             work_destruction_date = date(day=1, month=1, year=2022)
             work_creation_date = work_destruction_date - timedelta(days=work_i)
-            work_creation_date_time_description = OwlTimeDateTimeDescription.from_date(
+            work_modification_date = OwlTimeDateTimeDescription.from_date(
                 work_creation_date
             )
             work_title = title_prefix + str(work_i)
@@ -552,8 +552,9 @@ class SyntheticDataPipeline(Pipeline):
                     work_builder.add_alternative(work_alternative_title)
                 for work_identifier in work_identifiers:
                     work_builder.add_identifier(work_identifier)
-                # work_builder.set_date_created(work_creation_date)
                 work_builder.add_provenance(work_provenance)
+                work_builder.set_created(work_creation_date)
+                work_builder.set_modified(work_modification_date)
                 properties = tuple(
                     property_
                     for property_ in self.__PROPERTIES
@@ -567,6 +568,7 @@ class SyntheticDataPipeline(Pipeline):
                 #     work_builder.add_identifier(work_identifier)
                 # work_builder.add_provenance(work_provenance)
                 work_builder.set_date_created(work_creation_date)
+                work_builder.set_date_modified(work_modification_date)
                 work_builder.add_url(work_page)
                 properties = tuple(
                     property_

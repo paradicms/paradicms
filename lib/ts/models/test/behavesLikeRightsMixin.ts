@@ -35,10 +35,10 @@ export const behavesLikeRightsMixin = (
 
   it("should have a license that behaves like a license", () => {
     if (options?.requireLicense) {
-      expect(rightsMixin.license).to.not.be.null;
+      expect(rightsMixin.licenses).to.not.be.empty;
     }
-    if (rightsMixin.license) {
-      behavesLikeLicense(rightsMixin.license);
+    for (const license of rightsMixin.licenses) {
+      behavesLikeLicense(license);
     }
   });
 
@@ -53,10 +53,10 @@ export const behavesLikeRightsMixin = (
 
   it("should have a rights statement that behaves like a rights statement", () => {
     if (options?.requireRightsStatement) {
-      expect(rightsMixin.rightsStatement).to.not.be.null;
+      expect(rightsMixin.rightsStatements).to.not.be.empty;
     }
-    if (rightsMixin.rightsStatement) {
-      behavesLikeRightsStatement(rightsMixin.rightsStatement);
+    for (const rightsStatement of rightsMixin.rightsStatements) {
+      behavesLikeRightsStatement(rightsStatement);
     }
   });
 };

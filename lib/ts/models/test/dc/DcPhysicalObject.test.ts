@@ -7,9 +7,9 @@ import {dcterms} from "@paradicms/vocabularies";
 import {DcPhysicalObject} from "../../src/dc/DcPhysicalObject";
 
 describe("DcPhysicalObject", () => {
-  const work = requireNonNull(
+  const work: DcPhysicalObject = requireNonNull(
     testModelSet.workByIri("http://example.com/collection0/work2")
-  );
+  ) as DcPhysicalObject;
 
   before(() => {
     expect(work).to.be.instanceof(DcPhysicalObject);
@@ -20,6 +20,14 @@ describe("DcPhysicalObject", () => {
       testModelSet.workByIri("http://example.com/collection0/work0")!
         .wikidataConceptIri
     ).to.eq("http://www.wikidata.org/entity/Q937690");
+  });
+
+  it("should get the work's creation date", () => {
+    expect(work.created).not.to.be.null;
+  });
+
+  it("should get the work's modification date", () => {
+    expect(work.modified).not.to.be.null;
   });
 
   behavesLikeWork(work, {
