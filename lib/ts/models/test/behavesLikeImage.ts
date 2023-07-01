@@ -38,6 +38,12 @@ export const behavesLikeImage = (image: Image) => {
     expect(image.label).to.not.be.empty;
   });
 
+  it("should get the src", () => {
+    expect(image.src).not.to.be.null;
+    expect(image.src!.startsWith("https://paradicms.org/img/placeholder/")).to
+      .be.true;
+  });
+
   behavesLikeNamedModel(image);
   behavesLikeRightsMixin(image, {
     requireLicense: true,
