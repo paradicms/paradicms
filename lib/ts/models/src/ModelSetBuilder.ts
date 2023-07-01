@@ -27,6 +27,8 @@ import {PropertyValue} from "./PropertyValue";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {WorkEventUnion} from "./WorkEventUnion";
+import {ImagesMixin} from "./ImagesMixin";
+import {ThumbnailSelector} from "./ThumbnailSelector";
 
 /**
  * Build a ModelSet by adding models to it.
@@ -57,10 +59,7 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      const thumbnailImage = agent.thumbnail(joinSelector.thumbnail);
-      if (thumbnailImage) {
-        this.addImage(thumbnailImage, joinSelector.thumbnail);
-      }
+      this.addThumbnail(agent, joinSelector.thumbnail);
     }
 
     if (joinSelector.works) {
@@ -107,14 +106,10 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      const collectionThumbnail = collection.thumbnail(joinSelector.thumbnail);
-      if (collectionThumbnail) {
-        this.addImage(collectionThumbnail, joinSelector.thumbnail);
-      } else {
+      if (!this.addThumbnail(collection, joinSelector.thumbnail)) {
         for (const work of collection.works) {
-          const workThumbnail = work.thumbnail(joinSelector.thumbnail);
-          if (workThumbnail) {
-            this.addImage(workThumbnail, joinSelector.thumbnail);
+          if (this.addThumbnail(work, joinSelector.thumbnail)) {
+            break;
           }
         }
       }
@@ -140,10 +135,7 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      const thumbnail = concept.thumbnail(joinSelector.thumbnail);
-      if (thumbnail) {
-        this.addImage(thumbnail, joinSelector.thumbnail);
-      }
+      this.addThumbnail(concept, joinSelector.thumbnail);
     }
 
     return this;
@@ -233,10 +225,7 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      const thumbnailImage = property.thumbnail(joinSelector.thumbnail);
-      if (thumbnailImage) {
-        this.addImage(thumbnailImage, joinSelector.thumbnail);
-      }
+      this.addThumbnail(property, joinSelector.thumbnail);
     }
 
     return this;
@@ -259,10 +248,7 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      const thumbnailImage = propertyGroup.thumbnail(joinSelector.thumbnail);
-      if (thumbnailImage) {
-        this.addImage(thumbnailImage, joinSelector.thumbnail);
-      }
+      this.addThumbnail(propertyGroup, joinSelector.thumbnail);
     }
 
     return this;
@@ -327,6 +313,25 @@ export class ModelSetBuilder {
     return this.addModel(rightsStatement);
   }
 
+  /**
+   * Add a thumbnail and the original image it corresponds to.
+   * @return true if a thumbnail was added
+   */
+  private addThumbnail(
+    imagesMixin: ImagesMixin,
+    selector: ThumbnailSelector
+  ): boolean {
+    for (const image of imagesMixin.images) {
+      const thumbnail = imagesMixin.thumbnail(selector);
+      if (thumbnail) {
+        this.addImage(image); // Add the original image
+        this.addImage(thumbnail);
+        return true;
+      }
+    }
+    return false;
+  }
+
   addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
     this.addModel(work);
 
@@ -345,10 +350,7 @@ export class ModelSetBuilder {
         this.addImage(image, joinSelector.images);
       }
     } else if (joinSelector.thumbnail) {
-      const thumbnailImage = work.thumbnail(joinSelector.thumbnail);
-      if (thumbnailImage) {
-        this.addImage(thumbnailImage, joinSelector.images);
-      }
+      this.addThumbnail(work, joinSelector.thumbnail);
     }
 
     if (joinSelector.events) {
