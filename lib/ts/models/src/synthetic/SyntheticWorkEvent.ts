@@ -4,9 +4,12 @@ import {WorkEvent} from "../WorkEvent";
 import {WorkLocation} from "../WorkLocation";
 import {WorkLocationRole} from "../WorkLocationRole";
 import {Memoize} from "typescript-memoize";
+import {AgentUnion} from "../AgentUnion";
 
 export abstract class SyntheticWorkEvent extends Mixin(SyntheticEvent)
   implements WorkEvent {
+  abstract readonly agents: readonly AgentUnion[];
+
   @Memoize()
   get workLocation(): WorkLocation | null {
     if (!this.location) {

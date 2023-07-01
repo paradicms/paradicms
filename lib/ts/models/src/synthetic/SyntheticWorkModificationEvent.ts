@@ -1,48 +1,44 @@
 import {SyntheticWorkEvent} from "./SyntheticWorkEvent";
-import {WorkCreationEvent} from "../WorkCreationEvent";
 import {Mixin} from "ts-mixer";
 import {AgentUnion} from "../AgentUnion";
 import {SyntheticEventParameters} from "./SyntheticEventParameters";
 import {WorkLocationRole} from "../WorkLocationRole";
+import {WorkModificationEvent} from "../WorkModificationEvent";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {Work} from "../Work";
 
-export class SyntheticWorkCreationEvent extends Mixin(SyntheticWorkEvent)
-  implements WorkCreationEvent {
+export class SyntheticWorkModificationEvent extends Mixin(SyntheticWorkEvent)
+  implements WorkModificationEvent {
   readonly contributors: readonly AgentUnion[];
-  readonly creators: readonly AgentUnion[];
 
   constructor(
     kwds: {
       contributors: readonly AgentUnion[];
-      creators: readonly AgentUnion[];
     } & SyntheticEventParameters
   ) {
     super(kwds);
     this.contributors = kwds.contributors;
-    this.creators = kwds.creators;
   }
 
   get agents(): readonly AgentUnion[] {
-    return this.contributors.concat(this.creators);
+    return this.contributors;
   }
 
   static fromWork(kwds: {date: DateTimeDescription; work: Work}) {
     const {date, work} = kwds;
-    return new SyntheticWorkCreationEvent({
+    return new SyntheticWorkModificationEvent({
       contributors: work.contributors,
-      creators: work.creators,
-      date,
+      date: date,
       description: null,
       endDate: null,
-      label: `${work.label} creation`,
-      key: `${work.key} creation`,
+      label: `${work.label} modification`,
+      key: `${work.key} modification`,
       location: null,
       startDate: null,
     });
   }
 
-  readonly type: "WorkCreation" = "WorkCreation";
+  readonly type: "WorkModification" = "WorkModification";
 
-  readonly workLocationRole: WorkLocationRole = "Creation";
+  readonly workLocationRole: WorkLocationRole = "Modification";
 }
