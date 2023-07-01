@@ -515,12 +515,12 @@ class SyntheticDataPipeline(Pipeline):
             self.__next_work_i += 1
             work_uri = URIRef(uri_prefix + str(work_i))
 
-            anonymous_location = (
-                SchemaPlace.builder()
-                .set_latitude(42.728104)
-                .set_longitude(-73.687576)
-                .build()
-            )
+            # anonymous_location = (
+            #     SchemaPlace.builder()
+            #     .set_latitude(42.728104)
+            #     .set_longitude(-73.687576)
+            #     .build()
+            # )
             named_location = (
                 SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
                 .set_latitude(42.728104)

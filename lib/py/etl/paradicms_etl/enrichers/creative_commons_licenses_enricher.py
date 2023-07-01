@@ -1,7 +1,5 @@
 from typing import Iterable
 
-from rdflib import DCTERMS
-
 from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
