@@ -310,12 +310,16 @@ export class ModelSetBuilder {
       }
     }
 
-    if (joinSelector.license && rights.license) {
-      this.addLicense(rights.license);
+    if (joinSelector.licenses) {
+      for (const license of rights.licenses) {
+        this.addLicense(license);
+      }
     }
 
-    if (joinSelector.rightsStatement && rights.rightsStatement) {
-      this.addRightsStatement(rights.rightsStatement);
+    if (joinSelector.rightsStatements) {
+      for (const rightsStatement of rights.rightsStatements) {
+        this.addRightsStatement(rightsStatement);
+      }
     }
   }
 

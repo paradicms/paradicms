@@ -10,15 +10,15 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
   },
   images: {
     agents: {},
-    license: true,
-    rightsStatement: true,
+    licenses: true,
+    rightsStatements: true,
   },
-  license: true,
+  licenses: true,
   location: true,
   propertyValues: {
     property: {
       groups: {},
     },
   },
-  rightsStatement: true,
+  rightsStatements: true,
 };

@@ -12,7 +12,6 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {WorkEventUnion} from "./WorkEventUnion";
 
 export interface ModelSet {
   agentByIri(agentIri: string): AgentUnion | null;
@@ -36,7 +35,6 @@ export interface ModelSet {
   toRdf(): DatasetCore;
   workByIri(workIri: string): Work | null;
   workByKey(workKey: string): Work | null;
-  workEventByIri(workEventIri: string): WorkEventUnion | null;
   readonly works: readonly Work[];
   worksByAgentIri(agentIri: string): readonly Work[];
 }

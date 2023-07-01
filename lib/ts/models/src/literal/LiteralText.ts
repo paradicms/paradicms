@@ -7,12 +7,10 @@ import {LiteralModel} from "./LiteralModel";
 export class LiteralText extends LiteralModel implements Text {
   readonly contributors: readonly AgentUnion[] = [];
   readonly creators: readonly AgentUnion[] = [];
-  readonly license: License | null = null;
-  get requiresAttribution(): boolean {
-    return this.license?.requiresAttribution ?? false;
-  }
+  readonly licenses: readonly License[] = [];
+  readonly requiresAttribution = false;
   readonly rightsHolders: readonly AgentUnion[] = [];
-  readonly rightsStatement: RightsStatement | null = null;
+  readonly rightsStatements: readonly RightsStatement[] = [];
   override toString(): string {
     return this.value;
   }

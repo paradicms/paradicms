@@ -47,14 +47,21 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   }
 
   @Memoize()
-  get license(): License | null {
-    return this.findAndMapObject(schema.license, term =>
+  get licenses(): readonly License[] {
+    return this.filterAndMapObjects(schema.license, term =>
       mapTermToLicense(this, term)
     );
   }
 
   get requiresAttribution(): boolean {
-    return this.license?.requiresAttribution ?? true;
+    if (this.licenses.length === 0) {
+      return true;
+    } else if (!this.licenses.some(license => license.requiresAttribution)) {
+      // If some license does not require attribution, then don't do attribution
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @Memoize()
@@ -65,8 +72,8 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   }
 
   @Memoize()
-  get rightsStatement(): RightsStatement | null {
-    return this.findAndMapObject(schema.usageInfo, term =>
+  get rightsStatements(): readonly RightsStatement[] {
+    return this.filterAndMapObjects(schema.usageInfo, term =>
       mapTermToRightsStatement(this, term)
     );
   }

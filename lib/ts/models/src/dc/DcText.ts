@@ -1,11 +1,11 @@
 import {requireNonNull} from "@paradicms/utilities";
 import {rdf} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
-import {CmsRightsMixin} from "./CmsRightsMixin";
-import {CmsModel} from "./CmsModel";
 import {mapTermToString} from "@paradicms/rdf";
+import {DcModel} from "./DcModel";
+import {DcRightsMixin} from "./DcRightsMixin";
 
-export class CmsText extends Mixin(CmsModel, CmsRightsMixin) {
+export class DcText extends Mixin(DcModel, DcRightsMixin) {
   override toString(): string {
     return this.value;
   }

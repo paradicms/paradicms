@@ -1,15 +1,15 @@
 import {dcterms} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {AgentUnion} from "../AgentUnion";
-import {ContributorsMixin} from "../ContributorsMixin";
+import {CreatorsMixin} from "../CreatorsMixin";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {mapTermToAgent} from "../mapTermToAgent";
 
-export abstract class CmsContributorsMixin extends ResourceBackedModelMixin
-  implements ContributorsMixin {
+export abstract class DcCreatorsMixin extends ResourceBackedModelMixin
+  implements CreatorsMixin {
   @Memoize()
-  get contributors(): readonly AgentUnion[] {
-    return this.filterAndMapObjects(dcterms.contributor, term =>
+  get creators(): readonly AgentUnion[] {
+    return this.filterAndMapObjects(dcterms.creator, term =>
       mapTermToAgent(this, term)
     );
   }

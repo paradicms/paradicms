@@ -16,20 +16,24 @@ export abstract class SameAsRightsMixin<ModelT extends Model & RightsMixin>
     return this.getUniqueLinkedModels(model => model.creators);
   }
 
-  get license(): License | null {
-    return this.getBestLinkedModel(model => model.license);
+  get licenses(): readonly License[] {
+    return this.getUniqueLinkedModels(model => model.licenses);
   }
 
   get requiresAttribution(): boolean {
-    const license = this.license;
-    return license ? license.requiresAttribution : false;
+    for (const model of this.models) {
+      if (model.requiresAttribution) {
+        return true;
+      }
+    }
+    return false;
   }
 
   get rightsHolders(): readonly AgentUnion[] {
     return this.getUniqueLinkedModels(model => model.rightsHolders);
   }
 
-  get rightsStatement(): RightsStatement | null {
-    return this.getBestLinkedModel(model => model.rightsStatement);
+  get rightsStatements(): readonly RightsStatement[] {
+    return this.getUniqueLinkedModels(model => model.rightsStatements);
   }
 }

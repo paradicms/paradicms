@@ -1,4 +1,4 @@
-import {cms, dcterms, exif, foaf} from "@paradicms/vocabularies";
+import {cms, dcterms, exif} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
@@ -6,12 +6,12 @@ import {Image} from "../Image";
 import {ImageDimensions} from "../ImageDimensions";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
-import {CmsRightsMixin} from "./CmsRightsMixin";
-import {CmsNamedModel} from "./CmsNamedModel";
 import {mapTermToImage} from "../mapTermToImage";
 import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
+import {DcNamedModel} from "./DcNamedModel";
+import {DcRightsMixin} from "./DcRightsMixin";
 
-export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
+export class DcImage extends Mixin(DcNamedModel, DcRightsMixin)
   implements Image {
   @Memoize()
   get exactDimensions(): ImageDimensions | null {
@@ -45,10 +45,6 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
     return this.imageDimensions(cms.imageMaxHeight, cms.imageMaxWidth);
   }
 
-  static placeholderSrc(dimensions: ImageDimensions) {
-    return `https://paradicms.org/img/placeholder/${dimensions.width}x${dimensions.height}.png`;
-  }
-
   @Memoize()
   get src(): string | null {
     const src = this.findAndMapObject(cms.imageSrc, term =>
@@ -70,10 +66,20 @@ export class CmsImage extends Mixin(CmsNamedModel, CmsRightsMixin)
     return selectThumbnail(this.thumbnails, selector);
   }
 
+  @Memoize()
   get thumbnails(): readonly Image[] {
-    return this.filterAndMapObjects(foaf.thumbnail, term =>
-      mapTermToImage(this, term)
-    );
+    const thumbnails: Image[] = [];
+    for (const quad of this.dataset.match(
+      null,
+      dcterms.source,
+      this._identifier
+    )) {
+      const thumbnail = mapTermToImage(this, quad.subject);
+      if (thumbnail) {
+        thumbnails.push(thumbnail);
+      }
+    }
+    return thumbnails;
   }
 
   @Memoize()
