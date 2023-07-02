@@ -7,7 +7,6 @@ from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
-from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
@@ -165,20 +164,21 @@ class CostumeCoreDataAirtableTransformer:
                 uri=URIRef(object_image["url"]),
             )
 
-            for thumbnail in object_image["thumbnails"].values():
-                thumbnail_image = (
-                    SchemaImageObject.builder(
-                        uri=URIRef(thumbnail["url"]),
-                    )
-                    .set_exact_dimensions(
-                        ImageDimensions(
-                            height=thumbnail["height"],
-                            width=thumbnail["width"],
-                        )
-                    )
-                    .build()
-                )
-                yield thumbnail_image
-                original_image_builder.add_thumbnail(thumbnail_image)
+            # Don't include Airtable's thumbnails, make our own
+            # for thumbnail in object_image["thumbnails"].values():
+            #     thumbnail_image = (
+            #         SchemaImageObject.builder(
+            #             uri=URIRef(thumbnail["url"]),
+            #         )
+            #         .set_exact_dimensions(
+            #             ImageDimensions(
+            #                 height=thumbnail["height"],
+            #                 width=thumbnail["width"],
+            #             )
+            #         )
+            #         .build()
+            #     )
+            #     yield thumbnail_image
+            #     original_image_builder.add_thumbnail(thumbnail_image)
 
             yield original_image_builder.build()

@@ -30,9 +30,11 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.license import License
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
+from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -82,9 +84,13 @@ class CostumeCoreOntologyAirtableTransformer:
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
-        self.__available_licenses_by_uri = {
-            license.uri: license for license in CreativeCommonsLicenses.as_tuple()
-        }
+        self.__available_licenses_by_uri: Dict[URIRef, License] = {}
+        for license_ in CreativeCommonsLicenses.as_tuple():
+            self.__available_licenses_by_uri[license_.uri] = license_
+            assert str(license_.uri).startswith("http://")
+            self.__available_licenses_by_uri[
+                "https://" + str(license_.uri)[len("http://") :]
+            ] = license_
         odc_by_license = (
             DcLicenseDocument.builder(
                 title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
@@ -103,10 +109,15 @@ class CostumeCoreOntologyAirtableTransformer:
             self.__available_licenses_by_uri.keys()
         )
 
-        self.__available_rights_statements_by_uri = {
-            rights_statement.uri: rights_statement
-            for rights_statement in RightsStatementsDotOrgRightsStatements.as_tuple()
-        }
+        self.__available_rights_statements_by_uri: Dict[URIRef, RightsStatement] = {}
+        for rights_statement in RightsStatementsDotOrgRightsStatements.as_tuple():
+            self.__available_rights_statements_by_uri[
+                rights_statement.uri
+            ] = rights_statement
+            assert str(rights_statement.uri).startswith("http://")
+            self.__available_rights_statements_by_uri[
+                URIRef("https://" + rights_statement.uri[len("http://") :])
+            ] = rights_statement
         self.__available_rights_statement_uris = frozenset(
             self.__available_rights_statements_by_uri.keys()
         )
