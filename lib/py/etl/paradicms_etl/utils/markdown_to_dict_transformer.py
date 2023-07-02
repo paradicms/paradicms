@@ -5,7 +5,7 @@ from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
 from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
-from rdflib import SDO
+from rdflib import SDO, RDF, DCMITYPE
 
 
 class MarkdownToDictTransformer:
@@ -72,13 +72,20 @@ class MarkdownToDictTransformer:
         elif isinstance(existing_value, dict):
             # #27: the frontmatter had a dict for this key
             # Assume the frontmatter was specifying properties for a Text model e.g., the license
-            existing_value["@type"] = str(SDO.TextObject)
-            existing_text_value = existing_value.get(str(SDO.text))
+            if "@type" not in existing_value:
+                existing_value["@type"] = str(SDO.TextObject)
+            if existing_value["@type"] == str(SDO.TextObject):
+                value_predicate = SDO.text
+            elif existing_value["@type"] == str(DCMITYPE.Text):
+                value_predicate = RDF.value
+            else:
+                raise NotImplementedError(existing_value["@type"])
+            existing_text_value = existing_value.get(str(value_predicate))
             # Concatenate multiple paragraphs as needed
             if existing_text_value is None:
-                existing_value[str(SDO.text)] = html
+                existing_value[str(value_predicate)] = html
             else:
-                existing_value[str(SDO.text)] = str(existing_text_value) + html
+                existing_value[str(value_predicate)] = str(existing_text_value) + html
         else:
             # Concatenate multiple paragraphs under the same header
             self.__result[key] = str(existing_value) + html
