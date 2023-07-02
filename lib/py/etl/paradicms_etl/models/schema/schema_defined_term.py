@@ -27,7 +27,7 @@ class SchemaDefinedTerm(SchemaNamedModel, Concept):
 
     def __init__(self, resource: Resource):
         SchemaNamedModel.__init__(self, resource)
-        self.name
+        self.label
 
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:
@@ -37,11 +37,7 @@ class SchemaDefinedTerm(SchemaNamedModel, Concept):
 
     @property
     def label(self) -> str:
-        return self.name
-
-    @property
-    def name(self) -> str:
-        return self._required_name
+        return self._required_label
 
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:

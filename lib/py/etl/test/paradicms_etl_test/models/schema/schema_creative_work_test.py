@@ -9,7 +9,7 @@ def test_builder(schema_creative_work: SchemaCreativeWork):
 
 def test_replacer(schema_creative_work: SchemaCreativeWork):
     assert (
-        schema_creative_work.replacer().set_name("Test work 2").build().name
+        schema_creative_work.replacer().set_name("Test work 2").build().label
         == "Test work 2"
     )
 

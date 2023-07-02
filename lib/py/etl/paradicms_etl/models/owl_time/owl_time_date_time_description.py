@@ -1,4 +1,5 @@
 import datetime
+from typing import Optional
 
 from rdflib import Literal, XSD, BNode, Graph, URIRef
 
@@ -82,6 +83,10 @@ class OwlTimeDateTimeDescription(ResourceBackedModel, DateTimeDescription):
             .set_year(date.year)
             .build()
         )
+
+    @classmethod
+    def label_property_uri(cls) -> Optional[URIRef]:
+        return None
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

@@ -191,5 +191,9 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         return cls.Builder()
 
     @classmethod
+    def label_property_uri(cls) -> Optional[URIRef]:
+        raise NotImplementedError
+
+    @classmethod
     def rdf_type_uri(cls):
         return OWL.Ontology

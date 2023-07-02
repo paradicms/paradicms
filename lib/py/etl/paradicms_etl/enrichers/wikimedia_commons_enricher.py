@@ -93,7 +93,7 @@ class WikimediaCommonsEnricher:
     class _WikimediaCommonsImageInfo:
         descriptionshorturl: str
         descriptionurl: str
-        extmetadata: "_WikimediaCommonsImageInfoExtMetadata"
+        extmetadata: "_WikimediaCommonsImageInfoExtMetadata"  # type: ignore
         height: int
         size: int
         url: str

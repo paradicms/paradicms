@@ -1,5 +1,4 @@
 from rdflib import URIRef, Graph, DCMITYPE
-from rdflib.namespace import DCTERMS
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
@@ -18,7 +17,7 @@ class DcPhysicalObject(DcNamedModel, DcImagesMixin, Work):
 
     def __init__(self, resource: Resource):
         DcNamedModel.__init__(self, resource)
-        self.title
+        self.label
 
     @classmethod
     def builder(cls, *, title: str, uri: URIRef) -> Builder:
@@ -28,7 +27,7 @@ class DcPhysicalObject(DcNamedModel, DcImagesMixin, Work):
 
     @property
     def label(self) -> str:
-        return self.title
+        return self._required_label
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
@@ -36,10 +35,6 @@ class DcPhysicalObject(DcNamedModel, DcImagesMixin, Work):
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
-
-    @property
-    def title(self) -> str:
-        return self._required_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

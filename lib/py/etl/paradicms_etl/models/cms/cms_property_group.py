@@ -44,13 +44,17 @@ class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
             {
                 "comment": {"@id": str(RDFS.comment)},
                 "hasPart": {"@id": str(DCTERMS.hasPart)},
-                "label": {"@id": str(RDFS.label)},
+                "label": {"@id": str(cls.label_property_uri())},
             },
         )
 
     @property
     def label(self) -> str:
-        return self._required_value(RDFS.label, self._map_str_value)
+        return self._required_value(self.label_property_uri(), self._map_str_value)
+
+    @classmethod
+    def label_property_uri(cls) -> URIRef:
+        return RDFS.label
 
     @property
     def uri(self) -> URIRef:

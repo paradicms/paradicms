@@ -18,10 +18,6 @@ class Collection(NamedModel, ImagesMixin):
         def build(self) -> "Collection":
             raise NotImplementedError
 
-        @abstractmethod
-        def set_label(self, label: str) -> "Collection.Builder":
-            raise NotImplementedError
-
     @property
     @abstractmethod
     def label(self) -> str:

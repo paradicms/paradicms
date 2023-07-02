@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from typing import Generator, Tuple, Union, TypeVar, Any, Callable
 from typing import Optional
 
@@ -58,6 +59,18 @@ class ResourceBackedModel(Model):
         Model.__init__(self)
         resource.add(RDF.type, self.rdf_type_uri())
         self.__resource = resource
+
+    @property
+    def label(self) -> Optional[str]:
+        label_property_uri = self.label_property_uri()
+        if label_property_uri is None:
+            return None
+        return self._optional_value(label_property_uri, self._map_str_value)
+
+    @classmethod
+    @abstractmethod
+    def label_property_uri(cls) -> Optional[URIRef]:
+        return None
 
     @classmethod
     def from_rdf(cls, resource: Resource):
@@ -167,6 +180,15 @@ class ResourceBackedModel(Model):
         for value in self._values(p, mapper):
             return value
         return None
+
+    @property
+    def _required_label(self) -> str:
+        label_property_uri = self.label_property_uri()
+        if label_property_uri is None:
+            raise NotImplementedError(
+                self.__class__.__name__ + ": must implement label_property_uri"
+            )
+        return self._required_value(label_property_uri, self._map_str_value)
 
     def _required_value(
         self,

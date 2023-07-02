@@ -24,7 +24,7 @@ class FoafAgent(FoafModel, FoafImagesMixin, Agent):
     def __init__(self, resource: Resource):
         resource.add(RDF.type, FOAF.Agent)
         FoafModel.__init__(self, resource)
-        self.name
+        self.label
 
     @classmethod
     def json_ld_context(cls):
@@ -35,8 +35,8 @@ class FoafAgent(FoafModel, FoafImagesMixin, Agent):
 
     @property
     def label(self) -> str:
-        return self.name
+        return self._required_label
 
-    @property
-    def name(self) -> str:
-        return self._required_value(FOAF.name, self._map_str_value)
+    @classmethod
+    def label_property_uri(cls) -> URIRef:
+        return FOAF.name

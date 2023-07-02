@@ -27,13 +27,9 @@ class SchemaCollection(SchemaNamedModel, SchemaCreativeWorkMixin, Collection):
         def build(self) -> "SchemaCollection":
             return SchemaCollection(self._resource)
 
-        def set_label(self, label: str) -> "SchemaCollection.Builder":
-            super().set_label(label)
-            return self
-
     def __init__(self, resource: Resource):
         SchemaNamedModel.__init__(self, resource)
-        self.name
+        self.label
 
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:
@@ -50,11 +46,7 @@ class SchemaCollection(SchemaNamedModel, SchemaCreativeWorkMixin, Collection):
 
     @property
     def label(self) -> str:
-        return self.name
-
-    @property
-    def name(self) -> str:
-        return self._required_name
+        return self._required_label
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)

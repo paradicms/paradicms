@@ -1,11 +1,9 @@
 from abc import ABC, abstractmethod
 from typing import Optional, Any, Dict, Tuple
 
-import rdflib
 from rdflib import Graph, URIRef
 from rdflib.resource import Resource
 
-import paradicms_etl
 from paradicms_etl.namespaces.bind_namespaces import EXCLUDE_RDFLIB_NAMESPACE_PREFIXES
 from paradicms_etl.utils.module_namespaces import module_namespaces
 
@@ -22,9 +20,13 @@ class Model(ABC):
         Return a JSON-LD context that can be used to parse/serialize a JSON version of this model.
         """
 
-        context = {"@version": 1.1}
+        context: Dict[str, Any] = {"@version": 1.1}
+
+        import rdflib.namespace
+        import paradicms_etl.namespaces
+
         for namespace_prefix, namespace in module_namespaces(
-            rdflib.namespace, paradicms_etl.namespaces
+            rdflib.namespace, paradicms_etl.namespaces  # type: ignore
         ).items():
             if namespace_prefix in EXCLUDE_RDFLIB_NAMESPACE_PREFIXES:
                 continue

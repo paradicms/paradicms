@@ -191,6 +191,10 @@ class WikibaseItem(ResourceBackedNamedModel):
     def label(self):
         return self.pref_label
 
+    @classmethod
+    def label_property_uri(cls) -> Optional[URIRef]:
+        raise NotImplementedError
+
     @property
     def pref_label(self) -> Optional[str]:
         return self.__pref_label

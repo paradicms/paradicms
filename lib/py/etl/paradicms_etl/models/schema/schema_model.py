@@ -1,4 +1,4 @@
-from typing import Tuple, Optional
+from typing import Tuple
 
 from rdflib import URIRef, SDO
 
@@ -22,9 +22,9 @@ class SchemaModel(ResourceBackedModel, SchemaThingMixin):
             SchemaThingMixin.json_ld_context(),
         )
 
-    @property
-    def label(self) -> Optional[str]:
-        return SchemaThingMixin.label.fget(self)  # type: ignore
+    @classmethod
+    def label_property_uri(cls) -> URIRef:
+        return SDO.name
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

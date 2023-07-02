@@ -18,7 +18,7 @@ def __check_test_data_models(models: Tuple[Model, ...]):
     assert len(models) == 3
 
     person = next(person for person in models if isinstance(person, Person))
-    assert person.name == "Minor Gordon"
+    assert person.label == "Minor Gordon"
 
     image = next(image for image in models if isinstance(image, Image))
     assert isinstance(image.src, ImageData)

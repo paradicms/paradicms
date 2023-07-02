@@ -26,7 +26,7 @@ class SchemaPerson(SchemaModel, Person):
 
     def __init__(self, resource: Resource):
         SchemaModel.__init__(self, resource)
-        self.name
+        self.label
 
     @classmethod
     def builder(cls, *, name: str, uri: Optional[URIRef] = None) -> Builder:
@@ -36,8 +36,4 @@ class SchemaPerson(SchemaModel, Person):
 
     @property
     def label(self) -> str:
-        return self.name
-
-    @property
-    def name(self) -> str:
-        return self._required_name
+        return self._required_label

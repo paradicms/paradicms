@@ -5,7 +5,7 @@ from typing import Dict, Optional, Tuple, Type, List, Set, Iterable
 from urllib.parse import quote
 
 import yaml
-from rdflib import Graph, URIRef, Namespace
+from rdflib import Graph, URIRef, Namespace, Literal
 from stringcase import spinalcase, snakecase
 from yaml import FullLoader
 
@@ -402,6 +402,13 @@ class DirectoryTransformer:
             #             f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
             #         )
 
+            label_property_uri = root_model_class.label_property_uri()
+            if label_property_uri is not None:
+                if resource.value(label_property_uri) is None:
+                    resource.add(
+                        label_property_uri, Literal(metadata_file_entry.model_id)
+                    )
+
             model = root_model_class.from_rdf(resource)
 
             if isinstance(model, Image):
@@ -410,13 +417,6 @@ class DirectoryTransformer:
             elif isinstance(model, ImagesMixin):
                 for image_uri in model.image_uris:
                     self.__referenced_image_uris.add(image_uri)
-
-            if model.label is None:
-                if hasattr(model, "replacer"):
-                    model_replacer = model.replacer()
-                    if hasattr(model_replacer, "set_label"):
-                        model_replacer.set_label(metadata_file_entry.model_id)
-                    model = model_replacer.build()
 
             return model
 
