@@ -12,7 +12,7 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 export const selectThumbnail = <
   ImageT extends {
     readonly exactDimensions: ImageDimensions | null;
-    readonly iris: readonly string[];
+    readonly key: string;
     readonly maxDimensions: ImageDimensions | null;
   }
 >(
@@ -71,7 +71,14 @@ export const selectThumbnail = <
       JSON.stringify(selector),
       "found in",
       images.length,
-      "images"
+      "images",
+      JSON.stringify(
+        images.map(image => ({
+          exactDimensions: image.exactDimensions,
+          key: image.key,
+          maxDimensions: image.maxDimensions,
+        }))
+      )
     );
     return null;
   } else if (candidateImages.length === 1) {
