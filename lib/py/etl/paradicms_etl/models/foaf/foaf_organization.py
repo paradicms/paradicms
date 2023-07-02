@@ -20,3 +20,6 @@ class FoafOrganization(FoafAgent, Organization):
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return FOAF.Organization
+
+    def replacer(self) -> Builder:
+        return self.Builder(self._resource)

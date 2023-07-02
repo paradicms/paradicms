@@ -25,3 +25,6 @@ class FoafPerson(FoafAgent, Person):
         builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
         builder.set(FOAF.name, name)
         return builder
+
+    def replacer(self) -> Builder:
+        return self.Builder(self._resource)
