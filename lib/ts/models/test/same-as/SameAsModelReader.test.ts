@@ -1,7 +1,6 @@
 import {syntheticData} from "@paradicms/test";
 import {SameAsModelReader} from "../../src/same-as/SameAsModelReader";
 import {describe} from "mocha";
-import {CmsModelReader} from "../../src/cms/CmsModelReader";
 import {WikidataModelReader} from "../../src/wikidata/WikidataModelReader";
 import {ConcatenatingModelReader} from "../../src/ConcatenatingModelReader";
 import {expect} from "chai";
@@ -9,11 +8,12 @@ import {SameAsWork} from "../../src/same-as/SameAsWork";
 import {SameAsPerson} from "../../src/same-as/SameAsPerson";
 import {DatasetBackedModelSet} from "../../src/DatasetBackedModelSet";
 import {FoafModelReader} from "../../src/foaf/FoafModelReader";
+import {DcModelReader} from "../../src/dc/DcModelReader";
 
 describe("SameAsModelReader", () => {
   const dataset = syntheticData;
   const modelReaders = [
-    new CmsModelReader(dataset),
+    new DcModelReader(dataset),
     new FoafModelReader(dataset),
     new WikidataModelReader(dataset),
   ];
@@ -33,7 +33,7 @@ describe("SameAsModelReader", () => {
     ).to.have.length(1);
   });
 
-  it("should group CmsWorks with Wikidata works", () => {
+  it("should group DcPhysicalObject's with Wikidata works", () => {
     const allWorks = concatenatingModelReader.readWorks({
       modelSet,
     });

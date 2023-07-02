@@ -10,12 +10,12 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
     agents: {},
     location: true,
   },
-  license: true,
+  licenses: true,
   location: true,
   propertyValues: {
     property: {},
     thumbnail: valueThumbnailSelector,
   },
-  rightsStatement: true,
+  rightsStatements: true,
   thumbnail: galleryThumbnailSelector,
 };

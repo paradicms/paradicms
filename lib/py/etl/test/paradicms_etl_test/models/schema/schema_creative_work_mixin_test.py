@@ -20,16 +20,16 @@ def test_creators(schema_image_object: SchemaImageObject, schema_person: SchemaP
     assert schema_image_object.creators == (schema_person.uri,)
 
 
-def test_license(schema_image_object: SchemaImageObject):
-    assert schema_image_object.license == CreativeCommonsLicenses.BY_4_0.uri
+def test_licenses(schema_image_object: SchemaImageObject):
+    assert CreativeCommonsLicenses.BY_4_0.uri in schema_image_object.licenses
 
 
 def test_rights_holder(schema_image_object: SchemaImageObject):
     assert schema_image_object.rights_holders == ("Test rights holder",)
 
 
-def test_rights_statement(schema_image_object: SchemaImageObject):
+def test_rights_statements(schema_image_object: SchemaImageObject):
     assert (
-        schema_image_object.rights_statement
-        == RightsStatementsDotOrgRightsStatements.InC.uri
+        RightsStatementsDotOrgRightsStatements.InC.uri
+        in schema_image_object.rights_statements
     )

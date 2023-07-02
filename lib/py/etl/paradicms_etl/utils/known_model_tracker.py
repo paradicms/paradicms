@@ -1,7 +1,8 @@
-from typing import Generic, TypeVar, Type, Dict, Set, Iterable
+from typing import Generic, TypeVar, Type, Dict, Set, Iterable, Callable
 
-from rdflib import URIRef, Graph
+from rdflib import URIRef
 
+from paradicms_etl.model import Model
 from paradicms_etl.models.named_model import NamedModel
 
 ModelT = TypeVar("ModelT", bound=NamedModel)
@@ -15,13 +16,13 @@ class KnownModelTracker(Generic[ModelT]):
     def __init__(
         self,
         *,
+        get_references: Callable[[Model], Iterable[URIRef]],
         model_class: Type[ModelT],
-        models_by_uri: Dict[URIRef, ModelT],
-        referring_predicate: URIRef
+        models_by_uri: Dict[URIRef, ModelT]
     ):
+        self.__get_references = get_references
         self.__model_class = model_class
         self.__models_by_uri = models_by_uri
-        self.__referring_predicate = referring_predicate
         self.__referenced_model_uris: Set[URIRef] = set()
         self.__seen_model_uris_of_model_class: Set[URIRef] = set()
 
@@ -34,13 +35,9 @@ class KnownModelTracker(Generic[ModelT]):
             self.__seen_model_uris_of_model_class.add(model.uri)
             return
 
-        for _, o in model.to_rdf(graph=Graph()).graph.subject_objects(
-            self.__referring_predicate
-        ):
-            if not isinstance(o, URIRef):
-                continue
-            if o in self.__models_by_uri:
-                self.__referenced_model_uris.add(o)
+        for reference_uri in self.__get_references(model):
+            if reference_uri in self.__models_by_uri:
+                self.__referenced_model_uris.add(reference_uri)
 
     def missing_models(self) -> Iterable[ModelT]:
         for referenced_model_uri in self.__referenced_model_uris:

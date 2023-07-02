@@ -59,6 +59,12 @@ class SchemaImageObject(SchemaNamedModel, SchemaMediaObjectMixin, Image):
             self.set(CMS.imageCopyable, copyable)
             return self
 
+        def set_encoding_format(
+            self, encoding_format: str
+        ) -> "SchemaImageObject.Builder":
+            SchemaMediaObjectMixin.Builder.set_encoding_format(self, encoding_format)
+            return self
+
         def set_exact_dimensions(
             self, exact_dimensions: ImageDimensions
         ) -> "SchemaImageObject.Builder":
@@ -89,10 +95,6 @@ class SchemaImageObject(SchemaNamedModel, SchemaMediaObjectMixin, Image):
                     max_value=max_dimensions.width
                 ),
             )
-            return self
-
-        def set_source(self, source: URIRef) -> "SchemaImageObject.Builder":
-            self.add_url(source)
             return self
 
         def set_src(

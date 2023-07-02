@@ -76,9 +76,9 @@ export const WorkPage: React.FunctionComponent<{
             <ImagesCarousel
               getAbsoluteImageSrc={getAbsoluteImageSrc}
               hideImageRights={true}
-              images={work.images}
               key={leftColTabs.length}
               onShowImage={setCurrentWorkImagesCarouselImage}
+              originalImages={work.images}
             />
           </CardBody>
           {workImagesCarouselImage?.requiresAttribution ? (

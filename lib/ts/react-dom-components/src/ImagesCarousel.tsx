@@ -10,18 +10,16 @@ import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector
 export interface ImagesCarouselProps {
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   hideImageRights?: boolean;
-  images: readonly Image[];
   onShowImage?: (newImage: Image) => void;
+  originalImages: readonly Image[];
 }
 
 export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   getAbsoluteImageSrc,
   hideImageRights,
-  images,
   onShowImage,
+  originalImages,
 }) => {
-  const originalImages = images.filter(image => image.thumbnails.length > 0);
-
   const renderOriginalImage = (originalImage: Image) => {
     if (!originalImage.src) {
       return null;
@@ -85,7 +83,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
       // Invoke onChange with the first image
       onShowImage(originalImages[0]);
     }
-  }, [images]);
+  }, [originalImages]);
 
   const [activeIndex, setActiveIndex] = useState(0);
 

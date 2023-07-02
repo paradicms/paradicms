@@ -1,6 +1,4 @@
 import {expect} from "chai";
-import {License} from "../src/License";
-import {RightsStatement} from "../src/RightsStatement";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 
@@ -23,7 +21,7 @@ describe("CachingModelSet", () => {
         }
 
         if (work.iris.length === 1) {
-          expect(work.images).to.have.length(10);
+          expect(work.images).to.have.length(2);
           for (const image of work.images) {
             for (const imageIri of image.iris) {
               expect(sut.imageByIri(imageIri)).to.eq(image);
@@ -71,20 +69,14 @@ describe("CachingModelSet", () => {
           .some(agentWork => agentWork.iris[0] === work.iris[0])
       ).to.be.true;
       expect(work.images).to.not.be.empty;
-      expect(work.license).to.not.be.null;
-      expect((work.license! as License).iris[0]).to.not.be.empty;
-      expect(work.rightsStatement).to.not.be.null;
-      expect((work.rightsStatement! as RightsStatement).iris[0]).to.not.be
-        .empty;
-    }
-
-    for (const workEvent of sut.works[0].events) {
-      if (workEvent.iris.length === 0) {
-        continue;
+      expect(work.licenses).to.not.be.empty;
+      for (const license of work.licenses) {
+        expect(license.iris[0]).to.not.be.empty;
       }
-      expect(sut.workEventByIri(workEvent.iris[0])!.iris[0]).to.eq(
-        workEvent.iris[0]
-      );
+      expect(work.rightsStatements).to.not.be.empty;
+      for (const rightsStatement of work.rightsStatements) {
+        expect(rightsStatement.iris[0]).to.not.be.empty;
+      }
     }
   });
 

@@ -4,31 +4,31 @@ import {DatasetCore} from "@rdfjs/types";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {Memoize} from "typescript-memoize";
 import {modelIdentifiersToKey} from "../modelIdentifiersToKey";
-import {CmsNamedModel} from "../cms/CmsNamedModel";
 import {hasMixin} from "ts-mixer";
-import {CmsModel} from "../cms/CmsModel";
+import {SchemaModel} from "../schema/SchemaModel";
+import {SchemaNamedModel} from "../schema/SchemaNamedModel";
 
-const isCmsModel = (model: Model) => {
-  return hasMixin(model, CmsModel) || hasMixin(model, CmsNamedModel);
+const isBestModel = (model: Model) => {
+  return hasMixin(model, SchemaModel) || hasMixin(model, SchemaNamedModel);
 };
 
 export class SameAsModel<ModelT extends Model> implements Model {
-  private readonly cmsModels: readonly ModelT[];
-  private readonly nonCmsModels: readonly ModelT[];
+  private readonly bestModels: readonly ModelT[];
+  private readonly otherModels: readonly ModelT[];
 
   constructor(protected readonly models: readonly ModelT[]) {
     invariant(models.length > 1);
-    const cmsModels: ModelT[] = [];
-    const nonCmsModels: ModelT[] = [];
+    const bestModels: ModelT[] = [];
+    const otherModels: ModelT[] = [];
     for (const model of models) {
-      if (isCmsModel(model)) {
-        cmsModels.push(model);
+      if (isBestModel(model)) {
+        bestModels.push(model);
       } else {
-        nonCmsModels.push(model);
+        otherModels.push(model);
       }
     }
-    this.cmsModels = cmsModels;
-    this.nonCmsModels = nonCmsModels;
+    this.bestModels = bestModels;
+    this.otherModels = otherModels;
   }
 
   protected getAllValues<T>(
@@ -61,16 +61,16 @@ export class SameAsModel<ModelT extends Model> implements Model {
       case 1:
         return linkedModels[0];
       default:
-        const cmsModels = linkedModels.filter(linkedModel =>
-          isCmsModel(linkedModel)
+        const bestModels = linkedModels.filter(linkedModel =>
+          isBestModel(linkedModel)
         );
-        switch (cmsModels.length) {
+        switch (bestModels.length) {
           case 0:
             throw new EvalError("incompatible, non-CMS models");
           case 1:
-            return cmsModels[0];
+            return bestModels[0];
           default:
-            return cmsModels[0];
+            return bestModels[0];
           // throw new EvalError("multiple CMS models");
         }
     }
@@ -78,7 +78,7 @@ export class SameAsModel<ModelT extends Model> implements Model {
 
   protected getBestValue<T>(getValue: (model: ModelT) => T | null): T | null {
     // Prefer a non-null value from a CMS model
-    for (const models of [this.cmsModels, this.nonCmsModels]) {
+    for (const models of [this.bestModels, this.otherModels]) {
       for (const model of models) {
         const value = getValue(model);
         if (value !== null) {

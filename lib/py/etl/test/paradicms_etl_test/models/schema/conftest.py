@@ -82,7 +82,6 @@ def schema_image_object(
         .set_exact_dimensions(ImageDimensions(height=200, width=200))
         .set_encoding_format("image/jpeg")
         .set_max_dimensions(ImageDimensions(height=800, width=800))
-        .set_source(URIRef("http://example.com/imagesource"))
         .set_title("Test image title")
         .build()
     )

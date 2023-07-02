@@ -1,5 +1,5 @@
 from datetime import datetime, date
-from typing import Any, Union, Tuple, Optional
+from typing import Any, Union, Tuple
 
 from rdflib import SDO, URIRef, XSD
 
@@ -69,7 +69,7 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
 
     @classmethod
     def json_ld_context(cls):
-        return {
+        json_ld_context = {
             "dateCreated": {
                 "@id": str(SDO.dateCreated),
                 "@type": str(XSD.dateTime),
@@ -79,19 +79,30 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
                 "@type": str(XSD.dateTime),
             },
         }
+        for property_ in (
+            "copyrightHolder",
+            "contributor",
+            "creator",
+            "license",
+            "usageInfo",
+        ):
+            json_ld_context[property_] = {
+                "@id": str(getattr(SDO, property_)),
+                "@type": "@id",
+            }
+            json_ld_context[property_ + "Literal"] = {
+                "@id": str(getattr(SDO, property_))
+            }
+        return json_ld_context
 
     @property
-    def license(self) -> Union[str, URIRef, None]:
-        return self._optional_value(SDO.license, self._map_str_or_uri_value)
+    def licenses(self) -> Tuple[Union[str, URIRef], ...]:
+        return tuple(self._values(SDO.license, self._map_str_or_uri_value))
 
     @property
     def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
         return tuple(self._values(SDO.copyrightHolder, self._map_str_or_uri_value))
 
     @property
-    def rights_statement(self) -> Union[str, URIRef, None]:
-        return self._optional_value(SDO.usageInfo, self._map_str_or_uri_value)
-
-    @property
-    def source(self) -> Optional[URIRef]:
-        return self.url
+    def rights_statements(self) -> Tuple[Union[str, URIRef], ...]:
+        return tuple(self._values(SDO.usageInfo, self._map_str_or_uri_value))

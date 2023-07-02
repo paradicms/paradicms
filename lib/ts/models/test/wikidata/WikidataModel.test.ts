@@ -5,7 +5,7 @@ import {WikidataModel} from "../../src/wikidata/WikidataModel";
 import {ModelSetFactory} from "../../src";
 import {expect} from "chai";
 import {WikidataWork} from "../../src/wikidata/WikidataWork";
-import {CmsImage} from "../../src/cms/CmsImage";
+import {SchemaImageObject} from "../../src/schema/SchemaImageObject";
 
 describe("WikidataModel", () => {
   let sut: WikidataModel;
@@ -20,9 +20,9 @@ describe("WikidataModel", () => {
   it("should return images from Wikidata", () => {
     expect(sut.images).to.have.length(1);
     const image = sut.images[0];
-    expect(image).to.be.instanceof(CmsImage);
-    const cmsImage = image as CmsImage;
-    expect(cmsImage.iri).to.eq(
+    expect(image).to.be.instanceof(SchemaImageObject);
+    const concreteImage = image as SchemaImageObject;
+    expect(concreteImage.iri).to.eq(
       "http://commons.wikimedia.org/wiki/Special:FilePath/Pilot%20ACE%20computer-2.jpg"
     );
   });

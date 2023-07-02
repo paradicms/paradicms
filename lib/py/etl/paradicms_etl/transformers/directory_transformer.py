@@ -1,7 +1,7 @@
 import json
 import logging
 from logging import Logger
-from typing import Dict, Optional, Tuple, Type, List, Union, Set, Iterable
+from typing import Dict, Optional, Tuple, Type, List, Set, Iterable
 from urllib.parse import quote
 
 import yaml
@@ -11,7 +11,6 @@ from yaml import FullLoader
 
 from paradicms_etl.extractors.directory_extractor import DirectoryExtractor
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_collection import CmsCollection
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.images_mixin import ImagesMixin
@@ -19,11 +18,8 @@ from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes_by_name import (
     ROOT_MODEL_CLASSES_BY_NAME,
 )
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_closing import WorkClosing
-from paradicms_etl.models.work_creation import WorkCreation
-from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.models.work_opening import WorkOpening
 from paradicms_etl.utils.markdown_to_dict_transformer import (
     MarkdownToDictTransformer,
 )
@@ -114,7 +110,7 @@ class DirectoryTransformer:
             ] = {}
             for metadata_file_entry in metadata_file_entries:
                 try:
-                    root_model_class = self.__root_model_class(
+                    root_model_class = self.__root_model_class_by_alias(
                         metadata_file_entry.model_type
                     )
                 except KeyError:
@@ -137,13 +133,22 @@ class DirectoryTransformer:
             image-taking instances that have the same model id.
             """
 
-            transformed_images_by_id = self.__transformed_models_by_class.get(
-                self.__root_model_class(Image), {}
-            )
+            transformed_images_by_id = {}
+            for image_root_model_class in self.__root_model_classes_by_interface_type(
+                Image
+            ):
+                transformed_images_by_id.update(
+                    self.__transformed_models_by_class.get(image_root_model_class, {})
+                )
             if not transformed_images_by_id:
                 return
 
-            for transformed_models_by_id in self.__transformed_models_by_class.values():
+            for (
+                transformed_model_class,
+                transformed_models_by_id,
+            ) in self.__transformed_models_by_class.items():
+                if issubclass(transformed_model_class, Image):
+                    continue
                 for transformed_model_id in tuple(transformed_models_by_id.keys()):
                     transformed_model = transformed_models_by_id[transformed_model_id]
                     if not isinstance(transformed_model, ImagesMixin):
@@ -182,7 +187,7 @@ class DirectoryTransformer:
                 self.__transformed_model_uris.add(transformed_model.uri)
 
             transformed_models_by_type = self.__transformed_models_by_class.setdefault(
-                self.__root_model_class(transformed_model.__class__), {}
+                self.__root_model_class_by_type(transformed_model.__class__), {}
             )
             assert model_id not in transformed_models_by_type
             transformed_models_by_type[model_id] = transformed_model
@@ -190,7 +195,6 @@ class DirectoryTransformer:
         def __call__(self) -> Iterable[Model]:
             # Order is important
             self.__transform_image_metadata_file_entries()
-            self.__transform_work_event_metadata_file_entries()
             self.__transform_work_metadata_file_entries()
             self.__transform_collection_metadata_file_entries()
             self.__transform_other_metadata_file_entries()
@@ -200,7 +204,7 @@ class DirectoryTransformer:
 
         def __model_type_namespace(self, *, model_class: Type[Model]) -> Namespace:
             return Namespace(
-                f"{self.__pipeline_namespace}{quote(spinalcase(self.__root_model_class(model_class).__name__))}:"
+                f"{self.__pipeline_namespace}{quote(spinalcase(self.__root_model_class_by_type(model_class).__name__))}:"
             )
 
         def __model_uri(self, *, model_class: Type[Model], model_id: str) -> URIRef:
@@ -210,30 +214,47 @@ class DirectoryTransformer:
         def __pipeline_namespace(self) -> Namespace:
             return Namespace(f"urn:directory:{self.__pipeline_id}:")
 
-        def __root_model_class(self, model_class: Union[Type[Model], str]):
-            if isinstance(model_class, str):
-                return self.__root_model_classes_by_alias[model_class]
-            else:
-                return self.__root_model_classes_by_alias[model_class.__name__]
+        def __root_model_class_by_alias(self, model_class: str):
+            return self.__root_model_classes_by_alias[model_class]
+
+        def __root_model_class_by_type(self, model_class: Type[Model]):
+            return self.__root_model_classes_by_alias[model_class.__name__]
+
+        def __root_model_classes_by_interface_type(self, model_interface):
+            root_model_classes: Set[Type[Model]] = set()
+            for root_model_class in self.__root_model_classes_by_alias.values():
+                if issubclass(root_model_class, model_interface):
+                    root_model_classes.add(root_model_class)
+            return tuple(root_model_classes)
 
         def __transform_collection_metadata_file_entries(self) -> None:
             transformed_collections_by_id: Dict[str, Collection] = {}
-            root_model_class = self.__root_model_class(Collection)
             for (
-                metadata_file_entry
-            ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
-                root_model_class, tuple()
-            ):
-                collection: Collection = self.__transform_metadata_file_entry_to_model(
-                    metadata_file_entry=metadata_file_entry
-                )  # type: ignore
-                transformed_collections_by_id[metadata_file_entry.model_id] = collection
+                collection_root_model_class
+            ) in self.__root_model_classes_by_interface_type(Collection):
+                for (
+                    metadata_file_entry
+                ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
+                    collection_root_model_class, tuple()
+                ):
+                    collection: Collection = (
+                        self.__transform_metadata_file_entry_to_model(  # type: ignore
+                            metadata_file_entry=metadata_file_entry
+                        )
+                    )  # type: ignore
+                    transformed_collections_by_id[
+                        metadata_file_entry.model_id
+                    ] = collection
 
-            transformed_works_by_id: Dict[
-                str, Work
-            ] = self.__transformed_models_by_class.get(
-                self.__root_model_class(Work), {}  # type: ignore
-            )  # type: ignore
+            transformed_works_by_id: Dict[str, Work] = {}
+            for work_root_model_class in self.__root_model_classes_by_interface_type(
+                Work
+            ):
+                transformed_works_by_id.update(
+                    self.__transformed_models_by_class.get(
+                        work_root_model_class, {}  # type: ignore
+                    )
+                )  # type: ignore
             if not transformed_works_by_id:
                 return
 
@@ -243,10 +264,10 @@ class DirectoryTransformer:
                 default_collection_model_id = self.__directory_name
                 transformed_collections_by_id[
                     default_collection_model_id
-                ] = CmsCollection.builder(
-                    title=self.__directory_name,
+                ] = SchemaCollection.builder(
+                    name=self.__directory_name,
                     uri=self.__model_uri(
-                        model_class=CmsCollection,
+                        model_class=SchemaCollection,
                         model_id=default_collection_model_id,
                     ),
                 ).build()
@@ -277,42 +298,46 @@ class DirectoryTransformer:
                 )
 
         def __transform_image_metadata_file_entries(self) -> None:
-            image_root_model_class = self.__root_model_class(Image)
-            for (
-                metadata_file_entry
-            ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
-                image_root_model_class, tuple()
+            for image_root_model_class in self.__root_model_classes_by_interface_type(
+                Image
             ):
-                image: Image = self.__transform_metadata_file_entry_to_model(
-                    metadata_file_entry=metadata_file_entry
-                )  # type: ignore
+                for (
+                    metadata_file_entry
+                ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
+                    image_root_model_class, tuple()
+                ):
+                    image: Image = self.__transform_metadata_file_entry_to_model(
+                        metadata_file_entry=metadata_file_entry
+                    )  # type: ignore
 
-                # If the image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the metadata file,
-                # use that image file as the src.
-                if image.src is None:
-                    for image_file_entry in self.__image_file_entries:
-                        if (
-                            image_file_entry.model_type
-                            == metadata_file_entry.model_type
-                            and image_file_entry.model_id
-                            == metadata_file_entry.model_id
-                        ):
-                            image = (
-                                image.replacer()
-                                .set_src(image_file_entry.path.as_uri())
-                                .build()
-                            )
-                            break
+                    # If the image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the metadata file,
+                    # use that image file as the src.
+                    if image.src is None:
+                        for image_file_entry in self.__image_file_entries:
+                            if (
+                                image_file_entry.model_type
+                                == metadata_file_entry.model_type
+                                and image_file_entry.model_id
+                                == metadata_file_entry.model_id
+                            ):
+                                image = (
+                                    image.replacer()
+                                    .set_src(image_file_entry.path.as_uri())
+                                    .build()
+                                )
+                                break
 
-                self.__buffer_transformed_model(
-                    model_id=metadata_file_entry.model_id,
-                    transformed_model=image,
-                )
+                    self.__buffer_transformed_model(
+                        model_id=metadata_file_entry.model_id,
+                        transformed_model=image,
+                    )
 
         def __transform_metadata_file_entry_to_model(
             self, metadata_file_entry: DirectoryExtractor.MetadataFileEntry
         ) -> Model:
-            root_model_class = self.__root_model_class(metadata_file_entry.model_type)
+            root_model_class = self.__root_model_class_by_alias(
+                metadata_file_entry.model_type
+            )
 
             graph = Graph()
 
@@ -396,12 +421,14 @@ class DirectoryTransformer:
             return model
 
         def __transform_other_metadata_file_entries(self) -> None:
-            image_root_model_class = self.__root_model_class(Image)
+            image_root_model_classes = self.__root_model_classes_by_interface_type(
+                Image
+            )
             for (
                 root_model_class,
                 metadata_file_entries,
             ) in self.__untransformed_metadata_file_entries_by_root_model_class.items():
-                if root_model_class == image_root_model_class:
+                if root_model_class in image_root_model_classes:
                     continue
                 for metadata_file_entry in metadata_file_entries:
                     self.__buffer_transformed_model(
@@ -414,57 +441,21 @@ class DirectoryTransformer:
         def __transform_work_metadata_file_entries(
             self,
         ):
-            transformed_work_events_by_id: Dict[str, List[WorkEvent]] = {}
-            for work_event_model_class in (WorkClosing, WorkCreation, WorkOpening):
-                for (
-                    work_event_model_id,
-                    work_event,
-                ) in self.__transformed_models_by_class.get(
-                    self.__root_model_class(work_event_model_class), {}
-                ).items():
-                    transformed_work_events_by_id.setdefault(
-                        work_event_model_id, []
-                    ).append(work_event)
-
-            root_model_class = self.__root_model_class(Work)
-            for (
-                metadata_file_entry
-            ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
-                root_model_class, tuple()
+            for work_root_model_class in self.__root_model_classes_by_interface_type(
+                Work
             ):
-                work: Work = self.__transform_metadata_file_entry_to_model(
-                    metadata_file_entry
-                )
-
-                transformed_work_events = transformed_work_events_by_id.get(
-                    metadata_file_entry.model_id
-                )
-                if transformed_work_events:
-                    work_replacer = work.replacer()
-                    for transformed_work_event in transformed_work_events:
-                        work_replacer.add_event(transformed_work_event)
-                    work = work_replacer.build()
-
-                self.__buffer_transformed_model(
-                    model_id=metadata_file_entry.model_id,
-                    transformed_model=work,
-                )
-
-        def __transform_work_event_metadata_file_entries(
-            self,
-        ):
-            for model_class in (WorkClosing, WorkCreation, WorkOpening):
-                root_model_class = self.__root_model_class(model_class)
                 for (
                     metadata_file_entry
                 ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
-                    root_model_class, tuple()
+                    work_root_model_class, tuple()
                 ):
+                    work: Work = self.__transform_metadata_file_entry_to_model(
+                        metadata_file_entry
+                    )
+
                     self.__buffer_transformed_model(
                         model_id=metadata_file_entry.model_id,
-                        transformed_model=self.__transform_metadata_file_entry_to_model(
-                            metadata_file_entry
-                        ),
+                        transformed_model=work,
                     )
 
     def __call__(

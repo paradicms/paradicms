@@ -13,7 +13,6 @@ import {
   PropertyGroup,
   RightsStatement,
   Work,
-  WorkEventUnion,
 } from "../src";
 import {DatasetCore} from "@rdfjs/types";
 
@@ -79,9 +78,6 @@ export const dummyModelSet: ModelSet = {
     throw new EvalError("not implemented");
   },
   workByKey(workKey: string): Work | null {
-    throw new EvalError("not implemented");
-  },
-  workEventByIri(workEventIri: string): WorkEventUnion | null {
     throw new EvalError("not implemented");
   },
   get works(): readonly Work[] {

@@ -37,4 +37,6 @@ def synthetic_data_rdf_file_path(data_dir_path: Path) -> Path:
 
 @pytest.fixture
 def test_image_file_path(data_dir_path: Path) -> Path:
-    return data_dir_path / "test" / "directory" / "image" / "test_work2.gif"
+    return (
+        data_dir_path / "test" / "directory" / "schema-image-object" / "test_work2.gif"
+    )

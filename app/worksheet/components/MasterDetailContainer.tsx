@@ -88,7 +88,7 @@ const ItemDetailCard: React.FunctionComponent<{
         <Col className="p-0 text-center" xs={12}>
           <ImagesCarousel
             getAbsoluteImageSrc={relativeImageSrc => relativeImageSrc}
-            images={item.images}
+            originalImages={item.images}
           />
         </Col>
       </Row>

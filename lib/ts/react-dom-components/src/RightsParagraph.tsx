@@ -34,30 +34,30 @@ export const RightsParagraph: React.FunctionComponent<{
       creatorLabels.add(creator.label);
     }
 
-    if (rights.rightsStatement) {
+    for (const rightsStatement of rights.rightsStatements) {
       pushRightsElement(
         <span>
           <i>Statement</i>:{" "}
-          <RightsStatementLink rightsStatement={rights.rightsStatement} />
+          <RightsStatementLink rightsStatement={rightsStatement} />
         </span>
       );
     }
 
-    for (const holder of rights.rightsHolders) {
-      if (creatorLabels.has(holder.label)) {
+    for (const rigthsHolder of rights.rightsHolders) {
+      if (creatorLabels.has(rigthsHolder.label)) {
         continue;
       }
       pushRightsElement(
         <span>
-          <i>Holder</i>: {holder.label}
+          <i>Holder</i>: {rigthsHolder.label}
         </span>
       );
     }
 
-    if (rights.license) {
+    for (const license of rights.licenses) {
       pushRightsElement(
         <span>
-          <i>License</i>: {<LicenseLink license={rights.license} />}
+          <i>License</i>: {<LicenseLink license={license} />}
         </span>
       );
     }

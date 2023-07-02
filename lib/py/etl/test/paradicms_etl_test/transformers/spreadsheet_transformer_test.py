@@ -1,10 +1,8 @@
 import os
-from datetime import datetime
 from pathlib import Path
 from typing import Tuple
 
 import pytest
-from rdflib import Graph, DCTERMS
 
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
 from paradicms_etl.extractors.google_sheets_extractor import GoogleSheetsExtractor
@@ -13,12 +11,11 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_creation import WorkCreation
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
 
 
 def __check_test_data_models(models: Tuple[Model, ...]):
-    assert len(models) == 4
+    assert len(models) == 3
 
     person = next(person for person in models if isinstance(person, Person))
     assert person.name == "Minor Gordon"
@@ -27,16 +24,6 @@ def __check_test_data_models(models: Tuple[Model, ...]):
     assert isinstance(image.src, ImageData)
 
     work = next(work for work in models if isinstance(work, Work))
-    work_creation = next(
-        work_creation
-        for work_creation in models
-        if isinstance(work_creation, WorkCreation)
-    )
-    assert work.event_uris == (work_creation.uri,)
-    work_creation_date = (
-        work_creation.to_rdf(graph=Graph()).value(DCTERMS.date).toPython()
-    )
-    assert isinstance(work_creation_date, datetime)
     assert work.image_uris == (image.uri,)
 
 

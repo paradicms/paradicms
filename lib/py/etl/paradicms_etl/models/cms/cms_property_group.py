@@ -22,6 +22,10 @@ class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
             self.set(RDFS.comment, comment)
             return self
 
+        def set_label(self, label: str) -> "CmsPropertyGroup.Builder":
+            self.set(RDFS.label, label)
+            return self
+
     def __init__(self, *args, **kwds):
         CmsNamedModel.__init__(self, *args, **kwds)
         self.label
@@ -29,7 +33,7 @@ class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
     @classmethod
     def builder(cls, *, label: str, uri: URIRef):
         builder = cls.Builder(Graph().resource(uri))
-        builder.add(RDFS.label, label)
+        builder.set_label(label)
         return builder
 
     @classmethod

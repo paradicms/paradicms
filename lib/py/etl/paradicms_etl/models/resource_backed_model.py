@@ -1,14 +1,13 @@
 from typing import Generator, Tuple, Union, TypeVar, Any, Callable
 from typing import Optional
 
-from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO, OWL
+from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO, OWL, DCMITYPE
 from rdflib import Graph
 from rdflib.resource import Resource
 from rdflib.term import Node, BNode
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.image_data import ImageData
-from paradicms_etl.namespaces import CMS
 
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
 _StatementObject = Union[Literal, Resource]
@@ -18,7 +17,7 @@ _ValueT = TypeVar("_ValueT")
 class ResourceBackedModel(Model):
     class Builder:
         def __init__(self, resource: Resource):
-            self._resource = resource
+            self.__resource = resource
 
         def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
@@ -39,6 +38,10 @@ class ResourceBackedModel(Model):
             else:
                 self._resource.add(p, Literal(o))
             return self
+
+        @property
+        def _resource(self) -> Resource:
+            return self.__resource
 
         def set(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
@@ -123,10 +126,10 @@ class ResourceBackedModel(Model):
             resource: Resource = value
             value_type = resource.value(RDF.type)
             if isinstance(value_type, Resource):
-                if value_type.identifier == CMS.Text:
-                    from paradicms_etl.models.cms.cms_text import CmsText
+                if value_type.identifier == DCMITYPE.Text:
+                    from paradicms_etl.models.dc.dc_text import DcText
 
-                    return CmsText(value)
+                    return DcText(value)
                 elif value_type.identifier == SDO.TextObject:
                     from paradicms_etl.models.schema.schema_text_object import (
                         SchemaTextObject,

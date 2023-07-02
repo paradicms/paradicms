@@ -1,5 +1,3 @@
-from typing import Union, Tuple
-
 from rdflib import URIRef, SDO, Graph
 from rdflib.resource import Resource
 
@@ -7,10 +5,7 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
 from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
-from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_event import WorkEvent
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -24,10 +19,6 @@ class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
     class Builder(
         SchemaNamedModel.Builder, SchemaCreativeWorkMixin.Builder, Work.Builder
     ):
-        def add_event(self, event: Union[WorkEvent, URIRef]):
-            self.add(CMS.event, event)
-            return self
-
         def build(self) -> "SchemaCreativeWork":
             return SchemaCreativeWork(self._resource)
 
@@ -41,20 +32,11 @@ class SchemaCreativeWork(SchemaNamedModel, SchemaCreativeWorkMixin, Work):
         builder.set(SDO.name, name)
         return builder
 
-    @property
-    def description(self) -> Union[str, Text, None]:
-        return SchemaNamedModel.description.fget(self)  # type: ignore
-
-    @property
-    def event_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(CMS.event, self._map_uri_value))
-
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
             SchemaNamedModel.json_ld_context(),
             SchemaCreativeWorkMixin.json_ld_context(),
-            {"event": {"@id": str(CMS.event), "@type": "@id"}},
         )
 
     @property

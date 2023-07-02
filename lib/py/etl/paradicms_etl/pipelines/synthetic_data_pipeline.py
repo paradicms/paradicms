@@ -16,20 +16,16 @@ from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.models.agent import Agent
-from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_location import CmsLocation
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_text import CmsText
-from paradicms_etl.models.cms.cms_work import CmsWork
-from paradicms_etl.models.cms.cms_work_closing import CmsWorkClosing
-from paradicms_etl.models.cms.cms_work_creation import CmsWorkCreation
-from paradicms_etl.models.cms.cms_work_opening import CmsWorkOpening
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_collection import DcCollection
+from paradicms_etl.models.dc.dc_image import DcImage
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
+from paradicms_etl.models.dc.dc_text import DcText
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
 from paradicms_etl.models.image import Image
@@ -53,7 +49,6 @@ from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
-from paradicms_etl.models.work_event import WorkEvent
 from paradicms_etl.pipeline import Pipeline
 
 
@@ -239,7 +234,9 @@ class SyntheticDataPipeline(Pipeline):
                 for image in self.__generate_images(
                     base_uri=organization_builder.uri, text_prefix="Organization"
                 ):
-                    organization_builder.add_image(image)
+                    if image.thumbnail_uris:
+                        # Only add original images
+                        organization_builder.add_image(image)
                     yield image
                 yield organization_builder.build()
 
@@ -279,7 +276,9 @@ class SyntheticDataPipeline(Pipeline):
                     base_uri=person_builder.uri, text_prefix="Person"
                 ):
                     yield image
-                    person_builder.add_image(image)
+                    if image.thumbnail_uris:
+                        # Only add original images
+                        person_builder.add_image(image)
 
                 yield person_builder.build()
 
@@ -303,11 +302,11 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
                 original_image_builder: Union[
-                    CmsImage.Builder, SchemaImageObject.Builder
+                    DcImage.Builder, SchemaImageObject.Builder
                 ]
                 if image_i % 2 == 0:
                     original_image_builder = (
-                        CmsImage.builder(
+                        DcImage.builder(
                             uri=original_image_uri,
                         )
                         .set_exact_dimensions(original_image_exact_dimensions)
@@ -341,19 +340,19 @@ class SyntheticDataPipeline(Pipeline):
                     ImageDimensions(800, 800),
                 ):
                     thumbnail = (
-                        CmsImage.builder(
+                        SchemaImageObject.builder(
                             uri=URIRef(
                                 str(original_image_builder.uri)
                                 + f":Thumbnail{thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                             ),
                         )
                         .copy_rights(original_image_builder.build())
+                        .set_caption(
+                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                        )
                         .set_exact_dimensions(thumbnail_dimensions)
                         .set_src(
                             f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
-                        )
-                        .set_title(
-                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                         )
                         .build()
                     )
@@ -367,16 +366,16 @@ class SyntheticDataPipeline(Pipeline):
             *,
             agents: Tuple[Agent, ...],
             concepts_by_value: Dict[str, Concept],
-        ) -> Iterable[Union[Collection, Image, Location, Work, WorkEvent]]:
+        ) -> Iterable[Union[Collection, Image, Location, Work]]:
             assert self.__collections >= 2
             for collection_i in range(self.__collections):
                 collection_name = f"Collection{collection_i}"
                 collection_uri = URIRef(f"http://example.com/collection{collection_i}")
                 collection_builder: Union[
-                    CmsCollection.Builder, SchemaCollection.Builder
+                    DcCollection.Builder, SchemaCollection.Builder
                 ]
                 if collection_i % 2 == 0:
-                    collection_builder = CmsCollection.builder(
+                    collection_builder = DcCollection.builder(
                         title=collection_name, uri=collection_uri
                     )
                 else:
@@ -385,7 +384,7 @@ class SyntheticDataPipeline(Pipeline):
                         uri=collection_uri,
                     )
 
-                description_builder = CmsText.builder(self.__LOREM_IPSUM)
+                description_builder = DcText.builder(self.__LOREM_IPSUM)
                 description_builder.add_rights_holder(
                     f"{collection_name} description rights holder"
                 ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
@@ -399,7 +398,9 @@ class SyntheticDataPipeline(Pipeline):
                         text_prefix=collection_name,
                     ):
                         yield image
-                        collection_builder.add_image(image)
+                        if image.thumbnail_uris:
+                            # Only add original images
+                            collection_builder.add_image(image)
 
                 # For collection 0, force the GUI to use a work image
 
@@ -457,7 +458,9 @@ class SyntheticDataPipeline(Pipeline):
                         text_prefix=property_value,
                     ):
                         yield image
-                        concept_builder.add_image(image)
+                        if image.thumbnail_uris:
+                            # Only add original images
+                            concept_builder.add_image(image)
 
                     yield concept_builder.build()
 
@@ -475,7 +478,9 @@ class SyntheticDataPipeline(Pipeline):
                 text_prefix="Synthetic data properties",
             ):
                 yield image
-                property_group_builder.add_image(image)
+                if image.thumbnail_uris:
+                    # Only add original images
+                    property_group_builder.add_image(image)
 
             for property_ in self.__PROPERTIES:
                 property_model_builder: Union[
@@ -500,7 +505,9 @@ class SyntheticDataPipeline(Pipeline):
                     base_uri=property_model_builder.uri, text_prefix=property_.label
                 ):
                     yield image
-                    property_model_builder.add_image(image)
+                    if image.thumbnail_uris:
+                        # Only add original images
+                        property_model_builder.add_image(image)
 
                 property_model = property_model_builder.build()
                 yield property_model
@@ -515,13 +522,28 @@ class SyntheticDataPipeline(Pipeline):
             concepts_by_value: Dict[str, Concept],
             title_prefix: str,
             uri_prefix: str,
-        ) -> Iterable[Union[Image, Location, Work, WorkEvent]]:
+        ) -> Iterable[Union[Image, Location, Work]]:
             work_i = self.__next_work_i
             self.__next_work_i += 1
+            work_uri = URIRef(uri_prefix + str(work_i))
+
+            # anonymous_location = (
+            #     SchemaPlace.builder()
+            #     .set_latitude(42.728104)
+            #     .set_longitude(-73.687576)
+            #     .build()
+            # )
+            named_location = (
+                SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
+                .set_latitude(42.728104)
+                .set_longitude(-73.687576)
+                .build()
+            )
+            yield named_location
 
             work_destruction_date = date(day=1, month=1, year=2022)
             work_creation_date = work_destruction_date - timedelta(days=work_i)
-            work_creation_date_time_description = OwlTimeDateTimeDescription.from_date(
+            work_modification_date = OwlTimeDateTimeDescription.from_date(
                 work_creation_date
             )
             work_title = title_prefix + str(work_i)
@@ -534,49 +556,43 @@ class SyntheticDataPipeline(Pipeline):
             work_provenance = f"{work_title} provenance"
             work_rights_holder = f"{work_title} rights holder"
             work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU.uri
-            work_uri = URIRef(uri_prefix + str(work_i))
 
-            work_builder: Union[CmsWork.Builder, SchemaCreativeWork.Builder]
+            work_builder: Union[DcPhysicalObject.Builder, SchemaCreativeWork.Builder]
             if work_i % 2 == 0:
-                work_builder = CmsWork.builder(title=work_title, uri=work_uri)
+                work_builder = DcPhysicalObject.builder(title=work_title, uri=work_uri)
                 for work_alternative_title in work_alternative_titles:
-                    work_builder.add_alternative_title(work_alternative_title)
+                    work_builder.add_alternative(work_alternative_title)
                 for work_identifier in work_identifiers:
                     work_builder.add_identifier(work_identifier)
-                # work_builder.set_date_created(work_creation_date)
-                work_builder.add_license(work_license)
                 work_builder.add_provenance(work_provenance)
-                work_builder.add_rights_holder(work_rights_holder)
-                work_builder.add_rights_statement(work_rights_statement)
+                work_builder.set_created(work_creation_date)
+                work_builder.set_modified(work_modification_date)
+                properties = tuple(
+                    property_
+                    for property_ in self.__PROPERTIES
+                    if str(property_.uri).startswith(str(DCTERMS))
+                )
             else:
                 work_builder = SchemaCreativeWork.builder(name=work_title, uri=work_uri)
                 for work_alternative_title in work_alternative_titles:
                     work_builder.add_alternate_name(work_alternative_title)
                 # for work_identifier in work_identifiers:
                 #     work_builder.add_identifier(work_identifier)
-                work_builder.add_license(work_license)
                 # work_builder.add_provenance(work_provenance)
                 work_builder.set_date_created(work_creation_date)
-                work_builder.add_rights_holder(work_rights_holder)
-                work_builder.add_rights_statement(work_rights_statement)
+                work_builder.set_date_modified(work_modification_date)
                 work_builder.add_url(work_page)
-
-            # Faceted literal properties, which are the same across works
-            if isinstance(work_builder, CmsWork.Builder):
-                properties = tuple(
-                    property_
-                    for property_ in self.__PROPERTIES
-                    if str(property_.uri).startswith(str(DCTERMS))
-                )
-            elif isinstance(work_builder, SchemaCreativeWork.Builder):
                 properties = tuple(
                     property_
                     for property_ in self.__PROPERTIES
                     if str(property_.uri).startswith(str(SDO))
                 )
-            else:
-                raise NotImplementedError
 
+            work_builder.add_license(work_license)
+            work_builder.add_rights_holder(work_rights_holder)
+            work_builder.add_rights_statement(work_rights_statement)
+
+            # Faceted literal properties, which are the same across works
             for property_ in properties:
                 if not property_.values:
                     continue
@@ -613,9 +629,9 @@ class SyntheticDataPipeline(Pipeline):
                     URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
                 )
 
-            description_builder: Union[CmsText.Builder, SchemaTextObject.Builder]
-            if isinstance(work_builder, CmsWork.Builder):
-                description_builder = CmsText.builder(
+            description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
+            if isinstance(work_builder, DcPhysicalObject.Builder):
+                description_builder = DcText.builder(
                     self.__LOREM_IPSUM,
                 )
             elif isinstance(work_builder, SchemaCreativeWork.Builder):
@@ -632,81 +648,16 @@ class SyntheticDataPipeline(Pipeline):
 
             work_builder.set_description(description)
 
-            if work_i % 2 == 0:
-                anonymous_location = (
-                    CmsLocation.builder()
-                    .set_lat(42.728104)
-                    .set_long(-73.687576)
-                    .build()
-                )
-                named_location = (
-                    CmsLocation.builder(uri=URIRef(str(work_uri) + "Location"))
-                    .set_lat(42.728104)
-                    .set_long(-73.687576)
-                    .build()
-                )
-            else:
-                anonymous_location = (
-                    SchemaPlace.builder()
-                    .set_latitude(42.728104)
-                    .set_longitude(-73.687576)
-                    .build()
-                )
-                named_location = (
-                    SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
-                    .set_latitude(42.728104)
-                    .set_longitude(-73.687576)
-                    .build()
-                )
-
-            yield named_location
-            if isinstance(work_builder, CmsWork.Builder):
-                work_builder.set_location(named_location)
-            else:
-                work_builder.add_spatial(named_location)
+            work_builder.add_spatial(named_location)
 
             for image in self.__generate_images(
                 base_uri=work_uri,
                 text_prefix=work_title,
             ):
                 yield image
-                work_builder.add_image(image)
-
-            # Anonymous event
-            work_builder.add_event(
-                CmsWorkClosing.builder()
-                .set_description(description)
-                .set_date(work_destruction_date)
-                .set_location(anonymous_location)
-                .set_title(f"{work_title} closing")
-                .build()
-            )
-
-            work_creation_builder: CmsWorkCreation.Builder = (
-                CmsWorkCreation.builder(uri=URIRef(str(work_uri) + "Creation"))
-                .set_date(work_creation_date_time_description)
-                .set_description(description)
-                .set_location(named_location)
-                .set_title(f"{work_title} creation")
-            )
-            # for contributor in contributor_uris:
-            #     work_creation_builder.add_contributor_uri(contributor_uri)
-            for creator_uri in creator_uris:
-                work_creation_builder.add_creator(creator_uri)
-            work_creation = work_creation_builder.build()
-            yield work_creation
-            work_builder.add_event(work_creation)
-
-            work_opening = (
-                CmsWorkOpening.builder(uri=URIRef(str(work_uri) + "Opening"))
-                .set_description(description)
-                .set_date(work_creation_date)
-                .set_location(anonymous_location)
-                .set_title(f"{work_title} opening")
-                .build()
-            )
-            yield work_opening
-            work_builder.add_event(work_opening)
+                if image.thumbnail_uris:
+                    # Only add original images
+                    work_builder.add_image(image)
 
             yield work_builder.build()
 

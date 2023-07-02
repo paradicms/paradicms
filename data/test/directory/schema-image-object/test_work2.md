@@ -1,0 +1,3 @@
+---
+caption: "Image title"
+---

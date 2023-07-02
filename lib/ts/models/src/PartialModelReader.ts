@@ -11,7 +11,6 @@ import {Person} from "./Person";
 import {RightsStatement} from "./RightsStatement";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
-import {WorkEventUnion} from "./WorkEventUnion";
 import {Work} from "./Work";
 
 /**
@@ -61,10 +60,6 @@ export class PartialModelReader implements ModelReader {
   }
 
   readPropertyGroups(kwds: {modelSet: ModelSet}): readonly PropertyGroup[] {
-    return [];
-  }
-
-  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
     return [];
   }
 

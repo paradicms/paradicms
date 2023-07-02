@@ -2,7 +2,7 @@ import {SchemaNamedModel} from "./SchemaNamedModel";
 import {SchemaMediaObjectMixin} from "./SchemaMediaObjectMixin";
 import {Mixin} from "ts-mixer";
 import {Image} from "../Image";
-import {cms, schema} from "@paradicms/vocabularies";
+import {schema} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {ImageDimensions} from "../ImageDimensions";
 import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
@@ -62,7 +62,7 @@ export class SchemaImageObject
 
   @Memoize()
   get src(): string | null {
-    const src = this.findAndMapObject(cms.imageSrc, term =>
+    const src = this.findAndMapObject(schema.contentUrl, term =>
       term.termType === "Literal" ? term.value : null
     );
     if (src) {

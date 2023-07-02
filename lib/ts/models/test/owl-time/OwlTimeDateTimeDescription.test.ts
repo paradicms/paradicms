@@ -9,7 +9,7 @@ describe("OwlTimeDateTimeDescription", () => {
   for (const work of testModelSet.works) {
     for (const workEvent of work.events) {
       if (
-        workEvent.date &&
+        workEvent.type === "WorkModification" &&
         workEvent.date instanceof OwlTimeDateTimeDescription
       ) {
         dateTimeDescription = workEvent.date as OwlTimeDateTimeDescription;

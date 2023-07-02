@@ -1,19 +1,14 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
-import {cc, cms, dcterms, foaf, schema} from "@paradicms/vocabularies";
+import {cc, dcmitype, dcterms, foaf, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {
-  Model,
-  ModelSet,
-  ModelSetBuilder,
-  WorkClosing,
-  WorkOpening,
-} from "../src";
+import {Model, ModelSet, ModelSetBuilder} from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {WorkCreation} from "../src/WorkCreation";
+import {WorkCreationEvent} from "../src/WorkCreationEvent";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";
+import {WorkModificationEvent} from "../src/WorkModificationEvent";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -41,7 +36,7 @@ const countModelSetNamedAgents = (modelSet: ModelSet): number =>
   countModelSetNamedRdfInstances(schema.Person, modelSet);
 
 const countModelSetImages = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cms.Image, modelSet) +
+  countModelSetNamedRdfInstances(dcmitype.Image, modelSet) +
   countModelSetNamedRdfInstances(schema.ImageObject, modelSet);
 
 const countModelSetNamedLicenses = (modelSet: ModelSet): number =>
@@ -102,7 +97,7 @@ describe("ModelSetBuilder", () => {
       })
       .build();
     expect(countModelSetNamedAgents(agentsModelSet)).to.eq(namedAgents.length);
-    expect(countModelSetImages(agentsModelSet)).to.eq(namedAgents.length);
+    expect(countModelSetImages(agentsModelSet)).to.eq(namedAgents.length * 2); // One original image, one thumbnail per agent
     // for (const namedAgent of namedAgents) {
     //   expect(
     //     agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
@@ -125,8 +120,8 @@ describe("ModelSetBuilder", () => {
       propertyGroup.properties
     );
     expect(countModelSetImages(propertyGroupModelSet)).to.eq(
-      propertyGroup.properties.length
-    );
+      propertyGroup.properties.length * 2
+    ); // One original image, one thumbnail per property
   });
 
   it("should get a property groups subset (worksheet edit)", () => {
@@ -140,8 +135,8 @@ describe("ModelSetBuilder", () => {
     expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
     expect(propertyGroupsModelSet.properties).to.be.empty;
     expect(countModelSetImages(propertyGroupsModelSet)).to.eq(
-      propertyGroups.length
-    );
+      propertyGroups.length * 2
+    ); // One original image, one thumbnail per property group
   });
 
   it("should get a property groups subset (worksheet review)", () => {
@@ -182,38 +177,40 @@ describe("ModelSetBuilder", () => {
         })
         .build();
       expect(countModelSetImages(propertyModelSet)).to.eq(
-        property.rangeValues.length
-      );
+        property.rangeValues.length * 2
+      ); // One original image, one thumbnail per value
       return;
     }
   });
 
   it("should get a work subset (work page)", () => {
-    const work = requireNonNull(
-      completeModelSet.workByIri("http://example.com/collection0/work0")
-    );
     const workModelSet = sut
-      .addWork(work, {
-        agents: {
-          thumbnail: THUMBNAIL_SELECTOR,
-        },
-        events: {
-          location: true,
-        },
-        images: {
-          agents: {},
-          license: true,
-          rightsStatement: true,
-        },
-        license: true,
-        location: true,
-        propertyValues: {
-          property: {
-            groups: {},
+      .addWork(
+        requireNonNull(
+          completeModelSet.workByIri("http://example.com/collection0/work0")
+        ),
+        {
+          agents: {
+            thumbnail: THUMBNAIL_SELECTOR,
           },
-        },
-        rightsStatement: true,
-      })
+          events: {
+            location: true,
+          },
+          images: {
+            agents: {},
+            licenses: true,
+            rightsStatements: true,
+          },
+          licenses: true,
+          location: true,
+          propertyValues: {
+            property: {
+              groups: {},
+            },
+          },
+          rightsStatements: true,
+        }
+      )
       .build();
     // expectModelsDeepEq(
     //   workModelSet.collections,
@@ -223,30 +220,39 @@ describe("ModelSetBuilder", () => {
     //     )
     //   )
     // );
+    expectModelsDeepEq(workModelSet.works, [
+      requireNonNull(
+        completeModelSet.workByIri("http://example.com/collection0/work0")
+      ),
+    ]);
+    const subsetWork = workModelSet.works[0];
+
+    expect(countModelSetImages(workModelSet)).to.eq(7); // 3 work original images, 2 agent original images, 2 agent thumbnails
+
     expect(countModelSetNamedAgents(workModelSet)).to.eq(2);
-    for (const work of workModelSet.works) {
-      expect(work.agents).to.have.length(6); // 2 named agents + 2 blank node agents + 2 literal agents
-      expect(
-        work.agents.some(
-          agent => agent.agent.thumbnail(THUMBNAIL_SELECTOR) !== null
-        )
-      );
-    }
-    expect(workModelSet.concepts).to.have.length(14);
 
-    expect(countModelSetImages(workModelSet)).to.eq(13);
+    expect(subsetWork.agents).to.have.length(6); // 2 named agents + 2 blank node agents + 2 literal agents
+    const agentImages = subsetWork.agents.flatMap(agent => agent.agent.images);
+    expect(agentImages).to.have.length(2);
+    const agentThumbnails = agentImages.flatMap(
+      agentImage => agentImage.thumbnails
+    );
+    expect(agentThumbnails).to.have.length(2);
 
-    expect(work.license).to.not.be.null;
+    expect(workModelSet.concepts).to.have.length(16);
+
+    expect(subsetWork.images).to.have.length(3); // 1 DcImage and 1 SchemaImageObject in the data, 1 SchemaImageObject from Wikimedia Commons
+    const thumbnails = subsetWork.images.flatMap(image => image.thumbnails);
+    expect(thumbnails).to.be.empty; // Didn't ask for them
+
+    expect(subsetWork.licenses).not.to.be.empty;
     expect(countModelSetNamedLicenses(workModelSet)).to.eq(2);
 
-    // There is no LocationPropertyValue, so exclude dcterms:spatial.
     expectModelsDeepEq(
       workModelSet.properties,
       completeModelSet.properties.filter(property =>
-        property.iris.some(
-          propertyIri =>
-            propertyIri.startsWith(dcterms[""].value) &&
-            propertyIri !== dcterms.spatial.value
+        property.iris.some(propertyIri =>
+          propertyIri.startsWith(dcterms[""].value)
         )
       )
     );
@@ -255,37 +261,33 @@ describe("ModelSetBuilder", () => {
       completeModelSet.propertyGroups
     );
 
-    expect(work.rightsStatement).to.not.be.null;
+    expect(subsetWork.rightsStatements).to.not.be.empty;
     expect(countModelSetRightsStatements(workModelSet)).to.eq(2);
 
-    expectModelsDeepEq(workModelSet.works, [work]);
-    for (const work of workModelSet.works) {
-      expect(work.location).not.to.be.null;
-      expect(work.location!.location.iris).to.not.be.empty;
-      expect(work.location!.location.latitude).not.to.be.undefined;
-    }
+    expect(subsetWork.location).not.to.be.null;
+    expect(subsetWork.location!.location.iris).to.not.be.empty;
+    expect(subsetWork.location!.location.latitude).not.to.be.undefined;
 
-    // expectModelsDeepEq(workModelSet.workEvents, work.events);
-    expect(work.events).to.have.length(3);
+    expect(subsetWork.events).to.have.length(2);
+    expect(
+      subsetWork.events.find(workEvent => workEvent.type === "WorkCreation")
+    ).not.to.be.undefined;
+    expect(
+      subsetWork.events.find(workEvent => workEvent.type === "WorkModification")
+    ).not.to.be.undefined;
   });
 
   it("should get a work events subset (work events timeline)", () => {
     const work = completeModelSet.works[0];
-    // @ts-ignore
-    let workClosing: WorkClosing | undefined;
-    let workCreation: WorkCreation | undefined;
-    // @ts-ignore
-    let workOpening: WorkOpening | undefined;
+    let workCreation: WorkCreationEvent | undefined;
+    let workModification: WorkModificationEvent | undefined;
     for (const workEvent of work.events) {
       switch (workEvent.type) {
-        case "WorkClosing":
-          workClosing = workEvent;
-          break;
         case "WorkCreation":
           workCreation = workEvent;
           break;
-        case "WorkOpening":
-          workOpening = workEvent;
+        case "WorkModification":
+          workModification = workEvent;
           break;
       }
     }
@@ -302,11 +304,11 @@ describe("ModelSetBuilder", () => {
     //   agents,
     //   workCreation!.agents.concat(work.agents.map(agent => agent.agent))
     // );
-    expectModelsDeepEq(workEvents, [workClosing!, workCreation!, workOpening!]);
-    for (const workEvent of workEvents) {
-      expect(workEvent.location).not.to.be.null;
-      expect(workEvent.location!.latitude).not.to.eq(0);
-      expect(workEvent.location!.longitude).not.to.eq(0);
-    }
+    expectModelsDeepEq(workEvents, [workCreation!, workModification!]);
+    // for (const workEvent of workEvents) {
+    //   expect(workEvent.location).not.to.be.null;
+    //   expect(workEvent.location!.latitude).not.to.eq(0);
+    //   expect(workEvent.location!.longitude).not.to.eq(0);
+    // }
   });
 });

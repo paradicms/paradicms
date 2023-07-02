@@ -5,17 +5,7 @@ export const getWorkDisplayDate = (work: Work): string | null => {
   let endDisplayDate: string | undefined;
   for (const workEvent of work.events) {
     switch (workEvent.type) {
-      case "WorkClosing":
-        if (!endDisplayDate && workEvent.displayDate) {
-          endDisplayDate = workEvent.displayDate;
-        }
-        break;
       case "WorkCreation":
-        if (!startDisplayDate && workEvent.displayDate) {
-          startDisplayDate = workEvent.displayDate;
-        }
-        break;
-      case "WorkOpening":
         if (!startDisplayDate && workEvent.displayDate) {
           startDisplayDate = workEvent.displayDate;
         }

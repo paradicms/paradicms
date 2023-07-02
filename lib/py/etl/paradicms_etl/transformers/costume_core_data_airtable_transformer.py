@@ -5,15 +5,13 @@ from rdflib import URIRef
 
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.loaders.nop_loader import nop_loader
-from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
-from paradicms_etl.models.cms.cms_work import CmsWork
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.rdf.rdf_property import RdfProperty
-from paradicms_etl.models.skos.skos_concept import SkosConcept
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
@@ -47,17 +45,17 @@ class CostumeCoreDataAirtableTransformer:
             airtable_access_token="neverused",
             loader=nop_loader,
         )(force_extract=False):
-            if isinstance(ontology_model, SkosConcept):
+            if isinstance(ontology_model, Concept):
                 concept = ontology_model
                 concepts_by_uri[concept.uri] = concept
                 yield concept
-            elif isinstance(ontology_model, RdfProperty):
+            elif isinstance(ontology_model, Property):
                 property_ = ontology_model
                 properties_by_label[property_.label] = property_
                 yield property_
 
-        collection_builder = CmsCollection.builder(
-            title=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
+        collection_builder = SchemaCollection.builder(
+            name=base["name"], uri=AirtableExtractor.base_url(base_id=base["id"])
         )
 
         for model in self.__transform_object_records(
@@ -69,7 +67,7 @@ class CostumeCoreDataAirtableTransformer:
             term_records=records_by_table["Terms"],
         ):
             yield model
-            if isinstance(model, CmsWork):
+            if isinstance(model, Work):
                 collection_builder.add_work(model)
 
         yield collection_builder.build()
@@ -101,9 +99,9 @@ class CostumeCoreDataAirtableTransformer:
                 )
             )
 
-            work_builder = CmsWork.builder(
+            work_builder = SchemaCreativeWork.builder(
                 # rights=Rights.from_properties(properties),
-                title=object_record["fields"]["Title"],
+                name=object_record["fields"]["Title"],
                 uri=work_uri,
             )
 
@@ -163,13 +161,13 @@ class CostumeCoreDataAirtableTransformer:
     @staticmethod
     def __transform_object_images(*, object_images) -> Iterable[Image]:
         for object_image in object_images:
-            original_image_builder = CmsImage.builder(
+            original_image_builder = SchemaImageObject.builder(
                 uri=URIRef(object_image["url"]),
             )
 
             for thumbnail in object_image["thumbnails"].values():
                 thumbnail_image = (
-                    CmsImage.builder(
+                    SchemaImageObject.builder(
                         uri=URIRef(thumbnail["url"]),
                     )
                     .set_exact_dimensions(

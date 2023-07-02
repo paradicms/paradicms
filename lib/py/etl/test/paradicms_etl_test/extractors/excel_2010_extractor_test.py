@@ -9,7 +9,7 @@ def test_extract(excel_2010_test_data_file_path):
     )
     assert len(results) == 1
     sheets = results["sheets"]
-    assert len(sheets) == 4
+    assert len(sheets) == 3
 
     person_sheet = sheets["FoafPerson"]
     person_rows = person_sheet["rows"]
@@ -17,7 +17,7 @@ def test_extract(excel_2010_test_data_file_path):
     person_header_row = person_rows[0]
     assert person_header_row == ("@id", "familyName", "givenName", "name")
 
-    image_sheet = sheets["Image"]
+    image_sheet = sheets["DcImage"]
     image_rows = image_sheet["rows"]
     assert len(image_rows) == 2
     image_header_row = image_rows[0]
@@ -32,18 +32,10 @@ def test_extract(excel_2010_test_data_file_path):
     assert image_data_dict
     assert isinstance(image_data_dict["src"], Image)
 
-    work_sheet = sheets["Work"]
+    work_sheet = sheets["SchemaCreativeWork"]
     work_rows = work_sheet["rows"]
     assert len(work_rows) == 2
     work_header_row = work_rows[0]
-    assert work_header_row == ("@id", "event", "image", "title")
+    assert work_header_row == ("@id", "image", "name")
     work_data_row = work_rows[1]
-    assert len(work_data_row) == 4
-
-    work_creation_sheet = sheets["WorkCreation"]
-    work_creation_rows = work_creation_sheet["rows"]
-    assert len(work_creation_rows) == 2
-    work_creation_header_row = work_creation_rows[0]
-    assert work_creation_header_row == ("@id", "creator", "date")
-    work_creation_data_row = work_creation_rows[1]
-    assert len(work_creation_data_row) == 3
+    assert len(work_data_row) == 3

@@ -101,7 +101,7 @@ class WikimediaCommonsEnricher:
 
     def __enrich_image(self, image: Image) -> Image:
         wikimedia_commons_image_file_name: Optional[str] = None
-        for image_source in (image.source, image.src, image.uri):
+        for image_source in (image.src, image.uri):
             if image_source is None:
                 continue
             wikimedia_commons_image_file_name = self.__get_wikimedia_commons_file_name(
@@ -121,7 +121,7 @@ class WikimediaCommonsEnricher:
         image_replacer = image.replacer()
 
         if wikimedia_commons_image_extended_metadata.copyrighted:
-            if not image.rights_statement:
+            if not image.rights_statements:
                 image_replacer.add_rights_statement(
                     RightsStatementsDotOrgRightsStatements.InC
                 )
@@ -148,7 +148,7 @@ class WikimediaCommonsEnricher:
                 )
 
         if wikimedia_commons_image_extended_metadata.license_uri is not None:
-            if image.license is None:
+            if not image.licenses:
                 image_replacer.add_license(
                     wikimedia_commons_image_extended_metadata.license_uri
                 )
@@ -163,17 +163,17 @@ class WikimediaCommonsEnricher:
                 wikimedia_commons_image_extended_metadata.image_description
             )
 
-        if image.source is None:
-            image_replacer.set_source(
-                URIRef(
-                    f"http://commons.wikimedia.org/wiki/File:{quote(wikimedia_commons_image_file_name)}"
-                )
-            )
-        else:
-            self.__logger.debug(
-                "image %s: already has a source, ignoring information from Wikimedia Commons",
-                image.uri,
-            )
+        # if image.source is None:
+        #     image_replacer.set_source(
+        #         URIRef(
+        #             f"http://commons.wikimedia.org/wiki/File:{quote(wikimedia_commons_image_file_name)}"
+        #         )
+        #     )
+        # else:
+        #     self.__logger.debug(
+        #         "image %s: already has a source, ignoring information from Wikimedia Commons",
+        #         image.uri,
+        #     )
 
         if image.src is None:
             image_replacer.set_src(

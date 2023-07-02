@@ -17,7 +17,6 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {WorkEventUnion} from "./WorkEventUnion";
 
 const indexModelsByKey = <ModelT extends Model>(
   models: readonly ModelT[]
@@ -292,22 +291,6 @@ export class CachingModelSet implements ModelSet {
 
   workByKey(workKey: string): Work | null {
     return this.modelByKey(this.worksByKeyIndex, workKey);
-  }
-
-  workEventByIri(workEventIri: string): WorkEventUnion | null {
-    return this.modelByIri(this.workEventsByIriIndex, workEventIri);
-  }
-
-  @Memoize()
-  private get workEvents(): readonly WorkEventUnion[] {
-    return sortModelsArray(this.modelReader.readWorkEvents({modelSet: this}));
-  }
-
-  @Memoize()
-  private get workEventsByIriIndex(): {
-    [index: string]: WorkEventUnion;
-  } {
-    return indexModelsByIri(this.workEvents);
   }
 
   @Memoize()

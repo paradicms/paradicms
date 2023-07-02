@@ -9,7 +9,6 @@ import {Person} from "./Person";
 import {RightsStatement} from "./RightsStatement";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
-import {WorkEventUnion} from "./WorkEventUnion";
 import {Work} from "./Work";
 import {ModelReader} from "./ModelReader";
 import {ModelSet} from "./ModelSet";
@@ -89,12 +88,6 @@ export class ConcatenatingModelReader implements ModelReader {
   readPropertyGroups(kwds: {modelSet: ModelSet}): readonly PropertyGroup[] {
     return this.modelReaders.flatMap(modelReader =>
       modelReader.readPropertyGroups(kwds)
-    );
-  }
-
-  readWorkEvents(kwds: {modelSet: ModelSet}): readonly WorkEventUnion[] {
-    return this.modelReaders.flatMap(modelReader =>
-      modelReader.readWorkEvents(kwds)
     );
   }
 

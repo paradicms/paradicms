@@ -19,13 +19,9 @@ from inflector import Inflector
 from rdflib import URIRef, Literal
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.cms.cms_collection import CmsCollection
-from paradicms_etl.models.cms.cms_image import CmsImage
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
-from paradicms_etl.models.cms.cms_rights_mixin import CmsRightsMixin
-from paradicms_etl.models.cms.cms_text import CmsText
-from paradicms_etl.models.cms.cms_work import CmsWork
+from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
@@ -36,15 +32,21 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
-from paradicms_etl.models.rdf.rdf_property import RdfProperty
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
-from paradicms_etl.models.skos.skos_concept import SkosConcept
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.schema.schema_property import SchemaProperty
+from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
+from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 
-_RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=CmsRightsMixin.Builder)
+_RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=RightsMixin.Builder)
 
 
 class CostumeCoreOntologyAirtableTransformer:
@@ -57,10 +59,10 @@ class CostumeCoreOntologyAirtableTransformer:
     coming out of this transformer.
 
     The different types of yielded models are:
-    - CmsCollection, CmsImage, and CmsWork to build a faceted browser for the Costume Core ontology itself
+    - Collection, Image, and Work to build a faceted browser for the Costume Core ontology itself
     - CostumeCoreOntology, CostumeCoreOntology.Predicate, and CostumeCoreOntology.Term to build an RDF/OWL version of the Costume Core
         ontology
-    - SkosConcept (formerly WorksheetFeatureValue), CmsImage, RdfProperty (formerly WorksheetFeature), and CmsPropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
+    - Concept (formerly WorksheetFeatureValue), Image, Property (formerly WorksheetFeature), and PropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
 
@@ -242,7 +244,7 @@ class CostumeCoreOntologyAirtableTransformer:
                 feature_value_record=feature_value_record,
             ):
                 yield feature_value_model
-                if isinstance(feature_value_model, CmsWork):
+                if isinstance(feature_value_model, Work):
                     for feature_record_id in feature_value_record_fields.get(
                         "features", []
                     ):
@@ -283,7 +285,7 @@ class CostumeCoreOntologyAirtableTransformer:
                 feature_record=feature_record,
             ):
                 yield feature_model
-                if isinstance(feature_model, RdfProperty):
+                if isinstance(feature_model, Property):
                     assert feature_record["id"] not in properties_by_feature_record_id
                     properties_by_feature_record_id[
                         feature_record["id"]
@@ -329,7 +331,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_description_fields_to_text(
         self, *, record_fields: Dict[str, Union[str, List[str], None]]
-    ) -> Optional[CmsText]:
+    ) -> Optional[Text]:
         description_text_en = record_fields.get("description_text_en")
         if not description_text_en:
             return None
@@ -337,19 +339,19 @@ class CostumeCoreOntologyAirtableTransformer:
         return self.__transform_rights_fields_to_rights(
             key_prefix="description",
             record_fields=record_fields,
-            model_builder=CmsText.builder(description_text_en),
+            model_builder=SchemaTextObject.builder(description_text_en),
         ).build()
 
     @staticmethod
     def __transform_feature_record_to_collection(
         feature_record, feature_works: Tuple[Work, ...]
-    ) -> Optional[CmsCollection]:
+    ) -> Optional[Collection]:
         fields = feature_record["fields"]
         if not fields.get("feature_values_labels", []):
             # Don't yield Collections that won't have any associated Works
             return None
-        collection_builder = CmsCollection.builder(
-            title=fields["display_name_en"],
+        collection_builder = SchemaCollection.builder(
+            name=fields["display_name_en"],
             uri=URIRef(fields["URI"]),
         )
         for work in feature_works:
@@ -383,7 +385,7 @@ class CostumeCoreOntologyAirtableTransformer:
         feature_uri = URIRef(fields["URI"])
 
         property_builder = (
-            RdfProperty.builder(label=fields["display_name_en"], uri=feature_uri)
+            SchemaProperty.builder(name=fields["display_name_en"], uri=feature_uri)
             .set_order(int(fields["sort_order"]))
             .set_range(self.__feature_range_uri(feature_record))
         )
@@ -400,7 +402,7 @@ class CostumeCoreOntologyAirtableTransformer:
             record_fields=fields,
         )
         if feature_description:
-            property_builder.set_comment(feature_description)
+            property_builder.set_description(feature_description)
 
         if fields["Filterable"] == "Y":
             # if fields.get("feature_values_ids", []):
@@ -468,8 +470,8 @@ class CostumeCoreOntologyAirtableTransformer:
         concept_uri = COCO[fields["id"]]
         pref_label = fields["display_name_en"]
 
-        concept_builder = SkosConcept.builder(
-            pref_label=pref_label,
+        concept_builder = SchemaDefinedTerm.builder(
+            name=pref_label,
             uri=concept_uri,
         )
 
@@ -523,13 +525,13 @@ class CostumeCoreOntologyAirtableTransformer:
                 Literal(variant_term, lang=variant_term_record["fields"]["xml-lang"])
             )
         for alt_label in alt_labels:
-            concept_builder.add_alt_label(alt_label)
+            concept_builder.add_alternate_name(alt_label)
 
         feature_value_description = self.__transform_description_fields_to_text(
             record_fields=fields
         )
         if feature_value_description:
-            concept_builder.set_definition(feature_value_description)
+            concept_builder.set_description(feature_value_description)
 
         for image in self.__transform_image_records_to_images(
             depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
@@ -589,8 +591,8 @@ class CostumeCoreOntologyAirtableTransformer:
     ) -> Iterable[Union[Image, Work]]:
         fields = feature_value_record["fields"]
 
-        work_builder = CmsWork.builder(
-            title=fields["display_name_en"], uri=URIRef(str(COCO[fields["id"]]))
+        work_builder = SchemaCreativeWork.builder(
+            name=fields["display_name_en"], uri=URIRef(str(COCO[fields["id"]]))
         )
 
         description = self.__transform_description_fields_to_text(record_fields=fields)
@@ -649,7 +651,7 @@ class CostumeCoreOntologyAirtableTransformer:
                 yield self.__transform_rights_fields_to_rights(
                     key_prefix="image",
                     record_fields=image_record["fields"],
-                    model_builder=CmsImage.builder(
+                    model_builder=SchemaImageObject.builder(
                         uri=URIRef(
                             ":".join(
                                 (
@@ -663,7 +665,7 @@ class CostumeCoreOntologyAirtableTransformer:
                             )
                         ),
                     )
-                    .set_format(image_field_value["type"])
+                    .set_encoding_format(image_field_value["type"])
                     .set_exact_dimensions(
                         ImageDimensions(
                             height=image_field_value["height"],
