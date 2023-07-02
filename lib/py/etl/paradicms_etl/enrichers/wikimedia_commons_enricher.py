@@ -101,7 +101,7 @@ class WikimediaCommonsEnricher:
 
     def __enrich_image(self, image: Image) -> Image:
         wikimedia_commons_image_file_name: Optional[str] = None
-        for image_source in (image.src, image.uri):
+        for image_source in [image.src, image.uri] + list(image.same_as_uris):
             if image_source is None:
                 continue
             wikimedia_commons_image_file_name = self.__get_wikimedia_commons_file_name(
