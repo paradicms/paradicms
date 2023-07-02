@@ -78,6 +78,6 @@ export class SchemaImageObject
   }
 
   override thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.thumbnails.concat(this), selector);
+    return selectThumbnail(this.thumbnails, selector);
   }
 }
