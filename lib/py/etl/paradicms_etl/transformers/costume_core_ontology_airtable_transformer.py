@@ -89,7 +89,7 @@ class CostumeCoreOntologyAirtableTransformer:
             self.__available_licenses_by_uri[license_.uri] = license_
             assert str(license_.uri).startswith("http://")
             self.__available_licenses_by_uri[
-                "https://" + str(license_.uri)[len("http://") :]
+                URIRef("https://" + str(license_.uri)[len("http://") :])
             ] = license_
         odc_by_license = (
             DcLicenseDocument.builder(
@@ -104,7 +104,7 @@ class CostumeCoreOntologyAirtableTransformer:
             )
             .build()
         )
-        self.__available_licenses_by_uri[odc_by_license.uri] = odc_by_license
+        self.__available_licenses_by_uri[odc_by_license.uri] = odc_by_license  # type: ignore
         self.__available_license_uris = frozenset(
             self.__available_licenses_by_uri.keys()
         )
