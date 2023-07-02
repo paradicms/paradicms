@@ -12,6 +12,10 @@ from paradicms_etl.models.rights_mixin import RightsMixin
 class Image(NamedModel, RightsMixin):
     class Builder(RightsMixin.Builder):
         @abstractmethod
+        def add_thumbnail(self, thumbnail: Union["Image", URIRef]) -> "Image.Builder":
+            raise NotImplementedError
+
+        @abstractmethod
         def build(self) -> "Image":
             raise NotImplementedError
 

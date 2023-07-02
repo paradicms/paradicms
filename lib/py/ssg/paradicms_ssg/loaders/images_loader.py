@@ -61,13 +61,13 @@ class ImagesLoader:
 
     def __archive_original_image(
         self, *, original_image: Image, original_image_file_path: Path
-    ) -> Image:
+    ) -> Image.Builder:
         archived_original_image_url = self.__image_archiver(
             image_file_path=original_image_file_path
         )
         assert archived_original_image_url
         # The original image retains its URI but gets a new src
-        return original_image.replacer().set_src(archived_original_image_url).build()
+        return original_image.replacer().set_src(archived_original_image_url)
 
     def __archive_thumbnail_images(
         self,
@@ -158,12 +158,8 @@ class ImagesLoader:
                 )
                 continue
 
-            # Archive the original image and thumbnails of it
-            # If we can't get through the whole process, then ignore this image entirely
-            archived_images = []
-
             # try:
-            archived_original_image = self.__archive_original_image(
+            archived_original_image_builder = self.__archive_original_image(
                 original_image=original_image,
                 original_image_file_path=original_image_file_path,
             )
@@ -174,9 +170,6 @@ class ImagesLoader:
             #         exc_info=True,
             #     )
             #     continue
-            assert archived_original_image
-
-            archived_images.append(archived_original_image)
 
             try:
                 archived_thumbnail_images = self.__archive_thumbnail_images(
@@ -190,15 +183,11 @@ class ImagesLoader:
                     exc_info=True,
                 )
                 continue
-            archived_images.extend(archived_thumbnail_images)
 
-            self.__logger.debug(
-                "archived %d images (1 original, %d thumbnails) from %s",
-                len(archived_images),
-                len(archived_images) - 1,
-                original_image.uri,
-            )
+            for archived_thumbnail_image in archived_thumbnail_images:
+                archived_original_image_builder.add_thumbnail(archived_thumbnail_image)
 
-            yield from archived_images
+            yield archived_original_image_builder.build()
+            yield from archived_thumbnail_images
 
         self.__logger.info("loaded images")
