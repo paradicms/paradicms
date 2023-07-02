@@ -35,7 +35,7 @@ class SchemaProperty(SchemaNamedModel, Property):
 
     def __init__(self, *args, **kwds):
         SchemaNamedModel.__init__(self, *args, **kwds)
-        self.name
+        self.label
 
     @classmethod
     def builder(cls, *, name: str, uri: URIRef):
@@ -63,11 +63,7 @@ class SchemaProperty(SchemaNamedModel, Property):
 
     @property
     def label(self) -> str:
-        return self.name
-
-    @property
-    def name(self) -> str:
-        return self._required_name
+        return self._required_label
 
     @property
     def range(self) -> Optional[URIRef]:

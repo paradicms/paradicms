@@ -1,4 +1,4 @@
-from typing import Optional, Union, Any, Tuple
+from typing import Union, Any, Tuple
 
 from rdflib import DCTERMS, URIRef, XSD, OWL
 
@@ -87,9 +87,6 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             self.set(DCTERMS.identifier, identifier)
             return self
 
-        def set_label(self, label: str) -> "DctermsPropertiesMixin.Builder":
-            return self.set_title(label)
-
         def set_modified(
             self, modified: DateTimeUnion
         ) -> "DctermsPropertiesMixin.Builder":
@@ -172,6 +169,6 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
     # def source(self) -> Optional[URIRef]:
     #     return self._optional_value(DCTERMS.source, self._map_uri_value)
 
-    @property
-    def title(self) -> Optional[str]:
-        return self._optional_value(DCTERMS.title, self._map_str_value)
+    # @property
+    # def title(self) -> Optional[str]:
+    #     return self._optional_value(DCTERMS.title, self._map_str_value)

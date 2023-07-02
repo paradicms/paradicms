@@ -14,15 +14,15 @@ class CreativeCommonsLicense(ResourceBackedNamedModel, License):
 
     @property
     def label(self) -> str:
-        return self.title
+        return self._required_label
+
+    @classmethod
+    def label_property_uri(cls) -> URIRef:
+        return DC.title
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return CC.License
-
-    @property
-    def title(self) -> str:
-        return self._required_value(DC.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

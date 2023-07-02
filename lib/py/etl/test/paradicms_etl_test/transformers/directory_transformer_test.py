@@ -56,4 +56,4 @@ def test_transform(data_dir_path: Path):
     people = [model for model in models if isinstance(model, Person)]
     assert len(people) == 1
     person = people[0]
-    assert person.name == "Test person"
+    assert person.label == "Test person"

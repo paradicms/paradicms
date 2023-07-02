@@ -24,81 +24,83 @@ from paradicms_etl.utils.file_cache import FileCache
 logger = logging.getLogger(__name__)
 
 
-class WikimediaCommonsEnricher:
-    @dataclass(frozen=True)
-    class _WikimediaCommonsImageInfoExtMetadata:
-        IGNORE_API_PROPERTIES = {
-            "Assessments",
-            "CommonsMetadataExtension",
-            "GPSLatitude",
-            "GPSLongitude",
-            "GPSMapDatum",
-            "LicenseUrl",  # Do our own lookup
-        }
+@dataclass(frozen=True)
+class _WikimediaCommonsImageInfoExtMetadata:
+    IGNORE_API_PROPERTIES = {
+        "Assessments",
+        "CommonsMetadataExtension",
+        "GPSLatitude",
+        "GPSLongitude",
+        "GPSMapDatum",
+        "LicenseUrl",  # Do our own lookup
+    }
 
-        __LICENSE_URIS_BY_ID = {
-            # "Attribution": CreativeCommonsLicenses.BY_4_0,
-            "cc0": CreativeCommonsLicenses.CC0_1_0.uri,
-            # "GFDL": None,
-            "pd": CreativeCommonsLicenses.MARK_1_0.uri,
-        }
+    __LICENSE_URIS_BY_ID = {
+        # "Attribution": CreativeCommonsLicenses.BY_4_0,
+        "cc0": CreativeCommonsLicenses.CC0_1_0.uri,
+        # "GFDL": None,
+        "pd": CreativeCommonsLicenses.MARK_1_0.uri,
+    }
 
-        file_name: str
-        artist: Optional[str] = None
-        attribution_required: Optional[bool] = None
-        categories: Optional[Tuple[str, ...]] = None
-        copyrighted: Optional[bool] = None
-        credit: Optional[str] = None
-        date_time: Optional[str] = None
-        date_time_original: Optional[str] = None
-        image_description: Optional[str] = None
-        license: Optional[str] = None
-        license_short_name: Optional[str] = None
-        object_name: Optional[str] = None
-        permission: Optional[str] = None
-        restrictions: Optional[str] = None
-        usage_terms: Optional[str] = None
+    file_name: str
+    artist: Optional[str] = None
+    attribution_required: Optional[bool] = None
+    categories: Optional[Tuple[str, ...]] = None
+    copyrighted: Optional[bool] = None
+    credit: Optional[str] = None
+    date_time: Optional[str] = None
+    date_time_original: Optional[str] = None
+    image_description: Optional[str] = None
+    license: Optional[str] = None
+    license_short_name: Optional[str] = None
+    object_name: Optional[str] = None
+    permission: Optional[str] = None
+    restrictions: Optional[str] = None
+    usage_terms: Optional[str] = None
 
-        @property  # type: ignore
-        @cache
-        def license_uri(self) -> Optional[URIRef]:
-            if self.license is None:
+    @property  # type: ignore
+    @cache
+    def license_uri(self) -> Optional[URIRef]:
+        if self.license is None:
+            return None
+
+        try:
+            # Explicit table lookup
+            return self.__LICENSE_URIS_BY_ID[self.license]
+        except KeyError:
+            if not self.license.startswith("cc-"):
+                raise
+            # Resolve cc-* against the CreativeCommonsLicenses e.g.,
+            # cc-by-2.5 -> CreativeCommonsLicenses.BY_2_5
+            try:
+                return getattr(
+                    CreativeCommonsLicenses,
+                    self.license[len("cc-") :]
+                    .replace("-", "_")
+                    .replace(".", "_")
+                    .upper(),
+                ).uri
+            except AttributeError:
+                logger.warning(
+                    "Wikimedia Commons file (%s) has unknown license: %s",
+                    self.file_name,
+                    self.license,
+                )
                 return None
 
-            try:
-                # Explicit table lookup
-                return self.__LICENSE_URIS_BY_ID[self.license]
-            except KeyError:
-                if not self.license.startswith("cc-"):
-                    raise
-                # Resolve cc-* against the CreativeCommonsLicenses e.g.,
-                # cc-by-2.5 -> CreativeCommonsLicenses.BY_2_5
-                try:
-                    return getattr(
-                        CreativeCommonsLicenses,
-                        self.license[len("cc-") :]
-                        .replace("-", "_")
-                        .replace(".", "_")
-                        .upper(),
-                    ).uri
-                except AttributeError:
-                    logger.warning(
-                        "Wikimedia Commons file (%s) has unknown license: %s",
-                        self.file_name,
-                        self.license,
-                    )
-                    return None
 
-    @dataclass(frozen=True)
-    class _WikimediaCommonsImageInfo:
-        descriptionshorturl: str
-        descriptionurl: str
-        extmetadata: "_WikimediaCommonsImageInfoExtMetadata"
-        height: int
-        size: int
-        url: str
-        width: int
+@dataclass(frozen=True)
+class _WikimediaCommonsImageInfo:
+    descriptionshorturl: str
+    descriptionurl: str
+    extmetadata: _WikimediaCommonsImageInfoExtMetadata
+    height: int
+    size: int
+    url: str
+    width: int
 
+
+class WikimediaCommonsEnricher:
     def __init__(self, *, cache_dir_path: Path):
         self.__file_cache = FileCache(cache_dir_path=cache_dir_path)
         self.__logger = logger
@@ -259,10 +261,7 @@ class WikimediaCommonsEnricher:
                 if not value:
                     continue
                 dataclass_key = snakecase(key)
-                if (
-                    key
-                    in self._WikimediaCommonsImageInfoExtMetadata.IGNORE_API_PROPERTIES
-                ):
+                if key in _WikimediaCommonsImageInfoExtMetadata.IGNORE_API_PROPERTIES:
                     self.__logger.debug(
                         "Wikidata file %s: ignoring %s=%s", file_name, key, value
                     )
@@ -305,10 +304,10 @@ class WikimediaCommonsEnricher:
                     )
                     continue
 
-            return self._WikimediaCommonsImageInfo(
+            return _WikimediaCommonsImageInfo(
                 descriptionshorturl=imageinfo["descriptionshorturl"],
                 descriptionurl=imageinfo["descriptionurl"],
-                extmetadata=self._WikimediaCommonsImageInfoExtMetadata(
+                extmetadata=_WikimediaCommonsImageInfoExtMetadata(
                     **extmetadata_dataclass_kwds
                 ),
                 height=int(imageinfo["height"]),

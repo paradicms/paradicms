@@ -19,13 +19,9 @@ class DcCollection(DcNamedModel, DcImagesMixin, Collection):
         def build(self) -> "DcCollection":
             return DcCollection(self._resource)
 
-        def set_label(self, label: str) -> "DcCollection.Builder":
-            super().set_label(label)
-            return self
-
     def __init__(self, *args, **kwds):
         DcNamedModel.__init__(self, *args, **kwds)
-        self.title
+        self.label
 
     @classmethod
     def builder(cls, *, title: str, uri: URIRef) -> Builder:
@@ -35,7 +31,7 @@ class DcCollection(DcNamedModel, DcImagesMixin, Collection):
 
     @property
     def label(self) -> str:
-        return self.title
+        return self._required_label
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
@@ -43,10 +39,6 @@ class DcCollection(DcNamedModel, DcImagesMixin, Collection):
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
-
-    @property
-    def title(self) -> str:
-        return self._required_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

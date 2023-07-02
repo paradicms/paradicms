@@ -68,7 +68,11 @@ class RdfProperty(ResourceBackedNamedModel, FoafImagesMixin, Property):
 
     @property
     def label(self) -> str:
-        return self._required_value(RDFS.label, self._map_str_value)
+        return self._required_label
+
+    @classmethod
+    def label_property_uri(cls) -> URIRef:
+        return RDFS.label
 
     @property
     def range(self) -> Optional[URIRef]:

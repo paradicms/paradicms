@@ -1,4 +1,4 @@
-from typing import Optional, Union, Tuple
+from typing import Union, Tuple
 
 from rdflib import Literal, URIRef, Graph, XSD, DCMITYPE
 from rdflib.namespace import DCTERMS
@@ -112,10 +112,6 @@ class DcImage(DcNamedModel, Image):
             },
         )
 
-    @property
-    def label(self) -> Optional[str]:
-        return self.title
-
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return DCMITYPE.Image
@@ -140,10 +136,6 @@ class DcImage(DcNamedModel, Image):
             )
             if isinstance(subject, URIRef)
         )
-
-    @property
-    def title(self):
-        return self._optional_value(DCTERMS.title, self._map_str_value)
 
     @property
     def uri(self) -> URIRef:

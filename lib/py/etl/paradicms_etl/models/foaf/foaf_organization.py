@@ -17,9 +17,9 @@ class FoafOrganization(FoafAgent, Organization):
         builder.set(FOAF.name, name)
         return builder
 
-    @classmethod
-    def rdf_type_uri(cls) -> URIRef:
-        return FOAF.Organization
+    @property
+    def label(self) -> str:
+        return super().label
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)

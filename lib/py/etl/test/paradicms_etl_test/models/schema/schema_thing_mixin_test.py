@@ -20,11 +20,11 @@ def test_label(schema_collection: SchemaCollection):
 
 
 def test_name(schema_collection: SchemaCollection):
-    assert schema_collection.name == "Test collection"
+    assert schema_collection.label == "Test collection"
 
 
 def test_set_name(schema_collection: SchemaCollection):
     assert (
-        schema_collection.replacer().set_name("Test collection 2").build().name
+        schema_collection.replacer().set_name("Test collection 2").build().label
         == "Test collection 2"
     )

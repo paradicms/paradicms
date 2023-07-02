@@ -36,9 +36,6 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
             self.set(SDO.url, url)
             return self
 
-        def set_label(self, label: str) -> "SchemaThingMixin.Builder":
-            return self.set_name(label)
-
         def set_description(
             self, description: Union[str, Text]
         ) -> "SchemaThingMixin.Builder":
@@ -69,15 +66,7 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
 
     @property
     def label(self) -> Optional[str]:
-        return self.name
-
-    @property
-    def name(self) -> Optional[str]:
         return self._optional_value(SDO.name, self._map_str_value)
-
-    @property
-    def _required_name(self) -> str:
-        return self._required_value(SDO.name, self._map_str_value)
 
     @property
     def url(self) -> Optional[URIRef]:

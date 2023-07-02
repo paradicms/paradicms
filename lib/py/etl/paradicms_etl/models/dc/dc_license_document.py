@@ -26,7 +26,7 @@ class DcLicenseDocument(DcModel, License):
 
     def __init__(self, resource: Resource):
         DcModel.__init__(self, resource)
-        self.title
+        self.label
 
     @classmethod
     def builder(cls, *, title: str, uri: Optional[URIRef] = None) -> Builder:
@@ -34,17 +34,10 @@ class DcLicenseDocument(DcModel, License):
         builder.set_title(title)
         return builder
 
+    @property
+    def label(self) -> str:
+        return self._required_label
+
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return DCTERMS.LicenseDocument
-
-    @property
-    def label(self) -> str:
-        return self.title
-
-    @property
-    def title(self) -> str:
-        title = DcModel.title.fget(self)  # type: ignore
-        if title is None:
-            raise KeyError
-        return title

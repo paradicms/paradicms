@@ -26,5 +26,9 @@ class FoafPerson(FoafAgent, Person):
         builder.set(FOAF.name, name)
         return builder
 
+    @property
+    def label(self) -> str:
+        return super().label
+
     def replacer(self) -> Builder:
         return self.Builder(self._resource)

@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Optional
 
-from rdflib import Graph, RDF
+from rdflib import Graph, RDF, URIRef
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
@@ -29,6 +29,10 @@ class AppConfiguration(ResourceBackedModel):
         return safe_dict_update(
             ResourceBackedModel.json_ld_context(), {"@vocab": str(CONFIGURATION)}
         )
+
+    @classmethod
+    def label_property_uri(cls) -> Optional[URIRef]:
+        return None
 
     @classmethod
     def rdf_type_uri(cls):

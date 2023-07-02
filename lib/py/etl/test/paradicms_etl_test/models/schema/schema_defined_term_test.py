@@ -7,8 +7,8 @@ def test_builder(schema_defined_term: SchemaDefinedTerm):
     pass
 
 
-def test_name(schema_defined_term: SchemaDefinedTerm):
-    assert schema_defined_term.name == "Test defined term"
+def test_label(schema_defined_term: SchemaDefinedTerm):
+    assert schema_defined_term.label == "Test defined term"
 
 
 def test_type_uris(schema_defined_term: SchemaDefinedTerm):

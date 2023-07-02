@@ -8,7 +8,7 @@ def test_builder(schema_collection: SchemaCollection):
 
 def test_replacer(schema_collection: SchemaCollection):
     assert (
-        schema_collection.replacer().set_label("Test collection 2").build().label
+        schema_collection.replacer().set_name("Test collection 2").build().label
         == "Test collection 2"
     )
 

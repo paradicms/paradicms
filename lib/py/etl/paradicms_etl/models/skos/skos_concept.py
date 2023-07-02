@@ -38,7 +38,7 @@ class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
     def __init__(self, resource: Resource):
         resource.add(RDF.type, SKOS.Concept)
         ResourceBackedNamedModel.__init__(self, resource)
-        self.pref_label
+        self.label
 
     @classmethod
     def builder(cls, *, pref_label: str, uri: URIRef) -> Builder:
@@ -61,11 +61,11 @@ class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
 
     @property
     def label(self):
-        return self.pref_label
+        return self._required_label
 
-    @property
-    def pref_label(self) -> str:
-        return self._required_value(SKOS.prefLabel, self._map_str_value)
+    @classmethod
+    def label_property_uri(cls) -> URIRef:
+        return SKOS.prefLabel
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
