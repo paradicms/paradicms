@@ -52,6 +52,7 @@ class WikibaseFullStatement(WikibaseStatement):
                     "predicate %s has %d value objects: %s",
                     predicate,
                     len(value_objects),
+                    value_objects,
                 )
                 return None
             value_object = value_objects[0]
