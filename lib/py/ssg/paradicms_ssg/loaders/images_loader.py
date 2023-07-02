@@ -25,7 +25,7 @@ class ImagesLoader:
     Separated from AppLoader for modularity and testability.
     """
 
-    class __ArchiveThumbnailImagesException(Exception):
+    class __ArchiveImageException(Exception):
         pass
 
     THUMBNAIL_MAX_DIMENSIONS_DEFAULT = (
@@ -62,9 +62,14 @@ class ImagesLoader:
     def __archive_original_image(
         self, *, original_image: Image, original_image_file_path: Path
     ) -> Image.Builder:
-        archived_original_image_url = self.__image_archiver(
-            image_file_path=original_image_file_path
-        )
+        try:
+            archived_original_image_url = self.__image_archiver(
+                image_file_path=original_image_file_path
+            )
+        except ValueError as e:
+            raise self.__ArchiveImageException(
+                f"error archiving {original_image_file_path} (from {original_image.uri})"
+            ) from e
         assert archived_original_image_url
         # The original image retains its URI but gets a new src
         return original_image.replacer().set_src(archived_original_image_url)
@@ -101,7 +106,7 @@ class ImagesLoader:
                     output_thumbnail_file_path=thumbnail_file_path,
                 )
             except OSError as e:
-                raise self.__ArchiveThumbnailImagesException(
+                raise self.__ArchiveImageException(
                     f"error thumbnailing {original_image_file_path} (from {original_image.uri})"
                 ) from e
 
@@ -152,31 +157,31 @@ class ImagesLoader:
                 assert original_image_file_path
             except ImageFileCache.ImageFileCacheException:
                 self.__logger.info(
-                    "unable to cache original image %s, dropping image from GUI",
+                    "unable to cache original image %s, dropping image",
                     original_image.uri,
                     exc_info=True,
                 )
                 continue
 
-            # try:
-            archived_original_image_builder = self.__archive_original_image(
-                original_image=original_image,
-                original_image_file_path=original_image_file_path,
-            )
-            # except self.__Exception:
-            #     self.__logger.info(
-            #         "unable to archive original image %s, dropping image from GUI",
-            #         original_image.uri,
-            #         exc_info=True,
-            #     )
-            #     continue
+            try:
+                archived_original_image_builder = self.__archive_original_image(
+                    original_image=original_image,
+                    original_image_file_path=original_image_file_path,
+                )
+            except self.__ArchiveImageException:
+                self.__logger.info(
+                    "unable to archive original image %s, dropping image",
+                    original_image.uri,
+                    exc_info=True,
+                )
+                continue
 
             try:
                 archived_thumbnail_images = self.__archive_thumbnail_images(
                     original_image=original_image,
                     original_image_file_path=original_image_file_path,
                 )
-            except self.__ArchiveThumbnailImagesException:
+            except self.__ArchiveImageException:
                 self.__logger.info(
                     "unable to thumbnail original image %s, dropping image from GUI",
                     original_image.uri,
