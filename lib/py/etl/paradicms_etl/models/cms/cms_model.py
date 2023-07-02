@@ -5,21 +5,6 @@ from paradicms_etl.namespaces import CMS
 
 
 class CmsModel(ResourceBackedModel):
-    # @classmethod
-    # def json_ld_context(cls):
-    #     """
-    #     Return a JSON-LD context that can be used to parse/serialize a JSON version of this model.
-    #     """
-    #
-    #     context = {}
-    #     for namespace_prefix, namespace in module_namespaces(
-    #         rdflib.namespace, paradicms_etl.namespaces
-    #     ).items():
-    #         if namespace_prefix in EXCLUDE_RDFLIB_NAMESPACE_PREFIXES:
-    #             continue
-    #         context[namespace_prefix] = str(namespace)
-    #     return safe_dict_update(ResourceBackedModel.json_ld_context(), context)
-
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         assert cls.__name__.startswith("Cms")

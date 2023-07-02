@@ -1,6 +1,6 @@
 from typing import Optional, Union, Any, Tuple
 
-from rdflib import DCTERMS, DCMITYPE, URIRef, XSD, OWL
+from rdflib import DCTERMS, URIRef, XSD, OWL
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.location import Location
@@ -126,8 +126,6 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
     def json_ld_context(cls):
         json_ld_context = {
             "@vocab": str(DCTERMS),
-            "dcmitype": str(DCMITYPE),
-            "dcterms": str(DCTERMS),
             "created": {
                 "@id": str(DCTERMS.created),
                 "@type": str(XSD.dateTime),

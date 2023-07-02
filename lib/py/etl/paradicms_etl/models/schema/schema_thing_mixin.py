@@ -57,10 +57,10 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
     def json_ld_context(cls):
         return {
             # Override some Thing properties to enforce types
+            "@vocab": str(SDO),
             "image": {"@id": str(SDO.image), "@type": "@id"},
             "sameAs": {"@id": str(SDO.sameAs), "@type": "@id"},
             "url": {"@id": str(SDO.url), "@type": "@id"},
-            "@vocab": str(SDO),
         }
 
     @property
