@@ -15,6 +15,7 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -25,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 class WikimediaCommonsEnricher:
     @dataclass(frozen=True)
-    class __WikimediaCommonsImageExtendedMetadata:
+    class _WikimediaCommonsImageInfoExtMetadata:
         IGNORE_API_PROPERTIES = {
             "Assessments",
             "CommonsMetadataExtension",
@@ -88,6 +89,16 @@ class WikimediaCommonsEnricher:
                     )
                     return None
 
+    @dataclass(frozen=True)
+    class _WikimediaCommonsImageInfo:
+        descriptionshorturl: str
+        descriptionurl: str
+        extmetadata: "_WikimediaCommonsImageInfoExtMetadata"
+        height: int
+        size: int
+        url: str
+        width: int
+
     def __init__(self, *, cache_dir_path: Path):
         self.__file_cache = FileCache(cache_dir_path=cache_dir_path)
         self.__logger = logger
@@ -112,15 +123,13 @@ class WikimediaCommonsEnricher:
         if wikimedia_commons_image_file_name is None:
             return image
 
-        wikimedia_commons_image_extended_metadata = (
-            self.__get_wikimedia_commons_image_extended_metadata(
-                wikimedia_commons_image_file_name
-            )
+        wikimedia_commons_image_info = self.__get_wikimedia_commons_image_info(
+            wikimedia_commons_image_file_name
         )
 
         image_replacer = image.replacer()
 
-        if wikimedia_commons_image_extended_metadata.copyrighted:
+        if wikimedia_commons_image_info.extmetadata.copyrighted:
             if not image.rights_statements:
                 image_replacer.add_rights_statement(
                     RightsStatementsDotOrgRightsStatements.InC
@@ -131,11 +140,18 @@ class WikimediaCommonsEnricher:
                     image.uri,
                 )
 
-        if wikimedia_commons_image_extended_metadata.artist is not None:
+        image_replacer.set_exact_dimensions(
+            ImageDimensions(
+                height=wikimedia_commons_image_info.height,
+                width=wikimedia_commons_image_info.width,
+            )
+        )
+
+        if wikimedia_commons_image_info.extmetadata.artist is not None:
             if not image.creators:
                 image_replacer.add_creator(
                     BeautifulSoup(
-                        wikimedia_commons_image_extended_metadata.artist,
+                        wikimedia_commons_image_info.extmetadata.artist,
                         features="html.parser",
                     )
                     .get_text()
@@ -147,10 +163,10 @@ class WikimediaCommonsEnricher:
                     image.uri,
                 )
 
-        if wikimedia_commons_image_extended_metadata.license_uri is not None:
+        if wikimedia_commons_image_info.extmetadata.license_uri is not None:
             if not image.licenses:
                 image_replacer.add_license(
-                    wikimedia_commons_image_extended_metadata.license_uri
+                    wikimedia_commons_image_info.extmetadata.license_uri
                 )
             else:
                 self.__logger.debug(
@@ -158,9 +174,9 @@ class WikimediaCommonsEnricher:
                     image.uri,
                 )
 
-        if wikimedia_commons_image_extended_metadata.image_description is not None:
+        if wikimedia_commons_image_info.extmetadata.image_description is not None:
             image_replacer.set_title(
-                wikimedia_commons_image_extended_metadata.image_description
+                wikimedia_commons_image_info.extmetadata.image_description
             )
 
         # if image.source is None:
@@ -176,11 +192,7 @@ class WikimediaCommonsEnricher:
         #     )
 
         if image.src is None:
-            image_replacer.set_src(
-                self.__get_wikimedia_commons_image_url(
-                    wikimedia_commons_image_file_name
-                )
-            )
+            image_replacer.set_src(wikimedia_commons_image_info.url)
         else:
             self.__logger.debug(
                 "image %s: already has a src, ignoring information from Wikimedia Commons",
@@ -217,13 +229,13 @@ class WikimediaCommonsEnricher:
         )
         return None
 
-    def __get_wikimedia_commons_image_extended_metadata(
+    def __get_wikimedia_commons_image_info(
         self, file_name: str
-    ) -> __WikimediaCommonsImageExtendedMetadata:
+    ) -> _WikimediaCommonsImageInfo:
         with open(
             self.__file_cache.get_file(
                 URIRef(
-                    f"https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=extmetadata&titles=File%3a{quote(file_name)}&format=json"
+                    f"https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop={quote('extmetadata|size|url')}&titles=File%3a{quote(file_name)}&format=json"
                 )
             )
         ) as image_info_json_file:
@@ -240,7 +252,8 @@ class WikimediaCommonsEnricher:
             if len(imageinfos) > 1:
                 raise NotImplementedError(f"{file_name} has more than one imageinfo")
             imageinfo = imageinfos[0]
-            dataclass_kwds: Dict[str, Any] = {"file_name": file_name}
+
+            extmetadata_dataclass_kwds: Dict[str, Any] = {"file_name": file_name}
             for key, value_object in imageinfo["extmetadata"].items():
                 value = value_object["value"]
                 if not value:
@@ -248,7 +261,7 @@ class WikimediaCommonsEnricher:
                 dataclass_key = snakecase(key)
                 if (
                     key
-                    in WikimediaCommonsEnricher.__WikimediaCommonsImageExtendedMetadata.IGNORE_API_PROPERTIES
+                    in self._WikimediaCommonsImageInfoExtMetadata.IGNORE_API_PROPERTIES
                 ):
                     self.__logger.debug(
                         "Wikidata file %s: ignoring %s=%s", file_name, key, value
@@ -267,13 +280,13 @@ class WikimediaCommonsEnricher:
                     "Restrictions",
                     "UsageTerms",
                 }:
-                    dataclass_kwds[dataclass_key] = value
+                    extmetadata_dataclass_kwds[dataclass_key] = value
                 elif key in {"AttributionRequired", "Copyrighted"}:
                     value_lower = value.lower()
                     if value_lower == "false":
-                        dataclass_kwds[dataclass_key] = False
+                        extmetadata_dataclass_kwds[dataclass_key] = False
                     elif value_lower == "true":
-                        dataclass_kwds[dataclass_key] = True
+                        extmetadata_dataclass_kwds[dataclass_key] = True
                     else:
                         self.__logger.warning(
                             "unhandled Wikimedia file %s boolean value %s=%s",
@@ -282,7 +295,7 @@ class WikimediaCommonsEnricher:
                             value,
                         )
                 elif key == "Categories":
-                    dataclass_kwds[dataclass_key] = tuple(value.split("|"))
+                    extmetadata_dataclass_kwds[dataclass_key] = tuple(value.split("|"))
                 else:
                     self.__logger.warning(
                         "unhandled Wikimedia Commons file %s imageinfo extmetadata %s=%s",
@@ -292,37 +305,18 @@ class WikimediaCommonsEnricher:
                     )
                     continue
 
-            return self.__WikimediaCommonsImageExtendedMetadata(**dataclass_kwds)
-
-        raise NotImplementedError(
-            "no Wikimedia Commons extended metadata for image file name " + file_name
-        )
-
-    def __get_wikimedia_commons_image_url(self, file_name: str) -> str:
-        with open(
-            self.__file_cache.get_file(
-                URIRef(
-                    f"https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&titles=File%3a{quote(file_name)}&format=json"
-                )
+            return self._WikimediaCommonsImageInfo(
+                descriptionshorturl=imageinfo["descriptionshorturl"],
+                descriptionurl=imageinfo["descriptionurl"],
+                extmetadata=self._WikimediaCommonsImageInfoExtMetadata(
+                    **extmetadata_dataclass_kwds
+                ),
+                height=int(imageinfo["height"]),
+                size=int(imageinfo["size"]),
+                url=imageinfo["url"],
+                width=int(imageinfo["width"]),
             )
-        ) as image_info_json_file:
-            image_info_json = json.load(image_info_json_file)
-
-        for pageid, page in image_info_json["query"]["pages"].items():
-            # if pageid != "-1":
-            #     raise ValueError(
-            #         "unable to retrieve URL for Wikimedia Commons file " + file_name
-            #     )
-            imageinfos = page["imageinfo"]
-            if not imageinfos:
-                raise ValueError(
-                    "missing imageinfos for Wikimedia Commons file: " + file_name
-                )
-            if len(imageinfos) > 1:
-                raise NotImplementedError(f"{file_name} has more than one imageinfo")
-            imageinfo = imageinfos[0]
-            return imageinfo["url"]
 
         raise NotImplementedError(
-            "no Wikimedia Commons URL for image file name " + file_name
+            "no Wikimedia Commons image info for image file name " + file_name
         )
