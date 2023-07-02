@@ -72,13 +72,17 @@ class _WikimediaCommonsImageInfoExtMetadata:
                 raise
             # Resolve cc-* against the CreativeCommonsLicenses e.g.,
             # cc-by-2.5 -> CreativeCommonsLicenses.BY_2_5
+            cc_license_attr = (
+                self.license[len("cc-") :].replace("-", "_").replace(".", "_").upper()
+            )
+            for alpha_2_country_code in ("DE",):
+                if cc_license_attr.endswith("_" + alpha_2_country_code):
+                    cc_license_attr = cc_license_attr[:-3]
+                    break
             try:
                 return getattr(
                     CreativeCommonsLicenses,
-                    self.license[len("cc-") :]
-                    .replace("-", "_")
-                    .replace(".", "_")
-                    .upper(),
+                    cc_license_attr,
                 ).uri
             except AttributeError:
                 logger.warning(
