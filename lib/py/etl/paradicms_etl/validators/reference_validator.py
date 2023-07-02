@@ -327,9 +327,9 @@ class ReferenceValidator:
     def _validate_wikibase_item(
         self, wikibase_item: WikibaseItem
     ) -> Iterable[ValidationResult]:
-        self.__referenced_license_uris.add(CreativeCommonsLicenses.BY_SA_3_0)
+        self.__referenced_license_uris.add(CreativeCommonsLicenses.BY_SA_3_0.uri)
         self.__referenced_rights_statement_uris.add(
-            RightsStatementsDotOrgRightsStatements.InC
+            RightsStatementsDotOrgRightsStatements.InC.uri
         )
         return ()
 
