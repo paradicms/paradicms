@@ -11,18 +11,14 @@ from paradicms_etl.models.stub.stub_person import StubPerson
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 
 
-def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
-    person = next(model for model in synthetic_data_models if isinstance(model, Person))
+def test_enrich_stub_person(data_dir_path: Path):
+    person = StubPerson(URIRef("http://www.wikidata.org/entity/Q7251"))
     enriched_models = tuple(
         WikidataEnricher(
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((person,))
     )
-    assert len(enriched_models) == 5
-    assert any(
-        isinstance(model, Person) and model.uri == person.uri
-        for model in enriched_models
-    )
+    assert len(enriched_models) == 4  # WikidataEnricher should eat the stub
     assert any(isinstance(model, License) for model in enriched_models)
     assert any(isinstance(model, RightsStatement) for model in enriched_models)
     wikidata_entity_uri = URIRef("http://www.wikidata.org/entity/Q7251")
@@ -40,14 +36,18 @@ def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
     )
 
 
-def test_enrich_stub_person(data_dir_path: Path):
-    person = StubPerson(URIRef("http://www.wikidata.org/entity/Q7251"))
+def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
+    person = next(model for model in synthetic_data_models if isinstance(model, Person))
     enriched_models = tuple(
         WikidataEnricher(
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((person,))
     )
-    assert len(enriched_models) == 4  # WikidataEnricher should eat the stub
+    assert len(enriched_models) == 5
+    assert any(
+        isinstance(model, Person) and model.uri == person.uri
+        for model in enriched_models
+    )
     assert any(isinstance(model, License) for model in enriched_models)
     assert any(isinstance(model, RightsStatement) for model in enriched_models)
     wikidata_entity_uri = URIRef("http://www.wikidata.org/entity/Q7251")
