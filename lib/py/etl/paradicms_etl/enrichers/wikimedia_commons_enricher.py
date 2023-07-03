@@ -386,6 +386,7 @@ class WikimediaCommonsEnricher:
             wikimedia_commons_image_file_name
         )
 
+        image_replacer: Image.Builder
         if isinstance(image, StubImage):
             # Replace the StubImage with a new Image model
             image_replacer = SchemaImageObject.builder(uri=image.uri)
