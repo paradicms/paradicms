@@ -2,11 +2,9 @@ import json
 import logging
 from logging import Logger
 from typing import Dict, Optional, Tuple, Type, List, Set, Iterable
-from urllib.parse import quote
 
 import yaml
-from rdflib import Graph, URIRef, Namespace, Literal
-from stringcase import spinalcase, snakecase
+from rdflib import URIRef
 from yaml import FullLoader
 
 from paradicms_etl.extractors.directory_extractor import DirectoryExtractor
@@ -20,10 +18,13 @@ from paradicms_etl.models.root_model_classes_by_name import (
 )
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.work import Work
+from paradicms_etl.utils.json_object_to_model_transformer import (
+    JsonObjectToModelTransformer,
+)
 from paradicms_etl.utils.markdown_to_dict_transformer import (
     MarkdownToDictTransformer,
 )
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from paradicms_etl.utils.root_model_classes_by_alias import root_model_classes_by_alias
 
 
 class DirectoryTransformer:
@@ -53,7 +54,7 @@ class DirectoryTransformer:
     # create a class instance per transform invocation.
     # The state includes things like the default collection, which is synthesized if needed.
     class __TransformInvocation:
-        __METADATA_FILE_TO_JSON_LD_OBJECT_TRANSFORMERS = {
+        __METADATA_FILE_TO_JSON_OBJECT_TRANSFORMERS = {
             "json": lambda metadata_file_entry: json.loads(metadata_file_entry.source),
             "md": lambda metadata_file_entry: MarkdownToDictTransformer.transform(
                 markdown=metadata_file_entry.source,
@@ -75,29 +76,14 @@ class DirectoryTransformer:
         ):
             self.__directory_name = directory_name
             self.__image_file_entries = image_file_entries
+            self.__json_object_to_model_transformer = JsonObjectToModelTransformer(
+                pipeline_id=pipeline_id,
+                root_model_classes_by_name=root_model_classes_by_name,
+            )
             self.__logger = logger
-            self.__pipeline_id = pipeline_id
-            self.__root_model_classes_by_alias = root_model_classes_by_name.copy()
-
-            self.__json_ld_context = {"md": str(self.__pipeline_namespace)}
-            for (
-                model_class_name,
-                model_class,
-            ) in root_model_classes_by_name.items():
-                self.__json_ld_context["md-" + spinalcase(model_class_name)] = str(
-                    self.__model_type_namespace(model_class=model_class)
-                )
-                for model_class_name_variation in (
-                    snakecase(model_class_name),
-                    spinalcase(model_class_name),
-                ):
-                    if (
-                        model_class_name_variation
-                        not in self.__root_model_classes_by_alias
-                    ):
-                        self.__root_model_classes_by_alias[
-                            model_class_name_variation
-                        ] = model_class
+            self.__root_model_classes_by_alias = root_model_classes_by_alias(
+                root_model_classes_by_name
+            )
 
             self.__referenced_image_uris: Set[URIRef] = set()
             self.__transformed_models_by_class: Dict[
@@ -202,18 +188,6 @@ class DirectoryTransformer:
             for transformed_models_by_id in self.__transformed_models_by_class.values():
                 yield from transformed_models_by_id.values()
 
-        def __model_type_namespace(self, *, model_class: Type[Model]) -> Namespace:
-            return Namespace(
-                f"{self.__pipeline_namespace}{quote(spinalcase(self.__root_model_class_by_type(model_class).__name__))}:"
-            )
-
-        def __model_uri(self, *, model_class: Type[Model], model_id: str) -> URIRef:
-            return self.__model_type_namespace(model_class=model_class)[quote(model_id)]
-
-        @property
-        def __pipeline_namespace(self) -> Namespace:
-            return Namespace(f"urn:directory:{self.__pipeline_id}:")
-
         def __root_model_class_by_alias(self, model_class: str):
             return self.__root_model_classes_by_alias[model_class]
 
@@ -266,7 +240,7 @@ class DirectoryTransformer:
                     default_collection_model_id
                 ] = SchemaCollection.builder(
                     name=self.__directory_name,
-                    uri=self.__model_uri(
+                    uri=self.__json_object_to_model_transformer.model_uri(
                         model_class=SchemaCollection,
                         model_id=default_collection_model_id,
                     ),
@@ -335,81 +309,33 @@ class DirectoryTransformer:
         def __transform_metadata_file_entry_to_model(
             self, metadata_file_entry: DirectoryExtractor.MetadataFileEntry
         ) -> Model:
-            root_model_class = self.__root_model_class_by_alias(
-                metadata_file_entry.model_type
-            )
-
-            graph = Graph()
-
-            model_uri = self.__model_uri(
-                model_class=root_model_class,
-                model_id=metadata_file_entry.model_id,
-            )
+            if len(metadata_file_entry.source) == 0:
+                raise ValueError(
+                    f"empty metadata file: {metadata_file_entry.path}",
+                    metadata_file_entry.path,
+                )
+            elif (
+                metadata_file_entry.format
+                not in self.__METADATA_FILE_TO_JSON_OBJECT_TRANSFORMERS
+            ):
+                raise ValueError(
+                    f"unknown metadata file format ({metadata_file_entry.format}): {metadata_file_entry.path}"
+                )
 
             try:
-                if (
+                json_object = self.__METADATA_FILE_TO_JSON_OBJECT_TRANSFORMERS[
                     metadata_file_entry.format
-                    in self.__METADATA_FILE_TO_JSON_LD_OBJECT_TRANSFORMERS
-                ):
-                    json_ld_object = (
-                        self.__METADATA_FILE_TO_JSON_LD_OBJECT_TRANSFORMERS[
-                            metadata_file_entry.format
-                        ](metadata_file_entry)
-                    )
-
-                    if "@id" not in json_ld_object:
-                        json_ld_object["@id"] = str(model_uri)
-
-                    json_ld_context = safe_dict_update(
-                        root_model_class.json_ld_context(), self.__json_ld_context
-                    )
-
-                    graph.parse(
-                        data=json_ld_object, context=json_ld_context, format="json-ld"
-                    )
-                else:
-                    # Assume it's an RDF serialization
-                    graph.parse(
-                        data=metadata_file_entry.source,
-                        format=metadata_file_entry.format,
-                        publicID=model_uri,
-                    )
+                ](metadata_file_entry)
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
 
-            # graph_str = graph.serialize(format="turtle")
-            # print(graph_str)
-
-            uri_subjects = {
-                subject for subject in graph.subjects() if isinstance(subject, URIRef)
-            }
-            if len(uri_subjects) == 1:
-                resource = graph.resource(uri_subjects.pop())
-            else:
-                raise ValueError(
-                    f"metadata file {metadata_file_entry.model_type}/{metadata_file_entry.model_id}.{metadata_file_entry.format} has {len(uri_subjects)} named subjects"
-                )
-
-            # expected_rdf_type = getattr(CMS, model_class.__name__)
-            # actual_rdf_type = resource.value(RDF.type)
-            # if actual_rdf_type is None:
-            #     resource.add(RDF.type, expected_rdf_type)
-            # else:
-            #     if not isinstance(actual_rdf_type, Resource):
-            #         raise ValueError(f"{metadata_file_entry} rdf:type is not a URI")
-            #     if actual_rdf_type.identifier != expected_rdf_type:
-            #         raise ValueError(
-            #             f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
-            #         )
-
-            label_property_uri = root_model_class.label_property_uri()
-            if label_property_uri is not None:
-                if resource.value(label_property_uri) is None:
-                    resource.add(
-                        label_property_uri, Literal(metadata_file_entry.model_id)
-                    )
-
-            model = root_model_class.from_rdf(resource)
+            model = self.__json_object_to_model_transformer(
+                json_object=json_object,
+                model_class=self.__root_model_class_by_alias(
+                    metadata_file_entry.model_type
+                ),
+                model_id=metadata_file_entry.model_id,
+            )
 
             if isinstance(model, Image):
                 for image_uri in model.thumbnail_uris:

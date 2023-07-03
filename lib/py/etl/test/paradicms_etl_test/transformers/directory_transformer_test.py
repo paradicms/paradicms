@@ -20,7 +20,7 @@ def test_transform(data_dir_path: Path):
     extractor = DirectoryExtractor(directory_path=directory_data_dir_path)
     models = tuple(
         DirectoryTransformer(
-            # collection_uri="urn:directory:test:collection:default",
+            # collection_uri="urn:paradicms_etl:pipeline:test:collection:default",
             # collection_title="Markdown directory test collection",
             pipeline_id="test"
         )(**extractor())
@@ -36,18 +36,22 @@ def test_transform(data_dir_path: Path):
 
     works = {model.uri: model for model in models if isinstance(model, Work)}
     assert len(works) == 2
-    work1 = works[URIRef("urn:directory:test:schema-creative-work:test_work1")]
-    work2 = works[URIRef("urn:directory:test:schema-creative-work:test_work2")]
+    work1 = works[
+        URIRef("urn:paradicms_etl:pipeline:test:schema-creative-work:test_work1")
+    ]
+    work2 = works[
+        URIRef("urn:paradicms_etl:pipeline:test:schema-creative-work:test_work2")
+    ]
 
     assert work2.image_uris == (
-        URIRef("urn:directory:test:schema-image-object:test_work2"),
+        URIRef("urn:paradicms_etl:pipeline:test:schema-image-object:test_work2"),
     )
 
     work1_description = work1.description
     assert work1_description is not None
     assert isinstance(work1_description, Text)
     assert work1_description.rights_holders == (
-        URIRef("urn:directory:test:foaf-person:test_person"),
+        URIRef("urn:paradicms_etl:pipeline:test:foaf-person:test_person"),
     )
 
     images = {model.uri: model for model in models if isinstance(model, Image)}
