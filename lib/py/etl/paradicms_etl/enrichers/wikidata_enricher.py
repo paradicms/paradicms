@@ -14,6 +14,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.namespaces import WDT
@@ -56,7 +57,11 @@ class WikidataEnricher:
                     yielded_wikidata_rights_models = True
                 yield from self.__get_wikidata_entity_images(wikidata_entity)
 
-            yield model
+            if isinstance(model, StubModel) and yielded_wikidata_entity_uris:
+                # A StubModel is "replaced" by the Wikidata entity model
+                continue
+            else:
+                yield model
 
     def __get_model_wikidata_entity_references(
         self, model: Model
@@ -64,6 +69,12 @@ class WikidataEnricher:
         """
         Get a list of Wikidata entity URIs referenced by the given model.
         """
+        if isinstance(model, StubModel):
+            try:
+                return (canonicalize_wikidata_entity_uri(model.uri),)
+            except ValueError:
+                return ()
+
         wikidata_entity_uris: List[URIRef] = []
         for same_as_uri in model.same_as_uris:
             try:
