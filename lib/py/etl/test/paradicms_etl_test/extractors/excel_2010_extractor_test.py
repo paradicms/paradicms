@@ -9,7 +9,7 @@ def test_extract(excel_2010_test_data_file_path):
     )
     assert len(results) == 1
     sheets = results["sheets"]
-    assert len(sheets) == 3
+    assert len(sheets) == 4
 
     person_sheet = sheets["FoafPerson"]
     person_rows = person_sheet["rows"]
@@ -36,6 +36,14 @@ def test_extract(excel_2010_test_data_file_path):
     work_rows = work_sheet["rows"]
     assert len(work_rows) == 2
     work_header_row = work_rows[0]
-    assert work_header_row == ("@id", "image", "name")
+    assert work_header_row == ("@id", "image", "name", "#commentheader")
     work_data_row = work_rows[1]
-    assert len(work_data_row) == 3
+    assert len(work_data_row) == 4
+
+    work_sheet = sheets["StubWork"]
+    work_rows = work_sheet["rows"]
+    assert len(work_rows) == 2
+    work_header_row = work_rows[0]
+    assert work_header_row == ("@id",)
+    work_data_row = work_rows[1]
+    assert len(work_data_row) == 1
