@@ -2,7 +2,7 @@ import logging
 from typing import Type, Dict, Any
 from urllib.parse import quote
 
-from rdflib import Namespace, URIRef, Graph, Literal
+from rdflib import Namespace, URIRef, Graph, Literal, RDFS
 from stringcase import spinalcase
 
 from paradicms_etl.model import Model
@@ -56,20 +56,32 @@ class JsonObjectToModelTransformer:
         :return:
         """
 
+        json_ld_context = safe_dict_update(
+            model_class.json_ld_context(), self.__json_ld_context
+        )
+
         if issubclass(model_class, StubModel):
             if len(json_object) != 1 or "@id" not in json_object:
                 raise ValueError(f"expected {model_class.__name__} to only have an @id")
 
-            return model_class(json_object["@id"])
+            # Instead of assuming @id is a already an unqualified IRI, construct a dummy JSON-LD object that we can
+            # turn into a Graph, then extract the expanded @id from the Graph, so the input @id can incorporate
+            # namespace prefixes.
+            stub_json_ld_object = {
+                "@id": json_object["@id"],
+                str(RDFS.label): "dummy statement",
+            }
+            graph = Graph()
+            graph.parse(data=stub_json_ld_object, context=json_ld_context, format="json-ld")  # type: ignore
+            assert len(graph) == 1
+            expanded_id = tuple(graph.subjects())[0]
+            assert isinstance(expanded_id, URIRef)
+            return model_class(expanded_id)
 
         model_uri = self.model_uri(model_class=model_class, model_id=model_id)
 
         if "@id" not in json_object:
             json_object["@id"] = str(model_uri)
-
-        json_ld_context = safe_dict_update(
-            model_class.json_ld_context(), self.__json_ld_context
-        )
 
         graph = Graph()
         graph.parse(data=json_object, context=json_ld_context, format="json-ld")  # type: ignore

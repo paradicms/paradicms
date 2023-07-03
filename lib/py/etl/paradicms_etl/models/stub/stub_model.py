@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, Any, Optional
+from typing import Optional
 
 from rdflib import URIRef, Graph, BNode
 from rdflib.resource import Resource
@@ -23,10 +23,6 @@ class StubModel(Model):
 
     @classmethod
     def from_rdf(cls, resource: Resource):
-        raise NotImplementedError(cls.__name__)
-
-    @classmethod
-    def json_ld_context(cls) -> Dict[str, Any]:
         raise NotImplementedError(cls.__name__)
 
     def label(self) -> Optional[str]:
