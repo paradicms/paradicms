@@ -6,11 +6,11 @@ from rdflib import URIRef
 from paradicms_etl.extractors.airtable_extractor import AirtableExtractor
 from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.dc.dc_image import DcImage
+from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
-from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
-from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
 from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
@@ -98,9 +98,9 @@ class CostumeCoreDataAirtableTransformer:
                 )
             )
 
-            work_builder = SchemaCreativeWork.builder(
+            work_builder = DcPhysicalObject.builder(
                 # rights=Rights.from_properties(properties),
-                name=object_record["fields"]["Title"],
+                title=object_record["fields"]["Title"],
                 uri=work_uri,
             )
 
@@ -160,7 +160,7 @@ class CostumeCoreDataAirtableTransformer:
     @staticmethod
     def __transform_object_images(*, object_images) -> Iterable[Image]:
         for object_image in object_images:
-            original_image_builder = SchemaImageObject.builder(
+            original_image_builder = DcImage.builder(
                 uri=URIRef(object_image["url"]),
             )
 
