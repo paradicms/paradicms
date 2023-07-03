@@ -1,10 +1,13 @@
+import logging
 from typing import Type, Dict, Any
 from urllib.parse import quote
 
 from rdflib import Namespace, URIRef, Graph, Literal
 from stringcase import spinalcase
 
+from paradicms_etl.model import Model
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -19,8 +22,9 @@ class JsonObjectToModelTransformer:
         self,
         *,
         pipeline_id: str,
-        root_model_classes_by_name: Dict[str, Type[ResourceBackedModel]],
+        root_model_classes_by_name: Dict[str, Type[Model]],
     ):
+        self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
 
         self.__json_ld_context = {}
@@ -40,9 +44,9 @@ class JsonObjectToModelTransformer:
         self,
         *,
         json_object: Dict[str, Any],
-        model_class: Type[ResourceBackedModel],
+        model_class: Type[Model],
         model_id: str,
-    ) -> ResourceBackedModel:
+    ) -> Model:
         """
         Convert a JSON object into a model.
 
@@ -51,6 +55,12 @@ class JsonObjectToModelTransformer:
         :param model_id: model identifier derived from the file stem (directory format) or the row number (spreadsheet format)
         :return:
         """
+
+        if issubclass(model_class, StubModel):
+            if len(json_object) != 1 or "@id" not in json_object:
+                raise ValueError(f"expected {model_class.__name__} to only have an @id")
+
+            return model_class(json_object["@id"])
 
         model_uri = self.model_uri(model_class=model_class, model_id=model_id)
 
@@ -86,23 +96,20 @@ class JsonObjectToModelTransformer:
         #             f"{metadata_file_entry} rdf_type is {actual_rdf_type.identifier}, expected {expected_rdf_type}"
         #         )
 
-        label_property_uri = model_class.label_property_uri()
-        if label_property_uri is not None:
-            if resource.value(label_property_uri) is None:
-                resource.add(label_property_uri, Literal(model_id))
+        if issubclass(model_class, ResourceBackedModel):
+            label_property_uri = model_class.label_property_uri()
+            if label_property_uri is not None:
+                if resource.value(label_property_uri) is None:
+                    resource.add(label_property_uri, Literal(model_id))
 
         return model_class.from_rdf(resource)
 
-    def __model_class_namespace(
-        self, *, model_class: Type[ResourceBackedModel]
-    ) -> Namespace:
+    def __model_class_namespace(self, *, model_class: Type[Model]) -> Namespace:
         return Namespace(
             f"{self.__pipeline_namespace}{quote(spinalcase(model_class.__name__))}:"
         )
 
-    def model_uri(
-        self, *, model_class: Type[ResourceBackedModel], model_id: str
-    ) -> URIRef:
+    def model_uri(self, *, model_class: Type[Model], model_id: str) -> URIRef:
         return self.__model_class_namespace(model_class=model_class)[quote(model_id)]
 
     @property

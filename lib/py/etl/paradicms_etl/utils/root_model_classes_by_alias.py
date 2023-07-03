@@ -2,12 +2,12 @@ from typing import Dict, Type
 
 from stringcase import snakecase, spinalcase
 
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.model import Model
 
 
 def root_model_classes_by_alias(
-    root_model_classes_by_name: Dict[str, Type[ResourceBackedModel]]
-):
+    root_model_classes_by_name: Dict[str, Type[Model]]
+) -> Dict[str, Type[Model]]:
     """
     Given a dict of {model class.__name__, model class}, return a dict of {model class name variation: model class}
     """

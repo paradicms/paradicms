@@ -1,16 +1,12 @@
 import json
 import logging
 from typing import Type, Dict, Any, List, Union, TypeVar, Optional
-from urllib.parse import quote
 
 from PIL.Image import Image
-from rdflib import URIRef
-from rdflib.namespace import Namespace
-from stringcase import spinalcase
 
+from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.image_data import ImageData
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes_by_name import (
     ROOT_MODEL_CLASSES_BY_NAME,
 )
@@ -50,9 +46,7 @@ class SpreadsheetTransformer:
         *,
         pipeline_id: str,
         image_data_class: Optional[Type[ImageData]] = None,
-        root_model_classes_by_name: Optional[
-            Dict[str, Type[ResourceBackedModel]]
-        ] = None,
+        root_model_classes_by_name: Optional[Dict[str, Type[Model]]] = None,
     ):
         self.__logger = logging.getLogger(__name__)
         if image_data_class is None:
@@ -96,6 +90,8 @@ class SpreadsheetTransformer:
                     header_cell = header_cell.strip()
                     if not header_cell:
                         continue
+                    if header_cell.startswith("#"):
+                        continue
 
                     if data_cell is None:
                         continue
@@ -122,19 +118,3 @@ class SpreadsheetTransformer:
                     model_class=root_model_class,
                     model_id=sheet_name + ":" + str(row_i),
                 )
-
-    def __model_type_namespace(
-        self, *, model_class: Type[ResourceBackedModel]
-    ) -> Namespace:
-        return Namespace(
-            f"{self.__pipeline_namespace}{spinalcase(model_class.__name__)}:"
-        )
-
-    def __model_uri(
-        self, *, model_class: Type[ResourceBackedModel], model_id: str
-    ) -> URIRef:
-        return self.__model_type_namespace(model_class=model_class)[quote(model_id)]
-
-    @property
-    def __pipeline_namespace(self) -> Namespace:
-        return Namespace(f"urn:spreadsheet:{self.__pipeline_id}:")

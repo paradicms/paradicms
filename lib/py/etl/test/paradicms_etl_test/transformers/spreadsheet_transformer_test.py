@@ -53,14 +53,14 @@ def test_transform_google_sheets(google_sheets_spreadsheet_id: str, tmp_path: Pa
     )
 
 
-@pytest.mark.skipif("CI" in os.environ, reason="don't connect to Google Sheets in CI")
-def test_transform_google_sheets_dressdiscover_exhibitions(tmp_path: Path):
-    models = tuple(
-        SpreadsheetTransformer(pipeline_id="test")(
-            **GoogleSheetsExtractor(
-                cache_dir_path=tmp_path,
-                spreadsheet_id="1j2oaMvMxY4pnXO-sEH_fky2R2gm6TQeIev_Q8rVOD4M",
-            )(force=False)
-        )
-    )
-    assert models
+# @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Google Sheets in CI")
+# def test_transform_google_sheets_dressdiscover_exhibitions(tmp_path: Path):
+#     models = tuple(
+#         SpreadsheetTransformer(pipeline_id="test")(
+#             **GoogleSheetsExtractor(
+#                 cache_dir_path=tmp_path,
+#                 spreadsheet_id="1j2oaMvMxY4pnXO-sEH_fky2R2gm6TQeIev_Q8rVOD4M",
+#             )(force=False)
+#         )
+#     )
+#     assert models

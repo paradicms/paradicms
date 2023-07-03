@@ -12,7 +12,6 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.images_mixin import ImagesMixin
-from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes_by_name import (
     ROOT_MODEL_CLASSES_BY_NAME,
 )
@@ -40,9 +39,7 @@ class DirectoryTransformer:
         self,
         *,
         pipeline_id: str,
-        root_model_classes_by_name: Optional[
-            Dict[str, Type[ResourceBackedModel]]
-        ] = None,
+        root_model_classes_by_name: Optional[Dict[str, Type[Model]]] = None,
     ):
         self.__logger = logging.getLogger(__name__)
         self.__pipeline_id = pipeline_id
@@ -72,7 +69,7 @@ class DirectoryTransformer:
             metadata_file_entries: Tuple[DirectoryExtractor.MetadataFileEntry, ...],
             logger: Logger,
             pipeline_id: str,
-            root_model_classes_by_name: Dict[str, Type[ResourceBackedModel]],
+            root_model_classes_by_name: Dict[str, Type[Model]],
         ):
             self.__directory_name = directory_name
             self.__image_file_entries = image_file_entries
