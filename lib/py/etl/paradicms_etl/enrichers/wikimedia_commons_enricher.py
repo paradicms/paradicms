@@ -19,6 +19,8 @@ from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.stub.stub_image import StubImage
 from paradicms_etl.utils.file_cache import FileCache
 
 logger = logging.getLogger(__name__)
@@ -384,7 +386,11 @@ class WikimediaCommonsEnricher:
             wikimedia_commons_image_file_name
         )
 
-        image_replacer = image.replacer()
+        if isinstance(image, StubImage):
+            # Replace the StubImage with a new Image model
+            image_replacer = SchemaImageObject.builder(uri=image.uri)
+        else:
+            image_replacer = image.replacer()
 
         if wikimedia_commons_image_info.extmetadata.copyrighted:
             if not image.rights_statements:
