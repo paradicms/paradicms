@@ -34,7 +34,7 @@ class JsonObjectToModelTransformer:
             for namespace_prefix in namespace_prefixes:
                 self.__json_ld_context[
                     namespace_prefix + "-" + spinalcase(root_model_class_name)
-                ] = self.__model_class_namespace(model_class=root_model_class)
+                ] = str(self.__model_class_namespace(model_class=root_model_class))
 
     def __call__(
         self,
