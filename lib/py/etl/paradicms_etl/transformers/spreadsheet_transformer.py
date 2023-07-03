@@ -1,12 +1,12 @@
 import json
 import logging
-from typing import Set, Type, Dict, Any, List, Union, TypeVar, Optional
+from typing import Type, Dict, Any, List, Union, TypeVar, Optional
 from urllib.parse import quote
 
 from PIL.Image import Image
-from rdflib import URIRef, Graph
+from rdflib import URIRef
 from rdflib.namespace import Namespace
-from stringcase import spinalcase, snakecase
+from stringcase import spinalcase
 
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.image_data import ImageData
@@ -14,7 +14,10 @@ from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.root_model_classes_by_name import (
     ROOT_MODEL_CLASSES_BY_NAME,
 )
-from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from paradicms_etl.utils.json_object_to_model_transformer import (
+    JsonObjectToModelTransformer,
+)
+from paradicms_etl.utils.root_model_classes_by_alias import root_model_classes_by_alias
 
 _MultidictKeyT = TypeVar("_MultidictKeyT")
 _MultidictValueT = TypeVar("_MultidictValueT")
@@ -52,43 +55,30 @@ class SpreadsheetTransformer:
         ] = None,
     ):
         self.__logger = logging.getLogger(__name__)
-        self.__pipeline_id = pipeline_id
         if image_data_class is None:
             image_data_class = CmsImageData
         self.__image_data_class = image_data_class
         if root_model_classes_by_name is None:
             root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
-        self.__root_model_classes_by_alias = root_model_classes_by_name.copy()
-
-        self.__json_ld_context = {"ss": str(self.__pipeline_namespace)}
-        for (
-            model_class_name,
-            model_class,
-        ) in root_model_classes_by_name.items():
-            self.__json_ld_context["ss-" + spinalcase(model_class_name)] = str(
-                self.__model_type_namespace(model_class=model_class)
-            )
-            for model_class_name_variation in (
-                snakecase(model_class_name),
-                spinalcase(model_class_name),
-            ):
-                if model_class_name_variation not in self.__root_model_classes_by_alias:
-                    self.__root_model_classes_by_alias[
-                        model_class_name_variation
-                    ] = model_class
+        self.__json_object_to_model_transformer = JsonObjectToModelTransformer(
+            pipeline_id=pipeline_id,
+            root_model_classes_by_name=root_model_classes_by_name,
+        )
+        self.__root_model_classes_by_alias = root_model_classes_by_alias(
+            root_model_classes_by_name
+        )
 
     def __call__(self, sheets: Dict[str, Any]):
         for sheet_name, sheet in sheets.items():
             rows = sheet["rows"]
-            model_class = self.__root_model_classes_by_alias.get(sheet_name)
-            if model_class is None:
+            root_model_class = self.__root_model_classes_by_alias.get(sheet_name)
+            if root_model_class is None:
                 self.__logger.warning(
                     "sheet %s does not correspond to a model class", sheet_name
                 )
                 continue
 
             header_row = None
-            resource_identifiers: Set[URIRef] = set()
             for row_i, row in enumerate(rows):
                 if row_i == 0:
                     header_row = row
@@ -127,54 +117,11 @@ class SpreadsheetTransformer:
 
                     _multidict_add(row_dict, header_cell, json_ready_data_cell)
 
-                # Parse the row multi-dict as a JSON-LD object
-
-                # Synthesize an @id key if there isn't one
-                if "@id" not in row_dict:
-                    row_dict["@id"] = str(
-                        self.__model_uri(
-                            model_class=model_class,
-                            model_id=sheet_name + ":" + str(row_i),
-                        )
-                    )
-
-                json_ld_context = safe_dict_update(
-                    model_class.json_ld_context(), self.__json_ld_context
+                yield self.__json_object_to_model_transformer(
+                    json_object=row_dict,
+                    model_class=root_model_class,
+                    model_id=sheet_name + ":" + str(row_i),
                 )
-
-                graph = Graph()
-                graph.parse(data=row_dict, context=json_ld_context, format="json-ld")  # type: ignore
-
-                # The graph should have a single named subject
-                uri_subjects = {
-                    subject
-                    for subject in graph.subjects()
-                    if isinstance(subject, URIRef)
-                }
-                if len(uri_subjects) == 0:
-                    self.__logger.debug(
-                        "row %d in sheet %s has %d named subjects",
-                        row_i,
-                        sheet_name,
-                        len(uri_subjects),
-                    )
-                    break
-                elif len(uri_subjects) == 1:
-                    resource = graph.resource(uri_subjects.pop())
-                else:
-                    raise ValueError(
-                        f"row {row_i} in sheet {sheet_name} has {len(uri_subjects)} named subjects"
-                    )
-
-                if resource.identifier in resource_identifiers:
-                    raise ValueError(
-                        f"row {row_i} in sheet {sheet_name} has duplicate identifier: {resource.identifier}"
-                    )
-                resource_identifiers.add(resource.identifier)
-
-                # Add back the images once we know the format
-
-                yield model_class(resource)
 
     def __model_type_namespace(
         self, *, model_class: Type[ResourceBackedModel]
