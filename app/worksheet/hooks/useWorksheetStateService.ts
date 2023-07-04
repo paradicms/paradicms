@@ -7,6 +7,7 @@ import {LocalStorageWorksheetStateService} from "~/services/LocalStorageWorkshee
 import {UserSettings} from "~/models/UserSettings";
 import {defaultUserSettings} from "~/models/defaultUserSettings";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
+import log from "loglevel";
 
 interface WorksheetStateServiceReducerAction {
   payload: WorksheetStateService;

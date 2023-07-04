@@ -11,6 +11,7 @@ import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {WikidataModel} from "./WikidataModel";
 import {WikidataWork} from "./WikidataWork";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
+import log from 'loglevel';
 
 class WikidataEntities {
   static readonly HUMAN = wd["Q5"];

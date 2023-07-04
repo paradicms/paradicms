@@ -1,5 +1,6 @@
 import {ImageDimensions} from "./ImageDimensions";
 import {ThumbnailSelector} from "./ThumbnailSelector";
+import log from "loglevel";
 
 /**
  * Select a thumbnail from an array of images, given target, minimum, and maximum dimensions.
@@ -20,7 +21,7 @@ export const selectThumbnail = <
   selector: ThumbnailSelector
 ): ImageT | null => {
   if (images.length === 0) {
-    // log.warn("no images to select thumbnail from");
+    log.warn("no images to select thumbnail from");
     return null;
   }
 
@@ -65,7 +66,6 @@ export const selectThumbnail = <
   }
 
   if (candidateImages.length === 0) {
-    // log.debug("no candidate images, returning null");
     log.debug(
       "no acceptable thumbnail for selector",
       JSON.stringify(selector),
@@ -111,16 +111,16 @@ export const selectThumbnail = <
   // This may lead to choosing very large images. In that case maxDimensions should be used to exclude very large images as candidates.
   for (const candidateImage of candidateImages) {
     if (contains(candidateImage.imageDimensions, targetDimensions)) {
-      // log.debug(
-      //   "choosing smallest candidate image that's larger than target dimensions"
-      // );
+      log.debug(
+        "choosing smallest candidate image that's larger than target dimensions"
+      );
       return candidateImage.image;
     }
   }
 
   // All candidate images are smaller than the target, return the largest of them
-  // log.debug(
-  //   "choosing largest candidate image that's smaller than target dimensions"
-  // );
+  log.debug(
+    "choosing largest candidate image that's smaller than target dimensions"
+  );
   return candidateImages[candidateImages.length - 1].image;
 };

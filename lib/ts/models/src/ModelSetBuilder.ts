@@ -29,6 +29,7 @@ import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
 import {WorkEventUnion} from "./WorkEventUnion";
 import {ImagesMixin} from "./ImagesMixin";
 import {ThumbnailSelector} from "./ThumbnailSelector";
+import log from "loglevel";
 
 /**
  * Build a ModelSet by adding models to it.
@@ -187,10 +188,10 @@ export class ModelSetBuilder {
       }
     } else {
       // Otherwise the model is likely a blank node in another model's graph, don't add it
-      // log.debug(
-      //   "tried to add a model that belongs to another model's graph:",
-      //   model.key
-      // );
+      log.debug(
+        "tried to add a model that belongs to another model's graph:",
+        model.key
+      );
     }
 
     return this;

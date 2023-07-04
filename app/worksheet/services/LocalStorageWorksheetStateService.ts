@@ -2,6 +2,7 @@
 import {DuplicateWorksheetStateException} from "~/services/DuplicateWorksheetStateException";
 import {NoSuchWorksheetStateException} from "~/services/NoSuchWorksheetStateException";
 import {WorksheetStateService} from "~/services/WorksheetStateService";
+import log from "loglevel";
 
 export class LocalStorageWorksheetStateService
   implements WorksheetStateService {

@@ -1,6 +1,7 @@
 import {UserSettings} from "~/models/UserSettings";
 import {UserSettingsService} from "~/services/UserSettingsService";
 import {NoSuchUserSettingsException} from "~/services/NoSuchUserSettingsException";
+import log from "loglevel";
 
 export class LocalStorageUserSettingsService implements UserSettingsService {
   private static readonly USER_SETTINGS_ITEM_KEY_PREFIX = "userSettings";
@@ -11,7 +12,7 @@ export class LocalStorageUserSettingsService implements UserSettingsService {
         userId
       );
       const value = localStorage.getItem(key);
-      // log.info("read user settings from key=%s: %s (%s)", key, value);
+      log.debug("read user settings from key=%s: %s (%s)", key, value);
       if (!value) {
         reject(new NoSuchUserSettingsException(userId));
         return;
@@ -35,7 +36,7 @@ export class LocalStorageUserSettingsService implements UserSettingsService {
     );
     const value = JSON.stringify(kwds.userSettings);
     localStorage.setItem(key, value);
-    // log.info("wrote user settings to key=%s, value=%s", key, value);
+    log.debug("wrote user settings to key=%s, value=%s", key, value);
     return Promise.resolve();
   }
 }

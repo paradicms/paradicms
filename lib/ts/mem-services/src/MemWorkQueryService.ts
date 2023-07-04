@@ -42,6 +42,7 @@ import {
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {requireNonNull} from "@paradicms/utilities";
+import log from "loglevel";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -273,14 +274,14 @@ export class MemWorkQueryService implements WorkQueryService {
         works: searchedWorks,
       });
 
-      // log.debug("Search facets:", JSON.stringify(facets));
+      log.debug("Search facets:", JSON.stringify(facets));
 
       const filteredWorks = this.filterWorks({
         filters: query.filters,
         works: searchedWorks,
       });
 
-      // log.debug("Search filtered works count:", filteredWorks.length);
+      log.debug("Search filtered works count:", filteredWorks.length);
 
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
@@ -292,7 +293,7 @@ export class MemWorkQueryService implements WorkQueryService {
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
-      // log.debug("Search sliced works count:", slicedWorks.length);
+      log.debug("Search sliced works count:", slicedWorks.length);
 
       const slicedWorksModelSet = new ModelSetBuilder()
         .addWorks(slicedWorks, workJoinSelector)

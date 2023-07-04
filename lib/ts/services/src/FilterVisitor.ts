@@ -2,6 +2,7 @@ import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
 import {StringPropertyValueFacet} from "./StringPropertyValueFacet";
 import {FilterUnion} from "./FilterUnion";
 import {FacetUnion} from "./FacetUnion";
+import log from "loglevel";
 
 /**
  * Filter visitor interface. Optionally includes the search results facet corresponding to the query filter.

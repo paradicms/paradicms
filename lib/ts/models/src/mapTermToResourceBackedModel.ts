@@ -2,6 +2,7 @@ import {BlankNode, NamedNode} from "@rdfjs/types";
 import {ResourceBackedModelFactories} from "./ResourceBackedModelFactories";
 import {getNamedRdfTypes} from "@paradicms/rdf";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import log from "loglevel";
 
 export const mapTermToResourceBackedModel = <ResourceBackedModelT>(kwds: {
   factories: ResourceBackedModelFactories<ResourceBackedModelT>;
@@ -19,15 +20,14 @@ export const mapTermToResourceBackedModel = <ResourceBackedModelT>(kwds: {
     const factory = factories.get(rdfType);
     if (factory !== null) {
       return new factory({...modelParameters, identifier: term});
+    } else {
+      log.debug("no factory for rdf:type ", rdfType.value);
     }
-    // else {
-    //   log.info("no factory for rdf:type ", rdfType.value);
-    // }
   }
-  // log.warn(
-  //   `unable to determine model type from node ${
-  //     term.value
-  //   } (RDF types: ${rdfTypes.map(rdfType => rdfType.value).join(" ")})`
-  // );
+  log.debug(
+    `unable to determine model type from node ${
+      term.value
+    } (RDF types: ${rdfTypes.map(rdfType => rdfType.value).join(" ")})`
+  );
   return null;
 };

@@ -1,5 +1,6 @@
 import {ValueFilter} from "./ValueFilter";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
+import log from "loglevel";
 
 export class ValueFilterState<
   ValueT extends JsonPrimitiveType,
@@ -49,9 +50,9 @@ export class ValueFilterState<
       }
     });
 
-    // log.debug("Exclude value set: " + [...this.excludeValueSet]);
-    // log.debug("Include value set: " + [...this.includeValueSet]);
-    // log.debug("Value universe: " + this.valueUniverse);
+    log.debug("Exclude value set: " + [...this.excludeValueSet]);
+    log.debug("Include value set: " + [...this.includeValueSet]);
+    log.debug("Value universe: " + this.valueUniverse);
 
     if (
       this.includeValueSet.size + this.excludeValueSet.size !==
