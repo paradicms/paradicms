@@ -52,6 +52,7 @@ export class ModelSetBuilder {
       return this;
     }
 
+    console.debug("ModelSetBuilder: adding agent", agent.key);
     this.addModel(agent);
 
     if (!joinSelector) {
@@ -99,6 +100,7 @@ export class ModelSetBuilder {
     collection: Collection,
     joinSelector?: CollectionJoinSelector
   ): ModelSetBuilder {
+    console.debug("ModelSetBuilder: adding collection", collection.key);
     this.addModel(collection);
 
     if (!joinSelector) {
@@ -147,6 +149,7 @@ export class ModelSetBuilder {
       agents?: AgentJoinSelector;
     }
   ): ModelSetBuilder {
+    console.debug("ModelSetBuilder: adding image", image.key);
     this.addModel(image);
     if (joinSelector) {
       this.addRights(joinSelector, image);
@@ -155,6 +158,7 @@ export class ModelSetBuilder {
   }
 
   addLicense(license: License): ModelSetBuilder {
+    console.debug("ModelSetBuilder: adding license", license.key);
     return this.addModel(license);
   }
 
@@ -321,18 +325,51 @@ export class ModelSetBuilder {
     imagesMixin: ImagesMixin,
     selector: ThumbnailSelector
   ): boolean {
+    console.debug(
+      "ModelSetBuilder:",
+      imagesMixin.images.length,
+      "images to select thumbnails from:",
+      JSON.stringify(
+        imagesMixin.images.map(image => ({
+          key: image.key,
+          exactDimensions: image.exactDimensions,
+          maxDimensions: image.maxDimensions,
+        }))
+      )
+    );
     for (const image of imagesMixin.images) {
+      console.debug(
+        "ModelSetBuilder: trying to get thumbnail for",
+        (image as any).constructor,
+        JSON.stringify({
+          key: image.key,
+          exactDimensions: image.exactDimensions,
+          maxDimensions: image.maxDimensions,
+        })
+      );
       const thumbnail = imagesMixin.thumbnail(selector);
       if (thumbnail) {
+        console.debug(
+          "adding original image",
+          image.key,
+          "in order to add thumbnail",
+          thumbnail.key
+        );
         this.addImage(image); // Add the original image
+        console.debug("ModelSetBuilder: adding thumbnail", thumbnail.key);
         this.addImage(thumbnail);
         return true;
       }
     }
+    console.debug(
+      "ModelSetBuilder: no thumbnail found for selector",
+      JSON.stringify(selector)
+    );
     return false;
   }
 
   addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
+    console.debug("ModelSetBuilder: adding work", work.key);
     this.addModel(work);
 
     if (!joinSelector) {
