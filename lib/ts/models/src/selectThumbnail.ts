@@ -20,7 +20,7 @@ export const selectThumbnail = <
   selector: ThumbnailSelector
 ): ImageT | null => {
   if (images.length === 0) {
-    // console.warn("no images to select thumbnail from");
+    // log.warn("no images to select thumbnail from");
     return null;
   }
 
@@ -65,8 +65,8 @@ export const selectThumbnail = <
   }
 
   if (candidateImages.length === 0) {
-    // console.debug("no candidate images, returning null");
-    console.debug(
+    // log.debug("no candidate images, returning null");
+    log.debug(
       "no acceptable thumbnail for selector",
       JSON.stringify(selector),
       "found in",
@@ -82,7 +82,7 @@ export const selectThumbnail = <
     );
     return null;
   } else if (candidateImages.length === 1) {
-    // console.debug("single candidate image");
+    // log.debug("single candidate image");
     return candidateImages[0].image;
   }
 
@@ -111,7 +111,7 @@ export const selectThumbnail = <
   // This may lead to choosing very large images. In that case maxDimensions should be used to exclude very large images as candidates.
   for (const candidateImage of candidateImages) {
     if (contains(candidateImage.imageDimensions, targetDimensions)) {
-      // console.debug(
+      // log.debug(
       //   "choosing smallest candidate image that's larger than target dimensions"
       // );
       return candidateImage.image;
@@ -119,7 +119,7 @@ export const selectThumbnail = <
   }
 
   // All candidate images are smaller than the target, return the largest of them
-  // console.debug(
+  // log.debug(
   //   "choosing largest candidate image that's smaller than target dimensions"
   // );
   return candidateImages[candidateImages.length - 1].image;

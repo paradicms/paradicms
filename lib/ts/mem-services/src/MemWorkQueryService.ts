@@ -273,14 +273,14 @@ export class MemWorkQueryService implements WorkQueryService {
         works: searchedWorks,
       });
 
-      // console.debug("Search facets:", JSON.stringify(facets));
+      // log.debug("Search facets:", JSON.stringify(facets));
 
       const filteredWorks = this.filterWorks({
         filters: query.filters,
         works: searchedWorks,
       });
 
-      // console.debug("Search filtered works count:", filteredWorks.length);
+      // log.debug("Search filtered works count:", filteredWorks.length);
 
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
@@ -292,13 +292,13 @@ export class MemWorkQueryService implements WorkQueryService {
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
-      // console.debug("Search sliced works count:", slicedWorks.length);
+      // log.debug("Search sliced works count:", slicedWorks.length);
 
       const slicedWorksModelSet = new ModelSetBuilder()
         .addWorks(slicedWorks, workJoinSelector)
         .build();
 
-      // console.debug(
+      // log.debug(
       //   "Search results modelSet:",
       //   Object.keys(slicedWorksModelSet)
       //     .map(

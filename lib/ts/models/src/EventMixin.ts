@@ -88,7 +88,7 @@ export abstract class EventMixin {
         };
       }
     }
-    console.debug("event has no sort date");
+    log.debug("event has no sort date");
     return null;
   }
 }

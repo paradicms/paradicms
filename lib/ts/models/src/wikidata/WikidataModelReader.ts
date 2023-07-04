@@ -63,7 +63,7 @@ export class WikidataModelReader extends DatasetModelReader {
           })
         );
       } else {
-        console.error("missing Wikidata item", instanceQuad.value);
+        log.error("missing Wikidata item", instanceQuad.value);
       }
     }
     return models;

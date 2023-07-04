@@ -9,7 +9,7 @@ export class LocalStorageWorksheetStateService
     localStorage.removeItem(
       LocalStorageWorksheetStateService.getWorksheetStateItemKey(id)
     );
-    console.debug("deleted worksheet state", id, "from local storage");
+    log.debug("deleted worksheet state", id, "from local storage");
     return new Promise(resolve => resolve());
   }
 
@@ -19,11 +19,11 @@ export class LocalStorageWorksheetStateService
         LocalStorageWorksheetStateService.getWorksheetStateItemKey(id)
       );
       if (jsonString == null) {
-        console.debug("worksheet state", id, "does not exist in local storage");
+        log.debug("worksheet state", id, "does not exist in local storage");
         reject(new NoSuchWorksheetStateException(id));
         return;
       }
-      console.debug("worksheet state", id, "from local storage:", jsonString);
+      log.debug("worksheet state", id, "from local storage:", jsonString);
       resolve(JSON.parse(jsonString));
     });
   }
@@ -53,10 +53,7 @@ export class LocalStorageWorksheetStateService
         )
       );
     }
-    console.debug(
-      "worksheet state id's in local storage:",
-      JSON.stringify(result)
-    );
+    log.debug("worksheet state id's in local storage:", JSON.stringify(result));
     return new Promise(resolve => resolve(result));
   }
 
@@ -71,11 +68,7 @@ export class LocalStorageWorksheetStateService
       LocalStorageWorksheetStateService.getWorksheetStateItemKey(state.id),
       JSON.stringify(state)
     );
-    console.debug(
-      "put worksheet state",
-      JSON.stringify(state),
-      "to local storage"
-    );
+    log.debug("put worksheet state", JSON.stringify(state), "to local storage");
     return new Promise(resolve => resolve());
   }
 
@@ -105,7 +98,7 @@ export class LocalStorageWorksheetStateService
 
       localStorage.removeItem(oldKey);
       localStorage.setItem(newKey, JSON.stringify(value));
-      console.debug(
+      log.debug(
         "renamed worksheet state from",
         oldKey,
         "to",

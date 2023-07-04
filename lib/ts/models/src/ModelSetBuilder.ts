@@ -49,11 +49,11 @@ export class ModelSetBuilder {
     joinSelector?: AgentJoinSelector
   ): ModelSetBuilder {
     if (agent.type === "OtherAgent") {
-      console.debug("ModelSetBuilder: ignoring 'OtherAgent'", agent.key);
+      log.debug("ModelSetBuilder: ignoring 'OtherAgent'", agent.key);
       return this;
     }
 
-    console.debug("ModelSetBuilder: adding agent", agent.key);
+    log.debug("ModelSetBuilder: adding agent", agent.key);
     this.addModel(agent);
 
     if (!joinSelector) {
@@ -101,7 +101,7 @@ export class ModelSetBuilder {
     collection: Collection,
     joinSelector?: CollectionJoinSelector
   ): ModelSetBuilder {
-    console.debug("ModelSetBuilder: adding collection", collection.key);
+    log.debug("ModelSetBuilder: adding collection", collection.key);
     this.addModel(collection);
 
     if (!joinSelector) {
@@ -150,7 +150,7 @@ export class ModelSetBuilder {
       agents?: AgentJoinSelector;
     }
   ): ModelSetBuilder {
-    console.debug("ModelSetBuilder: adding image", image.key);
+    log.debug("ModelSetBuilder: adding image", image.key);
     this.addModel(image);
     if (joinSelector) {
       this.addRights(joinSelector, image);
@@ -159,7 +159,7 @@ export class ModelSetBuilder {
   }
 
   addLicense(license: License): ModelSetBuilder {
-    console.debug("ModelSetBuilder: adding license", license.key);
+    log.debug("ModelSetBuilder: adding license", license.key);
     return this.addModel(license);
   }
 
@@ -187,7 +187,7 @@ export class ModelSetBuilder {
       }
     } else {
       // Otherwise the model is likely a blank node in another model's graph, don't add it
-      // console.debug(
+      // log.debug(
       //   "tried to add a model that belongs to another model's graph:",
       //   model.key
       // );
@@ -290,7 +290,7 @@ export class ModelSetBuilder {
 
   private addRights(joinSelector: RightsJoinSelector, rights: RightsMixin) {
     if (joinSelector.agents) {
-      // console.debug(
+      // log.debug(
       //   "ModelSetBuilder: joining agents to",
       //   (rights as any).constructor
       // );
@@ -330,7 +330,7 @@ export class ModelSetBuilder {
     imagesMixin: ImagesMixin,
     selector: ThumbnailSelector
   ): boolean {
-    console.debug(
+    log.debug(
       "ModelSetBuilder:",
       imagesMixin.images.length,
       "images to select thumbnails from:",
@@ -343,7 +343,7 @@ export class ModelSetBuilder {
       )
     );
     for (const image of imagesMixin.images) {
-      // console.debug(
+      // log.debug(
       //   "ModelSetBuilder: trying to get thumbnail for",
       //   (image as any).constructor,
       //   JSON.stringify({
@@ -354,19 +354,19 @@ export class ModelSetBuilder {
       // );
       const thumbnail = imagesMixin.thumbnail(selector);
       if (thumbnail) {
-        console.debug(
+        log.debug(
           "ModelSetBuilder: adding original image",
           image.key,
           "in order to add thumbnail",
           thumbnail.key
         );
         this.addImage(image); // Add the original image
-        console.debug("ModelSetBuilder: adding thumbnail", thumbnail.key);
+        log.debug("ModelSetBuilder: adding thumbnail", thumbnail.key);
         this.addImage(thumbnail);
         return true;
       }
     }
-    console.debug(
+    log.debug(
       "ModelSetBuilder: no thumbnail found for selector",
       JSON.stringify(selector)
     );
@@ -374,11 +374,11 @@ export class ModelSetBuilder {
   }
 
   addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
-    console.debug("ModelSetBuilder: adding work", work.key);
+    log.debug("ModelSetBuilder: adding work", work.key);
     this.addModel(work);
 
     if (!joinSelector) {
-      // console.debug("ModelSetBuilder: work has no join selector");
+      // log.debug("ModelSetBuilder: work has no join selector");
       return this;
     }
 

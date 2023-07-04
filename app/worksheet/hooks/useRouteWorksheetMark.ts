@@ -8,10 +8,10 @@ export const useRouteWorksheetMark = (kwds: {
   review: boolean;
 }): WorksheetMark | null => {
   if (typeof window === "undefined") {
-    // console.info("window is not defined, returning null route worksheet mark");
+    // log.info("window is not defined, returning null route worksheet mark");
     return null;
   }
-  // console.info("window is defined");
+  // log.info("window is defined");
 
   const {featureSetIri, featureIri, review} = kwds;
 
@@ -36,10 +36,10 @@ export const useRouteWorksheetMark = (kwds: {
     StringParam
   );
   if (!worksheetStateId) {
-    // console.debug("no worksheet state id included in query params");
+    // log.debug("no worksheet state id included in query params");
     return null;
   }
-  console.debug("worksheet state id from query param:", worksheetStateId);
+  log.debug("worksheet state id from query param:", worksheetStateId);
 
   return {
     mode,

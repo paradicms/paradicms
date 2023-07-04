@@ -29,7 +29,7 @@ export const visitFilter = <T>(
             concreteFilter.propertyIri
       ) as StringPropertyValueFacet | undefined;
       if (!facet && facets) {
-        console.warn(
+        log.warn(
           "no matching facet for filter on property",
           concreteFilter.propertyIri
         );

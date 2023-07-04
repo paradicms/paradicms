@@ -7,10 +7,11 @@ export class LocalStorageUserSettingsService implements UserSettingsService {
 
   getUserSettings(userId: string): Promise<UserSettings> {
     return new Promise((resolve, reject) => {
-      const key =
-        LocalStorageUserSettingsService.getUserSettingsItemKey(userId);
+      const key = LocalStorageUserSettingsService.getUserSettingsItemKey(
+        userId
+      );
       const value = localStorage.getItem(key);
-      // console.info("read user settings from key=%s: %s (%s)", key, value);
+      // log.info("read user settings from key=%s: %s (%s)", key, value);
       if (!value) {
         reject(new NoSuchUserSettingsException(userId));
         return;
@@ -34,7 +35,7 @@ export class LocalStorageUserSettingsService implements UserSettingsService {
     );
     const value = JSON.stringify(kwds.userSettings);
     localStorage.setItem(key, value);
-    // console.info("wrote user settings to key=%s, value=%s", key, value);
+    // log.info("wrote user settings to key=%s, value=%s", key, value);
     return Promise.resolve();
   }
 }

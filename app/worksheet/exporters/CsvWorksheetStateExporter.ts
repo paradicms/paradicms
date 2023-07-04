@@ -84,7 +84,7 @@ export class CsvWorksheetStateExporter
 
           const header = featureHeader(featureSetState.uri, featureState.uri);
           if (!header) {
-            console.warn(
+            log.warn(
               "feature set + feature not present in definition? skipping: " +
                 featureSetState.uri +
                 "|" +
@@ -95,7 +95,7 @@ export class CsvWorksheetStateExporter
 
           const dataRowIndex = headerRow.indexOf(header);
           if (dataRowIndex < 0) {
-            console.warn(
+            log.warn(
               "feature set + feature not present in definition? skipping: " +
                 featureSetState.uri +
                 "|" +
@@ -113,7 +113,7 @@ export class CsvWorksheetStateExporter
               featureValueState.uri
             );
             if (!featureValueDefinition) {
-              console.warn(
+              log.warn(
                 "feature value not present in definition? skipping: " +
                   featureValueState.uri
               );

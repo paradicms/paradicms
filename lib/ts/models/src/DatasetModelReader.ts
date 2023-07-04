@@ -24,10 +24,10 @@ export abstract class DatasetModelReader extends PartialModelReader {
         modelGraph
       )}) to equal subject (${RdfString.termToString(modelIdentifier)})`;
       invariant(false, message);
-      // console.warn(message);
+      // log.warn(message);
     }
     // else {
-    //   console.info(
+    //   log.info(
     //     `graph (${RdfString.termToString(
     //       modelGraph
     //     )}) equals subject (${RdfString.termToString(modelNode)})`

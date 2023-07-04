@@ -36,9 +36,9 @@ export const useWorksheetStateService = (kwds: {
   const setWorksheetStateServiceFromUserSettings = (
     userSettings: UserSettings
   ) => {
-    // console.info("setting WorksheetStateService");
+    // log.info("setting WorksheetStateService");
     if (currentUser && userSettings.worksheetConfiguration.state.googleSheets) {
-      console.info("using Google Sheets WorksheetStateService");
+      log.info("using Google Sheets WorksheetStateService");
       dispatch({
         payload: new GoogleSheetsWorksheetStateService({
           accessToken: currentUser.session.accessToken,
@@ -47,7 +47,7 @@ export const useWorksheetStateService = (kwds: {
         }),
       });
     } else if (userSettings.worksheetConfiguration.state.localStorage) {
-      console.info("using localStorage WorksheetStateService");
+      log.info("using localStorage WorksheetStateService");
       dispatch({
         payload: new LocalStorageWorksheetStateService(),
       });
@@ -58,17 +58,17 @@ export const useWorksheetStateService = (kwds: {
 
   useEffect(() => {
     if (state.worksheetStateService) {
-      // console.info("already have worksheetStateService set");
+      // log.info("already have worksheetStateService set");
       return;
     } else if (currentUser) {
-      // console.info("getting user settings");
+      // log.info("getting user settings");
       userSettingsService
         .getUserSettings(currentUser.id)
         .then(setWorksheetStateServiceFromUserSettings, () =>
           setWorksheetStateServiceFromUserSettings(defaultUserSettings)
         );
     } else {
-      console.info("no current user, using default user settings");
+      log.info("no current user, using default user settings");
       setWorksheetStateServiceFromUserSettings(defaultUserSettings);
     }
   }, [currentUser, userSettingsService]);
