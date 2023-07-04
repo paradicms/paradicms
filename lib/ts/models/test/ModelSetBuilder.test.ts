@@ -246,7 +246,7 @@ describe("ModelSetBuilder", () => {
     expect(thumbnails).to.be.empty; // Didn't ask for them
 
     expect(subsetWork.licenses).not.to.be.empty;
-    expect(countModelSetNamedLicenses(workModelSet)).to.eq(2);
+    expect(countModelSetNamedLicenses(workModelSet)).to.eq(3);
 
     expectModelsDeepEq(
       workModelSet.properties,
