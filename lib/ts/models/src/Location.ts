@@ -1,6 +1,7 @@
 import {Model} from "./Model";
+import {Point} from "./Point";
 
 export interface Location extends Model {
-  readonly latitude: number;
-  readonly longitude: number;
+  readonly centroid: Point | null;
+  readonly label: string | null;
 }

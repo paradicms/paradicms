@@ -85,7 +85,6 @@ export class DcPhysicalObject
     );
     if (location) {
       return {
-        label: this.title,
         location,
         role: "Current",
       };
