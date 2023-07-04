@@ -4,6 +4,9 @@ import React from "react";
 import {NextAdapter} from "next-query-params";
 import {QueryParamProvider} from "use-query-params";
 import Script from "next/script";
+import {configureLogging} from "@paradicms/next";
+
+configureLogging();
 
 const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
   return (

@@ -3,6 +3,9 @@ import Head from "next/head";
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
 import "leaflet/dist/leaflet.css";
+import {configureLogging} from "@paradicms/next";
+
+configureLogging();
 
 const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
   return (
