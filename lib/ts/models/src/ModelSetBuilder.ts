@@ -338,19 +338,19 @@ export class ModelSetBuilder {
       )
     );
     for (const image of imagesMixin.images) {
-      console.debug(
-        "ModelSetBuilder: trying to get thumbnail for",
-        (image as any).constructor,
-        JSON.stringify({
-          key: image.key,
-          exactDimensions: image.exactDimensions,
-          maxDimensions: image.maxDimensions,
-        })
-      );
+      // console.debug(
+      //   "ModelSetBuilder: trying to get thumbnail for",
+      //   (image as any).constructor,
+      //   JSON.stringify({
+      //     key: image.key,
+      //     exactDimensions: image.exactDimensions,
+      //     maxDimensions: image.maxDimensions,
+      //   })
+      // );
       const thumbnail = imagesMixin.thumbnail(selector);
       if (thumbnail) {
         console.debug(
-          "adding original image",
+          "ModelSetBuilder: adding original image",
           image.key,
           "in order to add thumbnail",
           thumbnail.key
