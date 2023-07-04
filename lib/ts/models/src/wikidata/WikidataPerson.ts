@@ -13,7 +13,6 @@ export class WikidataPerson extends WikidataModel implements Person {
     return this.findAndMapStatementValue(wdt["P735"], mapTermToString);
   }
 
-  readonly sameAs: readonly Person[] = [];
   readonly type = "Person";
   readonly works: readonly Work[] = [];
 }

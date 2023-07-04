@@ -47,7 +47,12 @@ export abstract class WikidataModel
   }
 
   get creators(): readonly AgentUnion[] {
-    return [];
+    return this.filterAndMapStatements(wdt["P170"], statement => {
+      if (statement.value.termType !== "NamedNode") {
+        return null;
+      }
+      return this.modelSet.agentByIri(statement.value.value);
+    });
   }
 
   protected findAndMapStatement<T>(

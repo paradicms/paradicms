@@ -49,6 +49,7 @@ export class ModelSetBuilder {
     joinSelector?: AgentJoinSelector
   ): ModelSetBuilder {
     if (agent.type === "OtherAgent") {
+      console.debug("ModelSetBuilder: ignoring 'OtherAgent'", agent.key);
       return this;
     }
 
@@ -289,6 +290,10 @@ export class ModelSetBuilder {
 
   private addRights(joinSelector: RightsJoinSelector, rights: RightsMixin) {
     if (joinSelector.agents) {
+      // console.debug(
+      //   "ModelSetBuilder: joining agents to",
+      //   (rights as any).constructor
+      // );
       for (const agents of [
         rights.contributors,
         rights.creators,
@@ -373,6 +378,7 @@ export class ModelSetBuilder {
     this.addModel(work);
 
     if (!joinSelector) {
+      // console.debug("ModelSetBuilder: work has no join selector");
       return this;
     }
 
