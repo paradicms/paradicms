@@ -37,7 +37,7 @@ export const useRouteWorksheetMark = (kwds: {
     StringParam
   );
   if (!worksheetStateId) {
-    // log.debug("no worksheet state id included in query params");
+    log.debug("no worksheet state id included in query params");
     return null;
   }
   log.debug("worksheet state id from query param:", worksheetStateId);
