@@ -18,17 +18,15 @@ class RdfConjunctiveGraphTransformer:
     def __init__(
         self,
         *,
-        root_model_classes_by_name: Optional[
-            Dict[str, Type[ResourceBackedModel]]
-        ] = None,
+        root_model_classes_by_name: Optional[Dict[str, Type[Model]]] = None,
     ):
         self.__logger = logging.getLogger(__name__)
         if root_model_classes_by_name is None:
             root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
-        self.__root_model_classes_by_rdf_type_uri: Dict[
-            URIRef, Type[ResourceBackedModel]
-        ] = {}
+        self.__root_model_classes_by_rdf_type_uri: Dict[URIRef, Type[Model]] = {}
         for root_model_class in root_model_classes_by_name.values():
+            if not issubclass(root_model_class, ResourceBackedModel):
+                continue
             if (
                 root_model_class.rdf_type_uri()
                 in self.__root_model_classes_by_rdf_type_uri
@@ -50,7 +48,7 @@ class RdfConjunctiveGraphTransformer:
                 )
                 continue
 
-            root_model_class: Optional[Type[ResourceBackedModel]] = None
+            root_model_class: Optional[Type[Model]] = None
             for root_model_rdf_type in root_model_rdf_types:
                 if not isinstance(root_model_rdf_type, URIRef):
                     continue

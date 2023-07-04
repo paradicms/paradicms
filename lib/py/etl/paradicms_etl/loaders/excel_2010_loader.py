@@ -1,4 +1,5 @@
 import json
+import logging
 from pathlib import Path
 from types import ModuleType
 from typing import Tuple, List, Optional, Any, Iterable
@@ -42,12 +43,19 @@ class Excel2010Loader:
         additional_namespace_modules: Tuple[ModuleType, ...] = ()
     ):
         self.__additional_namespace_modules = additional_namespace_modules
+        self.__logger = logging.getLogger(__name__)
         self.__xlsx_file_path = xlsx_file_path
         self.__workbook = Workbook()
 
     def __call__(self, *, flush: bool, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
-            assert issubclass(model.__class__, ResourceBackedModel)
+            if not isinstance(model, ResourceBackedModel):
+                self.__logger.warning(
+                    "unable to handle non-%s: %s",
+                    ResourceBackedModel.__name__,
+                    model.__class__.__name__,
+                )
+                continue
 
             try:
                 sheet = self.__workbook.get_sheet_by_name(model.__class__.__name__)
