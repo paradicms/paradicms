@@ -23,6 +23,7 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.skos.skos_concept import SkosConcept
+from paradicms_etl.models.stub.stub_location import StubLocation
 from paradicms_etl.models.stub.stub_person import StubPerson
 from paradicms_etl.models.stub.stub_work import StubWork
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
@@ -48,6 +49,7 @@ __ROOT_MODEL_CLASSES: Tuple[Type[Model], ...] = (
     SchemaProperty,
     SchemaTextObject,
     SkosConcept,
+    StubLocation,
     StubPerson,
     StubWork,
     WikibaseItem,
