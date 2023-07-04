@@ -833,6 +833,11 @@
   dependencies:
     tslib "^2.4.0"
 
+"@terraformer/wkt@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@terraformer/wkt/-/wkt-2.2.0.tgz#3859825bc1bd2a895c30f32878bf4e0dc441a1d3"
+  integrity sha512-i33rTSqPtmO4sRdeznI0IEc9gpIZZIXN5kGhZ4rTwVtDccDKL3h4uia9cmWdRJlJMlG4Febxatw5b9ylI5YYuA==
+
 "@tpluscode/rdf-ns-builders@2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@tpluscode/rdf-ns-builders/-/rdf-ns-builders-2.0.1.tgz#1074666a538f6ea2946bf67dac12da191fd2d928"
@@ -1160,6 +1165,13 @@
   integrity sha512-nmFgmR6ns4i8sg9fYu+293H+PMLKmDOZy34sgwgAeUEEiIqSs4guj5aCZRt3gq1g0yuKXkqrxLDq/684g7pGtQ==
   dependencies:
     rdf-js "^4.0.2"
+
+"@types/terraformer__wkt@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/terraformer__wkt/-/terraformer__wkt-2.0.0.tgz#96218c37e6b7700dc959e41f36abf1e7101f8c66"
+  integrity sha512-RRjXoUNQxTsK/Amg7wfwrB8pqTYhXS1cV+wZsFPTDu0u8qn6gM9KHNayMGOOXNlJRCZSP8toOpr3WK1kd1EUyg==
+  dependencies:
+    "@types/geojson" "*"
 
 "@types/yargs-parser@*":
   version "21.0.0"
