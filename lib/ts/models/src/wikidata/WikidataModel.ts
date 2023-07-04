@@ -14,6 +14,7 @@ import {Memoize} from "typescript-memoize";
 import {wdt} from "@paradicms/vocabularies";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {Mixin} from "ts-mixer";
+import {requireNonNull} from "@paradicms/utilities";
 
 export abstract class WikidataModel
   extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin)
@@ -130,11 +131,10 @@ export abstract class WikidataModel
   }
 
   get licenses(): readonly License[] {
-    return [];
     // All structured data from the main, Property, Lexeme, and EntitySchema namespaces is available under the Creative Commons CC0 License; text in the other namespaces is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.
-    // return this.modelSet.licenseByIri(
-    //   "http://creativecommons.org/licenses/by-sa/3.0/"
-    // );
+    return [requireNonNull(this.modelSet.licenseByIri(
+      "http://creativecommons.org/licenses/by-sa/3.0/"
+    ))];
   }
 
   get requiresAttribution(): boolean {
@@ -146,10 +146,9 @@ export abstract class WikidataModel
   }
 
   get rightsStatements(): readonly RightsStatement[] {
-    return [];
-    // return this.modelSet.rightsStatementByIri(
-    //   "http://rightsstatements.org/vocab/InC/1.0/"
-    // );
+    return [requireNonNull(this.modelSet.rightsStatementByIri(
+      "http://rightsstatements.org/vocab/InC/1.0/"
+    ))];
   }
 
   get statements(): readonly WikibaseStatement[] {
