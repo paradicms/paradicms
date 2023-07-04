@@ -4,7 +4,6 @@ import {ModelSet} from "../ModelSet";
 import {ImagesMixin} from "../ImagesMixin";
 import {Image} from "../Image";
 import {ThumbnailSelector} from "../ThumbnailSelector";
-import {selectThumbnail} from "../selectThumbnail";
 import {NamedModel} from "../NamedModel";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {RightsMixin} from "../RightsMixin";
@@ -164,7 +163,13 @@ export abstract class WikidataModel
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.images, selector);
+    for (const image of this.images) {
+      const thumbnail = image.thumbnail(selector);
+      if (thumbnail) {
+        return thumbnail;
+      }
+    }
+    return null;
   }
 
   override get wikidataConceptIri(): string | null {
