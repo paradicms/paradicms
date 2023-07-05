@@ -328,8 +328,8 @@ class WikibaseItem(ResourceBackedNamedModel):
 
         # Remove non-primary items
         # Statements about these may be added back by to_type_rdf
-        for wikibase_item_subject_uri in context.subjects(
-            predicate=RDF.type, object=WIKIBASE.Item, unique=True
+        for wikibase_item_subject_uri in tuple(
+            context.subjects(predicate=RDF.type, object=WIKIBASE.Item, unique=True)
         ):
             if wikibase_item_subject_uri == self._resource.identifier:
                 continue

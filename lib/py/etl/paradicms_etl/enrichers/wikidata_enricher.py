@@ -46,7 +46,7 @@ class WikidataEnricher:
             for wikidata_entity_uri in referenced_wikidata_entity_uris:
                 if wikidata_entity_uri in yielded_wikidata_entity_uris:
                     continue
-                wikidata_entity = self.__get_wikidata_entity_with_related(
+                wikidata_entity = self.__get_wikidata_entity_with_superclass_tree(
                     wikidata_entity_uri
                 )
                 yield wikidata_entity
@@ -124,7 +124,7 @@ class WikidataEnricher:
             yield SchemaImageObject.builder(uri=image_uri).build()
             yielded_image_uris.add(image_uri)
 
-    def __get_wikidata_entity_with_related(
+    def __get_wikidata_entity_with_superclass_tree(
         self, root_wikidata_entity_uri: URIRef
     ) -> WikibaseItem:
         """
@@ -134,16 +134,17 @@ class WikidataEnricher:
         :return: WikibaseItem corresponding to the given entity id, backed by a Graph with all of its related entities
         """
 
-        related_wikidata_entities_by_uri: Dict[URIRef, WikibaseItem] = {}
+        type_wikidata_entities_by_uri: Dict[URIRef, WikibaseItem] = {}
 
-        def get_related_wikidata_entities(
-            related_property_labels: Tuple[str, ...],
+        def get_type_wikidata_entities(
             resolving_wikidata_entity_uris: Set[URIRef],
+            type_property_labels: Tuple[str, ...],
             wikidata_entity: WikibaseItem,
         ) -> None:
             """
-            Recursive function to resolve related (instance of, subclass of, same as) Wikidata entities.
+            Recursive function to resolve Wikidata entities in the superclass tree of the root Wikidata entity
             :param resolving_wikidata_entity_uris: set of Wikidata entity id's already involved in this resolution, to avoid infinite recursion
+            :param type_property_labels: property labels such as "subclass of" to consider part of the superclass tree
             :param wikidata_entity: resolve Wikidata entities related to this entity
             :return:
             """
@@ -156,45 +157,45 @@ class WikidataEnricher:
                 "resolving Wikidata entities related to %s", wikidata_entity.uri
             )
 
-            for related_property_label in related_property_labels:
-                related_wikidata_entity_uris: Sequence[URIRef]
-                if related_property_label == "same as":
-                    related_wikidata_entity_uris = wikidata_entity.same_as_uris
+            for type_property_label in type_property_labels:
+                type_wikidata_entity_uris: Sequence[URIRef]
+                if type_property_label == "same as":
+                    type_wikidata_entity_uris = wikidata_entity.same_as_uris
                 else:
-                    related_wikidata_entity_uris = []
+                    type_wikidata_entity_uris = []
                     for statement in wikidata_entity.statements_by_property_label.get(
-                        related_property_label, []
+                        type_property_label, []
                     ):
                         assert isinstance(statement.value, URIRef)
-                        related_wikidata_entity_uris.append(statement.value)
+                        type_wikidata_entity_uris.append(statement.value)
 
-                if len(related_wikidata_entity_uris) == 0:
+                if len(type_wikidata_entity_uris) == 0:
                     continue
 
-                for related_wikidata_entity_uri in related_wikidata_entity_uris:
+                for type_wikidata_entity_uri in type_wikidata_entity_uris:
                     self.__logger.debug(
                         "%s %s %s",
                         wikidata_entity.uri,
-                        related_property_label,
-                        related_wikidata_entity_uri,
+                        type_property_label,
+                        type_wikidata_entity_uri,
                     )
-                    related_wikidata_entity = related_wikidata_entities_by_uri.get(
-                        related_wikidata_entity_uri, None
+                    type_wikidata_entity = type_wikidata_entities_by_uri.get(
+                        type_wikidata_entity_uri, None
                     )
-                    if related_wikidata_entity is not None:
-                        self.__logger.debug("related hit", related_wikidata_entity_uri)
+                    if type_wikidata_entity is not None:
+                        self.__logger.debug("related hit", type_wikidata_entity_uri)
                     else:
-                        self.__logger.debug("related miss", related_wikidata_entity_uri)
-                        related_wikidata_entities_by_uri[
-                            related_wikidata_entity_uri
-                        ] = related_wikidata_entity = self.__get_wikidata_entity(
-                            wikidata_entity_uri=related_wikidata_entity_uri
+                        self.__logger.debug("related miss", type_wikidata_entity_uri)
+                        type_wikidata_entities_by_uri[
+                            type_wikidata_entity_uri
+                        ] = type_wikidata_entity = self.__get_wikidata_entity(
+                            wikidata_entity_uri=type_wikidata_entity_uri
                         )
 
-                    get_related_wikidata_entities(
-                        related_property_labels=("same as", "subclass of"),
+                    get_type_wikidata_entities(
+                        type_property_labels=("same as", "subclass of"),
                         resolving_wikidata_entity_uris=resolving_wikidata_entity_uris,
-                        wikidata_entity=related_wikidata_entity,
+                        wikidata_entity=type_wikidata_entity,
                     )
                 # Only consider one type of related entities per resolve
                 # same as
@@ -206,19 +207,17 @@ class WikidataEnricher:
                 return
 
         root_wikidata_entity = self.__get_wikidata_entity(root_wikidata_entity_uri)
-        related_wikidata_entities_by_uri[
-            root_wikidata_entity_uri
-        ] = root_wikidata_entity
+        type_wikidata_entities_by_uri[root_wikidata_entity_uri] = root_wikidata_entity
 
-        get_related_wikidata_entities(
-            related_property_labels=("same as", "subclass of", "instance of"),
+        get_type_wikidata_entities(
             resolving_wikidata_entity_uris=set(),
+            type_property_labels=("same as", "subclass of", "instance of"),
             wikidata_entity=root_wikidata_entity,
         )
 
-        # Combine all the related entities in one graph
+        # Combine the root Wikidata entity and all of its superclass tree statements in one Graph
         combined_graph = Graph()
-        for related_wikidata_entity in related_wikidata_entities_by_uri.values():
+        for related_wikidata_entity in type_wikidata_entities_by_uri.values():
             if related_wikidata_entity.uri == root_wikidata_entity.uri:
                 related_wikidata_entity.to_concise_rdf(graph=combined_graph)
             else:
@@ -226,12 +225,9 @@ class WikidataEnricher:
                     graph=combined_graph,
                     subclass_of_property_uri=WDT["P279"],
                 )
-        combined_wikidata_items = WikibaseItems.from_rdf(
-            graph=combined_graph, uris=tuple(related_wikidata_entities_by_uri.keys())
-        )
-        # Return the root entity backed by the combined graph
-        return next(
-            wikidata_item
-            for wikidata_item in combined_wikidata_items
-            if wikidata_item.uri == root_wikidata_entity.uri
-        )
+        combined_wikidata_items = WikibaseItems.from_rdf(graph=combined_graph)
+        assert (
+            len(combined_wikidata_items) == 1
+        )  # The rdf:type wikibase:Item statements should have been elided from everything but the root Wikidata entity
+        assert combined_wikidata_items[0].uri == root_wikidata_entity_uri
+        return combined_wikidata_items[0]
