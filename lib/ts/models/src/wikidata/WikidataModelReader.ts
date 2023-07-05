@@ -14,7 +14,10 @@ import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
 import log from 'loglevel';
 
 class WikidataEntities {
+  // static readonly BUILDING = wd["Q41176"];
+  static readonly EXHIBITION_HALL = wd["Q57659484"];
   static readonly HUMAN = wd["Q5"];
+  // static readonly LOCATION = wd["Q115095765"];
   static readonly WORK = wd["Q386724"];
 }
 
