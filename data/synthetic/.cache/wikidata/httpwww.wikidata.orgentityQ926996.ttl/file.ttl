@@ -1,0 +1,977 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q926996 a schema:Dataset ;
+	schema:about wd:Q926996 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1792830170"^^xsd:integer ;
+	schema:dateModified "2022-12-19T23:11:16Z"^^xsd:dateTime ;
+	wikibase:statements "14"^^xsd:integer ;
+	wikibase:sitelinks "12"^^xsd:integer ;
+	wikibase:identifiers "7"^^xsd:integer .
+
+wd:Q926996 a wikibase:Item .
+
+<https://es.wikipedia.org/wiki/Primer_axioma_de_numerabilidad> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Primer axioma de numerabilidad"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/First-countable_space> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "First-countable space"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E7%AC%AC%E4%B8%80%E5%8F%AF%E7%AE%97%E7%9A%84%E7%A9%BA%E9%96%93> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "第一可算的空間"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%9F%D0%B5%D1%80%D0%B2%D0%B0%D1%8F_%D0%B0%D0%BA%D1%81%D0%B8%D0%BE%D0%BC%D0%B0_%D1%81%D1%87%D1%91%D1%82%D0%BD%D0%BE%D1%81%D1%82%D0%B8> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Первая аксиома счётности"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%9F%D0%B5%D1%80%D1%88%D0%B0_%D0%B0%D0%BA%D1%81%D1%96%D0%BE%D0%BC%D0%B0_%D0%B7%D0%BB%D1%96%D1%87%D0%B5%D0%BD%D0%BD%D0%BE%D1%81%D1%82%D1%96> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Перша аксіома зліченності"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E7%AC%AC%E4%B8%80%E5%8F%AF%E6%95%B8%E7%A9%BA%E9%96%93> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "第一可數空間"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Espace_%C3%A0_bases_d%C3%A9nombrables_de_voisinages> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Espace à bases dénombrables de voisinages"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Spazio_primo-numerabile> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Spazio primo-numerabile"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EC%A0%9C1_%EA%B0%80%EC%82%B0_%EA%B3%B5%EA%B0%84> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "제1 가산 공간"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Primer_axioma_de_numerabilitat> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Primer axioma de numerabilitat"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/Kh%C3%B4ng_gian_%C4%91%E1%BA%BFm_%C4%91%C6%B0%E1%BB%A3c_b%E1%BA%ADc_nh%E1%BA%A5t> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Không gian đếm được bậc nhất"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://gl.wikipedia.org/wiki/Primeiro_axioma_de_numerabilidade> a schema:Article ;
+	schema:about wd:Q926996 ;
+	schema:inLanguage "gl" ;
+	schema:isPartOf <https://gl.wikipedia.org/> ;
+	schema:name "Primeiro axioma de numerabilidade"@gl .
+
+<https://gl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q926996 wdt:P279 wd:Q179899 ;
+	wdt:P646 "/m/03nkwz" ;
+	wdt:P3827 "first-countable" ;
+	wdt:P2581 "03797197n" ;
+	wdtn:P2581 <http://babelnet.org/rdf/s03797197n> ;
+	wdt:P6366 "118630013" ;
+	wdtn:P6366 <http://ma-graph.org/entity/118630013> ;
+	wdt:P4215 "first-countable space" ;
+	wdt:P2812 "First-CountableSpace" ;
+	wdt:P2534 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\forall x\\in X\\exists {\\mathcal {B}}\\subset {\\mathcal {N}}_{x}\\colon |{\\mathcal {B}}|\\leq \\aleph _{0}\\land \\forall N\\in {\\mathcal {N}}_{x}\\exists B\\in {\\mathcal {B}}\\colon B\\subset N}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi mathvariant=\"normal\">&#x2200;<!-- ∀ --></mi>\n        <mi>x</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mi>X</mi>\n        <mi mathvariant=\"normal\">&#x2203;<!-- ∃ --></mi>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">B</mi>\n          </mrow>\n        </mrow>\n        <mo>&#x2282;<!-- ⊂ --></mo>\n        <msub>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mrow class=\"MJX-TeXAtom-ORD\">\n              <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">N</mi>\n            </mrow>\n          </mrow>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>&#x003A;<!-- : --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mo stretchy=\"false\">|</mo>\n        </mrow>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">B</mi>\n          </mrow>\n        </mrow>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mo stretchy=\"false\">|</mo>\n        </mrow>\n        <mo>&#x2264;<!-- ≤ --></mo>\n        <msub>\n          <mi mathvariant=\"normal\">&#x2135;<!-- ℵ --></mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mn>0</mn>\n          </mrow>\n        </msub>\n        <mo>&#x2227;<!-- ∧ --></mo>\n        <mi mathvariant=\"normal\">&#x2200;<!-- ∀ --></mi>\n        <mi>N</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <msub>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mrow class=\"MJX-TeXAtom-ORD\">\n              <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">N</mi>\n            </mrow>\n          </mrow>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mi mathvariant=\"normal\">&#x2203;<!-- ∃ --></mi>\n        <mi>B</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">B</mi>\n          </mrow>\n        </mrow>\n        <mo>&#x003A;<!-- : --></mo>\n        <mi>B</mi>\n        <mo>&#x2282;<!-- ⊂ --></mo>\n        <mi>N</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\forall x\\in X\\exists {\\mathcal {B}}\\subset {\\mathcal {N}}_{x}\\colon |{\\mathcal {B}}|\\leq \\aleph _{0}\\land \\forall N\\in {\\mathcal {N}}_{x}\\exists B\\in {\\mathcal {B}}\\colon B\\subset N}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	wdt:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle X}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>X</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle X}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML>,
+		"<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle {\\mathcal {N}}_{x}}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <msub>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mrow class=\"MJX-TeXAtom-ORD\">\n              <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">N</mi>\n            </mrow>\n          </mrow>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle {\\mathcal {N}}_{x}}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML>,
+		"<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\aleph _{0}}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <msub>\n          <mi mathvariant=\"normal\">&#x2135;<!-- ℵ --></mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mn>0</mn>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\aleph _{0}}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML>,
+		"<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle N}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>N</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle N}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML>,
+		"<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\land }\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mo>&#x2227;<!-- ∧ --></mo>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\land }</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	wdt:P7554 "First_axiom_of_countability" ;
+	p:P279 s:Q926996-82975ecd-41a2-f5b1-7b1d-a99fa392f6dc .
+
+s:Q926996-82975ecd-41a2-f5b1-7b1d-a99fa392f6dc a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q179899 .
+
+wd:Q926996 p:P646 s:Q926996-1228B35F-5D89-41C3-A822-71C782E016F8 .
+
+s:Q926996-1228B35F-5D89-41C3-A822-71C782E016F8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/03nkwz" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q926996 p:P3827 s:Q926996-E0F14921-026E-4851-92BE-2B4ACBD62C06 .
+
+s:Q926996-E0F14921-026E-4851-92BE-2B4ACBD62C06 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3827 "first-countable" .
+
+wd:Q926996 p:P2581 s:Q926996-77281914-0F36-4324-9A22-C757596C0CD3 .
+
+s:Q926996-77281914-0F36-4324-9A22-C757596C0CD3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2581 "03797197n" ;
+	psn:P2581 <http://babelnet.org/rdf/s03797197n> ;
+	prov:wasDerivedFrom ref:248ac337a217a5f5eed7139a82a4e60931611af0 .
+
+wd:Q926996 p:P6366 s:Q926996-EE36B982-57BC-498D-83FF-029B9EB46B59 .
+
+s:Q926996-EE36B982-57BC-498D-83FF-029B9EB46B59 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "118630013" ;
+	psn:P6366 <http://ma-graph.org/entity/118630013> .
+
+wd:Q926996 p:P4215 s:Q926996-24A75F2A-AE56-4FAB-9D3C-CB29250B349F .
+
+s:Q926996-24A75F2A-AE56-4FAB-9D3C-CB29250B349F a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4215 "first-countable space" .
+
+wd:Q926996 p:P2812 s:Q926996-7FA57C99-93CA-423D-8694-5198DA91920C .
+
+s:Q926996-7FA57C99-93CA-423D-8694-5198DA91920C a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2812 "First-CountableSpace" .
+
+wd:Q926996 p:P2534 s:Q926996-ce613790-4a7e-0992-0378-466c10315ef4 .
+
+s:Q926996-ce613790-4a7e-0992-0378-466c10315ef4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2534 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\forall x\\in X\\exists {\\mathcal {B}}\\subset {\\mathcal {N}}_{x}\\colon |{\\mathcal {B}}|\\leq \\aleph _{0}\\land \\forall N\\in {\\mathcal {N}}_{x}\\exists B\\in {\\mathcal {B}}\\colon B\\subset N}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi mathvariant=\"normal\">&#x2200;<!-- ∀ --></mi>\n        <mi>x</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mi>X</mi>\n        <mi mathvariant=\"normal\">&#x2203;<!-- ∃ --></mi>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">B</mi>\n          </mrow>\n        </mrow>\n        <mo>&#x2282;<!-- ⊂ --></mo>\n        <msub>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mrow class=\"MJX-TeXAtom-ORD\">\n              <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">N</mi>\n            </mrow>\n          </mrow>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>&#x003A;<!-- : --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mo stretchy=\"false\">|</mo>\n        </mrow>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">B</mi>\n          </mrow>\n        </mrow>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mo stretchy=\"false\">|</mo>\n        </mrow>\n        <mo>&#x2264;<!-- ≤ --></mo>\n        <msub>\n          <mi mathvariant=\"normal\">&#x2135;<!-- ℵ --></mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mn>0</mn>\n          </mrow>\n        </msub>\n        <mo>&#x2227;<!-- ∧ --></mo>\n        <mi mathvariant=\"normal\">&#x2200;<!-- ∀ --></mi>\n        <mi>N</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <msub>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mrow class=\"MJX-TeXAtom-ORD\">\n              <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">N</mi>\n            </mrow>\n          </mrow>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mi mathvariant=\"normal\">&#x2203;<!-- ∃ --></mi>\n        <mi>B</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">B</mi>\n          </mrow>\n        </mrow>\n        <mo>&#x003A;<!-- : --></mo>\n        <mi>B</mi>\n        <mo>&#x2282;<!-- ⊂ --></mo>\n        <mi>N</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\forall x\\in X\\exists {\\mathcal {B}}\\subset {\\mathcal {N}}_{x}\\colon |{\\mathcal {B}}|\\leq \\aleph _{0}\\land \\forall N\\in {\\mathcal {N}}_{x}\\exists B\\in {\\mathcal {B}}\\colon B\\subset N}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> .
+
+wd:Q926996 p:P7235 s:Q926996-1401fdbe-4fb3-2125-5cca-baf60ce5bc2d .
+
+s:Q926996-1401fdbe-4fb3-2125-5cca-baf60ce5bc2d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle X}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>X</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle X}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q926996 .
+
+wd:Q926996 p:P7235 s:Q926996-9b734b79-4e49-dbd6-f695-46119e55f912 .
+
+s:Q926996-9b734b79-4e49-dbd6-f695-46119e55f912 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle {\\mathcal {N}}_{x}}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <msub>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mrow class=\"MJX-TeXAtom-ORD\">\n              <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">N</mi>\n            </mrow>\n          </mrow>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle {\\mathcal {N}}_{x}}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q3275652 .
+
+wd:Q926996 p:P7235 s:Q926996-2796ef50-4368-0778-165c-22c98517ee77 .
+
+s:Q926996-2796ef50-4368-0778-165c-22c98517ee77 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\aleph _{0}}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <msub>\n          <mi mathvariant=\"normal\">&#x2135;<!-- ℵ --></mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mn>0</mn>\n          </mrow>\n        </msub>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\aleph _{0}}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q1445491 .
+
+wd:Q926996 p:P7235 s:Q926996-48b28d24-42b8-ab51-ae84-879062401264 .
+
+s:Q926996-48b28d24-42b8-ab51-ae84-879062401264 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle N}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>N</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle N}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q2478475 .
+
+wd:Q926996 p:P7235 s:Q926996-43517f05-4e99-fdda-acaf-b08d3a8b1956 .
+
+s:Q926996-43517f05-4e99-fdda-acaf-b08d3a8b1956 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\land }\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mo>&#x2227;<!-- ∧ --></mo>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\land }</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q191081 .
+
+wd:Q926996 p:P7554 s:Q926996-292f00c2-4c18-9108-d5fb-e66b2340395f .
+
+s:Q926996-292f00c2-4c18-9108-d5fb-e66b2340395f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7554 "First_axiom_of_countability" .
+
+wd:Q926996 rdfs:label "espacio primero numerable"@es ;
+	skos:prefLabel "espacio primero numerable"@es ;
+	schema:name "espacio primero numerable"@es ;
+	rdfs:label "first-countable space"@en ;
+	skos:prefLabel "first-countable space"@en ;
+	schema:name "first-countable space"@en ;
+	rdfs:label "第一可算的空間"@ja ;
+	skos:prefLabel "第一可算的空間"@ja ;
+	schema:name "第一可算的空間"@ja ;
+	rdfs:label "제1 가산 공간"@ko ;
+	skos:prefLabel "제1 가산 공간"@ko ;
+	schema:name "제1 가산 공간"@ko ;
+	rdfs:label "пространство с первой аксиомой счётности"@ru ;
+	skos:prefLabel "пространство с первой аксиомой счётности"@ru ;
+	schema:name "пространство с первой аксиомой счётности"@ru ;
+	rdfs:label "простір з першої аксіомою счетності"@uk ;
+	skos:prefLabel "простір з першої аксіомою счетності"@uk ;
+	schema:name "простір з першої аксіомою счетності"@uk ;
+	rdfs:label "第一可數空間"@zh ;
+	skos:prefLabel "第一可數空間"@zh ;
+	schema:name "第一可數空間"@zh ;
+	rdfs:label "espace à base dénombrable de voisinages"@fr ;
+	skos:prefLabel "espace à base dénombrable de voisinages"@fr ;
+	schema:name "espace à base dénombrable de voisinages"@fr ;
+	rdfs:label "spazio primo-numerabile"@it ;
+	skos:prefLabel "spazio primo-numerabile"@it ;
+	schema:name "spazio primo-numerabile"@it ;
+	rdfs:label "espaço que satisfaz o primeiro axioma de enumerabilidade"@pt ;
+	skos:prefLabel "espaço que satisfaz o primeiro axioma de enumerabilidade"@pt ;
+	schema:name "espaço que satisfaz o primeiro axioma de enumerabilidade"@pt ;
+	rdfs:label "first-coontable space"@sco ;
+	skos:prefLabel "first-coontable space"@sco ;
+	schema:name "first-coontable space"@sco ;
+	rdfs:label "prima axiomă de numărabilitate"@ro ;
+	skos:prefLabel "prima axiomă de numărabilitate"@ro ;
+	schema:name "prima axiomă de numărabilitate"@ro ;
+	rdfs:label "прастора першай аксіёмы лічыльнасьці"@be-tarask ;
+	skos:prefLabel "прастора першай аксіёмы лічыльнасьці"@be-tarask ;
+	schema:name "прастора першай аксіёмы лічыльнасьці"@be-tarask ;
+	rdfs:label "espai primer numerable"@ca ;
+	skos:prefLabel "espai primer numerable"@ca ;
+	schema:name "espai primer numerable"@ca ;
+	rdfs:label "không gian đếm được bậc nhất"@vi ;
+	skos:prefLabel "không gian đếm được bậc nhất"@vi ;
+	schema:name "không gian đếm được bậc nhất"@vi ;
+	rdfs:label "espazo primeiro numerable"@gl ;
+	skos:prefLabel "espazo primeiro numerable"@gl ;
+	schema:name "espazo primeiro numerable"@gl ;
+	rdfs:label "spaco de kalkuleblaj ĉirkaŭaĵaj bazoj"@eo ;
+	skos:prefLabel "spaco de kalkuleblaj ĉirkaŭaĵaj bazoj"@eo ;
+	schema:name "spaco de kalkuleblaj ĉirkaŭaĵaj bazoj"@eo ;
+	schema:description "topological space in which every point admits a countable neighborhood basis"@en,
+		"тапалягічная прастора, якая задавальняе першай аксіёме зьлічанасьці"@be-tarask,
+		"topologia spaco tia, ke ĉe ĉiu punkto ekzistas kalkulebla bazo de ĉirkaŭaĵoj"@eo,
+		"espacio topológico en el que cada punto admite una base de vecindad contable"@es ;
+	skos:altLabel "прастора першай аксіёмы зьлічанасьці"@be-tarask,
+		"першая аксіёма лічыльнасьці"@be-tarask,
+		"першая аксіёма зьлічанасьці"@be-tarask,
+		"первая аксиома счётности"@ru,
+		"перша аксіома зліченності"@uk,
+		"first axiom of countability"@en,
+		"unuamaniere kalkulebla spaco"@eo,
+		"primer axioma de numerabilidad"@es,
+		"espacio primero contable"@es,
+		"primeiro axioma de numerabilidade"@gl,
+		"primer axioma de numerabilitat"@ca,
+		"espai primer contable"@ca,
+		"primeiro axioma de enumerabilidade"@pt .
+
+wd:Q179899 a wikibase:Item ;
+	rdfs:label "topological space"@en ;
+	skos:prefLabel "topological space"@en ;
+	schema:name "topological space"@en ;
+	schema:description "set of points and set of neighborhoods that satisfy axioms relating those points to those neighborhoods"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3827 a wikibase:Property ;
+	rdfs:label "JSTOR topic ID"@en ;
+	skos:prefLabel "JSTOR topic ID"@en ;
+	schema:name "JSTOR topic ID"@en ;
+	schema:description "identifier for a topic at JSTOR"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3827 ;
+	wikibase:claim p:P3827 ;
+	wikibase:statementProperty ps:P3827 ;
+	wikibase:statementValue psv:P3827 ;
+	wikibase:qualifier pq:P3827 ;
+	wikibase:qualifierValue pqv:P3827 ;
+	wikibase:reference pr:P3827 ;
+	wikibase:referenceValue prv:P3827 ;
+	wikibase:novalue wdno:P3827 ;
+	wikibase:directClaimNormalized wdtn:P3827 ;
+	wikibase:statementValueNormalized psn:P3827 ;
+	wikibase:qualifierValueNormalized pqn:P3827 ;
+	wikibase:referenceValueNormalized prn:P3827 .
+
+p:P3827 a owl:ObjectProperty .
+
+psv:P3827 a owl:ObjectProperty .
+
+pqv:P3827 a owl:ObjectProperty .
+
+prv:P3827 a owl:ObjectProperty .
+
+wdt:P3827 a owl:DatatypeProperty .
+
+ps:P3827 a owl:DatatypeProperty .
+
+pq:P3827 a owl:DatatypeProperty .
+
+pr:P3827 a owl:DatatypeProperty .
+
+psn:P3827 a owl:ObjectProperty .
+
+pqn:P3827 a owl:ObjectProperty .
+
+prn:P3827 a owl:ObjectProperty .
+
+wdtn:P3827 a owl:ObjectProperty .
+
+wdno:P3827 a owl:Class ;
+	owl:complementOf _:591354acd9a1c60143190541be6b2d38 .
+
+_:591354acd9a1c60143190541be6b2d38 a owl:Restriction ;
+	owl:onProperty wdt:P3827 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2581 a wikibase:Property ;
+	rdfs:label "BabelNet ID"@en ;
+	skos:prefLabel "BabelNet ID"@en ;
+	schema:name "BabelNet ID"@en ;
+	schema:description "ID in BabelNet encyclopedic dictionary"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2581 ;
+	wikibase:claim p:P2581 ;
+	wikibase:statementProperty ps:P2581 ;
+	wikibase:statementValue psv:P2581 ;
+	wikibase:qualifier pq:P2581 ;
+	wikibase:qualifierValue pqv:P2581 ;
+	wikibase:reference pr:P2581 ;
+	wikibase:referenceValue prv:P2581 ;
+	wikibase:novalue wdno:P2581 ;
+	wikibase:directClaimNormalized wdtn:P2581 ;
+	wikibase:statementValueNormalized psn:P2581 ;
+	wikibase:qualifierValueNormalized pqn:P2581 ;
+	wikibase:referenceValueNormalized prn:P2581 .
+
+p:P2581 a owl:ObjectProperty .
+
+psv:P2581 a owl:ObjectProperty .
+
+pqv:P2581 a owl:ObjectProperty .
+
+prv:P2581 a owl:ObjectProperty .
+
+wdt:P2581 a owl:DatatypeProperty .
+
+ps:P2581 a owl:DatatypeProperty .
+
+pq:P2581 a owl:DatatypeProperty .
+
+pr:P2581 a owl:DatatypeProperty .
+
+psn:P2581 a owl:ObjectProperty .
+
+pqn:P2581 a owl:ObjectProperty .
+
+prn:P2581 a owl:ObjectProperty .
+
+wdtn:P2581 a owl:ObjectProperty .
+
+wdno:P2581 a owl:Class ;
+	owl:complementOf _:bdd44b035df3e72593f3ac1acbd85353 .
+
+_:bdd44b035df3e72593f3ac1acbd85353 a owl:Restriction ;
+	owl:onProperty wdt:P2581 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4215 a wikibase:Property ;
+	rdfs:label "nLab ID"@en ;
+	skos:prefLabel "nLab ID"@en ;
+	schema:name "nLab ID"@en ;
+	schema:description "name of a page in nLab wiki"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4215 ;
+	wikibase:claim p:P4215 ;
+	wikibase:statementProperty ps:P4215 ;
+	wikibase:statementValue psv:P4215 ;
+	wikibase:qualifier pq:P4215 ;
+	wikibase:qualifierValue pqv:P4215 ;
+	wikibase:reference pr:P4215 ;
+	wikibase:referenceValue prv:P4215 ;
+	wikibase:novalue wdno:P4215 ;
+	wikibase:directClaimNormalized wdtn:P4215 ;
+	wikibase:statementValueNormalized psn:P4215 ;
+	wikibase:qualifierValueNormalized pqn:P4215 ;
+	wikibase:referenceValueNormalized prn:P4215 .
+
+p:P4215 a owl:ObjectProperty .
+
+psv:P4215 a owl:ObjectProperty .
+
+pqv:P4215 a owl:ObjectProperty .
+
+prv:P4215 a owl:ObjectProperty .
+
+wdt:P4215 a owl:DatatypeProperty .
+
+ps:P4215 a owl:DatatypeProperty .
+
+pq:P4215 a owl:DatatypeProperty .
+
+pr:P4215 a owl:DatatypeProperty .
+
+psn:P4215 a owl:ObjectProperty .
+
+pqn:P4215 a owl:ObjectProperty .
+
+prn:P4215 a owl:ObjectProperty .
+
+wdtn:P4215 a owl:ObjectProperty .
+
+wdno:P4215 a owl:Class ;
+	owl:complementOf _:f9a1d8b81de5a31700d65a433ccbace3 .
+
+_:f9a1d8b81de5a31700d65a433ccbace3 a owl:Restriction ;
+	owl:onProperty wdt:P4215 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2812 a wikibase:Property ;
+	rdfs:label "MathWorld ID"@en ;
+	skos:prefLabel "MathWorld ID"@en ;
+	schema:name "MathWorld ID"@en ;
+	schema:description "identifier for entries in MathWorld, online mathematics reference work"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2812 ;
+	wikibase:claim p:P2812 ;
+	wikibase:statementProperty ps:P2812 ;
+	wikibase:statementValue psv:P2812 ;
+	wikibase:qualifier pq:P2812 ;
+	wikibase:qualifierValue pqv:P2812 ;
+	wikibase:reference pr:P2812 ;
+	wikibase:referenceValue prv:P2812 ;
+	wikibase:novalue wdno:P2812 ;
+	wikibase:directClaimNormalized wdtn:P2812 ;
+	wikibase:statementValueNormalized psn:P2812 ;
+	wikibase:qualifierValueNormalized pqn:P2812 ;
+	wikibase:referenceValueNormalized prn:P2812 .
+
+p:P2812 a owl:ObjectProperty .
+
+psv:P2812 a owl:ObjectProperty .
+
+pqv:P2812 a owl:ObjectProperty .
+
+prv:P2812 a owl:ObjectProperty .
+
+wdt:P2812 a owl:DatatypeProperty .
+
+ps:P2812 a owl:DatatypeProperty .
+
+pq:P2812 a owl:DatatypeProperty .
+
+pr:P2812 a owl:DatatypeProperty .
+
+psn:P2812 a owl:ObjectProperty .
+
+pqn:P2812 a owl:ObjectProperty .
+
+prn:P2812 a owl:ObjectProperty .
+
+wdtn:P2812 a owl:ObjectProperty .
+
+wdno:P2812 a owl:Class ;
+	owl:complementOf _:fb0f7ab1055ee23989a25d6be40e2991 .
+
+_:fb0f7ab1055ee23989a25d6be40e2991 a owl:Restriction ;
+	owl:onProperty wdt:P2812 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2534 a wikibase:Property ;
+	rdfs:label "defining formula"@en ;
+	skos:prefLabel "defining formula"@en ;
+	schema:name "defining formula"@en ;
+	schema:description "mathematical formula representing a theorem or law. Maximum length: 400 characters"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Math> ;
+	wikibase:directClaim wdt:P2534 ;
+	wikibase:claim p:P2534 ;
+	wikibase:statementProperty ps:P2534 ;
+	wikibase:statementValue psv:P2534 ;
+	wikibase:qualifier pq:P2534 ;
+	wikibase:qualifierValue pqv:P2534 ;
+	wikibase:reference pr:P2534 ;
+	wikibase:referenceValue prv:P2534 ;
+	wikibase:novalue wdno:P2534 .
+
+p:P2534 a owl:ObjectProperty .
+
+psv:P2534 a owl:ObjectProperty .
+
+pqv:P2534 a owl:ObjectProperty .
+
+prv:P2534 a owl:ObjectProperty .
+
+wdt:P2534 a owl:DatatypeProperty .
+
+ps:P2534 a owl:DatatypeProperty .
+
+pq:P2534 a owl:DatatypeProperty .
+
+pr:P2534 a owl:DatatypeProperty .
+
+wdno:P2534 a owl:Class ;
+	owl:complementOf _:56106536cf53d9fe8e74344a86006cd7 .
+
+_:56106536cf53d9fe8e74344a86006cd7 a owl:Restriction ;
+	owl:onProperty wdt:P2534 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7235 a wikibase:Property ;
+	rdfs:label "in defining formula"@en ;
+	skos:prefLabel "in defining formula"@en ;
+	schema:name "in defining formula"@en ;
+	schema:description "any symbol used in the defining formula (P2534)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Math> ;
+	wikibase:directClaim wdt:P7235 ;
+	wikibase:claim p:P7235 ;
+	wikibase:statementProperty ps:P7235 ;
+	wikibase:statementValue psv:P7235 ;
+	wikibase:qualifier pq:P7235 ;
+	wikibase:qualifierValue pqv:P7235 ;
+	wikibase:reference pr:P7235 ;
+	wikibase:referenceValue prv:P7235 ;
+	wikibase:novalue wdno:P7235 .
+
+p:P7235 a owl:ObjectProperty .
+
+psv:P7235 a owl:ObjectProperty .
+
+pqv:P7235 a owl:ObjectProperty .
+
+prv:P7235 a owl:ObjectProperty .
+
+wdt:P7235 a owl:DatatypeProperty .
+
+ps:P7235 a owl:DatatypeProperty .
+
+pq:P7235 a owl:DatatypeProperty .
+
+pr:P7235 a owl:DatatypeProperty .
+
+wdno:P7235 a owl:Class ;
+	owl:complementOf _:6f24f85d4db3906ff01f78d842150d34 .
+
+_:6f24f85d4db3906ff01f78d842150d34 a owl:Restriction ;
+	owl:onProperty wdt:P7235 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7554 a wikibase:Property ;
+	rdfs:label "Encyclopedia of Mathematics wiki ID"@en ;
+	skos:prefLabel "Encyclopedia of Mathematics wiki ID"@en ;
+	schema:name "Encyclopedia of Mathematics wiki ID"@en ;
+	schema:description "identifier for an article on the Encyclopedia of Mathematics wiki"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7554 ;
+	wikibase:claim p:P7554 ;
+	wikibase:statementProperty ps:P7554 ;
+	wikibase:statementValue psv:P7554 ;
+	wikibase:qualifier pq:P7554 ;
+	wikibase:qualifierValue pqv:P7554 ;
+	wikibase:reference pr:P7554 ;
+	wikibase:referenceValue prv:P7554 ;
+	wikibase:novalue wdno:P7554 ;
+	wikibase:directClaimNormalized wdtn:P7554 ;
+	wikibase:statementValueNormalized psn:P7554 ;
+	wikibase:qualifierValueNormalized pqn:P7554 ;
+	wikibase:referenceValueNormalized prn:P7554 .
+
+p:P7554 a owl:ObjectProperty .
+
+psv:P7554 a owl:ObjectProperty .
+
+pqv:P7554 a owl:ObjectProperty .
+
+prv:P7554 a owl:ObjectProperty .
+
+wdt:P7554 a owl:DatatypeProperty .
+
+ps:P7554 a owl:DatatypeProperty .
+
+pq:P7554 a owl:DatatypeProperty .
+
+pr:P7554 a owl:DatatypeProperty .
+
+psn:P7554 a owl:ObjectProperty .
+
+pqn:P7554 a owl:ObjectProperty .
+
+prn:P7554 a owl:ObjectProperty .
+
+wdtn:P7554 a owl:ObjectProperty .
+
+wdno:P7554 a owl:Class ;
+	owl:complementOf _:45abacf62fe6c98d6cfce7d4a036d4de .
+
+_:45abacf62fe6c98d6cfce7d4a036d4de a owl:Restriction ;
+	owl:onProperty wdt:P7554 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4837690 a wikibase:Item ;
+	rdfs:label "BabelNet"@en ;
+	skos:prefLabel "BabelNet"@en ;
+	schema:name "BabelNet"@en ;
+	schema:description "multilingual semantic network and encyclopedic dictionary"@en .
+
+wd:P9758 a wikibase:Property ;
+	rdfs:label "symbol represents"@en ;
+	skos:prefLabel "symbol represents"@en ;
+	schema:name "symbol represents"@en ;
+	schema:description "qualifier for \"in defining formula\" (P7235) which indicates the quantity or operator represented by a symbol in the \"defining formula\" (P2534)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P9758 ;
+	wikibase:claim p:P9758 ;
+	wikibase:statementProperty ps:P9758 ;
+	wikibase:statementValue psv:P9758 ;
+	wikibase:qualifier pq:P9758 ;
+	wikibase:qualifierValue pqv:P9758 ;
+	wikibase:reference pr:P9758 ;
+	wikibase:referenceValue prv:P9758 ;
+	wikibase:novalue wdno:P9758 .
+
+p:P9758 a owl:ObjectProperty .
+
+psv:P9758 a owl:ObjectProperty .
+
+pqv:P9758 a owl:ObjectProperty .
+
+prv:P9758 a owl:ObjectProperty .
+
+wdt:P9758 a owl:ObjectProperty .
+
+ps:P9758 a owl:ObjectProperty .
+
+pq:P9758 a owl:ObjectProperty .
+
+pr:P9758 a owl:ObjectProperty .
+
+wdno:P9758 a owl:Class ;
+	owl:complementOf _:1ad786d2379b76f467f4b82374cd7b0e .
+
+_:1ad786d2379b76f467f4b82374cd7b0e a owl:Restriction ;
+	owl:onProperty wdt:P9758 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q3275652 a wikibase:Item ;
+	rdfs:label "neighborhood system"@en ;
+	skos:prefLabel "neighborhood system"@en ;
+	schema:name "neighborhood system"@en ;
+	schema:description "(for a point x) collection of all neighborhoods for the point x"@en .
+
+wd:Q1445491 a wikibase:Item ;
+	rdfs:label "aleph null"@en ;
+	skos:prefLabel "aleph null"@en ;
+	schema:name "aleph null"@en ;
+	schema:description "cardinal of the set of all natural numbers, and more generally of any well-ordered and countable infinite set"@en .
+
+wd:Q2478475 a wikibase:Item ;
+	rdfs:label "neighborhood"@en ;
+	skos:prefLabel "neighborhood"@en ;
+	schema:name "neighborhood"@en ;
+	schema:description "open set in a topological space that contains a given point or subset"@en .
+
+wd:Q191081 a wikibase:Item ;
+	rdfs:label "logical conjunction"@en ;
+	skos:prefLabel "logical conjunction"@en ;
+	schema:name "logical conjunction"@en ;
+	schema:description "logical connective AND"@en .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:248ac337a217a5f5eed7139a82a4e60931611af0 a wikibase:Reference ;
+	pr:P248 wd:Q4837690 .

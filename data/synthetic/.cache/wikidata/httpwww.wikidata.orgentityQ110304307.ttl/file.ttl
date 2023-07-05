@@ -1,0 +1,214 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q110304307 a schema:Dataset ;
+	schema:about wd:Q110304307 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1909855241"^^xsd:integer ;
+	schema:dateModified "2023-06-07T01:05:39Z"^^xsd:dateTime ;
+	wikibase:statements "3"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q110304307 a wikibase:Item ;
+	wdt:P279 wd:Q4502142,
+		wd:Q118870638 ;
+	wdt:P1557 wd:Q222032 ;
+	p:P279 s:Q110304307-7b1420ca-4194-3e4d-0e68-417ce2d20a17 .
+
+s:Q110304307-7b1420ca-4194-3e4d-0e68-417ce2d20a17 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q4502142 .
+
+wd:Q110304307 p:P279 s:Q110304307-6756c777-4c16-0541-aa12-9cc65ace45b2 .
+
+s:Q110304307-6756c777-4c16-0541-aa12-9cc65ace45b2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q118870638 .
+
+wd:Q110304307 p:P1557 s:Q110304307-b7f2a573-410d-4c6b-e2d5-548b2df7397b .
+
+s:Q110304307-b7f2a573-410d-4c6b-e2d5-548b2df7397b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1557 wd:Q222032 .
+
+wd:Q110304307 rdfs:label "two-dimensional visual artwork"@en ;
+	skos:prefLabel "two-dimensional visual artwork"@en ;
+	schema:name "two-dimensional visual artwork"@en ;
+	rdfs:label "двухмерное произведение визуального искусства"@ru ;
+	skos:prefLabel "двухмерное произведение визуального искусства"@ru ;
+	schema:name "двухмерное произведение визуального искусства"@ru ;
+	rdfs:label "opera d'arte visiva bidimensionale"@it ;
+	skos:prefLabel "opera d'arte visiva bidimensionale"@it ;
+	schema:name "opera d'arte visiva bidimensionale"@it ;
+	rdfs:label "יצירת אמנות חזותית דו-ממדית"@he ;
+	skos:prefLabel "יצירת אמנות חזותית דו-ממדית"@he ;
+	schema:name "יצירת אמנות חזותית דו-ממדית"@he ;
+	rdfs:label "œuvre d'art en deux dimensions"@fr ;
+	skos:prefLabel "œuvre d'art en deux dimensions"@fr ;
+	schema:name "œuvre d'art en deux dimensions"@fr ;
+	rdfs:label "imagen artística bidimensional"@es ;
+	skos:prefLabel "imagen artística bidimensional"@es ;
+	schema:name "imagen artística bidimensional"@es ;
+	rdfs:label "tweedimensionaal visueel kunstwerk"@nl ;
+	skos:prefLabel "tweedimensionaal visueel kunstwerk"@nl ;
+	schema:name "tweedimensionaal visueel kunstwerk"@nl ;
+	rdfs:label "двовимірний візуальний художній твір"@uk ;
+	skos:prefLabel "двовимірний візуальний художній твір"@uk ;
+	schema:name "двовимірний візуальний художній твір"@uk ;
+	rdfs:label "zweidimensionale bildliche Darstellung"@de ;
+	skos:prefLabel "zweidimensionale bildliche Darstellung"@de ;
+	schema:name "zweidimensionale bildliche Darstellung"@de ;
+	rdfs:label "todimensjonalt visuelt kunstverk"@nb ;
+	skos:prefLabel "todimensjonalt visuelt kunstverk"@nb ;
+	schema:name "todimensjonalt visuelt kunstverk"@nb ;
+	rdfs:label "obra d'art visual bidimensional"@ca ;
+	skos:prefLabel "obra d'art visual bidimensional"@ca ;
+	schema:name "obra d'art visual bidimensional"@ca ;
+	rdfs:label "2次元視覚芸術作品"@ja ;
+	skos:prefLabel "2次元視覚芸術作品"@ja ;
+	schema:name "2次元視覚芸術作品"@ja ;
+	rdfs:label "dvodimenzionalno vizualno umetniško delo"@sl ;
+	skos:prefLabel "dvodimenzionalno vizualno umetniško delo"@sl ;
+	schema:name "dvodimenzionalno vizualno umetniško delo"@sl ;
+	schema:description "most paintings, drawings, prints, etc."@en,
+		"la maggior parte dei dipinti, disegni, stampe, ecc."@it,
+		"Unterklasse von überwiegen visuell rezipierten Kunstwerken"@de,
+		"de fleste malerier, tegninger, trykk, osv."@nb,
+		"絵画を始めとする作品"@ja ;
+	skos:altLabel "2d visual artwork"@en,
+		"2-d visual artwork"@en,
+		"2D visual artwork"@en,
+		"todimensjonal visuell kunst"@nb,
+		"2D visuelt kunstverk"@nb,
+		"2D visuell kunst"@nb,
+		"二次元視覚芸術作品"@ja,
+		"2D視覚芸術作品"@ja .
+
+wd:Q4502142 a wikibase:Item ;
+	rdfs:label "visual artwork"@en ;
+	skos:prefLabel "visual artwork"@en ;
+	schema:name "visual artwork"@en ;
+	schema:description "work of art that is primarily visual"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q118870638 a wikibase:Item ;
+	rdfs:label "two-dimensional object"@en ;
+	skos:prefLabel "two-dimensional object"@en ;
+	schema:name "two-dimensional object"@en ;
+	schema:description "object occupying two spatial dimensions"@en .
+
+wd:Q222032 a wikibase:Item ;
+	rdfs:label "two-dimensional space"@en ;
+	skos:prefLabel "two-dimensional space"@en ;
+	schema:name "two-dimensional space"@en ;
+	schema:description "geometric model of the planar projection of the physical universe"@en .
+
+wd:P1557 a wikibase:Property ;
+	rdfs:label "manifestation of"@en ;
+	skos:prefLabel "manifestation of"@en ;
+	schema:name "manifestation of"@en ;
+	schema:description "inherent and characteristic embodiment of a given concept"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1557 ;
+	wikibase:claim p:P1557 ;
+	wikibase:statementProperty ps:P1557 ;
+	wikibase:statementValue psv:P1557 ;
+	wikibase:qualifier pq:P1557 ;
+	wikibase:qualifierValue pqv:P1557 ;
+	wikibase:reference pr:P1557 ;
+	wikibase:referenceValue prv:P1557 ;
+	wikibase:novalue wdno:P1557 .
+
+p:P1557 a owl:ObjectProperty .
+
+psv:P1557 a owl:ObjectProperty .
+
+pqv:P1557 a owl:ObjectProperty .
+
+prv:P1557 a owl:ObjectProperty .
+
+wdt:P1557 a owl:ObjectProperty .
+
+ps:P1557 a owl:ObjectProperty .
+
+pq:P1557 a owl:ObjectProperty .
+
+pr:P1557 a owl:ObjectProperty .
+
+wdno:P1557 a owl:Class ;
+	owl:complementOf _:983903d5dff2219d18c3fcdb5c55e893 .
+
+_:983903d5dff2219d18c3fcdb5c55e893 a owl:Restriction ;
+	owl:onProperty wdt:P1557 ;
+	owl:someValuesFrom owl:Thing .

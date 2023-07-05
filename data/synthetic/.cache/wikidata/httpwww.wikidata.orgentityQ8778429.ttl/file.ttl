@@ -1,0 +1,300 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q8778429 a schema:Dataset ;
+	schema:about wd:Q8778429 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1911594258"^^xsd:integer ;
+	schema:dateModified "2023-06-09T18:09:21Z"^^xsd:dateTime ;
+	wikibase:statements "3"^^xsd:integer ;
+	wikibase:sitelinks "4"^^xsd:integer ;
+	wikibase:identifiers "2"^^xsd:integer .
+
+wd:Q8778429 a wikibase:Item .
+
+<https://en.wikipedia.org/wiki/Sober_space> a schema:Article ;
+	schema:about wd:Q8778429 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Sober space"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Espacio_sobrio> a schema:Article ;
+	schema:about wd:Q8778429 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Espacio sobrio"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EC%B0%A8%EB%B6%84%ED%95%9C_%EA%B3%B5%EA%B0%84> a schema:Article ;
+	schema:about wd:Q8778429 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "차분한 공간"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/N%C3%BCchterner_Raum> a schema:Article ;
+	schema:about wd:Q8778429 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Nüchterner Raum"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q8778429 wdt:P279 wd:Q1148924 ;
+	wdt:P6366 "29778573" ;
+	wdtn:P6366 <http://ma-graph.org/entity/29778573> ;
+	wdt:P646 "/m/02vgx0" ;
+	p:P279 s:Q8778429-38c01baf-4335-73b0-d10e-19d93c9b7889 .
+
+s:Q8778429-38c01baf-4335-73b0-d10e-19d93c9b7889 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1148924 .
+
+wd:Q8778429 p:P6366 s:Q8778429-C9A46630-0F75-4D14-AA71-C258C64A1A18 .
+
+s:Q8778429-C9A46630-0F75-4D14-AA71-C258C64A1A18 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "29778573" ;
+	psn:P6366 <http://ma-graph.org/entity/29778573> .
+
+wd:Q8778429 p:P646 s:Q8778429-D04A86AD-9197-4A2A-8838-856C18EE6462 .
+
+s:Q8778429-D04A86AD-9197-4A2A-8838-856C18EE6462 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/02vgx0" .
+
+wd:Q8778429 rdfs:label "sober space"@en ;
+	skos:prefLabel "sober space"@en ;
+	schema:name "sober space"@en ;
+	rdfs:label "espacio sobrio"@es ;
+	skos:prefLabel "espacio sobrio"@es ;
+	schema:name "espacio sobrio"@es ;
+	rdfs:label "차분한 공간"@ko ;
+	skos:prefLabel "차분한 공간"@ko ;
+	schema:name "차분한 공간"@ko ;
+	rdfs:label "ソーバー空間"@ja ;
+	skos:prefLabel "ソーバー空間"@ja ;
+	schema:name "ソーバー空間"@ja ;
+	rdfs:label "sobra spaco"@eo ;
+	skos:prefLabel "sobra spaco"@eo ;
+	schema:name "sobra spaco"@eo ;
+	rdfs:label "espaço sóbrio"@pt ;
+	skos:prefLabel "espaço sóbrio"@pt ;
+	schema:name "espaço sóbrio"@pt ;
+	rdfs:label "sobert rom"@nn ;
+	skos:prefLabel "sobert rom"@nn ;
+	schema:name "sobert rom"@nn ;
+	rdfs:label "nüchterner Raum"@de ;
+	skos:prefLabel "nüchterner Raum"@de ;
+	schema:name "nüchterner Raum"@de ;
+	rdfs:label "espace sobre"@fr ;
+	skos:prefLabel "espace sobre"@fr ;
+	schema:name "espace sobre"@fr ;
+	rdfs:label "паважная прастора"@be-tarask ;
+	skos:prefLabel "паважная прастора"@be-tarask ;
+	schema:name "паважная прастора"@be-tarask ;
+	rdfs:label "собранное пространство"@ru ;
+	skos:prefLabel "собранное пространство"@ru ;
+	schema:name "собранное пространство"@ru ;
+	rdfs:label "трезвен простор"@mk ;
+	skos:prefLabel "трезвен простор"@mk ;
+	schema:name "трезвен простор"@mk ;
+	rdfs:label "trezni prostor"@sl ;
+	skos:prefLabel "trezni prostor"@sl ;
+	schema:name "trezni prostor"@sl ;
+	schema:description "topological space whose topology is fully captured by its lattice of open sets"@en,
+		"topologia spaco, kies topologio estas plene priskribita de ĝia latiso de malfermitaj subaroj"@eo,
+		"тапалягічная прастора, тапалёгія якой цалкам захопленая ейнай кратай адкрытых набораў"@be-tarask,
+		"топологическое пространство, каждое гиперсвязное замкнутое подмножество которого является замыканием одной точки"@ru,
+		"Art von Raum"@de,
+		"type d'espace"@fr,
+		"tipo di spazio T0"@it,
+		"espacio topológico cuya topología está completamente capturada por su red de conjuntos abiertos"@es ;
+	skos:altLabel "Sober 空間"@ja,
+		"穏健空間"@ja,
+		"sobra topologia spaco"@eo,
+		"sober topological space"@en,
+		"espaço topológico sóbrio"@pt .
+
+wd:Q1148924 a wikibase:Item ;
+	rdfs:label "Kolmogorov space"@en ;
+	skos:prefLabel "Kolmogorov space"@en ;
+	schema:name "Kolmogorov space"@en ;
+	schema:description "concept in topology"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .

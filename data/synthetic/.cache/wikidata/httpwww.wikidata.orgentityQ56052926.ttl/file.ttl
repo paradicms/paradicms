@@ -1,0 +1,417 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q56052926 a schema:Dataset ;
+	schema:about wd:Q56052926 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1910273770"^^xsd:integer ;
+	schema:dateModified "2023-06-07T15:21:12Z"^^xsd:dateTime ;
+	wikibase:statements "7"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "2"^^xsd:integer .
+
+wd:Q56052926 a wikibase:Item ;
+	wdt:P1014 "300072553" ;
+	wdtn:P1014 <http://vocab.getty.edu/aat/300072553> ;
+	wdt:P279 wd:Q17334923,
+		wd:Q15989253 ;
+	wdt:P460 wd:Q391414,
+		wd:Q4444145 ;
+	wdt:P8519 "63101" ;
+	wdtn:P8519 <https://data.rkd.nl/thesau/63101> ;
+	wdt:P361 wd:Q41176 ;
+	p:P1014 s:Q56052926-4ac046e7-4972-d2ca-d19e-7bb5bdc480f5 .
+
+s:Q56052926-4ac046e7-4972-d2ca-d19e-7bb5bdc480f5 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1014 "300072553" ;
+	psn:P1014 <http://vocab.getty.edu/aat/300072553> .
+
+wd:Q56052926 p:P279 s:Q56052926-EE4CEEEA-3273-4D1D-BCA8-614284B165DC .
+
+s:Q56052926-EE4CEEEA-3273-4D1D-BCA8-614284B165DC a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q17334923 .
+
+wd:Q56052926 p:P279 s:Q56052926-299D033F-5B6E-4075-A756-054930D0CE97 .
+
+s:Q56052926-299D033F-5B6E-4075-A756-054930D0CE97 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q15989253 .
+
+wd:Q56052926 p:P460 s:Q56052926-20c19369-412c-8cbc-cebf-f9e6eaaae35f .
+
+s:Q56052926-20c19369-412c-8cbc-cebf-f9e6eaaae35f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q391414 .
+
+wd:Q56052926 p:P460 s:Q56052926-087b60cf-4bd5-4715-6263-e3dcbd1ca8b0 .
+
+s:Q56052926-087b60cf-4bd5-4715-6263-e3dcbd1ca8b0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q4444145 .
+
+wd:Q56052926 p:P8519 s:Q56052926-1a92b68b-d8c3-4cef-806c-d0b7f07bbbc7 .
+
+s:Q56052926-1a92b68b-d8c3-4cef-806c-d0b7f07bbbc7 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8519 "63101" ;
+	psn:P8519 <https://data.rkd.nl/thesau/63101> .
+
+wd:Q56052926 p:P361 s:Q56052926-050ef067-4515-4eaf-fe33-a54d5f0ea950 .
+
+s:Q56052926-050ef067-4515-4eaf-fe33-a54d5f0ea950 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q41176 .
+
+wd:Q56052926 rdfs:label "building division"@en ;
+	skos:prefLabel "building division"@en ;
+	schema:name "building division"@en ;
+	rdfs:label "Gebäudeelement"@de ;
+	skos:prefLabel "Gebäudeelement"@de ;
+	schema:name "Gebäudeelement"@de ;
+	rdfs:label "division de construcción"@es ;
+	skos:prefLabel "division de construcción"@es ;
+	schema:name "division de construcción"@es ;
+	rdfs:label "gebouwelement"@nl ;
+	skos:prefLabel "gebouwelement"@nl ;
+	schema:name "gebouwelement"@nl ;
+	rdfs:label "divisió de construcció"@ca ;
+	skos:prefLabel "divisió de construcció"@ca ;
+	schema:name "divisió de construcció"@ca ;
+	rdfs:label "аддзяленьне будынку"@be-tarask ;
+	skos:prefLabel "аддзяленьне будынку"@be-tarask ;
+	schema:name "аддзяленьне будынку"@be-tarask ;
+	rdfs:label "împărțire a unei clădiri"@ro ;
+	skos:prefLabel "împărțire a unei clădiri"@ro ;
+	schema:name "împărțire a unei clădiri"@ro ;
+	rdfs:label "část budovy"@cs ;
+	skos:prefLabel "část budovy"@cs ;
+	schema:name "část budovy"@cs ;
+	rdfs:label "del av byggnad"@sv ;
+	skos:prefLabel "del av byggnad"@sv ;
+	schema:name "del av byggnad"@sv ;
+	rdfs:label "podział budynku"@pl ;
+	skos:prefLabel "podział budynku"@pl ;
+	schema:name "podział budynku"@pl ;
+	rdfs:label "yapı bölümü"@tr ;
+	skos:prefLabel "yapı bölümü"@tr ;
+	schema:name "yapı bölümü"@tr ;
+	rdfs:label "dźěl twarjenja"@hsb ;
+	skos:prefLabel "dźěl twarjenja"@hsb ;
+	schema:name "dźěl twarjenja"@hsb ;
+	rdfs:label "ڤمبهاݢين باڠونن"@ms-arab ;
+	skos:prefLabel "ڤمبهاݢين باڠونن"@ms-arab ;
+	schema:name "ڤمبهاݢين باڠونن"@ms-arab ;
+	rdfs:label "pembahagian bangunan"@ms ;
+	skos:prefLabel "pembahagian bangunan"@ms ;
+	schema:name "pembahagian bangunan"@ms ;
+	rdfs:label "divizion de costrusion"@vec ;
+	skos:prefLabel "divizion de costrusion"@vec ;
+	schema:name "divizion de costrusion"@vec ;
+	rdfs:label "divisione edilizia"@it ;
+	skos:prefLabel "divisione edilizia"@it ;
+	schema:name "divisione edilizia"@it ;
+	rdfs:label "épületelem"@hu ;
+	skos:prefLabel "épületelem"@hu ;
+	schema:name "épületelem"@hu ;
+	rdfs:label "отдел здания"@ru ;
+	skos:prefLabel "отдел здания"@ru ;
+	schema:name "отдел здания"@ru ;
+	rdfs:label "stavbni element"@sl ;
+	skos:prefLabel "stavbni element"@sl ;
+	schema:name "stavbni element"@sl ;
+	schema:description "element developed originally or primarily as portions of architecture, often adapted to other habitable spaces, such as in large vehicles, and often borrowed or imitated for structural or decorative use on other objects"@en,
+		"element desenvolupat originalment o principalment com a porcions d'arquitectura, sovint adaptat a altres espais habitables"@ca,
+		"архітэктурны элемэнт"@be-tarask,
+		"till exempel en flygel"@sv,
+		"element utworzony jako fragment architektury, często dostosowany do przestrzeni mieszkalnej"@pl,
+		"başlangıçta veya öncelikli olarak mimarinin bölümleri olarak geliştirilen, genellikle büyük araçlar gibi diğer yaşanabilir alanlara uyarlanan ve diğer nesnelerde yapısal veya dekoratif kullanım için ödünç alınan veya taklit edilen eleman"@tr ;
+	skos:altLabel "element twarjenja"@hsb,
+		"épületrész"@hu,
+		"часть здания"@ru .
+
+wd:P1014 a wikibase:Property ;
+	rdfs:label "Art & Architecture Thesaurus ID"@en ;
+	skos:prefLabel "Art & Architecture Thesaurus ID"@en ;
+	schema:name "Art & Architecture Thesaurus ID"@en ;
+	schema:description "identifier in the Art & Architecture Thesaurus by the Getty Research Institute"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1014 ;
+	wikibase:claim p:P1014 ;
+	wikibase:statementProperty ps:P1014 ;
+	wikibase:statementValue psv:P1014 ;
+	wikibase:qualifier pq:P1014 ;
+	wikibase:qualifierValue pqv:P1014 ;
+	wikibase:reference pr:P1014 ;
+	wikibase:referenceValue prv:P1014 ;
+	wikibase:novalue wdno:P1014 ;
+	wikibase:directClaimNormalized wdtn:P1014 ;
+	wikibase:statementValueNormalized psn:P1014 ;
+	wikibase:qualifierValueNormalized pqn:P1014 ;
+	wikibase:referenceValueNormalized prn:P1014 .
+
+p:P1014 a owl:ObjectProperty .
+
+psv:P1014 a owl:ObjectProperty .
+
+pqv:P1014 a owl:ObjectProperty .
+
+prv:P1014 a owl:ObjectProperty .
+
+wdt:P1014 a owl:DatatypeProperty .
+
+ps:P1014 a owl:DatatypeProperty .
+
+pq:P1014 a owl:DatatypeProperty .
+
+pr:P1014 a owl:DatatypeProperty .
+
+psn:P1014 a owl:ObjectProperty .
+
+pqn:P1014 a owl:ObjectProperty .
+
+prn:P1014 a owl:ObjectProperty .
+
+wdtn:P1014 a owl:ObjectProperty .
+
+wdno:P1014 a owl:Class ;
+	owl:complementOf _:b3313e8714e8603bc734ad31fe890277 .
+
+_:b3313e8714e8603bc734ad31fe890277 a owl:Restriction ;
+	owl:onProperty wdt:P1014 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q17334923 a wikibase:Item ;
+	rdfs:label "physical location"@en ;
+	skos:prefLabel "physical location"@en ;
+	schema:name "physical location"@en ;
+	schema:description "position of something in space"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15989253 a wikibase:Item ;
+	rdfs:label "part"@en ;
+	skos:prefLabel "part"@en ;
+	schema:name "part"@en ;
+	schema:description "separate element of a larger entity"@en .
+
+wd:Q391414 a wikibase:Item ;
+	rdfs:label "architectural element"@en ;
+	skos:prefLabel "architectural element"@en ;
+	schema:name "architectural element"@en ;
+	schema:description "forms primarily as components of architecture"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4444145 a wikibase:Item ;
+	rdfs:label "building block"@en ;
+	skos:prefLabel "building block"@en ;
+	schema:name "building block"@en ;
+	schema:description "a basic unit from which a construction is built up"@en .
+
+wd:P8519 a wikibase:Property ;
+	rdfs:label "RKD thesaurus ID"@en ;
+	skos:prefLabel "RKD thesaurus ID"@en ;
+	schema:name "RKD thesaurus ID"@en ;
+	schema:description "identifier in the RKD thesaurus (Rijksbureau voor Kunsthistorische Documentatie)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8519 ;
+	wikibase:claim p:P8519 ;
+	wikibase:statementProperty ps:P8519 ;
+	wikibase:statementValue psv:P8519 ;
+	wikibase:qualifier pq:P8519 ;
+	wikibase:qualifierValue pqv:P8519 ;
+	wikibase:reference pr:P8519 ;
+	wikibase:referenceValue prv:P8519 ;
+	wikibase:novalue wdno:P8519 ;
+	wikibase:directClaimNormalized wdtn:P8519 ;
+	wikibase:statementValueNormalized psn:P8519 ;
+	wikibase:qualifierValueNormalized pqn:P8519 ;
+	wikibase:referenceValueNormalized prn:P8519 .
+
+p:P8519 a owl:ObjectProperty .
+
+psv:P8519 a owl:ObjectProperty .
+
+pqv:P8519 a owl:ObjectProperty .
+
+prv:P8519 a owl:ObjectProperty .
+
+wdt:P8519 a owl:DatatypeProperty .
+
+ps:P8519 a owl:DatatypeProperty .
+
+pq:P8519 a owl:DatatypeProperty .
+
+pr:P8519 a owl:DatatypeProperty .
+
+psn:P8519 a owl:ObjectProperty .
+
+pqn:P8519 a owl:ObjectProperty .
+
+prn:P8519 a owl:ObjectProperty .
+
+wdtn:P8519 a owl:ObjectProperty .
+
+wdno:P8519 a owl:Class ;
+	owl:complementOf _:da548e7f1dbb9a9772003bef26820301 .
+
+_:da548e7f1dbb9a9772003bef26820301 a owl:Restriction ;
+	owl:onProperty wdt:P8519 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q41176 a wikibase:Item ;
+	rdfs:label "building"@en ;
+	skos:prefLabel "building"@en ;
+	schema:name "building"@en ;
+	schema:description "structure, typically with a roof and walls, standing more or less permanently in one place"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .

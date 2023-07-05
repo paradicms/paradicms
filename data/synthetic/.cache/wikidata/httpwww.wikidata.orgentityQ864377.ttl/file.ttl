@@ -1,0 +1,1404 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q864377 a schema:Dataset ;
+	schema:about wd:Q864377 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1878568225"^^xsd:integer ;
+	schema:dateModified "2023-04-19T17:37:13Z"^^xsd:dateTime ;
+	wikibase:statements "15"^^xsd:integer ;
+	wikibase:sitelinks "25"^^xsd:integer ;
+	wikibase:identifiers "8"^^xsd:integer .
+
+wd:Q864377 a wikibase:Item .
+
+<https://en.wikipedia.org/wiki/Multiset> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Multiset"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Multimenge> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Multimenge"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Multiensemble> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Multiensemble"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Multiconjunto> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Multiconjunto"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BC%D0%BD%D0%BE%D0%B6%D0%B5%D1%81%D1%82%D0%B2%D0%BE> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Мультимножество"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Multiinsieme> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Multiinsieme"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E5%A4%9A%E9%87%8D%E9%9B%86%E5%90%88> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "多重集合"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Multiset> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Multiset"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Multizbi%C3%B3r> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Multizbiór"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pt.wikipedia.org/wiki/Multiconjunto> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Multiconjunto"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E5%A4%9A%E9%87%8D%E9%9B%86> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "多重集"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Multim%C3%A4ngd> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Multimängd"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%DA%86%D9%86%D8%AF%D9%85%D8%AC%D9%85%D9%88%D8%B9%D9%87> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "چندمجموعه"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BC%D0%BD%D0%BE%D0%B6%D0%B8%D0%BD%D0%B0> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Мультимножина"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Multiconjunt> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Multiconjunt"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/Multimno%C5%BEina> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Multimnožina"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ro.wikipedia.org/wiki/Multimul%C8%9Bime> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "ro" ;
+	schema:isPartOf <https://ro.wikipedia.org/> ;
+	schema:name "Multimulțime"@ro .
+
+<https://ro.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://simple.wikipedia.org/wiki/Multiset> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "en-simple" ;
+	schema:isPartOf <https://simple.wikipedia.org/> ;
+	schema:name "Multiset"@en-simple .
+
+<https://simple.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eo.wikipedia.org/wiki/Multaro> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "eo" ;
+	schema:isPartOf <https://eo.wikipedia.org/> ;
+	schema:name "Multaro"@eo .
+
+<https://eo.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eu.wikipedia.org/wiki/Multimultzo> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "eu" ;
+	schema:isPartOf <https://eu.wikipedia.org/> ;
+	schema:name "Multimultzo"@eu .
+
+<https://eu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sl.wikipedia.org/wiki/Ve%C4%8Dkratna_mno%C5%BEica> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "sl" ;
+	schema:isPartOf <https://sl.wikipedia.org/> ;
+	schema:name "Večkratna množica"@sl .
+
+<https://sl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EC%A4%91%EB%B3%B5%EC%A7%91%ED%95%A9> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "중복집합"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/%C3%87okluk%C3%BCme> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Çokluküme"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ta.wikipedia.org/wiki/%E0%AE%AA%E0%AE%B2%E0%AF%8D%E0%AE%95%E0%AE%A3%E0%AE%AE%E0%AF%8D> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "ta" ;
+	schema:isPartOf <https://ta.wikipedia.org/> ;
+	schema:name "பல்கணம்"@ta .
+
+<https://ta.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh-yue.wikipedia.org/wiki/%E5%A4%9A%E9%87%8D%E9%9B%86> a schema:Article ;
+	schema:about wd:Q864377 ;
+	schema:inLanguage "yue" ;
+	schema:isPartOf <https://zh-yue.wikipedia.org/> ;
+	schema:name "多重集"@yue .
+
+<https://zh-yue.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q864377 wdt:P279 wd:Q246672 ;
+	wdt:P646 "/m/01sfhm" ;
+	wdt:P1482 <https://stackoverflow.com/tags/multiset> ;
+	wdt:P2534 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle M=(A,m);m\\colon A\\to \\mathbb {N} }\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>M</mi>\n        <mo>=</mo>\n        <mo stretchy=\"false\">(</mo>\n        <mi>A</mi>\n        <mo>,</mo>\n        <mi>m</mi>\n        <mo stretchy=\"false\">)</mo>\n        <mo>;</mo>\n        <mi>m</mi>\n        <mo>&#x003A;<!-- : --></mo>\n        <mi>A</mi>\n        <mo stretchy=\"false\">&#x2192;<!-- → --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mi mathvariant=\"double-struck\">N</mi>\n        </mrow>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle M=(A,m);m\\colon A\\to \\mathbb {N} }</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	wdt:P3417 "Multiset" ;
+	wdt:P3827 "multisets" ;
+	wdt:P6366 "2779623528" ;
+	wdtn:P6366 <http://ma-graph.org/entity/2779623528> ;
+	wdt:P1552 wd:Q2228257 ;
+	wdt:P4215 "multiset" ;
+	wdt:P5106 "multiset" ;
+	wdt:P10283 "C2779623528" ;
+	wdt:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle M}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>M</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle M}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML>,
+		"<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle A}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>A</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle A}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML>,
+		"<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle m}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>m</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle m}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	wdt:P2812 "Multiset" ;
+	p:P279 s:Q864377-6ace25bd-41ee-1b8f-c3bf-ef4df282f964 .
+
+s:Q864377-6ace25bd-41ee-1b8f-c3bf-ef4df282f964 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q246672 .
+
+wd:Q864377 p:P646 s:Q864377-5CB10694-F55A-4AFA-A691-45518F441840 .
+
+s:Q864377-5CB10694-F55A-4AFA-A691-45518F441840 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/01sfhm" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q864377 p:P1482 s:Q864377-496AAEB9-B0E9-457C-A5BF-14C7C6487574 .
+
+s:Q864377-496AAEB9-B0E9-457C-A5BF-14C7C6487574 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1482 <https://stackoverflow.com/tags/multiset> .
+
+wd:Q864377 p:P2534 s:Q864377-324BE2EC-9C90-4BD2-AE7E-C6C3F407159E .
+
+s:Q864377-324BE2EC-9C90-4BD2-AE7E-C6C3F407159E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2534 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle M=(A,m);m\\colon A\\to \\mathbb {N} }\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>M</mi>\n        <mo>=</mo>\n        <mo stretchy=\"false\">(</mo>\n        <mi>A</mi>\n        <mo>,</mo>\n        <mi>m</mi>\n        <mo stretchy=\"false\">)</mo>\n        <mo>;</mo>\n        <mi>m</mi>\n        <mo>&#x003A;<!-- : --></mo>\n        <mi>A</mi>\n        <mo stretchy=\"false\">&#x2192;<!-- → --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mi mathvariant=\"double-struck\">N</mi>\n        </mrow>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle M=(A,m);m\\colon A\\to \\mathbb {N} }</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	prov:wasDerivedFrom ref:fa278ebfc458360e5aed63d5058cca83c46134f1 .
+
+wd:Q864377 p:P3417 s:Q864377-94E6147E-0249-4FBE-A201-45617F1BCD9B .
+
+s:Q864377-94E6147E-0249-4FBE-A201-45617F1BCD9B a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3417 "Multiset" ;
+	prov:wasDerivedFrom ref:3b0a5bb3c1f955edce73740124f7d935698092ad .
+
+wd:Q864377 p:P3827 s:Q864377-E7CC797B-55DF-498B-8000-7B33ADEC23EF .
+
+s:Q864377-E7CC797B-55DF-498B-8000-7B33ADEC23EF a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3827 "multisets" .
+
+wd:Q864377 p:P6366 s:Q864377-A81D9A2B-42D4-439D-8387-0FD7F53D7BBA .
+
+s:Q864377-A81D9A2B-42D4-439D-8387-0FD7F53D7BBA a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "2779623528" ;
+	psn:P6366 <http://ma-graph.org/entity/2779623528> .
+
+wd:Q864377 p:P1552 s:Q864377-3455a2ea-428e-6298-3f34-6e85b7a2c400 .
+
+s:Q864377-3455a2ea-428e-6298-3f34-6e85b7a2c400 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q2228257 .
+
+wd:Q864377 p:P4215 s:Q864377-7B8A7AB1-A068-48EB-8150-F77A9D44F086 .
+
+s:Q864377-7B8A7AB1-A068-48EB-8150-F77A9D44F086 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4215 "multiset" .
+
+wd:Q864377 p:P5106 s:Q864377-0BA6C294-5DCA-4F74-9C35-66E187D0B91D .
+
+s:Q864377-0BA6C294-5DCA-4F74-9C35-66E187D0B91D a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P5106 "multiset" .
+
+wd:Q864377 p:P10283 s:Q864377-4EC40D44-E05B-443C-8664-0A890BD19061 .
+
+s:Q864377-4EC40D44-E05B-443C-8664-0A890BD19061 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10283 "C2779623528" ;
+	prov:wasDerivedFrom ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 .
+
+wd:Q864377 p:P7235 s:Q864377-2a0349f1-4729-1b02-c199-a602e1b9335e .
+
+s:Q864377-2a0349f1-4729-1b02-c199-a602e1b9335e a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle M}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>M</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle M}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q864377 .
+
+wd:Q864377 p:P7235 s:Q864377-9eadeafb-44c3-606c-8089-6259838578c0 .
+
+s:Q864377-9eadeafb-44c3-606c-8089-6259838578c0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle A}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>A</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle A}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q36161 .
+
+wd:Q864377 p:P7235 s:Q864377-ba3d7b89-44a7-4857-8bd9-7568506c0955 .
+
+s:Q864377-ba3d7b89-44a7-4857-8bd9-7568506c0955 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7235 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle m}\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi>m</mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle m}</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	pq:P9758 wd:Q19856468 .
+
+wd:Q864377 p:P2812 s:Q864377-EFBF7943-6D2C-447F-A59C-53364926E21B .
+
+s:Q864377-EFBF7943-6D2C-447F-A59C-53364926E21B a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2812 "Multiset" .
+
+wd:Q864377 rdfs:label "multiconjunto"@pt ;
+	skos:prefLabel "multiconjunto"@pt ;
+	schema:name "multiconjunto"@pt ;
+	rdfs:label "多重集"@zh-hans ;
+	skos:prefLabel "多重集"@zh-hans ;
+	schema:name "多重集"@zh-hans ;
+	rdfs:label "多重集"@zh-hant ;
+	skos:prefLabel "多重集"@zh-hant ;
+	schema:name "多重集"@zh-hant ;
+	rdfs:label "多重集"@zh-hk ;
+	skos:prefLabel "多重集"@zh-hk ;
+	schema:name "多重集"@zh-hk ;
+	rdfs:label "Multaro"@eo ;
+	skos:prefLabel "Multaro"@eo ;
+	schema:name "Multaro"@eo ;
+	rdfs:label "multizbiór"@pl ;
+	skos:prefLabel "multizbiór"@pl ;
+	schema:name "multizbiór"@pl ;
+	rdfs:label "мультимножество"@ru ;
+	skos:prefLabel "мультимножество"@ru ;
+	schema:name "мультимножество"@ru ;
+	rdfs:label "multiensemble"@fr ;
+	skos:prefLabel "multiensemble"@fr ;
+	schema:name "multiensemble"@fr ;
+	rdfs:label "중복집합"@ko ;
+	skos:prefLabel "중복집합"@ko ;
+	schema:name "중복집합"@ko ;
+	rdfs:label "multiset"@en ;
+	skos:prefLabel "multiset"@en ;
+	schema:name "multiset"@en ;
+	rdfs:label "multiconjunto"@es ;
+	skos:prefLabel "multiconjunto"@es ;
+	schema:name "multiconjunto"@es ;
+	rdfs:label "Multimulțime"@ro ;
+	skos:prefLabel "Multimulțime"@ro ;
+	schema:name "Multimulțime"@ro ;
+	rdfs:label "multiconjunt"@ca ;
+	skos:prefLabel "multiconjunt"@ca ;
+	schema:name "multiconjunt"@ca ;
+	rdfs:label "мультимножина"@uk ;
+	skos:prefLabel "мультимножина"@uk ;
+	schema:name "мультимножина"@uk ;
+	rdfs:label "multiinsieme"@it ;
+	skos:prefLabel "multiinsieme"@it ;
+	schema:name "multiinsieme"@it ;
+	rdfs:label "Multimenge"@de ;
+	skos:prefLabel "Multimenge"@de ;
+	schema:name "Multimenge"@de ;
+	rdfs:label "多重集合"@ja ;
+	skos:prefLabel "多重集合"@ja ;
+	schema:name "多重集合"@ja ;
+	rdfs:label "Večkratna množica"@sl ;
+	skos:prefLabel "Večkratna množica"@sl ;
+	schema:name "Večkratna množica"@sl ;
+	rdfs:label "multimnožina"@cs ;
+	skos:prefLabel "multimnožina"@cs ;
+	schema:name "multimnožina"@cs ;
+	rdfs:label "multiset"@nl ;
+	skos:prefLabel "multiset"@nl ;
+	schema:name "multiset"@nl ;
+	rdfs:label "multimängd"@sv ;
+	skos:prefLabel "multimängd"@sv ;
+	schema:name "multimängd"@sv ;
+	rdfs:label "多重集"@zh ;
+	skos:prefLabel "多重集"@zh ;
+	schema:name "多重集"@zh ;
+	rdfs:label "Multimultzo"@eu ;
+	skos:prefLabel "Multimultzo"@eu ;
+	schema:name "Multimultzo"@eu ;
+	rdfs:label "چندمجموعه"@fa ;
+	skos:prefLabel "چندمجموعه"@fa ;
+	schema:name "چندمجموعه"@fa ;
+	rdfs:label "multihalmaz"@hu ;
+	skos:prefLabel "multihalmaz"@hu ;
+	schema:name "multihalmaz"@hu ;
+	rdfs:label "Çokluküme"@tr ;
+	skos:prefLabel "Çokluküme"@tr ;
+	schema:name "Çokluküme"@tr ;
+	rdfs:label "multiconxunto"@gl ;
+	skos:prefLabel "multiconxunto"@gl ;
+	schema:name "multiconxunto"@gl ;
+	rdfs:label "பல்கணம்"@ta ;
+	skos:prefLabel "பல்கணம்"@ta ;
+	schema:name "பல்கணம்"@ta ;
+	rdfs:label "多重集"@yue ;
+	skos:prefLabel "多重集"@yue ;
+	schema:name "多重集"@yue ;
+	rdfs:label "multiconjunto"@pt-br ;
+	skos:prefLabel "multiconjunto"@pt-br ;
+	schema:name "multiconjunto"@pt-br ;
+	rdfs:label "Πολυσύνολο"@el ;
+	skos:prefLabel "Πολυσύνολο"@el ;
+	schema:name "Πολυσύνολο"@el ;
+	schema:description "generalizzazione del concetto di insieme"@it,
+		"mathematical set with repetitions allowed"@en,
+		"conxunto matemático que permite repeticións"@gl,
+		"conjunto matemático que permite repeticiones"@es,
+		"matematická množina, u které je dovoleno opakování prvků"@cs,
+		"重複度を考慮した集合概念"@ja ;
+	skos:altLabel "seleção com repetição"@pt,
+		"wielozbiór"@pl,
+		"сумка"@ru,
+		"multiset"@ca,
+		"bag"@ca,
+		"bossa"@ca,
+		"мультимножини"@uk,
+		"multinsieme"@it,
+		"sostegno del multiinsieme"@it,
+		"Multi-Menge"@de,
+		"Multiteilmenge"@de,
+		"multiset"@cs,
+		"Bag"@nl,
+		"bolsa"@es,
+		"bag"@es,
+		"bag"@en,
+		"mset"@en,
+		"bag"@gl,
+		"bolsa"@gl .
+
+wd:Q246672 a wikibase:Item ;
+	rdfs:label "mathematical object"@en ;
+	skos:prefLabel "mathematical object"@en ;
+	schema:name "mathematical object"@en ;
+	schema:description "abstract object in mathematics"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1482 a wikibase:Property ;
+	rdfs:label "Stack Exchange tag"@en ;
+	skos:prefLabel "Stack Exchange tag"@en ;
+	schema:name "Stack Exchange tag"@en ;
+	schema:description "tag on the Stack Exchange websites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P1482 ;
+	wikibase:claim p:P1482 ;
+	wikibase:statementProperty ps:P1482 ;
+	wikibase:statementValue psv:P1482 ;
+	wikibase:qualifier pq:P1482 ;
+	wikibase:qualifierValue pqv:P1482 ;
+	wikibase:reference pr:P1482 ;
+	wikibase:referenceValue prv:P1482 ;
+	wikibase:novalue wdno:P1482 .
+
+p:P1482 a owl:ObjectProperty .
+
+psv:P1482 a owl:ObjectProperty .
+
+pqv:P1482 a owl:ObjectProperty .
+
+prv:P1482 a owl:ObjectProperty .
+
+wdt:P1482 a owl:ObjectProperty .
+
+ps:P1482 a owl:ObjectProperty .
+
+pq:P1482 a owl:ObjectProperty .
+
+pr:P1482 a owl:ObjectProperty .
+
+wdno:P1482 a owl:Class ;
+	owl:complementOf _:066031779cfa800e67b51a6a3ae80549 .
+
+_:066031779cfa800e67b51a6a3ae80549 a owl:Restriction ;
+	owl:onProperty wdt:P1482 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2534 a wikibase:Property ;
+	rdfs:label "defining formula"@en ;
+	skos:prefLabel "defining formula"@en ;
+	schema:name "defining formula"@en ;
+	schema:description "mathematical formula representing a theorem or law. Maximum length: 400 characters"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Math> ;
+	wikibase:directClaim wdt:P2534 ;
+	wikibase:claim p:P2534 ;
+	wikibase:statementProperty ps:P2534 ;
+	wikibase:statementValue psv:P2534 ;
+	wikibase:qualifier pq:P2534 ;
+	wikibase:qualifierValue pqv:P2534 ;
+	wikibase:reference pr:P2534 ;
+	wikibase:referenceValue prv:P2534 ;
+	wikibase:novalue wdno:P2534 .
+
+p:P2534 a owl:ObjectProperty .
+
+psv:P2534 a owl:ObjectProperty .
+
+pqv:P2534 a owl:ObjectProperty .
+
+prv:P2534 a owl:ObjectProperty .
+
+wdt:P2534 a owl:DatatypeProperty .
+
+ps:P2534 a owl:DatatypeProperty .
+
+pq:P2534 a owl:DatatypeProperty .
+
+pr:P2534 a owl:DatatypeProperty .
+
+wdno:P2534 a owl:Class ;
+	owl:complementOf _:56106536cf53d9fe8e74344a86006cd7 .
+
+_:56106536cf53d9fe8e74344a86006cd7 a owl:Restriction ;
+	owl:onProperty wdt:P2534 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3417 a wikibase:Property ;
+	rdfs:label "Quora topic ID"@en ;
+	skos:prefLabel "Quora topic ID"@en ;
+	schema:name "Quora topic ID"@en ;
+	schema:description "identifier for a topic on Quora (English language version)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3417 ;
+	wikibase:claim p:P3417 ;
+	wikibase:statementProperty ps:P3417 ;
+	wikibase:statementValue psv:P3417 ;
+	wikibase:qualifier pq:P3417 ;
+	wikibase:qualifierValue pqv:P3417 ;
+	wikibase:reference pr:P3417 ;
+	wikibase:referenceValue prv:P3417 ;
+	wikibase:novalue wdno:P3417 ;
+	wikibase:directClaimNormalized wdtn:P3417 ;
+	wikibase:statementValueNormalized psn:P3417 ;
+	wikibase:qualifierValueNormalized pqn:P3417 ;
+	wikibase:referenceValueNormalized prn:P3417 .
+
+p:P3417 a owl:ObjectProperty .
+
+psv:P3417 a owl:ObjectProperty .
+
+pqv:P3417 a owl:ObjectProperty .
+
+prv:P3417 a owl:ObjectProperty .
+
+wdt:P3417 a owl:DatatypeProperty .
+
+ps:P3417 a owl:DatatypeProperty .
+
+pq:P3417 a owl:DatatypeProperty .
+
+pr:P3417 a owl:DatatypeProperty .
+
+psn:P3417 a owl:ObjectProperty .
+
+pqn:P3417 a owl:ObjectProperty .
+
+prn:P3417 a owl:ObjectProperty .
+
+wdtn:P3417 a owl:ObjectProperty .
+
+wdno:P3417 a owl:Class ;
+	owl:complementOf _:54217a89695819ffcfec13afc576b468 .
+
+_:54217a89695819ffcfec13afc576b468 a owl:Restriction ;
+	owl:onProperty wdt:P3417 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3827 a wikibase:Property ;
+	rdfs:label "JSTOR topic ID"@en ;
+	skos:prefLabel "JSTOR topic ID"@en ;
+	schema:name "JSTOR topic ID"@en ;
+	schema:description "identifier for a topic at JSTOR"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3827 ;
+	wikibase:claim p:P3827 ;
+	wikibase:statementProperty ps:P3827 ;
+	wikibase:statementValue psv:P3827 ;
+	wikibase:qualifier pq:P3827 ;
+	wikibase:qualifierValue pqv:P3827 ;
+	wikibase:reference pr:P3827 ;
+	wikibase:referenceValue prv:P3827 ;
+	wikibase:novalue wdno:P3827 ;
+	wikibase:directClaimNormalized wdtn:P3827 ;
+	wikibase:statementValueNormalized psn:P3827 ;
+	wikibase:qualifierValueNormalized pqn:P3827 ;
+	wikibase:referenceValueNormalized prn:P3827 .
+
+p:P3827 a owl:ObjectProperty .
+
+psv:P3827 a owl:ObjectProperty .
+
+pqv:P3827 a owl:ObjectProperty .
+
+prv:P3827 a owl:ObjectProperty .
+
+wdt:P3827 a owl:DatatypeProperty .
+
+ps:P3827 a owl:DatatypeProperty .
+
+pq:P3827 a owl:DatatypeProperty .
+
+pr:P3827 a owl:DatatypeProperty .
+
+psn:P3827 a owl:ObjectProperty .
+
+pqn:P3827 a owl:ObjectProperty .
+
+prn:P3827 a owl:ObjectProperty .
+
+wdtn:P3827 a owl:ObjectProperty .
+
+wdno:P3827 a owl:Class ;
+	owl:complementOf _:591354acd9a1c60143190541be6b2d38 .
+
+_:591354acd9a1c60143190541be6b2d38 a owl:Restriction ;
+	owl:onProperty wdt:P3827 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q2228257 a wikibase:Item ;
+	rdfs:label "multiplicity"@en ;
+	skos:prefLabel "multiplicity"@en ;
+	schema:name "multiplicity"@en ;
+	schema:description "number of times an object must be counted for making true a general formula"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4215 a wikibase:Property ;
+	rdfs:label "nLab ID"@en ;
+	skos:prefLabel "nLab ID"@en ;
+	schema:name "nLab ID"@en ;
+	schema:description "name of a page in nLab wiki"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4215 ;
+	wikibase:claim p:P4215 ;
+	wikibase:statementProperty ps:P4215 ;
+	wikibase:statementValue psv:P4215 ;
+	wikibase:qualifier pq:P4215 ;
+	wikibase:qualifierValue pqv:P4215 ;
+	wikibase:reference pr:P4215 ;
+	wikibase:referenceValue prv:P4215 ;
+	wikibase:novalue wdno:P4215 ;
+	wikibase:directClaimNormalized wdtn:P4215 ;
+	wikibase:statementValueNormalized psn:P4215 ;
+	wikibase:qualifierValueNormalized pqn:P4215 ;
+	wikibase:referenceValueNormalized prn:P4215 .
+
+p:P4215 a owl:ObjectProperty .
+
+psv:P4215 a owl:ObjectProperty .
+
+pqv:P4215 a owl:ObjectProperty .
+
+prv:P4215 a owl:ObjectProperty .
+
+wdt:P4215 a owl:DatatypeProperty .
+
+ps:P4215 a owl:DatatypeProperty .
+
+pq:P4215 a owl:DatatypeProperty .
+
+pr:P4215 a owl:DatatypeProperty .
+
+psn:P4215 a owl:ObjectProperty .
+
+pqn:P4215 a owl:ObjectProperty .
+
+prn:P4215 a owl:ObjectProperty .
+
+wdtn:P4215 a owl:ObjectProperty .
+
+wdno:P4215 a owl:Class ;
+	owl:complementOf _:f9a1d8b81de5a31700d65a433ccbace3 .
+
+_:f9a1d8b81de5a31700d65a433ccbace3 a owl:Restriction ;
+	owl:onProperty wdt:P4215 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P5106 a wikibase:Property ;
+	rdfs:label "Dictionary of Algorithms and Data Structures ID"@en ;
+	skos:prefLabel "Dictionary of Algorithms and Data Structures ID"@en ;
+	schema:name "Dictionary of Algorithms and Data Structures ID"@en ;
+	schema:description "identifier for an entry in the Dictionary of Algorithms and Data Structures"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P5106 ;
+	wikibase:claim p:P5106 ;
+	wikibase:statementProperty ps:P5106 ;
+	wikibase:statementValue psv:P5106 ;
+	wikibase:qualifier pq:P5106 ;
+	wikibase:qualifierValue pqv:P5106 ;
+	wikibase:reference pr:P5106 ;
+	wikibase:referenceValue prv:P5106 ;
+	wikibase:novalue wdno:P5106 ;
+	wikibase:directClaimNormalized wdtn:P5106 ;
+	wikibase:statementValueNormalized psn:P5106 ;
+	wikibase:qualifierValueNormalized pqn:P5106 ;
+	wikibase:referenceValueNormalized prn:P5106 .
+
+p:P5106 a owl:ObjectProperty .
+
+psv:P5106 a owl:ObjectProperty .
+
+pqv:P5106 a owl:ObjectProperty .
+
+prv:P5106 a owl:ObjectProperty .
+
+wdt:P5106 a owl:DatatypeProperty .
+
+ps:P5106 a owl:DatatypeProperty .
+
+pq:P5106 a owl:DatatypeProperty .
+
+pr:P5106 a owl:DatatypeProperty .
+
+psn:P5106 a owl:ObjectProperty .
+
+pqn:P5106 a owl:ObjectProperty .
+
+prn:P5106 a owl:ObjectProperty .
+
+wdtn:P5106 a owl:ObjectProperty .
+
+wdno:P5106 a owl:Class ;
+	owl:complementOf _:f72506dd5a873c2dfb539b1c5a73a28c .
+
+_:f72506dd5a873c2dfb539b1c5a73a28c a owl:Restriction ;
+	owl:onProperty wdt:P5106 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10283 a wikibase:Property ;
+	rdfs:label "OpenAlex ID"@en ;
+	skos:prefLabel "OpenAlex ID"@en ;
+	schema:name "OpenAlex ID"@en ;
+	schema:description "identifier for works, grants, authors, institutes, venues, concepts/subjects in OpenAlex"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10283 ;
+	wikibase:claim p:P10283 ;
+	wikibase:statementProperty ps:P10283 ;
+	wikibase:statementValue psv:P10283 ;
+	wikibase:qualifier pq:P10283 ;
+	wikibase:qualifierValue pqv:P10283 ;
+	wikibase:reference pr:P10283 ;
+	wikibase:referenceValue prv:P10283 ;
+	wikibase:novalue wdno:P10283 ;
+	wikibase:directClaimNormalized wdtn:P10283 ;
+	wikibase:statementValueNormalized psn:P10283 ;
+	wikibase:qualifierValueNormalized pqn:P10283 ;
+	wikibase:referenceValueNormalized prn:P10283 .
+
+p:P10283 a owl:ObjectProperty .
+
+psv:P10283 a owl:ObjectProperty .
+
+pqv:P10283 a owl:ObjectProperty .
+
+prv:P10283 a owl:ObjectProperty .
+
+wdt:P10283 a owl:DatatypeProperty .
+
+ps:P10283 a owl:DatatypeProperty .
+
+pq:P10283 a owl:DatatypeProperty .
+
+pr:P10283 a owl:DatatypeProperty .
+
+psn:P10283 a owl:ObjectProperty .
+
+pqn:P10283 a owl:ObjectProperty .
+
+prn:P10283 a owl:ObjectProperty .
+
+wdtn:P10283 a owl:ObjectProperty .
+
+wdno:P10283 a owl:Class ;
+	owl:complementOf _:32a5275a7dbbfba13192c77c3ada4d3a .
+
+_:32a5275a7dbbfba13192c77c3ada4d3a a owl:Restriction ;
+	owl:onProperty wdt:P10283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7235 a wikibase:Property ;
+	rdfs:label "in defining formula"@en ;
+	skos:prefLabel "in defining formula"@en ;
+	schema:name "in defining formula"@en ;
+	schema:description "any symbol used in the defining formula (P2534)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Math> ;
+	wikibase:directClaim wdt:P7235 ;
+	wikibase:claim p:P7235 ;
+	wikibase:statementProperty ps:P7235 ;
+	wikibase:statementValue psv:P7235 ;
+	wikibase:qualifier pq:P7235 ;
+	wikibase:qualifierValue pqv:P7235 ;
+	wikibase:reference pr:P7235 ;
+	wikibase:referenceValue prv:P7235 ;
+	wikibase:novalue wdno:P7235 .
+
+p:P7235 a owl:ObjectProperty .
+
+psv:P7235 a owl:ObjectProperty .
+
+pqv:P7235 a owl:ObjectProperty .
+
+prv:P7235 a owl:ObjectProperty .
+
+wdt:P7235 a owl:DatatypeProperty .
+
+ps:P7235 a owl:DatatypeProperty .
+
+pq:P7235 a owl:DatatypeProperty .
+
+pr:P7235 a owl:DatatypeProperty .
+
+wdno:P7235 a owl:Class ;
+	owl:complementOf _:6f24f85d4db3906ff01f78d842150d34 .
+
+_:6f24f85d4db3906ff01f78d842150d34 a owl:Restriction ;
+	owl:onProperty wdt:P7235 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2812 a wikibase:Property ;
+	rdfs:label "MathWorld ID"@en ;
+	skos:prefLabel "MathWorld ID"@en ;
+	schema:name "MathWorld ID"@en ;
+	schema:description "identifier for entries in MathWorld, online mathematics reference work"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2812 ;
+	wikibase:claim p:P2812 ;
+	wikibase:statementProperty ps:P2812 ;
+	wikibase:statementValue psv:P2812 ;
+	wikibase:qualifier pq:P2812 ;
+	wikibase:qualifierValue pqv:P2812 ;
+	wikibase:reference pr:P2812 ;
+	wikibase:referenceValue prv:P2812 ;
+	wikibase:novalue wdno:P2812 ;
+	wikibase:directClaimNormalized wdtn:P2812 ;
+	wikibase:statementValueNormalized psn:P2812 ;
+	wikibase:qualifierValueNormalized pqn:P2812 ;
+	wikibase:referenceValueNormalized prn:P2812 .
+
+p:P2812 a owl:ObjectProperty .
+
+psv:P2812 a owl:ObjectProperty .
+
+pqv:P2812 a owl:ObjectProperty .
+
+prv:P2812 a owl:ObjectProperty .
+
+wdt:P2812 a owl:DatatypeProperty .
+
+ps:P2812 a owl:DatatypeProperty .
+
+pq:P2812 a owl:DatatypeProperty .
+
+pr:P2812 a owl:DatatypeProperty .
+
+psn:P2812 a owl:ObjectProperty .
+
+pqn:P2812 a owl:ObjectProperty .
+
+prn:P2812 a owl:ObjectProperty .
+
+wdtn:P2812 a owl:ObjectProperty .
+
+wdno:P2812 a owl:Class ;
+	owl:complementOf _:fb0f7ab1055ee23989a25d6be40e2991 .
+
+_:fb0f7ab1055ee23989a25d6be40e2991 a owl:Restriction ;
+	owl:onProperty wdt:P2812 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q328 a wikibase:Item ;
+	rdfs:label "English Wikipedia"@en ;
+	skos:prefLabel "English Wikipedia"@en ;
+	schema:name "English Wikipedia"@en ;
+	schema:description "English-language edition of Wikipedia"@en .
+
+wd:P143 a wikibase:Property ;
+	rdfs:label "imported from Wikimedia project"@en ;
+	skos:prefLabel "imported from Wikimedia project"@en ;
+	schema:name "imported from Wikimedia project"@en ;
+	schema:description "source of this claim's value; used in references section by bots or humans importing data from Wikimedia projects"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P143 ;
+	wikibase:claim p:P143 ;
+	wikibase:statementProperty ps:P143 ;
+	wikibase:statementValue psv:P143 ;
+	wikibase:qualifier pq:P143 ;
+	wikibase:qualifierValue pqv:P143 ;
+	wikibase:reference pr:P143 ;
+	wikibase:referenceValue prv:P143 ;
+	wikibase:novalue wdno:P143 .
+
+p:P143 a owl:ObjectProperty .
+
+psv:P143 a owl:ObjectProperty .
+
+pqv:P143 a owl:ObjectProperty .
+
+prv:P143 a owl:ObjectProperty .
+
+wdt:P143 a owl:ObjectProperty .
+
+ps:P143 a owl:ObjectProperty .
+
+pq:P143 a owl:ObjectProperty .
+
+pr:P143 a owl:ObjectProperty .
+
+wdno:P143 a owl:Class ;
+	owl:complementOf _:66a2156e9cbfe8d655274b862fca1b59 .
+
+_:66a2156e9cbfe8d655274b862fca1b59 a owl:Restriction ;
+	owl:onProperty wdt:P143 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q51711 a wikibase:Item ;
+	rdfs:label "Quora"@en ;
+	skos:prefLabel "Quora"@en ;
+	schema:name "Quora"@en ;
+	schema:description "American question-and-answer website"@en .
+
+wd:Q107507571 a wikibase:Item ;
+	rdfs:label "OpenAlex"@en ;
+	skos:prefLabel "OpenAlex"@en ;
+	schema:name "OpenAlex"@en ;
+	schema:description "an open catalog of scholarly papers, authors, institutions, venues, and concepts"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P854 a wikibase:Property ;
+	rdfs:label "reference URL"@en ;
+	skos:prefLabel "reference URL"@en ;
+	schema:name "reference URL"@en ;
+	schema:description "should be used for Internet URLs as references. Use \"Wikimedia import URL\" (P4656) for imports from WMF sites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P854 ;
+	wikibase:claim p:P854 ;
+	wikibase:statementProperty ps:P854 ;
+	wikibase:statementValue psv:P854 ;
+	wikibase:qualifier pq:P854 ;
+	wikibase:qualifierValue pqv:P854 ;
+	wikibase:reference pr:P854 ;
+	wikibase:referenceValue prv:P854 ;
+	wikibase:novalue wdno:P854 .
+
+p:P854 a owl:ObjectProperty .
+
+psv:P854 a owl:ObjectProperty .
+
+pqv:P854 a owl:ObjectProperty .
+
+prv:P854 a owl:ObjectProperty .
+
+wdt:P854 a owl:ObjectProperty .
+
+ps:P854 a owl:ObjectProperty .
+
+pq:P854 a owl:ObjectProperty .
+
+pr:P854 a owl:ObjectProperty .
+
+wdno:P854 a owl:Class ;
+	owl:complementOf _:7317e7e5a3edc1980ecfe7616bb5fa1d .
+
+_:7317e7e5a3edc1980ecfe7616bb5fa1d a owl:Restriction ;
+	owl:onProperty wdt:P854 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P9758 a wikibase:Property ;
+	rdfs:label "symbol represents"@en ;
+	skos:prefLabel "symbol represents"@en ;
+	schema:name "symbol represents"@en ;
+	schema:description "qualifier for \"in defining formula\" (P7235) which indicates the quantity or operator represented by a symbol in the \"defining formula\" (P2534)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P9758 ;
+	wikibase:claim p:P9758 ;
+	wikibase:statementProperty ps:P9758 ;
+	wikibase:statementValue psv:P9758 ;
+	wikibase:qualifier pq:P9758 ;
+	wikibase:qualifierValue pqv:P9758 ;
+	wikibase:reference pr:P9758 ;
+	wikibase:referenceValue prv:P9758 ;
+	wikibase:novalue wdno:P9758 .
+
+p:P9758 a owl:ObjectProperty .
+
+psv:P9758 a owl:ObjectProperty .
+
+pqv:P9758 a owl:ObjectProperty .
+
+prv:P9758 a owl:ObjectProperty .
+
+wdt:P9758 a owl:ObjectProperty .
+
+ps:P9758 a owl:ObjectProperty .
+
+pq:P9758 a owl:ObjectProperty .
+
+pr:P9758 a owl:ObjectProperty .
+
+wdno:P9758 a owl:Class ;
+	owl:complementOf _:1ad786d2379b76f467f4b82374cd7b0e .
+
+_:1ad786d2379b76f467f4b82374cd7b0e a owl:Restriction ;
+	owl:onProperty wdt:P9758 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q36161 a wikibase:Item ;
+	rdfs:label "set"@en ;
+	skos:prefLabel "set"@en ;
+	schema:name "set"@en ;
+	schema:description "well-defined mathematical collection of distinct objects"@en .
+
+wd:Q19856468 a wikibase:Item ;
+	rdfs:label "integer-valued function"@en ;
+	skos:prefLabel "integer-valued function"@en ;
+	schema:name "integer-valued function"@en ;
+	schema:description "function that ranges over the integers"@en .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:3b2ff2744ee9af4b07734336d1723792 a wikibase:TimeValue ;
+	wikibase:timeValue "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:fa278ebfc458360e5aed63d5058cca83c46134f1 a wikibase:Reference ;
+	pr:P143 wd:Q328 .
+
+ref:3b0a5bb3c1f955edce73740124f7d935698092ad a wikibase:Reference ;
+	pr:P248 wd:Q51711 .
+
+ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 a wikibase:Reference ;
+	pr:P248 wd:Q107507571 ;
+	pr:P813 "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:3b2ff2744ee9af4b07734336d1723792 ;
+	pr:P854 <https://docs.openalex.org/download-snapshot/snapshot-data-format> .

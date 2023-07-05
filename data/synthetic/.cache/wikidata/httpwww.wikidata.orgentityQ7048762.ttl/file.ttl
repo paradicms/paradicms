@@ -1,0 +1,368 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q7048762 a schema:Dataset ;
+	schema:about wd:Q7048762 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1338538321"^^xsd:integer ;
+	schema:dateModified "2021-01-10T21:02:44Z"^^xsd:dateTime ;
+	wikibase:statements "5"^^xsd:integer ;
+	wikibase:sitelinks "3"^^xsd:integer ;
+	wikibase:identifiers "3"^^xsd:integer .
+
+wd:Q7048762 a wikibase:Item .
+
+<https://en.wikipedia.org/wiki/Non-Hausdorff_manifold> a schema:Article ;
+	schema:about wd:Q7048762 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Non-Hausdorff manifold"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D9%85%D8%AA%D8%B9%D8%AF%D8%AF%D8%A7%D8%AA_%D8%A7%D9%84%D8%B4%D8%B9%D8%A8_%D8%BA%D9%8A%D8%B1_%D8%A7%D9%84%D9%85%D8%B1%D8%AA%D8%A8%D8%B7%D8%A9_%D8%A8%D9%81%D8%B6%D8%A7%D8%A1_%D9%87%D8%A7%D9%88%D8%B3%D8%AF%D8%B1%D9%88%D9%81> a schema:Article ;
+	schema:about wd:Q7048762 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "متعددات الشعب غير المرتبطة بفضاء هاوسدروف"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/%C4%90a_t%E1%BA%A1p_phi-Hausdorff> a schema:Article ;
+	schema:about wd:Q7048762 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Đa tạp phi-Hausdorff"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q7048762 wdt:P279 wd:Q179899 ;
+	wdt:P1269 wd:Q203920 ;
+	wdt:P6366 "2781259996" ;
+	wdtn:P6366 <http://ma-graph.org/entity/2781259996> ;
+	wdt:P4215 "non-Hausdorff manifold" ;
+	wdt:P646 "/m/03cxf4t" ;
+	p:P279 s:Q7048762-d257a7d4-46ae-bcec-feb7-dcf196fc8967 .
+
+s:Q7048762-d257a7d4-46ae-bcec-feb7-dcf196fc8967 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q179899 .
+
+wd:Q7048762 p:P1269 s:Q7048762-9e0efb25-445c-8943-e1fe-1e48ae4f57d2 .
+
+s:Q7048762-9e0efb25-445c-8943-e1fe-1e48ae4f57d2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1269 wd:Q203920 .
+
+wd:Q7048762 p:P6366 s:Q7048762-C544E307-87F2-414F-BE40-85B983BAF9B3 .
+
+s:Q7048762-C544E307-87F2-414F-BE40-85B983BAF9B3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "2781259996" ;
+	psn:P6366 <http://ma-graph.org/entity/2781259996> .
+
+wd:Q7048762 p:P4215 s:Q7048762-429234AD-D861-4EA6-93CB-C1532A2B7D0A .
+
+s:Q7048762-429234AD-D861-4EA6-93CB-C1532A2B7D0A a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4215 "non-Hausdorff manifold" .
+
+wd:Q7048762 p:P646 s:Q7048762-8918A382-2F75-43B5-90DA-39CCFAC36C6E .
+
+s:Q7048762-8918A382-2F75-43B5-90DA-39CCFAC36C6E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/03cxf4t" .
+
+wd:Q7048762 rdfs:label "non-Hausdorff manifold"@en ;
+	skos:prefLabel "non-Hausdorff manifold"@en ;
+	schema:name "non-Hausdorff manifold"@en ;
+	rdfs:label "متعددات الشعب غير المرتبطة بفضاء هاوسدروف"@ar ;
+	skos:prefLabel "متعددات الشعب غير المرتبطة بفضاء هاوسدروف"@ar ;
+	schema:name "متعددات الشعب غير المرتبطة بفضاء هاوسدروف"@ar ;
+	rdfs:label "variedade não Hausdorff"@pt ;
+	skos:prefLabel "variedade não Hausdorff"@pt ;
+	schema:name "variedade não Hausdorff"@pt ;
+	rdfs:label "нехаусдорфово многообразие"@ru ;
+	skos:prefLabel "нехаусдорфово многообразие"@ru ;
+	schema:name "нехаусдорфово многообразие"@ru ;
+	rdfs:label "Đa tạp phi-Hausdorff"@vi ;
+	skos:prefLabel "Đa tạp phi-Hausdorff"@vi ;
+	schema:name "Đa tạp phi-Hausdorff"@vi ;
+	schema:description "generalization of manifolds"@en .
+
+wd:Q179899 a wikibase:Item ;
+	rdfs:label "topological space"@en ;
+	skos:prefLabel "topological space"@en ;
+	schema:name "topological space"@en ;
+	schema:description "set of points and set of neighborhoods that satisfy axioms relating those points to those neighborhoods"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q203920 a wikibase:Item ;
+	rdfs:label "manifold"@en ;
+	skos:prefLabel "manifold"@en ;
+	schema:name "manifold"@en ;
+	schema:description "topological space that at each point resembles Euclidean space (unspecified type)"@en .
+
+wd:P1269 a wikibase:Property ;
+	rdfs:label "facet of"@en ;
+	skos:prefLabel "facet of"@en ;
+	schema:name "facet of"@en ;
+	schema:description "topic of which this item is an aspect, item that offers a broader perspective on the same topic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1269 ;
+	wikibase:claim p:P1269 ;
+	wikibase:statementProperty ps:P1269 ;
+	wikibase:statementValue psv:P1269 ;
+	wikibase:qualifier pq:P1269 ;
+	wikibase:qualifierValue pqv:P1269 ;
+	wikibase:reference pr:P1269 ;
+	wikibase:referenceValue prv:P1269 ;
+	wikibase:novalue wdno:P1269 .
+
+p:P1269 a owl:ObjectProperty .
+
+psv:P1269 a owl:ObjectProperty .
+
+pqv:P1269 a owl:ObjectProperty .
+
+prv:P1269 a owl:ObjectProperty .
+
+wdt:P1269 a owl:ObjectProperty .
+
+ps:P1269 a owl:ObjectProperty .
+
+pq:P1269 a owl:ObjectProperty .
+
+pr:P1269 a owl:ObjectProperty .
+
+wdno:P1269 a owl:Class ;
+	owl:complementOf _:a498557c9680bd52a026c4a3e1e3a863 .
+
+_:a498557c9680bd52a026c4a3e1e3a863 a owl:Restriction ;
+	owl:onProperty wdt:P1269 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4215 a wikibase:Property ;
+	rdfs:label "nLab ID"@en ;
+	skos:prefLabel "nLab ID"@en ;
+	schema:name "nLab ID"@en ;
+	schema:description "name of a page in nLab wiki"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4215 ;
+	wikibase:claim p:P4215 ;
+	wikibase:statementProperty ps:P4215 ;
+	wikibase:statementValue psv:P4215 ;
+	wikibase:qualifier pq:P4215 ;
+	wikibase:qualifierValue pqv:P4215 ;
+	wikibase:reference pr:P4215 ;
+	wikibase:referenceValue prv:P4215 ;
+	wikibase:novalue wdno:P4215 ;
+	wikibase:directClaimNormalized wdtn:P4215 ;
+	wikibase:statementValueNormalized psn:P4215 ;
+	wikibase:qualifierValueNormalized pqn:P4215 ;
+	wikibase:referenceValueNormalized prn:P4215 .
+
+p:P4215 a owl:ObjectProperty .
+
+psv:P4215 a owl:ObjectProperty .
+
+pqv:P4215 a owl:ObjectProperty .
+
+prv:P4215 a owl:ObjectProperty .
+
+wdt:P4215 a owl:DatatypeProperty .
+
+ps:P4215 a owl:DatatypeProperty .
+
+pq:P4215 a owl:DatatypeProperty .
+
+pr:P4215 a owl:DatatypeProperty .
+
+psn:P4215 a owl:ObjectProperty .
+
+pqn:P4215 a owl:ObjectProperty .
+
+prn:P4215 a owl:ObjectProperty .
+
+wdtn:P4215 a owl:ObjectProperty .
+
+wdno:P4215 a owl:Class ;
+	owl:complementOf _:f9a1d8b81de5a31700d65a433ccbace3 .
+
+_:f9a1d8b81de5a31700d65a433ccbace3 a owl:Restriction ;
+	owl:onProperty wdt:P4215 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .

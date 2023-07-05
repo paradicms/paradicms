@@ -1,0 +1,176 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q94489757 a schema:Dataset ;
+	schema:about wd:Q94489757 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1811227590"^^xsd:integer ;
+	schema:dateModified "2023-01-14T08:02:41Z"^^xsd:dateTime ;
+	wikibase:statements "2"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q94489757 a wikibase:Item ;
+	wdt:P279 wd:Q484298 ;
+	wdt:P1889 wd:Q18123390 ;
+	p:P279 s:Q94489757-b3a85886-494e-a269-c1da-51376498c4cb .
+
+s:Q94489757-b3a85886-494e-a269-c1da-51376498c4cb a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q484298 .
+
+wd:Q94489757 p:P1889 s:Q94489757-fb4d666f-4724-de83-0712-de03dcdaf1ca .
+
+s:Q94489757-fb4d666f-4724-de83-0712-de03dcdaf1ca a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q18123390 .
+
+wd:Q94489757 rdfs:label "Ausstellungsfläche"@de ;
+	skos:prefLabel "Ausstellungsfläche"@de ;
+	schema:name "Ausstellungsfläche"@de ;
+	rdfs:label "exhibition area"@en ;
+	skos:prefLabel "exhibition area"@en ;
+	schema:name "exhibition area"@en ;
+	rdfs:label "espace d'exposition"@fr ;
+	skos:prefLabel "espace d'exposition"@fr ;
+	schema:name "espace d'exposition"@fr ;
+	rdfs:label "spazio espositivo"@it ;
+	skos:prefLabel "spazio espositivo"@it ;
+	schema:name "spazio espositivo"@it ;
+	rdfs:label "tentoonstellingsruimte"@nl ;
+	skos:prefLabel "tentoonstellingsruimte"@nl ;
+	schema:name "tentoonstellingsruimte"@nl ;
+	rdfs:label "utställningsyta"@sv ;
+	skos:prefLabel "utställningsyta"@sv ;
+	schema:name "utställningsyta"@sv ;
+	rdfs:label "展区"@zh ;
+	skos:prefLabel "展区"@zh ;
+	schema:name "展区"@zh ;
+	schema:description "Fläche die eine Ausstellung einnimmt"@de,
+		"surface area occupied by an exhibition"@en,
+		"surface occupée par une exposition"@fr,
+		"area occupata da una mostra"@it,
+		"gebied bezet door een tentoonstelling"@nl,
+		"plats för en utställning"@sv ;
+	skos:altLabel "utställningsplats"@sv .
+
+wd:Q484298 a wikibase:Item ;
+	rdfs:label "surface"@en ;
+	skos:prefLabel "surface"@en ;
+	schema:name "surface"@en ;
+	schema:description "two-dimensional manifold, and, as such, may be an \"abstract surface\" not embedded in any Euclidean space"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q18123390 a wikibase:Item ;
+	rdfs:label "exhibition area"@en ;
+	skos:prefLabel "exhibition area"@en ;
+	schema:name "exhibition area"@en ;
+	schema:description "area of a museum open to visitors"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .

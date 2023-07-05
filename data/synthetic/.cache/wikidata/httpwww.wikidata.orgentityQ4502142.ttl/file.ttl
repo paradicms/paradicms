@@ -1,0 +1,1575 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q4502142 a schema:Dataset ;
+	schema:about wd:Q4502142 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1909801002"^^xsd:integer ;
+	schema:dateModified "2023-06-06T22:26:48Z"^^xsd:dateTime ;
+	wikibase:statements "24"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "3"^^xsd:integer .
+
+wd:Q4502142 a wikibase:Item ;
+	wdt:P279 wd:Q838948,
+		wd:Q110910970 ;
+	wdt:P227 "4145419-4" ;
+	wdtn:P227 <https://d-nb.info/gnd/4145419-4> ;
+	wdt:P2579 wd:Q861716 ;
+	wdt:P1709 <https://schema.org/VisualArtwork> ;
+	wdt:P1963 wd:P186,
+		wd:P747,
+		wd:P2610,
+		wd:P2048,
+		wd:P2049,
+		wd:P170,
+		wd:P166,
+		wd:P571,
+		wd:P859,
+		wd:P136,
+		wd:P1679,
+		wd:P180,
+		wd:P921,
+		wd:P195,
+		wd:P1257 ;
+	wdt:P1014 "300191086" ;
+	wdtn:P1014 <http://vocab.getty.edu/aat/300191086> ;
+	wdt:P8519 "79320" ;
+	wdtn:P8519 <https://data.rkd.nl/thesau/79320> ;
+	wdt:P1889 wd:Q36649 ;
+	wdt:P1557 wd:Q36649 ;
+	p:P279 s:Q4502142-2de97db6-4d4d-d41b-c027-751c2ee5e49e .
+
+s:Q4502142-2de97db6-4d4d-d41b-c027-751c2ee5e49e a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q838948 .
+
+wd:Q4502142 p:P279 s:Q4502142-181c3488-40ed-a51f-cf46-5f7030efeaf1 .
+
+s:Q4502142-181c3488-40ed-a51f-cf46-5f7030efeaf1 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q110910970 .
+
+wd:Q4502142 p:P227 s:Q4502142-96f015b5-4188-7388-375b-4e83dbef2ac2 .
+
+s:Q4502142-96f015b5-4188-7388-375b-4e83dbef2ac2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P227 "4145419-4" ;
+	psn:P227 <https://d-nb.info/gnd/4145419-4> .
+
+wd:Q4502142 p:P2579 s:Q4502142-ed860a8f-4f13-7f6c-28c1-0deefa2df992 .
+
+s:Q4502142-ed860a8f-4f13-7f6c-28c1-0deefa2df992 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2579 wd:Q861716 .
+
+wd:Q4502142 p:P1709 s:Q4502142-a59bac3d-471e-11fa-bd2f-584a8229a792 .
+
+s:Q4502142-a59bac3d-471e-11fa-bd2f-584a8229a792 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1709 <https://schema.org/VisualArtwork> .
+
+wd:Q4502142 p:P1963 s:Q4502142-aaff414a-409c-4e08-64f7-fff81d96d4f2 .
+
+s:Q4502142-aaff414a-409c-4e08-64f7-fff81d96d4f2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P186 .
+
+wd:Q4502142 p:P1963 s:Q4502142-e4bdc000-415b-69fa-77d9-1dbe99b66dbe .
+
+s:Q4502142-e4bdc000-415b-69fa-77d9-1dbe99b66dbe a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P747 .
+
+wd:Q4502142 p:P1963 s:Q4502142-bfd6232a-4c44-f83b-b9a7-8964d4f49199 .
+
+s:Q4502142-bfd6232a-4c44-f83b-b9a7-8964d4f49199 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P2610 .
+
+wd:Q4502142 p:P1963 s:Q4502142-4b2c4007-4060-c74d-cbb7-6a37a7010b9a .
+
+s:Q4502142-4b2c4007-4060-c74d-cbb7-6a37a7010b9a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P2048 .
+
+wd:Q4502142 p:P1963 s:Q4502142-f839f7b6-4c68-459a-d798-652da3997a98 .
+
+s:Q4502142-f839f7b6-4c68-459a-d798-652da3997a98 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P2049 .
+
+wd:Q4502142 p:P1963 s:Q4502142-47e1d436-45c9-d20e-e56c-0e802feca1cf .
+
+s:Q4502142-47e1d436-45c9-d20e-e56c-0e802feca1cf a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P170 .
+
+wd:Q4502142 p:P1963 s:Q4502142-8908ca21-431c-ebbd-449b-4aa62b7cdf54 .
+
+s:Q4502142-8908ca21-431c-ebbd-449b-4aa62b7cdf54 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P166 .
+
+wd:Q4502142 p:P1963 s:Q4502142-b7078c5d-4d1a-4d6b-3b17-8b96a3231dbf .
+
+s:Q4502142-b7078c5d-4d1a-4d6b-3b17-8b96a3231dbf a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P571 .
+
+wd:Q4502142 p:P1963 s:Q4502142-bd610f22-49f0-760c-0284-dc888e4c521c .
+
+s:Q4502142-bd610f22-49f0-760c-0284-dc888e4c521c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P859 .
+
+wd:Q4502142 p:P1963 s:Q4502142-8364bddc-4a89-d1cb-5573-73a50327bd39 .
+
+s:Q4502142-8364bddc-4a89-d1cb-5573-73a50327bd39 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P136 .
+
+wd:Q4502142 p:P1963 s:Q4502142-210533bc-447c-b488-44a1-0d8694418a78 .
+
+s:Q4502142-210533bc-447c-b488-44a1-0d8694418a78 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P1679 .
+
+wd:Q4502142 p:P1963 s:Q4502142-cb68f702-4ced-87a9-2c99-8382a9680407 .
+
+s:Q4502142-cb68f702-4ced-87a9-2c99-8382a9680407 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P180 .
+
+wd:Q4502142 p:P1963 s:Q4502142-25b23f54-4700-8974-b746-d3f80b77724a .
+
+s:Q4502142-25b23f54-4700-8974-b746-d3f80b77724a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P921 .
+
+wd:Q4502142 p:P1963 s:Q4502142-c2308ffc-48d0-5927-1df7-87c6404887ec .
+
+s:Q4502142-c2308ffc-48d0-5927-1df7-87c6404887ec a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P195 .
+
+wd:Q4502142 p:P1963 s:Q4502142-ad6e13af-4d05-cde8-2843-419769126a57 .
+
+s:Q4502142-ad6e13af-4d05-cde8-2843-419769126a57 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P1257 .
+
+wd:Q4502142 p:P1014 s:Q4502142-914460FA-34D9-46E2-92B2-07A32E3A3733 .
+
+s:Q4502142-914460FA-34D9-46E2-92B2-07A32E3A3733 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1014 "300191086" ;
+	psn:P1014 <http://vocab.getty.edu/aat/300191086> ;
+	pq:P1810 "visual works (works)" ;
+	pq:P9570 "Works of art, architecture, and any objects that occupy space, are perceived by the sense of sight, and are created or arranged, rather than naturally occurring. Of special interest are those objects conveying a symbolic or expressive meaning or an aesthetic experience, although visual works are not limited only to such works. Visual works generally exclude the intangible, however, designs for works never constructed may be included. Visual works include pictorial and sculptural works, as well as time-based works such as performance art. They also include utilitarian or ceremonial objects of the type collected or valued by museums, cultures, or individuals. Visual works do not include the performing arts."@en .
+
+wd:Q4502142 p:P8519 s:Q4502142-11c3f173-fb57-47ba-a229-cdf037c58fef .
+
+s:Q4502142-11c3f173-fb57-47ba-a229-cdf037c58fef a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8519 "79320" ;
+	psn:P8519 <https://data.rkd.nl/thesau/79320> .
+
+wd:Q4502142 p:P1889 s:Q4502142-ddcaed13-4543-e37a-099c-97613ac466c8 .
+
+s:Q4502142-ddcaed13-4543-e37a-099c-97613ac466c8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q36649 .
+
+wd:Q4502142 p:P1557 s:Q4502142-b5fcfb1e-4f00-3669-2495-0b390bfa0903 .
+
+s:Q4502142-b5fcfb1e-4f00-3669-2495-0b390bfa0903 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1557 wd:Q36649 .
+
+wd:Q4502142 rdfs:label "визуальное произведение искусства"@ru ;
+	skos:prefLabel "визуальное произведение искусства"@ru ;
+	schema:name "визуальное произведение искусства"@ru ;
+	rdfs:label "Художестволы образ"@ba ;
+	skos:prefLabel "Художестволы образ"@ba ;
+	schema:name "Художестволы образ"@ba ;
+	rdfs:label "візуальний твір мистецтва"@uk ;
+	skos:prefLabel "візуальний твір мистецтва"@uk ;
+	schema:name "візуальний твір мистецтва"@uk ;
+	rdfs:label "visual artwork"@en ;
+	skos:prefLabel "visual artwork"@en ;
+	schema:name "visual artwork"@en ;
+	rdfs:label "мастацкі вобраз"@be ;
+	skos:prefLabel "мастацкі вобраз"@be ;
+	schema:name "мастацкі вобраз"@be ;
+	rdfs:label "visueel kunstwerk"@nl ;
+	skos:prefLabel "visueel kunstwerk"@nl ;
+	schema:name "visueel kunstwerk"@nl ;
+	rdfs:label "imagem de arte"@pt ;
+	skos:prefLabel "imagem de arte"@pt ;
+	schema:name "imagem de arte"@pt ;
+	rdfs:label "œuvre d'art visuel"@fr ;
+	skos:prefLabel "œuvre d'art visuel"@fr ;
+	schema:name "œuvre d'art visuel"@fr ;
+	rdfs:label "уметничка слика"@sr ;
+	skos:prefLabel "уметничка слика"@sr ;
+	schema:name "уметничка слика"@sr ;
+	rdfs:label "уметничка слика"@sr-ec ;
+	skos:prefLabel "уметничка слика"@sr-ec ;
+	schema:name "уметничка слика"@sr-ec ;
+	rdfs:label "umetnička slika"@sr-el ;
+	skos:prefLabel "umetnička slika"@sr-el ;
+	schema:name "umetnička slika"@sr-el ;
+	rdfs:label "bildliche Darstellung"@de ;
+	skos:prefLabel "bildliche Darstellung"@de ;
+	schema:name "bildliche Darstellung"@de ;
+	rdfs:label "hình ảnh nghệ thuật"@vi ;
+	skos:prefLabel "hình ảnh nghệ thuật"@vi ;
+	schema:name "hình ảnh nghệ thuật"@vi ;
+	rdfs:label "airt image"@sco ;
+	skos:prefLabel "airt image"@sco ;
+	schema:name "airt image"@sco ;
+	rdfs:label "imagen artística"@es ;
+	skos:prefLabel "imagen artística"@es ;
+	schema:name "imagen artística"@es ;
+	rdfs:label "уметничка слика"@mk ;
+	skos:prefLabel "уметничка слика"@mk ;
+	schema:name "уметничка слика"@mk ;
+	rdfs:label "καλλιτεχνική εικόνα"@el ;
+	skos:prefLabel "καλλιτεχνική εικόνα"@el ;
+	schema:name "καλλιτεχνική εικόνα"@el ;
+	rdfs:label "meninis piešinys"@lt ;
+	skos:prefLabel "meninis piešinys"@lt ;
+	schema:name "meninis piešinys"@lt ;
+	rdfs:label "taidekuva"@fi ;
+	skos:prefLabel "taidekuva"@fi ;
+	schema:name "taidekuva"@fi ;
+	rdfs:label "kunstbillede"@da ;
+	skos:prefLabel "kunstbillede"@da ;
+	schema:name "kunstbillede"@da ;
+	rdfs:label "imatge artística"@ca ;
+	skos:prefLabel "imatge artística"@ca ;
+	schema:name "imatge artística"@ca ;
+	rdfs:label "imagine artistică"@ro ;
+	skos:prefLabel "imagine artistică"@ro ;
+	schema:name "imagine artistică"@ro ;
+	rdfs:label "kunstbilde"@nb ;
+	skos:prefLabel "kunstbilde"@nb ;
+	schema:name "kunstbilde"@nb ;
+	rdfs:label "karya seni visual"@id ;
+	skos:prefLabel "karya seni visual"@id ;
+	schema:name "karya seni visual"@id ;
+	rdfs:label "عمل فني مرئي"@ar ;
+	skos:prefLabel "عمل فني مرئي"@ar ;
+	schema:name "عمل فني مرئي"@ar ;
+	rdfs:label "vizuāls mākslas darbs"@lv ;
+	skos:prefLabel "vizuāls mākslas darbs"@lv ;
+	schema:name "vizuāls mākslas darbs"@lv ;
+	rdfs:label "асари визуалии санъат"@tg ;
+	skos:prefLabel "асари визуалии санъат"@tg ;
+	schema:name "асари визуалии санъат"@tg ;
+	rdfs:label "視覚芸術作品"@ja ;
+	skos:prefLabel "視覚芸術作品"@ja ;
+	schema:name "視覚芸術作品"@ja ;
+	rdfs:label "artbildo"@eo ;
+	skos:prefLabel "artbildo"@eo ;
+	schema:name "artbildo"@eo ;
+	rdfs:label "obras de arte visual"@gl ;
+	skos:prefLabel "obras de arte visual"@gl ;
+	schema:name "obras de arte visual"@gl ;
+	rdfs:label "vizuális művészet"@hu ;
+	skos:prefLabel "vizuális művészet"@hu ;
+	schema:name "vizuális művészet"@hu ;
+	rdfs:label "بصری فن پارہ"@ur ;
+	skos:prefLabel "بصری فن پارہ"@ur ;
+	schema:name "بصری فن پارہ"@ur ;
+	rdfs:label "ദൃശ്യ കലാസൃഷ്ടി"@ml ;
+	skos:prefLabel "ദൃശ്യ കലാസൃഷ്ടി"@ml ;
+	schema:name "ദൃശ്യ കലാസൃഷ്ടി"@ml ;
+	rdfs:label "visuell kunst"@nn ;
+	skos:prefLabel "visuell kunst"@nn ;
+	schema:name "visuell kunst"@nn ;
+	rdfs:label "arte visual"@ast ;
+	skos:prefLabel "arte visual"@ast ;
+	schema:name "arte visual"@ast ;
+	rdfs:label "dzieło sztuk wizualnych"@pl ;
+	skos:prefLabel "dzieło sztuk wizualnych"@pl ;
+	schema:name "dzieło sztuk wizualnych"@pl ;
+	rdfs:label "visuellt konstverk"@sv ;
+	skos:prefLabel "visuellt konstverk"@sv ;
+	schema:name "visuellt konstverk"@sv ;
+	rdfs:label "вобраз"@be-tarask ;
+	skos:prefLabel "вобраз"@be-tarask ;
+	schema:name "вобраз"@be-tarask ;
+	rdfs:label "görsel sanat"@tr ;
+	skos:prefLabel "görsel sanat"@tr ;
+	schema:name "görsel sanat"@tr ;
+	rdfs:label "bildlechi Darstellig"@gsw ;
+	skos:prefLabel "bildlechi Darstellig"@gsw ;
+	schema:name "bildlechi Darstellig"@gsw ;
+	rdfs:label "saothar ealaíne físiúil"@ga ;
+	skos:prefLabel "saothar ealaíne físiúil"@ga ;
+	schema:name "saothar ealaíne físiúil"@ga ;
+	rdfs:label "יצירת אמנות חזותית"@he ;
+	skos:prefLabel "יצירת אמנות חזותית"@he ;
+	schema:name "יצירת אמנות חזותית"@he ;
+	rdfs:label "視覺藝術"@zh-tw ;
+	skos:prefLabel "視覺藝術"@zh-tw ;
+	schema:name "視覺藝術"@zh-tw ;
+	rdfs:label "視覺藝術"@zh ;
+	skos:prefLabel "視覺藝術"@zh ;
+	schema:name "視覺藝術"@zh ;
+	rdfs:label "視覺藝術"@zh-hant ;
+	skos:prefLabel "視覺藝術"@zh-hant ;
+	schema:name "視覺藝術"@zh-hant ;
+	rdfs:label "vizuelno umjetničko djelo"@bs ;
+	skos:prefLabel "vizuelno umjetničko djelo"@bs ;
+	schema:name "vizuelno umjetničko djelo"@bs ;
+	rdfs:label "งานทัศนศิลป์"@th ;
+	skos:prefLabel "งานทัศนศิลป์"@th ;
+	schema:name "งานทัศนศิลป์"@th ;
+	rdfs:label "gwaith celf gweledol"@cy ;
+	skos:prefLabel "gwaith celf gweledol"@cy ;
+	schema:name "gwaith celf gweledol"@cy ;
+	rdfs:label "vizuální umělecké dílo"@cs ;
+	skos:prefLabel "vizuální umělecké dílo"@cs ;
+	schema:name "vizuální umělecké dílo"@cs ;
+	rdfs:label "vizualno umjetničko djelo"@sh ;
+	skos:prefLabel "vizualno umjetničko djelo"@sh ;
+	schema:name "vizualno umjetničko djelo"@sh ;
+	rdfs:label "opera d'arte visiva"@it ;
+	skos:prefLabel "opera d'arte visiva"@it ;
+	schema:name "opera d'arte visiva"@it ;
+	rdfs:label "imagem de arte"@pt-br ;
+	skos:prefLabel "imagem de arte"@pt-br ;
+	schema:name "imagem de arte"@pt-br ;
+	rdfs:label "시각예술 작품"@ko ;
+	skos:prefLabel "시각예술 작품"@ko ;
+	schema:name "시각예술 작품"@ko ;
+	rdfs:label "վիզուալ արվեստի ստեղծագործություն"@hy ;
+	skos:prefLabel "վիզուալ արվեստի ստեղծագործություն"@hy ;
+	schema:name "վիզուալ արվեստի ստեղծագործություն"@hy ;
+	rdfs:label "کاريا سني تمڤق"@ms-arab ;
+	skos:prefLabel "کاريا سني تمڤق"@ms-arab ;
+	schema:name "کاريا سني تمڤق"@ms-arab ;
+	rdfs:label "karya seni tampak"@ms ;
+	skos:prefLabel "karya seni tampak"@ms ;
+	schema:name "karya seni tampak"@ms ;
+	rdfs:label "vizualno umetniško delo"@sl ;
+	skos:prefLabel "vizualno umetniško delo"@sl ;
+	schema:name "vizualno umetniško delo"@sl ;
+	schema:description "work of art that is primarily visual"@en,
+		"കണ്ടനുഭവിക്കാനുള്ള കലാസൃഷ്ടി"@ml,
+		"œuvre artistique principalement visuelle"@fr,
+		"obra d'arte que s'aprecia principalmente col sentíu de la vista"@ast,
+		"Kunstwerk, welches überwiegend visuell rezipiert wird"@de,
+		"konstverk som främst är visuellt"@sv,
+		"görsel olan sanat eseri"@tr,
+		"saothar ealaíne a bhfuil go príomha físiúil"@ga,
+		"витвір мистецтва, передусім візуальний"@uk,
+		"יצירת אומנות שהיא בעיקרה ויזואלית"@he,
+		"主要以影像呈現的藝術型式"@zh-tw,
+		"主要以影像呈現的藝術型式"@zh,
+		"主要以影像呈現的藝術型式"@zh-hant,
+		"kunstwerk dat voornamelijk beeldend en visueel van aard is"@nl,
+		"opera appartenente al campo delle arti visive"@it,
+		"gwaith celf i'r llygad"@cy,
+		"dílo, které je primárně vizuální"@cs,
+		"obra artística principalment visual"@ca,
+		"obra artística principalmente visual"@es,
+		"시각적 요소를 우선시한 예술 작품"@ko,
+		"kunstverk som primært er visuelt"@nb,
+		"視覚を主体とした芸術作品"@ja ;
+	skos:altLabel "künstlerische Abbildung"@de,
+		"art image"@en,
+		"work of visual art"@en,
+		"image artistique"@fr,
+		"visuelt kunstverk"@nb,
+		"visuell kunst"@nb,
+		"عمل فني بصري"@ar,
+		"imagen artistica"@es,
+		"imaxe artística"@gl,
+		"visuelt kunstverk"@nn,
+		"imaxe artística"@ast,
+		"образ"@uk,
+		"beeldend kunstwerk"@nl,
+		"celf i'r llygad"@cy,
+		"vizuelno umjetničko djelo"@sh,
+		"vizuelno umetničko delo"@sh,
+		"opera d'arte visuale"@it,
+		"karya seni visual"@ms .
+
+wd:Q838948 a wikibase:Item ;
+	rdfs:label "work of art"@en ;
+	skos:prefLabel "work of art"@en ;
+	schema:name "work of art"@en ;
+	schema:description "aesthetic item or artistic creation"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q110910970 a wikibase:Item ;
+	rdfs:label "visual work"@en ;
+	skos:prefLabel "visual work"@en ;
+	schema:name "visual work"@en ;
+	schema:description "work that conveys information through visual perception"@en .
+
+wd:P227 a wikibase:Property ;
+	rdfs:label "GND ID"@en ;
+	skos:prefLabel "GND ID"@en ;
+	schema:name "GND ID"@en ;
+	schema:description "identifier from an international authority file of names, subjects, and organizations (please don't use type n = name, disambiguation) - Deutsche Nationalbibliothek"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P227 ;
+	wikibase:claim p:P227 ;
+	wikibase:statementProperty ps:P227 ;
+	wikibase:statementValue psv:P227 ;
+	wikibase:qualifier pq:P227 ;
+	wikibase:qualifierValue pqv:P227 ;
+	wikibase:reference pr:P227 ;
+	wikibase:referenceValue prv:P227 ;
+	wikibase:novalue wdno:P227 ;
+	wikibase:directClaimNormalized wdtn:P227 ;
+	wikibase:statementValueNormalized psn:P227 ;
+	wikibase:qualifierValueNormalized pqn:P227 ;
+	wikibase:referenceValueNormalized prn:P227 .
+
+p:P227 a owl:ObjectProperty .
+
+psv:P227 a owl:ObjectProperty .
+
+pqv:P227 a owl:ObjectProperty .
+
+prv:P227 a owl:ObjectProperty .
+
+wdt:P227 a owl:DatatypeProperty .
+
+ps:P227 a owl:DatatypeProperty .
+
+pq:P227 a owl:DatatypeProperty .
+
+pr:P227 a owl:DatatypeProperty .
+
+psn:P227 a owl:ObjectProperty .
+
+pqn:P227 a owl:ObjectProperty .
+
+prn:P227 a owl:ObjectProperty .
+
+wdtn:P227 a owl:ObjectProperty .
+
+wdno:P227 a owl:Class ;
+	owl:complementOf _:286c7ee15bc3c86b8eb6b23547b34d68 .
+
+_:286c7ee15bc3c86b8eb6b23547b34d68 a owl:Restriction ;
+	owl:onProperty wdt:P227 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q861716 a wikibase:Item ;
+	rdfs:label "visual culture"@en ;
+	skos:prefLabel "visual culture"@en ;
+	schema:name "visual culture"@en ;
+	schema:description "aspect of culture expressed in visual images"@en .
+
+wd:P2579 a wikibase:Property ;
+	rdfs:label "studied by"@en ;
+	skos:prefLabel "studied by"@en ;
+	schema:name "studied by"@en ;
+	schema:description "subject is studied by this science or domain"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2579 ;
+	wikibase:claim p:P2579 ;
+	wikibase:statementProperty ps:P2579 ;
+	wikibase:statementValue psv:P2579 ;
+	wikibase:qualifier pq:P2579 ;
+	wikibase:qualifierValue pqv:P2579 ;
+	wikibase:reference pr:P2579 ;
+	wikibase:referenceValue prv:P2579 ;
+	wikibase:novalue wdno:P2579 .
+
+p:P2579 a owl:ObjectProperty .
+
+psv:P2579 a owl:ObjectProperty .
+
+pqv:P2579 a owl:ObjectProperty .
+
+prv:P2579 a owl:ObjectProperty .
+
+wdt:P2579 a owl:ObjectProperty .
+
+ps:P2579 a owl:ObjectProperty .
+
+pq:P2579 a owl:ObjectProperty .
+
+pr:P2579 a owl:ObjectProperty .
+
+wdno:P2579 a owl:Class ;
+	owl:complementOf _:646b8b1e4925fe4fca2b57678b2ceb02 .
+
+_:646b8b1e4925fe4fca2b57678b2ceb02 a owl:Restriction ;
+	owl:onProperty wdt:P2579 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1709 a wikibase:Property ;
+	rdfs:label "equivalent class"@en ;
+	skos:prefLabel "equivalent class"@en ;
+	schema:name "equivalent class"@en ;
+	schema:description "equivalent class in other ontologies (use property URI)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P1709 ;
+	wikibase:claim p:P1709 ;
+	wikibase:statementProperty ps:P1709 ;
+	wikibase:statementValue psv:P1709 ;
+	wikibase:qualifier pq:P1709 ;
+	wikibase:qualifierValue pqv:P1709 ;
+	wikibase:reference pr:P1709 ;
+	wikibase:referenceValue prv:P1709 ;
+	wikibase:novalue wdno:P1709 .
+
+p:P1709 a owl:ObjectProperty .
+
+psv:P1709 a owl:ObjectProperty .
+
+pqv:P1709 a owl:ObjectProperty .
+
+prv:P1709 a owl:ObjectProperty .
+
+wdt:P1709 a owl:ObjectProperty .
+
+ps:P1709 a owl:ObjectProperty .
+
+pq:P1709 a owl:ObjectProperty .
+
+pr:P1709 a owl:ObjectProperty .
+
+wdno:P1709 a owl:Class ;
+	owl:complementOf _:93c565e7ae0faaeda9bd92b52aafde14 .
+
+_:93c565e7ae0faaeda9bd92b52aafde14 a owl:Restriction ;
+	owl:onProperty wdt:P1709 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P186 a wikibase:Property ;
+	rdfs:label "made from material"@en ;
+	skos:prefLabel "made from material"@en ;
+	schema:name "made from material"@en ;
+	schema:description "material the subject or the object is made of or derived from (do not confuse with P10672 which is used for processes)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P186 ;
+	wikibase:claim p:P186 ;
+	wikibase:statementProperty ps:P186 ;
+	wikibase:statementValue psv:P186 ;
+	wikibase:qualifier pq:P186 ;
+	wikibase:qualifierValue pqv:P186 ;
+	wikibase:reference pr:P186 ;
+	wikibase:referenceValue prv:P186 ;
+	wikibase:novalue wdno:P186 .
+
+p:P186 a owl:ObjectProperty .
+
+psv:P186 a owl:ObjectProperty .
+
+pqv:P186 a owl:ObjectProperty .
+
+prv:P186 a owl:ObjectProperty .
+
+wdt:P186 a owl:ObjectProperty .
+
+ps:P186 a owl:ObjectProperty .
+
+pq:P186 a owl:ObjectProperty .
+
+pr:P186 a owl:ObjectProperty .
+
+wdno:P186 a owl:Class ;
+	owl:complementOf _:5b4814b34f39cbeb8f47994d89688b8b .
+
+_:5b4814b34f39cbeb8f47994d89688b8b a owl:Restriction ;
+	owl:onProperty wdt:P186 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1963 a wikibase:Property ;
+	rdfs:label "properties for this type"@en ;
+	skos:prefLabel "properties for this type"@en ;
+	schema:name "properties for this type"@en ;
+	schema:description "when this subject is used as object of \"instance of\" or \"occupation\", the following properties normally apply"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseProperty> ;
+	wikibase:directClaim wdt:P1963 ;
+	wikibase:claim p:P1963 ;
+	wikibase:statementProperty ps:P1963 ;
+	wikibase:statementValue psv:P1963 ;
+	wikibase:qualifier pq:P1963 ;
+	wikibase:qualifierValue pqv:P1963 ;
+	wikibase:reference pr:P1963 ;
+	wikibase:referenceValue prv:P1963 ;
+	wikibase:novalue wdno:P1963 .
+
+p:P1963 a owl:ObjectProperty .
+
+psv:P1963 a owl:ObjectProperty .
+
+pqv:P1963 a owl:ObjectProperty .
+
+prv:P1963 a owl:ObjectProperty .
+
+wdt:P1963 a owl:ObjectProperty .
+
+ps:P1963 a owl:ObjectProperty .
+
+pq:P1963 a owl:ObjectProperty .
+
+pr:P1963 a owl:ObjectProperty .
+
+wdno:P1963 a owl:Class ;
+	owl:complementOf _:4d8769fc1c544b1caed9e52ec1f84247 .
+
+_:4d8769fc1c544b1caed9e52ec1f84247 a owl:Restriction ;
+	owl:onProperty wdt:P1963 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P747 a wikibase:Property ;
+	rdfs:label "has edition or translation"@en ;
+	skos:prefLabel "has edition or translation"@en ;
+	schema:name "has edition or translation"@en ;
+	schema:description "link to an edition of this item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P747 ;
+	wikibase:claim p:P747 ;
+	wikibase:statementProperty ps:P747 ;
+	wikibase:statementValue psv:P747 ;
+	wikibase:qualifier pq:P747 ;
+	wikibase:qualifierValue pqv:P747 ;
+	wikibase:reference pr:P747 ;
+	wikibase:referenceValue prv:P747 ;
+	wikibase:novalue wdno:P747 .
+
+p:P747 a owl:ObjectProperty .
+
+psv:P747 a owl:ObjectProperty .
+
+pqv:P747 a owl:ObjectProperty .
+
+prv:P747 a owl:ObjectProperty .
+
+wdt:P747 a owl:ObjectProperty .
+
+ps:P747 a owl:ObjectProperty .
+
+pq:P747 a owl:ObjectProperty .
+
+pr:P747 a owl:ObjectProperty .
+
+wdno:P747 a owl:Class ;
+	owl:complementOf _:7feb6d2d25ba4947303c43d6d5fabcd2 .
+
+_:7feb6d2d25ba4947303c43d6d5fabcd2 a owl:Restriction ;
+	owl:onProperty wdt:P747 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2610 a wikibase:Property ;
+	rdfs:label "thickness"@en ;
+	skos:prefLabel "thickness"@en ;
+	schema:name "thickness"@en ;
+	schema:description "extent from one surface to the opposite"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Quantity> ;
+	wikibase:directClaim wdt:P2610 ;
+	wikibase:claim p:P2610 ;
+	wikibase:statementProperty ps:P2610 ;
+	wikibase:statementValue psv:P2610 ;
+	wikibase:qualifier pq:P2610 ;
+	wikibase:qualifierValue pqv:P2610 ;
+	wikibase:reference pr:P2610 ;
+	wikibase:referenceValue prv:P2610 ;
+	wikibase:novalue wdno:P2610 ;
+	wikibase:directClaimNormalized wdtn:P2610 ;
+	wikibase:statementValueNormalized psn:P2610 ;
+	wikibase:qualifierValueNormalized pqn:P2610 ;
+	wikibase:referenceValueNormalized prn:P2610 .
+
+p:P2610 a owl:ObjectProperty .
+
+psv:P2610 a owl:ObjectProperty .
+
+pqv:P2610 a owl:ObjectProperty .
+
+prv:P2610 a owl:ObjectProperty .
+
+wdt:P2610 a owl:DatatypeProperty .
+
+ps:P2610 a owl:DatatypeProperty .
+
+pq:P2610 a owl:DatatypeProperty .
+
+pr:P2610 a owl:DatatypeProperty .
+
+psn:P2610 a owl:ObjectProperty .
+
+pqn:P2610 a owl:ObjectProperty .
+
+prn:P2610 a owl:ObjectProperty .
+
+wdtn:P2610 a owl:DatatypeProperty .
+
+wdno:P2610 a owl:Class ;
+	owl:complementOf _:e1f7713cbe2087ceb2f092b7463d96cf .
+
+_:e1f7713cbe2087ceb2f092b7463d96cf a owl:Restriction ;
+	owl:onProperty wdt:P2610 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2048 a wikibase:Property ;
+	rdfs:label "height"@en ;
+	skos:prefLabel "height"@en ;
+	schema:name "height"@en ;
+	schema:description "vertical length of an entity"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Quantity> ;
+	wikibase:directClaim wdt:P2048 ;
+	wikibase:claim p:P2048 ;
+	wikibase:statementProperty ps:P2048 ;
+	wikibase:statementValue psv:P2048 ;
+	wikibase:qualifier pq:P2048 ;
+	wikibase:qualifierValue pqv:P2048 ;
+	wikibase:reference pr:P2048 ;
+	wikibase:referenceValue prv:P2048 ;
+	wikibase:novalue wdno:P2048 ;
+	wikibase:directClaimNormalized wdtn:P2048 ;
+	wikibase:statementValueNormalized psn:P2048 ;
+	wikibase:qualifierValueNormalized pqn:P2048 ;
+	wikibase:referenceValueNormalized prn:P2048 .
+
+p:P2048 a owl:ObjectProperty .
+
+psv:P2048 a owl:ObjectProperty .
+
+pqv:P2048 a owl:ObjectProperty .
+
+prv:P2048 a owl:ObjectProperty .
+
+wdt:P2048 a owl:DatatypeProperty .
+
+ps:P2048 a owl:DatatypeProperty .
+
+pq:P2048 a owl:DatatypeProperty .
+
+pr:P2048 a owl:DatatypeProperty .
+
+psn:P2048 a owl:ObjectProperty .
+
+pqn:P2048 a owl:ObjectProperty .
+
+prn:P2048 a owl:ObjectProperty .
+
+wdtn:P2048 a owl:DatatypeProperty .
+
+wdno:P2048 a owl:Class ;
+	owl:complementOf _:8b9e3c496971ca7a35e1bb77aa490b02 .
+
+_:8b9e3c496971ca7a35e1bb77aa490b02 a owl:Restriction ;
+	owl:onProperty wdt:P2048 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2049 a wikibase:Property ;
+	rdfs:label "width"@en ;
+	skos:prefLabel "width"@en ;
+	schema:name "width"@en ;
+	schema:description "width of an object"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Quantity> ;
+	wikibase:directClaim wdt:P2049 ;
+	wikibase:claim p:P2049 ;
+	wikibase:statementProperty ps:P2049 ;
+	wikibase:statementValue psv:P2049 ;
+	wikibase:qualifier pq:P2049 ;
+	wikibase:qualifierValue pqv:P2049 ;
+	wikibase:reference pr:P2049 ;
+	wikibase:referenceValue prv:P2049 ;
+	wikibase:novalue wdno:P2049 ;
+	wikibase:directClaimNormalized wdtn:P2049 ;
+	wikibase:statementValueNormalized psn:P2049 ;
+	wikibase:qualifierValueNormalized pqn:P2049 ;
+	wikibase:referenceValueNormalized prn:P2049 .
+
+p:P2049 a owl:ObjectProperty .
+
+psv:P2049 a owl:ObjectProperty .
+
+pqv:P2049 a owl:ObjectProperty .
+
+prv:P2049 a owl:ObjectProperty .
+
+wdt:P2049 a owl:DatatypeProperty .
+
+ps:P2049 a owl:DatatypeProperty .
+
+pq:P2049 a owl:DatatypeProperty .
+
+pr:P2049 a owl:DatatypeProperty .
+
+psn:P2049 a owl:ObjectProperty .
+
+pqn:P2049 a owl:ObjectProperty .
+
+prn:P2049 a owl:ObjectProperty .
+
+wdtn:P2049 a owl:DatatypeProperty .
+
+wdno:P2049 a owl:Class ;
+	owl:complementOf _:a55ba6e912ddf8da0985e42b4cc289b3 .
+
+_:a55ba6e912ddf8da0985e42b4cc289b3 a owl:Restriction ;
+	owl:onProperty wdt:P2049 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P170 a wikibase:Property ;
+	rdfs:label "creator"@en ;
+	skos:prefLabel "creator"@en ;
+	schema:name "creator"@en ;
+	schema:description "maker of this creative work or other object (where no more specific property exists)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P170 ;
+	wikibase:claim p:P170 ;
+	wikibase:statementProperty ps:P170 ;
+	wikibase:statementValue psv:P170 ;
+	wikibase:qualifier pq:P170 ;
+	wikibase:qualifierValue pqv:P170 ;
+	wikibase:reference pr:P170 ;
+	wikibase:referenceValue prv:P170 ;
+	wikibase:novalue wdno:P170 .
+
+p:P170 a owl:ObjectProperty .
+
+psv:P170 a owl:ObjectProperty .
+
+pqv:P170 a owl:ObjectProperty .
+
+prv:P170 a owl:ObjectProperty .
+
+wdt:P170 a owl:ObjectProperty .
+
+ps:P170 a owl:ObjectProperty .
+
+pq:P170 a owl:ObjectProperty .
+
+pr:P170 a owl:ObjectProperty .
+
+wdno:P170 a owl:Class ;
+	owl:complementOf _:9729a2092eee6702e50f1adf021a63b5 .
+
+_:9729a2092eee6702e50f1adf021a63b5 a owl:Restriction ;
+	owl:onProperty wdt:P170 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P166 a wikibase:Property ;
+	rdfs:label "award received"@en ;
+	skos:prefLabel "award received"@en ;
+	schema:name "award received"@en ;
+	schema:description "award or recognition received by a person, organization or creative work"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P166 ;
+	wikibase:claim p:P166 ;
+	wikibase:statementProperty ps:P166 ;
+	wikibase:statementValue psv:P166 ;
+	wikibase:qualifier pq:P166 ;
+	wikibase:qualifierValue pqv:P166 ;
+	wikibase:reference pr:P166 ;
+	wikibase:referenceValue prv:P166 ;
+	wikibase:novalue wdno:P166 .
+
+p:P166 a owl:ObjectProperty .
+
+psv:P166 a owl:ObjectProperty .
+
+pqv:P166 a owl:ObjectProperty .
+
+prv:P166 a owl:ObjectProperty .
+
+wdt:P166 a owl:ObjectProperty .
+
+ps:P166 a owl:ObjectProperty .
+
+pq:P166 a owl:ObjectProperty .
+
+pr:P166 a owl:ObjectProperty .
+
+wdno:P166 a owl:Class ;
+	owl:complementOf _:7d9248d3103ddecb66c1e5cdef1c87b5 .
+
+_:7d9248d3103ddecb66c1e5cdef1c87b5 a owl:Restriction ;
+	owl:onProperty wdt:P166 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P571 a wikibase:Property ;
+	rdfs:label "inception"@en ;
+	skos:prefLabel "inception"@en ;
+	schema:name "inception"@en ;
+	schema:description "time when an entity begins to exist; for date of official opening use P1619"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P571 ;
+	wikibase:claim p:P571 ;
+	wikibase:statementProperty ps:P571 ;
+	wikibase:statementValue psv:P571 ;
+	wikibase:qualifier pq:P571 ;
+	wikibase:qualifierValue pqv:P571 ;
+	wikibase:reference pr:P571 ;
+	wikibase:referenceValue prv:P571 ;
+	wikibase:novalue wdno:P571 .
+
+p:P571 a owl:ObjectProperty .
+
+psv:P571 a owl:ObjectProperty .
+
+pqv:P571 a owl:ObjectProperty .
+
+prv:P571 a owl:ObjectProperty .
+
+wdt:P571 a owl:DatatypeProperty .
+
+ps:P571 a owl:DatatypeProperty .
+
+pq:P571 a owl:DatatypeProperty .
+
+pr:P571 a owl:DatatypeProperty .
+
+wdno:P571 a owl:Class ;
+	owl:complementOf _:ed4d9507645e2210d8e4ed14d3266267 .
+
+_:ed4d9507645e2210d8e4ed14d3266267 a owl:Restriction ;
+	owl:onProperty wdt:P571 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P859 a wikibase:Property ;
+	rdfs:label "sponsor"@en ;
+	skos:prefLabel "sponsor"@en ;
+	schema:name "sponsor"@en ;
+	schema:description "organization or individual that sponsors this item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P859 ;
+	wikibase:claim p:P859 ;
+	wikibase:statementProperty ps:P859 ;
+	wikibase:statementValue psv:P859 ;
+	wikibase:qualifier pq:P859 ;
+	wikibase:qualifierValue pqv:P859 ;
+	wikibase:reference pr:P859 ;
+	wikibase:referenceValue prv:P859 ;
+	wikibase:novalue wdno:P859 .
+
+p:P859 a owl:ObjectProperty .
+
+psv:P859 a owl:ObjectProperty .
+
+pqv:P859 a owl:ObjectProperty .
+
+prv:P859 a owl:ObjectProperty .
+
+wdt:P859 a owl:ObjectProperty .
+
+ps:P859 a owl:ObjectProperty .
+
+pq:P859 a owl:ObjectProperty .
+
+pr:P859 a owl:ObjectProperty .
+
+wdno:P859 a owl:Class ;
+	owl:complementOf _:b807332ca56e5fa1c2bc9b419f330c23 .
+
+_:b807332ca56e5fa1c2bc9b419f330c23 a owl:Restriction ;
+	owl:onProperty wdt:P859 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P136 a wikibase:Property ;
+	rdfs:label "genre"@en ;
+	skos:prefLabel "genre"@en ;
+	schema:name "genre"@en ;
+	schema:description "creative work's genre or an artist's field of work (P101). Use main subject (P921) to relate creative works to their topic"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P136 ;
+	wikibase:claim p:P136 ;
+	wikibase:statementProperty ps:P136 ;
+	wikibase:statementValue psv:P136 ;
+	wikibase:qualifier pq:P136 ;
+	wikibase:qualifierValue pqv:P136 ;
+	wikibase:reference pr:P136 ;
+	wikibase:referenceValue prv:P136 ;
+	wikibase:novalue wdno:P136 .
+
+p:P136 a owl:ObjectProperty .
+
+psv:P136 a owl:ObjectProperty .
+
+pqv:P136 a owl:ObjectProperty .
+
+prv:P136 a owl:ObjectProperty .
+
+wdt:P136 a owl:ObjectProperty .
+
+ps:P136 a owl:ObjectProperty .
+
+pq:P136 a owl:ObjectProperty .
+
+pr:P136 a owl:ObjectProperty .
+
+wdno:P136 a owl:Class ;
+	owl:complementOf _:82beabebf8460a8af5174d4f3e83854d .
+
+_:82beabebf8460a8af5174d4f3e83854d a owl:Restriction ;
+	owl:onProperty wdt:P136 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1679 a wikibase:Property ;
+	rdfs:label "Art UK artwork ID"@en ;
+	skos:prefLabel "Art UK artwork ID"@en ;
+	schema:name "Art UK artwork ID"@en ;
+	schema:description "identifier for artworks (publicly owned oil paintings and sculptures in the UK)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1679 ;
+	wikibase:claim p:P1679 ;
+	wikibase:statementProperty ps:P1679 ;
+	wikibase:statementValue psv:P1679 ;
+	wikibase:qualifier pq:P1679 ;
+	wikibase:qualifierValue pqv:P1679 ;
+	wikibase:reference pr:P1679 ;
+	wikibase:referenceValue prv:P1679 ;
+	wikibase:novalue wdno:P1679 ;
+	wikibase:directClaimNormalized wdtn:P1679 ;
+	wikibase:statementValueNormalized psn:P1679 ;
+	wikibase:qualifierValueNormalized pqn:P1679 ;
+	wikibase:referenceValueNormalized prn:P1679 .
+
+p:P1679 a owl:ObjectProperty .
+
+psv:P1679 a owl:ObjectProperty .
+
+pqv:P1679 a owl:ObjectProperty .
+
+prv:P1679 a owl:ObjectProperty .
+
+wdt:P1679 a owl:DatatypeProperty .
+
+ps:P1679 a owl:DatatypeProperty .
+
+pq:P1679 a owl:DatatypeProperty .
+
+pr:P1679 a owl:DatatypeProperty .
+
+psn:P1679 a owl:ObjectProperty .
+
+pqn:P1679 a owl:ObjectProperty .
+
+prn:P1679 a owl:ObjectProperty .
+
+wdtn:P1679 a owl:ObjectProperty .
+
+wdno:P1679 a owl:Class ;
+	owl:complementOf _:18e3fb4ed5f4a37c0cdeb6011a4ef464 .
+
+_:18e3fb4ed5f4a37c0cdeb6011a4ef464 a owl:Restriction ;
+	owl:onProperty wdt:P1679 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P180 a wikibase:Property ;
+	rdfs:label "depicts"@en ;
+	skos:prefLabel "depicts"@en ;
+	schema:name "depicts"@en ;
+	schema:description "entity visually depicted in an image, literarily described in a work, or otherwise incorporated into an audiovisual or other medium; see also P921,  'main subject'"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P180 ;
+	wikibase:claim p:P180 ;
+	wikibase:statementProperty ps:P180 ;
+	wikibase:statementValue psv:P180 ;
+	wikibase:qualifier pq:P180 ;
+	wikibase:qualifierValue pqv:P180 ;
+	wikibase:reference pr:P180 ;
+	wikibase:referenceValue prv:P180 ;
+	wikibase:novalue wdno:P180 .
+
+p:P180 a owl:ObjectProperty .
+
+psv:P180 a owl:ObjectProperty .
+
+pqv:P180 a owl:ObjectProperty .
+
+prv:P180 a owl:ObjectProperty .
+
+wdt:P180 a owl:ObjectProperty .
+
+ps:P180 a owl:ObjectProperty .
+
+pq:P180 a owl:ObjectProperty .
+
+pr:P180 a owl:ObjectProperty .
+
+wdno:P180 a owl:Class ;
+	owl:complementOf _:20c681d1555b7d642c63c655f8ceb64a .
+
+_:20c681d1555b7d642c63c655f8ceb64a a owl:Restriction ;
+	owl:onProperty wdt:P180 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P921 a wikibase:Property ;
+	rdfs:label "main subject"@en ;
+	skos:prefLabel "main subject"@en ;
+	schema:name "main subject"@en ;
+	schema:description "primary topic of a work (see also P180: depicts)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P921 ;
+	wikibase:claim p:P921 ;
+	wikibase:statementProperty ps:P921 ;
+	wikibase:statementValue psv:P921 ;
+	wikibase:qualifier pq:P921 ;
+	wikibase:qualifierValue pqv:P921 ;
+	wikibase:reference pr:P921 ;
+	wikibase:referenceValue prv:P921 ;
+	wikibase:novalue wdno:P921 .
+
+p:P921 a owl:ObjectProperty .
+
+psv:P921 a owl:ObjectProperty .
+
+pqv:P921 a owl:ObjectProperty .
+
+prv:P921 a owl:ObjectProperty .
+
+wdt:P921 a owl:ObjectProperty .
+
+ps:P921 a owl:ObjectProperty .
+
+pq:P921 a owl:ObjectProperty .
+
+pr:P921 a owl:ObjectProperty .
+
+wdno:P921 a owl:Class ;
+	owl:complementOf _:fff380187de30e621a5e58a6336b9387 .
+
+_:fff380187de30e621a5e58a6336b9387 a owl:Restriction ;
+	owl:onProperty wdt:P921 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P195 a wikibase:Property ;
+	rdfs:label "collection"@en ;
+	skos:prefLabel "collection"@en ;
+	schema:name "collection"@en ;
+	schema:description "art, museum, archival, or bibliographic collection the subject is part of"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P195 ;
+	wikibase:claim p:P195 ;
+	wikibase:statementProperty ps:P195 ;
+	wikibase:statementValue psv:P195 ;
+	wikibase:qualifier pq:P195 ;
+	wikibase:qualifierValue pqv:P195 ;
+	wikibase:reference pr:P195 ;
+	wikibase:referenceValue prv:P195 ;
+	wikibase:novalue wdno:P195 .
+
+p:P195 a owl:ObjectProperty .
+
+psv:P195 a owl:ObjectProperty .
+
+pqv:P195 a owl:ObjectProperty .
+
+prv:P195 a owl:ObjectProperty .
+
+wdt:P195 a owl:ObjectProperty .
+
+ps:P195 a owl:ObjectProperty .
+
+pq:P195 a owl:ObjectProperty .
+
+pr:P195 a owl:ObjectProperty .
+
+wdno:P195 a owl:Class ;
+	owl:complementOf _:c5ee35fa0d92b854e4dc9e8ab30f6b8f .
+
+_:c5ee35fa0d92b854e4dc9e8ab30f6b8f a owl:Restriction ;
+	owl:onProperty wdt:P195 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1257 a wikibase:Property ;
+	rdfs:label "depicts Iconclass notation"@en ;
+	skos:prefLabel "depicts Iconclass notation"@en ;
+	schema:name "depicts Iconclass notation"@en ;
+	schema:description "Iconclass code depicted in an artwork. For linking Iconclass codes with their corresponding artistic themes or concepts, use P1256 (Iconclass notation)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1257 ;
+	wikibase:claim p:P1257 ;
+	wikibase:statementProperty ps:P1257 ;
+	wikibase:statementValue psv:P1257 ;
+	wikibase:qualifier pq:P1257 ;
+	wikibase:qualifierValue pqv:P1257 ;
+	wikibase:reference pr:P1257 ;
+	wikibase:referenceValue prv:P1257 ;
+	wikibase:novalue wdno:P1257 .
+
+p:P1257 a owl:ObjectProperty .
+
+psv:P1257 a owl:ObjectProperty .
+
+pqv:P1257 a owl:ObjectProperty .
+
+prv:P1257 a owl:ObjectProperty .
+
+wdt:P1257 a owl:DatatypeProperty .
+
+ps:P1257 a owl:DatatypeProperty .
+
+pq:P1257 a owl:DatatypeProperty .
+
+pr:P1257 a owl:DatatypeProperty .
+
+wdno:P1257 a owl:Class ;
+	owl:complementOf _:02dfa54fcb8421624a37867315d464b9 .
+
+_:02dfa54fcb8421624a37867315d464b9 a owl:Restriction ;
+	owl:onProperty wdt:P1257 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1014 a wikibase:Property ;
+	rdfs:label "Art & Architecture Thesaurus ID"@en ;
+	skos:prefLabel "Art & Architecture Thesaurus ID"@en ;
+	schema:name "Art & Architecture Thesaurus ID"@en ;
+	schema:description "identifier in the Art & Architecture Thesaurus by the Getty Research Institute"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1014 ;
+	wikibase:claim p:P1014 ;
+	wikibase:statementProperty ps:P1014 ;
+	wikibase:statementValue psv:P1014 ;
+	wikibase:qualifier pq:P1014 ;
+	wikibase:qualifierValue pqv:P1014 ;
+	wikibase:reference pr:P1014 ;
+	wikibase:referenceValue prv:P1014 ;
+	wikibase:novalue wdno:P1014 ;
+	wikibase:directClaimNormalized wdtn:P1014 ;
+	wikibase:statementValueNormalized psn:P1014 ;
+	wikibase:qualifierValueNormalized pqn:P1014 ;
+	wikibase:referenceValueNormalized prn:P1014 .
+
+p:P1014 a owl:ObjectProperty .
+
+psv:P1014 a owl:ObjectProperty .
+
+pqv:P1014 a owl:ObjectProperty .
+
+prv:P1014 a owl:ObjectProperty .
+
+wdt:P1014 a owl:DatatypeProperty .
+
+ps:P1014 a owl:DatatypeProperty .
+
+pq:P1014 a owl:DatatypeProperty .
+
+pr:P1014 a owl:DatatypeProperty .
+
+psn:P1014 a owl:ObjectProperty .
+
+pqn:P1014 a owl:ObjectProperty .
+
+prn:P1014 a owl:ObjectProperty .
+
+wdtn:P1014 a owl:ObjectProperty .
+
+wdno:P1014 a owl:Class ;
+	owl:complementOf _:b3313e8714e8603bc734ad31fe890277 .
+
+_:b3313e8714e8603bc734ad31fe890277 a owl:Restriction ;
+	owl:onProperty wdt:P1014 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8519 a wikibase:Property ;
+	rdfs:label "RKD thesaurus ID"@en ;
+	skos:prefLabel "RKD thesaurus ID"@en ;
+	schema:name "RKD thesaurus ID"@en ;
+	schema:description "identifier in the RKD thesaurus (Rijksbureau voor Kunsthistorische Documentatie)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8519 ;
+	wikibase:claim p:P8519 ;
+	wikibase:statementProperty ps:P8519 ;
+	wikibase:statementValue psv:P8519 ;
+	wikibase:qualifier pq:P8519 ;
+	wikibase:qualifierValue pqv:P8519 ;
+	wikibase:reference pr:P8519 ;
+	wikibase:referenceValue prv:P8519 ;
+	wikibase:novalue wdno:P8519 ;
+	wikibase:directClaimNormalized wdtn:P8519 ;
+	wikibase:statementValueNormalized psn:P8519 ;
+	wikibase:qualifierValueNormalized pqn:P8519 ;
+	wikibase:referenceValueNormalized prn:P8519 .
+
+p:P8519 a owl:ObjectProperty .
+
+psv:P8519 a owl:ObjectProperty .
+
+pqv:P8519 a owl:ObjectProperty .
+
+prv:P8519 a owl:ObjectProperty .
+
+wdt:P8519 a owl:DatatypeProperty .
+
+ps:P8519 a owl:DatatypeProperty .
+
+pq:P8519 a owl:DatatypeProperty .
+
+pr:P8519 a owl:DatatypeProperty .
+
+psn:P8519 a owl:ObjectProperty .
+
+pqn:P8519 a owl:ObjectProperty .
+
+prn:P8519 a owl:ObjectProperty .
+
+wdtn:P8519 a owl:ObjectProperty .
+
+wdno:P8519 a owl:Class ;
+	owl:complementOf _:da548e7f1dbb9a9772003bef26820301 .
+
+_:da548e7f1dbb9a9772003bef26820301 a owl:Restriction ;
+	owl:onProperty wdt:P8519 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q36649 a wikibase:Item ;
+	rdfs:label "visual arts"@en ;
+	skos:prefLabel "visual arts"@en ;
+	schema:name "visual arts"@en ;
+	schema:description "practice of art which creates works that are primarily visual in nature"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1557 a wikibase:Property ;
+	rdfs:label "manifestation of"@en ;
+	skos:prefLabel "manifestation of"@en ;
+	schema:name "manifestation of"@en ;
+	schema:description "inherent and characteristic embodiment of a given concept"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1557 ;
+	wikibase:claim p:P1557 ;
+	wikibase:statementProperty ps:P1557 ;
+	wikibase:statementValue psv:P1557 ;
+	wikibase:qualifier pq:P1557 ;
+	wikibase:qualifierValue pqv:P1557 ;
+	wikibase:reference pr:P1557 ;
+	wikibase:referenceValue prv:P1557 ;
+	wikibase:novalue wdno:P1557 .
+
+p:P1557 a owl:ObjectProperty .
+
+psv:P1557 a owl:ObjectProperty .
+
+pqv:P1557 a owl:ObjectProperty .
+
+prv:P1557 a owl:ObjectProperty .
+
+wdt:P1557 a owl:ObjectProperty .
+
+ps:P1557 a owl:ObjectProperty .
+
+pq:P1557 a owl:ObjectProperty .
+
+pr:P1557 a owl:ObjectProperty .
+
+wdno:P1557 a owl:Class ;
+	owl:complementOf _:983903d5dff2219d18c3fcdb5c55e893 .
+
+_:983903d5dff2219d18c3fcdb5c55e893 a owl:Restriction ;
+	owl:onProperty wdt:P1557 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P9570 a wikibase:Property ;
+	rdfs:label "scope note"@en ;
+	skos:prefLabel "scope note"@en ;
+	schema:name "scope note"@en ;
+	schema:description "note that describes what a term means in the context of a controlled vocabulary; use as a qualifier for identifier statements when a controlled vocabulary has a scope note"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Monolingualtext> ;
+	wikibase:directClaim wdt:P9570 ;
+	wikibase:claim p:P9570 ;
+	wikibase:statementProperty ps:P9570 ;
+	wikibase:statementValue psv:P9570 ;
+	wikibase:qualifier pq:P9570 ;
+	wikibase:qualifierValue pqv:P9570 ;
+	wikibase:reference pr:P9570 ;
+	wikibase:referenceValue prv:P9570 ;
+	wikibase:novalue wdno:P9570 .
+
+p:P9570 a owl:ObjectProperty .
+
+psv:P9570 a owl:ObjectProperty .
+
+pqv:P9570 a owl:ObjectProperty .
+
+prv:P9570 a owl:ObjectProperty .
+
+wdt:P9570 a owl:DatatypeProperty .
+
+ps:P9570 a owl:DatatypeProperty .
+
+pq:P9570 a owl:DatatypeProperty .
+
+pr:P9570 a owl:DatatypeProperty .
+
+wdno:P9570 a owl:Class ;
+	owl:complementOf _:4539f6588c38392a83c8b136d8f4d4fb .
+
+_:4539f6588c38392a83c8b136d8f4d4fb a owl:Restriction ;
+	owl:onProperty wdt:P9570 ;
+	owl:someValuesFrom owl:Thing .

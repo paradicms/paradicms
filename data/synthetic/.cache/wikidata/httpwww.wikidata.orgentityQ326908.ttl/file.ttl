@@ -1,0 +1,1628 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q326908 a schema:Dataset ;
+	schema:about wd:Q326908 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1911594060"^^xsd:integer ;
+	schema:dateModified "2023-06-09T18:08:47Z"^^xsd:dateTime ;
+	wikibase:statements "18"^^xsd:integer ;
+	wikibase:sitelinks "33"^^xsd:integer ;
+	wikibase:identifiers "12"^^xsd:integer .
+
+wd:Q326908 a wikibase:Item .
+
+<https://zh.wikipedia.org/wiki/%E8%B1%AA%E6%96%AF%E5%A4%9A%E5%A4%AB%E7%A9%BA%E9%97%B4> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "豪斯多夫空间"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pms.wikipedia.org/wiki/Spassi_%C3%ABd_Hausdorff> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "pms" ;
+	schema:isPartOf <https://pms.wikipedia.org/> ;
+	schema:name "Spassi ëd Hausdorff"@pms .
+
+<https://pms.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Przestrze%C5%84_Hausdorffa> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Przestrzeń Hausdorffa"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%ED%95%98%EC%9A%B0%EC%8A%A4%EB%8F%84%EB%A5%B4%ED%94%84_%EA%B3%B5%EA%B0%84> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "하우스도르프 공간"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%97%D7%91_%D7%94%D7%90%D7%95%D7%A1%D7%93%D7%95%D7%A8%D7%A3> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "he" ;
+	schema:isPartOf <https://he.wikipedia.org/> ;
+	schema:name "מרחב האוסדורף"@he .
+
+<https://he.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Espace_s%C3%A9par%C3%A9> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Espace séparé"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Espacio_de_Hausdorff> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Espacio de Hausdorff"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Spazio_di_Hausdorff> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Spazio di Hausdorff"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://et.wikipedia.org/wiki/Hausdorffi_ruum> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "et" ;
+	schema:isPartOf <https://et.wikipedia.org/> ;
+	schema:name "Hausdorffi ruum"@et .
+
+<https://et.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Hausdorff-Raum> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Hausdorff-Raum"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E3%83%8F%E3%82%A6%E3%82%B9%E3%83%89%E3%83%AB%E3%83%95%E7%A9%BA%E9%96%93> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "ハウスドルフ空間"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Hausdorff-ruimte> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Hausdorff-ruimte"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D9%81%D8%B6%D8%A7%D8%A1_%D9%87%D8%A7%D9%88%D8%B3%D8%AF%D9%88%D8%B1%D9%81> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "فضاء هاوسدورف"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Hausdorffrum> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Hausdorffrum"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pt.wikipedia.org/wiki/Espa%C3%A7o_de_Hausdorff> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Espaço de Hausdorff"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sk.wikipedia.org/wiki/Hausdorffov_priestor> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "sk" ;
+	schema:isPartOf <https://sk.wikipedia.org/> ;
+	schema:name "Hausdorffov priestor"@sk .
+
+<https://sk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%A5%D0%B0%D1%83%D1%81%D0%B4%D0%BE%D1%80%D1%84%D0%BE%D0%B2%D0%BE_%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%BE> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Хаусдорфово пространство"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://mn.wikipedia.org/wiki/%D0%A5%D0%B0%D1%83%D1%81%D0%B4%D0%BE%D1%80%D1%84%D1%8B%D0%BD_%D0%BE%D0%B3%D1%82%D0%BE%D1%80%D0%B3%D1%83%D0%B9> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "mn" ;
+	schema:isPartOf <https://mn.wikipedia.org/> ;
+	schema:name "Хаусдорфын огторгуй"@mn .
+
+<https://mn.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/Hausdorff_space> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Hausdorff space"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Hausdorff_uzay> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Hausdorff uzay"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cv.wikipedia.org/wiki/%D0%A5%D0%B0%D1%83%D1%81%D0%B4%D0%BE%D1%80%D1%84_%D1%83%C3%A7%D0%BB%C4%83%D1%85%C4%95> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "cv" ;
+	schema:isPartOf <https://cv.wikipedia.org/> ;
+	schema:name "Хаусдорф уçлăхĕ"@cv .
+
+<https://cv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Espai_de_Hausdorff> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Espai de Hausdorff"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fi.wikipedia.org/wiki/Hausdorffin_avaruus> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "fi" ;
+	schema:isPartOf <https://fi.wikipedia.org/> ;
+	schema:name "Hausdorffin avaruus"@fi .
+
+<https://fi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%93%D0%B0%D1%83%D1%81%D0%B4%D0%BE%D1%80%D1%84%D1%96%D0%B2_%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%96%D1%80> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Гаусдорфів простір"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/Hausdorff%C5%AFv_prostor> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Hausdorffův prostor"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D9%81%D8%B6%D8%A7%DB%8C_%D9%87%D8%A7%D8%B3%D8%AF%D9%88%D8%B1%D9%81> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "فضای هاسدورف"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bg.wikipedia.org/wiki/%D0%A5%D0%B0%D1%83%D1%81%D0%B4%D0%BE%D1%80%D1%84%D0%BE%D0%B2%D0%BE_%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D1%81%D1%82%D0%B2%D0%BE> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "bg" ;
+	schema:isPartOf <https://bg.wikipedia.org/> ;
+	schema:name "Хаусдорфово пространство"@bg .
+
+<https://bg.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://kk.wikipedia.org/wiki/%D0%A5%D0%B0%D1%83%D1%81%D0%B4%D0%BE%D1%80%D1%84%D1%82%D1%8B%D2%9B_%D0%BA%D0%B5%D2%A3%D1%96%D1%81%D1%82%D1%96%D0%BA> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "kk" ;
+	schema:isPartOf <https://kk.wikipedia.org/> ;
+	schema:name "Хаусдорфтық кеңістік"@kk .
+
+<https://kk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://da.wikipedia.org/wiki/Hausdorffrum> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "da" ;
+	schema:isPartOf <https://da.wikipedia.org/> ;
+	schema:name "Hausdorffrum"@da .
+
+<https://da.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hu.wikipedia.org/wiki/Hausdorff-t%C3%A9r> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "hu" ;
+	schema:isPartOf <https://hu.wikipedia.org/> ;
+	schema:name "Hausdorff-tér"@hu .
+
+<https://hu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nn.wikipedia.org/wiki/Hausdorffrom> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "nn" ;
+	schema:isPartOf <https://nn.wikipedia.org/> ;
+	schema:name "Hausdorffrom"@nn .
+
+<https://nn.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eo.wikipedia.org/wiki/Hausdorff-a_spaco> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "eo" ;
+	schema:isPartOf <https://eo.wikipedia.org/> ;
+	schema:name "Hausdorff-a spaco"@eo .
+
+<https://eo.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/Kh%C3%B4ng_gian_Hausdorff> a schema:Article ;
+	schema:about wd:Q326908 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Không gian Hausdorff"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q326908 wdt:P279 wd:Q7977932,
+		wd:Q8778429,
+		wd:Q15841121 ;
+	wdt:P138 wd:Q75856 ;
+	wdt:P646 "/m/03k2c" ;
+	wdt:P1296 "0032241" ;
+	wdt:P3827 "hausdorff-spaces" ;
+	wdt:P1417 "topic/Hausdorff-space" ;
+	wdt:P4746 "133662" ;
+	wdt:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Hausdorff%20space.svg> ;
+	wdt:P2534 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\forall x,y\\in X\\ \\exists \\,U_{x},U_{y}\\in {\\mathcal {T}}:\\;x\\in U_{x}\\land y\\in U_{y}\\land U_{x}\\cap U_{y}=\\emptyset }\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi mathvariant=\"normal\">&#x2200;<!-- ∀ --></mi>\n        <mi>x</mi>\n        <mo>,</mo>\n        <mi>y</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mi>X</mi>\n        <mtext>&#xA0;</mtext>\n        <mi mathvariant=\"normal\">&#x2203;<!-- ∃ --></mi>\n        <mspace width=\"thinmathspace\" />\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>,</mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>y</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">T</mi>\n          </mrow>\n        </mrow>\n        <mo>:</mo>\n        <mspace width=\"thickmathspace\" />\n        <mi>x</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2227;<!-- ∧ --></mo>\n        <mi>y</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>y</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2227;<!-- ∧ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2229;<!-- ∩ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>y</mi>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <mi mathvariant=\"normal\">&#x2205;<!-- ∅ --></mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\forall x,y\\in X\\ \\exists \\,U_{x},U_{y}\\in {\\mathcal {T}}:\\;x\\in U_{x}\\land y\\in U_{y}\\land U_{x}\\cap U_{y}=\\emptyset }</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> ;
+	wdt:P6366 "191399826" ;
+	wdtn:P6366 <http://ma-graph.org/entity/191399826> ;
+	wdt:P2812 "T2-Space",
+		"HausdorffSpace" ;
+	wdt:P4215 "Hausdorff space" ;
+	wdt:P10283 "C191399826" ;
+	wdt:P10376 "mathematics/hausdorff-space" ;
+	wdt:P11514 "khausdorfovo-prostranstvo-d4307b" ;
+	p:P279 s:Q326908-c37385e7-44c3-afac-8c96-4d1bf3df013d .
+
+s:Q326908-c37385e7-44c3-afac-8c96-4d1bf3df013d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q7977932 .
+
+wd:Q326908 p:P279 s:Q326908-1fc83991-4e76-7c62-0860-74085ba6fcff .
+
+s:Q326908-1fc83991-4e76-7c62-0860-74085ba6fcff a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q8778429 .
+
+wd:Q326908 p:P279 s:Q326908-d574f9a4-4a3b-e145-5aee-7819fef274ae .
+
+s:Q326908-d574f9a4-4a3b-e145-5aee-7819fef274ae a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q15841121 .
+
+wd:Q326908 p:P138 s:q326908-AAFFB1E4-8B40-4834-9E68-44BE9546D698 .
+
+s:q326908-AAFFB1E4-8B40-4834-9E68-44BE9546D698 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P138 wd:Q75856 .
+
+wd:Q326908 p:P646 s:Q326908-9A241BC9-B8E3-4268-92AB-6761939FE957 .
+
+s:Q326908-9A241BC9-B8E3-4268-92AB-6761939FE957 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/03k2c" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q326908 p:P1296 s:Q326908-A4DF4EBD-CB98-46DC-8AC2-FEDA429D5CC4 .
+
+s:Q326908-A4DF4EBD-CB98-46DC-8AC2-FEDA429D5CC4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1296 "0032241" .
+
+wd:Q326908 p:P3827 s:Q326908-0955506D-5358-49F2-B351-5C2FAD36799B .
+
+s:Q326908-0955506D-5358-49F2-B351-5C2FAD36799B a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3827 "hausdorff-spaces" .
+
+wd:Q326908 p:P1417 s:Q326908-AB25FB3B-3D89-4421-8916-DE4E6A8DAA62 .
+
+s:Q326908-AB25FB3B-3D89-4421-8916-DE4E6A8DAA62 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1417 "topic/Hausdorff-space" .
+
+wd:Q326908 p:P4746 s:Q326908-4C1ABA15-63F9-44B6-947D-616D70DF6F0E .
+
+s:Q326908-4C1ABA15-63F9-44B6-947D-616D70DF6F0E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4746 "133662" .
+
+wd:Q326908 p:P18 s:Q326908-28fc52fc-4393-271b-aa60-6cbe0abaf40f .
+
+s:Q326908-28fc52fc-4393-271b-aa60-6cbe0abaf40f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P18 <http://commons.wikimedia.org/wiki/Special:FilePath/Hausdorff%20space.svg> .
+
+wd:Q326908 p:P2534 s:Q326908-97752034-4434-9fdf-b594-20088ec1f241 .
+
+s:Q326908-97752034-4434-9fdf-b594-20088ec1f241 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2534 "<math xmlns=\"http://www.w3.org/1998/Math/MathML\" display=\"block\" alttext=\"{\\displaystyle \\forall x,y\\in X\\ \\exists \\,U_{x},U_{y}\\in {\\mathcal {T}}:\\;x\\in U_{x}\\land y\\in U_{y}\\land U_{x}\\cap U_{y}=\\emptyset }\">\n  <semantics>\n    <mrow class=\"MJX-TeXAtom-ORD\">\n      <mstyle displaystyle=\"true\" scriptlevel=\"0\">\n        <mi mathvariant=\"normal\">&#x2200;<!-- ∀ --></mi>\n        <mi>x</mi>\n        <mo>,</mo>\n        <mi>y</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mi>X</mi>\n        <mtext>&#xA0;</mtext>\n        <mi mathvariant=\"normal\">&#x2203;<!-- ∃ --></mi>\n        <mspace width=\"thinmathspace\" />\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>,</mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>y</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <mrow class=\"MJX-TeXAtom-ORD\">\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi class=\"MJX-tex-caligraphic\" mathvariant=\"script\">T</mi>\n          </mrow>\n        </mrow>\n        <mo>:</mo>\n        <mspace width=\"thickmathspace\" />\n        <mi>x</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2227;<!-- ∧ --></mo>\n        <mi>y</mi>\n        <mo>&#x2208;<!-- ∈ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>y</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2227;<!-- ∧ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>x</mi>\n          </mrow>\n        </msub>\n        <mo>&#x2229;<!-- ∩ --></mo>\n        <msub>\n          <mi>U</mi>\n          <mrow class=\"MJX-TeXAtom-ORD\">\n            <mi>y</mi>\n          </mrow>\n        </msub>\n        <mo>=</mo>\n        <mi mathvariant=\"normal\">&#x2205;<!-- ∅ --></mi>\n      </mstyle>\n    </mrow>\n    <annotation encoding=\"application/x-tex\">{\\displaystyle \\forall x,y\\in X\\ \\exists \\,U_{x},U_{y}\\in {\\mathcal {T}}:\\;x\\in U_{x}\\land y\\in U_{y}\\land U_{x}\\cap U_{y}=\\emptyset }</annotation>\n  </semantics>\n</math>"^^<http://www.w3.org/1998/Math/MathML> .
+
+wd:Q326908 p:P6366 s:Q326908-8A5D57D8-73FE-429F-B860-0BA0769CCB20 .
+
+s:Q326908-8A5D57D8-73FE-429F-B860-0BA0769CCB20 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "191399826" ;
+	psn:P6366 <http://ma-graph.org/entity/191399826> .
+
+wd:Q326908 p:P2812 s:Q326908-f99450e1-4cfd-0489-e232-6cf6ebd9fb97 .
+
+s:Q326908-f99450e1-4cfd-0489-e232-6cf6ebd9fb97 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2812 "T2-Space" .
+
+wd:Q326908 p:P2812 s:Q326908-B3550B08-795C-4650-B4D0-A5CE14DC8ED2 .
+
+s:Q326908-B3550B08-795C-4650-B4D0-A5CE14DC8ED2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2812 "HausdorffSpace" .
+
+wd:Q326908 p:P4215 s:Q326908-400b27ee-4179-dd07-b4a5-da911a96c729 .
+
+s:Q326908-400b27ee-4179-dd07-b4a5-da911a96c729 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P4215 "Hausdorff space" .
+
+wd:Q326908 p:P10283 s:Q326908-0F84948A-8681-4FC5-B821-F305ABFDDAFD .
+
+s:Q326908-0F84948A-8681-4FC5-B821-F305ABFDDAFD a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10283 "C191399826" ;
+	prov:wasDerivedFrom ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 .
+
+wd:Q326908 p:P10376 s:Q326908-c7da2c1d-491b-ee77-bd45-3c73823add4b .
+
+s:Q326908-c7da2c1d-491b-ee77-bd45-3c73823add4b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P10376 "mathematics/hausdorff-space" .
+
+wd:Q326908 p:P11514 s:Q326908-2F46A461-D222-4E98-9EFA-549D35518339 .
+
+s:Q326908-2F46A461-D222-4E98-9EFA-549D35518339 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P11514 "khausdorfovo-prostranstvo-d4307b" .
+
+wd:Q326908 rdfs:label "豪斯多夫空间"@zh-hans ;
+	skos:prefLabel "豪斯多夫空间"@zh-hans ;
+	schema:name "豪斯多夫空间"@zh-hans ;
+	rdfs:label "豪斯多夫空間"@zh-hant ;
+	skos:prefLabel "豪斯多夫空間"@zh-hant ;
+	schema:name "豪斯多夫空間"@zh-hant ;
+	rdfs:label "郝斯多夫空間"@zh-hk ;
+	skos:prefLabel "郝斯多夫空間"@zh-hk ;
+	schema:name "郝斯多夫空間"@zh-hk ;
+	rdfs:label "豪斯多夫空间"@zh-cn ;
+	skos:prefLabel "豪斯多夫空间"@zh-cn ;
+	schema:name "豪斯多夫空间"@zh-cn ;
+	rdfs:label "豪斯多夫空间"@zh-sg ;
+	skos:prefLabel "豪斯多夫空间"@zh-sg ;
+	schema:name "豪斯多夫空间"@zh-sg ;
+	rdfs:label "郝斯多夫空間"@zh-tw ;
+	skos:prefLabel "郝斯多夫空間"@zh-tw ;
+	schema:name "郝斯多夫空間"@zh-tw ;
+	rdfs:label "Spassi ëd Hausdorff"@pms ;
+	skos:prefLabel "Spassi ëd Hausdorff"@pms ;
+	schema:name "Spassi ëd Hausdorff"@pms ;
+	rdfs:label "przestrzeń Hausdorffa"@pl ;
+	skos:prefLabel "przestrzeń Hausdorffa"@pl ;
+	schema:name "przestrzeń Hausdorffa"@pl ;
+	rdfs:label "하우스도르프 공간"@ko ;
+	skos:prefLabel "하우스도르프 공간"@ko ;
+	schema:name "하우스도르프 공간"@ko ;
+	rdfs:label "מרחב האוסדורף"@he ;
+	skos:prefLabel "מרחב האוסדורף"@he ;
+	schema:name "מרחב האוסדורף"@he ;
+	rdfs:label "espace séparé"@fr ;
+	skos:prefLabel "espace séparé"@fr ;
+	schema:name "espace séparé"@fr ;
+	rdfs:label "espacio de Hausdorff"@es ;
+	skos:prefLabel "espacio de Hausdorff"@es ;
+	schema:name "espacio de Hausdorff"@es ;
+	rdfs:label "spazio di Hausdorff"@it ;
+	skos:prefLabel "spazio di Hausdorff"@it ;
+	schema:name "spazio di Hausdorff"@it ;
+	rdfs:label "Hausdorffi ruum"@et ;
+	skos:prefLabel "Hausdorffi ruum"@et ;
+	schema:name "Hausdorffi ruum"@et ;
+	rdfs:label "Hausdorff-Raum"@de ;
+	skos:prefLabel "Hausdorff-Raum"@de ;
+	schema:name "Hausdorff-Raum"@de ;
+	rdfs:label "ハウスドルフ空間"@ja ;
+	skos:prefLabel "ハウスドルフ空間"@ja ;
+	schema:name "ハウスドルフ空間"@ja ;
+	rdfs:label "Hausdorff-ruimte"@nl ;
+	skos:prefLabel "Hausdorff-ruimte"@nl ;
+	schema:name "Hausdorff-ruimte"@nl ;
+	rdfs:label "فضاء هاوسدورف"@ar ;
+	skos:prefLabel "فضاء هاوسدورف"@ar ;
+	schema:name "فضاء هاوسدورف"@ar ;
+	rdfs:label "Hausdorffrum"@sv ;
+	skos:prefLabel "Hausdorffrum"@sv ;
+	schema:name "Hausdorffrum"@sv ;
+	rdfs:label "espaço de Hausdorff"@pt ;
+	skos:prefLabel "espaço de Hausdorff"@pt ;
+	schema:name "espaço de Hausdorff"@pt ;
+	rdfs:label "Hausdorffov priestor"@sk ;
+	skos:prefLabel "Hausdorffov priestor"@sk ;
+	schema:name "Hausdorffov priestor"@sk ;
+	rdfs:label "хаусдорфово пространство"@ru ;
+	skos:prefLabel "хаусдорфово пространство"@ru ;
+	schema:name "хаусдорфово пространство"@ru ;
+	rdfs:label "Хаусдорфын огторгуй"@mn ;
+	skos:prefLabel "Хаусдорфын огторгуй"@mn ;
+	schema:name "Хаусдорфын огторгуй"@mn ;
+	rdfs:label "Hausdorff space"@en ;
+	skos:prefLabel "Hausdorff space"@en ;
+	schema:name "Hausdorff space"@en ;
+	rdfs:label "Hausdorff uzay"@tr ;
+	skos:prefLabel "Hausdorff uzay"@tr ;
+	schema:name "Hausdorff uzay"@tr ;
+	rdfs:label "Хаусдорф уçлăхĕ"@cv ;
+	skos:prefLabel "Хаусдорф уçлăхĕ"@cv ;
+	schema:name "Хаусдорф уçлăхĕ"@cv ;
+	rdfs:label "Espai de Hausdorff"@ca ;
+	skos:prefLabel "Espai de Hausdorff"@ca ;
+	schema:name "Espai de Hausdorff"@ca ;
+	rdfs:label "Hausdorffin avaruus"@fi ;
+	skos:prefLabel "Hausdorffin avaruus"@fi ;
+	schema:name "Hausdorffin avaruus"@fi ;
+	rdfs:label "гауздорфів простір"@uk ;
+	skos:prefLabel "гауздорфів простір"@uk ;
+	schema:name "гауздорфів простір"@uk ;
+	rdfs:label "Hausdorffův prostor"@cs ;
+	skos:prefLabel "Hausdorffův prostor"@cs ;
+	schema:name "Hausdorffův prostor"@cs ;
+	rdfs:label "فضای هاسدورف"@fa ;
+	skos:prefLabel "فضای هاسدورف"@fa ;
+	schema:name "فضای هاسدورف"@fa ;
+	rdfs:label "Хаусдорфово пространство"@bg ;
+	skos:prefLabel "Хаусдорфово пространство"@bg ;
+	schema:name "Хаусдорфово пространство"@bg ;
+	rdfs:label "حاۋسدورفتىق كەڭىستىك"@kk-arab ;
+	skos:prefLabel "حاۋسدورفتىق كەڭىستىك"@kk-arab ;
+	schema:name "حاۋسدورفتىق كەڭىستىك"@kk-arab ;
+	rdfs:label "حاۋسدورفتىق كەڭىستىك"@kk-cn ;
+	skos:prefLabel "حاۋسدورفتىق كەڭىستىك"@kk-cn ;
+	schema:name "حاۋسدورفتىق كەڭىستىك"@kk-cn ;
+	rdfs:label "Xawsdorftıq keñistik"@kk-tr ;
+	skos:prefLabel "Xawsdorftıq keñistik"@kk-tr ;
+	schema:name "Xawsdorftıq keñistik"@kk-tr ;
+	rdfs:label "Хаусдорфтық кеңістік"@kk-kz ;
+	skos:prefLabel "Хаусдорфтық кеңістік"@kk-kz ;
+	schema:name "Хаусдорфтық кеңістік"@kk-kz ;
+	rdfs:label "Хаусдорфтық кеңістік"@kk-cyrl ;
+	skos:prefLabel "Хаусдорфтық кеңістік"@kk-cyrl ;
+	schema:name "Хаусдорфтық кеңістік"@kk-cyrl ;
+	rdfs:label "Xawsdorftıq keñistik"@kk-latn ;
+	skos:prefLabel "Xawsdorftıq keñistik"@kk-latn ;
+	schema:name "Xawsdorftıq keñistik"@kk-latn ;
+	rdfs:label "Hausdorffrum"@da ;
+	skos:prefLabel "Hausdorffrum"@da ;
+	schema:name "Hausdorffrum"@da ;
+	rdfs:label "Хаусдорфтық кеңістік"@kk ;
+	skos:prefLabel "Хаусдорфтық кеңістік"@kk ;
+	schema:name "Хаусдорфтық кеңістік"@kk ;
+	rdfs:label "豪斯多夫空间"@zh ;
+	skos:prefLabel "豪斯多夫空间"@zh ;
+	schema:name "豪斯多夫空间"@zh ;
+	rdfs:label "Hausdorff-tér"@hu ;
+	skos:prefLabel "Hausdorff-tér"@hu ;
+	schema:name "Hausdorff-tér"@hu ;
+	rdfs:label "espaço de Hausdorff"@pt-br ;
+	skos:prefLabel "espaço de Hausdorff"@pt-br ;
+	schema:name "espaço de Hausdorff"@pt-br ;
+	rdfs:label "Hausdorff space"@sco ;
+	skos:prefLabel "Hausdorff space"@sco ;
+	schema:name "Hausdorff space"@sco ;
+	rdfs:label "spaco de Hausdorff"@eo ;
+	skos:prefLabel "spaco de Hausdorff"@eo ;
+	schema:name "spaco de Hausdorff"@eo ;
+	rdfs:label "không gian Hausdorff"@vi ;
+	skos:prefLabel "không gian Hausdorff"@vi ;
+	schema:name "không gian Hausdorff"@vi ;
+	rdfs:label "Hausdorffen espazio"@eu ;
+	skos:prefLabel "Hausdorffen espazio"@eu ;
+	schema:name "Hausdorffen espazio"@eu ;
+	rdfs:label "hausdorffrom"@nn ;
+	skos:prefLabel "hausdorffrom"@nn ;
+	schema:name "hausdorffrom"@nn ;
+	rdfs:label "ruang Hausdorff"@ms ;
+	skos:prefLabel "ruang Hausdorff"@ms ;
+	schema:name "ruang Hausdorff"@ms ;
+	rdfs:label "Хаусфорфов простор"@mk ;
+	skos:prefLabel "Хаусфорфов простор"@mk ;
+	schema:name "Хаусфорфов простор"@mk ;
+	rdfs:label "spațiu Hausdorff"@ro ;
+	skos:prefLabel "spațiu Hausdorff"@ro ;
+	schema:name "spațiu Hausdorff"@ro ;
+	rdfs:label "hausdorffrom"@nb ;
+	skos:prefLabel "hausdorffrom"@nb ;
+	schema:name "hausdorffrom"@nb ;
+	rdfs:label "Hausdorffov prostor"@sl ;
+	skos:prefLabel "Hausdorffov prostor"@sl ;
+	schema:name "Hausdorffov prostor"@sl ;
+	schema:description "topological space in which distinct points have disjoint neighbourhoods"@en,
+		"Puntu desberdinek ingurune disjuntuak dituztela betetzen duen espazio topologikoa."@eu,
+		"espaço topológico em que pontos distintos têm vizinhanças disjuntas"@pt,
+		"topologischer Raum"@de,
+		"espai topològic"@ca,
+		"topologia spaco, kies paroj de punktoj estas apartigeblaj per ĉirkaŭaĵoj"@eo,
+		"espaço topológico em que pontos distintos têm vizinhanças disjuntas"@pt-br,
+		"typ przestrzeni topologicznej"@pl,
+		"topologikus tér a matematikában"@hu,
+		"espacio topológico en el que distintos puntos tienen vecindades disjuntas"@es ;
+	skos:altLabel "预正则空间"@zh,
+		"豪斯多夫拓撲"@zh,
+		"豪斯道夫空间"@zh,
+		"T2空間"@zh,
+		"T2空间"@zh,
+		"R1空间"@zh,
+		"分离空间"@zh,
+		"Hausdorff空间"@zh,
+		"przestrzeń T2"@pl,
+		"T2 공간"@ko,
+		"분리된 공간"@ko,
+		"분리 공간"@ko,
+		"하우스돌프 공간"@ko,
+		"하우스도르프 집합"@ko,
+		"מרחב T2"@he,
+		"espace de Hausdorff"@fr,
+		"espace separe"@fr,
+		"espacio T2"@es,
+		"propiedad de Hausdorff"@es,
+		"espacios de Hausdorff"@es,
+		"espacio Hausdorff"@es,
+		"spazio T2"@it,
+		"spazio separato"@it,
+		"Hausdorffraum"@de,
+		"Hausdorffscher Raum"@de,
+		"Separierter Raum"@de,
+		"T₂-Raum"@de,
+		"Hausdorffsches Trennungsaxiom"@de,
+		"T2-Raum"@de,
+		"Parakompakter Hausdorff-Raum"@de,
+		"Hausdorffeigenschaft"@de,
+		"Hausdorff-Trennungsaxiom"@de,
+		"Hausdorffsch"@de,
+		"Hausdorff"@nl,
+		"Hausdorffruimte"@nl,
+		"T2-rum"@sv,
+		"espaço separado"@pt,
+		"espaço T₂"@pt,
+		"T2 priestor"@sk,
+		"Propietat de Hausdorff"@ca,
+		"Hausdorff-avaruus"@fi,
+		"хаусдорфів топологічний простір"@uk,
+		"гаусдорфів топологічний простір"@uk,
+		"хаусдорфів простір"@uk,
+		"T2 prostor"@cs,
+		"Oddělitelný prostor"@cs,
+		"Preregulær"@da,
+		"Separeret rum"@da,
+		"Hausdorff-rum"@da,
+		"Preregulært rum"@da,
+		"separated space"@en,
+		"T₂ space"@en,
+		"T2 space"@en,
+		"Hausdorff-a spaco"@eo,
+		"haŭsdorfa spaco"@eo,
+		"Hausdorff-spaco"@eo,
+		"haŭsdorfspaco"@eo,
+		"topologia spaco de Hausdorff"@eo,
+		"T₂-spaco"@eo,
+		"T2-spaco"@eo,
+		"R1空間"@ja,
+		"Hausdorff-rom"@nn,
+		"T₂-rom"@nn,
+		"T2-rom"@nn,
+		"хаусдорфово топологическое пространство"@ru,
+		"пространство T2"@ru,
+		"пространство со свойством T2"@ru,
+		"espaço separado"@pt-br,
+		"espaço T₂"@pt-br,
+		"T2-rom"@nb,
+		"Hausdorff-rom"@nb,
+		"separert rom"@nb .
+
+wd:Q7977932 a wikibase:Item ;
+	rdfs:label "Weak Hausdorff space"@en ;
+	skos:prefLabel "Weak Hausdorff space"@en ;
+	schema:name "Weak Hausdorff space"@en ;
+	schema:description "concept in algebraic topology"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q8778429 a wikibase:Item ;
+	rdfs:label "sober space"@en ;
+	skos:prefLabel "sober space"@en ;
+	schema:name "sober space"@en ;
+	schema:description "topological space whose topology is fully captured by its lattice of open sets"@en .
+
+wd:Q15841121 a wikibase:Item ;
+	rdfs:label "preregular space"@en ;
+	skos:prefLabel "preregular space"@en ;
+	schema:name "preregular space"@en ;
+	schema:description "topological space"@en .
+
+wd:Q75856 a wikibase:Item ;
+	rdfs:label "Felix Hausdorff"@en ;
+	skos:prefLabel "Felix Hausdorff"@en ;
+	schema:name "Felix Hausdorff"@en ;
+	schema:description "German mathematician  (*1868 – †1942)"@en .
+
+wd:P138 a wikibase:Property ;
+	rdfs:label "named after"@en ;
+	skos:prefLabel "named after"@en ;
+	schema:name "named after"@en ;
+	schema:description "entity or event that inspired the subject's name, or namesake (in at least one language). Qualifier \"applies to name\" (P5168) can be used to indicate which one"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P138 ;
+	wikibase:claim p:P138 ;
+	wikibase:statementProperty ps:P138 ;
+	wikibase:statementValue psv:P138 ;
+	wikibase:qualifier pq:P138 ;
+	wikibase:qualifierValue pqv:P138 ;
+	wikibase:reference pr:P138 ;
+	wikibase:referenceValue prv:P138 ;
+	wikibase:novalue wdno:P138 .
+
+p:P138 a owl:ObjectProperty .
+
+psv:P138 a owl:ObjectProperty .
+
+pqv:P138 a owl:ObjectProperty .
+
+prv:P138 a owl:ObjectProperty .
+
+wdt:P138 a owl:ObjectProperty .
+
+ps:P138 a owl:ObjectProperty .
+
+pq:P138 a owl:ObjectProperty .
+
+pr:P138 a owl:ObjectProperty .
+
+wdno:P138 a owl:Class ;
+	owl:complementOf _:e0c4151f3ca560de64568f2e6cd5a11a .
+
+_:e0c4151f3ca560de64568f2e6cd5a11a a owl:Restriction ;
+	owl:onProperty wdt:P138 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1296 a wikibase:Property ;
+	rdfs:label "Gran Enciclopèdia Catalana ID"@en ;
+	skos:prefLabel "Gran Enciclopèdia Catalana ID"@en ;
+	schema:name "Gran Enciclopèdia Catalana ID"@en ;
+	schema:description "identifier for an item in the Gran Enciclopèdia Catalana"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1296 ;
+	wikibase:claim p:P1296 ;
+	wikibase:statementProperty ps:P1296 ;
+	wikibase:statementValue psv:P1296 ;
+	wikibase:qualifier pq:P1296 ;
+	wikibase:qualifierValue pqv:P1296 ;
+	wikibase:reference pr:P1296 ;
+	wikibase:referenceValue prv:P1296 ;
+	wikibase:novalue wdno:P1296 ;
+	wikibase:directClaimNormalized wdtn:P1296 ;
+	wikibase:statementValueNormalized psn:P1296 ;
+	wikibase:qualifierValueNormalized pqn:P1296 ;
+	wikibase:referenceValueNormalized prn:P1296 .
+
+p:P1296 a owl:ObjectProperty .
+
+psv:P1296 a owl:ObjectProperty .
+
+pqv:P1296 a owl:ObjectProperty .
+
+prv:P1296 a owl:ObjectProperty .
+
+wdt:P1296 a owl:DatatypeProperty .
+
+ps:P1296 a owl:DatatypeProperty .
+
+pq:P1296 a owl:DatatypeProperty .
+
+pr:P1296 a owl:DatatypeProperty .
+
+psn:P1296 a owl:ObjectProperty .
+
+pqn:P1296 a owl:ObjectProperty .
+
+prn:P1296 a owl:ObjectProperty .
+
+wdtn:P1296 a owl:ObjectProperty .
+
+wdno:P1296 a owl:Class ;
+	owl:complementOf _:2b4e9773af61d716df50661bea8bd3b2 .
+
+_:2b4e9773af61d716df50661bea8bd3b2 a owl:Restriction ;
+	owl:onProperty wdt:P1296 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3827 a wikibase:Property ;
+	rdfs:label "JSTOR topic ID"@en ;
+	skos:prefLabel "JSTOR topic ID"@en ;
+	schema:name "JSTOR topic ID"@en ;
+	schema:description "identifier for a topic at JSTOR"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3827 ;
+	wikibase:claim p:P3827 ;
+	wikibase:statementProperty ps:P3827 ;
+	wikibase:statementValue psv:P3827 ;
+	wikibase:qualifier pq:P3827 ;
+	wikibase:qualifierValue pqv:P3827 ;
+	wikibase:reference pr:P3827 ;
+	wikibase:referenceValue prv:P3827 ;
+	wikibase:novalue wdno:P3827 ;
+	wikibase:directClaimNormalized wdtn:P3827 ;
+	wikibase:statementValueNormalized psn:P3827 ;
+	wikibase:qualifierValueNormalized pqn:P3827 ;
+	wikibase:referenceValueNormalized prn:P3827 .
+
+p:P3827 a owl:ObjectProperty .
+
+psv:P3827 a owl:ObjectProperty .
+
+pqv:P3827 a owl:ObjectProperty .
+
+prv:P3827 a owl:ObjectProperty .
+
+wdt:P3827 a owl:DatatypeProperty .
+
+ps:P3827 a owl:DatatypeProperty .
+
+pq:P3827 a owl:DatatypeProperty .
+
+pr:P3827 a owl:DatatypeProperty .
+
+psn:P3827 a owl:ObjectProperty .
+
+pqn:P3827 a owl:ObjectProperty .
+
+prn:P3827 a owl:ObjectProperty .
+
+wdtn:P3827 a owl:ObjectProperty .
+
+wdno:P3827 a owl:Class ;
+	owl:complementOf _:591354acd9a1c60143190541be6b2d38 .
+
+_:591354acd9a1c60143190541be6b2d38 a owl:Restriction ;
+	owl:onProperty wdt:P3827 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1417 a wikibase:Property ;
+	rdfs:label "Encyclopædia Britannica Online ID"@en ;
+	skos:prefLabel "Encyclopædia Britannica Online ID"@en ;
+	schema:name "Encyclopædia Britannica Online ID"@en ;
+	schema:description "identifier for an article in the online version of Encyclopædia Britannica"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1417 ;
+	wikibase:claim p:P1417 ;
+	wikibase:statementProperty ps:P1417 ;
+	wikibase:statementValue psv:P1417 ;
+	wikibase:qualifier pq:P1417 ;
+	wikibase:qualifierValue pqv:P1417 ;
+	wikibase:reference pr:P1417 ;
+	wikibase:referenceValue prv:P1417 ;
+	wikibase:novalue wdno:P1417 ;
+	wikibase:directClaimNormalized wdtn:P1417 ;
+	wikibase:statementValueNormalized psn:P1417 ;
+	wikibase:qualifierValueNormalized pqn:P1417 ;
+	wikibase:referenceValueNormalized prn:P1417 .
+
+p:P1417 a owl:ObjectProperty .
+
+psv:P1417 a owl:ObjectProperty .
+
+pqv:P1417 a owl:ObjectProperty .
+
+prv:P1417 a owl:ObjectProperty .
+
+wdt:P1417 a owl:DatatypeProperty .
+
+ps:P1417 a owl:DatatypeProperty .
+
+pq:P1417 a owl:DatatypeProperty .
+
+pr:P1417 a owl:DatatypeProperty .
+
+psn:P1417 a owl:ObjectProperty .
+
+pqn:P1417 a owl:ObjectProperty .
+
+prn:P1417 a owl:ObjectProperty .
+
+wdtn:P1417 a owl:ObjectProperty .
+
+wdno:P1417 a owl:Class ;
+	owl:complementOf _:0cb1ab8817799c4db539b18975ce292a .
+
+_:0cb1ab8817799c4db539b18975ce292a a owl:Restriction ;
+	owl:onProperty wdt:P1417 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4746 a wikibase:Property ;
+	rdfs:label "Elhuyar ZTH ID"@en ;
+	skos:prefLabel "Elhuyar ZTH ID"@en ;
+	schema:name "Elhuyar ZTH ID"@en ;
+	schema:description "Elhuyar Science and Technology Dictionary has a wide range of terms in four languages (en, es, fr, eu) that can easily be linked to and from Wikidata"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4746 ;
+	wikibase:claim p:P4746 ;
+	wikibase:statementProperty ps:P4746 ;
+	wikibase:statementValue psv:P4746 ;
+	wikibase:qualifier pq:P4746 ;
+	wikibase:qualifierValue pqv:P4746 ;
+	wikibase:reference pr:P4746 ;
+	wikibase:referenceValue prv:P4746 ;
+	wikibase:novalue wdno:P4746 ;
+	wikibase:directClaimNormalized wdtn:P4746 ;
+	wikibase:statementValueNormalized psn:P4746 ;
+	wikibase:qualifierValueNormalized pqn:P4746 ;
+	wikibase:referenceValueNormalized prn:P4746 .
+
+p:P4746 a owl:ObjectProperty .
+
+psv:P4746 a owl:ObjectProperty .
+
+pqv:P4746 a owl:ObjectProperty .
+
+prv:P4746 a owl:ObjectProperty .
+
+wdt:P4746 a owl:DatatypeProperty .
+
+ps:P4746 a owl:DatatypeProperty .
+
+pq:P4746 a owl:DatatypeProperty .
+
+pr:P4746 a owl:DatatypeProperty .
+
+psn:P4746 a owl:ObjectProperty .
+
+pqn:P4746 a owl:ObjectProperty .
+
+prn:P4746 a owl:ObjectProperty .
+
+wdtn:P4746 a owl:ObjectProperty .
+
+wdno:P4746 a owl:Class ;
+	owl:complementOf _:bb7f68ecb3e1370fa661a0df6b6a66ba .
+
+_:bb7f68ecb3e1370fa661a0df6b6a66ba a owl:Restriction ;
+	owl:onProperty wdt:P4746 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P18 a wikibase:Property ;
+	rdfs:label "image"@en ;
+	skos:prefLabel "image"@en ;
+	schema:name "image"@en ;
+	schema:description "image of relevant illustration of the subject; if available, also use more specific properties (sample: coat of arms image, locator map, flag image, signature image, logo image, collage image)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#CommonsMedia> ;
+	wikibase:directClaim wdt:P18 ;
+	wikibase:claim p:P18 ;
+	wikibase:statementProperty ps:P18 ;
+	wikibase:statementValue psv:P18 ;
+	wikibase:qualifier pq:P18 ;
+	wikibase:qualifierValue pqv:P18 ;
+	wikibase:reference pr:P18 ;
+	wikibase:referenceValue prv:P18 ;
+	wikibase:novalue wdno:P18 .
+
+p:P18 a owl:ObjectProperty .
+
+psv:P18 a owl:ObjectProperty .
+
+pqv:P18 a owl:ObjectProperty .
+
+prv:P18 a owl:ObjectProperty .
+
+wdt:P18 a owl:ObjectProperty .
+
+ps:P18 a owl:ObjectProperty .
+
+pq:P18 a owl:ObjectProperty .
+
+pr:P18 a owl:ObjectProperty .
+
+wdno:P18 a owl:Class ;
+	owl:complementOf _:90353c5ec33a5dc569985590a17a3551 .
+
+_:90353c5ec33a5dc569985590a17a3551 a owl:Restriction ;
+	owl:onProperty wdt:P18 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2534 a wikibase:Property ;
+	rdfs:label "defining formula"@en ;
+	skos:prefLabel "defining formula"@en ;
+	schema:name "defining formula"@en ;
+	schema:description "mathematical formula representing a theorem or law. Maximum length: 400 characters"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Math> ;
+	wikibase:directClaim wdt:P2534 ;
+	wikibase:claim p:P2534 ;
+	wikibase:statementProperty ps:P2534 ;
+	wikibase:statementValue psv:P2534 ;
+	wikibase:qualifier pq:P2534 ;
+	wikibase:qualifierValue pqv:P2534 ;
+	wikibase:reference pr:P2534 ;
+	wikibase:referenceValue prv:P2534 ;
+	wikibase:novalue wdno:P2534 .
+
+p:P2534 a owl:ObjectProperty .
+
+psv:P2534 a owl:ObjectProperty .
+
+pqv:P2534 a owl:ObjectProperty .
+
+prv:P2534 a owl:ObjectProperty .
+
+wdt:P2534 a owl:DatatypeProperty .
+
+ps:P2534 a owl:DatatypeProperty .
+
+pq:P2534 a owl:DatatypeProperty .
+
+pr:P2534 a owl:DatatypeProperty .
+
+wdno:P2534 a owl:Class ;
+	owl:complementOf _:56106536cf53d9fe8e74344a86006cd7 .
+
+_:56106536cf53d9fe8e74344a86006cd7 a owl:Restriction ;
+	owl:onProperty wdt:P2534 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2812 a wikibase:Property ;
+	rdfs:label "MathWorld ID"@en ;
+	skos:prefLabel "MathWorld ID"@en ;
+	schema:name "MathWorld ID"@en ;
+	schema:description "identifier for entries in MathWorld, online mathematics reference work"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2812 ;
+	wikibase:claim p:P2812 ;
+	wikibase:statementProperty ps:P2812 ;
+	wikibase:statementValue psv:P2812 ;
+	wikibase:qualifier pq:P2812 ;
+	wikibase:qualifierValue pqv:P2812 ;
+	wikibase:reference pr:P2812 ;
+	wikibase:referenceValue prv:P2812 ;
+	wikibase:novalue wdno:P2812 ;
+	wikibase:directClaimNormalized wdtn:P2812 ;
+	wikibase:statementValueNormalized psn:P2812 ;
+	wikibase:qualifierValueNormalized pqn:P2812 ;
+	wikibase:referenceValueNormalized prn:P2812 .
+
+p:P2812 a owl:ObjectProperty .
+
+psv:P2812 a owl:ObjectProperty .
+
+pqv:P2812 a owl:ObjectProperty .
+
+prv:P2812 a owl:ObjectProperty .
+
+wdt:P2812 a owl:DatatypeProperty .
+
+ps:P2812 a owl:DatatypeProperty .
+
+pq:P2812 a owl:DatatypeProperty .
+
+pr:P2812 a owl:DatatypeProperty .
+
+psn:P2812 a owl:ObjectProperty .
+
+pqn:P2812 a owl:ObjectProperty .
+
+prn:P2812 a owl:ObjectProperty .
+
+wdtn:P2812 a owl:ObjectProperty .
+
+wdno:P2812 a owl:Class ;
+	owl:complementOf _:fb0f7ab1055ee23989a25d6be40e2991 .
+
+_:fb0f7ab1055ee23989a25d6be40e2991 a owl:Restriction ;
+	owl:onProperty wdt:P2812 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P4215 a wikibase:Property ;
+	rdfs:label "nLab ID"@en ;
+	skos:prefLabel "nLab ID"@en ;
+	schema:name "nLab ID"@en ;
+	schema:description "name of a page in nLab wiki"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P4215 ;
+	wikibase:claim p:P4215 ;
+	wikibase:statementProperty ps:P4215 ;
+	wikibase:statementValue psv:P4215 ;
+	wikibase:qualifier pq:P4215 ;
+	wikibase:qualifierValue pqv:P4215 ;
+	wikibase:reference pr:P4215 ;
+	wikibase:referenceValue prv:P4215 ;
+	wikibase:novalue wdno:P4215 ;
+	wikibase:directClaimNormalized wdtn:P4215 ;
+	wikibase:statementValueNormalized psn:P4215 ;
+	wikibase:qualifierValueNormalized pqn:P4215 ;
+	wikibase:referenceValueNormalized prn:P4215 .
+
+p:P4215 a owl:ObjectProperty .
+
+psv:P4215 a owl:ObjectProperty .
+
+pqv:P4215 a owl:ObjectProperty .
+
+prv:P4215 a owl:ObjectProperty .
+
+wdt:P4215 a owl:DatatypeProperty .
+
+ps:P4215 a owl:DatatypeProperty .
+
+pq:P4215 a owl:DatatypeProperty .
+
+pr:P4215 a owl:DatatypeProperty .
+
+psn:P4215 a owl:ObjectProperty .
+
+pqn:P4215 a owl:ObjectProperty .
+
+prn:P4215 a owl:ObjectProperty .
+
+wdtn:P4215 a owl:ObjectProperty .
+
+wdno:P4215 a owl:Class ;
+	owl:complementOf _:f9a1d8b81de5a31700d65a433ccbace3 .
+
+_:f9a1d8b81de5a31700d65a433ccbace3 a owl:Restriction ;
+	owl:onProperty wdt:P4215 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10283 a wikibase:Property ;
+	rdfs:label "OpenAlex ID"@en ;
+	skos:prefLabel "OpenAlex ID"@en ;
+	schema:name "OpenAlex ID"@en ;
+	schema:description "identifier for works, grants, authors, institutes, venues, concepts/subjects in OpenAlex"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10283 ;
+	wikibase:claim p:P10283 ;
+	wikibase:statementProperty ps:P10283 ;
+	wikibase:statementValue psv:P10283 ;
+	wikibase:qualifier pq:P10283 ;
+	wikibase:qualifierValue pqv:P10283 ;
+	wikibase:reference pr:P10283 ;
+	wikibase:referenceValue prv:P10283 ;
+	wikibase:novalue wdno:P10283 ;
+	wikibase:directClaimNormalized wdtn:P10283 ;
+	wikibase:statementValueNormalized psn:P10283 ;
+	wikibase:qualifierValueNormalized pqn:P10283 ;
+	wikibase:referenceValueNormalized prn:P10283 .
+
+p:P10283 a owl:ObjectProperty .
+
+psv:P10283 a owl:ObjectProperty .
+
+pqv:P10283 a owl:ObjectProperty .
+
+prv:P10283 a owl:ObjectProperty .
+
+wdt:P10283 a owl:DatatypeProperty .
+
+ps:P10283 a owl:DatatypeProperty .
+
+pq:P10283 a owl:DatatypeProperty .
+
+pr:P10283 a owl:DatatypeProperty .
+
+psn:P10283 a owl:ObjectProperty .
+
+pqn:P10283 a owl:ObjectProperty .
+
+prn:P10283 a owl:ObjectProperty .
+
+wdtn:P10283 a owl:ObjectProperty .
+
+wdno:P10283 a owl:Class ;
+	owl:complementOf _:32a5275a7dbbfba13192c77c3ada4d3a .
+
+_:32a5275a7dbbfba13192c77c3ada4d3a a owl:Restriction ;
+	owl:onProperty wdt:P10283 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P10376 a wikibase:Property ;
+	rdfs:label "ScienceDirect topic ID"@en ;
+	skos:prefLabel "ScienceDirect topic ID"@en ;
+	schema:name "ScienceDirect topic ID"@en ;
+	schema:description "identifier for a topic on the research publication website ScienceDirect"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P10376 ;
+	wikibase:claim p:P10376 ;
+	wikibase:statementProperty ps:P10376 ;
+	wikibase:statementValue psv:P10376 ;
+	wikibase:qualifier pq:P10376 ;
+	wikibase:qualifierValue pqv:P10376 ;
+	wikibase:reference pr:P10376 ;
+	wikibase:referenceValue prv:P10376 ;
+	wikibase:novalue wdno:P10376 ;
+	wikibase:directClaimNormalized wdtn:P10376 ;
+	wikibase:statementValueNormalized psn:P10376 ;
+	wikibase:qualifierValueNormalized pqn:P10376 ;
+	wikibase:referenceValueNormalized prn:P10376 .
+
+p:P10376 a owl:ObjectProperty .
+
+psv:P10376 a owl:ObjectProperty .
+
+pqv:P10376 a owl:ObjectProperty .
+
+prv:P10376 a owl:ObjectProperty .
+
+wdt:P10376 a owl:DatatypeProperty .
+
+ps:P10376 a owl:DatatypeProperty .
+
+pq:P10376 a owl:DatatypeProperty .
+
+pr:P10376 a owl:DatatypeProperty .
+
+psn:P10376 a owl:ObjectProperty .
+
+pqn:P10376 a owl:ObjectProperty .
+
+prn:P10376 a owl:ObjectProperty .
+
+wdtn:P10376 a owl:ObjectProperty .
+
+wdno:P10376 a owl:Class ;
+	owl:complementOf _:64359d3fd04905039bf30ffe6c80d986 .
+
+_:64359d3fd04905039bf30ffe6c80d986 a owl:Restriction ;
+	owl:onProperty wdt:P10376 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P11514 a wikibase:Property ;
+	rdfs:label "Great Russian Encyclopedia portal ID"@en ;
+	skos:prefLabel "Great Russian Encyclopedia portal ID"@en ;
+	schema:name "Great Russian Encyclopedia portal ID"@en ;
+	schema:description "identifier of an entry on the web portal based on the Great Russian Encyclopedia and formerly known as \"Knowledge\" (for the older version of encyclopedia use P2924)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P11514 ;
+	wikibase:claim p:P11514 ;
+	wikibase:statementProperty ps:P11514 ;
+	wikibase:statementValue psv:P11514 ;
+	wikibase:qualifier pq:P11514 ;
+	wikibase:qualifierValue pqv:P11514 ;
+	wikibase:reference pr:P11514 ;
+	wikibase:referenceValue prv:P11514 ;
+	wikibase:novalue wdno:P11514 ;
+	wikibase:directClaimNormalized wdtn:P11514 ;
+	wikibase:statementValueNormalized psn:P11514 ;
+	wikibase:qualifierValueNormalized pqn:P11514 ;
+	wikibase:referenceValueNormalized prn:P11514 .
+
+p:P11514 a owl:ObjectProperty .
+
+psv:P11514 a owl:ObjectProperty .
+
+pqv:P11514 a owl:ObjectProperty .
+
+prv:P11514 a owl:ObjectProperty .
+
+wdt:P11514 a owl:DatatypeProperty .
+
+ps:P11514 a owl:DatatypeProperty .
+
+pq:P11514 a owl:DatatypeProperty .
+
+pr:P11514 a owl:DatatypeProperty .
+
+psn:P11514 a owl:ObjectProperty .
+
+pqn:P11514 a owl:ObjectProperty .
+
+prn:P11514 a owl:ObjectProperty .
+
+wdtn:P11514 a owl:ObjectProperty .
+
+wdno:P11514 a owl:Class ;
+	owl:complementOf _:5d36652ac32d2710f4fb28e817a22714 .
+
+_:5d36652ac32d2710f4fb28e817a22714 a owl:Restriction ;
+	owl:onProperty wdt:P11514 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q107507571 a wikibase:Item ;
+	rdfs:label "OpenAlex"@en ;
+	skos:prefLabel "OpenAlex"@en ;
+	schema:name "OpenAlex"@en ;
+	schema:description "an open catalog of scholarly papers, authors, institutions, venues, and concepts"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P854 a wikibase:Property ;
+	rdfs:label "reference URL"@en ;
+	skos:prefLabel "reference URL"@en ;
+	schema:name "reference URL"@en ;
+	schema:description "should be used for Internet URLs as references. Use \"Wikimedia import URL\" (P4656) for imports from WMF sites"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P854 ;
+	wikibase:claim p:P854 ;
+	wikibase:statementProperty ps:P854 ;
+	wikibase:statementValue psv:P854 ;
+	wikibase:qualifier pq:P854 ;
+	wikibase:qualifierValue pqv:P854 ;
+	wikibase:reference pr:P854 ;
+	wikibase:referenceValue prv:P854 ;
+	wikibase:novalue wdno:P854 .
+
+p:P854 a owl:ObjectProperty .
+
+psv:P854 a owl:ObjectProperty .
+
+pqv:P854 a owl:ObjectProperty .
+
+prv:P854 a owl:ObjectProperty .
+
+wdt:P854 a owl:ObjectProperty .
+
+ps:P854 a owl:ObjectProperty .
+
+pq:P854 a owl:ObjectProperty .
+
+pr:P854 a owl:ObjectProperty .
+
+wdno:P854 a owl:Class ;
+	owl:complementOf _:7317e7e5a3edc1980ecfe7616bb5fa1d .
+
+_:7317e7e5a3edc1980ecfe7616bb5fa1d a owl:Restriction ;
+	owl:onProperty wdt:P854 ;
+	owl:someValuesFrom owl:Thing .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:3b2ff2744ee9af4b07734336d1723792 a wikibase:TimeValue ;
+	wikibase:timeValue "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:c13ba4d7902ead2693f79396bc25bd35d4d14030 a wikibase:Reference ;
+	pr:P248 wd:Q107507571 ;
+	pr:P813 "2022-01-26T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:3b2ff2744ee9af4b07734336d1723792 ;
+	pr:P854 <https://docs.openalex.org/download-snapshot/snapshot-data-format> .
