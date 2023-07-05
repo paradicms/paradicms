@@ -365,12 +365,10 @@ class WikibaseItem(ResourceBackedNamedModel):
         self,
         *,
         graph: Graph,
-        instance_of_property_uri: URIRef,
         subclass_of_property_uri: URIRef,
     ) -> "Resource":
         for property_ in (
             OWL.sameAs,
-            instance_of_property_uri,
             subclass_of_property_uri,
         ):
             for triple in self._resource.graph.triples(
