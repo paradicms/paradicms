@@ -52,6 +52,7 @@ export class SchemaCreativeWork
     );
     if (location) {
       return {
+        label: null,
         location,
         role: "Current",
       };
