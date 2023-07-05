@@ -533,12 +533,16 @@ class SyntheticDataPipeline(Pipeline):
             #     .set_longitude(-73.687576)
             #     .build()
             # )
-            named_location = (
+            named_location_builder = (
                 SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
-                .set_latitude(42.728104)
-                .set_longitude(-73.687576)
-                .build()
+                .set_latitude(40.779451)
+                .set_longitude(-73.963245)
             )
+            if work_i == 0:
+                named_location_builder.add_same_as(
+                    URIRef("http://www.wikidata.org/entity/Q89503830")
+                )
+            named_location = named_location_builder.build()
             yield named_location
 
             work_destruction_date = date(day=1, month=1, year=2022)
