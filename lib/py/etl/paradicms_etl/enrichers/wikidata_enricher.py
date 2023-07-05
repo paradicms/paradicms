@@ -75,7 +75,7 @@ class WikidataEnricher:
                     ):
                         for (
                             connected_wikidata_entity
-                        ) in get_connected_wikidata_entities(
+                        ) in get_connected_wikidata_entities(  # type: ignore
                             referenced_wikidata_entity
                         ):
                             if (
