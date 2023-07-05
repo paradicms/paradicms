@@ -1,0 +1,563 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q24334685 a schema:Dataset ;
+	schema:about wd:Q24334685 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1915967523"^^xsd:integer ;
+	schema:dateModified "2023-06-15T17:56:00Z"^^xsd:dateTime ;
+	wikibase:statements "5"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "2"^^xsd:integer .
+
+wd:Q24334685 a wikibase:Item ;
+	wdt:P279 wd:Q18706315,
+		wd:Q7184903 ;
+	wdt:P361 wd:Q9134 ;
+	wdt:P7497 "Mythology" ;
+	wdt:P8408 "MythologicalThing" ;
+	wdtn:P8408 <http://kbpedia.org/kko/rc/MythologicalThing> ;
+	p:P279 s:Q24334685-27300eef-4e9f-8589-681a-e3784afae882 .
+
+s:Q24334685-27300eef-4e9f-8589-681a-e3784afae882 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q18706315 .
+
+wd:Q24334685 p:P279 s:Q24334685-cc188f8e-44ac-f3f4-2f1a-aea21395c1d4 .
+
+s:Q24334685-cc188f8e-44ac-f3f4-2f1a-aea21395c1d4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q7184903 .
+
+wd:Q24334685 p:P361 s:Q24334685-9b7543c7-4437-e118-3b6d-0a671ff74ba6 .
+
+s:Q24334685-9b7543c7-4437-e118-3b6d-0a671ff74ba6 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q9134 .
+
+wd:Q24334685 p:P7497 s:Q24334685-5f47ceaa-4f35-c8bb-e068-cad82cc07b58 .
+
+s:Q24334685-5f47ceaa-4f35-c8bb-e068-cad82cc07b58 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P7497 "Mythology" .
+
+wd:Q24334685 p:P8408 s:Q24334685-1E53817A-8781-47D1-9185-2867AE0F35E9 .
+
+s:Q24334685-1E53817A-8781-47D1-9185-2867AE0F35E9 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8408 "MythologicalThing" ;
+	psn:P8408 <http://kbpedia.org/kko/rc/MythologicalThing> ;
+	prov:wasDerivedFrom ref:9a681f9dd95c90224547c404e11295f4f7dcf54e .
+
+wd:Q24334685 rdfs:label "mythical entity"@en ;
+	skos:prefLabel "mythical entity"@en ;
+	schema:name "mythical entity"@en ;
+	rdfs:label "mytisk entitet"@da ;
+	skos:prefLabel "mytisk entitet"@da ;
+	schema:name "mytisk entitet"@da ;
+	rdfs:label "мифическая сущность"@ru ;
+	skos:prefLabel "мифическая сущность"@ru ;
+	schema:name "мифическая сущность"@ru ;
+	rdfs:label "mitologia ento"@eo ;
+	skos:prefLabel "mitologia ento"@eo ;
+	schema:name "mitologia ento"@eo ;
+	rdfs:label "entità mitologica"@it ;
+	skos:prefLabel "entità mitologica"@it ;
+	schema:name "entità mitologica"@it ;
+	rdfs:label "entidad mitológica"@es ;
+	skos:prefLabel "entidad mitológica"@es ;
+	schema:name "entidad mitológica"@es ;
+	rdfs:label "μυθική οντότητα"@el ;
+	skos:prefLabel "μυθική οντότητα"@el ;
+	schema:name "μυθική οντότητα"@el ;
+	rdfs:label "митска сушност"@mk ;
+	skos:prefLabel "митска сушност"@mk ;
+	schema:name "митска сушност"@mk ;
+	rdfs:label "كيان أسطوري"@ar ;
+	skos:prefLabel "كيان أسطوري"@ar ;
+	schema:name "كيان أسطوري"@ar ;
+	rdfs:label "byt mityczny"@pl ;
+	skos:prefLabel "byt mityczny"@pl ;
+	schema:name "byt mityczny"@pl ;
+	rdfs:label "entité mythique"@fr ;
+	skos:prefLabel "entité mythique"@fr ;
+	schema:name "entité mythique"@fr ;
+	rdfs:label "mythische entiteit"@nl ;
+	skos:prefLabel "mythische entiteit"@nl ;
+	schema:name "mythische entiteit"@nl ;
+	rdfs:label "mitikus entitás"@hu ;
+	skos:prefLabel "mitikus entitás"@hu ;
+	schema:name "mitikus entitás"@hu ;
+	rdfs:label "entitate mythic"@ia ;
+	skos:prefLabel "entitate mythic"@ia ;
+	schema:name "entitate mythic"@ia ;
+	rdfs:label "mythische Entität"@de ;
+	skos:prefLabel "mythische Entität"@de ;
+	schema:name "mythische Entität"@de ;
+	rdfs:label "اساطیری وجود"@ur ;
+	skos:prefLabel "اساطیری وجود"@ur ;
+	schema:name "اساطیری وجود"@ur ;
+	rdfs:label "міфологічна сутність"@uk ;
+	skos:prefLabel "міфологічна сутність"@uk ;
+	schema:name "міфологічна сутність"@uk ;
+	rdfs:label "entitat mitològica"@ca ;
+	skos:prefLabel "entitat mitològica"@ca ;
+	schema:name "entitat mitològica"@ca ;
+	rdfs:label "mytisk entitet"@sv ;
+	skos:prefLabel "mytisk entitet"@sv ;
+	schema:name "mytisk entitet"@sv ;
+	rdfs:label "entitas mitologis"@id ;
+	skos:prefLabel "entitas mitologis"@id ;
+	schema:name "entitas mitologis"@id ;
+	rdfs:label "神话实体"@zh-hans ;
+	skos:prefLabel "神话实体"@zh-hans ;
+	schema:name "神话实体"@zh-hans ;
+	rdfs:label "mytická entita"@cs ;
+	skos:prefLabel "mytická entita"@cs ;
+	schema:name "mytická entita"@cs ;
+	rdfs:label "ישות מיתולוגית"@he ;
+	skos:prefLabel "ישות מיתולוגית"@he ;
+	schema:name "ישות מיתולוגית"@he ;
+	rdfs:label "myyttinen entiteetti"@fi ;
+	skos:prefLabel "myyttinen entiteetti"@fi ;
+	schema:name "myyttinen entiteetti"@fi ;
+	rdfs:label "мітычная сутнасьць"@be-tarask ;
+	skos:prefLabel "мітычная сутнасьць"@be-tarask ;
+	schema:name "мітычная сутнасьць"@be-tarask ;
+	rdfs:label "entidade mitolóxica"@gl ;
+	skos:prefLabel "entidade mitolóxica"@gl ;
+	schema:name "entidade mitolóxica"@gl ;
+	rdfs:label "神話上の実体"@ja ;
+	skos:prefLabel "神話上の実体"@ja ;
+	schema:name "神話上の実体"@ja ;
+	rdfs:label "міфічная сутнасць"@be ;
+	skos:prefLabel "міфічная сутнасць"@be ;
+	schema:name "міфічная сутнасць"@be ;
+	rdfs:label "mistik varlık"@tr ;
+	skos:prefLabel "mistik varlık"@tr ;
+	schema:name "mistik varlık"@tr ;
+	rdfs:label "神話實體"@zh-hant ;
+	skos:prefLabel "神話實體"@zh-hant ;
+	schema:name "神話實體"@zh-hant ;
+	rdfs:label "神话实体"@zh ;
+	skos:prefLabel "神话实体"@zh ;
+	schema:name "神话实体"@zh ;
+	rdfs:label "신화적 존재"@ko ;
+	skos:prefLabel "신화적 존재"@ko ;
+	schema:name "신화적 존재"@ko ;
+	rdfs:label "entidade mitológica"@pt-br ;
+	skos:prefLabel "entidade mitológica"@pt-br ;
+	schema:name "entidade mitológica"@pt-br ;
+	rdfs:label "పౌరాణిక అస్థిత్వం"@te ;
+	skos:prefLabel "పౌరాణిక అస్థిత్వం"@te ;
+	schema:name "పౌరాణిక అస్థిత్వం"@te ;
+	rdfs:label "اينتيتي ميتوس"@ms-arab ;
+	skos:prefLabel "اينتيتي ميتوس"@ms-arab ;
+	schema:name "اينتيتي ميتوس"@ms-arab ;
+	rdfs:label "entiti mitos"@ms ;
+	skos:prefLabel "entiti mitos"@ms ;
+	schema:name "entiti mitos"@ms ;
+	rdfs:label "神话实体"@zh-cn ;
+	skos:prefLabel "神话实体"@zh-cn ;
+	schema:name "神话实体"@zh-cn ;
+	rdfs:label "аңыз нәрсе"@kk ;
+	skos:prefLabel "аңыз нәрсе"@kk ;
+	schema:name "аңыз нәрсе"@kk ;
+	rdfs:label "endid chwedlonol"@cy ;
+	skos:prefLabel "endid chwedlonol"@cy ;
+	schema:name "endid chwedlonol"@cy ;
+	rdfs:label "izaki mitologikoa"@eu ;
+	skos:prefLabel "izaki mitologikoa"@eu ;
+	schema:name "izaki mitologikoa"@eu ;
+	rdfs:label "mitološka entiteta"@sl ;
+	skos:prefLabel "mitološka entiteta"@sl ;
+	schema:name "mitološka entiteta"@sl ;
+	schema:description "entity that only exists in myth and legends"@en,
+		"entitet der kun eksisterer i myter"@da,
+		"entidad que solo existe en mitos y leyendas"@es,
+		"οντότητα που υπάρχει μόνο στο μύθο"@el,
+		"postać, przedmiot lub wydarzenie pojawiające się w mitach"@pl,
+		"اسطور میں کوئی موجود وجود"@ur,
+		"сутність, яка існує лише в міфі"@uk,
+		"entitet som endast förekommer i myter"@sv,
+		"entitas yang hanya ada dalam mitos"@id,
+		"entita, která existuje pouze v nějakém mýtu"@cs,
+		"ישות המוזכרת במיתולוגיה אך אינה קיימת במציאות"@he,
+		"mítoszok alanya, lénye"@hu,
+		"сутнасьць, якая існуе толькі ў мітах"@be-tarask,
+		"elemento referido a un ser mitolóxico"@gl,
+		"神話にのみ存在する実体"@ja,
+		"Entität, die nur in Mythen existiert"@de,
+		"entité qui n'existe que dans le mythe"@fr,
+		"كيان يتواجد فقط في الأساطير"@ar,
+		"sadece efsanede var olan varlık"@tr,
+		"신화나 전설 속에만 등장하는 존재"@ko,
+		"entidade existente apenas em mitos e lendas"@pt-br,
+		"పురాణంలో మాత్రమే ఉన్న అస్థిత్వం"@te,
+		"entiti yang hanya wujud dalam mitos"@ms,
+		"存在于神话传说中的实体"@zh-hans,
+		"mitoetan et elezaharretan agertzen diren izaki ez errealak"@eu ;
+	skos:altLabel "entidad legendaria"@es,
+		"entidades míticas"@es,
+		"entidades mitológicas"@es,
+		"entidades legendarias"@es,
+		"entidad mítica"@es,
+		"mythic entity"@en,
+		"legendary entity"@en,
+		"fabulous entity"@en,
+		"mythological entity"@en,
+		"objet mythique"@fr,
+		"mythologische Entität"@de,
+		"митолошка сушност"@mk,
+		"митски ентитет"@mk,
+		"митолошки ентитет"@mk,
+		"міфічна сутність"@uk,
+		"міфічний об'єкт"@uk,
+		"міфологічний об'єкт"@uk,
+		"objek mitologis"@id,
+		"mytologická entita"@cs,
+		"mytický objekt"@cs,
+		"mytologický objekt"@cs,
+		"mitológiai lény"@hu,
+		"мітычная існасьць"@be-tarask,
+		"شيء أسطوري"@ar,
+		"شيء خرافي"@ar,
+		"كيان خرافي"@ar,
+		"мифологическая сущность"@ru,
+		"efsanevi varlık"@tr,
+		"mitsi varlık"@tr,
+		"mistik nesne"@tr,
+		"mitolojik nesne"@tr,
+		"efsanevi nesne"@tr,
+		"ישות מיתית"@he,
+		"ישות אגדית"@he,
+		"entidade mítica"@pt-br,
+		"objeto mitológico"@pt-br,
+		"objeto mítico"@pt-br .
+
+wd:Q18706315 a wikibase:Item ;
+	rdfs:label "hypothetical entity"@en ;
+	skos:prefLabel "hypothetical entity"@en ;
+	schema:name "hypothetical entity"@en ;
+	schema:description "entity whose existence is possible, but not proven"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q7184903 a wikibase:Item ;
+	rdfs:label "abstract object"@en ;
+	skos:prefLabel "abstract object"@en ;
+	schema:name "abstract object"@en ;
+	schema:description "object with no physical referents"@en .
+
+wd:Q9134 a wikibase:Item ;
+	rdfs:label "mythology"@en ;
+	skos:prefLabel "mythology"@en ;
+	schema:name "mythology"@en ;
+	schema:description "stories of gods and fairies and fantastic creatures"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P7497 a wikibase:Property ;
+	rdfs:label "Wolfram Language entity type"@en ;
+	skos:prefLabel "Wolfram Language entity type"@en ;
+	schema:name "Wolfram Language entity type"@en ;
+	schema:description "first part of the Wolfram Language entity code"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P7497 ;
+	wikibase:claim p:P7497 ;
+	wikibase:statementProperty ps:P7497 ;
+	wikibase:statementValue psv:P7497 ;
+	wikibase:qualifier pq:P7497 ;
+	wikibase:qualifierValue pqv:P7497 ;
+	wikibase:reference pr:P7497 ;
+	wikibase:referenceValue prv:P7497 ;
+	wikibase:novalue wdno:P7497 ;
+	wikibase:directClaimNormalized wdtn:P7497 ;
+	wikibase:statementValueNormalized psn:P7497 ;
+	wikibase:qualifierValueNormalized pqn:P7497 ;
+	wikibase:referenceValueNormalized prn:P7497 .
+
+p:P7497 a owl:ObjectProperty .
+
+psv:P7497 a owl:ObjectProperty .
+
+pqv:P7497 a owl:ObjectProperty .
+
+prv:P7497 a owl:ObjectProperty .
+
+wdt:P7497 a owl:DatatypeProperty .
+
+ps:P7497 a owl:DatatypeProperty .
+
+pq:P7497 a owl:DatatypeProperty .
+
+pr:P7497 a owl:DatatypeProperty .
+
+psn:P7497 a owl:ObjectProperty .
+
+pqn:P7497 a owl:ObjectProperty .
+
+prn:P7497 a owl:ObjectProperty .
+
+wdtn:P7497 a owl:ObjectProperty .
+
+wdno:P7497 a owl:Class ;
+	owl:complementOf _:fc76848817599d44ab77684f3df057b6 .
+
+_:fc76848817599d44ab77684f3df057b6 a owl:Restriction ;
+	owl:onProperty wdt:P7497 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8408 a wikibase:Property ;
+	rdfs:label "KBpedia ID"@en ;
+	skos:prefLabel "KBpedia ID"@en ;
+	schema:name "KBpedia ID"@en ;
+	schema:description "identifier for the KBpedia knowledge graph, which provides consistent mappings across seven large-scale public knowledge bases including Wikidata, and is used to promote data interoperability and extraction of training sets for machine learning"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8408 ;
+	wikibase:claim p:P8408 ;
+	wikibase:statementProperty ps:P8408 ;
+	wikibase:statementValue psv:P8408 ;
+	wikibase:qualifier pq:P8408 ;
+	wikibase:qualifierValue pqv:P8408 ;
+	wikibase:reference pr:P8408 ;
+	wikibase:referenceValue prv:P8408 ;
+	wikibase:novalue wdno:P8408 ;
+	wikibase:directClaimNormalized wdtn:P8408 ;
+	wikibase:statementValueNormalized psn:P8408 ;
+	wikibase:qualifierValueNormalized pqn:P8408 ;
+	wikibase:referenceValueNormalized prn:P8408 .
+
+p:P8408 a owl:ObjectProperty .
+
+psv:P8408 a owl:ObjectProperty .
+
+pqv:P8408 a owl:ObjectProperty .
+
+prv:P8408 a owl:ObjectProperty .
+
+wdt:P8408 a owl:DatatypeProperty .
+
+ps:P8408 a owl:DatatypeProperty .
+
+pq:P8408 a owl:DatatypeProperty .
+
+pr:P8408 a owl:DatatypeProperty .
+
+psn:P8408 a owl:ObjectProperty .
+
+pqn:P8408 a owl:ObjectProperty .
+
+prn:P8408 a owl:ObjectProperty .
+
+wdtn:P8408 a owl:ObjectProperty .
+
+wdno:P8408 a owl:Class ;
+	owl:complementOf _:a5c6b2a39aa8787e5b2a55612fc3d63e .
+
+_:a5c6b2a39aa8787e5b2a55612fc3d63e a owl:Restriction ;
+	owl:onProperty wdt:P8408 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q64139102 a wikibase:Item ;
+	rdfs:label "KBpedia"@en ;
+	skos:prefLabel "KBpedia"@en ;
+	schema:name "KBpedia"@en ;
+	schema:description "free ontology aimed at making data and knowledge interoperable for machine learning"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+v:664bae4effccc18fd4ad1ae188fab025 a wikibase:TimeValue ;
+	wikibase:timeValue "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:9a681f9dd95c90224547c404e11295f4f7dcf54e a wikibase:Reference ;
+	pr:P248 wd:Q64139102 ;
+	pr:P813 "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:664bae4effccc18fd4ad1ae188fab025 .

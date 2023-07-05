@@ -1,0 +1,511 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q20742825 a schema:Dataset ;
+	schema:about wd:Q20742825 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1914593192"^^xsd:integer ;
+	schema:dateModified "2023-06-13T21:36:06Z"^^xsd:dateTime ;
+	wikibase:statements "5"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "1"^^xsd:integer .
+
+wd:Q20742825 a wikibase:Item ;
+	wdt:P279 wd:Q1166770 ;
+	wdt:P8408 "CulturalDepiction" ;
+	wdtn:P8408 <http://kbpedia.org/kko/rc/CulturalDepiction> ;
+	wdt:P361 wd:Q11042 ;
+	wdt:P1382 wd:Q53665230 ;
+	wdt:P2579 wd:Q113001573 ;
+	p:P279 s:Q20742825-09e64b7e-469c-24d8-36e7-75604677ecdb .
+
+s:Q20742825-09e64b7e-469c-24d8-36e7-75604677ecdb a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1166770 .
+
+wd:Q20742825 p:P8408 s:Q20742825-25AB4C00-DC3E-4248-AFD9-1C505D6C62C8 .
+
+s:Q20742825-25AB4C00-DC3E-4248-AFD9-1C505D6C62C8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8408 "CulturalDepiction" ;
+	psn:P8408 <http://kbpedia.org/kko/rc/CulturalDepiction> ;
+	prov:wasDerivedFrom ref:9a681f9dd95c90224547c404e11295f4f7dcf54e .
+
+wd:Q20742825 p:P361 s:Q20742825-aff01e6a-4456-f22d-855a-a10867033bd9 .
+
+s:Q20742825-aff01e6a-4456-f22d-855a-a10867033bd9 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q11042 .
+
+wd:Q20742825 p:P1382 s:Q20742825-3731cb89-40f7-445a-b5e7-6d6e2326056b .
+
+s:Q20742825-3731cb89-40f7-445a-b5e7-6d6e2326056b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1382 wd:Q53665230 .
+
+wd:Q20742825 p:P2579 s:Q20742825-b78dc5bf-4908-ff75-efa5-526c662251ec .
+
+s:Q20742825-b78dc5bf-4908-ff75-efa5-526c662251ec a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2579 wd:Q113001573 .
+
+wd:Q20742825 rdfs:label "cultural depiction"@en ;
+	skos:prefLabel "cultural depiction"@en ;
+	schema:name "cultural depiction"@en ;
+	rdfs:label "kulturelle Darstellung"@de ;
+	skos:prefLabel "kulturelle Darstellung"@de ;
+	schema:name "kulturelle Darstellung"@de ;
+	rdfs:label "représentation culturelle"@fr ;
+	skos:prefLabel "représentation culturelle"@fr ;
+	schema:name "représentation culturelle"@fr ;
+	rdfs:label "kulturális ábrázolás"@hu ;
+	skos:prefLabel "kulturális ábrázolás"@hu ;
+	schema:name "kulturális ábrázolás"@hu ;
+	rdfs:label "rappresentazione culturale"@it ;
+	skos:prefLabel "rappresentazione culturale"@it ;
+	schema:name "rappresentazione culturale"@it ;
+	rdfs:label "культурный образ"@ru ;
+	skos:prefLabel "культурный образ"@ru ;
+	schema:name "культурный образ"@ru ;
+	rdfs:label "kulturell återgivning"@sv ;
+	skos:prefLabel "kulturell återgivning"@sv ;
+	schema:name "kulturell återgivning"@sv ;
+	rdfs:label "representació cultural"@ca ;
+	skos:prefLabel "representació cultural"@ca ;
+	schema:name "representació cultural"@ca ;
+	rdfs:label "representación cultural"@es ;
+	skos:prefLabel "representación cultural"@es ;
+	schema:name "representación cultural"@es ;
+	rdfs:label "representação cultural"@pt ;
+	skos:prefLabel "representação cultural"@pt ;
+	schema:name "representação cultural"@pt ;
+	rdfs:label "kultura prezento"@eo ;
+	skos:prefLabel "kultura prezento"@eo ;
+	schema:name "kultura prezento"@eo ;
+	rdfs:label "культурная выява"@be-tarask ;
+	skos:prefLabel "культурная выява"@be-tarask ;
+	schema:name "культурная выява"@be-tarask ;
+	rdfs:label "representação cultural"@pt-br ;
+	skos:prefLabel "representação cultural"@pt-br ;
+	schema:name "representação cultural"@pt-br ;
+	rdfs:label "raprezentasion culturałe"@vec ;
+	skos:prefLabel "raprezentasion culturałe"@vec ;
+	schema:name "raprezentasion culturałe"@vec ;
+	rdfs:label "representación cultural"@gl ;
+	skos:prefLabel "representación cultural"@gl ;
+	schema:name "representación cultural"@gl ;
+	rdfs:label "ثقافتی عکاسی"@ur ;
+	skos:prefLabel "ثقافتی عکاسی"@ur ;
+	schema:name "ثقافتی عکاسی"@ur ;
+	rdfs:label "文化的描写"@ja ;
+	skos:prefLabel "文化的描写"@ja ;
+	schema:name "文化的描写"@ja ;
+	rdfs:label "kulturní zobrazení"@cs ;
+	skos:prefLabel "kulturní zobrazení"@cs ;
+	schema:name "kulturní zobrazení"@cs ;
+	rdfs:label "تصوير ثقافي"@ar ;
+	skos:prefLabel "تصوير ثقافي"@ar ;
+	schema:name "تصوير ثقافي"@ar ;
+	rdfs:label "wyobrażenie kulturalne"@pl ;
+	skos:prefLabel "wyobrażenie kulturalne"@pl ;
+	schema:name "wyobrażenie kulturalne"@pl ;
+	rdfs:label "kültürel tasvir"@tr ;
+	skos:prefLabel "kültürel tasvir"@tr ;
+	schema:name "kültürel tasvir"@tr ;
+	rdfs:label "kulturna upodobitev"@sl ;
+	skos:prefLabel "kulturna upodobitev"@sl ;
+	schema:name "kulturna upodobitev"@sl ;
+	schema:description "skildring av ämne i kulturen"@sv,
+		"depiction of topic within culture"@en,
+		"trattazione di un determinato argomento nella cultura di massa"@it,
+		"Darstellung eines Themas in Kultur/Literatur/Film usw."@de,
+		"przedstawienie tematu w kulturze"@pl,
+		"bir konunun kültür içindeki tasviri"@tr ;
+	skos:altLabel "als Sujet"@de,
+		"...in der populären Kultur"@de,
+		"in der populären Kultur"@de,
+		"...in der Literatur"@de,
+		"in der Literatur"@de,
+		"...im Film"@de,
+		"im Film"@de,
+		"kulturelle Thematisierung"@de,
+		"in popular culture"@en,
+		"cultural portrayal"@en,
+		"popular cultural depiction"@en,
+		"cultural views"@en,
+		"cultural representation"@en,
+		"representation"@en,
+		"в массовой культуре"@ru,
+		"в популярной культуре"@ru,
+		"dans l'art et la culture"@fr,
+		"...v kultuře"@cs,
+		"zobrazení v kultuře"@cs,
+		"odraz v kultuře"@cs,
+		"…a tömegkultúrában"@hu,
+		"tömegkultúrában való megjelenés"@hu,
+		"kulturális megjelenítés"@hu,
+		"w kulturze popularnej"@pl,
+		"przedstawienie kulturalne"@pl,
+		"przedstawienie w kulturze popularnej"@pl,
+		"popüler kültürel tasviri"@tr,
+		"kültürel temsil"@tr .
+
+wd:Q1166770 a wikibase:Item ;
+	rdfs:label "depiction"@en ;
+	skos:prefLabel "depiction"@en ;
+	schema:name "depiction"@en ;
+	schema:description "presentation of facts, events or concepts through text, images, other media or performances"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8408 a wikibase:Property ;
+	rdfs:label "KBpedia ID"@en ;
+	skos:prefLabel "KBpedia ID"@en ;
+	schema:name "KBpedia ID"@en ;
+	schema:description "identifier for the KBpedia knowledge graph, which provides consistent mappings across seven large-scale public knowledge bases including Wikidata, and is used to promote data interoperability and extraction of training sets for machine learning"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8408 ;
+	wikibase:claim p:P8408 ;
+	wikibase:statementProperty ps:P8408 ;
+	wikibase:statementValue psv:P8408 ;
+	wikibase:qualifier pq:P8408 ;
+	wikibase:qualifierValue pqv:P8408 ;
+	wikibase:reference pr:P8408 ;
+	wikibase:referenceValue prv:P8408 ;
+	wikibase:novalue wdno:P8408 ;
+	wikibase:directClaimNormalized wdtn:P8408 ;
+	wikibase:statementValueNormalized psn:P8408 ;
+	wikibase:qualifierValueNormalized pqn:P8408 ;
+	wikibase:referenceValueNormalized prn:P8408 .
+
+p:P8408 a owl:ObjectProperty .
+
+psv:P8408 a owl:ObjectProperty .
+
+pqv:P8408 a owl:ObjectProperty .
+
+prv:P8408 a owl:ObjectProperty .
+
+wdt:P8408 a owl:DatatypeProperty .
+
+ps:P8408 a owl:DatatypeProperty .
+
+pq:P8408 a owl:DatatypeProperty .
+
+pr:P8408 a owl:DatatypeProperty .
+
+psn:P8408 a owl:ObjectProperty .
+
+pqn:P8408 a owl:ObjectProperty .
+
+prn:P8408 a owl:ObjectProperty .
+
+wdtn:P8408 a owl:ObjectProperty .
+
+wdno:P8408 a owl:Class ;
+	owl:complementOf _:a5c6b2a39aa8787e5b2a55612fc3d63e .
+
+_:a5c6b2a39aa8787e5b2a55612fc3d63e a owl:Restriction ;
+	owl:onProperty wdt:P8408 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q11042 a wikibase:Item ;
+	rdfs:label "culture"@en ;
+	skos:prefLabel "culture"@en ;
+	schema:name "culture"@en ;
+	schema:description "shared aspects of a society's way of life"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q53665230 a wikibase:Item ;
+	rdfs:label "cultural impact"@en ;
+	skos:prefLabel "cultural impact"@en ;
+	schema:name "cultural impact"@en ;
+	schema:description "influence a person, entity, or event has had upon culture"@en .
+
+wd:P1382 a wikibase:Property ;
+	rdfs:label "partially coincident with"@en ;
+	skos:prefLabel "partially coincident with"@en ;
+	schema:name "partially coincident with"@en ;
+	schema:description "object that partially overlaps with the subject in its instances, parts, or members"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1382 ;
+	wikibase:claim p:P1382 ;
+	wikibase:statementProperty ps:P1382 ;
+	wikibase:statementValue psv:P1382 ;
+	wikibase:qualifier pq:P1382 ;
+	wikibase:qualifierValue pqv:P1382 ;
+	wikibase:reference pr:P1382 ;
+	wikibase:referenceValue prv:P1382 ;
+	wikibase:novalue wdno:P1382 .
+
+p:P1382 a owl:ObjectProperty .
+
+psv:P1382 a owl:ObjectProperty .
+
+pqv:P1382 a owl:ObjectProperty .
+
+prv:P1382 a owl:ObjectProperty .
+
+wdt:P1382 a owl:ObjectProperty .
+
+ps:P1382 a owl:ObjectProperty .
+
+pq:P1382 a owl:ObjectProperty .
+
+pr:P1382 a owl:ObjectProperty .
+
+wdno:P1382 a owl:Class ;
+	owl:complementOf _:330b6bb28dcfa3c625950ac043246d1d .
+
+_:330b6bb28dcfa3c625950ac043246d1d a owl:Restriction ;
+	owl:onProperty wdt:P1382 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q113001573 a wikibase:Item ;
+	rdfs:label "Culture, representation and identity"@en ;
+	skos:prefLabel "Culture, representation and identity"@en ;
+	schema:name "Culture, representation and identity"@en ;
+	schema:description "field of research"@en .
+
+wd:P2579 a wikibase:Property ;
+	rdfs:label "studied by"@en ;
+	skos:prefLabel "studied by"@en ;
+	schema:name "studied by"@en ;
+	schema:description "subject is studied by this science or domain"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2579 ;
+	wikibase:claim p:P2579 ;
+	wikibase:statementProperty ps:P2579 ;
+	wikibase:statementValue psv:P2579 ;
+	wikibase:qualifier pq:P2579 ;
+	wikibase:qualifierValue pqv:P2579 ;
+	wikibase:reference pr:P2579 ;
+	wikibase:referenceValue prv:P2579 ;
+	wikibase:novalue wdno:P2579 .
+
+p:P2579 a owl:ObjectProperty .
+
+psv:P2579 a owl:ObjectProperty .
+
+pqv:P2579 a owl:ObjectProperty .
+
+prv:P2579 a owl:ObjectProperty .
+
+wdt:P2579 a owl:ObjectProperty .
+
+ps:P2579 a owl:ObjectProperty .
+
+pq:P2579 a owl:ObjectProperty .
+
+pr:P2579 a owl:ObjectProperty .
+
+wdno:P2579 a owl:Class ;
+	owl:complementOf _:646b8b1e4925fe4fca2b57678b2ceb02 .
+
+_:646b8b1e4925fe4fca2b57678b2ceb02 a owl:Restriction ;
+	owl:onProperty wdt:P2579 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q64139102 a wikibase:Item ;
+	rdfs:label "KBpedia"@en ;
+	skos:prefLabel "KBpedia"@en ;
+	schema:name "KBpedia"@en ;
+	schema:description "free ontology aimed at making data and knowledge interoperable for machine learning"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+v:664bae4effccc18fd4ad1ae188fab025 a wikibase:TimeValue ;
+	wikibase:timeValue "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:9a681f9dd95c90224547c404e11295f4f7dcf54e a wikibase:Reference ;
+	pr:P248 wd:Q64139102 ;
+	pr:P813 "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:664bae4effccc18fd4ad1ae188fab025 .

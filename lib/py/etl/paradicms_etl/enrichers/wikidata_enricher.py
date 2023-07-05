@@ -1,4 +1,5 @@
 import logging
+from functools import partial
 from pathlib import Path
 from typing import Iterable, Set, Tuple, List, Dict, Sequence
 
@@ -67,19 +68,42 @@ class WikidataEnricher:
                 yield from self.__get_wikidata_entity_images(referenced_wikidata_entity)
 
                 if isinstance(model, Work):
-                    for (
-                        location_wikidata_entity
-                    ) in self.__get_wikidata_entity_locations(
-                        referenced_wikidata_entity
+                    for get_connected_wikidata_entities in (
+                        self.__get_wikidata_entity_locations,
+                        partial(self.__get_connected_wikidata_entities, "creator"),
+                        partial(self.__get_connected_wikidata_entities, "main subject"),
                     ):
-                        if location_wikidata_entity.uri in yielded_wikidata_entity_uris:
-                            continue
-                        yield location_wikidata_entity
-                        yielded_wikidata_entity_uris.add(location_wikidata_entity.uri)
+                        for (
+                            connected_wikidata_entity
+                        ) in get_connected_wikidata_entities(
+                            referenced_wikidata_entity
+                        ):
+                            if (
+                                connected_wikidata_entity.uri
+                                in yielded_wikidata_entity_uris
+                            ):
+                                continue
+                            yield connected_wikidata_entity
+                            yielded_wikidata_entity_uris.add(
+                                connected_wikidata_entity.uri
+                            )
 
             if not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
+
+    def __get_connected_wikidata_entities(
+        self,
+        connected_by_property_label: str,
+        wikidata_entity: WikibaseItem,
+    ) -> Iterable[WikibaseItem]:
+        for statement in wikidata_entity.statements_by_property_label.get(
+            connected_by_property_label, []
+        ):
+            assert isinstance(statement.value, URIRef)
+            yield self.__get_wikidata_entity_with_superclass_tree(
+                root_wikidata_entity_uri=statement.value
+            )
 
     def __get_model_wikidata_entity_references(
         self, model: Model

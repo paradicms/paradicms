@@ -80,7 +80,7 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((work,))
     )
-    assert len(enriched_models) == 7
+    assert len(enriched_models) == 9
     # Original work
     assert any(
         isinstance(model, Work) and model.uri == work.uri for model in enriched_models
@@ -94,7 +94,7 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
         isinstance(model, WikibaseItem) and model.uri == wikidata_entity_uri
         for model in enriched_models
     )
-    # Image associated with the Wikidata entity
+    # Image associated with the sameAs Wikidata entity
     assert any(
         isinstance(model, Image)
         and model.uri
@@ -103,7 +103,7 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
         )
         for model in enriched_models
     )
-    # Two WikibaseItem locations associated with the Wikidata entity
+    # Two WikibaseItem locations associated with the sameAs Wikidata entity
     assert any(
         isinstance(model, WikibaseItem)
         and model.uri == URIRef("http://www.wikidata.org/entity/Q82069921")
@@ -112,5 +112,17 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
     assert any(
         isinstance(model, WikibaseItem)
         and model.uri == URIRef("http://www.wikidata.org/entity/Q89503830")
+        for model in enriched_models
+    )
+    # WikibaseItem that's the subject of the sameAs Wikidata entity
+    assert any(
+        isinstance(model, WikibaseItem)
+        and model.uri == URIRef("http://www.wikidata.org/entity/Q1784308")
+        for model in enriched_models
+    )
+    # WikibaseItem that's the creator of the sameAs Wikidata entity
+    assert any(
+        isinstance(model, WikibaseItem)
+        and model.uri == URIRef("http://www.wikidata.org/entity/Q191748")
         for model in enriched_models
     )

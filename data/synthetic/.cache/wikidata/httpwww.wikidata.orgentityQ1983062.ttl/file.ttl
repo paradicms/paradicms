@@ -1,0 +1,2020 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q1983062 a schema:Dataset ;
+	schema:about wd:Q1983062 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1909889822"^^xsd:integer ;
+	schema:dateModified "2023-06-07T02:25:39Z"^^xsd:dateTime ;
+	wikibase:statements "22"^^xsd:integer ;
+	wikibase:sitelinks "33"^^xsd:integer ;
+	wikibase:identifiers "8"^^xsd:integer .
+
+wd:Q1983062 a wikibase:Item .
+
+<https://pt.wikipedia.org/wiki/Epis%C3%B3dio> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Episódio"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://eo.wikipedia.org/wiki/Epizodo> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "eo" ;
+	schema:isPartOf <https://eo.wikipedia.org/> ;
+	schema:name "Epizodo"@eo .
+
+<https://eo.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%AD%D0%BF%D0%B8%D0%B7%D0%BE%D0%B4> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Эпизод"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://he.wikipedia.org/wiki/%D7%A4%D7%A8%D7%A7> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "he" ;
+	schema:isPartOf <https://he.wikipedia.org/> ;
+	schema:name "פרק"@he .
+
+<https://he.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/%C3%89pisode> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Épisode"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/Episode> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Episode"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Episodio> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Episodio"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tr.wikipedia.org/wiki/Epizot> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "tr" ;
+	schema:isPartOf <https://tr.wikipedia.org/> ;
+	schema:name "Epizot"@tr .
+
+<https://tr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fi.wikipedia.org/wiki/Episodi> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "fi" ;
+	schema:isPartOf <https://fi.wikipedia.org/> ;
+	schema:name "Episodi"@fi .
+
+<https://fi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Episodio> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Episodio"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://cs.wikipedia.org/wiki/Epizoda> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "cs" ;
+	schema:isPartOf <https://cs.wikipedia.org/> ;
+	schema:name "Epizoda"@cs .
+
+<https://cs.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://io.wikipedia.org/wiki/Epizodo> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "io" ;
+	schema:isPartOf <https://io.wikipedia.org/> ;
+	schema:name "Epizodo"@io .
+
+<https://io.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Episode> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Episode"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://da.wikipedia.org/wiki/Episode> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "da" ;
+	schema:isPartOf <https://da.wikipedia.org/> ;
+	schema:name "Episode"@da .
+
+<https://da.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EC%97%90%ED%94%BC%EC%86%8C%EB%93%9C> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "에피소드"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D8%A7%D9%BE%DB%8C%D8%B2%D9%88%D8%AF> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "اپیزود"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%95%D0%BF%D1%96%D0%B7%D0%BE%D0%B4> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Епізод"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://hy.wikipedia.org/wiki/%D5%84%D5%AB%D5%BB%D5%A1%D5%A4%D5%A5%D5%BA> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "hy" ;
+	schema:isPartOf <https://hy.wikipedia.org/> ;
+	schema:name "Միջադեպ"@hy .
+
+<https://hy.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://simple.wikipedia.org/wiki/Episode> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "en-simple" ;
+	schema:isPartOf <https://simple.wikipedia.org/> ;
+	schema:name "Episode"@en-simple .
+
+<https://simple.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fy.wikipedia.org/wiki/Oflevering> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "fy" ;
+	schema:isPartOf <https://fy.wikipedia.org/> ;
+	schema:name "Oflevering"@fy .
+
+<https://fy.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://tg.wikipedia.org/wiki/%D0%AD%D0%BF%D0%B8%D0%B7%D0%BE%D0%B4> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "tg" ;
+	schema:isPartOf <https://tg.wikipedia.org/> ;
+	schema:name "Эпизод"@tg .
+
+<https://tg.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://azb.wikipedia.org/wiki/%D8%A7%D8%A6%D9%BE%D9%8A%D8%B2%D9%88%D8%AA> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "azb" ;
+	schema:isPartOf <https://azb.wikipedia.org/> ;
+	schema:name "ائپيزوت"@azb .
+
+<https://azb.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uz.wikipedia.org/wiki/Epizod> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "uz" ;
+	schema:isPartOf <https://uz.wikipedia.org/> ;
+	schema:name "Epizod"@uz .
+
+<https://uz.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://vi.wikipedia.org/wiki/T%E1%BA%ADp_phim> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "vi" ;
+	schema:isPartOf <https://vi.wikipedia.org/> ;
+	schema:name "Tập phim"@vi .
+
+<https://vi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://kk.wikipedia.org/wiki/%D0%AD%D0%BF%D0%B8%D0%B7%D0%BE%D0%B4> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "kk" ;
+	schema:isPartOf <https://kk.wikipedia.org/> ;
+	schema:name "Эпизод"@kk .
+
+<https://kk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ta.wikipedia.org/wiki/%E0%AE%85%E0%AE%A4%E0%AF%8D%E0%AE%A4%E0%AE%BF%E0%AE%AF%E0%AE%BE%E0%AE%AF%E0%AE%AE%E0%AF%8D> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "ta" ;
+	schema:isPartOf <https://ta.wikipedia.org/> ;
+	schema:name "அத்தியாயம்"@ta .
+
+<https://ta.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ur.wikipedia.org/wiki/%D8%A7%DB%8C%D9%BE%DB%8C_%D8%B3%D9%88%DA%88> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "ur" ;
+	schema:isPartOf <https://ur.wikipedia.org/> ;
+	schema:name "ایپی سوڈ"@ur .
+
+<https://ur.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pnb.wikipedia.org/wiki/%D8%A7%DB%8C%D9%BE%DB%8C_%D8%B3%D9%88%DA%88> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "pnb" ;
+	schema:isPartOf <https://pnb.wikipedia.org/> ;
+	schema:name "ایپی سوڈ"@pnb .
+
+<https://pnb.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://bn.wikipedia.org/wiki/%E0%A6%AA%E0%A6%B0%E0%A7%8D%E0%A6%AC> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "bn" ;
+	schema:isPartOf <https://bn.wikipedia.org/> ;
+	schema:name "পর্ব"@bn .
+
+<https://bn.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ky.wikipedia.org/wiki/%D0%AD%D0%BF%D0%B8%D0%B7%D0%BE%D0%B4> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "ky" ;
+	schema:isPartOf <https://ky.wikipedia.org/> ;
+	schema:name "Эпизод"@ky .
+
+<https://ky.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ms.wikipedia.org/wiki/Episod> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "ms" ;
+	schema:isPartOf <https://ms.wikipedia.org/> ;
+	schema:name "Episod"@ms .
+
+<https://ms.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://az.wikipedia.org/wiki/Epizod> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "az" ;
+	schema:isPartOf <https://az.wikipedia.org/> ;
+	schema:name "Epizod"@az .
+
+<https://az.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Episodi> a schema:Article ;
+	schema:about wd:Q1983062 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Episodi"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q1983062 wdt:P361 wd:Q15709880,
+		wd:Q526877 ;
+	wdt:P646 "/m/02cphr" ;
+	wdt:P1343 wd:Q2657718,
+		wd:Q63284758 ;
+	wdt:P1709 <https://schema.org/Episode>,
+		<http://purl.org/ontology/po/Episode> ;
+	wdt:P1889 wd:Q21191270,
+		wd:Q1980247,
+		wd:Q3925766 ;
+	wdt:P1963 wd:P1573,
+		wd:P179 ;
+	wdt:P279 wd:Q11578774 ;
+	wdt:P3417 "Episode" ;
+	wdt:P1296 "0103663" ;
+	wdt:P1687 wd:P1811,
+		wd:P1113 ;
+	wdt:P1245 "529843" ;
+	wdt:P8408 "ConceptualWorkSeries" ;
+	wdtn:P8408 <http://kbpedia.org/kko/rc/ConceptualWorkSeries> ;
+	wdt:P8313 "episode" ;
+	wdt:P11567 "episode" ;
+	wdt:P2671 "/g/11fr_vcg0h" ;
+	wdtn:P2671 <http://g.co/kg/g/11fr_vcg0h> ;
+	p:P361 s:Q1983062-b3520772-4910-1177-a8e0-722df8c3b5e6 .
+
+s:Q1983062-b3520772-4910-1177-a8e0-722df8c3b5e6 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q15709880 .
+
+wd:Q1983062 p:P361 s:Q1983062-53238b4e-4221-fb88-241c-0f4216e8767b .
+
+s:Q1983062-53238b4e-4221-fb88-241c-0f4216e8767b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q526877 .
+
+wd:Q1983062 p:P646 s:Q1983062-5F5965A4-7A6A-49A0-896A-FA75F13EA0A3 .
+
+s:Q1983062-5F5965A4-7A6A-49A0-896A-FA75F13EA0A3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/02cphr" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q1983062 p:P1343 s:Q1983062-4D327F7D-E057-4481-ACDE-98DC5E9D7C1E .
+
+s:Q1983062-4D327F7D-E057-4481-ACDE-98DC5E9D7C1E a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1343 wd:Q2657718 ;
+	pq:P478 "7" ;
+	pq:P304 "568" ;
+	prov:wasDerivedFrom ref:8bc722e6797143f2ba971ee5fedaeb0a331268e6 .
+
+wd:Q1983062 p:P1343 s:Q1983062-7eb912d3-fdfc-4e32-aa68-3ec334261189 .
+
+s:Q1983062-7eb912d3-fdfc-4e32-aa68-3ec334261189 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1343 wd:Q63284758 ;
+	pq:P805 wd:Q86854134 .
+
+wd:Q1983062 p:P1709 s:Q1983062-8c0f756d-48c9-12d0-611d-d0f9fbe68015 .
+
+s:Q1983062-8c0f756d-48c9-12d0-611d-d0f9fbe68015 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1709 <https://schema.org/Episode> .
+
+wd:Q1983062 p:P1709 s:Q1983062-68c2cb40-4528-db7f-f194-3611729856d7 .
+
+s:Q1983062-68c2cb40-4528-db7f-f194-3611729856d7 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1709 <http://purl.org/ontology/po/Episode> .
+
+wd:Q1983062 p:P1889 s:Q1983062-4b901a15-4923-1080-c669-460e05db5469 .
+
+s:Q1983062-4b901a15-4923-1080-c669-460e05db5469 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q21191270 .
+
+wd:Q1983062 p:P1889 s:Q1983062-31bc34c5-4cbb-c86e-1bfd-87e66095ec17 .
+
+s:Q1983062-31bc34c5-4cbb-c86e-1bfd-87e66095ec17 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q1980247 .
+
+wd:Q1983062 p:P1889 s:Q1983062-7fc79960-4b4f-88c0-594a-415439136ebd .
+
+s:Q1983062-7fc79960-4b4f-88c0-594a-415439136ebd a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q3925766 .
+
+wd:Q1983062 p:P1963 s:Q1983062-25950A97-67F1-4B0C-8711-FD1484222CFD .
+
+s:Q1983062-25950A97-67F1-4B0C-8711-FD1484222CFD a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P1573 .
+
+wd:Q1983062 p:P1963 s:Q1983062-64ea2b4a-4c2f-9dc1-0e64-0d6f6ed4a828 .
+
+s:Q1983062-64ea2b4a-4c2f-9dc1-0e64-0d6f6ed4a828 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1963 wd:P179 .
+
+wd:Q1983062 p:P279 s:Q1983062-51b75f69-4639-fc4c-be55-5ed11fa63f93 .
+
+s:Q1983062-51b75f69-4639-fc4c-be55-5ed11fa63f93 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q11578774 .
+
+wd:Q1983062 p:P3417 s:Q1983062-934EF3E1-56E6-4E42-B535-ECC84704D06A .
+
+s:Q1983062-934EF3E1-56E6-4E42-B535-ECC84704D06A a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P3417 "Episode" .
+
+wd:Q1983062 p:P1296 s:Q1983062-39C41D12-0305-47EC-9E39-47204E406645 .
+
+s:Q1983062-39C41D12-0305-47EC-9E39-47204E406645 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1296 "0103663" .
+
+wd:Q1983062 p:P1687 s:Q1983062-e157ed2c-4d64-2c10-cb05-68ddef01c750 .
+
+s:Q1983062-e157ed2c-4d64-2c10-cb05-68ddef01c750 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1687 wd:P1811 .
+
+wd:Q1983062 p:P1687 s:Q1983062-0f9632b3-4aed-4040-4f21-7d34d960fcc2 .
+
+s:Q1983062-0f9632b3-4aed-4040-4f21-7d34d960fcc2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1687 wd:P1113 .
+
+wd:Q1983062 p:P1245 s:Q1983062-C09A35A4-3341-4D4B-864B-BCC85B2E47E4 .
+
+s:Q1983062-C09A35A4-3341-4D4B-864B-BCC85B2E47E4 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1245 "529843" .
+
+wd:Q1983062 p:P8408 s:Q1983062-1C8BA84D-6187-486B-9039-748F2D449CA2 .
+
+s:Q1983062-1C8BA84D-6187-486B-9039-748F2D449CA2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8408 "ConceptualWorkSeries" ;
+	psn:P8408 <http://kbpedia.org/kko/rc/ConceptualWorkSeries> ;
+	prov:wasDerivedFrom ref:9a681f9dd95c90224547c404e11295f4f7dcf54e .
+
+wd:Q1983062 p:P8313 s:Q1983062-A0714906-92F1-47A7-A083-7B5B7B5FE47B .
+
+s:Q1983062-A0714906-92F1-47A7-A083-7B5B7B5FE47B a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P8313 "episode" .
+
+wd:Q1983062 p:P11567 s:Q1983062-C204769A-25F3-448F-835A-C9FF44F71FFB .
+
+s:Q1983062-C204769A-25F3-448F-835A-C9FF44F71FFB a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P11567 "episode" .
+
+wd:Q1983062 p:P2671 s:Q1983062-D9D6C6FA-9270-4FD9-A00E-79C321AF3D19 .
+
+s:Q1983062-D9D6C6FA-9270-4FD9-A00E-79C321AF3D19 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2671 "/g/11fr_vcg0h" ;
+	psn:P2671 <http://g.co/kg/g/11fr_vcg0h> .
+
+wd:Q1983062 rdfs:label "episódio"@pt ;
+	skos:prefLabel "episódio"@pt ;
+	schema:name "episódio"@pt ;
+	rdfs:label "ĉapitro"@eo ;
+	skos:prefLabel "ĉapitro"@eo ;
+	schema:name "ĉapitro"@eo ;
+	rdfs:label "эпизод"@ru ;
+	skos:prefLabel "эпизод"@ru ;
+	schema:name "эпизод"@ru ;
+	rdfs:label "פרק"@he ;
+	skos:prefLabel "פרק"@he ;
+	schema:name "פרק"@he ;
+	rdfs:label "épisode"@fr ;
+	skos:prefLabel "épisode"@fr ;
+	schema:name "épisode"@fr ;
+	rdfs:label "episode"@en ;
+	skos:prefLabel "episode"@en ;
+	schema:name "episode"@en ;
+	rdfs:label "episodio"@es ;
+	skos:prefLabel "episodio"@es ;
+	schema:name "episodio"@es ;
+	rdfs:label "epizot"@tr ;
+	skos:prefLabel "epizot"@tr ;
+	schema:name "epizot"@tr ;
+	rdfs:label "episodi"@fi ;
+	skos:prefLabel "episodi"@fi ;
+	schema:name "episodi"@fi ;
+	rdfs:label "episodio"@it ;
+	skos:prefLabel "episodio"@it ;
+	schema:name "episodio"@it ;
+	rdfs:label "díl"@cs ;
+	skos:prefLabel "díl"@cs ;
+	schema:name "díl"@cs ;
+	rdfs:label "epizodo"@io ;
+	skos:prefLabel "epizodo"@io ;
+	schema:name "epizodo"@io ;
+	rdfs:label "aflevering"@nl ;
+	skos:prefLabel "aflevering"@nl ;
+	schema:name "aflevering"@nl ;
+	rdfs:label "episode"@da ;
+	skos:prefLabel "episode"@da ;
+	schema:name "episode"@da ;
+	rdfs:label "에피소드"@ko ;
+	skos:prefLabel "에피소드"@ko ;
+	schema:name "에피소드"@ko ;
+	rdfs:label "Folge"@de ;
+	skos:prefLabel "Folge"@de ;
+	schema:name "Folge"@de ;
+	rdfs:label "episodi"@ca ;
+	skos:prefLabel "episodi"@ca ;
+	schema:name "episodi"@ca ;
+	rdfs:label "episode"@en-ca ;
+	skos:prefLabel "episode"@en-ca ;
+	schema:name "episode"@en-ca ;
+	rdfs:label "episode"@en-gb ;
+	skos:prefLabel "episode"@en-gb ;
+	schema:name "episode"@en-gb ;
+	rdfs:label "اپیزود"@fa ;
+	skos:prefLabel "اپیزود"@fa ;
+	schema:name "اپیزود"@fa ;
+	rdfs:label "episódio"@pt-br ;
+	skos:prefLabel "episódio"@pt-br ;
+	schema:name "episódio"@pt-br ;
+	rdfs:label "епізод"@uk ;
+	skos:prefLabel "епізод"@uk ;
+	schema:name "епізод"@uk ;
+	rdfs:label "avsnitt"@sv ;
+	skos:prefLabel "avsnitt"@sv ;
+	schema:name "avsnitt"@sv ;
+	rdfs:label "Episood"@nds ;
+	skos:prefLabel "Episood"@nds ;
+	schema:name "Episood"@nds ;
+	rdfs:label "епизода"@sr ;
+	skos:prefLabel "епизода"@sr ;
+	schema:name "епизода"@sr ;
+	rdfs:label "епизода"@sr-ec ;
+	skos:prefLabel "епизода"@sr-ec ;
+	schema:name "епизода"@sr-ec ;
+	rdfs:label "epizoda"@sr-el ;
+	skos:prefLabel "epizoda"@sr-el ;
+	schema:name "epizoda"@sr-el ;
+	rdfs:label "episode"@id ;
+	skos:prefLabel "episode"@id ;
+	schema:name "episode"@id ;
+	rdfs:label "episode"@sco ;
+	skos:prefLabel "episode"@sco ;
+	schema:name "episode"@sco ;
+	rdfs:label "odcinek"@pl ;
+	skos:prefLabel "odcinek"@pl ;
+	schema:name "odcinek"@pl ;
+	rdfs:label "ôflevering"@fy ;
+	skos:prefLabel "ôflevering"@fy ;
+	schema:name "ôflevering"@fy ;
+	rdfs:label "epizód"@hu ;
+	skos:prefLabel "epizód"@hu ;
+	schema:name "epizód"@hu ;
+	rdfs:label "エピソード"@ja ;
+	skos:prefLabel "エピソード"@ja ;
+	schema:name "エピソード"@ja ;
+	rdfs:label "episode"@nb ;
+	skos:prefLabel "episode"@nb ;
+	schema:name "episode"@nb ;
+	rdfs:label "episode"@nn ;
+	skos:prefLabel "episode"@nn ;
+	schema:name "episode"@nn ;
+	rdfs:label "միջադեպ"@hy ;
+	skos:prefLabel "միջադեպ"@hy ;
+	schema:name "միջադեպ"@hy ;
+	rdfs:label "эпізод"@be ;
+	skos:prefLabel "эпізод"@be ;
+	schema:name "эпізод"@be ;
+	rdfs:label "επεισόδιο"@el ;
+	skos:prefLabel "επεισόδιο"@el ;
+	schema:name "επεισόδιο"@el ;
+	rdfs:label "епизода"@mk ;
+	skos:prefLabel "епизода"@mk ;
+	schema:name "епизода"@mk ;
+	rdfs:label "episod"@ro ;
+	skos:prefLabel "episod"@ro ;
+	schema:name "episod"@ro ;
+	rdfs:label "epizodas"@lt ;
+	skos:prefLabel "epizodas"@lt ;
+	schema:name "epizodas"@lt ;
+	rdfs:label "sērija"@lv ;
+	skos:prefLabel "sērija"@lv ;
+	schema:name "sērija"@lv ;
+	rdfs:label "Episode"@lb ;
+	skos:prefLabel "Episode"@lb ;
+	schema:name "Episode"@lb ;
+	rdfs:label "集"@zh ;
+	skos:prefLabel "集"@zh ;
+	schema:name "集"@zh ;
+	rdfs:label "حلقة"@ar ;
+	skos:prefLabel "حلقة"@ar ;
+	schema:name "حلقة"@ar ;
+	rdfs:label "kabanata"@tl ;
+	skos:prefLabel "kabanata"@tl ;
+	schema:name "kabanata"@tl ;
+	rdfs:label "episòdi"@oc ;
+	skos:prefLabel "episòdi"@oc ;
+	schema:name "episòdi"@oc ;
+	rdfs:label "epizoda"@sh ;
+	skos:prefLabel "epizoda"@sh ;
+	schema:name "epizoda"@sh ;
+	rdfs:label "эпизод"@tg ;
+	skos:prefLabel "эпизод"@tg ;
+	schema:name "эпизод"@tg ;
+	rdfs:label "epizóda"@sk ;
+	skos:prefLabel "epizóda"@sk ;
+	schema:name "epizóda"@sk ;
+	rdfs:label "قسط"@ur ;
+	skos:prefLabel "قسط"@ur ;
+	schema:name "قسط"@ur ;
+	rdfs:label "ตอนของละคร"@th ;
+	skos:prefLabel "ตอนของละคร"@th ;
+	schema:name "ตอนของละคร"@th ;
+	rdfs:label "эпизод"@tt ;
+	skos:prefLabel "эпизод"@tt ;
+	schema:name "эпизод"@tt ;
+	rdfs:label "эпизод"@tt-cyrl ;
+	skos:prefLabel "эпизод"@tt-cyrl ;
+	schema:name "эпизод"@tt-cyrl ;
+	rdfs:label "ائپيزوت"@azb ;
+	skos:prefLabel "ائپيزوت"@azb ;
+	schema:name "ائپيزوت"@azb ;
+	rdfs:label "epizod"@uz ;
+	skos:prefLabel "epizod"@uz ;
+	schema:name "epizod"@uz ;
+	rdfs:label "episodio"@gl ;
+	skos:prefLabel "episodio"@gl ;
+	schema:name "episodio"@gl ;
+	rdfs:label "tập phim"@vi ;
+	skos:prefLabel "tập phim"@vi ;
+	schema:name "tập phim"@vi ;
+	rdfs:label "എപ്പിസോഡ്"@ml ;
+	skos:prefLabel "എപ്പിസോഡ്"@ml ;
+	schema:name "എപ്പിസോഡ്"@ml ;
+	rdfs:label "эпизод"@kk ;
+	skos:prefLabel "эпизод"@kk ;
+	schema:name "эпизод"@kk ;
+	rdfs:label "clár"@ga ;
+	skos:prefLabel "clár"@ga ;
+	schema:name "clár"@ga ;
+	rdfs:label "episod"@ms ;
+	skos:prefLabel "episod"@ms ;
+	schema:name "episod"@ms ;
+	rdfs:label "epizoda"@hr ;
+	skos:prefLabel "epizoda"@hr ;
+	schema:name "epizoda"@hr ;
+	rdfs:label "集"@zh-tw ;
+	skos:prefLabel "集"@zh-tw ;
+	schema:name "集"@zh-tw ;
+	rdfs:label "集"@zh-hant ;
+	skos:prefLabel "集"@zh-hant ;
+	schema:name "集"@zh-hant ;
+	rdfs:label "அத்தியாயம்"@ta ;
+	skos:prefLabel "அத்தியாயம்"@ta ;
+	schema:name "அத்தியாயம்"@ta ;
+	rdfs:label "ایپی سوڈ"@pnb ;
+	skos:prefLabel "ایپی سوڈ"@pnb ;
+	schema:name "ایپی سوڈ"@pnb ;
+	rdfs:label "পর্ব"@bn ;
+	skos:prefLabel "পর্ব"@bn ;
+	schema:name "পর্ব"@bn ;
+	rdfs:label "эпизод"@ky ;
+	skos:prefLabel "эпизод"@ky ;
+	schema:name "эпизод"@ky ;
+	rdfs:label "vueʹss"@sms ;
+	skos:prefLabel "vueʹss"@sms ;
+	schema:name "vueʹss"@sms ;
+	rdfs:label "集"@zh-hans ;
+	skos:prefLabel "集"@zh-hans ;
+	schema:name "集"@zh-hans ;
+	rdfs:label "epizod"@az ;
+	skos:prefLabel "epizod"@az ;
+	schema:name "epizod"@az ;
+	rdfs:label "uási"@smn ;
+	skos:prefLabel "uási"@smn ;
+	schema:name "uási"@smn ;
+	rdfs:label "oassi"@se ;
+	skos:prefLabel "oassi"@se ;
+	schema:name "oassi"@se ;
+	rdfs:label "epizoda"@sl ;
+	skos:prefLabel "epizoda"@sl ;
+	schema:name "epizoda"@sl ;
+	schema:description "part of a work such as a serial television or radio drama"@en,
+		"parte de una obra dramática en secuencia"@es,
+		"segment d'une œuvre comme une série télévisée ou un programme radio"@fr,
+		"einzelne Folge einer Fernseh- oder Radioserie"@de,
+		"parte de um trabalho dramático como uma série de televisão ou um programa de rádio"@pt,
+		"часть драматического произведения"@ru,
+		"parte di un'opera come una serie televisiva o programma radiofonico"@it,
+		"episode"@id,
+		"deel van een radio- of televisieserie"@nl,
+		"del av et verk, som en TV- eller radioserie"@nb,
+		"μέρος ενός έργου όπως μια τηλεοπτική ή ραδιοφωνική σειρά"@el,
+		"חלק מסדרת רדיו או טלוויזיה"@he,
+		"část seriálového dramatického díla, například televizního seriálu"@cs,
+		"del av fiktiv berättelse som till exempel TV-serier eller radioteater"@sv,
+		"电视或广播连续剧中的一集"@zh,
+		"جزء من عمل دارمي مثل سلسلة تلفزيونية أو دراما إذاعية"@ar,
+		"časť dramatického diela, napríklad televízneho seriálu"@sk,
+		"ส่วนของงานละคร เช่น ละครทีวีหรือวิทยุที่ออกอากาศเป็นตอนๆ ต่อเนื่องกัน"@th,
+		"parto de verko kiel televidserio- aŭ radio-romano"@eo,
+		"cada unha das partes en que se divide unha obra dramática, como unha serie televisiva ou radiofónica."@gl,
+		"bộ phận của một tác phẩm như chương trình truyền hình hoặc phát thanh (bao gồm cả các bộ phim, vở kịch)"@vi,
+		"bahagian tertentu daripada karya yang lebih besar"@ms,
+		"en del af den fiktive historie, såsom tv-shows og hørespil"@da,
+		"電視或廣播連續劇中的一集"@zh-tw,
+		"電視或廣播連續劇中的一集"@zh-hant,
+		"trajedisinin ögelerini oluşturan diyaloglu bölümlerin her biri"@tr,
+		"сюжеттүү чыгармалардагы өзүнчө бир башталышы жана аякталышы бар, ошол эле кезде башка окуялар менен биригип сюжетти түзгөн майда бөлүкчө"@ky,
+		"part of a work such as a serial television or radio drama"@en-gb,
+		"part of a work such as a serial television or radio drama"@en-ca,
+		"影视广播等系列作品的一部分"@zh-hans,
+		"süjeti böyük və mürəkkəb əsərin (roman, poema, dram) müəyyən bitkin hissəsi"@az ;
+	skos:altLabel "episódios"@pt,
+		"אפיזודה"@he,
+		"épisodes"@fr,
+		"episode"@fr,
+		"episodes"@fr,
+		"episodi"@it,
+		"серия"@ru,
+		"episode"@nl,
+		"Episode"@de,
+		"epizoda"@cs,
+		"jakso"@fi,
+		"剧集"@zh,
+		"серия"@tg,
+		"diel"@sk,
+		"ฉาก"@th,
+		"ตอน"@th,
+		"ตอนหนึ่งของเรื่องราว"@th,
+		"ตอนหนึ่งของละคร"@th,
+		"radio episode"@en,
+		"TV episode"@en,
+		"episodes"@en,
+		"tập chương trình"@vi,
+		"tập"@vi,
+		"afsnit (tv-serie)"@da,
+		"eipeasóid"@ga,
+		"ايڤيسود"@ms,
+		"radio episode"@en-gb,
+		"TV episode"@en-gb,
+		"episodes"@en-gb,
+		"radio episode"@en-ca,
+		"TV episode"@en-ca,
+		"episodes"@en-ca,
+		"episoda"@se .
+
+wd:Q15709880 a wikibase:Item ;
+	rdfs:label "serial"@en ;
+	skos:prefLabel "serial"@en ;
+	schema:name "serial"@en ;
+	schema:description "continuing plot in radio and television that unfolds in a sequential episode-by-episode fashion"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q526877 a wikibase:Item ;
+	rdfs:label "web series"@en ;
+	skos:prefLabel "web series"@en ;
+	schema:name "web series"@en ;
+	schema:description "video serial broadcast on the Internet"@en .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q2657718 a wikibase:Item ;
+	rdfs:label "Armenian Soviet Encyclopedia"@en ;
+	skos:prefLabel "Armenian Soviet Encyclopedia"@en ;
+	schema:name "Armenian Soviet Encyclopedia"@en ;
+	schema:description "encyclopedia"@en .
+
+wd:P1343 a wikibase:Property ;
+	rdfs:label "described by source"@en ;
+	skos:prefLabel "described by source"@en ;
+	schema:name "described by source"@en ;
+	schema:description "work where this item is described"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1343 ;
+	wikibase:claim p:P1343 ;
+	wikibase:statementProperty ps:P1343 ;
+	wikibase:statementValue psv:P1343 ;
+	wikibase:qualifier pq:P1343 ;
+	wikibase:qualifierValue pqv:P1343 ;
+	wikibase:reference pr:P1343 ;
+	wikibase:referenceValue prv:P1343 ;
+	wikibase:novalue wdno:P1343 .
+
+p:P1343 a owl:ObjectProperty .
+
+psv:P1343 a owl:ObjectProperty .
+
+pqv:P1343 a owl:ObjectProperty .
+
+prv:P1343 a owl:ObjectProperty .
+
+wdt:P1343 a owl:ObjectProperty .
+
+ps:P1343 a owl:ObjectProperty .
+
+pq:P1343 a owl:ObjectProperty .
+
+pr:P1343 a owl:ObjectProperty .
+
+wdno:P1343 a owl:Class ;
+	owl:complementOf _:9c5978c46703ed90be57b769a8622d59 .
+
+_:9c5978c46703ed90be57b769a8622d59 a owl:Restriction ;
+	owl:onProperty wdt:P1343 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q63284758 a wikibase:Item ;
+	rdfs:label "Desktop Encyclopedic Dictionary"@en ;
+	skos:prefLabel "Desktop Encyclopedic Dictionary"@en ;
+	schema:name "Desktop Encyclopedic Dictionary"@en ;
+	schema:description "Russian encyclopedic dictionary"@en .
+
+wd:P1709 a wikibase:Property ;
+	rdfs:label "equivalent class"@en ;
+	skos:prefLabel "equivalent class"@en ;
+	schema:name "equivalent class"@en ;
+	schema:description "equivalent class in other ontologies (use property URI)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Url> ;
+	wikibase:directClaim wdt:P1709 ;
+	wikibase:claim p:P1709 ;
+	wikibase:statementProperty ps:P1709 ;
+	wikibase:statementValue psv:P1709 ;
+	wikibase:qualifier pq:P1709 ;
+	wikibase:qualifierValue pqv:P1709 ;
+	wikibase:reference pr:P1709 ;
+	wikibase:referenceValue prv:P1709 ;
+	wikibase:novalue wdno:P1709 .
+
+p:P1709 a owl:ObjectProperty .
+
+psv:P1709 a owl:ObjectProperty .
+
+pqv:P1709 a owl:ObjectProperty .
+
+prv:P1709 a owl:ObjectProperty .
+
+wdt:P1709 a owl:ObjectProperty .
+
+ps:P1709 a owl:ObjectProperty .
+
+pq:P1709 a owl:ObjectProperty .
+
+pr:P1709 a owl:ObjectProperty .
+
+wdno:P1709 a owl:Class ;
+	owl:complementOf _:93c565e7ae0faaeda9bd92b52aafde14 .
+
+_:93c565e7ae0faaeda9bd92b52aafde14 a owl:Restriction ;
+	owl:onProperty wdt:P1709 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q21191270 a wikibase:Item ;
+	rdfs:label "television series episode"@en ;
+	skos:prefLabel "television series episode"@en ;
+	schema:name "television series episode"@en ;
+	schema:description "single installment of a television series"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1980247 a wikibase:Item ;
+	rdfs:label "chapter"@en ;
+	skos:prefLabel "chapter"@en ;
+	schema:name "chapter"@en ;
+	schema:description "section of a work, most commonly a book"@en .
+
+wd:Q3925766 a wikibase:Item .
+
+wd:P1573 a wikibase:Property ;
+	rdfs:label "BBC Genome ID"@en ;
+	skos:prefLabel "BBC Genome ID"@en ;
+	schema:name "BBC Genome ID"@en ;
+	schema:description "identifier for a single episode/programme in the BBC Genome database of Radio Times programme listings"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1573 ;
+	wikibase:claim p:P1573 ;
+	wikibase:statementProperty ps:P1573 ;
+	wikibase:statementValue psv:P1573 ;
+	wikibase:qualifier pq:P1573 ;
+	wikibase:qualifierValue pqv:P1573 ;
+	wikibase:reference pr:P1573 ;
+	wikibase:referenceValue prv:P1573 ;
+	wikibase:novalue wdno:P1573 ;
+	wikibase:directClaimNormalized wdtn:P1573 ;
+	wikibase:statementValueNormalized psn:P1573 ;
+	wikibase:qualifierValueNormalized pqn:P1573 ;
+	wikibase:referenceValueNormalized prn:P1573 .
+
+p:P1573 a owl:ObjectProperty .
+
+psv:P1573 a owl:ObjectProperty .
+
+pqv:P1573 a owl:ObjectProperty .
+
+prv:P1573 a owl:ObjectProperty .
+
+wdt:P1573 a owl:DatatypeProperty .
+
+ps:P1573 a owl:DatatypeProperty .
+
+pq:P1573 a owl:DatatypeProperty .
+
+pr:P1573 a owl:DatatypeProperty .
+
+psn:P1573 a owl:ObjectProperty .
+
+pqn:P1573 a owl:ObjectProperty .
+
+prn:P1573 a owl:ObjectProperty .
+
+wdtn:P1573 a owl:ObjectProperty .
+
+wdno:P1573 a owl:Class ;
+	owl:complementOf _:f79c516b4deb622f5d868dfe5b253e72 .
+
+_:f79c516b4deb622f5d868dfe5b253e72 a owl:Restriction ;
+	owl:onProperty wdt:P1573 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1963 a wikibase:Property ;
+	rdfs:label "properties for this type"@en ;
+	skos:prefLabel "properties for this type"@en ;
+	schema:name "properties for this type"@en ;
+	schema:description "when this subject is used as object of \"instance of\" or \"occupation\", the following properties normally apply"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseProperty> ;
+	wikibase:directClaim wdt:P1963 ;
+	wikibase:claim p:P1963 ;
+	wikibase:statementProperty ps:P1963 ;
+	wikibase:statementValue psv:P1963 ;
+	wikibase:qualifier pq:P1963 ;
+	wikibase:qualifierValue pqv:P1963 ;
+	wikibase:reference pr:P1963 ;
+	wikibase:referenceValue prv:P1963 ;
+	wikibase:novalue wdno:P1963 .
+
+p:P1963 a owl:ObjectProperty .
+
+psv:P1963 a owl:ObjectProperty .
+
+pqv:P1963 a owl:ObjectProperty .
+
+prv:P1963 a owl:ObjectProperty .
+
+wdt:P1963 a owl:ObjectProperty .
+
+ps:P1963 a owl:ObjectProperty .
+
+pq:P1963 a owl:ObjectProperty .
+
+pr:P1963 a owl:ObjectProperty .
+
+wdno:P1963 a owl:Class ;
+	owl:complementOf _:4d8769fc1c544b1caed9e52ec1f84247 .
+
+_:4d8769fc1c544b1caed9e52ec1f84247 a owl:Restriction ;
+	owl:onProperty wdt:P1963 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P179 a wikibase:Property ;
+	rdfs:label "part of the series"@en ;
+	skos:prefLabel "part of the series"@en ;
+	schema:name "part of the series"@en ;
+	schema:description "series which contains the subject"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P179 ;
+	wikibase:claim p:P179 ;
+	wikibase:statementProperty ps:P179 ;
+	wikibase:statementValue psv:P179 ;
+	wikibase:qualifier pq:P179 ;
+	wikibase:qualifierValue pqv:P179 ;
+	wikibase:reference pr:P179 ;
+	wikibase:referenceValue prv:P179 ;
+	wikibase:novalue wdno:P179 .
+
+p:P179 a owl:ObjectProperty .
+
+psv:P179 a owl:ObjectProperty .
+
+pqv:P179 a owl:ObjectProperty .
+
+prv:P179 a owl:ObjectProperty .
+
+wdt:P179 a owl:ObjectProperty .
+
+ps:P179 a owl:ObjectProperty .
+
+pq:P179 a owl:ObjectProperty .
+
+pr:P179 a owl:ObjectProperty .
+
+wdno:P179 a owl:Class ;
+	owl:complementOf _:b17993fd6a890bb6e4872e711311d590 .
+
+_:b17993fd6a890bb6e4872e711311d590 a owl:Restriction ;
+	owl:onProperty wdt:P179 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q11578774 a wikibase:Item ;
+	rdfs:label "broadcasting program"@en ;
+	skos:prefLabel "broadcasting program"@en ;
+	schema:name "broadcasting program"@en ;
+	schema:description "a program, can either be a brand, a series or an episode"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P3417 a wikibase:Property ;
+	rdfs:label "Quora topic ID"@en ;
+	skos:prefLabel "Quora topic ID"@en ;
+	schema:name "Quora topic ID"@en ;
+	schema:description "identifier for a topic on Quora (English language version)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P3417 ;
+	wikibase:claim p:P3417 ;
+	wikibase:statementProperty ps:P3417 ;
+	wikibase:statementValue psv:P3417 ;
+	wikibase:qualifier pq:P3417 ;
+	wikibase:qualifierValue pqv:P3417 ;
+	wikibase:reference pr:P3417 ;
+	wikibase:referenceValue prv:P3417 ;
+	wikibase:novalue wdno:P3417 ;
+	wikibase:directClaimNormalized wdtn:P3417 ;
+	wikibase:statementValueNormalized psn:P3417 ;
+	wikibase:qualifierValueNormalized pqn:P3417 ;
+	wikibase:referenceValueNormalized prn:P3417 .
+
+p:P3417 a owl:ObjectProperty .
+
+psv:P3417 a owl:ObjectProperty .
+
+pqv:P3417 a owl:ObjectProperty .
+
+prv:P3417 a owl:ObjectProperty .
+
+wdt:P3417 a owl:DatatypeProperty .
+
+ps:P3417 a owl:DatatypeProperty .
+
+pq:P3417 a owl:DatatypeProperty .
+
+pr:P3417 a owl:DatatypeProperty .
+
+psn:P3417 a owl:ObjectProperty .
+
+pqn:P3417 a owl:ObjectProperty .
+
+prn:P3417 a owl:ObjectProperty .
+
+wdtn:P3417 a owl:ObjectProperty .
+
+wdno:P3417 a owl:Class ;
+	owl:complementOf _:54217a89695819ffcfec13afc576b468 .
+
+_:54217a89695819ffcfec13afc576b468 a owl:Restriction ;
+	owl:onProperty wdt:P3417 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1296 a wikibase:Property ;
+	rdfs:label "Gran Enciclopèdia Catalana ID"@en ;
+	skos:prefLabel "Gran Enciclopèdia Catalana ID"@en ;
+	schema:name "Gran Enciclopèdia Catalana ID"@en ;
+	schema:description "identifier for an item in the Gran Enciclopèdia Catalana"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1296 ;
+	wikibase:claim p:P1296 ;
+	wikibase:statementProperty ps:P1296 ;
+	wikibase:statementValue psv:P1296 ;
+	wikibase:qualifier pq:P1296 ;
+	wikibase:qualifierValue pqv:P1296 ;
+	wikibase:reference pr:P1296 ;
+	wikibase:referenceValue prv:P1296 ;
+	wikibase:novalue wdno:P1296 ;
+	wikibase:directClaimNormalized wdtn:P1296 ;
+	wikibase:statementValueNormalized psn:P1296 ;
+	wikibase:qualifierValueNormalized pqn:P1296 ;
+	wikibase:referenceValueNormalized prn:P1296 .
+
+p:P1296 a owl:ObjectProperty .
+
+psv:P1296 a owl:ObjectProperty .
+
+pqv:P1296 a owl:ObjectProperty .
+
+prv:P1296 a owl:ObjectProperty .
+
+wdt:P1296 a owl:DatatypeProperty .
+
+ps:P1296 a owl:DatatypeProperty .
+
+pq:P1296 a owl:DatatypeProperty .
+
+pr:P1296 a owl:DatatypeProperty .
+
+psn:P1296 a owl:ObjectProperty .
+
+pqn:P1296 a owl:ObjectProperty .
+
+prn:P1296 a owl:ObjectProperty .
+
+wdtn:P1296 a owl:ObjectProperty .
+
+wdno:P1296 a owl:Class ;
+	owl:complementOf _:2b4e9773af61d716df50661bea8bd3b2 .
+
+_:2b4e9773af61d716df50661bea8bd3b2 a owl:Restriction ;
+	owl:onProperty wdt:P1296 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1811 a wikibase:Property ;
+	rdfs:label "list of episodes"@en ;
+	skos:prefLabel "list of episodes"@en ;
+	schema:name "list of episodes"@en ;
+	schema:description "link to the article with the list of episodes for this series"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1811 ;
+	wikibase:claim p:P1811 ;
+	wikibase:statementProperty ps:P1811 ;
+	wikibase:statementValue psv:P1811 ;
+	wikibase:qualifier pq:P1811 ;
+	wikibase:qualifierValue pqv:P1811 ;
+	wikibase:reference pr:P1811 ;
+	wikibase:referenceValue prv:P1811 ;
+	wikibase:novalue wdno:P1811 .
+
+p:P1811 a owl:ObjectProperty .
+
+psv:P1811 a owl:ObjectProperty .
+
+pqv:P1811 a owl:ObjectProperty .
+
+prv:P1811 a owl:ObjectProperty .
+
+wdt:P1811 a owl:ObjectProperty .
+
+ps:P1811 a owl:ObjectProperty .
+
+pq:P1811 a owl:ObjectProperty .
+
+pr:P1811 a owl:ObjectProperty .
+
+wdno:P1811 a owl:Class ;
+	owl:complementOf _:1fc1e832deeecf183c8e7ed79b69d413 .
+
+_:1fc1e832deeecf183c8e7ed79b69d413 a owl:Restriction ;
+	owl:onProperty wdt:P1811 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1687 a wikibase:Property ;
+	rdfs:label "Wikidata property"@en ;
+	skos:prefLabel "Wikidata property"@en ;
+	schema:name "Wikidata property"@en ;
+	schema:description "main Wikidata property for this item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseProperty> ;
+	wikibase:directClaim wdt:P1687 ;
+	wikibase:claim p:P1687 ;
+	wikibase:statementProperty ps:P1687 ;
+	wikibase:statementValue psv:P1687 ;
+	wikibase:qualifier pq:P1687 ;
+	wikibase:qualifierValue pqv:P1687 ;
+	wikibase:reference pr:P1687 ;
+	wikibase:referenceValue prv:P1687 ;
+	wikibase:novalue wdno:P1687 .
+
+p:P1687 a owl:ObjectProperty .
+
+psv:P1687 a owl:ObjectProperty .
+
+pqv:P1687 a owl:ObjectProperty .
+
+prv:P1687 a owl:ObjectProperty .
+
+wdt:P1687 a owl:ObjectProperty .
+
+ps:P1687 a owl:ObjectProperty .
+
+pq:P1687 a owl:ObjectProperty .
+
+pr:P1687 a owl:ObjectProperty .
+
+wdno:P1687 a owl:Class ;
+	owl:complementOf _:9526c37b25bc909b616cc0db2ab076e9 .
+
+_:9526c37b25bc909b616cc0db2ab076e9 a owl:Restriction ;
+	owl:onProperty wdt:P1687 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1113 a wikibase:Property ;
+	rdfs:label "number of episodes"@en ;
+	skos:prefLabel "number of episodes"@en ;
+	schema:name "number of episodes"@en ;
+	schema:description "number of episodes in a film/TV/radio series"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Quantity> ;
+	wikibase:directClaim wdt:P1113 ;
+	wikibase:claim p:P1113 ;
+	wikibase:statementProperty ps:P1113 ;
+	wikibase:statementValue psv:P1113 ;
+	wikibase:qualifier pq:P1113 ;
+	wikibase:qualifierValue pqv:P1113 ;
+	wikibase:reference pr:P1113 ;
+	wikibase:referenceValue prv:P1113 ;
+	wikibase:novalue wdno:P1113 ;
+	wikibase:directClaimNormalized wdtn:P1113 ;
+	wikibase:statementValueNormalized psn:P1113 ;
+	wikibase:qualifierValueNormalized pqn:P1113 ;
+	wikibase:referenceValueNormalized prn:P1113 .
+
+p:P1113 a owl:ObjectProperty .
+
+psv:P1113 a owl:ObjectProperty .
+
+pqv:P1113 a owl:ObjectProperty .
+
+prv:P1113 a owl:ObjectProperty .
+
+wdt:P1113 a owl:DatatypeProperty .
+
+ps:P1113 a owl:DatatypeProperty .
+
+pq:P1113 a owl:DatatypeProperty .
+
+pr:P1113 a owl:DatatypeProperty .
+
+psn:P1113 a owl:ObjectProperty .
+
+pqn:P1113 a owl:ObjectProperty .
+
+prn:P1113 a owl:ObjectProperty .
+
+wdtn:P1113 a owl:DatatypeProperty .
+
+wdno:P1113 a owl:Class ;
+	owl:complementOf _:7d2bafb1a166eacb2ea6d94a0a0126d7 .
+
+_:7d2bafb1a166eacb2ea6d94a0a0126d7 a owl:Restriction ;
+	owl:onProperty wdt:P1113 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1245 a wikibase:Property ;
+	rdfs:label "OmegaWiki Defined Meaning"@en ;
+	skos:prefLabel "OmegaWiki Defined Meaning"@en ;
+	schema:name "OmegaWiki Defined Meaning"@en ;
+	schema:description "\"Defined Meaning\" on the site"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P1245 ;
+	wikibase:claim p:P1245 ;
+	wikibase:statementProperty ps:P1245 ;
+	wikibase:statementValue psv:P1245 ;
+	wikibase:qualifier pq:P1245 ;
+	wikibase:qualifierValue pqv:P1245 ;
+	wikibase:reference pr:P1245 ;
+	wikibase:referenceValue prv:P1245 ;
+	wikibase:novalue wdno:P1245 ;
+	wikibase:directClaimNormalized wdtn:P1245 ;
+	wikibase:statementValueNormalized psn:P1245 ;
+	wikibase:qualifierValueNormalized pqn:P1245 ;
+	wikibase:referenceValueNormalized prn:P1245 .
+
+p:P1245 a owl:ObjectProperty .
+
+psv:P1245 a owl:ObjectProperty .
+
+pqv:P1245 a owl:ObjectProperty .
+
+prv:P1245 a owl:ObjectProperty .
+
+wdt:P1245 a owl:DatatypeProperty .
+
+ps:P1245 a owl:DatatypeProperty .
+
+pq:P1245 a owl:DatatypeProperty .
+
+pr:P1245 a owl:DatatypeProperty .
+
+psn:P1245 a owl:ObjectProperty .
+
+pqn:P1245 a owl:ObjectProperty .
+
+prn:P1245 a owl:ObjectProperty .
+
+wdtn:P1245 a owl:ObjectProperty .
+
+wdno:P1245 a owl:Class ;
+	owl:complementOf _:6e697cc455c85845bc517351bce8bc92 .
+
+_:6e697cc455c85845bc517351bce8bc92 a owl:Restriction ;
+	owl:onProperty wdt:P1245 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8408 a wikibase:Property ;
+	rdfs:label "KBpedia ID"@en ;
+	skos:prefLabel "KBpedia ID"@en ;
+	schema:name "KBpedia ID"@en ;
+	schema:description "identifier for the KBpedia knowledge graph, which provides consistent mappings across seven large-scale public knowledge bases including Wikidata, and is used to promote data interoperability and extraction of training sets for machine learning"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8408 ;
+	wikibase:claim p:P8408 ;
+	wikibase:statementProperty ps:P8408 ;
+	wikibase:statementValue psv:P8408 ;
+	wikibase:qualifier pq:P8408 ;
+	wikibase:qualifierValue pqv:P8408 ;
+	wikibase:reference pr:P8408 ;
+	wikibase:referenceValue prv:P8408 ;
+	wikibase:novalue wdno:P8408 ;
+	wikibase:directClaimNormalized wdtn:P8408 ;
+	wikibase:statementValueNormalized psn:P8408 ;
+	wikibase:qualifierValueNormalized pqn:P8408 ;
+	wikibase:referenceValueNormalized prn:P8408 .
+
+p:P8408 a owl:ObjectProperty .
+
+psv:P8408 a owl:ObjectProperty .
+
+pqv:P8408 a owl:ObjectProperty .
+
+prv:P8408 a owl:ObjectProperty .
+
+wdt:P8408 a owl:DatatypeProperty .
+
+ps:P8408 a owl:DatatypeProperty .
+
+pq:P8408 a owl:DatatypeProperty .
+
+pr:P8408 a owl:DatatypeProperty .
+
+psn:P8408 a owl:ObjectProperty .
+
+pqn:P8408 a owl:ObjectProperty .
+
+prn:P8408 a owl:ObjectProperty .
+
+wdtn:P8408 a owl:ObjectProperty .
+
+wdno:P8408 a owl:Class ;
+	owl:complementOf _:a5c6b2a39aa8787e5b2a55612fc3d63e .
+
+_:a5c6b2a39aa8787e5b2a55612fc3d63e a owl:Restriction ;
+	owl:onProperty wdt:P8408 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P8313 a wikibase:Property ;
+	rdfs:label "Den Store Danske ID"@en ;
+	skos:prefLabel "Den Store Danske ID"@en ;
+	schema:name "Den Store Danske ID"@en ;
+	schema:description "identifier of an article in the online encyclopedia denstoredanske.lex.dk"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P8313 ;
+	wikibase:claim p:P8313 ;
+	wikibase:statementProperty ps:P8313 ;
+	wikibase:statementValue psv:P8313 ;
+	wikibase:qualifier pq:P8313 ;
+	wikibase:qualifierValue pqv:P8313 ;
+	wikibase:reference pr:P8313 ;
+	wikibase:referenceValue prv:P8313 ;
+	wikibase:novalue wdno:P8313 ;
+	wikibase:directClaimNormalized wdtn:P8313 ;
+	wikibase:statementValueNormalized psn:P8313 ;
+	wikibase:qualifierValueNormalized pqn:P8313 ;
+	wikibase:referenceValueNormalized prn:P8313 .
+
+p:P8313 a owl:ObjectProperty .
+
+psv:P8313 a owl:ObjectProperty .
+
+pqv:P8313 a owl:ObjectProperty .
+
+prv:P8313 a owl:ObjectProperty .
+
+wdt:P8313 a owl:DatatypeProperty .
+
+ps:P8313 a owl:DatatypeProperty .
+
+pq:P8313 a owl:DatatypeProperty .
+
+pr:P8313 a owl:DatatypeProperty .
+
+psn:P8313 a owl:ObjectProperty .
+
+pqn:P8313 a owl:ObjectProperty .
+
+prn:P8313 a owl:ObjectProperty .
+
+wdtn:P8313 a owl:ObjectProperty .
+
+wdno:P8313 a owl:Class ;
+	owl:complementOf _:5ce4742f42f26afe436b747d2437666d .
+
+_:5ce4742f42f26afe436b747d2437666d a owl:Restriction ;
+	owl:onProperty wdt:P8313 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P11567 a wikibase:Property ;
+	rdfs:label "Dictionary of Archives Terminology ID"@en ;
+	skos:prefLabel "Dictionary of Archives Terminology ID"@en ;
+	schema:name "Dictionary of Archives Terminology ID"@en ;
+	schema:description "identifier for an entry in the Society of American Archivists' Dictionary of Archives Terminology"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P11567 ;
+	wikibase:claim p:P11567 ;
+	wikibase:statementProperty ps:P11567 ;
+	wikibase:statementValue psv:P11567 ;
+	wikibase:qualifier pq:P11567 ;
+	wikibase:qualifierValue pqv:P11567 ;
+	wikibase:reference pr:P11567 ;
+	wikibase:referenceValue prv:P11567 ;
+	wikibase:novalue wdno:P11567 ;
+	wikibase:directClaimNormalized wdtn:P11567 ;
+	wikibase:statementValueNormalized psn:P11567 ;
+	wikibase:qualifierValueNormalized pqn:P11567 ;
+	wikibase:referenceValueNormalized prn:P11567 .
+
+p:P11567 a owl:ObjectProperty .
+
+psv:P11567 a owl:ObjectProperty .
+
+pqv:P11567 a owl:ObjectProperty .
+
+prv:P11567 a owl:ObjectProperty .
+
+wdt:P11567 a owl:DatatypeProperty .
+
+ps:P11567 a owl:DatatypeProperty .
+
+pq:P11567 a owl:DatatypeProperty .
+
+pr:P11567 a owl:DatatypeProperty .
+
+psn:P11567 a owl:ObjectProperty .
+
+pqn:P11567 a owl:ObjectProperty .
+
+prn:P11567 a owl:ObjectProperty .
+
+wdtn:P11567 a owl:ObjectProperty .
+
+wdno:P11567 a owl:Class ;
+	owl:complementOf _:7478b3172596e5c87290a0f2e6ae7dc7 .
+
+_:7478b3172596e5c87290a0f2e6ae7dc7 a owl:Restriction ;
+	owl:onProperty wdt:P11567 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2671 a wikibase:Property ;
+	rdfs:label "Google Knowledge Graph ID"@en ;
+	skos:prefLabel "Google Knowledge Graph ID"@en ;
+	schema:name "Google Knowledge Graph ID"@en ;
+	schema:description "identifier for Google Knowledge Graph API, starting with \"/g/\". For IDs starting with \"/m/\", use Freebase ID (P646)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2671 ;
+	wikibase:claim p:P2671 ;
+	wikibase:statementProperty ps:P2671 ;
+	wikibase:statementValue psv:P2671 ;
+	wikibase:qualifier pq:P2671 ;
+	wikibase:qualifierValue pqv:P2671 ;
+	wikibase:reference pr:P2671 ;
+	wikibase:referenceValue prv:P2671 ;
+	wikibase:novalue wdno:P2671 ;
+	wikibase:directClaimNormalized wdtn:P2671 ;
+	wikibase:statementValueNormalized psn:P2671 ;
+	wikibase:qualifierValueNormalized pqn:P2671 ;
+	wikibase:referenceValueNormalized prn:P2671 .
+
+p:P2671 a owl:ObjectProperty .
+
+psv:P2671 a owl:ObjectProperty .
+
+pqv:P2671 a owl:ObjectProperty .
+
+prv:P2671 a owl:ObjectProperty .
+
+wdt:P2671 a owl:DatatypeProperty .
+
+ps:P2671 a owl:DatatypeProperty .
+
+pq:P2671 a owl:DatatypeProperty .
+
+pr:P2671 a owl:DatatypeProperty .
+
+psn:P2671 a owl:ObjectProperty .
+
+pqn:P2671 a owl:ObjectProperty .
+
+prn:P2671 a owl:ObjectProperty .
+
+wdtn:P2671 a owl:ObjectProperty .
+
+wdno:P2671 a owl:Class ;
+	owl:complementOf _:65accf8c5265233a873cf53510c73fa5 .
+
+_:65accf8c5265233a873cf53510c73fa5 a owl:Restriction ;
+	owl:onProperty wdt:P2671 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P478 a wikibase:Property ;
+	rdfs:label "volume"@en ;
+	skos:prefLabel "volume"@en ;
+	schema:name "volume"@en ;
+	schema:description "volume of a book or music release in a collection/series or a published collection of journal issues in a serial publication"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P478 ;
+	wikibase:claim p:P478 ;
+	wikibase:statementProperty ps:P478 ;
+	wikibase:statementValue psv:P478 ;
+	wikibase:qualifier pq:P478 ;
+	wikibase:qualifierValue pqv:P478 ;
+	wikibase:reference pr:P478 ;
+	wikibase:referenceValue prv:P478 ;
+	wikibase:novalue wdno:P478 .
+
+p:P478 a owl:ObjectProperty .
+
+psv:P478 a owl:ObjectProperty .
+
+pqv:P478 a owl:ObjectProperty .
+
+prv:P478 a owl:ObjectProperty .
+
+wdt:P478 a owl:DatatypeProperty .
+
+ps:P478 a owl:DatatypeProperty .
+
+pq:P478 a owl:DatatypeProperty .
+
+pr:P478 a owl:DatatypeProperty .
+
+wdno:P478 a owl:Class ;
+	owl:complementOf _:535dab7014016140dd170125242aa305 .
+
+_:535dab7014016140dd170125242aa305 a owl:Restriction ;
+	owl:onProperty wdt:P478 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P304 a wikibase:Property ;
+	rdfs:label "page(s)"@en ;
+	skos:prefLabel "page(s)"@en ;
+	schema:name "page(s)"@en ;
+	schema:description "page number of source referenced for statement. Note \"column(s)\" (P3903) and \"folio(s)\" (P7416) for other numbering systems"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P304 ;
+	wikibase:claim p:P304 ;
+	wikibase:statementProperty ps:P304 ;
+	wikibase:statementValue psv:P304 ;
+	wikibase:qualifier pq:P304 ;
+	wikibase:qualifierValue pqv:P304 ;
+	wikibase:reference pr:P304 ;
+	wikibase:referenceValue prv:P304 ;
+	wikibase:novalue wdno:P304 .
+
+p:P304 a owl:ObjectProperty .
+
+psv:P304 a owl:ObjectProperty .
+
+pqv:P304 a owl:ObjectProperty .
+
+prv:P304 a owl:ObjectProperty .
+
+wdt:P304 a owl:DatatypeProperty .
+
+ps:P304 a owl:DatatypeProperty .
+
+pq:P304 a owl:DatatypeProperty .
+
+pr:P304 a owl:DatatypeProperty .
+
+wdno:P304 a owl:Class ;
+	owl:complementOf _:49f6b1d5994a21499c8de6a108f33226 .
+
+_:49f6b1d5994a21499c8de6a108f33226 a owl:Restriction ;
+	owl:onProperty wdt:P304 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q1975217 a wikibase:Item ;
+	rdfs:label "Armenian Wikipedia"@en ;
+	skos:prefLabel "Armenian Wikipedia"@en ;
+	schema:name "Armenian Wikipedia"@en ;
+	schema:description "Armenian-language edition of Wikipedia"@en .
+
+wd:P143 a wikibase:Property ;
+	rdfs:label "imported from Wikimedia project"@en ;
+	skos:prefLabel "imported from Wikimedia project"@en ;
+	schema:name "imported from Wikimedia project"@en ;
+	schema:description "source of this claim's value; used in references section by bots or humans importing data from Wikimedia projects"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P143 ;
+	wikibase:claim p:P143 ;
+	wikibase:statementProperty ps:P143 ;
+	wikibase:statementValue psv:P143 ;
+	wikibase:qualifier pq:P143 ;
+	wikibase:qualifierValue pqv:P143 ;
+	wikibase:reference pr:P143 ;
+	wikibase:referenceValue prv:P143 ;
+	wikibase:novalue wdno:P143 .
+
+p:P143 a owl:ObjectProperty .
+
+psv:P143 a owl:ObjectProperty .
+
+pqv:P143 a owl:ObjectProperty .
+
+prv:P143 a owl:ObjectProperty .
+
+wdt:P143 a owl:ObjectProperty .
+
+ps:P143 a owl:ObjectProperty .
+
+pq:P143 a owl:ObjectProperty .
+
+pr:P143 a owl:ObjectProperty .
+
+wdno:P143 a owl:Class ;
+	owl:complementOf _:66a2156e9cbfe8d655274b862fca1b59 .
+
+_:66a2156e9cbfe8d655274b862fca1b59 a owl:Restriction ;
+	owl:onProperty wdt:P143 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q86854134 a wikibase:Item ;
+	schema:description "entry in Desktop Encyclopedic Dictionary"@en .
+
+wd:P805 a wikibase:Property ;
+	rdfs:label "statement is subject of"@en ;
+	skos:prefLabel "statement is subject of"@en ;
+	schema:name "statement is subject of"@en ;
+	schema:description "(qualifying) item that describes the relation identified in this statement"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P805 ;
+	wikibase:claim p:P805 ;
+	wikibase:statementProperty ps:P805 ;
+	wikibase:statementValue psv:P805 ;
+	wikibase:qualifier pq:P805 ;
+	wikibase:qualifierValue pqv:P805 ;
+	wikibase:reference pr:P805 ;
+	wikibase:referenceValue prv:P805 ;
+	wikibase:novalue wdno:P805 .
+
+p:P805 a owl:ObjectProperty .
+
+psv:P805 a owl:ObjectProperty .
+
+pqv:P805 a owl:ObjectProperty .
+
+prv:P805 a owl:ObjectProperty .
+
+wdt:P805 a owl:ObjectProperty .
+
+ps:P805 a owl:ObjectProperty .
+
+pq:P805 a owl:ObjectProperty .
+
+pr:P805 a owl:ObjectProperty .
+
+wdno:P805 a owl:Class ;
+	owl:complementOf _:b0057da68fba9959eba43619c1638733 .
+
+_:b0057da68fba9959eba43619c1638733 a owl:Restriction ;
+	owl:onProperty wdt:P805 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q64139102 a wikibase:Item ;
+	rdfs:label "KBpedia"@en ;
+	skos:prefLabel "KBpedia"@en ;
+	schema:name "KBpedia"@en ;
+	schema:description "free ontology aimed at making data and knowledge interoperable for machine learning"@en .
+
+wd:P813 a wikibase:Property ;
+	rdfs:label "retrieved"@en ;
+	skos:prefLabel "retrieved"@en ;
+	schema:name "retrieved"@en ;
+	schema:description "date or point in time that information was retrieved from a database or website (for use in online sources)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P813 ;
+	wikibase:claim p:P813 ;
+	wikibase:statementProperty ps:P813 ;
+	wikibase:statementValue psv:P813 ;
+	wikibase:qualifier pq:P813 ;
+	wikibase:qualifierValue pqv:P813 ;
+	wikibase:reference pr:P813 ;
+	wikibase:referenceValue prv:P813 ;
+	wikibase:novalue wdno:P813 .
+
+p:P813 a owl:ObjectProperty .
+
+psv:P813 a owl:ObjectProperty .
+
+pqv:P813 a owl:ObjectProperty .
+
+prv:P813 a owl:ObjectProperty .
+
+wdt:P813 a owl:DatatypeProperty .
+
+ps:P813 a owl:DatatypeProperty .
+
+pq:P813 a owl:DatatypeProperty .
+
+pr:P813 a owl:DatatypeProperty .
+
+wdno:P813 a owl:Class ;
+	owl:complementOf _:a84dea0fd38ed74f926ea4bdef778770 .
+
+_:a84dea0fd38ed74f926ea4bdef778770 a owl:Restriction ;
+	owl:onProperty wdt:P813 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q12300664 owl:sameAs wd:Q1983062 .
+
+wd:Q12571930 owl:sameAs wd:Q1983062 .
+
+wd:Q12839252 owl:sameAs wd:Q1983062 .
+
+wd:Q25425963 owl:sameAs wd:Q1983062 .
+
+wd:Q25647747 owl:sameAs wd:Q1983062 .
+
+wd:Q65313654 owl:sameAs wd:Q1983062 .
+
+wd:Q97196671 owl:sameAs wd:Q1983062 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+v:664bae4effccc18fd4ad1ae188fab025 a wikibase:TimeValue ;
+	wikibase:timeValue "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:8bc722e6797143f2ba971ee5fedaeb0a331268e6 a wikibase:Reference ;
+	pr:P143 wd:Q1975217 .
+
+ref:9a681f9dd95c90224547c404e11295f4f7dcf54e a wikibase:Reference ;
+	pr:P248 wd:Q64139102 ;
+	pr:P813 "2020-07-09T00:00:00Z"^^xsd:dateTime ;
+	prv:P813 v:664bae4effccc18fd4ad1ae188fab025 .
