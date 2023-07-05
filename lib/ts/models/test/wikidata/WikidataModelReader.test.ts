@@ -20,7 +20,8 @@ describe("WikidataModelReader", () => {
 
   it("should read at least one named Person", () => {
     const people = sut.readNamedPeople({modelSet: dummyModelSet});
-    expect(people).to.have.length(1);
+    // Alan Turing from the Person sameAs and Lucas Cranach from the Work sameAs's creators
+    expect(people).to.have.length(2);
     for (const person of people) {
       // "family name" and "given name" statements in Wikidata are often references to Wikidata entities we haven't resolved
       expect(person.label).not.to.be.empty;

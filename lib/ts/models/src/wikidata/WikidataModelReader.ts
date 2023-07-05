@@ -15,12 +15,12 @@ import log from 'loglevel';
 import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
 
 class WikidataEntities {
-  // static readonly BUILDING = wd["Q41176"];
-  // static readonly EXHIBITION_HALL = wd["Q57659484"];
-  static readonly CREATIVE_WORK = wd["Q17537576"]
+  // Creative work somehow captures "episode from Greek mythology" (-> episode -> broadcast program -> creative work)
+  // static readonly CREATIVE_WORK = wd["Q17537576"]
   static readonly HUMAN = wd["Q5"];
-  // static readonly LOCATION = wd["Q115095765"];
+  // "Work" captures too many things
   // static readonly WORK = wd["Q386724"];
+  static readonly WORK_OF_ART = wd["Q838948"];
 }
 
 export class WikidataModelReader extends DatasetModelReader {
@@ -79,7 +79,7 @@ export class WikidataModelReader extends DatasetModelReader {
 
   override readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
     return this.readWikidataModels({
-      class_: WikidataEntities.CREATIVE_WORK,
+      class_: WikidataEntities.WORK_OF_ART,
       factory: WikidataWork,
       modelSet: kwds.modelSet,
     });
