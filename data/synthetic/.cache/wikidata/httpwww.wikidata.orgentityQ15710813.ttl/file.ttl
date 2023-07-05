@@ -1,0 +1,280 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q15710813 a schema:Dataset ;
+	schema:about wd:Q15710813 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1910251428"^^xsd:integer ;
+	schema:dateModified "2023-06-07T14:46:17Z"^^xsd:dateTime ;
+	wikibase:statements "4"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q15710813 a wikibase:Item ;
+	wdt:P279 wd:Q1454986,
+		wd:Q6671777 ;
+	wdt:P460 wd:Q1454986 ;
+	wdt:P31 wd:Q111972893 ;
+	p:P279 s:Q15710813-3ea7efda-4651-7601-8a2b-b5fa09b24014 .
+
+s:Q15710813-3ea7efda-4651-7601-8a2b-b5fa09b24014 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1454986 .
+
+wd:Q15710813 p:P279 s:Q15710813-4239c374-451c-b9e7-75a5-70f340897eb5 .
+
+s:Q15710813-4239c374-451c-b9e7-75a5-70f340897eb5 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q6671777 .
+
+wd:Q15710813 p:P460 s:Q15710813-d83a6408-4987-c5e5-6313-c468960f8fcb .
+
+s:Q15710813-d83a6408-4987-c5e5-6313-c468960f8fcb a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P460 wd:Q1454986 .
+
+wd:Q15710813 p:P31 s:Q15710813-8c45302f-4872-cb5b-3508-bc1b14e91ae5 .
+
+s:Q15710813-8c45302f-4872-cb5b-3508-bc1b14e91ae5 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q111972893 .
+
+wd:Q15710813 rdfs:label "structure de type physique"@fr ;
+	skos:prefLabel "structure de type physique"@fr ;
+	schema:name "structure de type physique"@fr ;
+	rdfs:label "physical structure"@en ;
+	skos:prefLabel "physical structure"@en ;
+	schema:name "physical structure"@en ;
+	rdfs:label "fysieke structuur"@nl ;
+	skos:prefLabel "fysieke structuur"@nl ;
+	schema:name "fysieke structuur"@nl ;
+	rdfs:label "физическая структура"@ru ;
+	skos:prefLabel "физическая структура"@ru ;
+	schema:name "физическая структура"@ru ;
+	rdfs:label "estructura física"@es ;
+	skos:prefLabel "estructura física"@es ;
+	schema:name "estructura física"@es ;
+	rdfs:label "struttura fisica"@it ;
+	skos:prefLabel "struttura fisica"@it ;
+	schema:name "struttura fisica"@it ;
+	rdfs:label "estructura física"@ca ;
+	skos:prefLabel "estructura física"@ca ;
+	schema:name "estructura física"@ca ;
+	rdfs:label "fyzická struktura"@cs ;
+	skos:prefLabel "fyzická struktura"@cs ;
+	schema:name "fyzická struktura"@cs ;
+	rdfs:label "struktura fizyczna"@pl ;
+	skos:prefLabel "struktura fizyczna"@pl ;
+	schema:name "struktura fizyczna"@pl ;
+	rdfs:label "фізична структура"@uk ;
+	skos:prefLabel "фізична структура"@uk ;
+	schema:name "фізична структура"@uk ;
+	rdfs:label "strutur fisical"@lfn ;
+	skos:prefLabel "strutur fisical"@lfn ;
+	schema:name "strutur fisical"@lfn ;
+	rdfs:label "fizika strukturo"@eo ;
+	skos:prefLabel "fizika strukturo"@eo ;
+	schema:name "fizika strukturo"@eo ;
+	rdfs:label "fysisk struktur"@sv ;
+	skos:prefLabel "fysisk struktur"@sv ;
+	schema:name "fysisk struktur"@sv ;
+	rdfs:label "fiziksel yapı"@tr ;
+	skos:prefLabel "fiziksel yapı"@tr ;
+	schema:name "fiziksel yapı"@tr ;
+	rdfs:label "фізычная будова"@be-tarask ;
+	skos:prefLabel "фізычная будова"@be-tarask ;
+	schema:name "фізычная будова"@be-tarask ;
+	rdfs:label "物理構造"@ja ;
+	skos:prefLabel "物理構造"@ja ;
+	schema:name "物理構造"@ja ;
+	rdfs:label "konkreettinen rakenne"@fi ;
+	skos:prefLabel "konkreettinen rakenne"@fi ;
+	schema:name "konkreettinen rakenne"@fi ;
+	rdfs:label "fizička struktura"@bs ;
+	skos:prefLabel "fizička struktura"@bs ;
+	schema:name "fizička struktura"@bs ;
+	rdfs:label "fizikalna struktura"@sl ;
+	skos:prefLabel "fizikalna struktura"@sl ;
+	schema:name "fizikalna struktura"@sl ;
+	rdfs:label "物理结构"@zh ;
+	skos:prefLabel "物理结构"@zh ;
+	schema:name "物理结构"@zh ;
+	schema:description "body or assemblage of bodies in space that form a system capable of supporting loads"@en,
+		"corps ou assemblage de corps dans l'espace qui forment un système capable de supporter des charges"@fr,
+		"cuerpo o conjunto de cuerpos en el espacio que forman un sistema capaz de soportar cargas"@es,
+		"тіло або поєднання тіл у просторі, які утворюють систему, здатну підтримувати навантаження"@uk,
+		"boşlukta yükleri destekleyebilen bir sistem oluşturan gövdelerin ana gövdesi veya montajlanmış hali"@tr,
+		"цела або злучэньне целаў, якія ўтвараюць сыстэму, здольную падымаць груз"@be-tarask ;
+	skos:altLabel "estructura de tipo físico"@es,
+		"estructura fisica"@es,
+		"estructura de tipo fisico"@es,
+		"фізычная структура"@be-tarask,
+		"fyysinen rakenne"@fi .
+
+wd:Q1454986 a wikibase:Item ;
+	rdfs:label "physical system"@en ;
+	skos:prefLabel "physical system"@en ;
+	schema:name "physical system"@en ;
+	schema:description "portion of the physical universe chosen for analysis; everything outside the system is known as the environment"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q6671777 a wikibase:Item ;
+	rdfs:label "structure"@en ;
+	skos:prefLabel "structure"@en ;
+	schema:name "structure"@en ;
+	schema:description "arrangement and organization of interrelated elements in an object or system, or the object or system so organized"@en .
+
+wd:P460 a wikibase:Property ;
+	rdfs:label "said to be the same as"@en ;
+	skos:prefLabel "said to be the same as"@en ;
+	schema:name "said to be the same as"@en ;
+	schema:description "this item is said to be the same as that item, but it's uncertain or disputed"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P460 ;
+	wikibase:claim p:P460 ;
+	wikibase:statementProperty ps:P460 ;
+	wikibase:statementValue psv:P460 ;
+	wikibase:qualifier pq:P460 ;
+	wikibase:qualifierValue pqv:P460 ;
+	wikibase:reference pr:P460 ;
+	wikibase:referenceValue prv:P460 ;
+	wikibase:novalue wdno:P460 .
+
+p:P460 a owl:ObjectProperty .
+
+psv:P460 a owl:ObjectProperty .
+
+pqv:P460 a owl:ObjectProperty .
+
+prv:P460 a owl:ObjectProperty .
+
+wdt:P460 a owl:ObjectProperty .
+
+ps:P460 a owl:ObjectProperty .
+
+pq:P460 a owl:ObjectProperty .
+
+pr:P460 a owl:ObjectProperty .
+
+wdno:P460 a owl:Class ;
+	owl:complementOf _:d2d06f5f882d89e2beb38e48465a2548 .
+
+_:d2d06f5f882d89e2beb38e48465a2548 a owl:Restriction ;
+	owl:onProperty wdt:P460 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q111972893 a wikibase:Item ;
+	rdfs:label "type of structure"@en ;
+	skos:prefLabel "type of structure"@en ;
+	schema:name "type of structure"@en ;
+	schema:description "Wikidata metaclass of arrangement and organization of interrelated elements in an object or system"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
