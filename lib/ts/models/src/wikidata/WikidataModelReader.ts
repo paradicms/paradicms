@@ -12,13 +12,15 @@ import {WikidataModel} from "./WikidataModel";
 import {WikidataWork} from "./WikidataWork";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
 import log from 'loglevel';
+import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
 
 class WikidataEntities {
   // static readonly BUILDING = wd["Q41176"];
-  static readonly EXHIBITION_HALL = wd["Q57659484"];
+  // static readonly EXHIBITION_HALL = wd["Q57659484"];
+  static readonly CREATIVE_WORK = wd["Q17537576"]
   static readonly HUMAN = wd["Q5"];
   // static readonly LOCATION = wd["Q115095765"];
-  static readonly WORK = wd["Q386724"];
+  // static readonly WORK = wd["Q386724"];
 }
 
 export class WikidataModelReader extends DatasetModelReader {
@@ -37,6 +39,7 @@ export class WikidataModelReader extends DatasetModelReader {
         dataset: DatasetCore;
         modelSet: ModelSet;
         wikibaseItem: WikibaseItem;
+        wikibaseItemSet: WikibaseItemSet;
       }): WikidataModelT;
     };
     modelSet: ModelSet;
@@ -57,13 +60,14 @@ export class WikidataModelReader extends DatasetModelReader {
         modelGraph: instanceQuad.graph as ModelGraphIdentifier,
         modelIdentifier: instanceQuad.subject,
       });
-      const wikibaseItem = this.wikibaseItemsByIri[instanceQuad.subject.value];
+      const wikibaseItem = this.wikibaseItemSet.wikibaseItemByIri(instanceQuad.subject.value);
       if (wikibaseItem) {
         models.push(
           new factory({
             dataset: this.dataset,
             modelSet,
             wikibaseItem,
+            wikibaseItemSet: this.wikibaseItemSet
           })
         );
       } else {
@@ -75,22 +79,14 @@ export class WikidataModelReader extends DatasetModelReader {
 
   override readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
     return this.readWikidataModels({
-      class_: WikidataEntities.WORK,
+      class_: WikidataEntities.CREATIVE_WORK,
       factory: WikidataWork,
       modelSet: kwds.modelSet,
     });
   }
 
   @Memoize()
-  private get wikibaseItems(): readonly WikibaseItem[] {
-    return getWikibaseItems({dataset: this.dataset});
-  }
-
-  @Memoize()
-  private get wikibaseItemsByIri(): {[index: string]: WikibaseItem} {
-    return this.wikibaseItems.reduce((map, wikibaseItem) => {
-      map[wikibaseItem.identifier.value] = wikibaseItem;
-      return map;
-    }, {} as {[index: string]: WikibaseItem});
+  private get wikibaseItemSet(): WikibaseItemSet {
+    return new WikibaseItemSet(getWikibaseItems({dataset: this.dataset}));
   }
 }

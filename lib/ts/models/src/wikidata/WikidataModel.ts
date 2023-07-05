@@ -15,16 +15,19 @@ import {wdt} from "@paradicms/vocabularies";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {Mixin} from "ts-mixer";
 import {requireNonNull} from "@paradicms/utilities";
+import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
 
 export abstract class WikidataModel
   extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin)
   implements ImagesMixin, RightsMixin, NamedModel, WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
+  protected readonly wikibaseItemSet: WikibaseItemSet;
 
   constructor(kwds: {
     dataset: DatasetCore;
     modelSet: ModelSet;
     wikibaseItem: WikibaseItem;
+    wikibaseItemSet: WikibaseItemSet
   }) {
     super({
       dataset: kwds.dataset,
@@ -33,6 +36,7 @@ export abstract class WikidataModel
       modelSet: kwds.modelSet,
     });
     this.wikibaseItem = kwds.wikibaseItem;
+    this.wikibaseItemSet = kwds.wikibaseItemSet;
   }
 
   get altLabels(): readonly string[] {

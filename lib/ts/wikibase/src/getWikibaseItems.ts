@@ -325,10 +325,15 @@ const getWikibaseItem = (kwds: {
   };
 };
 
+/**
+ * Get the unique WikibaseItems in a given Dataset.
+ *
+ * @return items indexed by IRI.
+ */
 export const getWikibaseItems = (kwds: {
   dataset: DatasetCore;
   includeRedundantStatements?: boolean;
-}): readonly WikibaseItem[] => {
+}): {[index: string]: WikibaseItem} => {
   const {dataset, includeRedundantStatements} = kwds;
   const propertyDefinitions = getWikibasePropertyDefinitions(dataset);
 
@@ -352,7 +357,7 @@ export const getWikibaseItems = (kwds: {
     }
   }
 
-  return Object.values(itemsByIri);
+  return itemsByIri;
 };
 
 const getWikibasePropertyDefinition = (kwds: {
