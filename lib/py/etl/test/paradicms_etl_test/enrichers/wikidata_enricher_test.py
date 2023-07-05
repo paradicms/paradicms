@@ -80,7 +80,7 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((work,))
     )
-    assert len(enriched_models) == 9
+    assert len(enriched_models) == 10
     # Original work
     assert any(
         isinstance(model, Work) and model.uri == work.uri for model in enriched_models
@@ -100,6 +100,15 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
         and model.uri
         == URIRef(
             "http://commons.wikimedia.org/wiki/Special:FilePath/Lucas%20Cranach%20d.%C3%84.%20-%20Das%20Urteil%20des%20Paris.jpg"
+        )
+        for model in enriched_models
+    )
+    # Image associated with the sameAs Wikidata entity's creator
+    assert any(
+        isinstance(model, Image)
+        and model.uri
+        == URIRef(
+            "http://commons.wikimedia.org/wiki/Special:FilePath/Lucas%20Cranach%20d.%20%C3%84.%20063.jpg"
         )
         for model in enriched_models
     )

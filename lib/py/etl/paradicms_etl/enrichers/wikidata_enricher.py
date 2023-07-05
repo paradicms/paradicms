@@ -1,5 +1,4 @@
 import logging
-from functools import partial
 from pathlib import Path
 from typing import Iterable, Set, Tuple, List, Dict, Sequence
 
@@ -68,34 +67,34 @@ class WikidataEnricher:
                 yield from self.__get_wikidata_entity_images(referenced_wikidata_entity)
 
                 if isinstance(model, Work):
-                    for get_connected_wikidata_entities in (
-                        self.__get_wikidata_entity_locations,
-                        partial(self.__get_connected_wikidata_entities, "creator"),
-                        partial(self.__get_connected_wikidata_entities, "main subject"),
-                    ):
-                        for (
-                            connected_wikidata_entity
-                        ) in get_connected_wikidata_entities(  # type: ignore
+                    for connected_models in (
+                        self.__get_wikidata_entity_locations(
                             referenced_wikidata_entity
-                        ):
-                            if (
-                                connected_wikidata_entity.uri
-                                in yielded_wikidata_entity_uris
-                            ):
-                                continue
-                            yield connected_wikidata_entity
-                            yielded_wikidata_entity_uris.add(
-                                connected_wikidata_entity.uri
-                            )
+                        ),
+                        self.__get_wikidata_entity_creators(referenced_wikidata_entity),
+                        self.__get_wikidata_entity_subjects(referenced_wikidata_entity),
+                    ):
+                        for connected_model in connected_models:
+                            if isinstance(connected_model, WikibaseItem):
+                                connected_wikidata_entity = connected_model
+                                if (
+                                    connected_wikidata_entity.uri
+                                    in yielded_wikidata_entity_uris
+                                ):
+                                    continue
+                                yield connected_wikidata_entity
+                                yielded_wikidata_entity_uris.add(
+                                    connected_wikidata_entity.uri
+                                )
+                            else:
+                                yield connected_model
 
             if not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
 
     def __get_connected_wikidata_entities(
-        self,
-        connected_by_property_label: str,
-        wikidata_entity: WikibaseItem,
+        self, *, connected_by_property_label: str, wikidata_entity: WikibaseItem
     ) -> Iterable[WikibaseItem]:
         for statement in wikidata_entity.statements_by_property_label.get(
             connected_by_property_label, []
@@ -166,17 +165,22 @@ class WikidataEnricher:
             yield SchemaImageObject.builder(uri=image_uri).build()
             yielded_image_uris.add(image_uri)
 
+    def __get_wikidata_entity_creators(
+        self, wikidata_entity: WikibaseItem
+    ) -> Iterable[Model]:
+        for creator_wikidata_entity in self.__get_connected_wikidata_entities(
+            connected_by_property_label="creator", wikidata_entity=wikidata_entity
+        ):
+            yield creator_wikidata_entity
+            yield from self.__get_wikidata_entity_images(creator_wikidata_entity)
+
     def __get_wikidata_entity_locations(
         self,
         wikidata_entity: WikibaseItem,
     ) -> Iterable[WikibaseItem]:
-        for statement in wikidata_entity.statements_by_property_label.get(
-            "location", []
+        for location_wikidata_entity in self.__get_connected_wikidata_entities(
+            connected_by_property_label="location", wikidata_entity=wikidata_entity
         ):
-            assert isinstance(statement.value, URIRef)
-            location_wikidata_entity = self.__get_wikidata_entity_with_superclass_tree(
-                root_wikidata_entity_uri=statement.value
-            )
             yield location_wikidata_entity
             if not location_wikidata_entity.statements_by_property_label.get(
                 "coordinate location"
@@ -185,6 +189,13 @@ class WikidataEnricher:
                 yield from self.__get_wikidata_entity_locations(
                     location_wikidata_entity
                 )
+
+    def __get_wikidata_entity_subjects(
+        self, wikidata_entity: WikibaseItem
+    ) -> Iterable[Model]:
+        yield from self.__get_connected_wikidata_entities(
+            connected_by_property_label="main subject", wikidata_entity=wikidata_entity
+        )
 
     def __get_wikidata_entity_with_superclass_tree(
         self, root_wikidata_entity_uri: URIRef
