@@ -2,20 +2,24 @@ import {describe} from "mocha";
 import {WikidataModelReader} from "../../src/wikidata/WikidataModelReader";
 import {syntheticData} from "@paradicms/test";
 import {WikidataModel} from "../../src/wikidata/WikidataModel";
-import {ModelSetFactory} from "../../src";
 import {expect} from "chai";
-import {WikidataWork} from "../../src/wikidata/WikidataWork";
 import {SchemaImageObject} from "../../src/schema/SchemaImageObject";
 import {wd} from "@paradicms/vocabularies";
+import {requireDefined} from "@paradicms/utilities";
+import {testModelSet} from "../testModelSet";
+import {WikidataWork} from "../../src/wikidata/WikidataWork";
 
 describe("WikidataModel", () => {
   let sut: WikidataModel;
 
   before(() => {
-    const modelSet = ModelSetFactory.fromDataset(syntheticData);
-    const works = new WikidataModelReader(syntheticData).readWorks({modelSet});
-    expect(works).to.have.length(1);
-    sut = works[0] as WikidataWork;
+    sut = requireDefined(
+      new WikidataModelReader(syntheticData)
+        .readWorks({
+          modelSet: testModelSet,
+        })
+        .find(work => work.iris[0] === wd["Q19911452"].value)
+    ) as WikidataWork;
   });
 
   it("should have at least one article", () => {
@@ -57,7 +61,7 @@ describe("WikidataModel", () => {
   });
 
   it("should have property values for a specific IRI", () => {
-    expect(sut.propertyValuesByPropertyIri(wd["P1257"].value)).not.to.be.empty;
+    expect(sut.propertyValuesByPropertyIri(wd["P1476"].value)).not.to.be.empty;
   });
 
   it("should require attribution", () => {
