@@ -27,7 +27,7 @@ export abstract class WikidataModel
     dataset: DatasetCore;
     modelSet: ModelSet;
     wikibaseItem: WikibaseItem;
-    wikibaseItemSet: WikibaseItemSet
+    wikibaseItemSet: WikibaseItemSet,
   }) {
     super({
       dataset: kwds.dataset,

@@ -2,7 +2,7 @@ import {ModelSet} from "../ModelSet";
 import {Person} from "../Person";
 import {Work} from "../Work";
 import {DatasetModelReader} from "../DatasetModelReader";
-import {getWikibaseItems, WikibaseItem} from "@paradicms/wikibase";
+import {getWikibaseItems, WikibaseItem, WikibasePropertyDefinition} from "@paradicms/wikibase";
 import {wd, wdt} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WikidataPerson} from "./WikidataPerson";
@@ -13,6 +13,8 @@ import {WikidataWork} from "./WikidataWork";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
 import log from 'loglevel';
 import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
+import {Property} from "../Property";
+import {WikidataProperty} from "./WikidataProperty";
 
 class WikidataEntities {
   // Creative work somehow captures "episode from Greek mythology" (-> episode -> broadcast program -> creative work)
@@ -24,12 +26,25 @@ class WikidataEntities {
 }
 
 export class WikidataModelReader extends DatasetModelReader {
+  @Memoize()
+  private get getWikibaseItemsResult() {
+    return getWikibaseItems({dataset: this.dataset});
+  }
+
   override readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
     return this.readWikidataModels({
       class_: WikidataEntities.HUMAN,
       factory: WikidataPerson,
       modelSet: kwds.modelSet,
     });
+  }
+
+  override readProperties(kwds: { modelSet: ModelSet }): readonly Property[] {
+    return this.getWikibaseItemsResult.wikibasePropertyDefinitions.map(wikibasePropertyDefinition => new WikidataProperty({
+      dataset: this.dataset,
+      modelSet: kwds.modelSet,
+      wikibasePropertyDefinition
+    }))
   }
 
   protected readWikidataModels<WikidataModelT extends WikidataModel>(kwds: {
@@ -40,6 +55,7 @@ export class WikidataModelReader extends DatasetModelReader {
         modelSet: ModelSet;
         wikibaseItem: WikibaseItem;
         wikibaseItemSet: WikibaseItemSet;
+        wikibasePropertyDefinitions: readonly WikibasePropertyDefinition[]
       }): WikidataModelT;
     };
     modelSet: ModelSet;
@@ -67,7 +83,8 @@ export class WikidataModelReader extends DatasetModelReader {
             dataset: this.dataset,
             modelSet,
             wikibaseItem,
-            wikibaseItemSet: this.wikibaseItemSet
+            wikibaseItemSet: this.wikibaseItemSet,
+            wikibasePropertyDefinitions: this.getWikibaseItemsResult.wikibasePropertyDefinitions
           })
         );
       } else {
@@ -87,6 +104,6 @@ export class WikidataModelReader extends DatasetModelReader {
 
   @Memoize()
   private get wikibaseItemSet(): WikibaseItemSet {
-    return new WikibaseItemSet(getWikibaseItems({dataset: this.dataset}));
+    return new WikibaseItemSet(this.getWikibaseItemsResult.wikibaseItemsByIri);
   }
 }
