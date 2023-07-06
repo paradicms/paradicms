@@ -10,7 +10,7 @@ export const WorkLocationsMap: React.FunctionComponent<{
 }> = ({workLocations}) => {
   invariant(workLocations.length > 0);
   invariant(
-    workLocations.every(workLocation => workLocation.location.centroid)
+    workLocations.every(workLocation => !!workLocation.location.centroid)
   );
 
   return (
