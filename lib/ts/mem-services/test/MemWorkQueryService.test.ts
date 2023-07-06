@@ -80,10 +80,16 @@ describe("MemWorkQueryService", () => {
     expect(workAgents).not.to.be.empty;
     for (const workAgent of workAgents) {
       expect(workAgent.agent.label).not.to.be.empty;
-      expect(workAgent.agent.images).not.to.be.empty;
-      expect(workAgent.agent.thumbnail(THUMBNAIL_SELECTOR)).not.to.be.null;
       // expect(workAgent.agent.works).not.to.be.empty;
     }
+    // Not all work agents will have images
+    expect(workAgents.some(workAgent => workAgent.agent.images.length > 0)).to
+      .be.true;
+    expect(
+      workAgents.some(
+        workAgent => workAgent.agent.thumbnail(THUMBNAIL_SELECTOR) !== null
+      )
+    ).to.be.true;
   });
 
   const getWorkEvents = (result: GetWorkEventsResult) => {
@@ -132,16 +138,23 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    for (const workEvent of getWorkEvents(result)) {
+    const workEvents = getWorkEvents(result);
+    for (const workEvent of workEvents) {
       // expect(workEvent.location).to.not.be.null;
       switch (workEvent.type) {
         case "WorkCreation":
           expect(workEvent.creators).to.not.be.empty;
           break;
       }
-      expect(workEvent.images).not.to.be.empty;
-      expect(workEvent.thumbnail(THUMBNAIL_SELECTOR)).not.to.be.null;
     }
+    // Not all work events will have images
+    expect(workEvents.some(workEvent => workEvent.images.length > 0)).to.be
+      .true;
+    expect(
+      workEvents.some(
+        workEvent => workEvent.thumbnail(THUMBNAIL_SELECTOR) !== null
+      )
+    ).to.be.true;
   });
 
   it("getWorkEvents sorted by date", async () => {

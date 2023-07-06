@@ -396,18 +396,18 @@ export class ModelSetBuilder {
       this.addRights(joinSelector, work.description);
     }
 
+    if (joinSelector.events) {
+      for (const event of work.events) {
+        this.addWorkEvent(event, joinSelector.events);
+      }
+    }
+
     if (joinSelector.images) {
       for (const image of work.images) {
         this.addImage(image, joinSelector.images);
       }
     } else if (joinSelector.thumbnail) {
       this.addThumbnail(work, joinSelector.thumbnail);
-    }
-
-    if (joinSelector.events) {
-      for (const event of work.events) {
-        this.addWorkEvent(event, joinSelector.events);
-      }
     }
 
     if (joinSelector.location) {
@@ -443,6 +443,10 @@ export class ModelSetBuilder {
 
     if (!joinSelector) {
       return this;
+    }
+
+    if (joinSelector.thumbnail) {
+      this.addThumbnail(workEvent, joinSelector.thumbnail);
     }
 
     if (joinSelector.location && workEvent.location) {
