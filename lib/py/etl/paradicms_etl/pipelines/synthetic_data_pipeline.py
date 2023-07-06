@@ -527,20 +527,6 @@ class SyntheticDataPipeline(Pipeline):
             self.__next_work_i += 1
             work_uri = URIRef(uri_prefix + str(work_i))
 
-            # anonymous_location = (
-            #     SchemaPlace.builder()
-            #     .set_latitude(42.728104)
-            #     .set_longitude(-73.687576)
-            #     .build()
-            # )
-            named_location = (
-                SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
-                .set_latitude(42.728104)
-                .set_longitude(-73.687576)
-                .build()
-            )
-            yield named_location
-
             work_destruction_date = date(day=1, month=1, year=2022)
             work_creation_date = work_destruction_date - timedelta(days=work_i)
             work_modification_date = OwlTimeDateTimeDescription.from_date(
@@ -619,15 +605,40 @@ class SyntheticDataPipeline(Pipeline):
             for creator_uri in creator_uris:
                 work_builder.add_creator(creator_uri)
 
-            # Wikidata concept for the Pilot ACE
             if work_i == 0:
                 work_builder.add_same_as(
-                    URIRef("http://www.wikidata.org/entity/Q937690"),
+                    # Wikidata concept for Cranach's "Judgment of Paris"
+                    # Chosen because it has a location, but that location doesn't have coordinates; have to chase
+                    # to the next location to get the coordinates.
+                    URIRef("http://www.wikidata.org/entity/Q19911452")
+                    # Wikidata concept for the Pilot ACE
+                    # URIRef("http://www.wikidata.org/entity/Q937690"),
                 )
             elif work_i == 1:
                 work_builder.add_same_as(
                     URIRef("https://d.lib.ncsu.edu/collections/catalog/0002030")
                 )
+            elif work_i == 2:
+                work_builder.add_spatial(
+                    SchemaPlace.builder()
+                    .set_latitude(42.728104)
+                    .set_longitude(-73.687576)
+                    .build()
+                )
+            elif work_i == 3:
+                named_location = (
+                    SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
+                    .set_latitude(42.728104)
+                    .set_longitude(-73.687576)
+                    .build()
+                )
+                # if work_i == 0:
+                #     named_location_builder.add_same_as(
+                #         URIRef("http://www.wikidata.org/entity/Q89503830")
+                #     )
+                # named_location = named_location_builder.build()
+                yield named_location
+                work_builder.add_spatial(named_location)
 
             description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
             if isinstance(work_builder, DcPhysicalObject.Builder):
@@ -647,8 +658,6 @@ class SyntheticDataPipeline(Pipeline):
             description = description_builder.build()
 
             work_builder.set_description(description)
-
-            work_builder.add_spatial(named_location)
 
             for image in self.__generate_images(
                 base_uri=work_uri,

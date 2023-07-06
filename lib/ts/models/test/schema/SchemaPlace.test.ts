@@ -7,7 +7,7 @@ import {SchemaPlace} from "../../src/schema/SchemaPlace";
 
 describe("SchemaPlace", () => {
   const location = requireNonNull(
-    testModelSet.locationByIri("http://example.com/collection0/work1Location")
+    testModelSet.locationByIri("http://example.com/collection0/work3Location")
   );
 
   before(() => {

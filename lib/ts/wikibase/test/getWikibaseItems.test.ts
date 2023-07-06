@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as N3 from "n3";
 import {getWikibaseItems} from "../src";
 import {expect} from "chai";
+import {describe} from "mocha";
 
 require.extensions[".ttl"] = function(module, filename) {
   module.exports = fs.readFileSync(filename, "utf8");
@@ -41,10 +42,12 @@ describe("getWikibaseItems", () => {
       this.timeout(5000);
       const store = new N3.Store();
       store.addQuads(new N3.Parser().parse(testWikidataItemFile.ttl));
-      const items = getWikibaseItems({
+      const result = getWikibaseItems({
         dataset: store,
         includeRedundantStatements: true,
       });
+      expect(result.wikibasePropertyDefinitions).not.to.be.empty;
+      const items = Object.values(result.wikibaseItemsByIri);
       expect(items).to.have.length(testWikidataItemFile.itemsCount);
       const fileItem = items.find(
         item =>

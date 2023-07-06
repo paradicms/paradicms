@@ -28,14 +28,14 @@ export const getDefaultWorksQueryFilters = (
           (filter as StringPropertyValueFilter).propertyIri === propertyIri
       )
     ) {
-      // console.debug(
+      // log.debug(
       //   "filterable property",
       //   propertyConfiguration.iri,
       //   "already has a search filter, skipping"
       // );
       continue;
     }
-    // console.debug(
+    // log.debug(
     //   "filterable property",
     //   propertyConfiguration.iri,
     //   "does not have search filter, adding"

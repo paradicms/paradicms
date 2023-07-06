@@ -17,13 +17,13 @@ export abstract class SyntheticWorkEvent extends Mixin(SyntheticEvent)
     }
 
     return {
-      role: this.workLocationRole,
       label: this.label
         ? this.displayDate
           ? `${this.displayDate}: ${this.label}`
           : this.label
         : null,
       location: this.location,
+      role: this.workLocationRole,
     };
   }
 

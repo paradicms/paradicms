@@ -7,8 +7,8 @@ export const summarizeWorkLocation = (
 ): WorkLocationSummary => ({
   label: workLocation.label,
   location: {
-    latitude: workLocation.location.latitude,
-    longitude: workLocation.location.longitude,
+    centroid: workLocation.location.centroid,
+    label: workLocation.location.label,
   },
   role: workLocation.role,
   work: {

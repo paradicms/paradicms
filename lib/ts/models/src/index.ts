@@ -23,6 +23,7 @@ export * from "./ModelSetFactory";
 export * from "./NamedModel";
 export * from "./Organization";
 export * from "./Person";
+export * from "./Point";
 export * from "./Property";
 export * from "./PropertyGroup";
 export * from "./PropertyGroupJoinSelector";

@@ -42,6 +42,7 @@ import {
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {requireNonNull} from "@paradicms/utilities";
+import log from "loglevel";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -273,14 +274,14 @@ export class MemWorkQueryService implements WorkQueryService {
         works: searchedWorks,
       });
 
-      // console.debug("Search facets:", JSON.stringify(facets));
+      log.debug("Search facets:", JSON.stringify(facets));
 
       const filteredWorks = this.filterWorks({
         filters: query.filters,
         works: searchedWorks,
       });
 
-      // console.debug("Search filtered works count:", filteredWorks.length);
+      log.debug("Search filtered works count:", filteredWorks.length);
 
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
@@ -292,13 +293,13 @@ export class MemWorkQueryService implements WorkQueryService {
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
-      // console.debug("Search sliced works count:", slicedWorks.length);
+      log.debug("Search sliced works count:", slicedWorks.length);
 
       const slicedWorksModelSet = new ModelSetBuilder()
         .addWorks(slicedWorks, workJoinSelector)
         .build();
 
-      // console.debug(
+      // log.debug(
       //   "Search results modelSet:",
       //   Object.keys(slicedWorksModelSet)
       //     .map(
@@ -528,6 +529,7 @@ export class MemWorkQueryService implements WorkQueryService {
     query: WorksQuery
   ): Promise<GetWorkLocationsResult> {
     invariant(!!query, "query must be defined");
+    const {requireCentroids} = options;
 
     return new Promise(resolve => {
       const works = this.filterWorks({
@@ -538,13 +540,17 @@ export class MemWorkQueryService implements WorkQueryService {
       const workLocations = works.flatMap(work => {
         const workWorkLocations: WorkLocationSummary[] = [];
         if (work.location) {
-          workWorkLocations.push(summarizeWorkLocation(work, work.location));
+          if (!requireCentroids || work.location.location.centroid) {
+            workWorkLocations.push(summarizeWorkLocation(work, work.location));
+          }
         }
         for (const event of work.events) {
           if (event.workLocation) {
-            workWorkLocations.push(
-              summarizeWorkLocation(work, event.workLocation)
-            );
+            if (!requireCentroids || event.workLocation.location.centroid) {
+              workWorkLocations.push(
+                summarizeWorkLocation(work, event.workLocation)
+              );
+            }
           }
         }
         return workWorkLocations;

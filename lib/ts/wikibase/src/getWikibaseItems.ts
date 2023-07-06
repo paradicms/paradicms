@@ -325,18 +325,24 @@ const getWikibaseItem = (kwds: {
   };
 };
 
+/**
+ * Get the unique WikibaseItems in a given Dataset.
+ */
 export const getWikibaseItems = (kwds: {
   dataset: DatasetCore;
   includeRedundantStatements?: boolean;
-}): readonly WikibaseItem[] => {
+}): {
+  wikibaseItemsByIri: {[index: string]: WikibaseItem};
+  wikibasePropertyDefinitions: readonly WikibasePropertyDefinition[];
+} => {
   const {dataset, includeRedundantStatements} = kwds;
-  const propertyDefinitions = getWikibasePropertyDefinitions(dataset);
+  const wikibasePropertyDefinitions = getWikibasePropertyDefinitions(dataset);
 
-  const itemsByIri: {[index: string]: WikibaseItem} = {};
+  const wikibaseItemsByIri: {[index: string]: WikibaseItem} = {};
   for (const quad of dataset.match(null, rdf.type, wikibase.Item)) {
     if (quad.subject.termType !== "NamedNode") {
       continue;
-    } else if (itemsByIri[quad.subject.value]) {
+    } else if (wikibaseItemsByIri[quad.subject.value]) {
       continue;
     }
 
@@ -345,14 +351,17 @@ export const getWikibaseItems = (kwds: {
       graph: quad.graph as BlankNode | DefaultGraph | NamedNode,
       includeRedundantStatements,
       identifier: quad.subject,
-      propertyDefinitions,
+      propertyDefinitions: wikibasePropertyDefinitions,
     });
     if (item !== null) {
-      itemsByIri[item.identifier.value] = item;
+      wikibaseItemsByIri[item.identifier.value] = item;
     }
   }
 
-  return Object.values(itemsByIri);
+  return {
+    wikibaseItemsByIri,
+    wikibasePropertyDefinitions,
+  };
 };
 
 const getWikibasePropertyDefinition = (kwds: {
@@ -388,6 +397,7 @@ const getWikibasePropertyDefinition = (kwds: {
     directClaimNormalized: getWikibasePropertyIri(
       wikibase.directClaimNormalized
     ),
+    graph: graph as BlankNode | DefaultGraph | NamedNode,
     labels: getWikibasePropertyLabels(rdfs.label),
     node,
     qualifier: getWikibasePropertyIri(wikibase.qualifier),

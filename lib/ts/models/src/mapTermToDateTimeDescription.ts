@@ -5,6 +5,8 @@ import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
 import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
+import log from "loglevel";
+
 /**
  * Map a term in a modelSet to a DateTimeDescription.
  */
@@ -39,6 +41,7 @@ export const mapTermToDateTimeDescription = (
       ) {
         return partialDateTime;
       } else {
+        log.debug("unable to parse literal date-time: ", term.value);
         return null;
       }
     }

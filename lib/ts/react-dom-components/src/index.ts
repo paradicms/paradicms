@@ -8,6 +8,7 @@ export * from "./Gallery";
 export * from "./getNamedModelLinks";
 export * from "./getWorkEventIcon";
 export * from "./getWorkLocationIcon";
+export * from "./getWorkLocationLabel";
 export * from "./ImagesCarousel";
 export * from "./imagesCarouselThumbnailSelector";
 export * from "./LicenseLink";

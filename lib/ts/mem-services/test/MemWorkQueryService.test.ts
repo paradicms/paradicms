@@ -171,39 +171,34 @@ describe("MemWorkQueryService", () => {
   });
 
   it("getWorkLocations returns all work locations", async () => {
-    // All locations should be represented
-    const expectedWorkLocations: WorkLocation[] = [];
-    for (const work of modelSet.works) {
-      if (work.location) {
-        expectedWorkLocations.push(work.location);
-      }
-      for (const event of work.events) {
-        if (event.workLocation) {
-          expectedWorkLocations.push(event.workLocation);
-        }
-      }
-    }
-
     const result = await sut.getWorkLocations(
-      {},
+      {requireCentroids: true},
       {
         filters: [],
       }
     );
 
-    expect(result.workLocations).to.have.length(expectedWorkLocations.length);
     for (const work of modelSet.works) {
-      for (const expectedWorkLocation of expectedWorkLocations) {
+      const expectResultWorkLocation = (expectedWorkLocation: WorkLocation) => {
         const resultWorkLocation = result.workLocations.find(
           resultWorkLocation =>
             resultWorkLocation.work.key === work.key &&
-            resultWorkLocation.location.latitude ===
-              expectedWorkLocation.location.latitude &&
-            resultWorkLocation.location.longitude ===
-              expectedWorkLocation.location.longitude
+            resultWorkLocation.location.centroid!.latitude ===
+              expectedWorkLocation.location.centroid!.latitude &&
+            resultWorkLocation.location.centroid!.longitude ===
+              expectedWorkLocation.location.centroid!.longitude
         );
         expect(resultWorkLocation).to.not.be.undefined;
         expect(resultWorkLocation!.work.label).to.eq(work.label);
+      };
+
+      if (work.location) {
+        expectResultWorkLocation(work.location);
+      }
+      for (const event of work.events) {
+        if (event.workLocation) {
+          expectResultWorkLocation(event.workLocation);
+        }
       }
     }
   });

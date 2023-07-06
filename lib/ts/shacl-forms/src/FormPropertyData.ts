@@ -120,7 +120,7 @@ export class FormPropertyData extends FormModel {
     }
 
     // if (scores.size > 0) {
-    //   console.info("widget scores: ", [...scores.entries()]);
+    //   log.info("widget scores: ", [...scores.entries()]);
     // }
 
     const scoreEntries = [...scores.entries()];

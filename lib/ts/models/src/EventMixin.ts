@@ -2,6 +2,7 @@ import {Memoize} from "typescript-memoize";
 import {dateTimeDescriptionToString} from "./dateTimeDescriptionToString";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {Event} from "./Event";
+import log from "loglevel";
 
 export abstract class EventMixin {
   abstract readonly date: DateTimeDescription | null;
@@ -88,7 +89,7 @@ export abstract class EventMixin {
         };
       }
     }
-    console.debug("event has no sort date");
+    log.debug("event has no sort date");
     return null;
   }
 }

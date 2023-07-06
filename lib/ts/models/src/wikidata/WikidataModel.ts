@@ -14,16 +14,25 @@ import {Memoize} from "typescript-memoize";
 import {wdt} from "@paradicms/vocabularies";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {Mixin} from "ts-mixer";
+import {requireNonNull} from "@paradicms/utilities";
+import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
+import {PropertyValue} from "../PropertyValue";
+import {WikidataProperty} from "./WikidataProperty";
+import {createPropertyValueFromTerm} from "../createPropertyValueFromTerm";
 
 export abstract class WikidataModel
   extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin)
   implements ImagesMixin, RightsMixin, NamedModel, WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
+  protected readonly wikibaseItemSet: WikibaseItemSet;
+  protected readonly wikidataPropertiesByIri: {[index: string]: WikidataProperty};
 
   constructor(kwds: {
     dataset: DatasetCore;
     modelSet: ModelSet;
     wikibaseItem: WikibaseItem;
+    wikibaseItemSet: WikibaseItemSet,
+    wikidataPropertiesByIri: {[index: string]: WikidataProperty}
   }) {
     super({
       dataset: kwds.dataset,
@@ -32,6 +41,8 @@ export abstract class WikidataModel
       modelSet: kwds.modelSet,
     });
     this.wikibaseItem = kwds.wikibaseItem;
+    this.wikibaseItemSet = kwds.wikibaseItemSet;
+    this.wikidataPropertiesByIri = kwds.wikidataPropertiesByIri;
   }
 
   get altLabels(): readonly string[] {
@@ -125,16 +136,39 @@ export abstract class WikidataModel
     return null;
   }
 
+  get licenses(): readonly License[] {
+    // All structured data from the main, Property, Lexeme, and EntitySchema namespaces is available under the Creative Commons CC0 License; text in the other namespaces is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.
+    return [requireNonNull(this.modelSet.licenseByIri(
+        "http://creativecommons.org/licenses/by-sa/3.0/"
+    ))];
+  }
+
   get prefLabel(): string | null {
     return this.wikibaseItem.prefLabel;
   }
 
-  get licenses(): readonly License[] {
-    return [];
-    // All structured data from the main, Property, Lexeme, and EntitySchema namespaces is available under the Creative Commons CC0 License; text in the other namespaces is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.
-    // return this.modelSet.licenseByIri(
-    //   "http://creativecommons.org/licenses/by-sa/3.0/"
-    // );
+  @Memoize()
+  override get propertyValues(): readonly PropertyValue[] {
+    return Object.values(this.wikidataPropertiesByIri).flatMap(wikidataProperty => this.propertyValuesByWikidataProperty(wikidataProperty));
+  }
+
+  private propertyValuesByWikidataProperty(wikidataProperty: WikidataProperty): readonly PropertyValue[] {
+    return this.statements.filter(statement => statement.propertyDefinition.node.equals(wikidataProperty.identifier)).flatMap(statement => createPropertyValueFromTerm({
+      dataset: this.dataset,
+      modelSet: this.modelSet,
+      property: wikidataProperty,
+      term: statement.value,
+      termGraph: this.graph
+    }) ?? []);
+  }
+
+  @Memoize()
+  override propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+    const wikidataProperty = this.wikidataPropertiesByIri[propertyIri];
+    if (!wikidataProperty) {
+      return [];
+    }
+    return this.propertyValuesByWikidataProperty(wikidataProperty);
   }
 
   get requiresAttribution(): boolean {
@@ -146,10 +180,9 @@ export abstract class WikidataModel
   }
 
   get rightsStatements(): readonly RightsStatement[] {
-    return [];
-    // return this.modelSet.rightsStatementByIri(
-    //   "http://rightsstatements.org/vocab/InC/1.0/"
-    // );
+    return [requireNonNull(this.modelSet.rightsStatementByIri(
+      "http://rightsstatements.org/vocab/InC/1.0/"
+    ))];
   }
 
   get statements(): readonly WikibaseStatement[] {
@@ -177,7 +210,7 @@ export abstract class WikidataModel
     return null;
   }
 
-  override get wikidataConceptIri(): string | null {
+  override get wikidataConceptIri(): string {
     return this.identifier.value;
   }
 

@@ -1,0 +1,612 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q1148924 a schema:Dataset ;
+	schema:about wd:Q1148924 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1911594222"^^xsd:integer ;
+	schema:dateModified "2023-06-09T18:09:15Z"^^xsd:dateTime ;
+	wikibase:statements "4"^^xsd:integer ;
+	wikibase:sitelinks "16"^^xsd:integer ;
+	wikibase:identifiers "2"^^xsd:integer .
+
+wd:Q1148924 a wikibase:Item .
+
+<https://zh.wikipedia.org/wiki/%E6%9F%AF%E7%88%BE%E8%8E%AB%E6%9E%9C%E6%B4%9B%E5%A4%AB%E7%A9%BA%E9%96%93> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "柯爾莫果洛夫空間"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pt.wikipedia.org/wiki/Espa%C3%A7o_de_Kolmogorov> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Espaço de Kolmogorov"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Przestrze%C5%84_T0> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Przestrzeń T0"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/Kolmogorov_space> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Kolmogorov space"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Espacio_de_Kolmog%C3%B3rov> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Espacio de Kolmogórov"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Espai_de_Kolmog%C3%B3rov> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Espai de Kolmogórov"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Spazio_T0> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Spazio T0"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Kolmogoroff-Raum> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Kolmogoroff-Raum"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%AB%E3%83%A2%E3%82%B4%E3%83%AD%E3%83%95%E7%A9%BA%E9%96%93> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "コルモゴロフ空間"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Kolmogorov-ruimte> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Kolmogorov-ruimte"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Kolmogorovrum> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Kolmogorovrum"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D9%81%D8%B6%D8%A7%D8%A1_%D9%83%D9%88%D9%84%D9%85%D9%88%D8%BA%D9%88%D8%B1%D9%88%D9%81> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "فضاء كولموغوروف"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Espace_de_Kolmogorov> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Espace de Kolmogorov"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EC%BD%9C%EB%AA%A8%EA%B3%A0%EB%A1%9C%ED%94%84_%EA%B3%B5%EA%B0%84> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "콜모고로프 공간"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D1%81%D1%82%D1%96%D1%80_T0> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Простір T0"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fa.wikipedia.org/wiki/%D9%81%D8%B6%D8%A7%DB%8C_%DA%A9%D9%88%D9%84%D9%85%D9%88%DA%AF%D9%88%D8%B1%D9%88%D9%81> a schema:Article ;
+	schema:about wd:Q1148924 ;
+	schema:inLanguage "fa" ;
+	schema:isPartOf <https://fa.wikipedia.org/> ;
+	schema:name "فضای کولموگوروف"@fa .
+
+<https://fa.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q1148924 wdt:P138 wd:Q153224 ;
+	wdt:P646 "/m/0hv8f" ;
+	wdt:P279 wd:Q179899 ;
+	wdt:P6366 "183023244" ;
+	wdtn:P6366 <http://ma-graph.org/entity/183023244> ;
+	p:P138 s:q1148924-EC6E2031-5ABA-47FD-A2B1-CDD197A22228 .
+
+s:q1148924-EC6E2031-5ABA-47FD-A2B1-CDD197A22228 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P138 wd:Q153224 .
+
+wd:Q1148924 p:P646 s:Q1148924-40EAD7A8-FE21-4294-BB64-2132CD06B25D .
+
+s:Q1148924-40EAD7A8-FE21-4294-BB64-2132CD06B25D a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/0hv8f" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q1148924 p:P279 s:Q1148924-85770d79-427c-65d5-e870-897f53f17c9d .
+
+s:Q1148924-85770d79-427c-65d5-e870-897f53f17c9d a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q179899 .
+
+wd:Q1148924 p:P6366 s:Q1148924-F63B3BDA-7A09-4D91-8A50-5565D2AEBD88 .
+
+s:Q1148924-F63B3BDA-7A09-4D91-8A50-5565D2AEBD88 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "183023244" ;
+	psn:P6366 <http://ma-graph.org/entity/183023244> .
+
+wd:Q1148924 rdfs:label "柯尔莫果洛夫空间"@zh-hans ;
+	skos:prefLabel "柯尔莫果洛夫空间"@zh-hans ;
+	schema:name "柯尔莫果洛夫空间"@zh-hans ;
+	rdfs:label "柯爾莫果洛夫空間"@zh-hant ;
+	skos:prefLabel "柯爾莫果洛夫空間"@zh-hant ;
+	schema:name "柯爾莫果洛夫空間"@zh-hant ;
+	rdfs:label "柯爾莫果洛夫空間"@zh-hk ;
+	skos:prefLabel "柯爾莫果洛夫空間"@zh-hk ;
+	schema:name "柯爾莫果洛夫空間"@zh-hk ;
+	rdfs:label "espaço de Kolmogorov"@pt ;
+	skos:prefLabel "espaço de Kolmogorov"@pt ;
+	schema:name "espaço de Kolmogorov"@pt ;
+	rdfs:label "przestrzeń T0"@pl ;
+	skos:prefLabel "przestrzeń T0"@pl ;
+	schema:name "przestrzeń T0"@pl ;
+	rdfs:label "콜모고로프 공간"@ko ;
+	skos:prefLabel "콜모고로프 공간"@ko ;
+	schema:name "콜모고로프 공간"@ko ;
+	rdfs:label "Kolmogorov space"@en ;
+	skos:prefLabel "Kolmogorov space"@en ;
+	schema:name "Kolmogorov space"@en ;
+	rdfs:label "espacio de Kolmogórov"@es ;
+	skos:prefLabel "espacio de Kolmogórov"@es ;
+	schema:name "espacio de Kolmogórov"@es ;
+	rdfs:label "Espai de Kolmogorov"@ca ;
+	skos:prefLabel "Espai de Kolmogorov"@ca ;
+	schema:name "Espai de Kolmogorov"@ca ;
+	rdfs:label "spazio T0"@it ;
+	skos:prefLabel "spazio T0"@it ;
+	schema:name "spazio T0"@it ;
+	rdfs:label "Kolmogoroff-Raum"@de ;
+	skos:prefLabel "Kolmogoroff-Raum"@de ;
+	schema:name "Kolmogoroff-Raum"@de ;
+	rdfs:label "コルモゴロフ空間"@ja ;
+	skos:prefLabel "コルモゴロフ空間"@ja ;
+	schema:name "コルモゴロフ空間"@ja ;
+	rdfs:label "Kolmogorov-ruimte"@nl ;
+	skos:prefLabel "Kolmogorov-ruimte"@nl ;
+	schema:name "Kolmogorov-ruimte"@nl ;
+	rdfs:label "Kolmogorovrum"@sv ;
+	skos:prefLabel "Kolmogorovrum"@sv ;
+	schema:name "Kolmogorovrum"@sv ;
+	rdfs:label "فضاء كولموغوروف"@ar ;
+	skos:prefLabel "فضاء كولموغوروف"@ar ;
+	schema:name "فضاء كولموغوروف"@ar ;
+	rdfs:label "espace de Kolmogorov"@fr ;
+	skos:prefLabel "espace de Kolmogorov"@fr ;
+	schema:name "espace de Kolmogorov"@fr ;
+	rdfs:label "柯爾莫果洛夫空間"@zh ;
+	skos:prefLabel "柯爾莫果洛夫空間"@zh ;
+	schema:name "柯爾莫果洛夫空間"@zh ;
+	rdfs:label "пространство Колмогорова"@ru ;
+	skos:prefLabel "пространство Колмогорова"@ru ;
+	schema:name "пространство Колмогорова"@ru ;
+	rdfs:label "spaco de Kolmogorov"@eo ;
+	skos:prefLabel "spaco de Kolmogorov"@eo ;
+	schema:name "spaco de Kolmogorov"@eo ;
+	rdfs:label "простір T0"@uk ;
+	skos:prefLabel "простір T0"@uk ;
+	schema:name "простір T0"@uk ;
+	rdfs:label "kolmogorovrom"@nn ;
+	skos:prefLabel "kolmogorovrom"@nn ;
+	schema:name "kolmogorovrom"@nn ;
+	rdfs:label "Калмагорава прастора"@be-tarask ;
+	skos:prefLabel "Калмагорава прастора"@be-tarask ;
+	schema:name "Калмагорава прастора"@be-tarask ;
+	rdfs:label "ruang Kolmogorov"@ms ;
+	skos:prefLabel "ruang Kolmogorov"@ms ;
+	schema:name "ruang Kolmogorov"@ms ;
+	rdfs:label "فضای کولموگوروف"@fa ;
+	skos:prefLabel "فضای کولموگوروف"@fa ;
+	schema:name "فضای کولموگوروف"@fa ;
+	rdfs:label "מרחב קולמוגורוב"@he ;
+	skos:prefLabel "מרחב קולמוגורוב"@he ;
+	schema:name "מרחב קולמוגורוב"@he ;
+	rdfs:label "Колмогровов простор"@mk ;
+	skos:prefLabel "Колмогровов простор"@mk ;
+	schema:name "Колмогровов простор"@mk ;
+	rdfs:label "spațiu Kolmogorov"@ro ;
+	skos:prefLabel "spațiu Kolmogorov"@ro ;
+	schema:name "spațiu Kolmogorov"@ro ;
+	rdfs:label "prostor Kolmogorova"@sl ;
+	skos:prefLabel "prostor Kolmogorova"@sl ;
+	schema:name "prostor Kolmogorova"@sl ;
+	schema:description "concept in topology"@en,
+		"tipo di spazio topologico"@it,
+		"Art von topologischem Raum"@de,
+		"type d'espace topologique"@fr,
+		"typ przestrzeni topologicznej"@pl ;
+	skos:altLabel "T0空間"@zh,
+		"柯爾莫哥洛夫空間"@zh,
+		"espaço T0"@pt,
+		"przestrzeń Kołmogorowa"@pl,
+		"T0 공간"@ko,
+		"espacio T0"@es,
+		"espacio de Kolmogorov"@es,
+		"spazio di Kolmogorov"@it,
+		"T0-Raum"@de,
+		"Kolmogoroff-Quotient"@de,
+		"Topologische Unterscheidbarkeit"@de,
+		"Kolmogorow-Raum"@de,
+		"Kolmogorow-Quotient"@de,
+		"T₀-Raum"@de,
+		"T0空間"@ja,
+		"T0-rum"@sv,
+		"Kolmogorova spaco"@eo,
+		"Kolmogorov-spaco"@eo,
+		"T₀-spaco"@eo,
+		"T0-spaco"@eo,
+		"T0 space"@en,
+		"T₀ space"@en,
+		"T₀-rom"@nn,
+		"T0-rom"@nn,
+		"пространство со свойством T0"@ru,
+		"пространство T0"@ru,
+		"колмогоровское пространство"@ru,
+		"прастора Калмагорава"@be-tarask,
+		"прастора T₀"@be-tarask,
+		"прастора з уласьцівасьцю T₀"@be-tarask .
+
+wd:Q153224 a wikibase:Item ;
+	rdfs:label "Andrey Kolmogorov"@en ;
+	skos:prefLabel "Andrey Kolmogorov"@en ;
+	schema:name "Andrey Kolmogorov"@en ;
+	schema:description "Russian mathematician (*1903 – †1987)"@en .
+
+wd:P138 a wikibase:Property ;
+	rdfs:label "named after"@en ;
+	skos:prefLabel "named after"@en ;
+	schema:name "named after"@en ;
+	schema:description "entity or event that inspired the subject's name, or namesake (in at least one language). Qualifier \"applies to name\" (P5168) can be used to indicate which one"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P138 ;
+	wikibase:claim p:P138 ;
+	wikibase:statementProperty ps:P138 ;
+	wikibase:statementValue psv:P138 ;
+	wikibase:qualifier pq:P138 ;
+	wikibase:qualifierValue pqv:P138 ;
+	wikibase:reference pr:P138 ;
+	wikibase:referenceValue prv:P138 ;
+	wikibase:novalue wdno:P138 .
+
+p:P138 a owl:ObjectProperty .
+
+psv:P138 a owl:ObjectProperty .
+
+pqv:P138 a owl:ObjectProperty .
+
+prv:P138 a owl:ObjectProperty .
+
+wdt:P138 a owl:ObjectProperty .
+
+ps:P138 a owl:ObjectProperty .
+
+pq:P138 a owl:ObjectProperty .
+
+pr:P138 a owl:ObjectProperty .
+
+wdno:P138 a owl:Class ;
+	owl:complementOf _:e0c4151f3ca560de64568f2e6cd5a11a .
+
+_:e0c4151f3ca560de64568f2e6cd5a11a a owl:Restriction ;
+	owl:onProperty wdt:P138 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q179899 a wikibase:Item ;
+	rdfs:label "topological space"@en ;
+	skos:prefLabel "topological space"@en ;
+	schema:name "topological space"@en ;
+	schema:description "set of points and set of neighborhoods that satisfy axioms relating those points to those neighborhoods"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .

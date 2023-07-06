@@ -11,19 +11,43 @@ import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {WikidataModel} from "./WikidataModel";
 import {WikidataWork} from "./WikidataWork";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
+import log from 'loglevel';
+import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
+import {WikidataProperty} from "./WikidataProperty";
+import {indexModelsByIri} from "../indexModelsByIri";
 
 class WikidataEntities {
+  // Creative work somehow captures "episode from Greek mythology" (-> episode -> broadcast program -> creative work)
+  // static readonly CREATIVE_WORK = wd["Q17537576"]
   static readonly HUMAN = wd["Q5"];
-  static readonly WORK = wd["Q386724"];
+  // "Work" captures too many things
+  // static readonly WORK = wd["Q386724"];
+  static readonly WORK_OF_ART = wd["Q838948"];
 }
 
 export class WikidataModelReader extends DatasetModelReader {
+  @Memoize()
+  private get getWikibaseItemsResult() {
+    return getWikibaseItems({dataset: this.dataset});
+  }
+
   override readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
     return this.readWikidataModels({
       class_: WikidataEntities.HUMAN,
       factory: WikidataPerson,
       modelSet: kwds.modelSet,
     });
+  }
+
+  // There is no readProperties, since we don't want non-Wikidata models to deal with the Wikidata properties.
+  // If at some point we want to be able to filter on arbitrary Wikidata properties, will have to enable readProperties here.
+
+  private readWikidataProperties(kwds: { modelSet: ModelSet }): readonly WikidataProperty[] {
+    return this.getWikibaseItemsResult.wikibasePropertyDefinitions.map(wikibasePropertyDefinition => new WikidataProperty({
+      dataset: this.dataset,
+      modelSet: kwds.modelSet,
+      wikibasePropertyDefinition
+    }))
   }
 
   protected readWikidataModels<WikidataModelT extends WikidataModel>(kwds: {
@@ -33,12 +57,15 @@ export class WikidataModelReader extends DatasetModelReader {
         dataset: DatasetCore;
         modelSet: ModelSet;
         wikibaseItem: WikibaseItem;
+        wikibaseItemSet: WikibaseItemSet;
+        wikidataPropertiesByIri: {[index: string]: WikidataProperty}
       }): WikidataModelT;
     };
     modelSet: ModelSet;
   }): readonly WikidataModelT[] {
     const {class_, factory, modelSet} = kwds;
     const models: WikidataModelT[] = [];
+    const wikidataPropertiesByIri = indexModelsByIri(this.readWikidataProperties(kwds));
     for (const instanceQuad of getRdfInstanceQuads({
       class_,
       dataset: this.dataset,
@@ -53,17 +80,19 @@ export class WikidataModelReader extends DatasetModelReader {
         modelGraph: instanceQuad.graph as ModelGraphIdentifier,
         modelIdentifier: instanceQuad.subject,
       });
-      const wikibaseItem = this.wikibaseItemsByIri[instanceQuad.subject.value];
+      const wikibaseItem = this.wikibaseItemSet.wikibaseItemByIri(instanceQuad.subject.value);
       if (wikibaseItem) {
         models.push(
           new factory({
             dataset: this.dataset,
             modelSet,
             wikibaseItem,
+            wikibaseItemSet: this.wikibaseItemSet,
+            wikidataPropertiesByIri
           })
         );
       } else {
-        console.error("missing Wikidata item", instanceQuad.value);
+        log.error("missing Wikidata item", instanceQuad.value);
       }
     }
     return models;
@@ -71,22 +100,14 @@ export class WikidataModelReader extends DatasetModelReader {
 
   override readWorks(kwds: {modelSet: ModelSet}): readonly Work[] {
     return this.readWikidataModels({
-      class_: WikidataEntities.WORK,
+      class_: WikidataEntities.WORK_OF_ART,
       factory: WikidataWork,
       modelSet: kwds.modelSet,
     });
   }
 
   @Memoize()
-  private get wikibaseItems(): readonly WikibaseItem[] {
-    return getWikibaseItems({dataset: this.dataset});
-  }
-
-  @Memoize()
-  private get wikibaseItemsByIri(): {[index: string]: WikibaseItem} {
-    return this.wikibaseItems.reduce((map, wikibaseItem) => {
-      map[wikibaseItem.identifier.value] = wikibaseItem;
-      return map;
-    }, {} as {[index: string]: WikibaseItem});
+  private get wikibaseItemSet(): WikibaseItemSet {
+    return new WikibaseItemSet(this.getWikibaseItemsResult.wikibaseItemsByIri);
   }
 }

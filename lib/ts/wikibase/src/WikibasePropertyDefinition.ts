@@ -1,9 +1,10 @@
-import {Literal, NamedNode} from "@rdfjs/types";
+import {BlankNode, DefaultGraph, Literal, NamedNode} from "@rdfjs/types";
 
 export interface WikibasePropertyDefinition {
   readonly claim: NamedNode | null;
   readonly directClaimNormalized: NamedNode | null;
   readonly directClaim: NamedNode | null;
+  readonly graph: BlankNode | DefaultGraph | NamedNode;
   readonly labels: readonly Literal[];
   readonly node: NamedNode;
   readonly qualifier: NamedNode | null;

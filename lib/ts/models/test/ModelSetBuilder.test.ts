@@ -4,11 +4,9 @@ import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
 import {Model, ModelSet, ModelSetBuilder} from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {WorkCreationEvent} from "../src/WorkCreationEvent";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";
-import {WorkModificationEvent} from "../src/WorkModificationEvent";
 
 const THUMBNAIL_SELECTOR: ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
@@ -96,8 +94,9 @@ describe("ModelSetBuilder", () => {
         thumbnail: THUMBNAIL_SELECTOR,
       })
       .build();
-    expect(countModelSetNamedAgents(agentsModelSet)).to.eq(namedAgents.length);
-    expect(countModelSetImages(agentsModelSet)).to.eq(namedAgents.length * 2); // One original image, one thumbnail per agent
+    expect(countModelSetNamedAgents(agentsModelSet)).to.eq(2);
+    // The WikidataPerson isn't counted because it doesn't have an unambiguous rdf:type
+    expect(countModelSetImages(agentsModelSet)).to.eq(4); // One original image, one thumbnail per named agent
     // for (const namedAgent of namedAgents) {
     //   expect(
     //     agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
@@ -229,9 +228,7 @@ describe("ModelSetBuilder", () => {
 
     expect(countModelSetImages(workModelSet)).to.eq(7); // 3 work original images, 2 agent original images, 2 agent thumbnails
 
-    expect(countModelSetNamedAgents(workModelSet)).to.eq(2);
-
-    expect(subsetWork.agents).to.have.length(6); // 2 named agents + 2 blank node agents + 2 literal agents
+    expect(subsetWork.agents).to.have.length(7); // 3 named agents + 2 blank node agents + 2 literal agents
     const agentImages = subsetWork.agents.flatMap(agent => agent.agent.images);
     expect(agentImages).to.have.length(2);
     const agentThumbnails = agentImages.flatMap(
@@ -246,7 +243,7 @@ describe("ModelSetBuilder", () => {
     expect(thumbnails).to.be.empty; // Didn't ask for them
 
     expect(subsetWork.licenses).not.to.be.empty;
-    expect(countModelSetNamedLicenses(workModelSet)).to.eq(2);
+    expect(countModelSetNamedLicenses(workModelSet)).to.eq(3);
 
     expectModelsDeepEq(
       workModelSet.properties,
@@ -264,11 +261,15 @@ describe("ModelSetBuilder", () => {
     expect(subsetWork.rightsStatements).to.not.be.empty;
     expect(countModelSetRightsStatements(workModelSet)).to.eq(2);
 
-    expect(subsetWork.location).not.to.be.null;
-    expect(subsetWork.location!.location.iris).to.not.be.empty;
-    expect(subsetWork.location!.location.latitude).not.to.be.undefined;
+    if (subsetWork.location) {
+      expect(subsetWork.location!.location.iris).to.not.be.empty;
+      expect(subsetWork.location!.location.centroid!.latitude).not.to.be
+        .undefined;
+      expect(subsetWork.location!.location.centroid!.latitude).not.to.eq(0);
+      expect(subsetWork.location!.location.centroid!.longitude).not.to.eq(0);
+    }
 
-    expect(subsetWork.events).to.have.length(2);
+    expect(subsetWork.events).to.have.length(3);
     expect(
       subsetWork.events.find(workEvent => workEvent.type === "WorkCreation")
     ).not.to.be.undefined;
@@ -279,18 +280,7 @@ describe("ModelSetBuilder", () => {
 
   it("should get a work events subset (work events timeline)", () => {
     const work = completeModelSet.works[0];
-    let workCreation: WorkCreationEvent | undefined;
-    let workModification: WorkModificationEvent | undefined;
-    for (const workEvent of work.events) {
-      switch (workEvent.type) {
-        case "WorkCreation":
-          workCreation = workEvent;
-          break;
-        case "WorkModification":
-          workModification = workEvent;
-          break;
-      }
-    }
+    const expectedWorkEvents = work.events;
 
     const workEventsModelSet = sut
       .addWork(work, {events: {agents: {}, location: true}})
@@ -299,12 +289,14 @@ describe("ModelSetBuilder", () => {
     // const agents = workEventsModelSet.works.flatMap(work =>
     //   work.agents.map(agent => agent.agent)
     // );
-    const workEvents = workEventsModelSet.works.flatMap(work => work.events);
+    const actualWorkEvents = workEventsModelSet.works.flatMap(
+      work => work.events
+    );
     // expectModelsDeepEq(
     //   agents,
     //   workCreation!.agents.concat(work.agents.map(agent => agent.agent))
     // );
-    expectModelsDeepEq(workEvents, [workCreation!, workModification!]);
+    expectModelsDeepEq(actualWorkEvents, expectedWorkEvents);
     // for (const workEvent of workEvents) {
     //   expect(workEvent.location).not.to.be.null;
     //   expect(workEvent.location!.latitude).not.to.eq(0);

@@ -52,7 +52,7 @@ export class SchemaCreativeWork
     );
     if (location) {
       return {
-        label: this.name,
+        label: null,
         location,
         role: "Current",
       };

@@ -1,0 +1,186 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q63143903 a schema:Dataset ;
+	schema:about wd:Q63143903 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1789168779"^^xsd:integer ;
+	schema:dateModified "2022-12-13T13:42:14Z"^^xsd:dateTime ;
+	wikibase:statements "3"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q63143903 a wikibase:Item ;
+	wdt:P279 wd:Q1983062,
+		wd:Q24336466 ;
+	wdt:P361 wd:Q34726 ;
+	p:P279 s:Q63143903-31ff3f8e-4ed9-3aa6-3d26-877dcf314b40 .
+
+s:Q63143903-31ff3f8e-4ed9-3aa6-3d26-877dcf314b40 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q1983062 .
+
+wd:Q63143903 p:P279 s:Q63143903-ba2076c4-43c4-30b8-015d-8104a9be0282 .
+
+s:Q63143903-ba2076c4-43c4-30b8-015d-8104a9be0282 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q24336466 .
+
+wd:Q63143903 p:P361 s:Q63143903-a249f9cb-48af-12a1-971d-2eaf1fffa320 .
+
+s:Q63143903-a249f9cb-48af-12a1-971d-2eaf1fffa320 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P361 wd:Q34726 .
+
+wd:Q63143903 rdfs:label "episode in Greek mythology"@en ;
+	skos:prefLabel "episode in Greek mythology"@en ;
+	schema:name "episode in Greek mythology"@en ;
+	rdfs:label "episodio della mitologia greca"@it ;
+	skos:prefLabel "episodio della mitologia greca"@it ;
+	schema:name "episodio della mitologia greca"@it ;
+	rdfs:label "episodi de la mitologia grega"@ca ;
+	skos:prefLabel "episodi de la mitologia grega"@ca ;
+	schema:name "episodi de la mitologia grega"@ca ;
+	rdfs:label "Episode der griechischen Mythologie"@de ;
+	skos:prefLabel "Episode der griechischen Mythologie"@de ;
+	schema:name "Episode der griechischen Mythologie"@de ;
+	rdfs:label "suceso de la mitología griega"@es ;
+	skos:prefLabel "suceso de la mitología griega"@es ;
+	schema:name "suceso de la mitología griega"@es ;
+	rdfs:label "episode in de Griekse mythologie"@nl ;
+	skos:prefLabel "episode in de Griekse mythologie"@nl ;
+	schema:name "episode in de Griekse mythologie"@nl ;
+	rdfs:label "épisode de la mythologie grecque"@fr ;
+	skos:prefLabel "épisode de la mythologie grecque"@fr ;
+	schema:name "épisode de la mythologie grecque"@fr ;
+	schema:description "story from the myths of the Greek gods"@en,
+		"historia de los mitos griegos"@es ;
+	skos:altLabel "episodio de la mitología griega"@es .
+
+wd:Q1983062 a wikibase:Item ;
+	rdfs:label "episode"@en ;
+	skos:prefLabel "episode"@en ;
+	schema:name "episode"@en ;
+	schema:description "part of a work such as a serial television or radio drama"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q24336466 a wikibase:Item ;
+	rdfs:label "mythical event"@en ;
+	skos:prefLabel "mythical event"@en ;
+	schema:name "mythical event"@en ;
+	schema:description "event that only appears in myths and legends"@en .
+
+wd:Q34726 a wikibase:Item ;
+	rdfs:label "Greek mythology"@en ;
+	skos:prefLabel "Greek mythology"@en ;
+	schema:name "Greek mythology"@en ;
+	schema:description "myths of ancient Greece"@en .
+
+wd:P361 a wikibase:Property ;
+	rdfs:label "part of"@en ;
+	skos:prefLabel "part of"@en ;
+	schema:name "part of"@en ;
+	schema:description "object of which the subject is a part (if this subject is already part of object A which is a part of object B, then please only make the subject part of object A), inverse property of \"has part\" (P527, see also \"has parts of the class\" (P2670))"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P361 ;
+	wikibase:claim p:P361 ;
+	wikibase:statementProperty ps:P361 ;
+	wikibase:statementValue psv:P361 ;
+	wikibase:qualifier pq:P361 ;
+	wikibase:qualifierValue pqv:P361 ;
+	wikibase:reference pr:P361 ;
+	wikibase:referenceValue prv:P361 ;
+	wikibase:novalue wdno:P361 .
+
+p:P361 a owl:ObjectProperty .
+
+psv:P361 a owl:ObjectProperty .
+
+pqv:P361 a owl:ObjectProperty .
+
+prv:P361 a owl:ObjectProperty .
+
+wdt:P361 a owl:ObjectProperty .
+
+ps:P361 a owl:ObjectProperty .
+
+pq:P361 a owl:ObjectProperty .
+
+pr:P361 a owl:ObjectProperty .
+
+wdno:P361 a owl:Class ;
+	owl:complementOf _:1f19cc093e08019869fef6acaebb4b10 .
+
+_:1f19cc093e08019869fef6acaebb4b10 a owl:Restriction ;
+	owl:onProperty wdt:P361 ;
+	owl:someValuesFrom owl:Thing .

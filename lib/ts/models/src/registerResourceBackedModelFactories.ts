@@ -6,6 +6,7 @@ import {
   foaf,
   schema,
   time,
+  wikibase,
 } from "@paradicms/vocabularies";
 import {imageFactories} from "./imageFactories";
 import {licenseFactories} from "./licenseFactories";
@@ -24,6 +25,7 @@ import {DcLicenseDocument} from "./dc/DcLicenseDocument";
 import {SchemaPlace} from "./schema/SchemaPlace";
 import {DcText} from "./dc/DcText";
 import {DcImage} from "./dc/DcImage";
+import {WikibaseTimeValue} from "./wikibase/WikibaseTimeValue";
 
 export const registerResourceBackedModelFactories = () => {
   agentFactories.register(foaf.Organization, FoafOrganization);
@@ -33,6 +35,7 @@ export const registerResourceBackedModelFactories = () => {
     time.DateTimeDescription,
     OwlTimeDateTimeDescription
   );
+  dateTimeDescriptionFactories.register(wikibase.TimeValue, WikibaseTimeValue);
 
   imageFactories.register(dcmitype.Image, DcImage);
   imageFactories.register(schema.ImageObject, SchemaImageObject);

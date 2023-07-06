@@ -1,26 +1,31 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {getWorkLocationIcon} from "@paradicms/react-dom-components";
+import {
+  getWorkLocationIcon,
+  getWorkLocationLabel,
+} from "@paradicms/react-dom-components";
 import {WorkLocationSummary} from "@paradicms/services";
 import {useRouter} from "next/router";
 import * as React from "react";
 import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
 import {Hrefs} from "../lib/Hrefs";
+import invariant from "ts-invariant";
 
 export const WorkLocationsMap: React.FunctionComponent<{
   readonly collectionKey: string;
   readonly workLocations: readonly WorkLocationSummary[];
 }> = ({collectionKey, workLocations}) => {
-  if (workLocations.length === 0) {
-    return null;
-  }
+  invariant(workLocations.length > 0);
+  invariant(
+    workLocations.every(workLocation => !!workLocation.location.centroid)
+  );
 
   const router = useRouter();
 
   return (
     <MapContainer
       center={[
-        workLocations[0].location.latitude,
-        workLocations[0].location.longitude,
+        workLocations[0].location.centroid!.latitude,
+        workLocations[0].location.centroid!.longitude,
       ]}
       style={{height: "600px"}}
       zoom={13}
@@ -42,8 +47,8 @@ export const WorkLocationsMap: React.FunctionComponent<{
           }}
           key={workLocationIndex}
           position={[
-            workLocation.location.latitude,
-            workLocation.location.longitude,
+            workLocation.location.centroid!.latitude,
+            workLocation.location.centroid!.longitude,
           ]}
         >
           <Tooltip
@@ -57,7 +62,7 @@ export const WorkLocationsMap: React.FunctionComponent<{
               icon={getWorkLocationIcon(workLocation)}
               style={{height: "16px", width: "16px"}}
             />
-            {workLocation.label ?? workLocation.work.label}
+            {getWorkLocationLabel(workLocation)}
           </Tooltip>
         </Marker>
       ))}

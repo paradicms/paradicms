@@ -1,0 +1,635 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q106865223 a schema:Dataset ;
+	schema:about wd:Q106865223 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1908100212"^^xsd:integer ;
+	schema:dateModified "2023-06-04T15:34:13Z"^^xsd:dateTime ;
+	wikibase:statements "13"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q106865223 a wikibase:Item ;
+	wdt:P31 wd:Q96116695 ;
+	wdt:P279 wd:Q58778,
+		wd:Q16686448 ;
+	wdt:P828 wd:Q11023 ;
+	wdt:P461 wd:Q106865236 ;
+	wdt:P1889 wd:Q26839523 ;
+	wdt:P2579 wd:Q682496 ;
+	wdt:P1552 wd:Q477538,
+		wd:Q7663702,
+		wd:Q12070446,
+		wd:Q30295815 ;
+	wdt:P527 wd:Q811909,
+		wd:Q110558466 ;
+	p:P31 s:Q106865223-d9ceadce-4b61-4b4d-b27e-3e88fe80a7c8 .
+
+s:Q106865223-d9ceadce-4b61-4b4d-b27e-3e88fe80a7c8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q96116695 .
+
+wd:Q106865223 p:P279 s:Q106865223-0ee81bef-4fc8-78f1-de97-b4fb3e060526 .
+
+s:Q106865223-0ee81bef-4fc8-78f1-de97-b4fb3e060526 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q58778 .
+
+wd:Q106865223 p:P279 s:Q106865223-0c310972-4210-b073-b062-36ecff59655a .
+
+s:Q106865223-0c310972-4210-b073-b062-36ecff59655a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q16686448 .
+
+wd:Q106865223 p:P828 s:Q106865223-bfef526f-492f-2ca6-8a86-ef2c94407635 .
+
+s:Q106865223-bfef526f-492f-2ca6-8a86-ef2c94407635 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P828 wd:Q11023 .
+
+wd:Q106865223 p:P461 s:Q106865223-b38ba2ac-4bcd-4dd1-b02e-127de5d1e6f3 .
+
+s:Q106865223-b38ba2ac-4bcd-4dd1-b02e-127de5d1e6f3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P461 wd:Q106865236 ;
+	pq:P1013 wd:Q14623823 .
+
+wd:Q106865223 p:P1889 s:Q106865223-d7faa519-47f2-523c-e4b8-3f11934e49b9 .
+
+s:Q106865223-d7faa519-47f2-523c-e4b8-3f11934e49b9 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q26839523 .
+
+wd:Q106865223 p:P2579 s:Q106865223-b3a21eb2-4ed6-b78c-b338-cc0523873206 .
+
+s:Q106865223-b3a21eb2-4ed6-b78c-b338-cc0523873206 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2579 wd:Q682496 .
+
+wd:Q106865223 p:P1552 s:Q106865223-8946abb6-4ae5-f76d-37e3-28c1317acfdc .
+
+s:Q106865223-8946abb6-4ae5-f76d-37e3-28c1317acfdc a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q477538 .
+
+wd:Q106865223 p:P1552 s:Q106865223-ac23b628-4387-b04f-f51b-d0acee9c612a .
+
+s:Q106865223-ac23b628-4387-b04f-f51b-d0acee9c612a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q7663702 .
+
+wd:Q106865223 p:P1552 s:Q106865223-fa2848ba-4f1b-3e05-c882-573d9b988350 .
+
+s:Q106865223-fa2848ba-4f1b-3e05-c882-573d9b988350 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q12070446 .
+
+wd:Q106865223 p:P1552 s:Q106865223-7a831cb5-41f0-51cd-850d-3778056060e3 .
+
+s:Q106865223-7a831cb5-41f0-51cd-850d-3778056060e3 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1552 wd:Q30295815 .
+
+wd:Q106865223 p:P527 s:Q106865223-3144b104-4448-9c92-06ce-47337999af7f .
+
+s:Q106865223-3144b104-4448-9c92-06ce-47337999af7f a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P527 wd:Q811909 .
+
+wd:Q106865223 p:P527 s:Q106865223-40AF6215-5CF0-435F-B176-1DCA62AB7110 .
+
+s:Q106865223-40AF6215-5CF0-435F-B176-1DCA62AB7110 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P527 wd:Q110558466 .
+
+wd:Q106865223 rdfs:label "engineered system"@en ;
+	skos:prefLabel "engineered system"@en ;
+	schema:name "engineered system"@en ;
+	rdfs:label "инженерная система"@ru ;
+	skos:prefLabel "инженерная система"@ru ;
+	schema:name "инженерная система"@ru ;
+	rdfs:label "מערכת מתוכננת"@he ;
+	skos:prefLabel "מערכת מתוכננת"@he ;
+	schema:name "מערכת מתוכננת"@he ;
+	rdfs:label "інжынэрная сыстэма"@be-tarask ;
+	skos:prefLabel "інжынэрная сыстэма"@be-tarask ;
+	schema:name "інжынэрная сыстэма"@be-tarask ;
+	rdfs:label "fasonita sistemo"@eo ;
+	skos:prefLabel "fasonita sistemo"@eo ;
+	schema:name "fasonita sistemo"@eo ;
+	rdfs:label "sistema dissenyat"@ca ;
+	skos:prefLabel "sistema dissenyat"@ca ;
+	schema:name "sistema dissenyat"@ca ;
+	rdfs:label "sistema dezignà"@vec ;
+	skos:prefLabel "sistema dezignà"@vec ;
+	schema:name "sistema dezignà"@vec ;
+	rdfs:label "sistema progettato"@it ;
+	skos:prefLabel "sistema progettato"@it ;
+	schema:name "sistema progettato"@it ;
+	rdfs:label "konstruert system"@nb ;
+	skos:prefLabel "konstruert system"@nb ;
+	schema:name "konstruert system"@nb ;
+	rdfs:label "人工システム"@ja ;
+	skos:prefLabel "人工システム"@ja ;
+	schema:name "人工システム"@ja ;
+	rdfs:label "zasnovani sistem"@sl ;
+	skos:prefLabel "zasnovani sistem"@sl ;
+	schema:name "zasnovani sistem"@sl ;
+	schema:description "system created by an engineering process"@en,
+		"sistema creato con un processo di ingegnerizzazione"@it,
+		"人工的に作られたシステム"@ja ;
+	skos:altLabel "designed system"@en,
+		"artificial system"@en,
+		"manmade system"@en,
+		"искусственная система"@ru,
+		"созданная система"@ru,
+		"מערכת מהונדסת"@he,
+		"מערכת מלאכותית"@he,
+		"מערכת מעשה ידי-אדם"@he,
+		"sistema ingegnerizzato"@it,
+		"utviklet system"@nb,
+		"designet system"@nb,
+		"menneskeskapt system"@nb,
+		"設計システム"@ja,
+		"技術システム"@ja,
+		"工学システム"@ja,
+		"umetni sistem"@sl,
+		"načrtovani sistem"@sl .
+
+wd:Q96116695 a wikibase:Item ;
+	rdfs:label "type of system"@en ;
+	skos:prefLabel "type of system"@en ;
+	schema:name "type of system"@en ;
+	schema:description "Wikidata metaclass of sets of interacting or interdependent components"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q58778 a wikibase:Item ;
+	rdfs:label "system"@en ;
+	skos:prefLabel "system"@en ;
+	schema:name "system"@en ;
+	schema:description "set of interacting or interdependent components"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q16686448 a wikibase:Item ;
+	rdfs:label "artificial entity"@en ;
+	skos:prefLabel "artificial entity"@en ;
+	schema:name "artificial entity"@en ;
+	schema:description "anything created by humans (either material or mental)"@en .
+
+wd:Q11023 a wikibase:Item ;
+	rdfs:label "engineering"@en ;
+	skos:prefLabel "engineering"@en ;
+	schema:name "engineering"@en ;
+	schema:description "applied science"@en .
+
+wd:P828 a wikibase:Property ;
+	rdfs:label "has cause"@en ;
+	skos:prefLabel "has cause"@en ;
+	schema:name "has cause"@en ;
+	schema:description "underlying cause, thing that ultimately resulted in this effect"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P828 ;
+	wikibase:claim p:P828 ;
+	wikibase:statementProperty ps:P828 ;
+	wikibase:statementValue psv:P828 ;
+	wikibase:qualifier pq:P828 ;
+	wikibase:qualifierValue pqv:P828 ;
+	wikibase:reference pr:P828 ;
+	wikibase:referenceValue prv:P828 ;
+	wikibase:novalue wdno:P828 .
+
+p:P828 a owl:ObjectProperty .
+
+psv:P828 a owl:ObjectProperty .
+
+pqv:P828 a owl:ObjectProperty .
+
+prv:P828 a owl:ObjectProperty .
+
+wdt:P828 a owl:ObjectProperty .
+
+ps:P828 a owl:ObjectProperty .
+
+pq:P828 a owl:ObjectProperty .
+
+pr:P828 a owl:ObjectProperty .
+
+wdno:P828 a owl:Class ;
+	owl:complementOf _:d5c04d284ed06e97d905f88f3040f07f .
+
+_:d5c04d284ed06e97d905f88f3040f07f a owl:Restriction ;
+	owl:onProperty wdt:P828 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q106865236 a wikibase:Item ;
+	rdfs:label "natural system"@en ;
+	skos:prefLabel "natural system"@en ;
+	schema:name "natural system"@en ;
+	schema:description "naturally-occurring system"@en .
+
+wd:P461 a wikibase:Property ;
+	rdfs:label "opposite of"@en ;
+	skos:prefLabel "opposite of"@en ;
+	schema:name "opposite of"@en ;
+	schema:description "item that is in some way the opposite of this item"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P461 ;
+	wikibase:claim p:P461 ;
+	wikibase:statementProperty ps:P461 ;
+	wikibase:statementValue psv:P461 ;
+	wikibase:qualifier pq:P461 ;
+	wikibase:qualifierValue pqv:P461 ;
+	wikibase:reference pr:P461 ;
+	wikibase:referenceValue prv:P461 ;
+	wikibase:novalue wdno:P461 .
+
+p:P461 a owl:ObjectProperty .
+
+psv:P461 a owl:ObjectProperty .
+
+pqv:P461 a owl:ObjectProperty .
+
+prv:P461 a owl:ObjectProperty .
+
+wdt:P461 a owl:ObjectProperty .
+
+ps:P461 a owl:ObjectProperty .
+
+pq:P461 a owl:ObjectProperty .
+
+pr:P461 a owl:ObjectProperty .
+
+wdno:P461 a owl:Class ;
+	owl:complementOf _:7c6b4349f2e51cd4f621a4581e9beb4f .
+
+_:7c6b4349f2e51cd4f621a4581e9beb4f a owl:Restriction ;
+	owl:onProperty wdt:P461 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q26839523 a wikibase:Item ;
+	rdfs:label "Engineered Systems"@en ;
+	skos:prefLabel "Engineered Systems"@en ;
+	schema:name "Engineered Systems"@en ;
+	schema:description "trade journal"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q682496 a wikibase:Item ;
+	rdfs:label "systems engineering"@en ;
+	skos:prefLabel "systems engineering"@en ;
+	schema:name "systems engineering"@en ;
+	schema:description "interdisciplinary field of engineering and engineering management that focuses on how to design and manage complex systems over their life cycles"@en .
+
+wd:P2579 a wikibase:Property ;
+	rdfs:label "studied by"@en ;
+	skos:prefLabel "studied by"@en ;
+	schema:name "studied by"@en ;
+	schema:description "subject is studied by this science or domain"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2579 ;
+	wikibase:claim p:P2579 ;
+	wikibase:statementProperty ps:P2579 ;
+	wikibase:statementValue psv:P2579 ;
+	wikibase:qualifier pq:P2579 ;
+	wikibase:qualifierValue pqv:P2579 ;
+	wikibase:reference pr:P2579 ;
+	wikibase:referenceValue prv:P2579 ;
+	wikibase:novalue wdno:P2579 .
+
+p:P2579 a owl:ObjectProperty .
+
+psv:P2579 a owl:ObjectProperty .
+
+pqv:P2579 a owl:ObjectProperty .
+
+prv:P2579 a owl:ObjectProperty .
+
+wdt:P2579 a owl:ObjectProperty .
+
+ps:P2579 a owl:ObjectProperty .
+
+pq:P2579 a owl:ObjectProperty .
+
+pr:P2579 a owl:ObjectProperty .
+
+wdno:P2579 a owl:Class ;
+	owl:complementOf _:646b8b1e4925fe4fca2b57678b2ceb02 .
+
+_:646b8b1e4925fe4fca2b57678b2ceb02 a owl:Restriction ;
+	owl:onProperty wdt:P2579 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q477538 a wikibase:Item ;
+	rdfs:label "systems architecture"@en ;
+	skos:prefLabel "systems architecture"@en ;
+	schema:name "systems architecture"@en ;
+	schema:description "conceptual model that defines the structure, behavior, and views of a system"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q7663702 a wikibase:Item ;
+	rdfs:label "system configuration"@en ;
+	skos:prefLabel "system configuration"@en ;
+	schema:name "system configuration"@en ;
+	schema:description "set of modifiable parameters of an engineered system, or their values, that allow it to support a particular function"@en .
+
+wd:Q12070446 a wikibase:Item ;
+	rdfs:label "system modeling"@en ;
+	skos:prefLabel "system modeling"@en ;
+	schema:name "system modeling"@en ;
+	schema:description "interdisciplinary study of the use of conceptual models to conceptualize and construct systems in business and IT development"@en .
+
+wd:Q30295815 a wikibase:Item ;
+	rdfs:label "functionality"@en ;
+	skos:prefLabel "functionality"@en ;
+	schema:name "functionality"@en ;
+	schema:description "state of a system that is capable of functioning or operating"@en .
+
+wd:Q811909 a wikibase:Item ;
+	rdfs:label "technological component"@en ;
+	skos:prefLabel "technological component"@en ;
+	schema:name "technological component"@en ;
+	schema:description "fundamental component of a machine or a tool, part of the machinery and contributing to the function of the machine, not of the esthetics"@en .
+
+wd:P527 a wikibase:Property ;
+	rdfs:label "has part(s)"@en ;
+	skos:prefLabel "has part(s)"@en ;
+	schema:name "has part(s)"@en ;
+	schema:description "part of this subject; inverse property of \"part of\" (P361). See also \"has parts of the class\" (P2670)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P527 ;
+	wikibase:claim p:P527 ;
+	wikibase:statementProperty ps:P527 ;
+	wikibase:statementValue psv:P527 ;
+	wikibase:qualifier pq:P527 ;
+	wikibase:qualifierValue pqv:P527 ;
+	wikibase:reference pr:P527 ;
+	wikibase:referenceValue prv:P527 ;
+	wikibase:novalue wdno:P527 .
+
+p:P527 a owl:ObjectProperty .
+
+psv:P527 a owl:ObjectProperty .
+
+pqv:P527 a owl:ObjectProperty .
+
+prv:P527 a owl:ObjectProperty .
+
+wdt:P527 a owl:ObjectProperty .
+
+ps:P527 a owl:ObjectProperty .
+
+pq:P527 a owl:ObjectProperty .
+
+pr:P527 a owl:ObjectProperty .
+
+wdno:P527 a owl:Class ;
+	owl:complementOf _:c508fd90817ec28651ec025cc3117403 .
+
+_:c508fd90817ec28651ec025cc3117403 a owl:Restriction ;
+	owl:onProperty wdt:P527 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q110558466 a wikibase:Item ;
+	rdfs:label "interface"@en ;
+	skos:prefLabel "interface"@en ;
+	schema:name "interface"@en ;
+	schema:description "point of interaction of two items, not necessarily physical"@en .
+
+wd:Q14623823 a wikibase:Item ;
+	rdfs:label "artificiality"@en ;
+	skos:prefLabel "artificiality"@en ;
+	schema:name "artificiality"@en ;
+	schema:description "state of being the product of intentional human manufacture, rather than occurring naturally"@en .
+
+wd:P1013 a wikibase:Property ;
+	rdfs:label "criterion used"@en ;
+	skos:prefLabel "criterion used"@en ;
+	schema:name "criterion used"@en ;
+	schema:description "property by which a distinction or classification is made"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1013 ;
+	wikibase:claim p:P1013 ;
+	wikibase:statementProperty ps:P1013 ;
+	wikibase:statementValue psv:P1013 ;
+	wikibase:qualifier pq:P1013 ;
+	wikibase:qualifierValue pqv:P1013 ;
+	wikibase:reference pr:P1013 ;
+	wikibase:referenceValue prv:P1013 ;
+	wikibase:novalue wdno:P1013 .
+
+p:P1013 a owl:ObjectProperty .
+
+psv:P1013 a owl:ObjectProperty .
+
+pqv:P1013 a owl:ObjectProperty .
+
+prv:P1013 a owl:ObjectProperty .
+
+wdt:P1013 a owl:ObjectProperty .
+
+ps:P1013 a owl:ObjectProperty .
+
+pq:P1013 a owl:ObjectProperty .
+
+pr:P1013 a owl:ObjectProperty .
+
+wdno:P1013 a owl:Class ;
+	owl:complementOf _:5273a0069dacad510b42ec771f79d93a .
+
+_:5273a0069dacad510b42ec771f79d93a a owl:Restriction ;
+	owl:onProperty wdt:P1013 ;
+	owl:someValuesFrom owl:Thing .

@@ -1,0 +1,874 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q18706315 a schema:Dataset ;
+	schema:about wd:Q18706315 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1915246082"^^xsd:integer ;
+	schema:dateModified "2023-06-14T18:39:18Z"^^xsd:dateTime ;
+	wikibase:statements "15"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "0"^^xsd:integer .
+
+wd:Q18706315 a wikibase:Item ;
+	wdt:P279 wd:Q35120 ;
+	wdt:P1557 wd:Q41719 ;
+	wdt:P1889 wd:Q29651519,
+		wd:Q147027,
+		wd:Q7184903,
+		wd:Q14897293,
+		wd:Q15706911,
+		wd:Q64728693 ;
+	wdt:P31 wd:Q96251598 ;
+	wdt:P1552 wd:Q21170479 ;
+	wdt:P6477 wd:Q953429 ;
+	wdt:P1382 wd:Q96196524,
+		wd:Q15893266,
+		wd:Q64728693,
+		wd:Q117782942 ;
+	p:P279 s:Q18706315-c2340368-4588-f0c1-d8d1-615193251f27 .
+
+s:Q18706315-c2340368-4588-f0c1-d8d1-615193251f27 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q35120 .
+
+wd:Q18706315 p:P1557 s:Q18706315-4fd2af23-4278-c5d9-313d-ca4763a19f67 .
+
+s:Q18706315-4fd2af23-4278-c5d9-313d-ca4763a19f67 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1557 wd:Q41719 .
+
+wd:Q18706315 p:P1889 s:Q18706315-dd6fb503-4290-9132-3c7c-f13efd026f3a .
+
+s:Q18706315-dd6fb503-4290-9132-3c7c-f13efd026f3a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q29651519 .
+
+wd:Q18706315 p:P1889 s:Q18706315-5185e72a-4740-96c4-5317-756ac2082976 .
+
+s:Q18706315-5185e72a-4740-96c4-5317-756ac2082976 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q147027 .
+
+wd:Q18706315 p:P1889 s:Q18706315-b7d1f06b-4de1-eba6-8270-5d0616d13722 .
+
+s:Q18706315-b7d1f06b-4de1-eba6-8270-5d0616d13722 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q7184903 .
+
+wd:Q18706315 p:P1889 s:Q18706315-68225A5F-06A6-45DF-83E2-2E348BC654D2 .
+
+s:Q18706315-68225A5F-06A6-45DF-83E2-2E348BC654D2 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q14897293 .
+
+wd:Q18706315 p:P1889 s:Q18706315-9A365DD3-E39A-4C8A-9AED-F714A5EE8291 .
+
+s:Q18706315-9A365DD3-E39A-4C8A-9AED-F714A5EE8291 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q15706911 ;
+	prov:wasDerivedFrom ref:113d94ef8ba89ae1b09df03574ac51bd4936eb95 .
+
+wd:Q18706315 p:P1889 s:Q18706315-18f51825-492e-e60f-b28c-959e95aaa731 .
+
+s:Q18706315-18f51825-492e-e60f-b28c-959e95aaa731 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1889 wd:Q64728693 ;
+	pq:P1013 wd:Q21170479 .
+
+wd:Q18706315 p:P31 s:Q18706315-607afcc3-4715-c956-2e4b-c35076797904 .
+
+s:Q18706315-607afcc3-4715-c956-2e4b-c35076797904 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P31 wd:Q96251598 .
+
+wd:Q18706315 p:P1552 s:Q18706315-2cab8c0d-42d8-19e1-e089-2cf5a36a836a .
+
+s:Q18706315-2cab8c0d-42d8-19e1-e089-2cf5a36a836a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:PreferredRank ;
+	ps:P1552 wd:Q21170479 ;
+	pq:P5102 wd:Q114980101 .
+
+wd:Q18706315 p:P6477 s:Q18706315-1f512fa9-4841-8172-bc8f-c1331acb50d8 .
+
+s:Q18706315-1f512fa9-4841-8172-bc8f-c1331acb50d8 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6477 wd:Q953429 .
+
+wd:Q18706315 p:P1382 s:Q18706315-9457212b-4b49-8682-87b2-dfeaf9e69edd .
+
+s:Q18706315-9457212b-4b49-8682-87b2-dfeaf9e69edd a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1382 wd:Q96196524 .
+
+wd:Q18706315 p:P1382 s:Q18706315-6b61a596-46eb-daf4-e63e-c7f91068872c .
+
+s:Q18706315-6b61a596-46eb-daf4-e63e-c7f91068872c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1382 wd:Q15893266 .
+
+wd:Q18706315 p:P1382 s:Q18706315-0cec48de-41a1-7cf7-5322-aa8643938cf0 .
+
+s:Q18706315-0cec48de-41a1-7cf7-5322-aa8643938cf0 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1382 wd:Q64728693 .
+
+wd:Q18706315 p:P1382 s:Q18706315-9bc2f23d-4cff-109e-7a40-5d177064cd2c .
+
+s:Q18706315-9bc2f23d-4cff-109e-7a40-5d177064cd2c a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P1382 wd:Q117782942 .
+
+wd:Q18706315 rdfs:label "гипотетический объект"@ru ;
+	skos:prefLabel "гипотетический объект"@ru ;
+	schema:name "гипотетический объект"@ru ;
+	rdfs:label "hypothetical entity"@en ;
+	skos:prefLabel "hypothetical entity"@en ;
+	schema:name "hypothetical entity"@en ;
+	rdfs:label "objet hypothétique"@fr ;
+	skos:prefLabel "objet hypothétique"@fr ;
+	schema:name "objet hypothétique"@fr ;
+	rdfs:label "хипотетички објект"@mk ;
+	skos:prefLabel "хипотетички објект"@mk ;
+	schema:name "хипотетички објект"@mk ;
+	rdfs:label "entidad hipotética"@es ;
+	skos:prefLabel "entidad hipotética"@es ;
+	schema:name "entidad hipotética"@es ;
+	rdfs:label "hypothetisches Objekt"@de ;
+	skos:prefLabel "hypothetisches Objekt"@de ;
+	schema:name "hypothetisches Objekt"@de ;
+	rdfs:label "hypotetický objekt"@cs ;
+	skos:prefLabel "hypotetický objekt"@cs ;
+	schema:name "hypotetický objekt"@cs ;
+	rdfs:label "хипотетичко тело"@sr ;
+	skos:prefLabel "хипотетичко тело"@sr ;
+	schema:name "хипотетичко тело"@sr ;
+	rdfs:label "objeto hipotético"@pt ;
+	skos:prefLabel "objeto hipotético"@pt ;
+	schema:name "objeto hipotético"@pt ;
+	rdfs:label "objeto hipotético"@pt-br ;
+	skos:prefLabel "objeto hipotético"@pt-br ;
+	schema:name "objeto hipotético"@pt-br ;
+	rdfs:label "hipotetični predmet"@sl ;
+	skos:prefLabel "hipotetični predmet"@sl ;
+	schema:name "hipotetični predmet"@sl ;
+	rdfs:label "гіпотетичний об'єкт"@uk ;
+	skos:prefLabel "гіпотетичний об'єкт"@uk ;
+	schema:name "гіпотетичний об'єкт"@uk ;
+	rdfs:label "obiekt hipotetyczny"@pl ;
+	skos:prefLabel "obiekt hipotetyczny"@pl ;
+	schema:name "obiekt hipotetyczny"@pl ;
+	rdfs:label "entità ipotetica"@it ;
+	skos:prefLabel "entità ipotetica"@it ;
+	schema:name "entità ipotetica"@it ;
+	rdfs:label "hipoteza objekto"@eo ;
+	skos:prefLabel "hipoteza objekto"@eo ;
+	schema:name "hipoteza objekto"@eo ;
+	rdfs:label "hypotetisk objekt"@nn ;
+	skos:prefLabel "hypotetisk objekt"@nn ;
+	schema:name "hypotetisk objekt"@nn ;
+	rdfs:label "objecte hipotètic"@ca ;
+	skos:prefLabel "objecte hipotètic"@ca ;
+	schema:name "objecte hipotètic"@ca ;
+	rdfs:label "אובייקט משוער"@he ;
+	skos:prefLabel "אובייקט משוער"@he ;
+	schema:name "אובייקט משוער"@he ;
+	rdfs:label "hypotetiskt objekt"@sv ;
+	skos:prefLabel "hypotetiskt objekt"@sv ;
+	schema:name "hypotetiskt objekt"@sv ;
+	rdfs:label "ჰიპოთეტური ობიექტი"@ka ;
+	skos:prefLabel "ჰიპოთეტური ობიექტი"@ka ;
+	schema:name "ჰიპოთეტური ობიექტი"@ka ;
+	rdfs:label "hypothetisch object"@nl ;
+	skos:prefLabel "hypothetisch object"@nl ;
+	schema:name "hypothetisch object"@nl ;
+	rdfs:label "entidade asumida"@gl ;
+	skos:prefLabel "entidade asumida"@gl ;
+	schema:name "entidade asumida"@gl ;
+	rdfs:label "entitate onartua"@eu ;
+	skos:prefLabel "entitate onartua"@eu ;
+	schema:name "entitate onartua"@eu ;
+	rdfs:label "feltételezett entitás"@hu ;
+	skos:prefLabel "feltételezett entitás"@hu ;
+	schema:name "feltételezett entitás"@hu ;
+	rdfs:label "гіпатэтычны аб’ект"@be-tarask ;
+	skos:prefLabel "гіпатэтычны аб’ект"@be-tarask ;
+	schema:name "гіпатэтычны аб’ект"@be-tarask ;
+	rdfs:label "hypoteettinen entiteetti"@fi ;
+	skos:prefLabel "hypoteettinen entiteetti"@fi ;
+	schema:name "hypoteettinen entiteetti"@fi ;
+	rdfs:label "entitas rekaan"@id ;
+	skos:prefLabel "entitas rekaan"@id ;
+	schema:name "entitas rekaan"@id ;
+	rdfs:label "hypotetisk objekt"@da ;
+	skos:prefLabel "hypotetisk objekt"@da ;
+	schema:name "hypotetisk objekt"@da ;
+	rdfs:label "hipotetik obyekt"@az ;
+	skos:prefLabel "hipotetik obyekt"@az ;
+	schema:name "hipotetik obyekt"@az ;
+	rdfs:label "仮説上の実体"@ja ;
+	skos:prefLabel "仮説上の実体"@ja ;
+	schema:name "仮説上の実体"@ja ;
+	rdfs:label "aonán hipitéiseach"@ga ;
+	skos:prefLabel "aonán hipitéiseach"@ga ;
+	schema:name "aonán hipitéiseach"@ga ;
+	rdfs:label "entitate ipotetică"@ro ;
+	skos:prefLabel "entitate ipotetică"@ro ;
+	schema:name "entitate ipotetică"@ro ;
+	rdfs:label "كيان افتراضي"@ar ;
+	skos:prefLabel "كيان افتراضي"@ar ;
+	schema:name "كيان افتراضي"@ar ;
+	rdfs:label "假说实体"@zh-cn ;
+	skos:prefLabel "假说实体"@zh-cn ;
+	schema:name "假说实体"@zh-cn ;
+	rdfs:label "假说实体"@zh ;
+	skos:prefLabel "假说实体"@zh ;
+	schema:name "假说实体"@zh ;
+	rdfs:label "гіпатэтычны аб’ект"@be ;
+	skos:prefLabel "гіпатэтычны аб’ект"@be ;
+	schema:name "гіпатэтычны аб’ект"@be ;
+	rdfs:label "varsayımsal varlık"@tr ;
+	skos:prefLabel "varsayımsal varlık"@tr ;
+	schema:name "varsayımsal varlık"@tr ;
+	rdfs:label "假說實體"@zh-hant ;
+	skos:prefLabel "假說實體"@zh-hant ;
+	schema:name "假說實體"@zh-hant ;
+	rdfs:label "υποθετική οντότητα"@el ;
+	skos:prefLabel "υποθετική οντότητα"@el ;
+	schema:name "υποθετική οντότητα"@el ;
+	rdfs:label "hypotetisk entitet"@nb ;
+	skos:prefLabel "hypotetisk entitet"@nb ;
+	schema:name "hypotetisk entitet"@nb ;
+	rdfs:label "entiti hipotesis"@ms ;
+	skos:prefLabel "entiti hipotesis"@ms ;
+	schema:name "entiti hipotesis"@ms ;
+	rdfs:label "가설적 존재"@ko ;
+	skos:prefLabel "가설적 존재"@ko ;
+	schema:name "가설적 존재"@ko ;
+	rdfs:label "hypotetiski objekt"@hsb ;
+	skos:prefLabel "hypotetiski objekt"@hsb ;
+	schema:name "hypotetiski objekt"@hsb ;
+	rdfs:label "endid damcaniaethol"@cy ;
+	skos:prefLabel "endid damcaniaethol"@cy ;
+	schema:name "endid damcaniaethol"@cy ;
+	rdfs:label "thực thể giả thuyết"@vi ;
+	skos:prefLabel "thực thể giả thuyết"@vi ;
+	schema:name "thực thể giả thuyết"@vi ;
+	schema:description "объект, существование которого допускается, но не доказано"@ru,
+		"entity whose existence is possible, but not proven"@en,
+		"Objekt, dessen Existenz angenommen wird, aber nicht bewiesen ist"@de,
+		"objekt, o jehož existenci se spekuluje, ale který nebyl objeven či prokázán"@cs,
+		"objeto cuja existência não foi comprovada"@pt,
+		"об'єкт, існування якого допускається, але не доведено"@uk,
+		"objecte d'existència no demostrada, però assumida"@ca,
+		"entité dont l'existence est supposée mais qui n'a pas été confirmée"@fr,
+		"entidad cuya existencia es posible, pero no está probada"@es,
+		"entidade cuxa existencia non está probada"@gl,
+		"byt, którego istnienie nie zostało udowodnione"@pl,
+		"entità la cui esistenza non è stata provata"@it,
+		"entitate honen izatea ez da frogatu"@eu,
+		"nem bizonyított létű entitás"@hu,
+		"entiteetti, jonka olemassaolo on oletettu eikä todistettu"@fi,
+		"mövcud olması fərziyyəyə əsaslanan obyekt"@az,
+		"存在しうるが、実証されていない実体"@ja,
+		"entitate a cărei existență este posibilă, dar nu demonstrată"@ro,
+		"科学假说中的实体，尚未证明，可能不存在"@zh-cn,
+		"科学假说中的实体，尚未证明，可能不存在"@zh,
+		"varlığı mümkün olan ancak kanıtlanmamış varlık"@tr,
+		"οντότητα της οποίας η ύπαρξη είναι δυνατή, αλλά δεν αποδεικνύεται"@el,
+		"존재할 가능성이 있지만 증명되지 않은 존재"@ko,
+		"objekt vars existens är möjligt, men inte bevisad"@sv,
+		"objekt, z kotrehož eksistency so wuchadźa, kotraž pak njeje dopokazana"@hsb ;
+	skos:altLabel "хипотетички објекат"@sr,
+		"претпостављени ентитет"@sr,
+		"entidad asumida"@es,
+		"entidad potencial"@es,
+		"objeto hipotético"@es,
+		"entidad teórica"@es,
+		"objeto teórico"@es,
+		"ישות משוערת"@he,
+		"אובייקט היפותטי"@he,
+		"assumed entity"@en,
+		"theorized entity"@en,
+		"theoretical entity"@en,
+		"hypothetical object"@en,
+		"theorized object"@en,
+		"theoretical object"@en,
+		"hypothetical item"@en,
+		"theorized item"@en,
+		"theoretical item"@en,
+		"hypothesized object"@en,
+		"hypothesized entity"@en,
+		"hypothetical"@en,
+		"hypothetically"@en,
+		"possible entity"@en,
+		"entité potentielle"@fr,
+		"entité putative"@fr,
+		"vermutete Entität"@de,
+		"angenommene Entität"@de,
+		"предполагаемая сущность"@ru,
+		"entità presunta"@it,
+		"entità putativa"@it,
+		"entità teorica"@it,
+		"entità teorizzata"@it,
+		"entità ipotizzata"@it,
+		"entitat assumida"@ca,
+		"претпоставена сушност"@mk,
+		"претпоставен ентитет"@mk,
+		"vermoedelijke entiteit"@nl,
+		"сутність, що припускається"@uk,
+		"byt przypuszczalnie istniejący"@pl,
+		"předpokládaná entita"@cs,
+		"anteke vesen"@nn,
+		"anteken skapning"@nn,
+		"antagen företeelse"@sv,
+		"меркаваны аб’ект"@be-tarask,
+		"nəzəri obyekt"@az,
+		"varsayılan varlık"@tr,
+		"teorik varlık"@tr,
+		"varsayımsal nesne"@tr,
+		"kuramsal nesne"@tr,
+		"teorik nesne"@tr,
+		"varsayımsal öge"@tr,
+		"teorik öge"@tr,
+		"varsayılmış varlık"@tr,
+		"varsayılmış nesne"@tr,
+		"hypotetisk objekt"@nb,
+		"科学实体"@zh,
+		"假說實體"@zh,
+		"科学实体"@zh-cn,
+		"科學實體"@zh-hant,
+		"hipotetikus entitás"@hu,
+		"hipotetikus lény"@hu,
+		"feltételezett lény"@hu,
+		"feltételes entitás"@hu,
+		"feltételes lény"@hu .
+
+wd:Q35120 a wikibase:Item ;
+	rdfs:label "entity"@en ;
+	skos:prefLabel "entity"@en ;
+	schema:name "entity"@en ;
+	schema:description "anything that can be considered, discussed, or observed"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q41719 a wikibase:Item ;
+	rdfs:label "hypothesis"@en ;
+	skos:prefLabel "hypothesis"@en ;
+	schema:name "hypothesis"@en ;
+	schema:description "proposed explanation for an observation, phenomenon, or scientific problem"@en .
+
+wd:P1557 a wikibase:Property ;
+	rdfs:label "manifestation of"@en ;
+	skos:prefLabel "manifestation of"@en ;
+	schema:name "manifestation of"@en ;
+	schema:description "inherent and characteristic embodiment of a given concept"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1557 ;
+	wikibase:claim p:P1557 ;
+	wikibase:statementProperty ps:P1557 ;
+	wikibase:statementValue psv:P1557 ;
+	wikibase:qualifier pq:P1557 ;
+	wikibase:qualifierValue pqv:P1557 ;
+	wikibase:reference pr:P1557 ;
+	wikibase:referenceValue prv:P1557 ;
+	wikibase:novalue wdno:P1557 .
+
+p:P1557 a owl:ObjectProperty .
+
+psv:P1557 a owl:ObjectProperty .
+
+pqv:P1557 a owl:ObjectProperty .
+
+prv:P1557 a owl:ObjectProperty .
+
+wdt:P1557 a owl:ObjectProperty .
+
+ps:P1557 a owl:ObjectProperty .
+
+pq:P1557 a owl:ObjectProperty .
+
+pr:P1557 a owl:ObjectProperty .
+
+wdno:P1557 a owl:Class ;
+	owl:complementOf _:983903d5dff2219d18c3fcdb5c55e893 .
+
+_:983903d5dff2219d18c3fcdb5c55e893 a owl:Restriction ;
+	owl:onProperty wdt:P1557 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q29651519 a wikibase:Item ;
+	rdfs:label "mental object"@en ;
+	skos:prefLabel "mental object"@en ;
+	schema:name "mental object"@en ;
+	schema:description "object whose space of existence is the mind; item that is thought of as being \"in\" the mind, and capable of being formed and manipulated by mental processes and faculties: thoughts, concepts, memories, emotions, percepts and intentions"@en .
+
+wd:P1889 a wikibase:Property ;
+	rdfs:label "different from"@en ;
+	skos:prefLabel "different from"@en ;
+	schema:name "different from"@en ;
+	schema:description "item that is different from another item, with which it may be confused"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1889 ;
+	wikibase:claim p:P1889 ;
+	wikibase:statementProperty ps:P1889 ;
+	wikibase:statementValue psv:P1889 ;
+	wikibase:qualifier pq:P1889 ;
+	wikibase:qualifierValue pqv:P1889 ;
+	wikibase:reference pr:P1889 ;
+	wikibase:referenceValue prv:P1889 ;
+	wikibase:novalue wdno:P1889 .
+
+p:P1889 a owl:ObjectProperty .
+
+psv:P1889 a owl:ObjectProperty .
+
+pqv:P1889 a owl:ObjectProperty .
+
+prv:P1889 a owl:ObjectProperty .
+
+wdt:P1889 a owl:ObjectProperty .
+
+ps:P1889 a owl:ObjectProperty .
+
+pq:P1889 a owl:ObjectProperty .
+
+pr:P1889 a owl:ObjectProperty .
+
+wdno:P1889 a owl:Class ;
+	owl:complementOf _:4fcc9ce770ae6fe14cb8672fb35a8bc9 .
+
+_:4fcc9ce770ae6fe14cb8672fb35a8bc9 a owl:Restriction ;
+	owl:onProperty wdt:P1889 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q147027 a wikibase:Item ;
+	rdfs:label "thought experiment"@en ;
+	skos:prefLabel "thought experiment"@en ;
+	schema:name "thought experiment"@en ;
+	schema:description "considering hypothesis, theory, or principle for the purpose of thinking through its consequences"@en .
+
+wd:Q7184903 a wikibase:Item ;
+	rdfs:label "abstract object"@en ;
+	skos:prefLabel "abstract object"@en ;
+	schema:name "abstract object"@en ;
+	schema:description "object with no physical referents"@en .
+
+wd:Q14897293 a wikibase:Item ;
+	rdfs:label "fictional entity"@en ;
+	skos:prefLabel "fictional entity"@en ;
+	schema:name "fictional entity"@en ;
+	schema:description "entity that only exists in a work of fiction"@en .
+
+wd:Q15706911 a wikibase:Item ;
+	rdfs:label "fictional object"@en ;
+	skos:prefLabel "fictional object"@en ;
+	schema:name "fictional object"@en ;
+	schema:description "object appearing only in fictional stories"@en .
+
+wd:Q64728693 a wikibase:Item ;
+	rdfs:label "non-existent entity"@en ;
+	skos:prefLabel "non-existent entity"@en ;
+	schema:name "non-existent entity"@en ;
+	schema:description "entity which does not exist, and has never existed"@en .
+
+wd:Q96251598 a wikibase:Item ;
+	rdfs:label "type of object"@en ;
+	skos:prefLabel "type of object"@en ;
+	schema:name "type of object"@en ;
+	schema:description "Wikidata metaclass of object, which could be concrete or abstract"@en .
+
+wd:P31 a wikibase:Property ;
+	rdfs:label "instance of"@en ;
+	skos:prefLabel "instance of"@en ;
+	schema:name "instance of"@en ;
+	schema:description "that class of which this subject is a particular example and member; different from P279 (subclass of); for example: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P31 ;
+	wikibase:claim p:P31 ;
+	wikibase:statementProperty ps:P31 ;
+	wikibase:statementValue psv:P31 ;
+	wikibase:qualifier pq:P31 ;
+	wikibase:qualifierValue pqv:P31 ;
+	wikibase:reference pr:P31 ;
+	wikibase:referenceValue prv:P31 ;
+	wikibase:novalue wdno:P31 .
+
+p:P31 a owl:ObjectProperty .
+
+psv:P31 a owl:ObjectProperty .
+
+pqv:P31 a owl:ObjectProperty .
+
+prv:P31 a owl:ObjectProperty .
+
+wdt:P31 a owl:ObjectProperty .
+
+ps:P31 a owl:ObjectProperty .
+
+pq:P31 a owl:ObjectProperty .
+
+pr:P31 a owl:ObjectProperty .
+
+wdno:P31 a owl:Class ;
+	owl:complementOf _:0b8bd71b926a65ca3fa72e5d9103e4d6 .
+
+_:0b8bd71b926a65ca3fa72e5d9103e4d6 a owl:Restriction ;
+	owl:onProperty wdt:P31 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q21170479 a wikibase:Item ;
+	rdfs:label "possibility"@en ;
+	skos:prefLabel "possibility"@en ;
+	schema:name "possibility"@en ;
+	schema:description "quality of being possible; the condition or fact of being possible"@en .
+
+wd:P1552 a wikibase:Property ;
+	rdfs:label "has quality"@en ;
+	skos:prefLabel "has quality"@en ;
+	schema:name "has quality"@en ;
+	schema:description "the entity has an inherent or distinguishing non-material characteristic. use a more-specific property when possible"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1552 ;
+	wikibase:claim p:P1552 ;
+	wikibase:statementProperty ps:P1552 ;
+	wikibase:statementValue psv:P1552 ;
+	wikibase:qualifier pq:P1552 ;
+	wikibase:qualifierValue pqv:P1552 ;
+	wikibase:reference pr:P1552 ;
+	wikibase:referenceValue prv:P1552 ;
+	wikibase:novalue wdno:P1552 .
+
+p:P1552 a owl:ObjectProperty .
+
+psv:P1552 a owl:ObjectProperty .
+
+pqv:P1552 a owl:ObjectProperty .
+
+prv:P1552 a owl:ObjectProperty .
+
+wdt:P1552 a owl:ObjectProperty .
+
+ps:P1552 a owl:ObjectProperty .
+
+pq:P1552 a owl:ObjectProperty .
+
+pr:P1552 a owl:ObjectProperty .
+
+wdno:P1552 a owl:Class ;
+	owl:complementOf _:d646ce684b92dfe343f574cfbd061458 .
+
+_:d646ce684b92dfe343f574cfbd061458 a owl:Restriction ;
+	owl:onProperty wdt:P1552 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q953429 a wikibase:Item ;
+	rdfs:label "verification"@en ;
+	skos:prefLabel "verification"@en ;
+	schema:name "verification"@en ;
+	schema:description "process of proving that a suspected fact is true"@en .
+
+wd:P6477 a wikibase:Property ;
+	rdfs:label "does not have quality"@en ;
+	skos:prefLabel "does not have quality"@en ;
+	schema:name "does not have quality"@en ;
+	schema:description "expected quality that the item does not possess"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P6477 ;
+	wikibase:claim p:P6477 ;
+	wikibase:statementProperty ps:P6477 ;
+	wikibase:statementValue psv:P6477 ;
+	wikibase:qualifier pq:P6477 ;
+	wikibase:qualifierValue pqv:P6477 ;
+	wikibase:reference pr:P6477 ;
+	wikibase:referenceValue prv:P6477 ;
+	wikibase:novalue wdno:P6477 .
+
+p:P6477 a owl:ObjectProperty .
+
+psv:P6477 a owl:ObjectProperty .
+
+pqv:P6477 a owl:ObjectProperty .
+
+prv:P6477 a owl:ObjectProperty .
+
+wdt:P6477 a owl:ObjectProperty .
+
+ps:P6477 a owl:ObjectProperty .
+
+pq:P6477 a owl:ObjectProperty .
+
+pr:P6477 a owl:ObjectProperty .
+
+wdno:P6477 a owl:Class ;
+	owl:complementOf _:2d566b2d1e1b7babc95ebf8e5328ae40 .
+
+_:2d566b2d1e1b7babc95ebf8e5328ae40 a owl:Restriction ;
+	owl:onProperty wdt:P6477 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q96196524 a wikibase:Item ;
+	rdfs:label "current entity"@en ;
+	skos:prefLabel "current entity"@en ;
+	schema:name "current entity"@en ;
+	schema:description "entity that exists in the present"@en .
+
+wd:P1382 a wikibase:Property ;
+	rdfs:label "partially coincident with"@en ;
+	skos:prefLabel "partially coincident with"@en ;
+	schema:name "partially coincident with"@en ;
+	schema:description "object that partially overlaps with the subject in its instances, parts, or members"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1382 ;
+	wikibase:claim p:P1382 ;
+	wikibase:statementProperty ps:P1382 ;
+	wikibase:statementValue psv:P1382 ;
+	wikibase:qualifier pq:P1382 ;
+	wikibase:qualifierValue pqv:P1382 ;
+	wikibase:reference pr:P1382 ;
+	wikibase:referenceValue prv:P1382 ;
+	wikibase:novalue wdno:P1382 .
+
+p:P1382 a owl:ObjectProperty .
+
+psv:P1382 a owl:ObjectProperty .
+
+pqv:P1382 a owl:ObjectProperty .
+
+prv:P1382 a owl:ObjectProperty .
+
+wdt:P1382 a owl:ObjectProperty .
+
+ps:P1382 a owl:ObjectProperty .
+
+pq:P1382 a owl:ObjectProperty .
+
+pr:P1382 a owl:ObjectProperty .
+
+wdno:P1382 a owl:Class ;
+	owl:complementOf _:330b6bb28dcfa3c625950ac043246d1d .
+
+_:330b6bb28dcfa3c625950ac043246d1d a owl:Restriction ;
+	owl:onProperty wdt:P1382 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15893266 a wikibase:Item ;
+	rdfs:label "former entity"@en ;
+	skos:prefLabel "former entity"@en ;
+	schema:name "former entity"@en ;
+	schema:description "entity that no longer operates or is terminated"@en .
+
+wd:Q117782942 a wikibase:Item ;
+	rdfs:label "missing entity"@en ;
+	skos:prefLabel "missing entity"@en ;
+	schema:name "missing entity"@en ;
+	schema:description "real entity whose location is unknown, or whose continuing existence cannot be confirmed"@en .
+
+wd:P3452 a wikibase:Property ;
+	rdfs:label "inferred from"@en ;
+	skos:prefLabel "inferred from"@en ;
+	schema:name "inferred from"@en ;
+	schema:description "statement added based on related statement found on the following item, not the entity described by the item (to be used in a reference field)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P3452 ;
+	wikibase:claim p:P3452 ;
+	wikibase:statementProperty ps:P3452 ;
+	wikibase:statementValue psv:P3452 ;
+	wikibase:qualifier pq:P3452 ;
+	wikibase:qualifierValue pqv:P3452 ;
+	wikibase:reference pr:P3452 ;
+	wikibase:referenceValue prv:P3452 ;
+	wikibase:novalue wdno:P3452 .
+
+p:P3452 a owl:ObjectProperty .
+
+psv:P3452 a owl:ObjectProperty .
+
+pqv:P3452 a owl:ObjectProperty .
+
+prv:P3452 a owl:ObjectProperty .
+
+wdt:P3452 a owl:ObjectProperty .
+
+ps:P3452 a owl:ObjectProperty .
+
+pq:P3452 a owl:ObjectProperty .
+
+pr:P3452 a owl:ObjectProperty .
+
+wdno:P3452 a owl:Class ;
+	owl:complementOf _:5839b6febac847e3b7df51938b87824d .
+
+_:5839b6febac847e3b7df51938b87824d a owl:Restriction ;
+	owl:onProperty wdt:P3452 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1013 a wikibase:Property ;
+	rdfs:label "criterion used"@en ;
+	skos:prefLabel "criterion used"@en ;
+	schema:name "criterion used"@en ;
+	schema:description "property by which a distinction or classification is made"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P1013 ;
+	wikibase:claim p:P1013 ;
+	wikibase:statementProperty ps:P1013 ;
+	wikibase:statementValue psv:P1013 ;
+	wikibase:qualifier pq:P1013 ;
+	wikibase:qualifierValue pqv:P1013 ;
+	wikibase:reference pr:P1013 ;
+	wikibase:referenceValue prv:P1013 ;
+	wikibase:novalue wdno:P1013 .
+
+p:P1013 a owl:ObjectProperty .
+
+psv:P1013 a owl:ObjectProperty .
+
+pqv:P1013 a owl:ObjectProperty .
+
+prv:P1013 a owl:ObjectProperty .
+
+wdt:P1013 a owl:ObjectProperty .
+
+ps:P1013 a owl:ObjectProperty .
+
+pq:P1013 a owl:ObjectProperty .
+
+pr:P1013 a owl:ObjectProperty .
+
+wdno:P1013 a owl:Class ;
+	owl:complementOf _:5273a0069dacad510b42ec771f79d93a .
+
+_:5273a0069dacad510b42ec771f79d93a a owl:Restriction ;
+	owl:onProperty wdt:P1013 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q114980101 a wikibase:Item ;
+	rdfs:label "defining quality"@en ;
+	skos:prefLabel "defining quality"@en ;
+	schema:name "defining quality"@en ;
+	schema:description "quality which is integral to the definition or identity of an item"@en .
+
+wd:P5102 a wikibase:Property ;
+	rdfs:label "nature of statement"@en ;
+	skos:prefLabel "nature of statement"@en ;
+	schema:name "nature of statement"@en ;
+	schema:description "(qualifier only) the underlying circumstances of this statement"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P5102 ;
+	wikibase:claim p:P5102 ;
+	wikibase:statementProperty ps:P5102 ;
+	wikibase:statementValue psv:P5102 ;
+	wikibase:qualifier pq:P5102 ;
+	wikibase:qualifierValue pqv:P5102 ;
+	wikibase:reference pr:P5102 ;
+	wikibase:referenceValue prv:P5102 ;
+	wikibase:novalue wdno:P5102 .
+
+p:P5102 a owl:ObjectProperty .
+
+psv:P5102 a owl:ObjectProperty .
+
+pqv:P5102 a owl:ObjectProperty .
+
+prv:P5102 a owl:ObjectProperty .
+
+wdt:P5102 a owl:ObjectProperty .
+
+ps:P5102 a owl:ObjectProperty .
+
+pq:P5102 a owl:ObjectProperty .
+
+pr:P5102 a owl:ObjectProperty .
+
+wdno:P5102 a owl:Class ;
+	owl:complementOf _:702a3efe4ee32375bd06c1f1201ceb3c .
+
+_:702a3efe4ee32375bd06c1f1201ceb3c a owl:Restriction ;
+	owl:onProperty wdt:P5102 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q24199478 owl:sameAs wd:Q18706315 .
+
+ref:113d94ef8ba89ae1b09df03574ac51bd4936eb95 a wikibase:Reference ;
+	pr:P3452 wd:Q15706911 .

@@ -1,0 +1,329 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q115923123 a schema:Dataset ;
+	schema:about wd:Q115923123 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1923719676"^^xsd:integer ;
+	schema:dateModified "2023-06-25T15:06:37Z"^^xsd:dateTime ;
+	wikibase:statements "4"^^xsd:integer ;
+	wikibase:sitelinks "0"^^xsd:integer ;
+	wikibase:identifiers "1"^^xsd:integer .
+
+wd:Q115923123 a wikibase:Item ;
+	wdt:P366 wd:Q91791919 ;
+	wdt:P11302 "696" ;
+	wdt:P279 wd:Q223557 ;
+	p:P366 s:Q115923123-44111169-473d-48a9-3738-326097f6154a .
+
+s:Q115923123-44111169-473d-48a9-3738-326097f6154a a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P366 wd:Q91791919 .
+
+wd:Q115923123 p:P11302 s:Q115923123-ae611b1b-4559-7d56-9d18-f451e541d163 .
+
+s:Q115923123-ae611b1b-4559-7d56-9d18-f451e541d163 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P11302 "696" ;
+	pq:P1810 "696 - Home & Garden > Decor" .
+
+wd:Q115923123 p:P279 s:Q115923123-51837a46-479b-b3b7-b938-3d80e36e8f3b .
+
+s:Q115923123-51837a46-479b-b3b7-b938-3d80e36e8f3b a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q223557 .
+
+wd:Q115923123 p:P279 s:Q115923123-060eb081-48a3-919c-942d-66a35bdef483 .
+
+s:Q115923123-060eb081-48a3-919c-942d-66a35bdef483 a wikibase:Statement ;
+	wikibase:rank wikibase:DeprecatedRank ;
+	ps:P279 wd:Q369594 ;
+	pq:P2241 wd:Q118134102 .
+
+wd:Q115923123 rdfs:label "decorative object"@en ;
+	skos:prefLabel "decorative object"@en ;
+	schema:name "decorative object"@en ;
+	rdfs:label "декоративный объект"@ru ;
+	skos:prefLabel "декоративный объект"@ru ;
+	schema:name "декоративный объект"@ru ;
+	rdfs:label "dekorativt objekt"@nb ;
+	skos:prefLabel "dekorativt objekt"@nb ;
+	schema:name "dekorativt objekt"@nb ;
+	rdfs:label "装飾品"@ja ;
+	skos:prefLabel "装飾品"@ja ;
+	schema:name "装飾品"@ja ;
+	rdfs:label "đồ vật trang trí"@vi ;
+	skos:prefLabel "đồ vật trang trí"@vi ;
+	schema:name "đồ vật trang trí"@vi ;
+	schema:description "object used as decoration"@en,
+		"objekt brukt som dekorasjon"@nb,
+		"装飾に使用されるもの"@ja,
+		"đồ vật dùng làm vật trang trí"@vi ;
+	skos:altLabel "Decor"@en,
+		"decor"@en,
+		"dekorativ gjenstand"@nb,
+		"dekor"@nb,
+		"装飾"@ja .
+
+wd:Q91791919 a wikibase:Item ;
+	rdfs:label "decorating"@en ;
+	skos:prefLabel "decorating"@en ;
+	schema:name "decorating"@en ;
+	schema:description "process of embellishing architecture, furniture, or other objects"@en .
+
+wd:P366 a wikibase:Property ;
+	rdfs:label "has use"@en ;
+	skos:prefLabel "has use"@en ;
+	schema:name "has use"@en ;
+	schema:description "main use of the subject (includes current and former usage)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P366 ;
+	wikibase:claim p:P366 ;
+	wikibase:statementProperty ps:P366 ;
+	wikibase:statementValue psv:P366 ;
+	wikibase:qualifier pq:P366 ;
+	wikibase:qualifierValue pqv:P366 ;
+	wikibase:reference pr:P366 ;
+	wikibase:referenceValue prv:P366 ;
+	wikibase:novalue wdno:P366 .
+
+p:P366 a owl:ObjectProperty .
+
+psv:P366 a owl:ObjectProperty .
+
+pqv:P366 a owl:ObjectProperty .
+
+prv:P366 a owl:ObjectProperty .
+
+wdt:P366 a owl:ObjectProperty .
+
+ps:P366 a owl:ObjectProperty .
+
+pq:P366 a owl:ObjectProperty .
+
+pr:P366 a owl:ObjectProperty .
+
+wdno:P366 a owl:Class ;
+	owl:complementOf _:e3313a663f1512d0bc6282d834b00038 .
+
+_:e3313a663f1512d0bc6282d834b00038 a owl:Restriction ;
+	owl:onProperty wdt:P366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P11302 a wikibase:Property ;
+	rdfs:label "Google Product Taxonomy ID"@en ;
+	skos:prefLabel "Google Product Taxonomy ID"@en ;
+	schema:name "Google Product Taxonomy ID"@en ;
+	schema:description "ID for the product related to this concept on the Google Product Taxonomy"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P11302 ;
+	wikibase:claim p:P11302 ;
+	wikibase:statementProperty ps:P11302 ;
+	wikibase:statementValue psv:P11302 ;
+	wikibase:qualifier pq:P11302 ;
+	wikibase:qualifierValue pqv:P11302 ;
+	wikibase:reference pr:P11302 ;
+	wikibase:referenceValue prv:P11302 ;
+	wikibase:novalue wdno:P11302 ;
+	wikibase:directClaimNormalized wdtn:P11302 ;
+	wikibase:statementValueNormalized psn:P11302 ;
+	wikibase:qualifierValueNormalized pqn:P11302 ;
+	wikibase:referenceValueNormalized prn:P11302 .
+
+p:P11302 a owl:ObjectProperty .
+
+psv:P11302 a owl:ObjectProperty .
+
+pqv:P11302 a owl:ObjectProperty .
+
+prv:P11302 a owl:ObjectProperty .
+
+wdt:P11302 a owl:DatatypeProperty .
+
+ps:P11302 a owl:DatatypeProperty .
+
+pq:P11302 a owl:DatatypeProperty .
+
+pr:P11302 a owl:DatatypeProperty .
+
+psn:P11302 a owl:ObjectProperty .
+
+pqn:P11302 a owl:ObjectProperty .
+
+prn:P11302 a owl:ObjectProperty .
+
+wdtn:P11302 a owl:ObjectProperty .
+
+wdno:P11302 a owl:Class ;
+	owl:complementOf _:9654d92dfba8686adfde46c56c3c3cef .
+
+_:9654d92dfba8686adfde46c56c3c3cef a owl:Restriction ;
+	owl:onProperty wdt:P11302 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q223557 a wikibase:Item ;
+	rdfs:label "physical object"@en ;
+	skos:prefLabel "physical object"@en ;
+	schema:name "physical object"@en ;
+	schema:description "singular aggregation of substance(s) such as matter or radiation, with overall properties such as mass, position or momentum"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P1810 a wikibase:Property ;
+	rdfs:label "subject named as"@en ;
+	skos:prefLabel "subject named as"@en ;
+	schema:name "subject named as"@en ;
+	schema:description "name by which a subject is recorded in a database, mentioned as a contributor of a work, or is referred to in a particular context"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#String> ;
+	wikibase:directClaim wdt:P1810 ;
+	wikibase:claim p:P1810 ;
+	wikibase:statementProperty ps:P1810 ;
+	wikibase:statementValue psv:P1810 ;
+	wikibase:qualifier pq:P1810 ;
+	wikibase:qualifierValue pqv:P1810 ;
+	wikibase:reference pr:P1810 ;
+	wikibase:referenceValue prv:P1810 ;
+	wikibase:novalue wdno:P1810 .
+
+p:P1810 a owl:ObjectProperty .
+
+psv:P1810 a owl:ObjectProperty .
+
+pqv:P1810 a owl:ObjectProperty .
+
+prv:P1810 a owl:ObjectProperty .
+
+wdt:P1810 a owl:DatatypeProperty .
+
+ps:P1810 a owl:DatatypeProperty .
+
+pq:P1810 a owl:DatatypeProperty .
+
+pr:P1810 a owl:DatatypeProperty .
+
+wdno:P1810 a owl:Class ;
+	owl:complementOf _:1d6e1ecf4f0164f6a3471dd66d38c9d8 .
+
+_:1d6e1ecf4f0164f6a3471dd66d38c9d8 a owl:Restriction ;
+	owl:onProperty wdt:P1810 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q369594 a wikibase:Item ;
+	rdfs:label "household goods"@en ;
+	skos:prefLabel "household goods"@en ;
+	schema:name "household goods"@en ;
+	schema:description "goods and products used within households"@en .
+
+wd:Q118134102 a wikibase:Item ;
+	rdfs:label "not all instances of the item are instances of the value class"@en ;
+	skos:prefLabel "not all instances of the item are instances of the value class"@en ;
+	schema:name "not all instances of the item are instances of the value class"@en ;
+	schema:description "value of P2241 (reason for deprecated rank), to qualify inaccurate P279 (subclass of) statements"@en .
+
+wd:P2241 a wikibase:Property ;
+	rdfs:label "reason for deprecated rank"@en ;
+	skos:prefLabel "reason for deprecated rank"@en ;
+	schema:name "reason for deprecated rank"@en ;
+	schema:description "qualifier to indicate why a particular statement should have deprecated rank"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P2241 ;
+	wikibase:claim p:P2241 ;
+	wikibase:statementProperty ps:P2241 ;
+	wikibase:statementValue psv:P2241 ;
+	wikibase:qualifier pq:P2241 ;
+	wikibase:qualifierValue pqv:P2241 ;
+	wikibase:reference pr:P2241 ;
+	wikibase:referenceValue prv:P2241 ;
+	wikibase:novalue wdno:P2241 .
+
+p:P2241 a owl:ObjectProperty .
+
+psv:P2241 a owl:ObjectProperty .
+
+pqv:P2241 a owl:ObjectProperty .
+
+prv:P2241 a owl:ObjectProperty .
+
+wdt:P2241 a owl:ObjectProperty .
+
+ps:P2241 a owl:ObjectProperty .
+
+pq:P2241 a owl:ObjectProperty .
+
+pr:P2241 a owl:ObjectProperty .
+
+wdno:P2241 a owl:Class ;
+	owl:complementOf _:fcd7b2b5fef47b34b991f1fe543dfcb2 .
+
+_:fcd7b2b5fef47b34b991f1fe543dfcb2 a owl:Restriction ;
+	owl:onProperty wdt:P2241 ;
+	owl:someValuesFrom owl:Thing .

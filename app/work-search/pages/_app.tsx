@@ -5,6 +5,9 @@ import "react-vertical-timeline-component/style.min.css";
 import "leaflet/dist/leaflet.css";
 import {NextAdapter} from "next-query-params";
 import {QueryParamProvider} from "use-query-params";
+import {configureLogging} from "@paradicms/next";
+
+configureLogging();
 
 const App: React.FunctionComponent<AppProps> = ({Component, pageProps}) => {
   return (

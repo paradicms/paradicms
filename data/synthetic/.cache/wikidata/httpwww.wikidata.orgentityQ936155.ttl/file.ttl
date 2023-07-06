@@ -1,0 +1,671 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ontolex: <http://www.w3.org/ns/lemon/ontolex#> .
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix wikibase: <http://wikiba.se/ontology#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix schema: <http://schema.org/> .
+@prefix cc: <http://creativecommons.org/ns#> .
+@prefix geo: <http://www.opengis.net/ont/geosparql#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@prefix data: <https://www.wikidata.org/wiki/Special:EntityData/> .
+@prefix s: <http://www.wikidata.org/entity/statement/> .
+@prefix ref: <http://www.wikidata.org/reference/> .
+@prefix v: <http://www.wikidata.org/value/> .
+@prefix wdt: <http://www.wikidata.org/prop/direct/> .
+@prefix wdtn: <http://www.wikidata.org/prop/direct-normalized/> .
+@prefix p: <http://www.wikidata.org/prop/> .
+@prefix ps: <http://www.wikidata.org/prop/statement/> .
+@prefix psv: <http://www.wikidata.org/prop/statement/value/> .
+@prefix psn: <http://www.wikidata.org/prop/statement/value-normalized/> .
+@prefix pq: <http://www.wikidata.org/prop/qualifier/> .
+@prefix pqv: <http://www.wikidata.org/prop/qualifier/value/> .
+@prefix pqn: <http://www.wikidata.org/prop/qualifier/value-normalized/> .
+@prefix pr: <http://www.wikidata.org/prop/reference/> .
+@prefix prv: <http://www.wikidata.org/prop/reference/value/> .
+@prefix prn: <http://www.wikidata.org/prop/reference/value-normalized/> .
+@prefix wdno: <http://www.wikidata.org/prop/novalue/> .
+
+data:Q936155 a schema:Dataset ;
+	schema:about wd:Q936155 ;
+	cc:license <http://creativecommons.org/publicdomain/zero/1.0/> ;
+	schema:softwareVersion "1.0.0" ;
+	schema:version "1842992192"^^xsd:integer ;
+	schema:dateModified "2023-02-28T10:06:08Z"^^xsd:dateTime ;
+	wikibase:statements "5"^^xsd:integer ;
+	wikibase:sitelinks "19"^^xsd:integer ;
+	wikibase:identifiers "3"^^xsd:integer .
+
+wd:Q936155 a wikibase:Item .
+
+<https://hu.wikipedia.org/wiki/Lindel%C3%B6f-t%C3%A9r> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "hu" ;
+	schema:isPartOf <https://hu.wikipedia.org/> ;
+	schema:name "Lindelöf-tér"@hu .
+
+<https://hu.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://de.wikipedia.org/wiki/Lindel%C3%B6f-Raum> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "de" ;
+	schema:isPartOf <https://de.wikipedia.org/> ;
+	schema:name "Lindelöf-Raum"@de .
+
+<https://de.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://en.wikipedia.org/wiki/Lindel%C3%B6f_space> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "en" ;
+	schema:isPartOf <https://en.wikipedia.org/> ;
+	schema:name "Lindelöf space"@en .
+
+<https://en.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://it.wikipedia.org/wiki/Spazio_di_Lindel%C3%B6f> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "it" ;
+	schema:isPartOf <https://it.wikipedia.org/> ;
+	schema:name "Spazio di Lindelöf"@it .
+
+<https://it.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ja.wikipedia.org/wiki/%E3%83%AA%E3%83%B3%E3%83%87%E3%83%AC%E3%83%95%E7%A9%BA%E9%96%93> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "ja" ;
+	schema:isPartOf <https://ja.wikipedia.org/> ;
+	schema:name "リンデレフ空間"@ja .
+
+<https://ja.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ko.wikipedia.org/wiki/%EB%A6%B0%EB%8D%B8%EB%A2%B0%ED%94%84_%EA%B3%B5%EA%B0%84> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "ko" ;
+	schema:isPartOf <https://ko.wikipedia.org/> ;
+	schema:name "린델뢰프 공간"@ko .
+
+<https://ko.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://nl.wikipedia.org/wiki/Lindel%C3%B6f-ruimte> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "nl" ;
+	schema:isPartOf <https://nl.wikipedia.org/> ;
+	schema:name "Lindelöf-ruimte"@nl .
+
+<https://nl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pl.wikipedia.org/wiki/Przestrze%C5%84_Lindel%C3%B6fa> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "pl" ;
+	schema:isPartOf <https://pl.wikipedia.org/> ;
+	schema:name "Przestrzeń Lindelöfa"@pl .
+
+<https://pl.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://pt.wikipedia.org/wiki/Espa%C3%A7o_de_Lindel%C3%B6f> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "pt" ;
+	schema:isPartOf <https://pt.wikipedia.org/> ;
+	schema:name "Espaço de Lindelöf"@pt .
+
+<https://pt.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://zh.wikipedia.org/wiki/%E6%9E%97%E5%BE%B7%E5%8B%92%E5%A4%AB%E7%A9%BA%E9%96%93> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "zh" ;
+	schema:isPartOf <https://zh.wikipedia.org/> ;
+	schema:name "林德勒夫空間"@zh .
+
+<https://zh.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fr.wikipedia.org/wiki/Espace_de_Lindel%C3%B6f> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "fr" ;
+	schema:isPartOf <https://fr.wikipedia.org/> ;
+	schema:name "Espace de Lindelöf"@fr .
+
+<https://fr.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://uk.wikipedia.org/wiki/%D0%9B%D1%96%D0%BD%D0%B4%D0%B5%D0%BB%D1%8C%D0%BE%D1%84%D1%96%D0%B2_%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%96%D1%80> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "uk" ;
+	schema:isPartOf <https://uk.wikipedia.org/> ;
+	schema:name "Ліндельофів простір"@uk .
+
+<https://uk.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ar.wikipedia.org/wiki/%D9%81%D8%B6%D8%A7%D8%A1_%D9%84%D9%8A%D9%86%D8%AF%D9%84%D9%88%D9%81> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "ar" ;
+	schema:isPartOf <https://ar.wikipedia.org/> ;
+	schema:name "فضاء ليندلوف"@ar .
+
+<https://ar.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://he.wikipedia.org/wiki/%D7%9E%D7%A8%D7%97%D7%91_%D7%9C%D7%99%D7%A0%D7%93%D7%9C%D7%A3> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "he" ;
+	schema:isPartOf <https://he.wikipedia.org/> ;
+	schema:name "מרחב לינדלף"@he .
+
+<https://he.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://sv.wikipedia.org/wiki/Lindel%C3%B6frum> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "sv" ;
+	schema:isPartOf <https://sv.wikipedia.org/> ;
+	schema:name "Lindelöfrum"@sv .
+
+<https://sv.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://es.wikipedia.org/wiki/Espacio_de_Lindel%C3%B6f> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "es" ;
+	schema:isPartOf <https://es.wikipedia.org/> ;
+	schema:name "Espacio de Lindelöf"@es .
+
+<https://es.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ru.wikipedia.org/wiki/%D0%A7%D0%B8%D1%81%D0%BB%D0%BE_%D0%9B%D0%B8%D0%BD%D0%B4%D0%B5%D0%BB%D1%91%D1%84%D0%B0> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "ru" ;
+	schema:isPartOf <https://ru.wikipedia.org/> ;
+	schema:name "Число Линделёфа"@ru .
+
+<https://ru.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://ca.wikipedia.org/wiki/Espai_de_Lindel%C3%B6f> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "ca" ;
+	schema:isPartOf <https://ca.wikipedia.org/> ;
+	schema:name "Espai de Lindelöf"@ca .
+
+<https://ca.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+<https://fi.wikipedia.org/wiki/Lindel%C3%B6fin_avaruus> a schema:Article ;
+	schema:about wd:Q936155 ;
+	schema:inLanguage "fi" ;
+	schema:isPartOf <https://fi.wikipedia.org/> ;
+	schema:name "Lindelöfin avaruus"@fi .
+
+<https://fi.wikipedia.org/> wikibase:wikiGroup "wikipedia" .
+
+wd:Q936155 wdt:P279 wd:Q179899 ;
+	wdt:P646 "/m/01t3hk" ;
+	wdt:P138 wd:Q924443 ;
+	wdt:P2581 "02456048n" ;
+	wdtn:P2581 <http://babelnet.org/rdf/s02456048n> ;
+	wdt:P6366 "165612278" ;
+	wdtn:P6366 <http://ma-graph.org/entity/165612278> ;
+	p:P279 s:Q936155-9f283027-42c4-caf6-45e1-ffefdb291927 .
+
+s:Q936155-9f283027-42c4-caf6-45e1-ffefdb291927 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P279 wd:Q179899 .
+
+wd:Q936155 p:P646 s:Q936155-8FF9D383-AD95-4618-86D4-96AE9E0E1E2F .
+
+s:Q936155-8FF9D383-AD95-4618-86D4-96AE9E0E1E2F a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P646 "/m/01t3hk" ;
+	prov:wasDerivedFrom ref:2b00cb481cddcac7623114367489b5c194901c4a .
+
+wd:Q936155 p:P138 s:Q936155-3d7a3c7f-4b15-f47d-e86a-58f4d84dbc11 .
+
+s:Q936155-3d7a3c7f-4b15-f47d-e86a-58f4d84dbc11 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P138 wd:Q924443 .
+
+wd:Q936155 p:P2581 s:Q936155-72EB62A1-45C5-466A-A2B9-61FF5CA08295 .
+
+s:Q936155-72EB62A1-45C5-466A-A2B9-61FF5CA08295 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P2581 "02456048n" ;
+	psn:P2581 <http://babelnet.org/rdf/s02456048n> ;
+	prov:wasDerivedFrom ref:248ac337a217a5f5eed7139a82a4e60931611af0 .
+
+wd:Q936155 p:P6366 s:Q936155-D602355F-A161-4991-A1CE-88D2F861BCB7 .
+
+s:Q936155-D602355F-A161-4991-A1CE-88D2F861BCB7 a wikibase:Statement,
+		wikibase:BestRank ;
+	wikibase:rank wikibase:NormalRank ;
+	ps:P6366 "165612278" ;
+	psn:P6366 <http://ma-graph.org/entity/165612278> .
+
+wd:Q936155 rdfs:label "Lindelöf-tér"@hu ;
+	skos:prefLabel "Lindelöf-tér"@hu ;
+	schema:name "Lindelöf-tér"@hu ;
+	rdfs:label "Lindelöf-Raum"@de ;
+	skos:prefLabel "Lindelöf-Raum"@de ;
+	schema:name "Lindelöf-Raum"@de ;
+	rdfs:label "Lindelöf space"@en ;
+	skos:prefLabel "Lindelöf space"@en ;
+	schema:name "Lindelöf space"@en ;
+	rdfs:label "spazio di Lindelöf"@it ;
+	skos:prefLabel "spazio di Lindelöf"@it ;
+	schema:name "spazio di Lindelöf"@it ;
+	rdfs:label "リンデレフ空間"@ja ;
+	skos:prefLabel "リンデレフ空間"@ja ;
+	schema:name "リンデレフ空間"@ja ;
+	rdfs:label "린델뢰프 공간"@ko ;
+	skos:prefLabel "린델뢰프 공간"@ko ;
+	schema:name "린델뢰프 공간"@ko ;
+	rdfs:label "Lindelöf-ruimte"@nl ;
+	skos:prefLabel "Lindelöf-ruimte"@nl ;
+	schema:name "Lindelöf-ruimte"@nl ;
+	rdfs:label "przestrzeń Lindelöfa"@pl ;
+	skos:prefLabel "przestrzeń Lindelöfa"@pl ;
+	schema:name "przestrzeń Lindelöfa"@pl ;
+	rdfs:label "espaço de Lindelöf"@pt ;
+	skos:prefLabel "espaço de Lindelöf"@pt ;
+	schema:name "espaço de Lindelöf"@pt ;
+	rdfs:label "Lindelöf-rum"@sv ;
+	skos:prefLabel "Lindelöf-rum"@sv ;
+	schema:name "Lindelöf-rum"@sv ;
+	rdfs:label "林德洛夫空間"@zh ;
+	skos:prefLabel "林德洛夫空間"@zh ;
+	schema:name "林德洛夫空間"@zh ;
+	rdfs:label "espace de Lindelöf"@fr ;
+	skos:prefLabel "espace de Lindelöf"@fr ;
+	schema:name "espace de Lindelöf"@fr ;
+	rdfs:label "فضاء ليندلوف"@ar ;
+	skos:prefLabel "فضاء ليندلوف"@ar ;
+	schema:name "فضاء ليندلوف"@ar ;
+	rdfs:label "ліндельофів простір"@uk ;
+	skos:prefLabel "ліндельофів простір"@uk ;
+	schema:name "ліндельофів простір"@uk ;
+	rdfs:label "пространство Линделёфа"@ru ;
+	skos:prefLabel "пространство Линделёфа"@ru ;
+	schema:name "пространство Линделёфа"@ru ;
+	rdfs:label "espaço de Lindelöf"@pt-br ;
+	skos:prefLabel "espaço de Lindelöf"@pt-br ;
+	schema:name "espaço de Lindelöf"@pt-br ;
+	rdfs:label "מרחב לינדלף"@he ;
+	skos:prefLabel "מרחב לינדלף"@he ;
+	schema:name "מרחב לינדלף"@he ;
+	rdfs:label "Lindelöf space"@sco ;
+	skos:prefLabel "Lindelöf space"@sco ;
+	schema:name "Lindelöf space"@sco ;
+	rdfs:label "espacio de Lindelöf"@es ;
+	skos:prefLabel "espacio de Lindelöf"@es ;
+	schema:name "espacio de Lindelöf"@es ;
+	rdfs:label "spaco de Lindelöf"@eo ;
+	skos:prefLabel "spaco de Lindelöf"@eo ;
+	schema:name "spaco de Lindelöf"@eo ;
+	rdfs:label "林德洛夫空間"@zh-hant ;
+	skos:prefLabel "林德洛夫空間"@zh-hant ;
+	schema:name "林德洛夫空間"@zh-hant ;
+	rdfs:label "Lindelöf-rom"@nn ;
+	skos:prefLabel "Lindelöf-rom"@nn ;
+	schema:name "Lindelöf-rom"@nn ;
+	rdfs:label "Espai de Lindelöf"@ca ;
+	skos:prefLabel "Espai de Lindelöf"@ca ;
+	schema:name "Espai de Lindelöf"@ca ;
+	rdfs:label "Lindelöfin avaruus"@fi ;
+	skos:prefLabel "Lindelöfin avaruus"@fi ;
+	schema:name "Lindelöfin avaruus"@fi ;
+	schema:description "spezielle Überdeckung eines topologischen Raumes"@de,
+		"espai topològic"@ca,
+		"topological space such that every open cover has a countable subcover"@en,
+		"typ przestrzeni topologicznej uogólniającej przestrzenie euklidesowe"@pl ;
+	skos:altLabel "число Линделёфа"@ru,
+		"линделёфово пространство"@ru,
+		"пространство Линделефа"@ru,
+		"число Линделефа"@ru,
+		"линделефово пространство"@ru .
+
+wd:Q179899 a wikibase:Item ;
+	rdfs:label "topological space"@en ;
+	skos:prefLabel "topological space"@en ;
+	schema:name "topological space"@en ;
+	schema:description "set of points and set of neighborhoods that satisfy axioms relating those points to those neighborhoods"@en .
+
+wd:P279 a wikibase:Property ;
+	rdfs:label "subclass of"@en ;
+	skos:prefLabel "subclass of"@en ;
+	schema:name "subclass of"@en ;
+	schema:description "this item is a subclass (subset) of that item; all instances of this item are instances of that item; different from P31 (instance of), e.g.: K2 is an instance of mountain; volcano is a subclass of mountain (and an instance of volcanic landform)."@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P279 ;
+	wikibase:claim p:P279 ;
+	wikibase:statementProperty ps:P279 ;
+	wikibase:statementValue psv:P279 ;
+	wikibase:qualifier pq:P279 ;
+	wikibase:qualifierValue pqv:P279 ;
+	wikibase:reference pr:P279 ;
+	wikibase:referenceValue prv:P279 ;
+	wikibase:novalue wdno:P279 .
+
+p:P279 a owl:ObjectProperty .
+
+psv:P279 a owl:ObjectProperty .
+
+pqv:P279 a owl:ObjectProperty .
+
+prv:P279 a owl:ObjectProperty .
+
+wdt:P279 a owl:ObjectProperty .
+
+ps:P279 a owl:ObjectProperty .
+
+pq:P279 a owl:ObjectProperty .
+
+pr:P279 a owl:ObjectProperty .
+
+wdno:P279 a owl:Class ;
+	owl:complementOf _:55a0a46aa65f620d17fa7dc3671280d4 .
+
+_:55a0a46aa65f620d17fa7dc3671280d4 a owl:Restriction ;
+	owl:onProperty wdt:P279 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P646 a wikibase:Property ;
+	rdfs:label "Freebase ID"@en ;
+	skos:prefLabel "Freebase ID"@en ;
+	schema:name "Freebase ID"@en ;
+	schema:description "identifier for a page in the Freebase database. Format: \"/m/0\" followed by 2 to 7 characters. For IDs starting with \"/g/\", use Google Knowledge Graph ID (P2671)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P646 ;
+	wikibase:claim p:P646 ;
+	wikibase:statementProperty ps:P646 ;
+	wikibase:statementValue psv:P646 ;
+	wikibase:qualifier pq:P646 ;
+	wikibase:qualifierValue pqv:P646 ;
+	wikibase:reference pr:P646 ;
+	wikibase:referenceValue prv:P646 ;
+	wikibase:novalue wdno:P646 ;
+	wikibase:directClaimNormalized wdtn:P646 ;
+	wikibase:statementValueNormalized psn:P646 ;
+	wikibase:qualifierValueNormalized pqn:P646 ;
+	wikibase:referenceValueNormalized prn:P646 .
+
+p:P646 a owl:ObjectProperty .
+
+psv:P646 a owl:ObjectProperty .
+
+pqv:P646 a owl:ObjectProperty .
+
+prv:P646 a owl:ObjectProperty .
+
+wdt:P646 a owl:DatatypeProperty .
+
+ps:P646 a owl:DatatypeProperty .
+
+pq:P646 a owl:DatatypeProperty .
+
+pr:P646 a owl:DatatypeProperty .
+
+psn:P646 a owl:ObjectProperty .
+
+pqn:P646 a owl:ObjectProperty .
+
+prn:P646 a owl:ObjectProperty .
+
+wdtn:P646 a owl:ObjectProperty .
+
+wdno:P646 a owl:Class ;
+	owl:complementOf _:38db277a4b10d59fd38a3fd995cbe570 .
+
+_:38db277a4b10d59fd38a3fd995cbe570 a owl:Restriction ;
+	owl:onProperty wdt:P646 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q924443 a wikibase:Item ;
+	rdfs:label "Ernst Leonard Lindelöf"@en ;
+	skos:prefLabel "Ernst Leonard Lindelöf"@en ;
+	schema:name "Ernst Leonard Lindelöf"@en ;
+	schema:description "Finnish mathematician who made contributions in real/complex analysis and topology (1870–1946)"@en .
+
+wd:P138 a wikibase:Property ;
+	rdfs:label "named after"@en ;
+	skos:prefLabel "named after"@en ;
+	schema:name "named after"@en ;
+	schema:description "entity or event that inspired the subject's name, or namesake (in at least one language). Qualifier \"applies to name\" (P5168) can be used to indicate which one"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P138 ;
+	wikibase:claim p:P138 ;
+	wikibase:statementProperty ps:P138 ;
+	wikibase:statementValue psv:P138 ;
+	wikibase:qualifier pq:P138 ;
+	wikibase:qualifierValue pqv:P138 ;
+	wikibase:reference pr:P138 ;
+	wikibase:referenceValue prv:P138 ;
+	wikibase:novalue wdno:P138 .
+
+p:P138 a owl:ObjectProperty .
+
+psv:P138 a owl:ObjectProperty .
+
+pqv:P138 a owl:ObjectProperty .
+
+prv:P138 a owl:ObjectProperty .
+
+wdt:P138 a owl:ObjectProperty .
+
+ps:P138 a owl:ObjectProperty .
+
+pq:P138 a owl:ObjectProperty .
+
+pr:P138 a owl:ObjectProperty .
+
+wdno:P138 a owl:Class ;
+	owl:complementOf _:e0c4151f3ca560de64568f2e6cd5a11a .
+
+_:e0c4151f3ca560de64568f2e6cd5a11a a owl:Restriction ;
+	owl:onProperty wdt:P138 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P2581 a wikibase:Property ;
+	rdfs:label "BabelNet ID"@en ;
+	skos:prefLabel "BabelNet ID"@en ;
+	schema:name "BabelNet ID"@en ;
+	schema:description "ID in BabelNet encyclopedic dictionary"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P2581 ;
+	wikibase:claim p:P2581 ;
+	wikibase:statementProperty ps:P2581 ;
+	wikibase:statementValue psv:P2581 ;
+	wikibase:qualifier pq:P2581 ;
+	wikibase:qualifierValue pqv:P2581 ;
+	wikibase:reference pr:P2581 ;
+	wikibase:referenceValue prv:P2581 ;
+	wikibase:novalue wdno:P2581 ;
+	wikibase:directClaimNormalized wdtn:P2581 ;
+	wikibase:statementValueNormalized psn:P2581 ;
+	wikibase:qualifierValueNormalized pqn:P2581 ;
+	wikibase:referenceValueNormalized prn:P2581 .
+
+p:P2581 a owl:ObjectProperty .
+
+psv:P2581 a owl:ObjectProperty .
+
+pqv:P2581 a owl:ObjectProperty .
+
+prv:P2581 a owl:ObjectProperty .
+
+wdt:P2581 a owl:DatatypeProperty .
+
+ps:P2581 a owl:DatatypeProperty .
+
+pq:P2581 a owl:DatatypeProperty .
+
+pr:P2581 a owl:DatatypeProperty .
+
+psn:P2581 a owl:ObjectProperty .
+
+pqn:P2581 a owl:ObjectProperty .
+
+prn:P2581 a owl:ObjectProperty .
+
+wdtn:P2581 a owl:ObjectProperty .
+
+wdno:P2581 a owl:Class ;
+	owl:complementOf _:bdd44b035df3e72593f3ac1acbd85353 .
+
+_:bdd44b035df3e72593f3ac1acbd85353 a owl:Restriction ;
+	owl:onProperty wdt:P2581 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P6366 a wikibase:Property ;
+	rdfs:label "Microsoft Academic ID"@en ;
+	skos:prefLabel "Microsoft Academic ID"@en ;
+	schema:name "Microsoft Academic ID"@en ;
+	schema:description "identifier for an object or topic in the Microsoft Academic Graph (until 31 December 2021)"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#ExternalId> ;
+	wikibase:directClaim wdt:P6366 ;
+	wikibase:claim p:P6366 ;
+	wikibase:statementProperty ps:P6366 ;
+	wikibase:statementValue psv:P6366 ;
+	wikibase:qualifier pq:P6366 ;
+	wikibase:qualifierValue pqv:P6366 ;
+	wikibase:reference pr:P6366 ;
+	wikibase:referenceValue prv:P6366 ;
+	wikibase:novalue wdno:P6366 ;
+	wikibase:directClaimNormalized wdtn:P6366 ;
+	wikibase:statementValueNormalized psn:P6366 ;
+	wikibase:qualifierValueNormalized pqn:P6366 ;
+	wikibase:referenceValueNormalized prn:P6366 .
+
+p:P6366 a owl:ObjectProperty .
+
+psv:P6366 a owl:ObjectProperty .
+
+pqv:P6366 a owl:ObjectProperty .
+
+prv:P6366 a owl:ObjectProperty .
+
+wdt:P6366 a owl:DatatypeProperty .
+
+ps:P6366 a owl:DatatypeProperty .
+
+pq:P6366 a owl:DatatypeProperty .
+
+pr:P6366 a owl:DatatypeProperty .
+
+psn:P6366 a owl:ObjectProperty .
+
+pqn:P6366 a owl:ObjectProperty .
+
+prn:P6366 a owl:ObjectProperty .
+
+wdtn:P6366 a owl:ObjectProperty .
+
+wdno:P6366 a owl:Class ;
+	owl:complementOf _:6f940be26025c3cdbbbed9534272bb72 .
+
+_:6f940be26025c3cdbbbed9534272bb72 a owl:Restriction ;
+	owl:onProperty wdt:P6366 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q15241312 a wikibase:Item ;
+	rdfs:label "Freebase Data Dumps"@en ;
+	skos:prefLabel "Freebase Data Dumps"@en ;
+	schema:name "Freebase Data Dumps"@en ;
+	schema:description "dumps of the public part of Google's Knowledge Graph"@en .
+
+wd:P248 a wikibase:Property ;
+	rdfs:label "stated in"@en ;
+	skos:prefLabel "stated in"@en ;
+	schema:name "stated in"@en ;
+	schema:description "to be used in the references field to refer to the information document or database in which a claim is made; for qualifiers use P805; for the type of document in which a claim is made use P3865"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#WikibaseItem> ;
+	wikibase:directClaim wdt:P248 ;
+	wikibase:claim p:P248 ;
+	wikibase:statementProperty ps:P248 ;
+	wikibase:statementValue psv:P248 ;
+	wikibase:qualifier pq:P248 ;
+	wikibase:qualifierValue pqv:P248 ;
+	wikibase:reference pr:P248 ;
+	wikibase:referenceValue prv:P248 ;
+	wikibase:novalue wdno:P248 .
+
+p:P248 a owl:ObjectProperty .
+
+psv:P248 a owl:ObjectProperty .
+
+pqv:P248 a owl:ObjectProperty .
+
+prv:P248 a owl:ObjectProperty .
+
+wdt:P248 a owl:ObjectProperty .
+
+ps:P248 a owl:ObjectProperty .
+
+pq:P248 a owl:ObjectProperty .
+
+pr:P248 a owl:ObjectProperty .
+
+wdno:P248 a owl:Class ;
+	owl:complementOf _:a2b31078afaf5caae811f4ac846f5f35 .
+
+_:a2b31078afaf5caae811f4ac846f5f35 a owl:Restriction ;
+	owl:onProperty wdt:P248 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:P577 a wikibase:Property ;
+	rdfs:label "publication date"@en ;
+	skos:prefLabel "publication date"@en ;
+	schema:name "publication date"@en ;
+	schema:description "date or point in time when a work was first published or released"@en ;
+	wikibase:propertyType <http://wikiba.se/ontology#Time> ;
+	wikibase:directClaim wdt:P577 ;
+	wikibase:claim p:P577 ;
+	wikibase:statementProperty ps:P577 ;
+	wikibase:statementValue psv:P577 ;
+	wikibase:qualifier pq:P577 ;
+	wikibase:qualifierValue pqv:P577 ;
+	wikibase:reference pr:P577 ;
+	wikibase:referenceValue prv:P577 ;
+	wikibase:novalue wdno:P577 .
+
+p:P577 a owl:ObjectProperty .
+
+psv:P577 a owl:ObjectProperty .
+
+pqv:P577 a owl:ObjectProperty .
+
+prv:P577 a owl:ObjectProperty .
+
+wdt:P577 a owl:DatatypeProperty .
+
+ps:P577 a owl:DatatypeProperty .
+
+pq:P577 a owl:DatatypeProperty .
+
+pr:P577 a owl:DatatypeProperty .
+
+wdno:P577 a owl:Class ;
+	owl:complementOf _:eca5fcd2c546d0e0c20e05f61e0aa797 .
+
+_:eca5fcd2c546d0e0c20e05f61e0aa797 a owl:Restriction ;
+	owl:onProperty wdt:P577 ;
+	owl:someValuesFrom owl:Thing .
+
+wd:Q4837690 a wikibase:Item ;
+	rdfs:label "BabelNet"@en ;
+	skos:prefLabel "BabelNet"@en ;
+	schema:name "BabelNet"@en ;
+	schema:description "multilingual semantic network and encyclopedic dictionary"@en .
+
+wd:Q4516311 owl:sameAs wd:Q936155 .
+
+v:f987783e1f9c9fa0cb0b774d330af52d a wikibase:TimeValue ;
+	wikibase:timeValue "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	wikibase:timePrecision "11"^^xsd:integer ;
+	wikibase:timeTimezone "0"^^xsd:integer ;
+	wikibase:timeCalendarModel <http://www.wikidata.org/entity/Q1985727> .
+
+ref:2b00cb481cddcac7623114367489b5c194901c4a a wikibase:Reference ;
+	pr:P248 wd:Q15241312 ;
+	pr:P577 "2013-10-28T00:00:00Z"^^xsd:dateTime ;
+	prv:P577 v:f987783e1f9c9fa0cb0b774d330af52d .
+
+ref:248ac337a217a5f5eed7139a82a4e60931611af0 a wikibase:Reference ;
+	pr:P248 wd:Q4837690 .

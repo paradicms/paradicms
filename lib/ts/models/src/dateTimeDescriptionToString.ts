@@ -13,19 +13,19 @@ export const dateTimeDescriptionToString = (
   let dayjs_ = dayjs();
 
   // https://day.js.org/docs/en/display/format
-  let dateFormat = "";
+  const dateFormat: string[] = [];
   const month = partialDateTime.month;
   if (month !== null) {
-    dateFormat += "MMM";
+    dateFormat.push("MMM");
     dayjs_ = dayjs_.month(month - 1);
 
     const day = partialDateTime.day;
     if (day !== null) {
-      dateFormat += " D";
+      dateFormat.push("D");
       dayjs_ = dayjs_.date(day);
     }
   }
-  dateFormat += " YYYY";
+  dateFormat.push("YYYY");
   dayjs_ = dayjs_.year(year);
 
   const hour = partialDateTime.hour;
@@ -57,6 +57,6 @@ export const dateTimeDescriptionToString = (
   }
 
   return dayjs_.format(
-    dateFormat + (timeFormat.length > 0 ? " " + timeFormat : "")
+    dateFormat.join(" ") + (timeFormat.length > 0 ? " " + timeFormat : "")
   );
 };

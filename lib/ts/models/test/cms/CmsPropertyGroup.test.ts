@@ -4,7 +4,6 @@ import {testModelSet} from "../testModelSet";
 import {requireNonNull} from "@paradicms/utilities";
 import {expect} from "chai";
 import {CmsPropertyGroup} from "../../src/cms/CmsPropertyGroup";
-// import {CmsPropertyGroup} from "../../src/cms/CmsPropertyGroup";
 
 describe("CmsPropertyGroup", () => {
   const propertyGroup = requireNonNull(

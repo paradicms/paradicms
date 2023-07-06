@@ -13,6 +13,7 @@ export {
   dcterms,
   exif,
   foaf,
+  geo,
   owl,
   prov,
   rdf,

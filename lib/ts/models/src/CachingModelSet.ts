@@ -8,7 +8,6 @@ import {Concept} from "./Concept";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
-import {Model} from "./Model";
 import {ModelReader} from "./ModelReader";
 import {ModelSet} from "./ModelSet";
 import {Organization} from "./Organization";
@@ -17,59 +16,11 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-
-const indexModelsByKey = <ModelT extends Model>(
-  models: readonly ModelT[]
-): {[index: string]: ModelT} => {
-  return models.reduce((map, model) => {
-    map[model.key] = model;
-    return map;
-  }, {} as {[index: string]: ModelT});
-};
-
-const indexModelsByIri = <ModelT extends Model>(
-  models: readonly ModelT[]
-): {[index: string]: ModelT} => {
-  return models.reduce((map, model) => {
-    for (const iri of model.iris) {
-      map[iri] = model;
-    }
-    return map;
-  }, {} as {[index: string]: ModelT});
-};
-
-const indexModelsByValues = <ModelT extends Model>(
-  models: readonly ModelT[],
-  modelValues: (model: ModelT) => readonly string[]
-): {[index: string]: readonly ModelT[]} => {
-  const modelsMultimap: {[index: string]: ModelT[]} = {};
-  for (const model of models) {
-    for (const modelValue of modelValues(model)) {
-      const modelsWithValue = modelsMultimap[modelValue];
-      if (modelsWithValue) {
-        modelsWithValue.push(model);
-      } else {
-        modelsMultimap[modelValue] = [model];
-      }
-    }
-  }
-  return sortModelsMultimap(modelsMultimap);
-};
-
-const sortModelsArray = <ModelT extends Model>(
-  models: readonly ModelT[]
-): readonly ModelT[] =>
-  models.concat().sort((left, right) => left.key.localeCompare(right.key));
-
-const sortModelsMultimap = <ModelT extends Model>(models: {
-  [index: string]: readonly ModelT[];
-}): {[index: string]: readonly ModelT[]} => {
-  const sortedModels: {[index: string]: readonly ModelT[]} = {};
-  for (const key of Object.keys(models)) {
-    sortedModels[key] = sortModelsArray(models[key]);
-  }
-  return sortedModels;
-};
+import {sortModelsArray} from "./sortModelsArray";
+import {indexModelsByIri} from "./indexModelsByIri";
+import {indexModelsByKey} from "./indexModelsByKey";
+import {indexModelsByValues} from "./indexModelsByValues";
+import {sortModelsMultimap} from "./sortModelsMultimap";
 
 export class CachingModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
@@ -263,8 +214,10 @@ export class CachingModelSet implements ModelSet {
   private get propertyGroupsByPropertyKeyIndex(): {
     [index: string]: readonly PropertyGroup[];
   } {
-    return indexModelsByValues(this.propertyGroups, propertyGroup =>
-      propertyGroup.properties.map(property => property.key)
+    return sortModelsMultimap(
+      indexModelsByValues(this.propertyGroups, propertyGroup =>
+        propertyGroup.properties.map(property => property.key)
+      )
     );
   }
 
@@ -306,8 +259,10 @@ export class CachingModelSet implements ModelSet {
   private get worksByAgentIriIndex(): {
     [index: string]: readonly Work[];
   } {
-    return indexModelsByValues(this.works, work =>
-      work.agents.flatMap(agent => agent.agent.iris)
+    return sortModelsMultimap(
+      indexModelsByValues(this.works, work =>
+        work.agents.flatMap(agent => agent.agent.iris)
+      )
     );
   }
 
