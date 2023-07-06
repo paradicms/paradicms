@@ -30,6 +30,7 @@ import {WorkEventUnion} from "./WorkEventUnion";
 import {ImagesMixin} from "./ImagesMixin";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import log from "loglevel";
+import {ImageJoinSelector} from "./ImageJoinSelector";
 
 /**
  * Build a ModelSet by adding models to it.
@@ -151,7 +152,12 @@ export class ModelSetBuilder {
       agents?: AgentJoinSelector;
     }
   ): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding image", image.key);
+    log.debug(
+      "ModelSetBuilder: adding image",
+      image.key,
+      "with join selector",
+      JSON.stringify(joinSelector)
+    );
     this.addModel(image);
     if (joinSelector) {
       this.addRights(joinSelector, image);
@@ -329,7 +335,7 @@ export class ModelSetBuilder {
    */
   private addThumbnail(
     imagesMixin: ImagesMixin,
-    selector: ThumbnailSelector
+    selector: ImageJoinSelector & ThumbnailSelector
   ): boolean {
     log.debug(
       "ModelSetBuilder:",
@@ -361,9 +367,9 @@ export class ModelSetBuilder {
           "in order to add thumbnail",
           thumbnail.key
         );
-        this.addImage(image); // Add the original image
+        this.addImage(image, selector); // Add the original image
         log.debug("ModelSetBuilder: adding thumbnail", thumbnail.key);
-        this.addImage(thumbnail);
+        this.addImage(thumbnail, selector);
         return true;
       }
     }
