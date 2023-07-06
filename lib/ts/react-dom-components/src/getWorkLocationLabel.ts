@@ -3,6 +3,10 @@ import {WorkLocationSummary} from "@paradicms/services";
 export const getWorkLocationLabel = (
   workLocation: WorkLocationSummary
 ): string => {
+  if (workLocation.label) {
+    return workLocation.label;
+  }
+
   const labelParts: string[] = [];
   labelParts.push(workLocation.work.label);
   switch (workLocation.role) {

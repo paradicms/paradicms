@@ -1,6 +1,7 @@
 import {Point, WorkLocationRole} from "@paradicms/models";
 
 export interface WorkLocationSummary {
+  readonly label: string | null;
   readonly location: {
     readonly centroid: Point | null;
     readonly label: string | null;
