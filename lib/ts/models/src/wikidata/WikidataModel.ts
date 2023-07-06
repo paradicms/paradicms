@@ -17,10 +17,11 @@ import {PropertyValue} from "../PropertyValue";
 import {WikidataProperty} from "./WikidataProperty";
 import {createPropertyValueFromTerm} from "../createPropertyValueFromTerm";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {NamedModel} from "../NamedModel";
 
 export abstract class WikidataModel
   extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin, SomeImageThumbnailMixin)
-  implements RightsMixin, WikibaseItem {
+  implements NamedModel, RightsMixin, WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
   protected readonly wikibaseItemSet: WikibaseItemSet;
   protected readonly wikidataPropertiesByIri: {[index: string]: WikidataProperty};

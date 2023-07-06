@@ -1,5 +1,7 @@
 import {
+  ImageJoinSelector,
   ModelSetFactory,
+  ThumbnailSelector,
   WorkAgent,
   WorkEventUnion,
   WorkLocation,
@@ -18,6 +20,12 @@ import {expect} from "chai";
 import {MemWorkQueryService} from "../src/MemWorkQueryService";
 import {requireDefined, requireNonNull} from "@paradicms/utilities";
 import {describe} from "mocha";
+
+const THUMBNAIL_SELECTOR: ImageJoinSelector & ThumbnailSelector = {
+  licenses: true,
+  rightsStatements: true,
+  targetDimensions: {height: 200, width: 200},
+};
 
 describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDataset(syntheticData);
@@ -53,10 +61,11 @@ describe("MemWorkQueryService", () => {
     expect(getWorkAgents(result)).not.to.be.empty;
   });
 
-  it("getWorkAgents returns the works associated with an agent", async () => {
+  it("getWorkAgents returns the other models associated with an agent", async () => {
     const result = await sut.getWorkAgents(
       {
         agentJoinSelector: {
+          thumbnail: THUMBNAIL_SELECTOR,
           works: {},
         },
         limit: Number.MAX_SAFE_INTEGER,
@@ -71,6 +80,8 @@ describe("MemWorkQueryService", () => {
     expect(workAgents).not.to.be.empty;
     for (const workAgent of workAgents) {
       expect(workAgent.agent.label).not.to.be.empty;
+      expect(workAgent.agent.images).not.to.be.empty;
+      expect(workAgent.agent.thumbnail(THUMBNAIL_SELECTOR)).not.to.be.null;
       // expect(workAgent.agent.works).not.to.be.empty;
     }
   });
@@ -113,6 +124,7 @@ describe("MemWorkQueryService", () => {
         workEventJoinSelector: {
           agents: {},
           location: true,
+          thumbnail: THUMBNAIL_SELECTOR,
         },
       },
       {
@@ -127,6 +139,8 @@ describe("MemWorkQueryService", () => {
           expect(workEvent.creators).to.not.be.empty;
           break;
       }
+      expect(workEvent.images).not.to.be.empty;
+      expect(workEvent.thumbnail(THUMBNAIL_SELECTOR)).not.to.be.null;
     }
   });
 

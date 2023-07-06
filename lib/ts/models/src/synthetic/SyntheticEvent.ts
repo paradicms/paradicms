@@ -7,12 +7,16 @@ import {DatasetCore} from "@rdfjs/types";
 import {EventMixin} from "../EventMixin";
 import {Mixin} from "ts-mixer";
 import {SyntheticEventParameters} from "./SyntheticEventParameters";
+import {Image} from "../Image";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
-export class SyntheticEvent extends Mixin(EventMixin) implements Event {
+export class SyntheticEvent extends Mixin(EventMixin, SomeImageThumbnailMixin)
+  implements Event {
   readonly date: DateTimeDescription | null;
   readonly description: Text | null;
   readonly endDate: DateTimeDescription | null;
   readonly key: string;
+  readonly images: readonly Image[];
   readonly label: string;
   readonly location: Location | null;
   readonly startDate: DateTimeDescription | null;
@@ -23,6 +27,7 @@ export class SyntheticEvent extends Mixin(EventMixin) implements Event {
     this.description = kwds.description;
     this.endDate = kwds.endDate;
     this.key = kwds.key;
+    this.images = kwds.images;
     this.label = kwds.label;
     this.location = kwds.location;
     this.startDate = kwds.startDate;

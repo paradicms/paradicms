@@ -2,13 +2,15 @@ import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cc, dcmitype, dcterms, foaf, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {Model, ModelSet, ModelSetBuilder} from "../src";
+import {ImageJoinSelector, Model, ModelSet, ModelSetBuilder} from "../src";
 import {ThumbnailSelector} from "../src/ThumbnailSelector";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";
 
-const THUMBNAIL_SELECTOR: ThumbnailSelector = {
+const THUMBNAIL_SELECTOR: ImageJoinSelector & ThumbnailSelector = {
+  licenses: true,
+  rightsStatements: true,
   targetDimensions: {height: 200, width: 200},
 };
 
@@ -283,7 +285,9 @@ describe("ModelSetBuilder", () => {
     const expectedWorkEvents = work.events;
 
     const workEventsModelSet = sut
-      .addWork(work, {events: {agents: {}, location: true}})
+      .addWork(work, {
+        events: {agents: {}, location: true, thumbnail: THUMBNAIL_SELECTOR},
+      })
       .build();
     expectModelsDeepEq(workEventsModelSet.works, [work]);
     // const agents = workEventsModelSet.works.flatMap(work =>
