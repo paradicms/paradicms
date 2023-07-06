@@ -246,7 +246,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       // console.debug("getWorkLocations");
       setLoadingWorkLocations(true);
       workQueryService
-        .getWorkLocations({}, worksQuery)
+        .getWorkLocations({requireCentroids: true}, worksQuery)
         .then(getWorkLocationsResult => {
           // console.debug(
           //   "getWorkLocations result:",

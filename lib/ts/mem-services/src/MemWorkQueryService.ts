@@ -529,6 +529,7 @@ export class MemWorkQueryService implements WorkQueryService {
     query: WorksQuery
   ): Promise<GetWorkLocationsResult> {
     invariant(!!query, "query must be defined");
+    const {requireCentroids} = options;
 
     return new Promise(resolve => {
       const works = this.filterWorks({
@@ -539,13 +540,17 @@ export class MemWorkQueryService implements WorkQueryService {
       const workLocations = works.flatMap(work => {
         const workWorkLocations: WorkLocationSummary[] = [];
         if (work.location) {
-          workWorkLocations.push(summarizeWorkLocation(work, work.location));
+          if (!requireCentroids || work.location.location.centroid) {
+            workWorkLocations.push(summarizeWorkLocation(work, work.location));
+          }
         }
         for (const event of work.events) {
           if (event.workLocation) {
-            workWorkLocations.push(
-              summarizeWorkLocation(work, event.workLocation)
-            );
+            if (!requireCentroids || event.workLocation.location.centroid) {
+              workWorkLocations.push(
+                summarizeWorkLocation(work, event.workLocation)
+              );
+            }
           }
         }
         return workWorkLocations;
