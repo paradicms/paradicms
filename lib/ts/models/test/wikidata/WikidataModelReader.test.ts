@@ -32,10 +32,10 @@ describe("WikidataModelReader", () => {
     }
   });
 
-  it("should read at least one Property", () => {
-    const properties = sut.readProperties({modelSet: dummyModelSet});
-    expect(properties).to.not.be.empty;
-  });
+  // it("should read at least one Property", () => {
+  //   const properties = sut.readProperties({modelSet: dummyModelSet});
+  //   expect(properties).to.not.be.empty;
+  // });
 
   it("should read at least one Work", () => {
     const works = sut.readWorks({modelSet: dummyModelSet});

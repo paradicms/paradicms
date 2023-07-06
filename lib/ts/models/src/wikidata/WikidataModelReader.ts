@@ -2,7 +2,7 @@ import {ModelSet} from "../ModelSet";
 import {Person} from "../Person";
 import {Work} from "../Work";
 import {DatasetModelReader} from "../DatasetModelReader";
-import {getWikibaseItems, WikibaseItem, WikibasePropertyDefinition} from "@paradicms/wikibase";
+import {getWikibaseItems, WikibaseItem} from "@paradicms/wikibase";
 import {wd, wdt} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {WikidataPerson} from "./WikidataPerson";
@@ -13,8 +13,8 @@ import {WikidataWork} from "./WikidataWork";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
 import log from 'loglevel';
 import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
-import {Property} from "../Property";
 import {WikidataProperty} from "./WikidataProperty";
+import {indexModelsByIri} from "../indexModelsByIri";
 
 class WikidataEntities {
   // Creative work somehow captures "episode from Greek mythology" (-> episode -> broadcast program -> creative work)
@@ -39,7 +39,7 @@ export class WikidataModelReader extends DatasetModelReader {
     });
   }
 
-  override readProperties(kwds: { modelSet: ModelSet }): readonly Property[] {
+  override readProperties(kwds: { modelSet: ModelSet }): readonly WikidataProperty[] {
     return this.getWikibaseItemsResult.wikibasePropertyDefinitions.map(wikibasePropertyDefinition => new WikidataProperty({
       dataset: this.dataset,
       modelSet: kwds.modelSet,
@@ -55,13 +55,14 @@ export class WikidataModelReader extends DatasetModelReader {
         modelSet: ModelSet;
         wikibaseItem: WikibaseItem;
         wikibaseItemSet: WikibaseItemSet;
-        wikibasePropertyDefinitions: readonly WikibasePropertyDefinition[]
+        wikidataPropertiesByIri: {[index: string]: WikidataProperty}
       }): WikidataModelT;
     };
     modelSet: ModelSet;
   }): readonly WikidataModelT[] {
     const {class_, factory, modelSet} = kwds;
     const models: WikidataModelT[] = [];
+    const wikidataPropertiesByIri = indexModelsByIri(this.readProperties(kwds));
     for (const instanceQuad of getRdfInstanceQuads({
       class_,
       dataset: this.dataset,
@@ -84,7 +85,7 @@ export class WikidataModelReader extends DatasetModelReader {
             modelSet,
             wikibaseItem,
             wikibaseItemSet: this.wikibaseItemSet,
-            wikibasePropertyDefinitions: this.getWikibaseItemsResult.wikibasePropertyDefinitions
+            wikidataPropertiesByIri
           })
         );
       } else {

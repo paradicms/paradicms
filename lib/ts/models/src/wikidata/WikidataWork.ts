@@ -88,6 +88,7 @@ export class WikidataWork extends WikidataModel implements Work {
           modelSet: this.modelSet,
           wikibaseItem,
           wikibaseItemSet: this.wikibaseItemSet,
+          wikidataPropertiesByIri: this.wikidataPropertiesByIri,
         });
         if (wikidataLocation.centroid) {
           return wikidataLocation;
