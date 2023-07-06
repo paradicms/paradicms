@@ -19,7 +19,7 @@ describe("DcPhysicalObject", () => {
     expect(
       testModelSet.workByIri("http://example.com/collection0/work0")!
         .wikidataConceptIri
-    ).to.eq("http://www.wikidata.org/entity/Q937690");
+    ).to.eq("http://www.wikidata.org/entity/Q19911452");
   });
 
   it("should get the work's creation date", () => {

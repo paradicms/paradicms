@@ -25,9 +25,9 @@ describe("SameAsModelReader", () => {
     const allPeople = concatenatingModelReader.readNamedPeople({
       modelSet,
     });
-    expect(allPeople).to.have.length(4);
+    expect(allPeople).to.have.length(5);
     const groupedPeople = sut.readNamedPeople({modelSet});
-    expect(groupedPeople).to.have.length(3);
+    expect(groupedPeople).to.have.length(allPeople.length - 1);
     expect(
       groupedPeople.filter(person => person instanceof SameAsPerson)
     ).to.have.length(1);

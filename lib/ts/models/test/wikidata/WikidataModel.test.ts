@@ -23,7 +23,7 @@ describe("WikidataModel", () => {
     expect(image).to.be.instanceof(SchemaImageObject);
     const concreteImage = image as SchemaImageObject;
     expect(concreteImage.iri).to.eq(
-      "http://commons.wikimedia.org/wiki/Special:FilePath/Pilot%20ACE%20computer-2.jpg"
+      "http://commons.wikimedia.org/wiki/Special:FilePath/Lucas%20Cranach%20d.%C3%84.%20-%20Das%20Urteil%20des%20Paris.jpg"
     );
   });
 });
