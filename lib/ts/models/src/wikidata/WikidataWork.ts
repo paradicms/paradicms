@@ -99,9 +99,14 @@ export class WikidataWork extends WikidataModel implements Work {
     };
 
     const location = getLocationWithCentroid(this);
-    if (!location) {
+    if (location) {
+      return {
+        label: null,
+        location,
+        role: "Current",
+      };
+    } else {
       return null;
     }
-    throw new RangeError("not implemented");
   }
 }
