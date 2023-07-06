@@ -8,6 +8,12 @@ import invariant from "ts-invariant";
 import {Memoize} from "typescript-memoize";
 import {mapTermToNumber} from "@paradicms/rdf";
 
+import dayjsPluginTimezone from "dayjs/plugin/timezone";
+import dayjsPluginUtc from "dayjs/plugin/utc";
+
+dayjs.extend(dayjsPluginUtc);
+dayjs.extend(dayjsPluginTimezone);
+
 export class WikibaseTimeValue extends Mixin(ResourceBackedModel)
   implements DateTimeDescription {
   get day(): number | null {
@@ -58,12 +64,22 @@ export class WikibaseTimeValue extends Mixin(ResourceBackedModel)
   }
 
   @Memoize()
+  private get timeTimezone(): number {
+    // Timezone as an offset from UTC in minutes
+    return requireNonNull(
+      this.findAndMapObject(wikibase.timeTimezone, mapTermToNumber)
+    );
+  }
+
+  @Memoize()
   private get timeValue(): dayjs.Dayjs {
     return requireNonNull(
       this.findAndMapObject(wikibase.timeValue, term => {
         invariant(term.termType === "Literal");
         invariant(term.datatype.equals(xsd.dateTime));
-        return dayjs(term.value);
+        invariant(this.timeTimezone === 0);
+        const timeValue = dayjs.utc(term.value);
+        return timeValue;
       })
     );
   }

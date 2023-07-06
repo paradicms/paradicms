@@ -8,6 +8,7 @@ interface Wikibase {
   geoLatitude: NamedNode<"http://wikiba.se/ontology#geoLatitude">;
   geoLongitude: NamedNode<"http://wikiba.se/ontology#geoLongitude">;
   timePrecision: NamedNode<"http://wikiba.se/ontology#timePrecision">;
+  timeTimezone: NamedNode<"http://wikiba.se/ontology#timeTimezone">;
   timeValue: NamedNode<"http://wikiba.se/ontology#timeValue">;
 
   // Resources

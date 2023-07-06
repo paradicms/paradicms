@@ -25,14 +25,14 @@ describe("WikidataWork", () => {
   });
 
   it("should get the work's display date", () => {
-    expect(sut.displayDate).to.eq("1527");
+    expect(sut.displayDate).to.eq("1528");
   });
 
   it("should get the work's events", () => {
     expect(sut.events).to.have.length(1);
     const workCreation: WorkCreationEvent = sut.events[0] as WorkCreationEvent;
     expect(workCreation).to.be.instanceof(SyntheticWorkCreationEvent);
-    expect(workCreation.displayDate).to.eq("1527");
+    expect(workCreation.displayDate).to.eq("1528");
   });
 
   it("should get the work's label", () => {
