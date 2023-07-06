@@ -39,7 +39,10 @@ export class WikidataModelReader extends DatasetModelReader {
     });
   }
 
-  override readProperties(kwds: { modelSet: ModelSet }): readonly WikidataProperty[] {
+  // There is no readProperties, since we don't want non-Wikidata models to deal with the Wikidata properties.
+  // If at some point we want to be able to filter on arbitrary Wikidata properties, will have to enable readProperties here.
+
+  private readWikidataProperties(kwds: { modelSet: ModelSet }): readonly WikidataProperty[] {
     return this.getWikibaseItemsResult.wikibasePropertyDefinitions.map(wikibasePropertyDefinition => new WikidataProperty({
       dataset: this.dataset,
       modelSet: kwds.modelSet,
@@ -62,7 +65,7 @@ export class WikidataModelReader extends DatasetModelReader {
   }): readonly WikidataModelT[] {
     const {class_, factory, modelSet} = kwds;
     const models: WikidataModelT[] = [];
-    const wikidataPropertiesByIri = indexModelsByIri(this.readProperties(kwds));
+    const wikidataPropertiesByIri = indexModelsByIri(this.readWikidataProperties(kwds));
     for (const instanceQuad of getRdfInstanceQuads({
       class_,
       dataset: this.dataset,

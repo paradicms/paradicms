@@ -42,12 +42,12 @@ describe("getWikibaseItems", () => {
       this.timeout(5000);
       const store = new N3.Store();
       store.addQuads(new N3.Parser().parse(testWikidataItemFile.ttl));
-      const items = Object.values(
-        getWikibaseItems({
-          dataset: store,
-          includeRedundantStatements: true,
-        })
-      );
+      const result = getWikibaseItems({
+        dataset: store,
+        includeRedundantStatements: true,
+      });
+      expect(result.wikibasePropertyDefinitions).not.to.be.empty;
+      const items = Object.values(result.wikibaseItemsByIri);
       expect(items).to.have.length(testWikidataItemFile.itemsCount);
       const fileItem = items.find(
         item =>
