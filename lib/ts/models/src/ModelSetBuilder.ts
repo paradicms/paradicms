@@ -31,6 +31,7 @@ import {ImagesMixin} from "./ImagesMixin";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import log from "loglevel";
 import {ImageJoinSelector} from "./ImageJoinSelector";
+import {ThumbnailMixin} from "./ThumbnailMixin";
 
 /**
  * Build a ModelSet by adding models to it.
@@ -334,7 +335,7 @@ export class ModelSetBuilder {
    * @return true if a thumbnail was added
    */
   private addThumbnail(
-    imagesMixin: ImagesMixin,
+    imagesMixin: ImagesMixin & ThumbnailMixin,
     selector: ImageJoinSelector & ThumbnailSelector
   ): boolean {
     log.debug(

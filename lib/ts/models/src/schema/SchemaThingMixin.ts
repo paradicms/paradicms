@@ -1,6 +1,5 @@
 import {ImagesMixin} from "../ImagesMixin";
 import {Image} from "../Image";
-import {ThumbnailSelector} from "../ThumbnailSelector";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {schema} from "@paradicms/vocabularies";
 import {Text} from "../Text";
@@ -11,9 +10,13 @@ import {mapTermToString} from "@paradicms/rdf";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {isWikidataConceptIri} from "../isWikidataConceptIri";
 import {isWikipediaUrl} from "../isWikipediaUrl";
+import {ThumbnailMixin} from "../ThumbnailMixin";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {Mixin} from "ts-mixer";
 
-export abstract class SchemaThingMixin extends ResourceBackedModelMixin
-  implements ImagesMixin {
+export abstract class SchemaThingMixin
+  extends Mixin(ResourceBackedModelMixin, SomeImageThumbnailMixin)
+  implements ImagesMixin, ThumbnailMixin {
   @Memoize()
   get alternateNames(): readonly string[] {
     return this.filterAndMapObjects(schema.alternateName, mapTermToString);
@@ -53,16 +56,6 @@ export abstract class SchemaThingMixin extends ResourceBackedModelMixin
           return null;
       }
     });
-  }
-
-  thumbnail(selector: ThumbnailSelector): Image | null {
-    for (const image of this.images) {
-      const thumbnail = image.thumbnail(selector);
-      if (thumbnail) {
-        return thumbnail;
-      }
-    }
-    return null;
   }
 
   @Memoize()

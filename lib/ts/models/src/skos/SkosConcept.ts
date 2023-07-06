@@ -8,9 +8,14 @@ import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {mapTermToText} from "../mapTermToText";
 import {Text} from "../Text";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
 export class SkosConcept
-  extends Mixin(ResourceBackedNamedModel, FoafImagesMixin)
+  extends Mixin(
+    ResourceBackedNamedModel,
+    FoafImagesMixin,
+    SomeImageThumbnailMixin
+  )
   implements Concept {
   @Memoize()
   get altLabels(): readonly Literal[] {

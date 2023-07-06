@@ -11,11 +11,4 @@ export const behavesLikeImagesMixin = (imagesMixin: ImagesMixin) => {
       expect(image.thumbnails).to.not.be.empty; // Only "original" images
     }
   });
-
-  it("should get a thumbnail", () => {
-    const thumbnail = imagesMixin.thumbnail({
-      targetDimensions: {height: 600, width: 600},
-    });
-    expect(thumbnail).to.not.be.null;
-  });
 };

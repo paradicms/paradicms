@@ -5,6 +5,7 @@ import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
 import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
 import {NamedNode} from "@rdfjs/types";
+import {behavesLikeThumbnailMixin} from "./behavesLikeThumbnailMixin";
 
 export const behavesLikeWork = (
   work: Work,
@@ -97,4 +98,5 @@ export const behavesLikeWork = (
     requireRightsHolders: true,
     requireRightsStatement: true,
   });
+  behavesLikeThumbnailMixin(work);
 };

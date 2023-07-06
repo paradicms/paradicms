@@ -21,9 +21,16 @@ import {DateTimeDescription} from "DateTimeDescription";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
 export class DcPhysicalObject
-  extends Mixin(DcNamedModel, DcImagesMixin, DcRightsMixin, OwlSameAsMixin)
+  extends Mixin(
+    DcNamedModel,
+    DcImagesMixin,
+    DcRightsMixin,
+    OwlSameAsMixin,
+    SomeImageThumbnailMixin
+  )
   implements Work {
   @Memoize()
   get agents(): readonly WorkAgent[] {

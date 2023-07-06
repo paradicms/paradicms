@@ -9,8 +9,10 @@ import {Text} from "../Text";
 import {mapTermToText} from "../mapTermToText";
 import {requireNonNull} from "@paradicms/utilities";
 import {mapTermToString} from "@paradicms/rdf";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
-export class CmsPropertyGroup extends Mixin(CmsNamedModel, FoafImagesMixin)
+export class CmsPropertyGroup
+  extends Mixin(CmsNamedModel, FoafImagesMixin, SomeImageThumbnailMixin)
   implements PropertyGroup {
   @Memoize()
   get comment(): Text | null {

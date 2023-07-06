@@ -8,9 +8,16 @@ import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 import {AgentType} from "../AgentType";
 import {FoafPageMixin} from "./FoafPageMixin";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
 export abstract class FoafAgent
-  extends Mixin(FoafModel, FoafImagesMixin, FoafPageMixin, OwlSameAsMixin)
+  extends Mixin(
+    FoafModel,
+    FoafImagesMixin,
+    FoafPageMixin,
+    OwlSameAsMixin,
+    SomeImageThumbnailMixin
+  )
   implements Agent {
   get label(): string {
     return this.name;

@@ -4,8 +4,9 @@ import {NamedModel} from "./NamedModel";
 import {PropertyValue} from "./PropertyValue";
 import {Text} from "./Text";
 import {PropertyGroup} from "./PropertyGroup";
+import {ThumbnailMixin} from "./ThumbnailMixin";
 
-export interface Property extends NamedModel, ImagesMixin {
+export interface Property extends NamedModel, ImagesMixin, ThumbnailMixin {
   readonly comment: Text | null;
   readonly filterable: boolean;
   readonly hidden: boolean;

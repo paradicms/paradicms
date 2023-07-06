@@ -9,8 +9,9 @@ import {WorkLocation} from "../WorkLocation";
 import {PropertyValue} from "../PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {SameAsImagesMixin} from "./SameAsImagesMixin";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
-export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<Work>, SameAsRightsMixin<Work>) implements Work {
+export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<Work>, SameAsRightsMixin<Work>, SomeImageThumbnailMixin) implements Work {
     get agents(): readonly WorkAgent[] {
         return this.getAllValues(model => model.agents);
     }
