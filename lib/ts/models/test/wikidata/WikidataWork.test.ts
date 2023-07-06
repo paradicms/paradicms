@@ -6,12 +6,15 @@ import {describe} from "mocha";
 import {expect} from "chai";
 import {WorkCreationEvent} from "../../src";
 import {SyntheticWorkCreationEvent} from "../../src/synthetic/SyntheticWorkCreationEvent";
+import {wd} from "@paradicms/vocabularies";
 
 describe("WikidataWork", () => {
   const sut = requireDefined(
-    new WikidataModelReader(syntheticData).readWorks({
-      modelSet: testModelSet,
-    })[0]
+    new WikidataModelReader(syntheticData)
+      .readWorks({
+        modelSet: testModelSet,
+      })
+      .find(work => work.iris[0] === wd["Q19911452"].value)
   );
 
   it("should get the work's description", () => {
