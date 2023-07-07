@@ -64,11 +64,14 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
+      log.debug("ModelSetBuilder: adding agent", agent.key, "thumbnail");
       this.addThumbnail(agent, joinSelector.thumbnail);
     }
 
     if (joinSelector.works) {
+      log.debug("ModelSetBuilder: adding agent", agent.key, "works");
       for (const work of agent.works) {
+        log.debug("ModelSetBuilder: adding agent", agent.key, "work", work.key);
         this.addWork(work, joinSelector.works);
       }
     }
@@ -112,9 +115,25 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
+      log.debug(
+        "ModelSetBuilder: adding collection",
+        collection.key,
+        " thumbnail"
+      );
       if (!this.addThumbnail(collection, joinSelector.thumbnail)) {
+        log.debug(
+          "ModelSetBuilder: collection",
+          collection.key,
+          "doesn't have its own thumbnail, adding a collection work thumbnail"
+        );
         for (const work of collection.works) {
           if (this.addThumbnail(work, joinSelector.thumbnail)) {
+            log.debug(
+              "ModelSetBuilder: added work",
+              work.key,
+              "thumbnail for collection",
+              collection.key
+            );
             break;
           }
         }
@@ -122,7 +141,14 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.works) {
+      log.debug("ModelSetBuilder: adding collection", collection.key, "works");
       for (const work of collection.works) {
+        log.debug(
+          "ModelSetBuilder: adding collection",
+          collection.key,
+          "work",
+          work.key
+        );
         this.addWork(work, joinSelector.works);
       }
     }
@@ -134,6 +160,7 @@ export class ModelSetBuilder {
     concept: Concept,
     joinSelector?: PropertyValueJoinSelector
   ): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding concept", concept.key);
     this.addModel(concept);
 
     if (!joinSelector) {
@@ -141,6 +168,7 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
+      log.debug("ModelSetBuilder: adding concept", concept.key, "thumbnail");
       this.addThumbnail(concept, joinSelector.thumbnail);
     }
 
@@ -161,6 +189,7 @@ export class ModelSetBuilder {
     );
     this.addModel(image);
     if (joinSelector) {
+      log.debug("adding image", image.key, "rights");
       this.addRights(joinSelector, image);
     }
     return this;
@@ -172,6 +201,7 @@ export class ModelSetBuilder {
   }
 
   addLocation(location: Location): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding location", location.key);
     return this.addModel(location);
   }
 
@@ -219,6 +249,7 @@ export class ModelSetBuilder {
     property: Property,
     joinSelector?: PropertyJoinSelector
   ): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding property", property.key);
     this.addModel(property);
 
     if (!joinSelector) {
@@ -226,18 +257,37 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.groups) {
+      log.debug("ModelSetBuilder: adding property", property.key, "groups");
       for (const propertyGroup of property.groups) {
+        log.debug(
+          "ModelSetBuilder: adding property",
+          property.key,
+          "group",
+          propertyGroup.key
+        );
         this.addPropertyGroup(propertyGroup, joinSelector.groups);
       }
     }
 
     if (joinSelector.rangeValues) {
+      log.debug(
+        "ModelSetBuilder: adding property",
+        property.key,
+        "range values"
+      );
       for (const value of property.rangeValues) {
+        log.debug(
+          "ModelSetBuilder: adding property",
+          property.key,
+          "range value",
+          value.value
+        );
         this.addPropertyValue(value, joinSelector.rangeValues);
       }
     }
 
     if (joinSelector.thumbnail) {
+      log.debug("ModelSetBuilder: adding property", property.key, "thumbnail");
       this.addThumbnail(property, joinSelector.thumbnail);
     }
 
@@ -248,6 +298,7 @@ export class ModelSetBuilder {
     propertyGroup: PropertyGroup,
     joinSelector?: PropertyGroupJoinSelector
   ): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding propertyGroup", propertyGroup.key);
     this.addModel(propertyGroup);
 
     if (!joinSelector) {
@@ -255,12 +306,28 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.properties) {
+      log.debug(
+        "ModelSetBuilder: adding property group",
+        propertyGroup.key,
+        "properties"
+      );
       for (const property of propertyGroup.properties) {
+        log.debug(
+          "ModelSetBuilder: adding property group",
+          propertyGroup.key,
+          "property",
+          property.key
+        );
         this.addProperty(property, joinSelector.properties);
       }
     }
 
     if (joinSelector.thumbnail) {
+      log.debug(
+        "ModelSetBuilder: adding property group",
+        propertyGroup.key,
+        "thumbnail"
+      );
       this.addThumbnail(propertyGroup, joinSelector.thumbnail);
     }
 
@@ -281,7 +348,13 @@ export class ModelSetBuilder {
     propertyValue: PropertyValue,
     joinSelector?: PropertyValueJoinSelector
   ): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding property value", propertyValue.value);
+
     if (propertyValue instanceof ConceptPropertyValue) {
+      log.debug(
+        "ModelSetBuilder: adding concept property value",
+        propertyValue.concept.key
+      );
       this.addConcept(propertyValue.concept, joinSelector);
     }
 
@@ -290,6 +363,12 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.property) {
+      log.debug(
+        "ModelSetBuilder: adding property value",
+        propertyValue.value,
+        "property",
+        propertyValue.property.key
+      );
       this.addProperty(propertyValue.property, joinSelector.property);
     }
 
@@ -298,6 +377,8 @@ export class ModelSetBuilder {
 
   private addRights(joinSelector: RightsJoinSelector, rights: RightsMixin) {
     if (joinSelector.agents) {
+      log.debug("ModelSetBuilder: adding rights agents");
+
       // log.debug(
       //   "ModelSetBuilder: joining agents to",
       //   (rights as any).constructor
@@ -314,12 +395,14 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.licenses) {
+      log.debug("ModelSetBuilder: adding rights licenses");
       for (const license of rights.licenses) {
         this.addLicense(license);
       }
     }
 
     if (joinSelector.rightsStatements) {
+      log.debug("ModelSetBuilder: adding rights rights statements");
       for (const rightsStatement of rights.rightsStatements) {
         this.addRightsStatement(rightsStatement);
       }
@@ -327,6 +410,7 @@ export class ModelSetBuilder {
   }
 
   addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding rights statement", rightsStatement.key);
     return this.addModel(rightsStatement);
   }
 
@@ -390,33 +474,47 @@ export class ModelSetBuilder {
       return this;
     }
 
+    log.debug("ModelSetBuilder: adding work", work.key, "rights");
     this.addRights(joinSelector, work);
 
     if (work.description) {
+      log.debug("ModelSetBuilder: adding work", work.key, "description rights");
       this.addRights(joinSelector, work.description);
     }
 
     if (joinSelector.events) {
+      log.debug("ModelSetBuilder: adding work", work.key, "events");
       for (const event of work.events) {
+        log.debug("ModelSetBuilder: adding work", work.key, "event", event.key);
         this.addWorkEvent(event, joinSelector.events);
       }
     }
 
     if (joinSelector.images) {
+      log.debug("ModelSetBuilder: adding work", work.key, "images");
       for (const image of work.images) {
+        log.debug("ModelSetBuilder: adding work", work.key, "image", image.key);
         this.addImage(image, joinSelector.images);
       }
     } else if (joinSelector.thumbnail) {
+      log.debug("ModelSetBuilder: adding work", work.key, "thumbnail");
       this.addThumbnail(work, joinSelector.thumbnail);
     }
 
     if (joinSelector.location) {
       if (work.location) {
+        log.debug(
+          "ModelSetBuilder: adding work",
+          work.key,
+          "location",
+          work.location.location.key
+        );
         this.addLocation(work.location.location);
       }
     }
 
     if (joinSelector.propertyValues) {
+      log.debug("ModelSetBuilder: adding work", work.key, "property values");
       for (const propertyValue of work.propertyValues) {
         this.addPropertyValue(propertyValue, joinSelector.propertyValues);
       }
@@ -439,6 +537,7 @@ export class ModelSetBuilder {
     workEvent: WorkEventUnion,
     joinSelector?: WorkEventJoinSelector
   ): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding work event", workEvent.key);
     this.addModel(workEvent);
 
     if (!joinSelector) {
@@ -446,17 +545,39 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
+      log.debug(
+        "ModelSetBuilder: adding work event",
+        workEvent.key,
+        "thumbnail"
+      );
       this.addThumbnail(workEvent, joinSelector.thumbnail);
     }
 
     if (joinSelector.location && workEvent.location) {
+      log.debug(
+        "ModelSetBuilder: adding work event",
+        workEvent.key,
+        "location",
+        workEvent.location.key
+      );
       this.addLocation(workEvent.location);
     }
 
     switch (workEvent.type) {
       case "WorkCreation": {
         if (joinSelector.agents) {
+          log.debug(
+            "ModelSetBuilder: adding work event",
+            workEvent.key,
+            "agents"
+          );
           for (const agent of workEvent.agents) {
+            log.debug(
+              "ModelSetBuilder: adding work event",
+              workEvent.key,
+              "agent",
+              agent.key
+            );
             this.addAgent(agent, joinSelector.agents);
           }
         }
