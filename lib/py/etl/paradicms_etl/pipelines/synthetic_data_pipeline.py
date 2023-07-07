@@ -296,9 +296,7 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_rights_statement = (
                     RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                 )
-                original_image_src = (
-                    "https://paradicms.org/img/placeholder/1000x1000.png"
-                )
+                original_image_src = "https://paradicms.org/img/synthetic/1000x1000.png"
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
                 original_image_builder: Union[
@@ -352,7 +350,7 @@ class SyntheticDataPipeline(Pipeline):
                         )
                         .set_exact_dimensions(thumbnail_dimensions)
                         .set_src(
-                            f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
+                            f"https://paradicms.org/img/synthetic/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
                         )
                         .build()
                     )
