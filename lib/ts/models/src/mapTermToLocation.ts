@@ -25,7 +25,7 @@ export const mapTermToLocation = (
     case "NamedNode": {
       const location = modelParameters.modelSet.locationByIri(term.value);
       if (!location) {
-        log.debug("mapped term to missing location:", term.value);
+        log.trace("mapped term to missing location:", term.value);
       }
       return location;
     }

@@ -25,7 +25,7 @@ export const mapTermToAgent = (
     case "NamedNode": {
       const agent = modelParameters.modelSet.agentByIri(term.value);
       if (!agent) {
-        log.debug("mapped term to missing agent:", term.value);
+        log.trace("mapped term to missing agent:", term.value);
       }
       return agent;
     }

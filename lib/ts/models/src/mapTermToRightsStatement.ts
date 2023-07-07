@@ -27,7 +27,7 @@ export const mapTermToRightsStatement = (
         term.value
       );
       if (!rightsStatement) {
-        log.debug("mapped term to missing rights statement:", term.value);
+        log.trace("mapped term to missing rights statement:", term.value);
       }
       return rightsStatement;
     }
