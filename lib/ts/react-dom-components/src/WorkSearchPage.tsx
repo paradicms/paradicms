@@ -404,16 +404,20 @@ export const WorkSearchPage: React.FunctionComponent<{
     title: "Timeline",
     content: getWorkEventsResult ? (
       <WorkEventsTimeline
+        getAbsoluteImageSrc={getAbsoluteImageSrc}
         page={workEventsPage}
         pageMax={calculatePageMax({
           objectsPerPage,
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
+        renderWorkLink={renderWorkLink}
         setPage={setWorkEventsPage}
         workEvents={getWorkEventsResult.modelSet.works.flatMap(work =>
-          work.events.filter(workEvent =>
-            getWorkEventsResult.workEventKeysSet.has(workEvent.key)
-          )
+          work.events
+            .filter(workEvent =>
+              getWorkEventsResult.workEventKeysSet.has(workEvent.key)
+            )
+            .map(workEvent => ({work, workEvent}))
         )}
       />
     ) : null,

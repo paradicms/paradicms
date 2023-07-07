@@ -20,6 +20,8 @@ import * as React from "react";
 import {useMemo} from "react";
 import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
+import {Hrefs} from "multi-page-exhibition/lib/Hrefs";
+import Link from "next/link";
 
 const WorkLocationsMap = dynamic<{
   readonly workLocations: readonly WorkLocationSummary[];
@@ -63,6 +65,11 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
         }
         properties={modelSet.properties}
         propertyGroups={modelSet.propertyGroups}
+        renderWorkLink={(work, children) => (
+          <Link href={Hrefs.work({workKey: work.key})}>
+            <a>{children}</a>
+          </Link>
+        )}
         renderWorkLocationsMap={workLocations => (
           <WorkLocationsMap workLocations={workLocations} />
         )}

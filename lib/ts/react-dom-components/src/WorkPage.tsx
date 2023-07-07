@@ -37,6 +37,7 @@ export const WorkPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   properties: readonly Property[];
   propertyGroups: readonly PropertyGroup[];
+  renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactElement;
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]
   ) => React.ReactElement;
@@ -45,6 +46,7 @@ export const WorkPage: React.FunctionComponent<{
   getAbsoluteImageSrc,
   properties,
   propertyGroups,
+  renderWorkLink,
   renderWorkLocationsMap,
   work,
 }) => {
@@ -140,10 +142,12 @@ export const WorkPage: React.FunctionComponent<{
       title: "Timeline",
       content: (
         <WorkEventsTimeline
+          getAbsoluteImageSrc={getAbsoluteImageSrc}
           page={0}
           pageMax={0}
+          renderWorkLink={renderWorkLink}
           setPage={() => {}}
-          workEvents={work.events}
+          workEvents={work.events.map(workEvent => ({work, workEvent}))}
         />
       ),
     });
