@@ -42,6 +42,7 @@ import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {Work} from "@paradicms/models";
+import {workSearchWorkEventJoinSelector} from "./workSearchWorkEventJoinSelector";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
@@ -220,9 +221,7 @@ export const WorkSearchPage: React.FunctionComponent<{
             limit: (workEventsPage + 1) * objectsPerPage,
             offset: 0,
             requireDate: true,
-            workEventJoinSelector: {
-              // work: {},
-            },
+            workEventJoinSelector: workSearchWorkEventJoinSelector,
           },
           worksQuery
         )

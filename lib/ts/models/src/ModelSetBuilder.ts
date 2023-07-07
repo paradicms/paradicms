@@ -60,6 +60,7 @@ export class ModelSetBuilder {
     this.addModel(agent);
 
     if (!joinSelector) {
+      log.debug("ModelSetBuilder: agent", agent.key, "has no join selector");
       return this;
     }
 
@@ -111,6 +112,11 @@ export class ModelSetBuilder {
     this.addModel(collection);
 
     if (!joinSelector) {
+      log.debug(
+        "ModelSetBuilder: collection",
+        collection.key,
+        "has no join selector"
+      );
       return this;
     }
 
@@ -164,6 +170,11 @@ export class ModelSetBuilder {
     this.addModel(concept);
 
     if (!joinSelector) {
+      log.debug(
+        "ModelSetBuilder: concept",
+        concept.key,
+        "has no join selector"
+      );
       return this;
     }
 
@@ -253,6 +264,11 @@ export class ModelSetBuilder {
     this.addModel(property);
 
     if (!joinSelector) {
+      log.debug(
+        "ModelSetBuilder: property",
+        property.key,
+        "has no join selector"
+      );
       return this;
     }
 
@@ -302,6 +318,11 @@ export class ModelSetBuilder {
     this.addModel(propertyGroup);
 
     if (!joinSelector) {
+      log.debug(
+        "ModelSetBuilder: property group",
+        propertyGroup.key,
+        "has no join selector"
+      );
       return this;
     }
 
@@ -359,6 +380,11 @@ export class ModelSetBuilder {
     }
 
     if (!joinSelector) {
+      log.debug(
+        "ModelSetBuilder: property value",
+        propertyValue.value,
+        "has no join selector"
+      );
       return this;
     }
 
@@ -470,7 +496,7 @@ export class ModelSetBuilder {
     this.addModel(work);
 
     if (!joinSelector) {
-      // log.debug("ModelSetBuilder: work has no join selector");
+      log.debug("ModelSetBuilder: work", work.key, "has no join selector");
       return this;
     }
 
@@ -541,6 +567,11 @@ export class ModelSetBuilder {
     this.addModel(workEvent);
 
     if (!joinSelector) {
+      log.debug(
+        "ModelSetBuilder: work event",
+        workEvent.key,
+        "has no join selector"
+      );
       return this;
     }
 
@@ -551,6 +582,12 @@ export class ModelSetBuilder {
         "thumbnail"
       );
       this.addThumbnail(workEvent, joinSelector.thumbnail);
+    } else {
+      log.debug(
+        "ModelSetBuilder: not adding work event",
+        workEvent.key,
+        "thumbnail"
+      );
     }
 
     if (joinSelector.location && workEvent.location) {

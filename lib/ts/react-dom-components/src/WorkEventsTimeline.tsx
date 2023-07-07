@@ -36,9 +36,9 @@ const WorkEventCard: React.FunctionComponent<{
       {thumbnail ? (
         <div
           className="d-flex justify-content-center"
-          style={{
-            minHeight: galleryThumbnailSelector.targetDimensions.height,
-          }}
+          // style={{
+          //   minHeight: galleryThumbnailSelector.targetDimensions.height,
+          // }}
         >
           {renderWorkLink(
             work,

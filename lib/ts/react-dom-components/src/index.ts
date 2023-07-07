@@ -26,5 +26,6 @@ export * from "./WorkPage";
 export * from "./workPageWorkJoinSelector";
 export * from "./WorkSearchPage";
 export * from "./workSearchWorkJoinSelector";
+export * from "./workSearchWorkEventJoinSelector";
 export * from "./WorksGallery";
 export * from "./WorksSortDropdown";
