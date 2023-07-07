@@ -11,9 +11,8 @@ import {Hrefs} from "../lib/Hrefs";
 import invariant from "ts-invariant";
 
 export const WorkLocationsMap: React.FunctionComponent<{
-  readonly collectionKey: string;
   readonly workLocations: readonly WorkLocationSummary[];
-}> = ({collectionKey, workLocations}) => {
+}> = ({workLocations}) => {
   invariant(workLocations.length > 0);
   invariant(
     workLocations.every(workLocation => !!workLocation.location.centroid)
@@ -40,7 +39,6 @@ export const WorkLocationsMap: React.FunctionComponent<{
             click: () =>
               router.push(
                 Hrefs.work({
-                  collectionKey,
                   workKey: workLocation.work.key,
                 })
               ),

@@ -1,4 +1,9 @@
-import {ModelSet, ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {
+  ModelSet,
+  ModelSetBuilder,
+  ModelSetFactory,
+  selectExhibitionWorks,
+} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
@@ -21,9 +26,9 @@ import {useCallback, useMemo} from "react";
 import Hammer from "react-hammerjs";
 import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
+import Link from "next/link";
 
 const WorkLocationsMap = dynamic<{
-  readonly collectionKey: string;
   readonly workLocations: readonly WorkLocationSummary[];
 }>(
   () =>
@@ -34,7 +39,7 @@ const WorkLocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly collectionKey: string;
+  readonly collectionKey: string | null;
   readonly currentWorkKey: string;
   readonly modelSetString: string;
   readonly nextWorkKey: string | null;
@@ -52,24 +57,22 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
-  const collection = requireNonNull(modelSet.collectionByKey(collectionKey));
+  const collection = collectionKey
+    ? modelSet.collectionByKey(collectionKey)
+    : null;
   const configuration = modelSet.appConfiguration;
   const currentWork = requireNonNull(modelSet.workByKey(currentWorkKey));
   const router = useRouter();
 
   const onGoToNextWork = useCallback(() => {
     if (nextWorkKey) {
-      router.push(
-        Hrefs.work({collectionKey: collectionKey, workKey: nextWorkKey})
-      );
+      router.push(Hrefs.work({workKey: nextWorkKey}));
     }
   }, [nextWorkKey, router]);
 
   const onGoToPreviousWork = useCallback(() => {
     if (previousWorkKey) {
-      router.push(
-        Hrefs.work({collectionKey: collectionKey, workKey: previousWorkKey})
-      );
+      router.push(Hrefs.work({workKey: previousWorkKey}));
     }
   }, [previousWorkKey, router]);
 
@@ -108,11 +111,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
               }
               propertyGroups={modelSet.propertyGroups}
               properties={modelSet.properties}
+              renderWorkLink={(work, children) => (
+                <Link href={Hrefs.work({workKey: currentWorkKey})}>
+                  <a>{children}</a>
+                </Link>
+              )}
               renderWorkLocationsMap={workLocations => (
-                <WorkLocationsMap
-                  collectionKey={collectionKey}
-                  workLocations={workLocations}
-                />
+                <WorkLocationsMap workLocations={workLocations} />
               )}
               work={currentWork}
             />
@@ -134,21 +139,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
     readFile,
   });
 
-  const paths: {params: {collectionKey: string; workKey: string}}[] = [];
+  const paths: {params: {workKey: string}}[] = [];
+
+  const {works} = selectExhibitionWorks(modelSet);
 
   // Use first collection with works
-  for (const collection of modelSet.collections) {
-    for (const work of collection.works) {
-      paths.push({
-        params: {
-          collectionKey: encodeFileName(collection.key),
-          workKey: encodeFileName(work.key),
-        },
-      });
-    }
-    if (paths.length > 0) {
-      break;
-    }
+  for (const work of works) {
+    paths.push({
+      params: {
+        workKey: encodeFileName(work.key),
+      },
+    });
   }
 
   return {
@@ -160,34 +161,24 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const collectionKey = decodeFileName(params!.collectionKey as string);
-  const workKey = decodeFileName(params!.workKey as string);
-
   const completeModelSet = await readModelSet({
     pathDelimiter: path.delimiter,
     readFile,
   });
+  const {collection, works} = selectExhibitionWorks(completeModelSet);
+  const workKey = decodeFileName(params!.workKey as string);
 
-  const collection = requireNonNull(
-    completeModelSet.collectionByKey(collectionKey)
-  );
-  const collectionWorks = collection.works;
   const currentWork = requireNonNull(completeModelSet.workByKey(workKey));
 
-  const currentWorkI = collectionWorks.findIndex(
-    work => work.key === currentWork.key
-  );
+  const currentWorkI = works.findIndex(work => work.key === currentWork.key);
   if (currentWorkI === -1) {
     throw new EvalError(
-      `current work ${currentWork.key} not found among collection ${collectionKey} works`
+      `current work ${currentWork.key} not found among works`
     );
   }
   const nextWorkKey =
-    currentWorkI + 1 < collectionWorks.length
-      ? collectionWorks[currentWorkI + 1].key
-      : null;
-  const previousWorkKey =
-    currentWorkI > 0 ? collectionWorks[currentWorkI - 1].key : null;
+    currentWorkI + 1 < works.length ? works[currentWorkI + 1].key : null;
+  const previousWorkKey = currentWorkI > 0 ? works[currentWorkI - 1].key : null;
 
   const workKeys: string[] = [];
   if (previousWorkKey) {
@@ -198,21 +189,23 @@ export const getStaticProps: GetStaticProps = async ({
     workKeys.push(nextWorkKey);
   }
 
+  const modelSetBuilder = new ModelSetBuilder()
+    .addAppConfiguration(completeModelSet.appConfiguration)
+    .addWorks(
+      workKeys.map(workKey =>
+        requireNonNull(completeModelSet.workByKey(workKey))
+      ),
+      workPageWorkJoinSelector
+    );
+  if (collection) {
+    modelSetBuilder.addCollection(collection);
+  }
+
   return {
     props: {
-      collectionKey: collectionKey,
+      collectionKey: collection?.key ?? null,
       currentWorkKey: workKey,
-      modelSetString: new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addCollection(collection)
-        .addWorks(
-          workKeys.map(workKey =>
-            requireNonNull(completeModelSet.workByKey(workKey))
-          ),
-          workPageWorkJoinSelector
-        )
-        .build()
-        .toFastRdfString(),
+      modelSetString: modelSetBuilder.build().toFastRdfString(),
       nextWorkKey: nextWorkKey,
       previousWorkKey: previousWorkKey,
     },

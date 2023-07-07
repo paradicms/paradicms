@@ -50,4 +50,5 @@ export * from "./createPropertyValuesFromQuadSubjects";
 export * from "./dateTimeDescriptionToString";
 export * from "./defaultProperties";
 export * from "./imagePlaceholderSrc";
+export * from "./selectExhibitionWorks";
 export * from "./selectThumbnail";

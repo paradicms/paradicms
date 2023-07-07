@@ -1,4 +1,4 @@
-import {ModelSetFactory} from "@paradicms/models";
+import {ModelSetFactory, selectExhibitionWorks} from "@paradicms/models";
 import {readModelSet} from "@paradicms/next";
 import {RightsParagraph} from "@paradicms/react-dom-components";
 import fs from "fs";
@@ -10,12 +10,11 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
-import {requireNonNull} from "@paradicms/utilities";
 
 interface StaticProps {
-  readonly collectionKey: string;
-  readonly modelSetString: string;
+  readonly collectionKey: string | null;
   readonly firstWorkKey: string;
+  readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
@@ -28,16 +27,18 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
     () => ModelSetFactory.fromFastRdfString(modelSetString),
     [modelSetString]
   );
-  const collection = requireNonNull(modelSet.collectionByKey(collectionKey));
+  const collection = collectionKey
+    ? modelSet.collectionByKey(collectionKey)
+    : null;
   const configuration = modelSet.appConfiguration;
 
   React.useEffect(() => {
-    if (!collection.description) {
-      router.push(Hrefs.work({collectionKey, workKey: firstWorkKey}));
+    if (!collection?.description) {
+      router.push(Hrefs.work({workKey: firstWorkKey}));
     }
   }, []);
 
-  if (!collection.description) {
+  if (!collection?.description) {
     // Will redirect in the useEffect, so this render will never be seen
     return <div></div>;
   }
@@ -84,13 +85,14 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
   });
-  const collection = modelSet.collections[0];
+
+  const {collection, works} = selectExhibitionWorks(modelSet);
 
   return {
     props: {
+      collectionKey: collection?.key ?? null,
+      firstWorkKey: works[0].key,
       modelSetString: modelSet.toFastRdfString(),
-      collectionKey: collection.key,
-      firstWorkKey: collection.works[0].key,
     },
   };
 };
