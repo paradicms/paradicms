@@ -10,6 +10,7 @@ import {mapTermToImage} from "../mapTermToImage";
 import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
 import {DcNamedModel} from "./DcNamedModel";
 import {DcRightsMixin} from "./DcRightsMixin";
+import log from "loglevel";
 
 export class DcImage extends Mixin(DcNamedModel, DcRightsMixin)
   implements Image {
@@ -63,7 +64,20 @@ export class DcImage extends Mixin(DcNamedModel, DcRightsMixin)
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.thumbnails, selector);
+    const thumbnail = selectThumbnail(this.thumbnails, selector);
+    if (thumbnail) {
+      return thumbnail;
+    } else if (selectThumbnail([this], selector)) {
+      log.debug(
+        "using original image",
+        this.key,
+        "as a thumbnail for",
+        JSON.stringify(selector)
+      );
+      return this;
+    } else {
+      return null;
+    }
   }
 
   @Memoize()

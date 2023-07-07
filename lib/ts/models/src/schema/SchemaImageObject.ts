@@ -9,6 +9,7 @@ import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
 import {mapTermToString} from "@paradicms/rdf";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
+import log from "loglevel";
 
 export class SchemaImageObject
   extends Mixin(SchemaNamedModel, SchemaMediaObjectMixin)
@@ -78,6 +79,19 @@ export class SchemaImageObject
   }
 
   override thumbnail(selector: ThumbnailSelector): Image | null {
-    return selectThumbnail(this.thumbnails, selector);
+    const thumbnail = selectThumbnail(this.thumbnails, selector);
+    if (thumbnail) {
+      return thumbnail;
+    } else if (selectThumbnail([this], selector)) {
+      log.debug(
+          "using original image",
+          this.key,
+          "as a thumbnail for",
+          JSON.stringify(selector)
+      );
+      return this;
+    } else {
+      return null;
+    }
   }
 }
