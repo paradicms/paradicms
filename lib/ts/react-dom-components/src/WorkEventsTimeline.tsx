@@ -104,10 +104,12 @@ export const WorkEventsTimeline: React.FunctionComponent<{
   workEvents,
 }) => {
   return (
-    <VerticalTimeline layout="1-column">
+    // @ts-ignore
+    <VerticalTimeline layout="1-column-left">
       {workEvents.map(({work, workEvent}) => (
         <VerticalTimelineElement
           date={workEvent.displayDate ?? undefined}
+          dateClassName="text-center"
           key={workEvent.key}
           icon={<FontAwesomeIcon icon={getWorkEventIcon(workEvent)} />}
         >
