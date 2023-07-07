@@ -58,12 +58,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         >
           <NavItem className="align-top">
             {previousWork ? (
-              <Link
-                href={Hrefs.work({
-                  workKey: previousWork.key,
-                })}
-                passHref
-              >
+              <Link href={Hrefs.work(previousWork)} passHref>
                 <NavLink style={textStyle}>‹</NavLink>
               </Link>
             ) : (
@@ -78,13 +73,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           {currentWork ? (
             <>
               <span>&nbsp;/&nbsp;</span>
-              <Link
-                href={Hrefs.work({
-                  workKey: currentWork.key,
-                })}
-              >
-                {currentWork.label}
-              </Link>
+              <Link href={Hrefs.work(currentWork)}>{currentWork.label}</Link>
             </>
           ) : null}
           {currentWorkLinks.length > 0 ? (
@@ -102,12 +91,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         >
           <NavItem>
             {nextWork ? (
-              <Link
-                href={Hrefs.work({
-                  workKey: nextWork.key,
-                })}
-                passHref
-              >
+              <Link href={Hrefs.work(nextWork)} passHref>
                 <NavLink style={textStyle}>›</NavLink>
               </Link>
             ) : (

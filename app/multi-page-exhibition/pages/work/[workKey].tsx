@@ -66,13 +66,13 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
   const onGoToNextWork = useCallback(() => {
     if (nextWorkKey) {
-      router.push(Hrefs.work({workKey: nextWorkKey}));
+      router.push(Hrefs.work({key: nextWorkKey}));
     }
   }, [nextWorkKey, router]);
 
   const onGoToPreviousWork = useCallback(() => {
     if (previousWorkKey) {
-      router.push(Hrefs.work({workKey: previousWorkKey}));
+      router.push(Hrefs.work({key: previousWorkKey}));
     }
   }, [previousWorkKey, router]);
 
@@ -112,7 +112,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
               propertyGroups={modelSet.propertyGroups}
               properties={modelSet.properties}
               renderWorkLink={(work, children) => (
-                <Link href={Hrefs.work({workKey: currentWorkKey})}>
+                <Link href={Hrefs.work({key: currentWorkKey})}>
                   <a>{children}</a>
                 </Link>
               )}

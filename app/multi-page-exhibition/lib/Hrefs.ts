@@ -5,7 +5,7 @@ export class Hrefs {
     return "/";
   }
 
-  static work(kwds: {workKey: string}): string {
-    return `/work/${encodeFileName(kwds.workKey)}/`;
+  static work(kwds: {key: string}): string {
+    return `/work/${encodeFileName(kwds.key)}/`;
   }
 }

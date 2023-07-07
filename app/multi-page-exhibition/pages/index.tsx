@@ -34,7 +34,7 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
 
   React.useEffect(() => {
     if (!collection?.description) {
-      router.push(Hrefs.work({workKey: firstWorkKey}));
+      router.push(Hrefs.work({key: firstWorkKey}));
     }
   }, []);
 
