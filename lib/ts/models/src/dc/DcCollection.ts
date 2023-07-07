@@ -9,8 +9,10 @@ import {DcImagesMixin} from "./DcImagesMixin";
 import {Memoize} from "typescript-memoize";
 import {requireNonNull} from "@paradicms/utilities";
 import {mapTermToString} from "@paradicms/rdf";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
-export class DcCollection extends Mixin(DcNamedModel, DcImagesMixin)
+export class DcCollection
+  extends Mixin(DcNamedModel, DcImagesMixin, SomeImageThumbnailMixin)
   implements Collection {
   @Memoize()
   get description(): Text | null {

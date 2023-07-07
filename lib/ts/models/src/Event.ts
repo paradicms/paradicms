@@ -2,8 +2,10 @@ import {DateTimeDescription} from "./DateTimeDescription";
 import {Location} from "./Location";
 import {Text} from "./Text";
 import {Model} from "./Model";
+import {ImagesMixin} from "./ImagesMixin";
+import {ThumbnailMixin} from "./ThumbnailMixin";
 
-export interface Event extends Model {
+export interface Event extends ImagesMixin, Model, ThumbnailMixin {
   compareByDate(other: Event): number;
   readonly date: DateTimeDescription | null;
   readonly description: Text | null;

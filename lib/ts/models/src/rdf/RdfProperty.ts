@@ -17,9 +17,14 @@ import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {requireNonNull} from "@paradicms/utilities";
 import {Text} from "../Text";
 import {mapTermToText} from "../mapTermToText";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
 export class RdfProperty
-  extends Mixin(ResourceBackedNamedModel, FoafImagesMixin)
+  extends Mixin(
+    ResourceBackedNamedModel,
+    FoafImagesMixin,
+    SomeImageThumbnailMixin
+  )
   implements Property {
   get comment(): Text | null {
     return this.findAndMapObject(rdfs.comment, term =>

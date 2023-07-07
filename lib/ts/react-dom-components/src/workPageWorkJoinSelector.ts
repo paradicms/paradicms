@@ -1,5 +1,6 @@
 import {WorkJoinSelector} from "@paradicms/models";
 import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 
 export const workPageWorkJoinSelector: WorkJoinSelector = {
   agents: {
@@ -7,6 +8,7 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
   },
   events: {
     location: true,
+    thumbnail: galleryThumbnailSelector,
   },
   images: {
     agents: {},

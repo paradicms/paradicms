@@ -29,9 +29,10 @@ export class SyntheticWorkModificationEvent extends Mixin(SyntheticWorkEvent)
     return new SyntheticWorkModificationEvent({
       contributors: work.contributors,
       date: date,
-      description: null,
+      description: work.description,
       endDate: null,
-      label: `${work.label} modification`,
+      images: work.images,
+      label: `Work modified: ${work.label}`,
       key: `${work.key} modification`,
       location: null,
       startDate: null,

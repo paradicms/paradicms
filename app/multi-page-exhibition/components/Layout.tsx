@@ -8,11 +8,12 @@ import Head from "next/head";
 import Link from "next/link";
 import * as React from "react";
 import {Nav, NavItem, NavLink, Navbar} from "reactstrap";
+import invariant from "ts-invariant";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
-  collection: Collection;
+  collection: Collection | null;
   configuration: AppConfiguration | null;
   currentWork?: Work;
   nextWork?: {readonly key: string};
@@ -29,12 +30,19 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     ? getNamedModelLinks(currentWork)
     : [];
 
+  const titleParts: string[] = [];
+  if (collection) {
+    titleParts.push(collection.label);
+  }
+  if (currentWork) {
+    titleParts.push(currentWork.label);
+  }
+  invariant(titleParts.length > 0);
+
   return (
     <>
       <Head>
-        <title>
-          {collection.label + (currentWork ? " - " + currentWork.label : "")}
-        </title>
+        <title>{titleParts.join(" - ")}</title>
         <link
           rel="stylesheet"
           href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
@@ -50,13 +58,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         >
           <NavItem className="align-top">
             {previousWork ? (
-              <Link
-                href={Hrefs.work({
-                  collectionKey: collection.key,
-                  workKey: previousWork.key,
-                })}
-                passHref
-              >
+              <Link href={Hrefs.work(previousWork)} passHref>
                 <NavLink style={textStyle}>‹</NavLink>
               </Link>
             ) : (
@@ -65,18 +67,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           </NavItem>
         </Nav>
         <div className="navbar-brand mx-auto" style={textStyle}>
-          <Link href={Hrefs.home}>{collection.label}</Link>
+          {collection ? (
+            <Link href={Hrefs.home}>{collection.label}</Link>
+          ) : null}
           {currentWork ? (
             <>
               <span>&nbsp;/&nbsp;</span>
-              <Link
-                href={Hrefs.work({
-                  collectionKey: collection.key,
-                  workKey: currentWork.key,
-                })}
-              >
-                {currentWork.label}
-              </Link>
+              <Link href={Hrefs.work(currentWork)}>{currentWork.label}</Link>
             </>
           ) : null}
           {currentWorkLinks.length > 0 ? (
@@ -94,13 +91,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         >
           <NavItem>
             {nextWork ? (
-              <Link
-                href={Hrefs.work({
-                  collectionKey: collection.key,
-                  workKey: nextWork.key,
-                })}
-                passHref
-              >
+              <Link href={Hrefs.work(nextWork)} passHref>
                 <NavLink style={textStyle}>›</NavLink>
               </Link>
             ) : (

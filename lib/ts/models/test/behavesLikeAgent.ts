@@ -3,6 +3,7 @@ import {Agent} from "../src";
 import {it} from "mocha";
 import {behavesLikeModel} from "./behavesLikeModel";
 import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
+import {behavesLikeThumbnailMixin} from "./behavesLikeThumbnailMixin";
 
 export const behavesLikeAgent = (agent: Agent) => {
   it("should get the agent's homepage", () => {
@@ -22,4 +23,5 @@ export const behavesLikeAgent = (agent: Agent) => {
 
   behavesLikeModel(agent);
   behavesLikeImagesMixin(agent);
+  behavesLikeThumbnailMixin(agent);
 };

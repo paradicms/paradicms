@@ -21,13 +21,13 @@ export const mapTermToResourceBackedModel = <ResourceBackedModelT>(kwds: {
     if (factory !== null) {
       return new factory({...modelParameters, identifier: term});
     } else {
-      log.debug("no factory for rdf:type ", rdfType.value);
+      log.trace("no factory for rdf:type ", rdfType.value);
     }
   }
-  log.debug(
-    `unable to determine model type from node ${
-      term.value
-    } (RDF types: ${rdfTypes.map(rdfType => rdfType.value).join(" ")})`
+  log.trace(
+    `no factories to map ${term.value} to RDF types: ${rdfTypes
+      .map(rdfType => rdfType.value)
+      .join(" ")}`
   );
   return null;
 };

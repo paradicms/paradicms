@@ -42,6 +42,7 @@ import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {Work} from "@paradicms/models";
+import {workSearchWorkEventJoinSelector} from "./workSearchWorkEventJoinSelector";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
@@ -220,9 +221,7 @@ export const WorkSearchPage: React.FunctionComponent<{
             limit: (workEventsPage + 1) * objectsPerPage,
             offset: 0,
             requireDate: true,
-            workEventJoinSelector: {
-              // work: {},
-            },
+            workEventJoinSelector: workSearchWorkEventJoinSelector,
           },
           worksQuery
         )
@@ -404,16 +403,20 @@ export const WorkSearchPage: React.FunctionComponent<{
     title: "Timeline",
     content: getWorkEventsResult ? (
       <WorkEventsTimeline
+        getAbsoluteImageSrc={getAbsoluteImageSrc}
         page={workEventsPage}
         pageMax={calculatePageMax({
           objectsPerPage,
           totalObjects: getWorkEventsResult.totalWorkEventsCount,
         })}
+        renderWorkLink={renderWorkLink}
         setPage={setWorkEventsPage}
         workEvents={getWorkEventsResult.modelSet.works.flatMap(work =>
-          work.events.filter(workEvent =>
-            getWorkEventsResult.workEventKeysSet.has(workEvent.key)
-          )
+          work.events
+            .filter(workEvent =>
+              getWorkEventsResult.workEventKeysSet.has(workEvent.key)
+            )
+            .map(workEvent => ({work, workEvent}))
         )}
       />
     ) : null,

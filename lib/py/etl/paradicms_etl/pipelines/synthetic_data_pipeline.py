@@ -296,9 +296,7 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_rights_statement = (
                     RightsStatementsDotOrgRightsStatements.InC_EDU.uri
                 )
-                original_image_src = (
-                    "https://paradicms.org/img/placeholder/1000x1000.png"
-                )
+                original_image_src = "https://paradicms.org/img/synthetic/1000x1000.png"
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
                 original_image_builder: Union[
@@ -352,7 +350,7 @@ class SyntheticDataPipeline(Pipeline):
                         )
                         .set_exact_dimensions(thumbnail_dimensions)
                         .set_src(
-                            f"https://paradicms.org/img/placeholder/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
+                            f"https://paradicms.org/img/synthetic/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
                         )
                         .build()
                     )
@@ -551,8 +549,10 @@ class SyntheticDataPipeline(Pipeline):
                 for work_identifier in work_identifiers:
                     work_builder.add_identifier(work_identifier)
                 work_builder.add_provenance(work_provenance)
-                work_builder.set_created(work_creation_date)
-                work_builder.set_modified(work_modification_date)
+                if work_i >= 2:
+                    work_builder.set_created(work_creation_date)
+                    work_builder.set_modified(work_modification_date)
+                # else get that info from the sameAs
                 properties = tuple(
                     property_
                     for property_ in self.__PROPERTIES
@@ -565,8 +565,10 @@ class SyntheticDataPipeline(Pipeline):
                 # for work_identifier in work_identifiers:
                 #     work_builder.add_identifier(work_identifier)
                 # work_builder.add_provenance(work_provenance)
-                work_builder.set_date_created(work_creation_date)
-                work_builder.set_date_modified(work_modification_date)
+                if work_i >= 2:
+                    work_builder.set_date_created(work_creation_date)
+                    work_builder.set_date_modified(work_modification_date)
+                # else get that info from the sameAs
                 work_builder.add_url(work_page)
                 properties = tuple(
                     property_

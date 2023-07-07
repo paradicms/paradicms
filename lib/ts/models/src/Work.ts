@@ -7,12 +7,14 @@ import {WorkAgent} from "./WorkAgent";
 import {WorkLocation} from "./WorkLocation";
 import {WorkEventUnion} from "./WorkEventUnion";
 import {SameAsMixin} from "./SameAsMixin";
+import {ThumbnailMixin} from "./ThumbnailMixin";
 
 export interface Work
   extends NamedModel,
     ImagesMixin,
     RightsMixin,
-    SameAsMixin {
+    SameAsMixin,
+    ThumbnailMixin {
   readonly agents: readonly WorkAgent[];
   readonly description: Text | null;
   readonly displayDate: string | null;

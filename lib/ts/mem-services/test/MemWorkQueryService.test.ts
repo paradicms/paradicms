@@ -1,5 +1,7 @@
 import {
+  ImageJoinSelector,
   ModelSetFactory,
+  ThumbnailSelector,
   WorkAgent,
   WorkEventUnion,
   WorkLocation,
@@ -18,6 +20,12 @@ import {expect} from "chai";
 import {MemWorkQueryService} from "../src/MemWorkQueryService";
 import {requireDefined, requireNonNull} from "@paradicms/utilities";
 import {describe} from "mocha";
+
+const THUMBNAIL_SELECTOR: ImageJoinSelector & ThumbnailSelector = {
+  licenses: true,
+  rightsStatements: true,
+  targetDimensions: {height: 200, width: 200},
+};
 
 describe("MemWorkQueryService", () => {
   const modelSet = ModelSetFactory.fromDataset(syntheticData);
@@ -53,10 +61,11 @@ describe("MemWorkQueryService", () => {
     expect(getWorkAgents(result)).not.to.be.empty;
   });
 
-  it("getWorkAgents returns the works associated with an agent", async () => {
+  it("getWorkAgents returns the other models associated with an agent", async () => {
     const result = await sut.getWorkAgents(
       {
         agentJoinSelector: {
+          thumbnail: THUMBNAIL_SELECTOR,
           works: {},
         },
         limit: Number.MAX_SAFE_INTEGER,
@@ -73,6 +82,14 @@ describe("MemWorkQueryService", () => {
       expect(workAgent.agent.label).not.to.be.empty;
       // expect(workAgent.agent.works).not.to.be.empty;
     }
+    // Not all work agents will have images
+    expect(workAgents.some(workAgent => workAgent.agent.images.length > 0)).to
+      .be.true;
+    expect(
+      workAgents.some(
+        workAgent => workAgent.agent.thumbnail(THUMBNAIL_SELECTOR) !== null
+      )
+    ).to.be.true;
   });
 
   const getWorkEvents = (result: GetWorkEventsResult) => {
@@ -113,6 +130,7 @@ describe("MemWorkQueryService", () => {
         workEventJoinSelector: {
           agents: {},
           location: true,
+          thumbnail: THUMBNAIL_SELECTOR,
         },
       },
       {
@@ -120,7 +138,8 @@ describe("MemWorkQueryService", () => {
       }
     );
 
-    for (const workEvent of getWorkEvents(result)) {
+    const workEvents = getWorkEvents(result);
+    for (const workEvent of workEvents) {
       // expect(workEvent.location).to.not.be.null;
       switch (workEvent.type) {
         case "WorkCreation":
@@ -128,6 +147,14 @@ describe("MemWorkQueryService", () => {
           break;
       }
     }
+    // Not all work events will have images
+    expect(workEvents.some(workEvent => workEvent.images.length > 0)).to.be
+      .true;
+    expect(
+      workEvents.some(
+        workEvent => workEvent.thumbnail(THUMBNAIL_SELECTOR) !== null
+      )
+    ).to.be.true;
   });
 
   it("getWorkEvents sorted by date", async () => {

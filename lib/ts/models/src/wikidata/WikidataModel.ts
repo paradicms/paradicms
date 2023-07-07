@@ -1,10 +1,7 @@
 import {WikibaseArticle, WikibaseItem, WikibaseStatement,} from "@paradicms/wikibase";
 import {DatasetCore, Literal, NamedNode} from "@rdfjs/types";
 import {ModelSet} from "../ModelSet";
-import {ImagesMixin} from "../ImagesMixin";
 import {Image} from "../Image";
-import {ThumbnailSelector} from "../ThumbnailSelector";
-import {NamedModel} from "../NamedModel";
 import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {RightsMixin} from "../RightsMixin";
 import {License} from "../License";
@@ -19,10 +16,12 @@ import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
 import {PropertyValue} from "../PropertyValue";
 import {WikidataProperty} from "./WikidataProperty";
 import {createPropertyValueFromTerm} from "../createPropertyValueFromTerm";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {NamedModel} from "../NamedModel";
 
 export abstract class WikidataModel
-  extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin)
-  implements ImagesMixin, RightsMixin, NamedModel, WikibaseItem {
+  extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin, SomeImageThumbnailMixin)
+  implements NamedModel, RightsMixin, WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
   protected readonly wikibaseItemSet: WikibaseItemSet;
   protected readonly wikidataPropertiesByIri: {[index: string]: WikidataProperty};
@@ -198,16 +197,6 @@ export abstract class WikidataModel
         statement.propertyDefinition.directClaim?.value ===
         directClaimPropertyIri
     );
-  }
-
-  thumbnail(selector: ThumbnailSelector): Image | null {
-    for (const image of this.images) {
-      const thumbnail = image.thumbnail(selector);
-      if (thumbnail) {
-        return thumbnail;
-      }
-    }
-    return null;
   }
 
   override get wikidataConceptIri(): string {

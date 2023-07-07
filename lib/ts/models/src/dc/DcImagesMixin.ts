@@ -2,7 +2,6 @@ import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {ImagesMixin} from "../ImagesMixin";
 import {Image} from "../Image";
 import {dcterms} from "@paradicms/vocabularies";
-import {ThumbnailSelector} from "../ThumbnailSelector";
 import {mapTermToImage} from "../mapTermToImage";
 import {ModelIdentifier} from "../ModelIdentifier";
 
@@ -23,15 +22,5 @@ export abstract class DcImagesMixin extends ResourceBackedModelMixin
       }
     }
     return images;
-  }
-
-  thumbnail(selector: ThumbnailSelector): Image | null {
-    for (const image of this.images) {
-      const thumbnail = image.thumbnail(selector);
-      if (thumbnail) {
-        return thumbnail;
-      }
-    }
-    return null;
   }
 }

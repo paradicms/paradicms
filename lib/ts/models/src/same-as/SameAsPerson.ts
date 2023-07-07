@@ -3,8 +3,9 @@ import {SameAsImagesMixin} from "./SameAsImagesMixin";
 import {Person} from "../Person";
 import {SameAsModel} from "./SameAsModel";
 import {SameAsAgentMixin} from "./SameAsAgentMixin";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
-export class SameAsPerson extends Mixin(SameAsModel<Person>, SameAsAgentMixin<Person>, SameAsImagesMixin<Person>) implements Person {
+export class SameAsPerson extends Mixin(SameAsModel<Person>, SameAsAgentMixin<Person>, SameAsImagesMixin<Person>, SomeImageThumbnailMixin) implements Person {
     get homepage(): string | null {
         return this.getBestValue(model => model.homepage);
     }

@@ -25,7 +25,7 @@ export const mapTermToLicense = (
     case "NamedNode": {
       const license = modelParameters.modelSet.licenseByIri(term.value);
       if (!license) {
-        log.debug("mapped term to missing license:", term.value);
+        log.trace("mapped term to missing license:", term.value);
       }
       return license;
     }
