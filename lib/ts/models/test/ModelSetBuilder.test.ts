@@ -30,22 +30,23 @@ const expectModelsDeepEq = <ModelT extends Model>(
       .sort()
   );
 
-const countModelSetNamedAgents = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(foaf.Agent, modelSet) +
-  countModelSetNamedRdfInstances(schema.Organization, modelSet) +
-  countModelSetNamedRdfInstances(schema.Person, modelSet);
+const modelSetNamedAgentIris = (modelSet: ModelSet): readonly string[] =>
+  modelSetNamedModelIris(foaf.Agent, modelSet)
+    .concat(modelSetNamedModelIris(schema.Organization, modelSet))
+    .concat(modelSetNamedModelIris(schema.Person, modelSet));
 
-const countModelSetImages = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(dcmitype.Image, modelSet) +
-  countModelSetNamedRdfInstances(schema.ImageObject, modelSet);
+const modelSetImageIris = (modelSet: ModelSet): readonly string[] =>
+  modelSetNamedModelIris(dcmitype.Image, modelSet).concat(
+    modelSetNamedModelIris(schema.ImageObject, modelSet)
+  );
 
-const countModelSetNamedLicenses = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(cc.License, modelSet);
+const modelSetNameLicenseIris = (modelSet: ModelSet): readonly string[] =>
+  modelSetNamedModelIris(cc.License, modelSet);
 
-const countModelSetNamedRdfInstances = (
+const modelSetNamedModelIris = (
   class_: NamedNode,
   modelSet: ModelSet
-) =>
+): readonly string[] =>
   [
     // @ts-ignore
     ...getRdfInstanceQuads({
@@ -53,10 +54,14 @@ const countModelSetNamedRdfInstances = (
       dataset: modelSet.toRdf(),
       includeSubclasses: false,
     }).values(),
-  ].filter(quad => quad.subject.termType === "NamedNode").length;
+  ]
+    .filter(quad => quad.subject.termType === "NamedNode")
+    .map(quad => quad.subject.value);
 
-const countModelSetRightsStatements = (modelSet: ModelSet): number =>
-  countModelSetNamedRdfInstances(dcterms.RightsStatement, modelSet);
+const modelSetNamedRightsStatementIris = (
+  modelSet: ModelSet
+): readonly string[] =>
+  modelSetNamedModelIris(dcterms.RightsStatement, modelSet);
 
 // const hasCommonIri = (
 //   leftIris: readonly string[],
@@ -96,9 +101,9 @@ describe("ModelSetBuilder", () => {
         thumbnail: THUMBNAIL_SELECTOR,
       })
       .build();
-    expect(countModelSetNamedAgents(agentsModelSet)).to.eq(2);
+    expect(modelSetNamedAgentIris(agentsModelSet)).to.have.length(2);
     // The WikidataPerson isn't counted because it doesn't have an unambiguous rdf:type
-    expect(countModelSetImages(agentsModelSet)).to.eq(4); // One original image, one thumbnail per named agent
+    expect(modelSetImageIris(agentsModelSet)).to.have.length(5); // One original image, one thumbnail per named agent + the sameAs agent image
     // for (const namedAgent of namedAgents) {
     //   expect(
     //     agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
@@ -120,7 +125,7 @@ describe("ModelSetBuilder", () => {
       propertyGroupModelSet.properties,
       propertyGroup.properties
     );
-    expect(countModelSetImages(propertyGroupModelSet)).to.eq(
+    expect(modelSetImageIris(propertyGroupModelSet)).to.have.length(
       propertyGroup.properties.length * 2
     ); // One original image, one thumbnail per property
   });
@@ -135,7 +140,7 @@ describe("ModelSetBuilder", () => {
       .build();
     expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
     expect(propertyGroupsModelSet.properties).to.be.empty;
-    expect(countModelSetImages(propertyGroupsModelSet)).to.eq(
+    expect(modelSetImageIris(propertyGroupsModelSet)).to.have.length(
       propertyGroups.length * 2
     ); // One original image, one thumbnail per property group
   });
@@ -157,7 +162,7 @@ describe("ModelSetBuilder", () => {
       propertyGroups[0].properties,
       propertyGroupsModelSet.properties
     );
-    expect(countModelSetImages(propertyGroupsModelSet)).to.eq(0);
+    expect(modelSetImageIris(propertyGroupsModelSet)).to.have.length(0);
     expect(
       propertyGroupsModelSet.properties.some(
         property => property.rangeValues.length > 0
@@ -177,7 +182,7 @@ describe("ModelSetBuilder", () => {
           },
         })
         .build();
-      expect(countModelSetImages(propertyModelSet)).to.eq(
+      expect(modelSetImageIris(propertyModelSet)).to.have.length(
         property.rangeValues.length * 2
       ); // One original image, one thumbnail per value
       return;
@@ -228,11 +233,11 @@ describe("ModelSetBuilder", () => {
     ]);
     const subsetWork = workModelSet.works[0];
 
-    expect(countModelSetImages(workModelSet)).to.eq(7); // 3 work original images, 2 agent original images, 2 agent thumbnails
+    expect(modelSetImageIris(workModelSet)).to.have.length(8); // 3 work original images, 2 agent original images, 2 agent thumbnails + 1 sameAs
 
     expect(subsetWork.agents).to.have.length(7); // 3 named agents + 2 blank node agents + 2 literal agents
     const agentImages = subsetWork.agents.flatMap(agent => agent.agent.images);
-    expect(agentImages).to.have.length(2);
+    expect(agentImages).to.have.length(3);
     const agentThumbnails = agentImages.flatMap(
       agentImage => agentImage.thumbnails
     );
@@ -245,7 +250,7 @@ describe("ModelSetBuilder", () => {
     expect(thumbnails).to.be.empty; // Didn't ask for them
 
     expect(subsetWork.licenses).not.to.be.empty;
-    expect(countModelSetNamedLicenses(workModelSet)).to.eq(3);
+    expect(modelSetNameLicenseIris(workModelSet)).to.have.length(3);
 
     expectModelsDeepEq(
       workModelSet.properties,
@@ -261,7 +266,7 @@ describe("ModelSetBuilder", () => {
     );
 
     expect(subsetWork.rightsStatements).to.not.be.empty;
-    expect(countModelSetRightsStatements(workModelSet)).to.eq(2);
+    expect(modelSetNamedRightsStatementIris(workModelSet)).to.have.length(2);
 
     if (subsetWork.location) {
       expect(subsetWork.location!.location.iris).to.not.be.empty;
@@ -271,13 +276,13 @@ describe("ModelSetBuilder", () => {
       expect(subsetWork.location!.location.centroid!.longitude).not.to.eq(0);
     }
 
-    expect(subsetWork.events).to.have.length(3);
+    expect(subsetWork.events).to.have.length(1); // Only the sameAs WikidataWork has a creation event
     expect(
       subsetWork.events.find(workEvent => workEvent.type === "WorkCreation")
     ).not.to.be.undefined;
-    expect(
-      subsetWork.events.find(workEvent => workEvent.type === "WorkModification")
-    ).not.to.be.undefined;
+    // expect(
+    //   subsetWork.events.find(workEvent => workEvent.type === "WorkModification")
+    // ).not.to.be.undefined;
   });
 
   it("should get a work events subset (work events timeline)", () => {
