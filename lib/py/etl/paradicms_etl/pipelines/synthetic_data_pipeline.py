@@ -549,8 +549,10 @@ class SyntheticDataPipeline(Pipeline):
                 for work_identifier in work_identifiers:
                     work_builder.add_identifier(work_identifier)
                 work_builder.add_provenance(work_provenance)
-                work_builder.set_created(work_creation_date)
-                work_builder.set_modified(work_modification_date)
+                if work_i >= 2:
+                    work_builder.set_created(work_creation_date)
+                    work_builder.set_modified(work_modification_date)
+                # else get that info from the sameAs
                 properties = tuple(
                     property_
                     for property_ in self.__PROPERTIES
@@ -563,8 +565,10 @@ class SyntheticDataPipeline(Pipeline):
                 # for work_identifier in work_identifiers:
                 #     work_builder.add_identifier(work_identifier)
                 # work_builder.add_provenance(work_provenance)
-                work_builder.set_date_created(work_creation_date)
-                work_builder.set_date_modified(work_modification_date)
+                if work_i >= 2:
+                    work_builder.set_date_created(work_creation_date)
+                    work_builder.set_date_modified(work_modification_date)
+                # else get that info from the sameAs
                 work_builder.add_url(work_page)
                 properties = tuple(
                     property_
