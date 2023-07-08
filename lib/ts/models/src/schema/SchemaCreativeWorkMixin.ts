@@ -13,8 +13,6 @@ import {Location} from "../Location";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
-import {Image} from "../Image";
-import {mapTermToImage} from "../mapTermToImage";
 
 export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   implements RightsMixin {
@@ -82,13 +80,6 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   get spatial(): readonly Location[] {
     return this.filterAndMapObjects(schema.spatial, term =>
       mapTermToLocation(this, term)
-    );
-  }
-
-  @Memoize()
-  get thumbnails(): readonly Image[] {
-    return this.filterAndMapObjects(schema.thumbnail, term =>
-      mapTermToImage(this, term)
     );
   }
 }

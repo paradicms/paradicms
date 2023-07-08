@@ -10,6 +10,7 @@ import {mapTermToString} from "@paradicms/rdf";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import log from "loglevel";
+import {mapTermToImage} from "../mapTermToImage";
 
 export class SchemaImageObject
   extends Mixin(SchemaNamedModel, SchemaMediaObjectMixin)
@@ -93,5 +94,12 @@ export class SchemaImageObject
     } else {
       return null;
     }
+  }
+
+  @Memoize()
+  get thumbnails(): readonly Image[] {
+    return this.filterAndMapObjects(schema.thumbnail, term =>
+        mapTermToImage(this, term)
+    );
   }
 }
