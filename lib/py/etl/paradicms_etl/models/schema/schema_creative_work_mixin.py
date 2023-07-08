@@ -80,8 +80,8 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             },
         }
         for property_ in (
-            "copyrightHolder",
             "contributor",
+            "copyrightHolder",
             "creator",
             "license",
             "usageInfo",
