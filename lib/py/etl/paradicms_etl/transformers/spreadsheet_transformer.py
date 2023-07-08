@@ -64,6 +64,9 @@ class SpreadsheetTransformer:
 
     def __call__(self, sheets: Dict[str, Any]):
         for sheet_name, sheet in sheets.items():
+            if sheet_name.lstrip().startswith("#"):
+                continue
+
             rows = sheet["rows"]
             root_model_class = self.__root_model_classes_by_alias.get(sheet_name)
             if root_model_class is None:
@@ -113,8 +116,17 @@ class SpreadsheetTransformer:
 
                     _multidict_add(row_dict, header_cell, json_ready_data_cell)
 
-                yield self.__json_object_to_model_transformer(
-                    json_object=row_dict,
-                    model_class=root_model_class,
-                    model_id=sheet_name + ":" + str(row_i),
-                )
+                try:
+                    yield self.__json_object_to_model_transformer(
+                        json_object=row_dict,
+                        model_class=root_model_class,
+                        model_id=sheet_name + ":" + str(row_i),
+                    )
+                except ValueError:
+                    self.__logger.warning(
+                        "error transforming %s row %d:",
+                        sheet_name,
+                        row_i,
+                        exc_info=True,
+                    )
+                    continue
