@@ -16,8 +16,8 @@ The code in this repository is organized into three areas:
 
 * `app/`: [Paradicms app](https://paradicms.org/docs/introduction/apps) implementations
 * `lib/py/`: Python libraries, which are primarily used by [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions)
-  * `lib/py/etl`: code for transforming data from various sources (Airtable, Omeka, spreadsheets, et al.) into the [Paradicms data model](https://paradicms.org/docs/introduction/data-model/)
-  * `lib/py/ssg`: code for statically generating websites (apps) from data adhering to the Paradicms data model
+  * `lib/py/etl`: code for transforming data from various sources (Airtable, Omeka, spreadsheets, et al.) into one of the [logical data models](https://paradicms.org/docs/reference/logical-data-models/) supported by Paradicms
+  * `lib/py/ssg`: code for statically generating websites (apps) from data adhering to one of the logical data models
 * `lib/ts`: TypeScript libraries used by app implementations
 
 ### Data
