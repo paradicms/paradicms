@@ -9,6 +9,7 @@ from rdflib.term import Node, BNode
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.image_data import ImageData
+from paradicms_etl.utils.clone_graph import clone_graph
 
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
 _StatementObject = Union[Literal, Resource]
@@ -74,9 +75,7 @@ class ResourceBackedModel(Model):
 
     @classmethod
     def from_rdf(cls, resource: Resource):
-        graph = Graph()
-        graph += resource.graph
-        return cls(graph.resource(resource.identifier))
+        return cls(clone_graph(resource.graph).resource(resource.identifier))
 
     @staticmethod
     def _map_bool_value(value: _StatementObject) -> Optional[bool]:
