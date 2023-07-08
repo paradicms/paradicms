@@ -6,6 +6,7 @@ from rdflib.resource import Resource
 from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.text import Text
+from paradicms_etl.utils.clone_graph import clone_graph
 
 
 class DcRightsStatement(DcModel, RightsStatement):
@@ -31,6 +32,8 @@ class DcRightsStatement(DcModel, RightsStatement):
 
     @classmethod
     def from_rdf(cls, resource: Resource) -> "DcRightsStatement":
+        resource_clone = clone_graph(resource.graph).resource(resource.identifier)
+
         if isinstance(resource.identifier, URIRef):
             if str(resource.identifier).startswith(
                 "http://rightsstatements.org/vocab/"
@@ -40,9 +43,9 @@ class DcRightsStatement(DcModel, RightsStatement):
                         RightsStatementsDotOrgRightsStatement,
                     )
 
-                    return RightsStatementsDotOrgRightsStatement(resource)
+                    return RightsStatementsDotOrgRightsStatement(resource_clone)
 
-        return DcModel.from_rdf(resource)
+        return cls(resource_clone)
 
     @property
     def label(self) -> str:
