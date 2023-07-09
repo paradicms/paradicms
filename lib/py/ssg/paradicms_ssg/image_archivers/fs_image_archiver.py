@@ -2,6 +2,8 @@ import mimetypes
 import shutil
 from pathlib import Path
 
+from PIL import UnidentifiedImageError
+
 from paradicms_ssg.utils.get_image_file_mime_type import get_image_file_mime_type
 from paradicms_ssg.utils.sha256_hash_file import sha256_hash_file
 
@@ -19,7 +21,10 @@ class FsImageArchiver:
         self.__root_directory_path = root_directory_path
 
     def __call__(self, *, image_file_path: Path) -> str:
-        image_file_mime_type = get_image_file_mime_type(image_file_path)
+        try:
+            image_file_mime_type = get_image_file_mime_type(image_file_path)
+        except UnidentifiedImageError:
+            raise ValueError(f"unable to get MIME type {image_file_path}")
 
         guess_file_ext = mimetypes.guess_extension(image_file_mime_type, strict=False)
         if guess_file_ext is None:
