@@ -208,11 +208,16 @@ class DirectoryTransformer:
                 ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
                     collection_root_model_class, tuple()
                 ):
-                    collection: Collection = (
-                        self.__transform_metadata_file_entry_to_model(  # type: ignore
+                    try:
+                        collection: Collection = self.__transform_metadata_file_entry_to_model(  # type: ignore
                             metadata_file_entry=metadata_file_entry
+                        )  # type: ignore
+                    except ValueError as e:
+                        self.__logger.warning(
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
                         )
-                    )  # type: ignore
+                        continue
+
                     transformed_collections_by_id[
                         metadata_file_entry.model_id
                     ] = collection
@@ -277,9 +282,15 @@ class DirectoryTransformer:
                 ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
                     image_root_model_class, tuple()
                 ):
-                    image: Image = self.__transform_metadata_file_entry_to_model(
-                        metadata_file_entry=metadata_file_entry
-                    )  # type: ignore
+                    try:
+                        image: Image = self.__transform_metadata_file_entry_to_model(
+                            metadata_file_entry=metadata_file_entry
+                        )  # type: ignore
+                    except ValueError as e:
+                        self.__logger.warning(
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
+                        )
+                        continue
 
                     # If the image metadata has no src and there is a sibling image file (i.e., a .jpg) with the same model id (i.e., file stem) as the metadata file,
                     # use that image file as the src.
@@ -326,13 +337,16 @@ class DirectoryTransformer:
             except Exception as e:
                 raise ValueError(f"error deserializing {metadata_file_entry}") from e
 
-            model = self.__json_object_to_model_transformer(
-                json_object=json_object,
-                model_class=self.__root_model_class_by_alias(
-                    metadata_file_entry.model_type
-                ),
-                model_id=metadata_file_entry.model_id,
-            )
+            try:
+                model = self.__json_object_to_model_transformer(
+                    json_object=json_object,
+                    model_class=self.__root_model_class_by_alias(
+                        metadata_file_entry.model_type
+                    ),
+                    model_id=metadata_file_entry.model_id,
+                )
+            except ValueError as e:
+                raise ValueError(f"error deserializing {metadata_file_entry}") from e
 
             if isinstance(model, Image):
                 for image_uri in model.thumbnail_uris:
@@ -354,12 +368,18 @@ class DirectoryTransformer:
                 if root_model_class in image_root_model_classes:
                     continue
                 for metadata_file_entry in metadata_file_entries:
-                    self.__buffer_transformed_model(
-                        model_id=metadata_file_entry.model_id,
-                        transformed_model=self.__transform_metadata_file_entry_to_model(
-                            metadata_file_entry
-                        ),
-                    )
+                    try:
+                        self.__buffer_transformed_model(
+                            model_id=metadata_file_entry.model_id,
+                            transformed_model=self.__transform_metadata_file_entry_to_model(
+                                metadata_file_entry
+                            ),
+                        )
+                    except ValueError as e:
+                        self.__logger.warning(
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
+                        )
+                        continue
 
         def __transform_work_metadata_file_entries(
             self,
@@ -372,9 +392,15 @@ class DirectoryTransformer:
                 ) in self.__untransformed_metadata_file_entries_by_root_model_class.pop(
                     work_root_model_class, tuple()
                 ):
-                    work: Work = self.__transform_metadata_file_entry_to_model(
-                        metadata_file_entry
-                    )
+                    try:
+                        work: Work = self.__transform_metadata_file_entry_to_model(
+                            metadata_file_entry
+                        )
+                    except ValueError as e:
+                        self.__logger.warning(
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
+                        )
+                        continue
 
                     self.__buffer_transformed_model(
                         model_id=metadata_file_entry.model_id,
