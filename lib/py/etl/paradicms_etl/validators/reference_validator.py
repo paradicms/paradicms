@@ -35,9 +35,11 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.work import Work
@@ -324,6 +326,14 @@ class ReferenceValidator:
             uri_type="rights statement",
         )
 
+    def _validate_schema_creative_work_object(
+        self, work: SchemaCreativeWork
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_work(work)
+
+    def _validate_schema_creative_work_references(self) -> Iterable[ValidationResult]:
+        return ()
+
     def _validate_schema_image_object(
         self, image_object: SchemaImageObject
     ) -> Iterable[ValidationResult]:
@@ -346,6 +356,14 @@ class ReferenceValidator:
         yield from self.__validate_person(person)
 
     def _validate_schema_person_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_place(
+        self, schema_place: SchemaPlace
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_location(schema_place)
+
+    def _validate_schema_place_references(self) -> Iterable[ValidationResult]:
         return ()
 
     def _validate_skos_concept(
