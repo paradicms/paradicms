@@ -212,11 +212,9 @@ class DirectoryTransformer:
                         collection: Collection = self.__transform_metadata_file_entry_to_model(  # type: ignore
                             metadata_file_entry=metadata_file_entry
                         )  # type: ignore
-                    except ValueError:
+                    except ValueError as e:
                         self.__logger.warning(
-                            "exception transforming %s:",
-                            metadata_file_entry,
-                            exc_info=True,
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
                         )
                         continue
 
@@ -288,11 +286,9 @@ class DirectoryTransformer:
                         image: Image = self.__transform_metadata_file_entry_to_model(
                             metadata_file_entry=metadata_file_entry
                         )  # type: ignore
-                    except ValueError:
+                    except ValueError as e:
                         self.__logger.warning(
-                            "exception transforming %s:",
-                            metadata_file_entry,
-                            exc_info=True,
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
                         )
                         continue
 
@@ -379,11 +375,9 @@ class DirectoryTransformer:
                                 metadata_file_entry
                             ),
                         )
-                    except ValueError:
+                    except ValueError as e:
                         self.__logger.warning(
-                            "exception transforming %s:",
-                            metadata_file_entry,
-                            exc_info=True,
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
                         )
                         continue
 
@@ -402,11 +396,9 @@ class DirectoryTransformer:
                         work: Work = self.__transform_metadata_file_entry_to_model(
                             metadata_file_entry
                         )
-                    except ValueError:
+                    except ValueError as e:
                         self.__logger.warning(
-                            "exception transforming %s:",
-                            metadata_file_entry,
-                            exc_info=True,
+                            "exception transforming %s: %s", metadata_file_entry, str(e)
                         )
                         continue
 
