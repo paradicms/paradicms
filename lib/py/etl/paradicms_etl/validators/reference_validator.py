@@ -326,7 +326,7 @@ class ReferenceValidator:
             uri_type="rights statement",
         )
 
-    def _validate_schema_creative_work_object(
+    def _validate_schema_creative_work(
         self, work: SchemaCreativeWork
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_work(work)
