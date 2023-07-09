@@ -35,6 +35,9 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.schema.schema_organization import SchemaOrganization
+from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.work import Work
@@ -119,9 +122,15 @@ class ReferenceValidator:
     def _validate_cms_property_group_references(self) -> Iterable[ValidationResult]:
         return ()
 
-    def __validate_collection(self, collection: Collection):
+    def __validate_collection(
+        self, collection: Collection
+    ) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(collection)
-        assert collection.uri not in self.__collection_uris
+        if collection.uri in self.__collection_uris:
+            yield ValidationResult(
+                message=f"duplicate Collection {collection.uri}",
+                severity=ValidationResult.Severity.WARNING,
+            )
         self.__collection_uris.add(collection.uri)
         for image_uri in collection.image_uris:
             self.__referenced_image_uris.add(image_uri)
@@ -209,11 +218,15 @@ class ReferenceValidator:
             uri_type="image",
         )
 
-    def __validate_license(self, license: License) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(license)
-        if license.uri is not None:
-            assert license.uri not in self.__license_uris
-            self.__license_uris.add(license.uri)
+    def __validate_license(self, license_: License) -> Iterable[ValidationResult]:
+        yield from self.__validate_named_model(license_)
+        if license_.uri is not None:
+            if license_.uri in self.__license_uris:
+                yield ValidationResult(
+                    message=f"duplicate License {license_.uri}",
+                    severity=ValidationResult.Severity.WARNING,
+                )
+            self.__license_uris.add(license_.uri)
 
     def __validate_license_references(self) -> Iterable[ValidationResult]:
         yield from self.__validate_uri_references(
@@ -243,7 +256,11 @@ class ReferenceValidator:
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(organization)
         if organization.uri is not None:
-            assert organization.uri not in self.__organization_uris, organization.uri
+            if organization.uri in self.__organization_uris:
+                yield ValidationResult(
+                    message=f"duplicate Organization {organization.uri}",
+                    severity=ValidationResult.Severity.WARNING,
+                )
             self.__organization_uris.add(organization.uri)
         for image_uri in organization.image_uris:
             self.__referenced_image_uris.add(image_uri)
@@ -251,7 +268,11 @@ class ReferenceValidator:
     def __validate_person(self, person: Person) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(person)
         if person.uri is not None:
-            assert person.uri not in self.__person_uris
+            if person.uri in self.__person_uris:
+                yield ValidationResult(
+                    message=f"duplicate Person {person.uri}",
+                    severity=ValidationResult.Severity.WARNING,
+                )
             self.__person_uris.add(person.uri)
         for image_uri in person.image_uris:
             self.__referenced_image_uris.add(image_uri)
@@ -279,7 +300,11 @@ class ReferenceValidator:
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(rights_statement)
         if rights_statement.uri is not None:
-            assert rights_statement.uri not in self.__rights_statement_uris
+            if rights_statement.uri in self.__rights_statement_uris:
+                yield ValidationResult(
+                    message=f"duplicate RightsStatement {rights_statement.uri}",
+                    severity=ValidationResult.Severity.WARNING,
+                )
             self.__rights_statement_uris.add(rights_statement.uri)
 
     def _validate_rights_statements_dot_org_rights_statement(
@@ -298,6 +323,30 @@ class ReferenceValidator:
             universe_uris=self.__rights_statement_uris,
             uri_type="rights statement",
         )
+
+    def _validate_schema_image_object(
+        self, image_object: SchemaImageObject
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_image(image_object)
+
+    def _validate_schema_image_object_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_organization(
+        self, organization: SchemaOrganization
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_organization(organization)
+
+    def _validate_schema_organization_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_person(
+        self, person: SchemaPerson
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_person(person)
+
+    def _validate_schema_person_references(self) -> Iterable[ValidationResult]:
+        return ()
 
     def _validate_skos_concept(
         self, concept: SkosConcept
@@ -339,8 +388,12 @@ class ReferenceValidator:
     def __validate_work(self, work: Work) -> Iterable[ValidationResult]:
         yield from self.__validate_named_model(work)
         yield from self.__validate_rights(work)
-        assert work.uri not in self.__work_uris
-        self.__work_uris.add(work.uri)
+        if work.uri in self.__work_uris:
+            yield ValidationResult(
+                message=f"duplicate Work {work.uri}",
+                severity=ValidationResult.Severity.WARNING,
+            )
+            self.__work_uris.add(work.uri)
         self.__image_uris.add(work.image_uris)
 
     def __validate_work_references(self) -> Iterable[ValidationResult]:
