@@ -9,7 +9,8 @@ class SchemaExhibitionEvent(
     SchemaEvent,
 ):
     class Builder(SchemaEvent.Builder):
-        pass
+        def build(self) -> "SchemaExhibitionEvent":
+            return SchemaExhibitionEvent(self._resource)
 
     @classmethod
     def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
