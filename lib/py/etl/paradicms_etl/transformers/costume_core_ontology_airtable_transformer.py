@@ -6,7 +6,6 @@ from typing import (
     Union,
     List,
     Set,
-    FrozenSet,
     Optional,
     Any,
     TypeVar,
@@ -33,7 +32,6 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
-from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -75,9 +73,8 @@ class CostumeCoreOntologyAirtableTransformer:
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
-        self.__available_licenses_by_uri: Dict[
-            URIRef, License
-        ] = CreativeCommonsLicenses.by_uri().copy()
+        self.__available_licenses_by_uri: Dict[URIRef, License] = {}
+        self.__available_licenses_by_uri.update(CreativeCommonsLicenses.by_uri())
         odc_by_license = (
             DcLicenseDocument.builder(
                 title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
@@ -92,15 +89,9 @@ class CostumeCoreOntologyAirtableTransformer:
             .build()
         )
         self.__available_licenses_by_uri[odc_by_license.uri] = odc_by_license  # type: ignore
-        self.__available_license_uris = frozenset(
-            self.__available_licenses_by_uri.keys()
-        )
 
-        self.__available_rights_statements_by_uri: Dict[
-            URIRef, RightsStatement
-        ] = RightsStatementsDotOrgRightsStatements.by_uri()
-        self.__available_rights_statement_uris = frozenset(
-            self.__available_rights_statements_by_uri.keys()
+        self.__available_rights_statements_by_uri = (
+            RightsStatementsDotOrgRightsStatements.by_uri()
         )
         # Track which licenses and rights statements we want to yield as we see references to them
         self.__referenced_license_uris: Set[URIRef] = set()
@@ -716,58 +707,47 @@ class CostumeCoreOntologyAirtableTransformer:
             assert len(list_) == 1
             return list_[0]
 
-        def transform_rights_uri(
-            available_rights_uris: FrozenSet[URIRef],
-            rights_uri_str: Union[None, str],
-            referenced_rights_uris: Set[URIRef],
-        ) -> Union[None, str, URIRef]:
-            if not rights_uri_str:
-                return None
-
-            rights_uri = URIRef(rights_uri_str)
-            if rights_uri in available_rights_uris:
-                referenced_rights_uris.add(rights_uri)
-                return rights_uri
-
-            if str(rights_uri).startswith("https://"):
-                http_rights_uri = URIRef("http://" + rights_uri[len("https://") :])
-                if http_rights_uri in available_rights_uris:
-                    referenced_rights_uris.add(http_rights_uri)
-                    return http_rights_uri
-
-            if id(available_rights_uris) != id(
-                self.__available_rights_statement_uris
-            ) or rights_uri not in (
-                URIRef("https://creativecommons.org/publicdomain/zero/1.0/"),
-                URIRef("https://creativecommons.org/publicdomain/mark/1.0/"),
-            ):
-                self.__logger.warning("unknown rights URI: %s", rights_uri)
-
-            return None
-
         model_builder.add_creator(
             get_first_list_element(record_fields.get(f"{key_prefix}_rights_author"))
         )
 
-        license = transform_rights_uri(
-            available_rights_uris=self.__available_license_uris,
-            rights_uri_str=get_first_list_element(
-                record_fields.get(f"{key_prefix}_rights_license")
-            ),
-            referenced_rights_uris=self.__referenced_license_uris,
-        )
-        if license:
-            model_builder.add_license(license)
+        license_uri: Optional[URIRef] = None
+        rights_statement_uri: Optional[URIRef] = None
 
-        rights_statement = transform_rights_uri(
-            available_rights_uris=self.__available_rights_statement_uris,
-            rights_uri_str=get_first_list_element(
-                record_fields.get(f"{key_prefix}_rights_statement")
-            ),
-            referenced_rights_uris=self.__referenced_rights_statement_uris,
+        license_uri_str = get_first_list_element(
+            record_fields.get(f"{key_prefix}_rights_license")
         )
-        if rights_statement:
-            model_builder.add_rights_statement(rights_statement)
+        if license_uri_str:
+            license_uri = URIRef(license_uri_str)
+
+        rights_statement_uri_str = get_first_list_element(
+            record_fields.get(f"{key_prefix}_rights_statement")
+        )
+        if rights_statement_uri_str:
+            if rights_statement_uri_str in {
+                "https://creativecommons.org/publicdomain/mark/1.0/",
+                "https://creativecommons.org/publicdomain/zero/1.0/",
+            }:
+                assert license_uri is None
+                license_uri = URIRef(rights_statement_uri_str)
+            else:
+                rights_statement_uri = URIRef(rights_statement_uri_str)
+
+        if license_uri is not None:
+            if license_uri in self.__available_licenses_by_uri:
+                model_builder.add_license(license_uri)
+                self.__referenced_license_uris.add(license_uri)
+            else:
+                self.__logger.warning("unknown license URI: %s", license_uri)
+
+        if rights_statement_uri is not None:
+            if rights_statement_uri in self.__available_rights_statements_by_uri:
+                model_builder.add_rights_statement(rights_statement_uri)
+                self.__referenced_rights_statement_uris.add(rights_statement_uri)
+            else:
+                self.__logger.warning(
+                    "unknown rights statement URI: %s", rights_statement_uri
+                )
 
         # source_name=get_first_list_element(
         #     fields[f"{key_prefix}_rights_source_name"]
