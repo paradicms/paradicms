@@ -35,13 +35,16 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_event import SchemaEvent
 from paradicms_etl.models.schema.schema_exhibition_event import SchemaExhibitionEvent
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_place import SchemaPlace
+from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.work import Work
@@ -286,6 +289,9 @@ class ReferenceValidator:
     ) -> Iterable[ValidationResult]:
         return ()
 
+    def _validate_rdf_property_references(self) -> Iterable[ValidationResult]:
+        return ()
+
     def __validate_rights(self, rights: RightsMixin) -> Iterable[ValidationResult]:
         for agents in (rights.contributors, rights.creators, rights.rights_holders):
             for agent in agents:
@@ -328,12 +334,28 @@ class ReferenceValidator:
             uri_type="rights statement",
         )
 
+    def _validate_schema_collection(
+        self, collection: SchemaCollection
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_collection(collection)
+
+    def _validate_schema_collection_references(self) -> Iterable[ValidationResult]:
+        return ()
+
     def _validate_schema_creative_work(
         self, work: SchemaCreativeWork
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_work(work)
 
     def _validate_schema_creative_work_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_defined_term(
+        self, concept: SchemaDefinedTerm
+    ) -> Iterable[ValidationResult]:
+        yield from self.__validate_concept(concept)
+
+    def _validate_schema_defined_term_references(self) -> Iterable[ValidationResult]:
         return ()
 
     def _validate_schema_event(
@@ -384,6 +406,14 @@ class ReferenceValidator:
         yield from self.__validate_location(schema_place)
 
     def _validate_schema_place_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_property(
+        self, property_: SchemaProperty
+    ) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_property_references(self) -> Iterable[ValidationResult]:
         return ()
 
     def _validate_skos_concept(
