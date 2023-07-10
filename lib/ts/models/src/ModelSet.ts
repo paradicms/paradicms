@@ -3,6 +3,7 @@ import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
+import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
@@ -20,6 +21,7 @@ export interface ModelSet {
   collectionByKey(collectionKey: string): Collection | null;
   conceptByIri(conceptIri: string): Concept | null;
   readonly concepts: readonly Concept[];
+  readonly events: readonly Event[];
   imageByIri(imageIri: string): Image | null;
   licenseByIri(licenseIri: string): License | null;
   locationByIri(locationIri: string): Location | null;

@@ -10,10 +10,6 @@ describe("CachingModelSet", () => {
     expect(collections).to.have.length(2);
     for (const collection of collections) {
       expect(sut.collectionByKey(collection.key)).to.eq(collection);
-      // for (const collectionIri of collection.iris) {
-      //   expect(sut.collectionByIri(collectionIri)!).to.eq(collection);
-      // }
-
       for (const work of collection.works) {
         expect(sut.workByKey(work.key)).to.eq(work);
         for (const workIri of work.iris) {

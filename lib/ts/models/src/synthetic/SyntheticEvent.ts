@@ -4,13 +4,14 @@ import {ModelIdentifier} from "../ModelIdentifier";
 import {Text} from "../Text";
 import {Location} from "../Location";
 import {DatasetCore} from "@rdfjs/types";
-import {EventMixin} from "../EventMixin";
+import {EventDerivedDatesMixin} from "../EventDerivedDatesMixin";
 import {Mixin} from "ts-mixer";
 import {SyntheticEventParameters} from "./SyntheticEventParameters";
 import {Image} from "../Image";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 
-export class SyntheticEvent extends Mixin(EventMixin, SomeImageThumbnailMixin)
+export class SyntheticEvent
+  extends Mixin(EventDerivedDatesMixin, SomeImageThumbnailMixin)
   implements Event {
   readonly date: DateTimeDescription | null;
   readonly description: Text | null;
