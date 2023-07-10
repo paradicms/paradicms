@@ -1,11 +1,9 @@
 import {WikidataModel} from "./WikidataModel";
 import {Work} from "../Work";
 import {WorkLocation} from "../WorkLocation";
-import {WorkAgent} from "../WorkAgent";
 import {Collection} from "../Collection";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {Text} from "../Text";
-import {getWorkAgents} from "../getWorkAgents";
 import {Memoize} from "typescript-memoize";
 import {mapTermToText} from "../mapTermToText";
 import {DataFactory} from "@paradicms/rdf";
@@ -17,14 +15,11 @@ import {WikidataLocation} from "./WikidataLocation";
 import log from "loglevel";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
 import {Mixin} from "ts-mixer";
+import {WorkAgentsMixin} from "../WorkAgentsMixin";
 
-export class WikidataWork extends Mixin(WikidataModel, WorkDisplayDateMixin)
+export class WikidataWork
+  extends Mixin(WikidataModel, WorkAgentsMixin, WorkDisplayDateMixin)
   implements Work {
-  @Memoize()
-  get agents(): readonly WorkAgent[] {
-    return getWorkAgents(this);
-  }
-
   readonly collections: readonly Collection[] = [];
 
   @Memoize()

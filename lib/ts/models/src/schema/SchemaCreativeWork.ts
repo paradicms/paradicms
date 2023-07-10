@@ -2,8 +2,6 @@ import {Mixin} from "ts-mixer";
 import {SchemaNamedModel} from "./SchemaNamedModel";
 import {SchemaCreativeWorkMixin} from "./SchemaCreativeWorkMixin";
 import {Work} from "../Work";
-import {WorkAgent} from "../WorkAgent";
-import {getWorkAgents} from "../getWorkAgents";
 import {Memoize} from "typescript-memoize";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {WorkLocation} from "../WorkLocation";
@@ -13,15 +11,11 @@ import {requireNonNull} from "@paradicms/utilities";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
+import {WorkAgentsMixin} from "../WorkAgentsMixin";
 
 export class SchemaCreativeWork
-  extends Mixin(SchemaNamedModel, SchemaCreativeWorkMixin, WorkDisplayDateMixin)
+  extends Mixin(SchemaNamedModel, SchemaCreativeWorkMixin, WorkAgentsMixin, WorkDisplayDateMixin)
   implements Work {
-  @Memoize()
-  get agents(): readonly WorkAgent[] {
-    return getWorkAgents(this);
-  }
-
   @Memoize()
   get events(): readonly WorkEventUnion[] {
     const events: WorkEventUnion[] = [];
