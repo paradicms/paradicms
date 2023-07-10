@@ -113,6 +113,9 @@ class CostumeCoreDataAirtableTransformer:
                 uri=work_uri,
             )
 
+            if object_record["fields"].get("Date", "").strip():
+                work_builder.set_created(object_record["fields"]["Date"])
+
             for field_key, field_value in object_record["fields"].items():
                 try:
                     property_ = properties_by_label[field_key]
@@ -187,8 +190,10 @@ class CostumeCoreDataAirtableTransformer:
             ).set_format(display_image["type"])
             if image_record_fields.get("imageID"):
                 original_image_builder.add_identifier(image_record_fields["imageID"])
-            if image_record_fields.get("image_creator"):
-                original_image_builder.add_creator(image_record_fields["image_creator"])
+            # if image_record_fields.get("image_creator"):
+            #     original_image_builder.add_rights_holder(
+            #         image_record_fields["image_creator"]
+            #     )
             if image_record_fields.get("image_rights_license"):
                 original_image_builder.add_license(
                     URIRef(image_record_fields["image_rights_license"])
