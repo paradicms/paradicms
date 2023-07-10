@@ -728,8 +728,8 @@ class CostumeCoreOntologyAirtableTransformer:
                 "https://creativecommons.org/publicdomain/mark/1.0/",
                 "https://creativecommons.org/publicdomain/zero/1.0/",
             }:
-                assert license_uri is None
-                license_uri = URIRef(rights_statement_uri_str)
+                if license_uri is None:
+                    license_uri = URIRef(rights_statement_uri_str)
             else:
                 rights_statement_uri = URIRef(rights_statement_uri_str)
 
