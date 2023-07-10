@@ -1557,6 +1557,9 @@ wd:Q1045372 a owl:NamedIndividual ;
 wd:Q10461476 a owl:NamedIndividual ;
     owl:sameAs coco:CC00514 .
 
+wd:Q105840205 a owl:NamedIndividual ;
+    owl:sameAs coco:CC00318 .
+
 wd:Q10638846 a owl:NamedIndividual ;
     owl:sameAs coco:CC00502 .
 
@@ -1601,6 +1604,9 @@ wd:Q116887 a owl:NamedIndividual ;
 
 wd:Q117740097 a owl:NamedIndividual ;
     owl:sameAs coco:CC00274 .
+
+wd:Q118274542 a owl:NamedIndividual ;
+    owl:sameAs coco:CC00269 .
 
 wd:Q1262096 a owl:NamedIndividual ;
     owl:sameAs coco:CC00291 .
@@ -7183,17 +7189,6 @@ coco:CC00268 a owl:NamedIndividual ;
     dcterms:identifier "CC00268" ;
     owl:sameAs <http://vocab.getty.edu/aat/300227801> .
 
-coco:CC00269 a owl:NamedIndividual ;
-    rdfs:label "China silk"@en ;
-    dcterms:description [ rdfs:label "Lightweight silk of plain weave."@en ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <https://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <https://rightsstatements.org/vocab/InC/1.0/> ;
-            dcterms:source <http://www.getty.edu/research/tools/vocabularies/aat/> ],
-        "Lightweight silk of plain weave."@en ;
-    dcterms:identifier "CC00269" ;
-    owl:sameAs <http://vocab.getty.edu/aat/300132896> .
-
 coco:CC00270 a owl:NamedIndividual ;
     rdfs:label "chintz"@en ;
     dcterms:description [ rdfs:label "Textile, usually cotton or linen, dyed in a number of colors and usually glazed."@en ;
@@ -7602,17 +7597,6 @@ coco:CC00316 a owl:NamedIndividual ;
         "Refers to a woven textile characterized by parallel diagonal ridges or ribs, produced by passing the weft threads over one and under two or more threads of the warp, instead of over and under in regular succession, as in plain weaving. Regular twill features a diagonal line that is repeated regularly, usually running from the left to right at a 45-degree angle and upward. The weave may be varied in several ways, including changing the angle or direction of the twill line, as exemplified in herringbone twill."@en ;
     dcterms:identifier "CC00316" ;
     owl:sameAs <http://vocab.getty.edu/aat/300227915> .
-
-coco:CC00318 a owl:NamedIndividual ;
-    rdfs:label "vinyl"@en ;
-    dcterms:description [ rdfs:label "Generic term for materials derived from vinyl chloride, vinyl acetate, or vinylidene chloride. Commonly used with reference to all polymers and copolymers of which vinyl chloride is a constituent. Use more precise terminology for known materials such as \"polyvinyl chloride\" or \"polyvinyl acetate.\""@en ;
-            dcterms:creator "The J. Paul Getty Trust" ;
-            dcterms:license <https://opendatacommons.org/licenses/by/1-0/> ;
-            dcterms:rights <https://rightsstatements.org/vocab/InC/1.0/> ;
-            dcterms:source <http://www.getty.edu/research/tools/vocabularies/aat/> ],
-        "Generic term for materials derived from vinyl chloride, vinyl acetate, or vinylidene chloride. Commonly used with reference to all polymers and copolymers of which vinyl chloride is a constituent. Use more precise terminology for known materials such as \"polyvinyl chloride\" or \"polyvinyl acetate.\""@en ;
-    dcterms:identifier "CC00318" ;
-    owl:sameAs <http://vocab.getty.edu/aat/300014502> .
 
 coco:CC00319 a owl:NamedIndividual ;
     rdfs:label "voile"@en ;
@@ -8305,6 +8289,18 @@ coco:CC00250 a owl:NamedIndividual ;
     owl:sameAs <http://vocab.getty.edu/aat/300243430>,
         wd:Q11547758 .
 
+coco:CC00269 a owl:NamedIndividual ;
+    rdfs:label "China silk"@en ;
+    dcterms:description [ rdfs:label "Lightweight silk of plain weave."@en ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <https://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <https://rightsstatements.org/vocab/InC/1.0/> ;
+            dcterms:source <http://www.getty.edu/research/tools/vocabularies/aat/> ],
+        "Lightweight silk of plain weave."@en ;
+    dcterms:identifier "CC00269" ;
+    owl:sameAs <http://vocab.getty.edu/aat/300132896>,
+        wd:Q118274542 .
+
 coco:CC00274 a owl:NamedIndividual ;
     rdfs:label "dupioni"@en ;
     dcterms:description [ rdfs:label "Irregular, rough silk reeled from double cocoons or cocoons spun side-by-side that have interlocked. The surface can be recognized by the irregular relief caused by the uneven width of the yarns, and this quality makes it difficult to distinguish from wild silk."@en ;
@@ -8340,6 +8336,18 @@ coco:CC00303 a owl:NamedIndividual ;
     dcterms:identifier "CC00303" ;
     owl:sameAs <http://vocab.getty.edu/aat/300014051>,
         wd:Q14251138 .
+
+coco:CC00318 a owl:NamedIndividual ;
+    rdfs:label "vinyl"@en ;
+    dcterms:description [ rdfs:label "Generic term for materials derived from vinyl chloride, vinyl acetate, or vinylidene chloride. Commonly used with reference to all polymers and copolymers of which vinyl chloride is a constituent. Use more precise terminology for known materials such as \"polyvinyl chloride\" or \"polyvinyl acetate.\""@en ;
+            dcterms:creator "The J. Paul Getty Trust" ;
+            dcterms:license <https://opendatacommons.org/licenses/by/1-0/> ;
+            dcterms:rights <https://rightsstatements.org/vocab/InC/1.0/> ;
+            dcterms:source <http://www.getty.edu/research/tools/vocabularies/aat/> ],
+        "Generic term for materials derived from vinyl chloride, vinyl acetate, or vinylidene chloride. Commonly used with reference to all polymers and copolymers of which vinyl chloride is a constituent. Use more precise terminology for known materials such as \"polyvinyl chloride\" or \"polyvinyl acetate.\""@en ;
+    dcterms:identifier "CC00318" ;
+    owl:sameAs <http://vocab.getty.edu/aat/300014502>,
+        wd:Q105840205 .
 
 coco:CC00345 a owl:NamedIndividual ;
     rdfs:label "underwear"@en ;
