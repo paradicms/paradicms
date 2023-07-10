@@ -16,6 +16,8 @@ from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
+from paradicms_etl.models.schema.schema_event import SchemaEvent
+from paradicms_etl.models.schema.schema_exhibition_event import SchemaExhibitionEvent
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
@@ -42,6 +44,8 @@ __ROOT_MODEL_CLASSES: Tuple[Type[Model], ...] = (
     SchemaCollection,
     SchemaCreativeWork,
     SchemaDefinedTerm,
+    SchemaEvent,
+    SchemaExhibitionEvent,
     SchemaImageObject,
     SchemaOrganization,
     SchemaPerson,
