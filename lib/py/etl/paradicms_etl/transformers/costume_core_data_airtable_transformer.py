@@ -37,7 +37,6 @@ class CostumeCoreDataAirtableTransformer:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, *, base: Dict[str, Any], records_by_table, **kwds):
-        concepts_by_uri: Dict[URIRef, Concept] = {}
         properties_by_label: Dict[str, Property] = {}
 
         for ontology_model in CostumeCoreOntologyAirtablePipeline(
@@ -45,9 +44,9 @@ class CostumeCoreDataAirtableTransformer:
             loader=nop_loader,
         )(force_extract=False):
             if isinstance(ontology_model, Concept):
-                concept = ontology_model
-                concepts_by_uri[concept.uri] = concept
-                yield concept
+                yield ontology_model
+            elif isinstance(ontology_model, Image):
+                yield ontology_model
             elif isinstance(ontology_model, Property):
                 property_ = ontology_model
                 properties_by_label[property_.label] = property_
@@ -59,7 +58,6 @@ class CostumeCoreDataAirtableTransformer:
 
         for model in self.__transform_object_records(
             base_id=base["id"],
-            concepts_by_uri=concepts_by_uri,
             name_records=records_by_table["Names"],
             object_records=records_by_table["Objects"],
             properties_by_label=properties_by_label,
@@ -75,7 +73,6 @@ class CostumeCoreDataAirtableTransformer:
         self,
         *,
         base_id: str,
-        concepts_by_uri: Dict[URIRef, Concept],
         name_records,
         object_records,
         properties_by_label: Dict[str, Property],
@@ -148,8 +145,7 @@ class CostumeCoreDataAirtableTransformer:
                         elif term_record is not None:
                             term_id = term_record["fields"]["id"]
                             term_uri = COCO[term_id]
-                            concept = concepts_by_uri[term_uri]
-                            work_builder.add(property_.uri, concept.label)
+                            work_builder.add(property_.uri, term_uri)
                         else:
                             raise NotImplementedError
                     else:
