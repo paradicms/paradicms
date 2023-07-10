@@ -2,11 +2,13 @@ import {time, xsd} from "@paradicms/vocabularies";
 import {Literal} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {DateTimeDescription} from "../DateTimeDescription";
-import {dateTimeDescriptionToString} from "../dateTimeDescriptionToString";
 import {ResourceBackedModel} from "../ResourceBackedModel";
 import {mapTermToNumber} from "@paradicms/rdf";
+import {DateTimeDescriptionDisplayStringMixin} from "../DateTimeDescriptionDisplayStringMixin";
 
-export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) implements DateTimeDescription {
+export class OwlTimeDateTimeDescription
+  extends Mixin(ResourceBackedModel, DateTimeDescriptionDisplayStringMixin)
+  implements DateTimeDescription {
   /**
    * Day of the month, 1..31 inclusive.
    */
@@ -92,10 +94,6 @@ export class OwlTimeDateTimeDescription extends Mixin(ResourceBackedModel) imple
         return null;
       }
     });
-  }
-
-  override toString() {
-    return dateTimeDescriptionToString(this);
   }
 
   /**

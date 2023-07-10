@@ -47,7 +47,6 @@ export * from "./WorkLocation";
 export * from "./WorkLocationRole";
 export * from "./createPropertyValuesFromQuadObjects";
 export * from "./createPropertyValuesFromQuadSubjects";
-export * from "./dateTimeDescriptionToString";
 export * from "./defaultProperties";
 export * from "./imagePlaceholderSrc";
 export * from "./selectExhibitionWorks";

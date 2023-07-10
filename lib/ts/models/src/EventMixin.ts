@@ -1,5 +1,4 @@
 import {Memoize} from "typescript-memoize";
-import {dateTimeDescriptionToString} from "./dateTimeDescriptionToString";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {Event} from "./Event";
 import log from "loglevel";
@@ -48,7 +47,7 @@ export abstract class EventMixin {
   get displayDate(): string | null {
     const date = this.date;
     if (date !== null) {
-      return dateTimeDescriptionToString(date);
+      return date.displayString;
     }
 
     const startDate = this.startDate;
@@ -60,10 +59,10 @@ export abstract class EventMixin {
 
     const result: string[] = [];
     if (startDate !== null) {
-      result.push(dateTimeDescriptionToString(startDate) + " (start)");
+      result.push(startDate.displayString + " (start)");
     }
     if (endDate !== null) {
-      result.push(dateTimeDescriptionToString(endDate) + " (end)");
+      result.push(endDate.displayString + " (end)");
     }
 
     return result.join(" - ");
