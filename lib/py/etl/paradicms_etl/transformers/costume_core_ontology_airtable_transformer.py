@@ -1,5 +1,4 @@
 import logging
-from enum import Enum
 from typing import (
     Dict,
     Tuple,
@@ -67,14 +66,6 @@ class CostumeCoreOntologyAirtableTransformer:
     - Concept (formerly WorksheetFeatureValue), Image, Property (formerly WorksheetFeature), and PropertyGroup (formerly WorksheetFeatureSet) to build a Costume Core
         worksheet app
     """
-
-    class __ImageDepictsType(Enum):
-        FEATURE = "feature"
-        FEATURE_SET = "featureSet"
-        FEATURE_VALUE = "featureValue"
-
-        def __str__(self):
-            return self.value
 
     def __init__(
         self,
@@ -392,7 +383,7 @@ class CostumeCoreOntologyAirtableTransformer:
         )
 
         for image in self.__transform_image_records_to_images(
-            depicts_type=self.__ImageDepictsType.FEATURE,
+            depicts_type="property",
             depicts_uri=property_builder.uri,
             image_records=feature_image_records,
         ):
@@ -439,7 +430,7 @@ class CostumeCoreOntologyAirtableTransformer:
             property_group_builder.set_comment(feature_set_description)
 
         for image in self.__transform_image_records_to_images(
-            depicts_type=self.__ImageDepictsType.FEATURE_SET,
+            depicts_type="propertyGroup",
             depicts_uri=property_group_builder.uri,
             image_records=tuple(
                 image_records_by_id[image_record_id]
@@ -535,7 +526,7 @@ class CostumeCoreOntologyAirtableTransformer:
             concept_builder.set_description(feature_value_description)
 
         for image in self.__transform_image_records_to_images(
-            depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+            depicts_type="concept",
             depicts_uri=concept_uri,
             image_records=feature_value_image_records,
         ):
@@ -608,7 +599,7 @@ class CostumeCoreOntologyAirtableTransformer:
         #             )
 
         for image in self.__transform_image_records_to_images(
-            depicts_type=self.__ImageDepictsType.FEATURE_VALUE,
+            depicts_type="work",
             depicts_uri=work_builder.uri,
             image_records=feature_value_image_records,
         ):
@@ -618,7 +609,7 @@ class CostumeCoreOntologyAirtableTransformer:
         yield work_builder.build()
 
     def __transform_image_records_to_images(
-        self, *, depicts_type: __ImageDepictsType, depicts_uri: URIRef, image_records
+        self, *, depicts_type: str, depicts_uri: URIRef, image_records
     ) -> Iterable[Image]:
         # yield from self.__transform_image_records(
         #     depicts_uri=feature_set_uri,
