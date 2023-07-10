@@ -1,0 +1,2605 @@
+{
+  "records": [
+    {
+      "id": "rec08xLGYc1oUqasY",
+      "createdTime": "2020-06-05T07:35:24.000Z",
+      "fields": {
+        "imageID": "VC1992125-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recjB2Z7GV3IMEfbQ"
+        ],
+        "Display Image": [
+          {
+            "id": "att79dldE9p7vSXF0",
+            "width": 87,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/S4CkjsASXZK_7M0OftI1zw/XY__3YI0G4C8_5KHOlBpxdnEy8ElQWe6nE5Ybz_GM86KQz6FRJBYe9vEKc9RpOw2qih_mZqg0p-sKE0akcvtDbpu8kvESnQxFRW36lDaFODKAMg47wVE-pHg0RBEYXhQ/OQE9B2DMMOlfT22BrUUdk9Y4YxPB7PCrPT9v2qStkr8",
+            "filename": "3b1171cf9952edee225afa2a09010837.jpg",
+            "size": 8235,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/PajLNCnPQmcm_YSpBlmcEw/A7HmB3gs85JsXoJ9gssSat7YuC1sKn2BDabAqzz7s-aSwZ-uOcYcLU75PIqnSgBB8mOs1c12kjWjmQIKIlSEJA/7_MOsPBY3hn7rS_1mGhi8qyESv7eUDS2OlBMAZh3isE",
+                "width": 21,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/rrOkgcqFohpx1DgXhDZIPA/dZNsOSqGp6DPTro0xipn6vA-iSXdhfvZUtTuGclKT4G-0do3ns_tnfrpk1zROFqbry1ZUE3SWo46QxtbTIoVXQ/GNMIh9znP6ERRMXfmkKYB_nxqBqRdL2mCnRUnjERrRs",
+                "width": 87,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/sWFF1WAqAvUSRLU43iUcmw/VHJQh2qc_GZhf-hIFHJJjewnXXpnHxRuElIhztdS9NIxWcL7CMl9HJK8YAU2i3QZ7HMmSoHEVv5Xyd8MYYWZpQ/mcAiHIKhKZE5zbXF-qozkyfzmdQ5imVqnL_dTrpKoas",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "3b1171cf9952edee225afa2a09010837.jpg "
+      }
+    },
+    {
+      "id": "rec2sL6UQ9ebEOxKK",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2007020-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recAGymrY6j8ZrdOy"
+        ],
+        "Display Image": [
+          {
+            "id": "attfH1AKzbF3HIBbg",
+            "width": 133,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/l0PPve_1Da93I1y9i6cP2A/kY9G88R9JTMNTSRsMYOQxmIqz5hnKinvajIvE8Lbj3JrTWCFri1df-m-olSsZyVVWCGx2IByMqYKsaKdrkoY7dwiBUwnmhsJRTFgItHPcJEVnYk27hZZeb0jrhzAHjfe/OkvaI7LG-QCUdUOn58Wh1ftKT-NmE7JBbfF60wqHacA",
+            "filename": "5aa07b3a23c96bbdb31e3a997be29006.jpg",
+            "size": 7018,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/y3MwhUnpOSorPvYbxJMdZQ/weUyN49Wp0xOKx2D9QQNmpc4_mkmCzxbur7SM_sD7pjK7VVCmZWTw9LcY-Gf2bH2NbxJVDnC-wXHoJFV0cDTXQ/p0gqA27kb2ha-jakBOnIbr_wyI2SQvqqnebxU8Vxz0k",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/0wXAcdlc5u_sRUb4oLCdJg/GQ_D8-r5SpWDdO9TlievBfgXSXha-dGAqT9IxaOIg5DcsNj9H2Z425I2Mm2FYwHU9T0jpZgaSixKTNCybMftcQ/1adJxRNi6T6tVUsIfkq2ra1cmVOYkk7LLM_x_44uAfk",
+                "width": 133,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/35qnIP7KDQ7q_JKRMoUnDw/kAfVi4PcJrq9StfKLu7q1O5_moEYXOtyQ4CptAd8uCb8m89OiDhgP_s_gEpaVm2N6Zu4FdNRZbPKltzWJ1tXxQ/yr4jIoNwQsJzOMmRc1vgt6SN1h2dSmeEoQYwvBbXfHA",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "5aa07b3a23c96bbdb31e3a997be29006.jpg "
+      }
+    },
+    {
+      "id": "rec31TEFmCqr21HJD",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "15.1.1-001",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recfpUMHKepQVjKUG"
+        ],
+        "Display Image": [
+          {
+            "id": "attzXzvp91ra8aMcr",
+            "width": 191,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/pfnMZD85Og0RO9ej7yVQiQ/jPInAL7l1sTB94Pxp1Nn3O7yXWTlss5AMljaGxl6NiwPDeCbpln1H9C3OTDHvA2YELRf7sQCEscBHhj2zwTfuLmyw4j7NsJAwxbiXq05jOQ/5FmxxQ1CC8ITaLkLYwdJNyya-bKJcJkwit7zoWPw-Nk",
+            "filename": "SSID18982544_452636D.jpg",
+            "size": 25873,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/C7PmOFd_zKP15CFeybxl1w/9slIvQ0wx6IoMOBalUVFVfe2Y3BX6ZqMvf5OeqPclbK6VU0o2s_vf83Qt6XLlKtdiF67kK7jLYhiCV_kJPUToQ/rmp74IwquEozQfsNu4r50PsxPNVDWiG8G1fyw8aUEiU",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/UmhbGGp48B9Pa6i1Dn-Y4A/oYCoG0xqVWKxgJ2YknlkJOc952wzYn_CahCUTiyjr9p0LiLhBqGL--hyD7x-BK87ttIj7ylkg_xe7h78VqBZRA/-4bjK30DvkEtMRJAMWWK6lYAo6j-G9Qe9YXPaUibDAQ",
+                "width": 191,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/wjDS8HLGvBTgfU8VDaAGZg/1F8kfizsdIb4JN6xca6RW8TYR7v9oeeqfr1qnZZTmWFO0ry5LbfoJ8uefCZd0JSFok3LHSq9CLf9QJVATTmFMQ/3aK-GodrigebM3y6DBl-C_ErBxKLqtKE5opzE0Bw6KM",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982544_452636D.jpg "
+      }
+    },
+    {
+      "id": "rec3FaOuBxBZ29bUn",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2017004-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec9WCDZLXk05glXT"
+        ],
+        "Display Image": [
+          {
+            "id": "att5CGC7Sbe7IAnKb",
+            "width": 200,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Dl4V0eT3Dnp2fmuJYUREZg/ccU4whQKbYyLqStt5m0NsOnd6SIT_2mBr8jyxYR4P7BvH7Dq9tDd9B5rFspe56bD71vmOgbOFXeXycG6AMfNK54yEgY6mDPgFi6os-MbnSV6uO8UajSZ2JRLzkHzBmL2/0azTj1ZaYrgRTXKuvSw_TcO5CbJpt3tKGNyLPa2vs4o",
+            "filename": "b2b519bf596d4b27eb410aab2b29b0ba.jpg",
+            "size": 12652,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/AxqH_4vAObc78KkMvZuBjA/4GXImxubkiziPNds3hfgvWfpSP3iw1G2Dq-gepWbPCPKaBizbiycgHnKS37xOSILS8bUrnISc0WkXo_1Mx81bw/tkHEotUUgENedSbBuVgcpHMH-hJvXxBicTGAJ-mcNzA",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/5jBL928X215SPDoUq8orGQ/RyBLuMrufxwATzckoe7W8gTISvIpK3bFL4Ni_b8NyQdNDmUOypLt7vJOlFi9q5UCQTxSrjnAtV8zDC-3taCg_Q/0Wjf3lvIcb_pSEox5XuPGUHA48XXMgyueg0dm1z0Ya8",
+                "width": 200,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/XC6t-RZScAnPp17d9-B5Eg/C7Z1xas3uG-kYkpY_v-QMQCGCQy-VmyAVfFfqT8UwYWYsfHI0R9_9tr7z3gqdVSOYrXQPWELlcGVTtVnKDVyJQ/SOiPilwamGR0fZZnT56chNDHWJ-WzpUq3kHy2QZInLY",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "b2b519bf596d4b27eb410aab2b29b0ba.jpg "
+      }
+    },
+    {
+      "id": "rec4FcnqT6HPWcyXT",
+      "createdTime": "2020-06-05T06:37:32.000Z",
+      "fields": {
+        "imageID": "1985.5.4ab-001",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recNUJ6Uag1wE6Jsw"
+        ],
+        "Display Image": [
+          {
+            "id": "attDlNcLyjfE5F2cg",
+            "width": 1876,
+            "height": 3000,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/EL6vZ-JmmFjv8tG4gzDejw/RnUoePXd_qJMZjgMJz8NWcnJpEUWepHT5ZA9x08Y7MYP5lxn9t50GA4I4EsOfP5q3T7nDQecu6wdfmic1Mvc-wAbZvoKtlRJ8tM1VocmsPiZHfstnSB4_0gYY88wa7y8/IO9zoOmcH0alA-wpbgxjEDm_QKnaxpk8hvpKFGlsqUE",
+            "filename": "SS37319_37319_37560089.jpg",
+            "size": 1103303,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/aQjJGnPUUdoY4aPUlYvEjQ/cjkjOPyYlWcHg5tcnGqeUwgT0k9v3mS8kTYWz5hh7Gd1-Ip9S6206HhCKEkJEuU535Np7BMXrfSix8csCRBbYA/hZh3KScv-K1aZcLALaZiBM1gZIvLM66aRLZFg1K1XUI",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/zmumOJHJYelYDGKhA4pkLg/qJ0a1Ge7Ar0beFCk6BXjBna1E842m3vER101wqsCad8UM1Khs-7J2wCDLjMzzpa_n3Xjm3J6keibif0QEc9zHA/hEpML4g9ACHPEYvV7Y2og1LRt0JOxn9eKdJckJx91pE",
+                "width": 512,
+                "height": 819
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/3dod5eVdT8j43-9DPi0OWg/kk1laNBLD1vpMNYbdDbMpw3L0aO3dDh9ZxwPIBxg8M3PNviJowpjqLP0SnIB2qzQyrnUoXYRJsy4zRqXDZomOA/_PODas5iTx4GJp7xQnbRAyuOzTHG9u4ThMhwkIG4zaY",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SS37319_37319_37560089.jpg "
+      }
+    },
+    {
+      "id": "rec4mqeh52RWbDdSf",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2001039-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recrGe6LA7pn3Eil6"
+        ],
+        "Display Image": [
+          {
+            "id": "attDUBm4ZfAFdBK6W",
+            "width": 122,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Uab1vFXNQKI1Gg9zdH0OTQ/5Jxe6QYeRvAg-WOEN_cKQq5eAzxtczSTK82sXtEg4HTWe2teOpyp2mYsnJ1eibDRjHb8wbVHHnFLsTRwkJrUAvN9fWgwQ-dZhjs4Z7SLukT3QTSZKpL_fjVDaMYwTKOj/wZT5sJRY6_Qx7Zy27xHvgTOADjGMU8uAVDLES5Baz9s",
+            "filename": "66769d29b2061a74e88a6fbd3ab0dd66.jpg",
+            "size": 8676,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/5m7H9c_vhmjU3XkdMs9lZg/1PcGaR_0pR_TS2h_up7YX6zFpYCKQUa8vNXSSq3GOF5YCeHeImRYrH_Bh4FMmiAyDcymUn2qeRigq3x7I2Yg_A/pgz2dqT_ZgQZfA8mj-xALfvAbigOtxqqeOI55w_FsQo",
+                "width": 22,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/xzbz6jqxuFK-PDtX2NwouQ/MpdYq2f5ZZRzEtH66pQ43suskEf5e6PHOgJC1RULsiCPrujKP2XO24TRirpd801EFvJbQ4vx7NHcjbsecOoN2Q/GQ_RskUX8QvQPjZ9LSDP3vs8i6VdfHkV0r9NACv1UsU",
+                "width": 122,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/0kXVf4hydMQUcECptAWABA/c021QGI6EIcjfLJT2t34V8GQsSxRg_JO_M4zaXGrFU3zX4l0HTovSRgexMJYBzssqvJToGZcqO59iaus1bt3oQ/qj6OmOEO8kbGiOV_UV7uzLwsDxWNEcceSoXgT-Ip97k",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "66769d29b2061a74e88a6fbd3ab0dd66.jpg "
+      }
+    },
+    {
+      "id": "rec5Sl3UATC0b3EwM",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1840.0.2-002",
+        "image_date": "2014-06-11",
+        "image_creator": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4UvX4PhqqvJsIm"
+        ],
+        "Display Image": [
+          {
+            "id": "attowYeoHOMShYYzG",
+            "width": 200,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/30JU5CJUJU3IT6IhREtIIA/NX-qdhldFnhb0img0mrWdcngqfa2732U34nmXKDSamlFTY3OLYsBQxK-5d-XXjZzmOCaYqeOHwzjsppeQ1_Rc9jHJw-rqvengCM9mb3l9og/4oNQxBIy_FojVQ25jAR8zv0jZ_eCNbNocvWGhJGuqX4",
+            "filename": "1840_0_2 (28).jpg",
+            "size": 47143,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/7JPmE6ae2UbxtBvzbmZp1w/gwZgbKGI1OXWhfwxGTpHOJuWoh9Q_urdk4P3ALxm-GYyeocQk7TtKV64CldmurmNCbXjekn6YKC2SehfLK895w/z_rcDvACSKcXxW0oxFm4omiMRZt67AwlVBDVaTtT2Bs",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/LBc3A-fPPEWvHZm7Cvu-_Q/8Gs0GM07FrPuKV3LuF6f894lQXBILTuH7CnwLfNf9APRHXRdYdNdxrA8cnXGnJk_3U5T-ZHaSDh_Pm54sEzrqQ/N5OTKWjhU-Xm5UVDE4rcNx7qdh4cDSsq9qtdwSRoeXU",
+                "width": 200,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/a5Z1mp-yaSFACadc5lJINA/bdCLoe_2S6soceJT2uafzOHIFHwi89Q7QHbiGnUshuZCSn5Le9pYUyMMmep9eaRRcEU9eiKf4l_wvZ_qeLkHXw/0G2Rm_I7XjCcI7qEM9ufdyt-ctbrwDpbkJ7EDiDLxJk",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "1840_0_2 "
+      }
+    },
+    {
+      "id": "rec6X3vfRI2tRK93i",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC1992087-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec29SdL7oObNGNUb"
+        ],
+        "Display Image": [
+          {
+            "id": "attLBjm3W0Fok2Sga",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/C1wFUuo0XDa19giJqBpyCw/lRteq2QzMkqjYu_blGPP4_U1SwyTRjGH0nTcyDhId5Z-9AESzNMY3N9JM7l_-LZv29l_HXp70iqeKp5uR95mYQVObCHgVDvhQmGn0wkCD_nOco2sEILvJ986f3wHhoTO/1U0DHy-YEIGhd8aw13c8enilzUq_NuiOjYtKRsTiPJM",
+            "filename": "3c264ea1cd97d4b7e00e2210d404a597.jpg",
+            "size": 11815,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/eh4Y7jFHQwC2Kv_5rBRusQ/RLzZbIK0sVnoo34Vk3UCx6goXnr0OKojy_vyZYYKiy4H1dttMll8d2Pfi4KfNWx6DFTYghFyxiELaGxdT33ufw/AJ-HCEsIYbQVO-efC7v4J6NYoGvMddJ2nso439atCI8",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/HWS9NnEoU42u09xiLDUW2g/I2i2X--JWUdZ96wbg-xIWu9VeadpIF-Sl551vNFIuWvIqJ_Ckl04nX5gQuqm-m7MXv9PN47P6Vw11hZZsqy9Ag/tR7fbQwppLPEk4j-Q9wV4YO2q4BjQcXlFN7FM5k5q_k",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/k3dx4OD--LvLaUwUFZbGIA/vbncAFJq6lfSjs2a2NBJSEKY8KYSdIr5BqQj3Ur4nN3pxWh8ld5Uaa6dRRlBC9i-JUPYVI2g1Km52klSIUC0Gw/A4ohEOVuxiYyb2hP1NvKZjm_vAnKUm9VrovhdDB_jmo",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "3c264ea1cd97d4b7e00e2210d404a597.jpg "
+      }
+    },
+    {
+      "id": "rec8orq8Fn4Jte5WK",
+      "createdTime": "2020-06-05T07:35:24.000Z",
+      "fields": {
+        "imageID": "VC2019004-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "receQe7UJoI0intKQ"
+        ],
+        "Display Image": [
+          {
+            "id": "atte0utA6cHGrKwjd",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/kQCq84NMKoY9JHPK_4ACtQ/kqpzB3jDxABghzFXZO1bnKiUOwCkSLmcOIKiuFyQ81f45808kO4klz7HEBtC4M3Qa9pdpgUGpOFsOjXvdGq5rZBclZk-KwM9rQBUwz_Gpq4EVeXRIR9OhcCWZbG_6bls/E8P0FJhh6goLNQG2Lnji-bVldmCpSf7mBeiPrBC894s",
+            "filename": "f918e21ca66a4c21190f8dc5565ffa4b.jpg",
+            "size": 4269,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/ycopgOSnhguI95V1tUdpUg/8jzJTdqBubtaQKsFpYtcBCwalt1cPRM-Oy_vEHDX5JinR6AuWvMwcXKjiknc0Pr7ntSTmiQ9iUZGPCWnBWbetw/N_7-bbeUz1dUwODeQWOI03vweg-STUuFQ9AeUV7oblU",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/GNjMHOP87kRPE1E1QcwdMg/D8qAE-ExvweHVusR8FfIbYVGVQInU6oInnl-vk2YCqMogGAA0LD7c2j46-OOLMOFycuvwso4usySeQFGWTb02g/enT4hI50nxor0zbqdNxBqFadG_yan52ZVXE2JnNW4bI",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/cEp4mvbtAUicF3GTZeqlJw/yH_Crgos_FGJOBhoWyNr4e4Q1-yCIFatMszr7waehKUQkPpmU3wLPrVxKkljdS-StlTrc76s_FBcY96QPdqIUA/oQREbCYErWNBfjo44YoK0jpWWXaHdcRpGdZSZ91TV-E",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "f918e21ca66a4c21190f8dc5565ffa4b.jpg "
+      }
+    },
+    {
+      "id": "rec9haROxvtGnWMXC",
+      "createdTime": "2020-06-05T01:29:23.000Z",
+      "fields": {
+        "imageID": "VC2004023-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recXu0AGQuzYzrszJ"
+        ],
+        "Display Image": [
+          {
+            "id": "att1uM50C6vixLiNq",
+            "width": 107,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/0qdAKG-PzoRuZU07nLrjgA/fbDxvqimxkm5MwV9KPGJb9SsqVk2TwXrs7TCNHPF2CPHJpDNTm7dKfp-dZ_K4YKIuLqzeGsl-S7ncB3XHjaz46aVtXbuiANbiPeiFGLGVBDnE726JtHCuXvyRUk3pHaK/dtz73COY9RwstG3o3IXnrnVGlyLhpQZDC7EOntQGTjk",
+            "filename": "0d2433c4a422723bdeaab87bcfb2b53a.jpg",
+            "size": 7115,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/W0c_XYelOWwuXo0GFCR5Qg/z-lJOl9sPDx0gxufqFqJ8R3JgFTrnn206Uv0vUE9FkWpct1Q3HkSclCE6tSMcJN4dn8_nMDvFFw1t28yYTT5AA/UYp7FRLNseBAsYGjyONDhpszXwvmj57wNYQphnV7LD0",
+                "width": 26,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/jyZY0IdNfV4wyvH3iSc8DA/lyiaHJsTt3awv_M3al4uGh8P8lNoPoPYoIBDdYYgpVrgx9uuGuaYdn71NSxbWGCbDJnfpKcNTdzqp801ioZcfA/LbvmcmFJ6Ba9--cnchgiHOpROwjOJAjhQGrO76boo1g",
+                "width": 107,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/zOLNg4yJk970qSWARg-MIg/70KTnfkpFz46dC4NYlb7_Zo8edprRWGt-rYDMnlZcBk0_DeAgiK8tXoX8tyVcqqdsxO2dGNJzy6Z8XBeDkxS5w/tSObRuunUUswaC7ev5-z2BVn-5g87OiO09gpJhYz5Vg",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "0d2433c4a422723bdeaab87bcfb2b53a.jpg "
+      }
+    },
+    {
+      "id": "recCBwi304fEM8Ldw",
+      "createdTime": "2020-06-05T07:35:24.000Z",
+      "fields": {
+        "imageID": "VC2001042-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recjXQoNdoIWaEJza"
+        ],
+        "Display Image": [
+          {
+            "id": "attzfyDEAmpk0TbFo",
+            "width": 113,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/tup-Rht92CWT7oU_ymvVng/eafsUnD2Wzp9FyNcUFUgtqW6GdFUuFx-Ndg7Si2LO_T-OnihJ3NuDywCmQaQl8nqIUsLBb2f0WkIAJPVlfpJ_90hiK70ySkWvn_-a2whzer_wxCxkm11rLCLAWtYOsdl/_WMiTykxJdFNds38JLZ2uEyPpwJ7-zR1oGcj9nEbpzU",
+            "filename": "695334faf78d4e45a08649baa6c859bc.jpg",
+            "size": 6880,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/aWwrRLm5H_kv1aJP0D0zcQ/Uzx1CvvOpF3w9Cg2Y0U7iMXZWDgedY4ckv2FrOZ3_lT8sV6vLfEnXgHWYqIIuVlGCjhPni8T76-7F5ICZWhtMA/VuirFRYp6W-j32f7JZCjx56HShlH-9QS8-68ZOf_YXU",
+                "width": 27,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/AWMLIsf4Iw7dl4JPBTy-mw/ga8qwU3J8wHXvJMKntB3IAtJfi2RdSD_EMBVlrOwjfoZjPAZEX5fBdV42SLcS5oUK2t3whLVMbkPuGvh62cJRA/wuFVScTNrZ-_4ABGzuQ9y6S-1VgfRPJFfQVDuOfrFkU",
+                "width": 113,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/7ucWC60rY7o4jnQC4qI8hg/X9yXVPxkKx8dX_TBKnCAFhPLt8b5edvM9hRzC7pvxyO6QtFTeNm6RoE4dW6Ay3wKVdPSacGgr25_8oyT6SoYqg/-cdOueTnp4486tObeb_rGWXNDcVMUxak5TGT2oYk-cw",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "695334faf78d4e45a08649baa6c859bc.jpg "
+      }
+    },
+    {
+      "id": "recCFbIYOxAzjurYV",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2007020-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recAGymrY6j8ZrdOy"
+        ],
+        "Display Image": [
+          {
+            "id": "attD7KvbP23IjI8hE",
+            "width": 113,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/-U-Zh8fcu7PSxm1jp11MXA/tdNEmzILfgccfGUJD_NgGQMshnCeSQkJ54a8OrO2IZL9kWY0BnKnoBrCBegWmynRwB-RmxtQMrUI9gs4eri3Net1xzZzadjoq0j8YP_PFXMl4FJbr8je-2_vCfXNaO1E/nFTCY6xRkFbqigplYCng-tjLcuFlfJ8geDAV52vuH7Y",
+            "filename": "2ff5b550c38bb67d58c9ec46a57aec19.jpg",
+            "size": 5899,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/lconCySCWrdxjAG9gfNYjA/wQvq3aCjwQtnzC9gZitvc1i2ll1N5oTBpSS7pUA6_JEoStbnzHtV-p7OHMedS2HzMu3Bq4R-CWU2paT7RixA-g/sjFHZiSt6zGghLm-_OCJrY10w9C1e4aforFa7IXGmEc",
+                "width": 27,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/k5R9coWqavT6pXdouUeTUQ/Km9uAZ2RU0j1DxInwG2EgPreX69KBJtY4WAOkoiHBOmUEzLY4t3tOyvpMnaaGRaUoc3V2B2NUie00w4S7Eicjg/PJ92LRMPK-RNE1cyXBvWzjepaTTph4SatAwTexQtcxw",
+                "width": 113,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/EWVxkEkNm0pFNLZJNt04dw/uwvCS7mu7PQ1Y49lJO5dtO-VJMRfR97NPJrfACwH6skhz7e1Mr7AsgBkwT6iyadTXZumSRF9UVKWfbHz0eFEdg/d0Its8XyH01-WsqTBlCUH3jyNEIVu3C6vhDbFMWKY4M",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "2ff5b550c38bb67d58c9ec46a57aec19.jpg "
+      }
+    },
+    {
+      "id": "recDwb1GJEIBN0xyl",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1840.0.2-004",
+        "image_date": "2014-06-11",
+        "image_creator": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4UvX4PhqqvJsIm"
+        ],
+        "Display Image": [
+          {
+            "id": "attzabDjYN2DgCF5s",
+            "width": 300,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/eajafAZ2SpdAmfW4ZvPwVA/EOb_5KnLln0E5pudzbQ1uI15qy3_UjmRuqyg6c-1uUnOmEbU_5huTJCKBlaZFh-hL6VxqoS4bMWcfvygz_UgJnkMznpjmIpfnXanIA8ksKw/jibKZgl67JV3jYQJjksDbbNugBK_kr4fBZJbbl3vlQI",
+            "filename": "1840_0_2 (26).jpg",
+            "size": 71421,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/IyQJ9KUKNCJnfVbW3PFOyA/rWbx4Z-0jyusyuIq5W4C0gmjqCi91_vYaGMMbaqfrTQk94CIu90I32DJgb_cEe2QUtvFo7VRNK5aydiyFAwK6g/vLEMGMrovJ3ZiBZXZB0w9BQIypaiQ-b1k7vIx9yXw2A",
+                "width": 54,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Uw8Gr7sIiHWuJGT3WOTIlw/wTxkCF3Ooko3jHhdyePEPSzucTag2kJI8PmrHQCGIsxtIF3PvH2gk3HdpUfvC6RIpfAMXpWGh9fk-H-ItCWqCw/gcZgeByHavijEvjvsuXeDHtv1e6VhB6LIOyGIdZ1yu8",
+                "width": 300,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Ia9uDoiWi0zVGbIUYzoXTQ/_81WYOlREnQrfI4IXfJB_SDMZNjAtnluxWq9MatbVK8A5H5D5rMlEYYVBTgq_kYUY4LR7w2NcEHOgJ9T6ks0tg/78ARUFnGyRWWZoHQmLDjv9YMTJzqsIWSdpwAzqvsFOY",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "1840_0_2 "
+      }
+    },
+    {
+      "id": "recE4HfAJSrLgaCq9",
+      "createdTime": "2020-11-08T16:45:52.000Z",
+      "fields": {
+        "imageID": "VC2011.008-001",
+        "image_date": "2011-06-07",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recoRFnZvMwlBFgNw"
+        ],
+        "Display Image": [
+          {
+            "id": "att76DI2aEqNirhd0",
+            "width": 2264,
+            "height": 5065,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/eVQnTdua8TKcT9Jrt-2pGw/KH6RmpRVjGf3MUN7bWoxLTFED8uA0gMZfABCx8HYckK5p8o7FGCUkFBtzWnbTx2PcgaBXA2VTiPs1EV7TvRiP8AtzGAiQwInI5slww-2WVQ/lhInQyTjBV8Qw7Oq0bHcvV2tkwb702x_cDBZVJSwDLc",
+            "filename": "VC2011.008-001.jpg",
+            "size": 3293395,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/oWxFjVBic-kK7yuAVOqsUw/WKPBA0O7GyKxbA0D7seX_mdmAtf7zkmCybUoYba2ZG4G0Lw71U5U9ufhMC-fDPtKmkuZT5upaaD1e4fjeSpY1A/2rDKVZQ-C5IsUIaMh5lvBOd8ca8m-Zqjzr3sU4bWYS0",
+                "width": 16,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/J1DP1qArh8rEBPBhjZejpw/9A7bLks4zzTpiOzgQv_yF51mf4IwIewkElRFLxdJZS56JNb4psyU-lvoZy4zYNrXatk3u0yz7YfLDaC7e8C_FQ/1ATdJiFIoCedDRn8Mg49o7leHQbtl8c7W1H8fQDDlEA",
+                "width": 512,
+                "height": 1145
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/45Xcxroxl3x5BFyE8T99Jg/bzIpQMtt6i3gYrOa6vw3XeYaMoNBd0vUidIXbPoVG6RqT9b9k66vxQeXqtiKfk8hJmuNmFNB1wse1FJlIpvZCg/jzUqdTM1Pd007yt_hWizV81kMQY1CigOUZE_Ey-EIL0",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "VC2011.008-001.jpg "
+      }
+    },
+    {
+      "id": "recENrHO987WZtocN",
+      "createdTime": "2020-06-05T06:37:32.000Z",
+      "fields": {
+        "imageID": "2008.6.1ab-001",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rectzQdZCZf4igrdW"
+        ],
+        "Display Image": [
+          {
+            "id": "attbtdn1nH7ctug2p",
+            "width": 1607,
+            "height": 3000,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/BipvMPWkVYQCtT4CyNjyPw/hbV2aTB1awYsSLrxoZnddhcQKNc6bq2T3x7P-ZkP9wlOTa1DN31be9MiZcZg9R2ngQFtmTa93JLg9akwEkbj0uTGFzx4YcntsEafJDmEi60dw7xDQX79rUH0n78PM-3d/U9r_iuq2z49dzAK-QikkL5QWv6o27XoeWkGulowcKz0",
+            "filename": "SS37319_37319_37560083.jpg",
+            "size": 797115,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/ZVzYKaU8fkNAMzxHn4oMyQ/zBbxZqKnoKhoCWljAONDaIBNriFVwQPvw_eQw5JvmYZbPhkv_gMaYE5kinh3AuwhU4dF1ho6LZOV4daG7HqxJA/2tHCYuYX2-BhEdhljchiRO-Jnt6CY-nFWCU10O6Lt-4",
+                "width": 19,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/k3L7kPsrz2AOm44JrnyGwA/RbZHl4iGcfCaM5iE8iDmKc0mpI7Ehb5uw-Pgb9aT8BkwQA60holI731lx7txk8XISH5ezJNciRLKl8xXwC80Ew/iYwmjCx1xJCxNzgEB48mwJyqZfsRWkQd-8fMrFu6QC0",
+                "width": 512,
+                "height": 956
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/CDmQY-9n6Etu0ZnrWeQbxg/2yVdvkCUSOzx1wUz5H1awXsP9pPLLtWoGvNWkZhY2T83V0X3GNON069BpPKFuiu2wNqmpqt9d8KvA_yHM877SQ/W0AWbjAEDQpTyxQudUdYHoki2OgfwOUzuLl7Tf064EI",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SS37319_37319_37560083.jpg "
+      }
+    },
+    {
+      "id": "recIesnjQnR1LuGSV",
+      "createdTime": "2020-06-05T07:35:24.000Z",
+      "fields": {
+        "imageID": "VC1992125-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recjB2Z7GV3IMEfbQ"
+        ],
+        "Display Image": [
+          {
+            "id": "att7RQeA6XcttbBjo",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Nj2e_mJb-HfwFW55vTUzmQ/_LCuXJeoMBIRemSLJMoolQ2pixzfNlLdE95CA96vxC7FDPppf8xKLnQY25zSWnmE-15f1R7bhMzWtwFBjQ-TWoGxYfi_HbhinMeJ4EymgvCVzDVdXNwRQv9M6654uvL3/knBj8tA7LdBxqIjeOJQbrWpY89sTxB99dB5cJFT_Ans",
+            "filename": "bce6c4d6db4011d77a57c51f85d973f3.jpg",
+            "size": 14671,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/PryoZLvBPA1x4UfpH8PJ0A/P-qEaIIfsxa2xZPFrP3FrcvpLnHIXs81s0UEhXOWsha69Nt5xpXV640ujuSk3BIOQajxORHG3J6HSBeFKjXnRA/XqbU0dSZmDI4aUaEzJ_pMc9ApSioxQ4ns80itbx1eGg",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/GURPrBPyK6RQ7uq1Mv6kNg/_vy3RzzlshM05HDM1FpX5wLqfLQCCZIirDUtsgioew9MFK7QBJpsAmZy52sUrGTTj1-YzoAaUI1O37Svbtj19w/p9Uanh5iV_NuL6cCwXe1uC4wP9WuapE65K-jtRIVPC4",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/pod4FN4a7ObeAH8giYPK5A/Rm-fx2OBcZ8uVjv30y2UsnjLnqCR4gxopJNWLJYx6uyxu8RDdEnOW_dui3aZBvcHL0kEmJCpI-V05w6oN1U6aQ/ULhh9vWK_xVWJbyjni86DUfoW6ubquk6Vd-rSmvLpZI",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "bce6c4d6db4011d77a57c51f85d973f3.jpg "
+      }
+    },
+    {
+      "id": "recJzdIN2JSFQAZsB",
+      "createdTime": "2020-06-05T07:35:24.000Z",
+      "fields": {
+        "imageID": "VC2001042-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recjXQoNdoIWaEJza"
+        ],
+        "Display Image": [
+          {
+            "id": "att16OZETPHdvhIqn",
+            "width": 113,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/CE_ZnMlAYV3YICdvnL9BCQ/unmQxJ-CtmLtU6fZlEgNfZQ04DOTywgPQb5YRY9eHEd6hXoU4W3LKLi8-VZf4FTB4Ixnd657YCUTVk9BaG_XiqRxn8lPkBuyjpDlWV-e59I7wVOiprfV9cnmoIMM60zV/89WColD10Mwr6lx2mbVuRpdxu7xeUmbpIxXncULqi5U",
+            "filename": "45b0f09408020d45a749c5022f0d30df.jpg",
+            "size": 6347,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/IBV7LQdVrnKvZtv-dB8bZA/CpA5Slw8zYPjq95ORZkqj0Q4QZXUi2bVtua5rC4ky6vYzeRwnZMd2szOE5UeDhHW382pv0ACU8C-RFixKu78VQ/9NHk1gzOb7kiEeniwvO8gG8GZh5Qz5MO6g07Ohe7l4M",
+                "width": 27,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/2WVTmDZi9-fRxGPOI1T0LA/rJbBszTGz_A7WeYxKIN1ZwVupoUHmbGYYism7qPQdJaY2cGdDMNkwU7R2y9vlqMJBXhQ6_QXVBpZOQvfJRODtw/izcQ5oyG7eh4dcGUy8hhX6RCW5bqjmICEz5n7maaiiQ",
+                "width": 113,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/XgWLnOpjjscxoCkVQF_Mpg/PBoMLbM37qpNEmm8-9o28uDl54CbSVyaVMjMIUEuZRo2MMHtQuaXAOHRjWrMiGmnGnWjEm_y9uwr-IlbkuNORw/akSHrpKZ4ZgmryLz-EkuXxH9UJrFjBOz9OHSBSEuXZg",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "45b0f09408020d45a749c5022f0d30df.jpg "
+      }
+    },
+    {
+      "id": "recM8BsOcJCjOU2d2",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2005002-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "reccj1wbldlO0peQ5"
+        ],
+        "Display Image": [
+          {
+            "id": "attQJtiFPLMvK1FMF",
+            "width": 133,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/gbIWG9i82H5csh86Sld9Cg/okbXlohOT62GB_K9bsbB3ddy3W-BpvY8TD5Nq-Y2SzGGr13y1Gn6PhJYJ0c5FTntph4Fix6GDo3nWVSQpP1fj2v5yz94hvwjeJRT-QAFC4SLXFPLGS4NJm6kaf_aU6Qe/doRy_Rz55PN3XH6Fb38Q_46Q7AK1I2KpgG_vVk-op7I",
+            "filename": "0efca861f676038dd6c3aa8547683dc0.jpg",
+            "size": 8373,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/70oKVJhb6ppyQTJBL0CsYg/VC6ro8DiVrRKglhVP33WBUP_64GGmHDkS874wHkmYn8sXjGz8cTmUPMrEgBS-4tEteNsB_49zxHA3m3vPYZNkg/A6YIWLTIRXXZVA2sMjsxCVeAG-yjQBH1NbvURKPxQlE",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/XAQYDdEeOS_SesCccLVhhQ/2LD3ZGqUuvj_saiL6KF3YI_Dzl-DzwNKveM8bBPh-Q40VpGGsNau9NDToqr1AXJMyZqWLgKTmV76qm0u3DW8gA/gc_RvoMXOzd4LP-Bk7b9c1vdfr0iLad8Yh12UfvIEcI",
+                "width": 133,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/v2SjoZSZsWK9m09D1zNMZQ/6iAGVJ99JnxspS_prXdQNBS4hvSsQLf6mFyPIU1GxWB5hqECNl3LH31-xWMJkp3ApIljksJoD_PB7dwgn7795w/g01tzGIyiIVyVOXNqYw1h_UqfzcwffJKoNBEfgqA5mk",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "0efca861f676038dd6c3aa8547683dc0.jpg "
+      }
+    },
+    {
+      "id": "recMlFGkMtRVA19Ay",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC1992013-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recpX3alm3KYbRmdI"
+        ],
+        "Display Image": [
+          {
+            "id": "att3acp6F8Dl4Kk5L",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/e2kwWA-41FqPqoRLj5e_tw/Wxto5Q7SegPP1drgaJRHaO00XRpxXqYuC1cTC_6oJEpftPW0Uz65ZEsFXSXSyv27T3OaY51V8FVcuNtWIEaetSnd-mMFo8cuAjroLioCFXIEbUKjIfGCh_amm136y4cY/tCxKauOCsxcS_8AOv_QSCTr7PEwZIbVXSlGyCojEHNg",
+            "filename": "3df60302728106e38f65e42122c31c75.jpg",
+            "size": 14535,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/pSjD0fqSReEBEzKKMBptOg/KRIjjy3u-r5I0squ5qIe-A3E5ZeUSiuFiHfnuDVA8BQYSZL9Wx1vE8VKLde2RfMZ0YWX3-j_LVxgqnxAtT7a8A/3WZMnsu3XlIwk_l41iDfSa74i0DVtgD2CbWNPPV-ngo",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/dkZOu98WBG552mAzAjG0Og/cZ216_tr-ifmaGSfd2eRvSwgsBLKImF82v9u94dWvGjCPX53_s78MI8s8NRFRzv4lB_vHsFdpOyxj_UiysslUA/Bcw0kABhn8UueuryVULQEOlHTiVK4UDE1ec3JVA4VLs",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/PjUzlIRsWZtgPDALZucUbg/XUZWanXBRHSXvcqHsapXhwJ1ssccCk3fFgIk2QfiS6ynDo-Cdzt3TtYdWiGWgSEHMwVhn4-j8Cx8c93YXBOJoA/-PUjl9z_KDK7mZytv5T-5wX-ywI7t4HsJFfmt7VCKiQ",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "3df60302728106e38f65e42122c31c75.jpg "
+      }
+    },
+    {
+      "id": "recOIP69zqTMei0OH",
+      "createdTime": "2020-11-08T17:38:02.000Z",
+      "fields": {
+        "imageID": "IP2012.001.q-007.jpg",
+        "image_date": "2013-06-05",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recBV1VOeM9z7ZoMF"
+        ],
+        "Display Image": [
+          {
+            "id": "attsmS4Fe2MYCVYlo",
+            "width": 533,
+            "height": 800,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/0I7Jf2ET1db2_rRtcD05cw/ypDMwAq96lsyytRBxS2V7l5EMy32JMFAeB9JTFOblOkm8XyWn-fRBItnJdDweE__VnIyeWTf5qGHOKSPuWs1rVFd2YGPk4pVbSW8j6kyV_M/5LDcm4q_y-c4pWbw9wUzo1Q-88qI7gZsUxf6qRAAmk0",
+            "filename": "IP2012_001_q-007.jpg",
+            "size": 88101,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/mw2XjOEuwGablYonIOCQqQ/-BtVPNX6yHheMZIs7WE-6ya6K_3LwnhQTqcPrVVQV4_RxKbhxktNQQ3ZfCTfBtzFtwSRRl4seTK_n28WyDYtOw/4_JXyYl1vnWtyMBFdY1JVeoKLzZvhklEJfcnHrYFyNQ",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/1OwmF_0uyUa-IiUlYXqJMQ/iMcgrf7EZt6wfMZ-ipcV_mMaZqTums1aaI0zmgWfu982EBiCcBBagOBB7coKp8Gi_YP44lPUUlcio9WpBQFn6w/AgYHlsNkjQCRjjzHuawy4I5kNQwhiAYOV2VeQLCSqBo",
+                "width": 512,
+                "height": 768
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/9rN6rG-RIbBNvSHM3Xn66A/0P47XtbYcc400HSYAtg9xZfdCP0hAzFpPc-IRrCxrgm9JTvosFlOGipt3FK0-RJIXXIKLk1akEy3gPYCi0C9KA/88Aujtcbh4kn-MdKzaqCOdK-ZqRhN-egqhwn2EZ27iM",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "IP2012_001_q-007.jpg "
+      }
+    },
+    {
+      "id": "recPXjKmil58e5aup",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "130.0a,b-003",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recvXPUUPLxgpKXYj"
+        ],
+        "Display Image": [
+          {
+            "id": "att9SV56uNjDXP8sh",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/aq2UlK-RYYN3ntVUMjiQ-g/V7TUmb8Zv9FHli1UGUdNNFixBF2A8QfsQIeM8OQjnxzWpuLBYi-Wb2rRWmZoMD6NXi41ioV5cP6pHm74uuPB8Vv-FYQcNOmrt-3UKwZHlrM/RrEu3bJdOekLQV5LjGrqxK15USS03GBYRBXAyelJhTo",
+            "filename": "SSID18982549_454271D.jpg",
+            "size": 34540,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/FnNHMnril-1hDBw8bh_zNQ/9BSYOWkDkzwlkn_2JcQAaPd6WJUiD8vjRIWAO4puXMuKPm7oXy1ynDDwE-joELcZyTNm3M8uTcTrR97oc5PmMQ/5KUyyPxSyNbr6ns9cMsHSCt57a5BDXtHSRfT5HdyG7U",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/izCgwwJ9wwhnqedmXb3cEA/T7wyJNQSDEfhx87NiPSaQxFfrkrnc86IQ3zMr2DBTcTc6p0ogCQLeRSfIEFYqt8YRoj7a_OeSDkEpThs4vvdng/psmt8L3WkSiDueWp74MgXqP97gk5K1K4n9S5uLLRtw4",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/cTXqVEVnCLhpk8pmPFTU6w/GDTgTGhYPPSZb5mJQRaho0jCHJjKBclzsaFmcFYw-tm6k7Fg0PoCBi1vDa_6zmk32l6jES_twl824qm6dTWpqQ/oEGjaBdHS4NI0ZGy66uVd1MbSA4XQPYrxLfeOf4RCaA",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982549_454271D.jpg "
+      }
+    },
+    {
+      "id": "recPyPLgcfw6s4rgJ",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC1985001-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec40kcQ8yJTnP5O5"
+        ],
+        "Display Image": [
+          {
+            "id": "attvqsVU3yljHhAdx",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/C3j-9a1XdYbjPOuhzBRt5A/7iCPB6xs-XTwlMNt-fIk-Egp6H_gTdZuXh8anArlxWwgXW8wiU1zVQPo8tnqScj1eqZNxYy_bgMpa4AtSKsItuolgNKTm7CW5CVT9YOmrpY_LE5ErAsIplmZ9lUimlaM/9lJ0hzoO9jOd05eMl0YClkiTCPYiv6mkHttRRuopc_4",
+            "filename": "00c2d0697bfa85495b5e4c3605d9b7e4.jpg",
+            "size": 9003,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/LPFDACJYaW9kUIaCfcc2sA/8qcF7N10bWCq1MnS9H9XWUAU5BkGbWXc2iW7K8jZmuFe5EOExXHwqfONdx_ZCHAGtnG2MNLGxUaeVnSQdLZvPw/QKEQuNxIABbxASllZ_ypautSpjBAgi1yiQl2p8Qf1cA",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/_aLcMcoqGg-l_Mwf97tTHA/1Q4jyk6XyGHo4vxTro8KnXMQ6Y2VaPoO_PrHadi3B-dDDYjOjSwUnyaBpCA-aeQkqJJDo8fSpnUpM8uUFpjFpw/aB2nSL_Saqlf6WeiBn3sQLCNc209PBNEKM6CfuHRkjY",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/cxycf9hAbk-CDsVjCfQTEA/frbGAyMhbka_2V44MmJ35lcNddqbi-w54aMpfMgxqLRxoTjedolqh9LIDUCjCNfQnyVeOL85M-QlW4SIATbyhw/_g40yW2PRfTZpg1tqL2N2AsRRwVYFPW4_BqAaMOjikQ",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "00c2d0697bfa85495b5e4c3605d9b7e4.jpg "
+      }
+    },
+    {
+      "id": "recQPRdhLIIrHLOK3",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "15.1.1-003",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recfpUMHKepQVjKUG"
+        ],
+        "Display Image": [
+          {
+            "id": "attYC2PBYerVnOCNx",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/4aK6v8-DoTl0akvHryOPfQ/F-zEsa_9FSdajr7ibv5Y6PXr6GuK2pC-Ps8vTMIrARbHW2-abqw9nwpAmyJZ7YYHfZh7iRSNJdR1O-wCKJHbHbq94xNS081bNlr16f2zahk/8qhO2YZa1JfAwmKy5SvhxtmnkRmC8cFSwOK21oXAtC4",
+            "filename": "SSID18982546_452638D.jpg",
+            "size": 30663,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/3xAtg2vIdtBrG-xnXqpfjA/ex7toYcg_D2baThO9OOz2U3i59hbu-hTg_A6WTOlgUrM8Z1vta5qNdVKH1UtmsRVGPyu_lpIZdfqO3W8g47bSg/Cs6yZqc0xEGEckkYeoU5zcu8Rxsd58JGnaaaO8PGjNo",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/X_TdEfuZ2Gkmi5hb4OGmGw/0c0wmvLMxQNRMsyXidnpoRJvyYwnwHFztthF59tRX9TfEOzYQXJdqqfQqFgdK5gzOE6fMCBJw4Gm6R2UjQMX5Q/JcbWuEnA4DlwMCOFGAQC_Rpathz-rzy0vJ-Y2PfZOVc",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/ezG7pHh0K3IZnskWi1jotw/t1mODfzVjLdegMzMJSv0e6_m30Rt4jtE3qR1YXH5EyhjPv4Sxu-Zo8W2ylulNSmDZhR18vxAPDYwBrsqRK0CrA/x4Sh8Q5df5SiXPchbqciaIEYhPbbNRngt2xO1PpNpr0",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982546_452638D.jpg "
+      }
+    },
+    {
+      "id": "recRXhcEing7db9hc",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1840.0.2-007",
+        "image_date": "2014-06-11",
+        "image_creator": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4UvX4PhqqvJsIm"
+        ],
+        "Display Image": [
+          {
+            "id": "attYWVw6N4mBfOD0G",
+            "width": 300,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/ijaZ_V-2c7j2CiMfL7crDg/E1ZgxMA-JkAC6gYBGEDpdGGqUBuh2UZjQYgdktX9cC73uEeEk2khphd5PmkDeIDLLDqWZ_oulzTHRkpb4aXB6WmRF-9nDUAppdNNBc9atg4/8ntcqhcCp9J6D6tY4KgF6kggSs21OWDNIGjLeGWV_Xg",
+            "filename": "1840_0_2 (3).jpg",
+            "size": 66294,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/jQcYqc7NJFrEHi5oNyIyXA/VrUY3yF4q8Td_DVRxAoUjfoCjR7s-VSmLnJnaPOoWqhLCGBcyBOoouFPEr9o8MTDeq8odGi8uOWFsSzlTZysgg/DnC4w3CYRS_o52wFaSFZzpscdCc6JR2ZAp1O7xPCC3Y",
+                "width": 54,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/-D_Sb9FTAHbnPygOC_GE-A/C1Zm4_6cnHZrmNEJwKQtxaj-jxxWnv8mmRCRimRHmPzPRRznU2wfk1Xqx782Jq9HT5KWCju9MrnFq-9frUCXxw/JEz2k31YI6hl2l4NhQSHTmfLzLKyiQQbgExW5JEg708",
+                "width": 300,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/t9BWTTM1rZT5S0eOGEdS2A/SOJQah_qNqLudgBcUYpD7VGhjD4yXQ2iutNjG9hbOnRON51FjGFQAhHe1rFDcbm2khwoNcx20uFR2LE139Tj9g/JxoZ6mgng7QLgfptnjHp4-NF_ELmN-o-L3LQw4xUOo8",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "1840_0_2 "
+      }
+    },
+    {
+      "id": "recRZWIaO9A71ZabX",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1981.13.1-004",
+        "image_date": "2017-01-25",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec30efNIY2aIoSwC"
+        ],
+        "Display Image": [
+          {
+            "id": "atts4RiQl9FVcHZOn",
+            "width": 144,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/c9Ua83NqcCa27dqWcE4vcQ/YxlvZYtoeasaVDWYpCaVIu08ih7UPsAtJ8G8lgprPsKGwti018i9z_0wLsz_3ph9LefyuYwHQNsZmdE3gFfNKYTkz3jvXSYt_Zexf2AkS34P3dBUSGBHVDBOFuaHH6MAukInZTt3myxith6bUnWiVw/yyKY4yRiM4S4HukChmxQqo5-ABt7IlWRFB_hBRhGMCU",
+            "filename": "SSID22009542_Smith College Relief Unit suit Abercr.jpg",
+            "size": 29246,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/VN46FmwC1stoCU8SW1nNKQ/zaJ3vyfWDjB2RywEeS-Ryb2Ka93rnbdYoQAklg6Zae9lY1_M55lT2V6WbyTuKBMdl6gsziRHno74dK34PESw1A/eD6ImUt4GHvzHefGgahA3HGP47PMI0U0dERDRLpFZZM",
+                "width": 17,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/uT0DGVclWbAbl7_61SX5ag/NYmCwn8lRfsJd6VVZUfwHXXc7CUezHDhSeS3lmkWc3FTVILYhAYVeBMjG9557kJexfEC1OGMiTJMaWkSlJUMWQ/es8r0cf2qwT0WtWmCsPmLm-4o4LV3i2s6AD-NvqSrpo",
+                "width": 144,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Pf5NA5YB95WHehgpDnk88w/HOb3BNELrZgPKxBa0wxaSZ6b_stu1Ig2QsTApjZ8OunTQ0tXrenAuh14Ovhyf91_vY_EbNX26QGlCoW_R1MRQg/lPnW8v5zqB7LggozgV2Ro02NHiuKgwearHmtY44cpF0",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID22009542_Smith College Relief Unit suit Abercr.jpg "
+      }
+    },
+    {
+      "id": "recS90RMrp4M2CzCy",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1985.2.1-001",
+        "image_date": "2008-01-23",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "reciozWIvXHsr3iVW"
+        ],
+        "Display Image": [
+          {
+            "id": "attHT8sBpvROuuiAH",
+            "width": 271,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/fa5l8eAb3Juga9zVfcpo5A/7C2d-9Q7XYojji6e-VndQVlxLjrS3r4yVUi_PfAjs8nht7AEpmXv-F8yMZZAntc_tVSi6yTPNOUjjm15LkWPYl4ixJ1NgbtM8YvqRAACbDk/oRFKyaYp0cERwiw5F9CsPImxKNseCFvvq3gwHOQXIt0",
+            "filename": "SSID18982500_502518D.jpg",
+            "size": 36862,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/nml5nSgdIKmQNrE6LUDvWQ/GJrxaun5YWBZQgkCI70qr3sOz-bVau8mMo6u_bzTUyZH4oWXCiC8uQJ6-oepLnSg3p3CDHL9lQvDYYlmEVPeKg/3uMzebKLdV5DlL8a1HiIwkrMfCsIx5Q3nPvjPSWIt7w",
+                "width": 33,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/lQhzCnaME7AWoSBQvalEhQ/R859Bko4kzU1XLtI94YMDUgUVIcsRJRXsfu00_w32xo4_btTtoJTy2sA3G1xrrFODRwkI9VltF_v8F0WjnvJFQ/ieoB9uWzjjVcT73PmBDDhp8r2XPAriHwpQdOevWEAbQ",
+                "width": 271,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/gCG_wA5zH_qRDt7Hmmx1iA/FH3Ktp4uUwRoPLB6mVzhhOe1T207AV-scMmjls_iTns0J0E1ONAwQPPgXs6-K9rReKedp_stfAoB3rOHpb-KDg/Ncm3CvGvQngvraWYo6z2KckeFLPL383zdoazx6HUhwA",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982500_502518D.jpg "
+      }
+    },
+    {
+      "id": "recSW4WYTV7tlZZac",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1979.27.9-001",
+        "image_date": "2008-01-23",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "reco9ur6EXzXywY1o"
+        ],
+        "Display Image": [
+          {
+            "id": "attDYYdPZGIDT3Nst",
+            "width": 199,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/giYvAZm0Gdofjmkiu6uv9Q/v1LVtWy72o3YAjjO05ZwkYeoTPOoB8XP0h574TgfFTqT-Tkx_hA63H-8oMdyWwDquy6F95CIK3_sj5GJIiPT2Po7TssMe-AaTMxEli1EL_w/OEMmVEoLNxhUbiWVE5N9u7bg4EzpbWPA1YuuQP0PCMk",
+            "filename": "502513D.jpg",
+            "size": 46647,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/e5HlksJCj_8FQs564H9kig/1Zcxg1AgYYVjtujCiNFnhoQU7xyLhOF5Vc53952uElfpypXzluOj7E_g7q4MUKachZvTtsqAjO3fZa9M6_Ao1w/5NXwBQgekw4StnMy6hsQnc12oXapJSy-YB_fEIz5k7Y",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/53V8UL0pC2Ajo867B09kPg/uu3SqqexcpQtJFrtQQiYYZ2wyDCgHqt6ur_O5z7BD1dyy2yqHTRxO2oj08bfXsCFkGkjfKUKM-QK5ZMwqlNSsA/KLPqYiI0G0WjtWwnNI8oLTf3JnaNSWD63jXfNJCJn1A",
+                "width": 199,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/ybmOVUdhS3ajjn_v6mZt9w/hY8ARuvJZpSRwP7yBRUzURZDbwkdViiK8hWlOUmQ7P5GxA07u4S3oOEXC-onPE2usSNzNrIeLcDnAPUkofIwpQ/6M678AIwTruIZHOxD2JI3AQ38O7tYamxLwq5cZdqLCE",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "502513D.jpg "
+      }
+    },
+    {
+      "id": "recSusFPEiNtVqvAy",
+      "createdTime": "2020-06-05T01:29:23.000Z",
+      "fields": {
+        "imageID": "IP2012001-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recBV1VOeM9z7ZoMF"
+        ],
+        "Display Image": [
+          {
+            "id": "att5IcsDCQf64Xnyw",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/P4fcYoPRKT6g5Pa2D5yn6Q/ffFYF4hgDYgySBS3cG3f56FXi1PA96soGHT-kdBrKSG_zJL2LrnWDLBtVykPrTS_0zwbc5W99x1_c-hzVhiWtnhwYRdlmzjkhvjE5ZlEP68Npc4IZTyakLzwREs7VrLv/zvvrAMB-B7Zy5EUtkzycPNoH7yBnqlmeV25hv3dSCvQ",
+            "filename": "acba0e3a59c92a896300168abb70e62d.jpg",
+            "size": 12109,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/b8gryuAcUGoXQ5uLfuyQiA/r4Q9EOIKI6Gzc9GeP8JAXuvg4OaXlB6M9X03akuAQPGDCIMq5ipLVj8lL5sb20LuDDQCQemGmtVsA4_dRfnjag/krZ9JIDn1cj9Fu5i5KZ9ue8o6YHIof5wY6M6GkqtltQ",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/c3uQobQR9ASaKeiXHiyGKg/rNZN1ngnusGg8Gnpq0JJj189U2sh_B0anL0wZUXHKHLqfy11FTmDSxZnhtZ21tlStNLEPvA2qJpVvnQttvZcRA/69ZqusVTQCfd5NgozHn3panUahH-0RzFZBqnGNrHYk8",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/_ihkI8-p46kc-zch8QLSag/cxZ_xHGD7LUe2fk4t9VqspiCYYiX0kyGmznWFtzm3N1202wn1Y3SBhBgUiMUX3gTwQjh51cp_91uaHBQNIYfFw/na-dCfhAxjtm2ZVYw6a29RNSFu5oNRPq7xCUhsBxgqA",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "acba0e3a59c92a896300168abb70e62d.jpg "
+      }
+    },
+    {
+      "id": "recSzaa6Uoo7wEWrs",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2017004-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec9WCDZLXk05glXT"
+        ],
+        "Display Image": [
+          {
+            "id": "attVsPOO8DVzPIzF7",
+            "width": 150,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/eGaui6aCR2_RbQb-XPEwBw/A4u1o7Wbjg_HRHI8-cslsUVKugtFdZ4DLhhdlvFBpwkbMpFBrDoGfs2UVfoWQKRmC-boQ3lT52NetBVnWD1bR3rLfpnTMmmGcz9my9vW5q2__MjXyjDPvMSmr9RzGey0/5NLpyM4AmKoXMv59VqKt8fcCsbGOD_q_hRLkfmaqMgs",
+            "filename": "af7452ae80243bee19dbb36a310ff290.jpg",
+            "size": 13953,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/KuIarVQoRSA5KtD8iv-OOg/8kcbxs7DDCLWaiB4FkwLwrmd3GCucV7UKlyOQO8yk29k-XvqPlbJ9JJeCkHl2eRc-vyqwcnZRn2_ZtMei1vzJw/u3Xd9xX92ENozDygRIY65rfxjtHnSVhuhJA6DO8SyME",
+                "width": 27,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/iNg8_G7uPiymrGvxT-qU1Q/7ASa4iuuIX9JktoBa6MQDVkD1Ozmf2YdUOrP6fcl9rPBfXsW3gsEMSRB94dUXorjzYvxxX8EvRqzJVBnik5BBA/G_qchTIbkmyLl-klHbcSC5Is63ZexlEdY_2SoIJVdYs",
+                "width": 150,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/8dvgQ2SgegCHXDm0enMoDA/7N-2wPt_yVrdto5UNLYV69Av8AWw6I8zlcFArkXjYw_7II_3BO4iFKQldmaCkDaLuIBw-svw0ne7xcKkewuoxg/-xX66xrvP2n3koNcuuNDL-YIHqugxWhB1kG2TC1n2A0",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "af7452ae80243bee19dbb36a310ff290.jpg "
+      }
+    },
+    {
+      "id": "recUjrDqesBsXHIcz",
+      "createdTime": "2020-11-08T17:38:02.000Z",
+      "fields": {
+        "imageID": "IP2012.001.q-011.jpg",
+        "image_date": "2013-06-05",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recBV1VOeM9z7ZoMF"
+        ],
+        "Display Image": [
+          {
+            "id": "att6AEwwuK7ccCWIm",
+            "width": 533,
+            "height": 800,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/9yDDRdrtwINU6xeaWVJY7g/uTmBMgb55QfyISDISoW4nv-krOiFQgB9JXFvMcX-FuBZhUyBWELZxJ2WT03Ck6BwUZ1pMLoOHEV04aZQTqDG1elm7CieyTuHY22sDaXeiNA/Go2A9Obw7E_-IdHR1v1DcMK7EjnRe_7szwrJhRfaDWc",
+            "filename": "IP2012_001_q-011.jpg",
+            "size": 85498,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/yZJt3sDEeU2-XRn5BSD7kg/m5HxgrVnArizcUsb74b_uJw6-f4RvkiaYXupuuyA54Q-cOfQ6LPULwY3NJRrpfo7qmvG5P3nX8w5XaATywFKvg/1krndKkMVuKruCHFqg0EqN0QSPpgFtoh8FZXqTrLdyQ",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Lc9GxXLelwL4PHE3CkdRJg/pLdF0m1dKxrFw8jzLZRStJVhTB8ZhwviSH_McX0-VpNfeiU7zBGcN-BNlPjcSYpmiao3fbqhQejNAb7CmbAa-A/i2tk6h5lzjBjOb9fuH0ZZ5f9dKA9zn8g8Do31A7ahvE",
+                "width": 512,
+                "height": 768
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/RQkttk3TrX2vFCG80oqAbQ/Mo0aylmpHsenefsoEKyWqVBBkNLLpfvj35yl7ZaNW5ND6ieUAXWFgghIFucUOpHGxHPLQkCG11yfLKCUgC2w2w/cKkjCgtU0S8PLauDGffMI6OZEjwH0-n6OlSYF9qQfyU",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "IP2012_001_q-011.jpg "
+      }
+    },
+    {
+      "id": "recWg3tkWqXA1iuzb",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC1992013-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recpX3alm3KYbRmdI"
+        ],
+        "Display Image": [
+          {
+            "id": "attUmorUZYmljPEAI",
+            "width": 70,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Y7h6sas7at7q3oOA8t_icw/P5RTATpOYHFeP7exW96sUzsURhrp5FWDrkCCFg4quG3OXsOnMsLFaZe2kZ4P-F3taeYbwVkABTfPFivQ3u60GwiJVB6T5Y0cWzKnMkjf17sZ65xvqXXdpfYM7ps4ofYB/LwMi3On4EQTvh5j77AMt8YH7QTpxE2NugJKAd3bNz30",
+            "filename": "7cc00cb6eb76aec9562b459a73038098.jpg",
+            "size": 4184,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/XoF5Y2YUl5edE_5tp9WswA/3iou_r7gfVExIy_pLUxT7CwpaPBaQqrJ_Qjx-phJjoMCPfC7TheKFRiVCK9gSajbOVUtQDdqFkrTj_gFkjft3g/2-rWFQ_qQMjmAFIRXQeremgK-2Pa24pNFOT9QReIZ2I",
+                "width": 17,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/xF9Td6_QvsBg9r_6InUGVg/nJxUjf-VRyWUY2JBqddarvfioSdSxERRvoZEle7oAO6Kv-9QiqH9K-g75Xz3_a62JQ9jNSeVtatSUv3vpUS2_w/w7YPNu5fLoPoVFafp_q2nplZAfh9WSmgCHExJZLER7A",
+                "width": 70,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/kcF4xlzt2aAE-11oonoVpQ/r4-cykXVZtbJssdXjgLwIasXKtQ6pCVcmaFhV_pUgTIV1EU8NAP4X5iMiJv1Cxu-2RCEUvPX-ZdNEgJhfdir2w/HoJ1Rvkhmialp3jtKmh7mWIkud6a-WfpIrEiqb_NokE",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "7cc00cb6eb76aec9562b459a73038098.jpg "
+      }
+    },
+    {
+      "id": "recX0JGXrjIc7sUF3",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1840.0.2-001",
+        "image_date": "2014-06-11",
+        "image_creator": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4UvX4PhqqvJsIm"
+        ],
+        "Display Image": [
+          {
+            "id": "attCX6ramLiuuUXlX",
+            "width": 200,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/MMs2XDJzHaenGh9ysGGqWg/IwreWGBPBj_FWVFat-9CeCd1pGQxQgfmnX2RRraRkZM16ZlZOXbMdQo3eRy37ke_RZihvgfiBbR6PXSm08KuoCRkxtuwqvcFIMzJVKFNBNE/UEfbvRROUyUckRa1bnhkQ26k8Td7vP6L_1iWr6IhYMM",
+            "filename": "1840_0_2 (9).jpg",
+            "size": 46686,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Kj3dlt_W1kT1L-ZKvd6Trg/ciYy6uH2p_YXF7aFmQr1-U5dNq9s9KB3CbUijRUI0WlEE3y6uD72qan86kovVw9WvUcrYH2iAL1jiwJlYeWCDw/tQMQhK6GnjsvPy3qz39ptDNkEx4uKtqxyRt_0kUvV2Q",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/dTl-qbMeHnLjuQOqNRI9EQ/VMciHK7C_7FbO7YUYj9LnwiOmoXsI0qSEW2EKWwjEEaTr1BSP12l-VF4xsKECd32Q93Z8VCuLluRguz7grxVsA/DW7eExIPL7dQJsgDfjx4qfaOtYvMH8tIWtGD6HVXrYo",
+                "width": 200,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Ch0T7bdUaT6D3X59TWEbhQ/AYFjHe1xRof5lPYyYLDdN7dueQNcn-xRxk6iVCBcqipqafajrUbKwK_CgcoXX6lmVFdvn-ZFPTuKGg7uRXgnfA/jejU9yx9KeLZAzwY1eyaLp2MwsPzSALmdiV5ut0UMVI",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "1840_0_2 "
+      }
+    },
+    {
+      "id": "recXa4tHmHQLDX1hU",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1978.108-002",
+        "image_date": "2011-05-12",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec9lEs1uFmFoO3Vl"
+        ],
+        "Display Image": [
+          {
+            "id": "attLFA5IceLdksDe4",
+            "width": 199,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/iKyzr1mWpOwzWL5ZIv6h3w/Y9gqGArui4FfqIzUma1bVo3AoHaOjFSVn-wtEYMehTUXy_OZG9xlSMCZYy6RAgwqr9y-7EIG1RShlksAyk6Y1q4bzvS8wH1rP7ciVo1wDMc/iHIZe62DrmUjYN2L3rMpX-_ObHIFhQ_dhfnhxrP7r7Q",
+            "filename": "SSID18982551_509991D.jpg",
+            "size": 41272,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/EBZ2lXt1JItQBbQO0rKJzQ/XKD024csmLJPFuW-VALYvXg8j8M6bS-ocbbRBHV_tmUwv7CUMkGniM-bfkJaXdcFcglo3rN5vwd9miROulte_Q/lM2oiTR-Hr5SRvXvF2J3rd1_qsnyhvpJjzyTVm7iB1s",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/DEtt1oqMPTwOo3OUEz4uPg/DAkd3-71MOiQ_N4dpNjJhKYOaQ1OinRD8LQUMOZv1nGoIA20uFW-VhJOqFMXlOONFsmOzFNDti-p35_IXLxWoQ/AvsBP-DRc-bjUKqWG9QijpYhFsS86Ahvn7gAjrPXPjM",
+                "width": 199,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/6abFQ2l9YO0Ha4ti_usVsQ/m5aA2OP7y6EuqJVdC0Li14JzZuVdwAwrx-KvXKdqZXvFw6dgvNEPUd30n7ZVZiAEtGC-f2OsWPntkTAGKxImMw/olgdv9Awhrut0f16ilj7LTllL9eEbH5_OzeLU5IaSbo",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982551_509991D.jpg "
+      }
+    },
+    {
+      "id": "recYZ8aXC3gj06aTV",
+      "createdTime": "2020-06-05T01:29:23.000Z",
+      "fields": {
+        "imageID": "VC2004023-003",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recXu0AGQuzYzrszJ"
+        ],
+        "Display Image": [
+          {
+            "id": "atts4GbQsUqXB3teE",
+            "width": 107,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Kc93jDGFpqkAMPzorneqpw/-jIvPy-NOasbUT8-mvy10inKsbS6AQ_gYzJFdSEnvsRv9-Syf0sLWg0a0syCEGv_9cKDKrVGt5GGnrH7Id6fiLSJP54IIwgFZDXaMbkQ1lt_yl6kqdukJF_KB5YPD9pA/Jum0YHZQP-fTzBeVwWwZxDJqHlk2RsM_LvKEt9z-Nds",
+            "filename": "49182488e28a4e6e4ec7eff0fde7e271.jpg",
+            "size": 7252,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/XGQi41Y6PMyNO6_J9DLyvA/TH1SHEMzid_HCZ6Nc-jowxxbSuCcgSItKpss6HsYdLd5Kx3L9LF4DCwy4t9ed29cXphuYUnlE0Sq63NKvqTnpQ/XkrtYL8epEBGTFLJhNSexfPu05LU-I2oy80IHowBdhY",
+                "width": 26,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/R5Ez7FQGS_P1299GbYJtrA/mqI7VA2fCFGY7l3etPzpB6TqPHcAHsMDSi_QVJi1HuiKhDvRWzQ4l331-GsdaaV2oznFssbzR2XlJW1fBC4A6g/auBNS9_4VQSru5GDUJRVtNskDsG5BLni3KYMT6xCvP0",
+                "width": 107,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/1NGzdslq8AqCSCgP5MForw/3ddCmWnybLik764GUTLfNCSLWSPcXJ8Lq5bxKPknwa6hNkaH_63cBxbc9xVVL1_xM00E8cpSoTZOQ5vwn875AQ/lV2kBoVjgxYaxoieZPXaUARplDF6b6v4VdESIraYFFA",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "49182488e28a4e6e4ec7eff0fde7e271.jpg "
+      }
+    },
+    {
+      "id": "recdFsgJvL1IiPCkf",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2007022-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec5FthXZvMoAtusH"
+        ],
+        "Display Image": [
+          {
+            "id": "attPfQc8InPDqukLC",
+            "width": 113,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/9-uqZAFSyMDRrEKTEii09A/kOCOIUYVmuPfl_VwAGEGZqg4kazxtuVYP26NMEl1cB61y0OIAaFeAANbPNnDQkeanq38TLfo8O6UTTuCGWkCsjQdTsLZcC1kxATlQAtgw24FvGkX1kNNf0l1q9cAfAVC/lRPTW6fayWUMJWmifsOQz43Mw-JcDXaawEPtdP9fnmg",
+            "filename": "d4ad234a64257b4752b3535e932ccc02.jpg",
+            "size": 9726,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/AQEplt01tATzdk4e7ZUe7Q/joK94dDco9Iuora16CtT2qOVyl19C3UerUBS0O8kcLhNNb1wViM8dbwLfs09EEnGM9Z-9FrPF2ncIO-SAuM1Ww/bLlzV2_y596c8E8IlRZAFwoXnvOBK0pnPBH1Ph4Q0mI",
+                "width": 27,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/T7Pe8iz8Y3ZcJ14zZOW1Mg/pD-2vnlsi_vBwLEVkrj8jI9ojCmcWKZ3Ke1wmlODW3SfveHKNXNmkh_I8V8tSRIYWYxOrqoMZYE9rryDW8UlSQ/ww_8M6Uuy2vvxTYn-ENT8coPdRXYL92RS7mQ4khU57g",
+                "width": 113,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/I-T6yG0-zTrUNH0l6lkd-Q/G4YeXCO76xr9BFPleWYQxR6igFurswB_WiXEGCqBfTd5e-_d0wa026wSaKNlAnwAy8NvTOsm9HdHl2Fg3SiDyQ/rX7BkeG64RllcHrSm8DSXwAhyhkgbswWAeeq9sMVs4k",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "d4ad234a64257b4752b3535e932ccc02.jpg "
+      }
+    },
+    {
+      "id": "recda1ORsEc20fTV3",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1840.0.2-006",
+        "image_date": "2014-06-11",
+        "image_creator": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4UvX4PhqqvJsIm"
+        ],
+        "Display Image": [
+          {
+            "id": "attVEvbE4pHRwdTjj",
+            "width": 300,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/hkdGMGQ7I45Kt02iVELRPw/VKK0b675RG90XD0Kf38V2NJvO_YDWA0kHauysZHmbHHx77tZkmpl6EWisGqYz67fodwVDRA7qtRg0-Dr7Yb3YuLMvjib3bwUoRxXe__TXQE/QmsAMNFdBFuBmcwI3mIi1T8WPW0Omk1UV08B-2qfn0k",
+            "filename": "1840_0_2 (6).jpg",
+            "size": 71808,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/s1gsV1GQnLN68v1iMvWDRg/OLLawQSkDxr7VxwbMRJV2gqdkjvow00eLYqT-k5A42KV7teB476lXXn4hrnn38Ut0BqI1reDZ2HkELqfHrHPdw/YLxwKjh2O0-4fh_H9M0vBLHGEQOxG2QRiljU0l27T2k",
+                "width": 54,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/jJZ39vNmeyCNyt1vgjylSQ/Nu3yTpC218Dxg7vVDvtHO5bQmvmPYDFhtgfLXaawV9kmGVW2jEQFgrfoZ6Ltm6ESHrYv_Gw7cK6mejCnIMR5SQ/sgnbO-npWV9sGFN-ZsN3SA8awgntRn_qrHq5gQVJonc",
+                "width": 300,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/_sbAD3aIuNooLS1jEKz2OQ/IZQXatIfRon3-DLkpe0cX46ETDA3YaON8ljlv6qjRUOWFQIa10UjYcAWtXEoUkWDOulLcCWqE2u0HViuzjG_tw/e7Szc-KXTT1HZ3iZ7Pom0VschNi6EikB4ealvgOU5O0",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "1840_0_2 "
+      }
+    },
+    {
+      "id": "receDlx1OpTpSvFha",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC1992013-003",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recpX3alm3KYbRmdI"
+        ],
+        "Display Image": [
+          {
+            "id": "attvuVAZnc4EDufl3",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Q8sP4EX9bLs8inAFAouJtw/IpucjkFDYazxsC_zIBBZ4Yk-rrc_NhyQ05Z-eSwZ1_grLoVaMyp3HODcBRyrL_zEtkNWevtV1-N-5owy-wYAn6TYFspkboLL56gt8OwIqEh4ClJOHLTWialWmCOUFPnW/dZtaO1F743d98yffxoq-tQgl_Xbd504ZDKT2PJNqj-Q",
+            "filename": "676da93c7bfa69db3b11a62c066b782a.jpg",
+            "size": 13474,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/6y__ImBUzS26BZxYwkVAvA/u4paXn869cenNKBrKyJwNjYQka-JhxddTt7txnv_7P14GdTATzfB0EHY2osKEyYXb3nLtcPlmDXMIrJOTs91-w/Y1vNe0MRr3qxd2_l1Jlc0ntzPWfQMUj-XYJI57C8rOM",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/2ozoCkg1sro5gpqE0QhuDQ/Rl5ev9KIMRNpc0TiKHk_PJ8DBDT_4BQN4PXX0TbI0DQAZogrqTjugUyBFrg9Qn9_Jb-KFx8VRZBmM98odN4aeQ/4crbVMAABVtDm2-5e84mIfA4ZBe-b7bweDtfmAL81xI",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/G2FmxlbUEWns6F5QsTEC5A/de22rDbc_TIBptL478fjoe7DvnA7BuWfvu3pFYs0gL5gd1G2YrN0dBykcDZW43AQxb_MdGYbgKHbE7zrw2HAcg/Xy04OdTomvFPRGLLOq6XBIIeyo4XrM_cAvQugXGg7Lo",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "676da93c7bfa69db3b11a62c066b782a.jpg "
+      }
+    },
+    {
+      "id": "recenK8tIP6duo5qT",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1981.13.1-002",
+        "image_date": "2017-01-25",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec30efNIY2aIoSwC"
+        ],
+        "Display Image": [
+          {
+            "id": "attNwLgtCIBUJDcWi",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/4QVQbfvSqA8dhrsD5tMM_g/NNyzj6T5JtBn5wAsv6Wj7wKis-FzEaibmOFv2u_WT4X1o6g9EhdncgRwW2oWqt_c3rYzhpsiB_VFZl01WiNaCKlqAK8XonOStsWdK-uMzkQ/UtxyLVRmHCdJyw9fvLTS9h7NyyMIaxbAATusBCTMTLE",
+            "filename": "SSID19000692_452532D.jpg",
+            "size": 23586,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/LkR2vC2IDJnFE6x6Ryox7Q/MehhvzuxsyKayV6wWhKGHL-bxuvW1V4U_stefBFk5_jSmtljlVG44fptJvzyg1HLJftH-wevvz2YHx1mfS5rEQ/0q6t4x1wHEkS-rhdhXrT6Ba4gA5UwRcnFzb3vmy9px4",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/pgSvnEiZk1EC_0qLG0ND-Q/h2A02X_Vhxa-IulkyyB-DH7PFRURmrGXNj85uxbU7i2TaY0UCzpuVqlQICy0mCewSUuxqw-eEb4-nd8iX5SaGw/L_mRU7Qq3QTD258z5jI0f8vqtl3n6DW92XgwBTVKzkg",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/HfI36pHApTgXKQq0lzWnoA/Xg4K9lEAHsd0ZhcFg9lnXVTAuMhOm6JEq1VHHrnHnWbvKFuH5YBIXVMVk5d92kUdoN2mFivWH2NeHW3iPXwgkg/fBt13aMIvCHFBRwIua2KB6jJ9t54MAZyLMdU751Tad8",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID19000692_452532D.jpg "
+      }
+    },
+    {
+      "id": "recgECWUIFp6xAJyi",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "130.0a,b-001",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recvXPUUPLxgpKXYj"
+        ],
+        "Display Image": [
+          {
+            "id": "attWABw2MXPNmMf5T",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/uYTvBvGanrtR19mMbxIOxA/YhYVGVh6-vs2lF4urjHBpgGWQigOBLaZLeC45_HjMTcc3x5RF1LS_vAA2kiS7qbsH1_A8tjhJW7HVFF5AcRZvOCK08P7IvvnK5Q7DnIEgKU/uHn9zBs0GBzqIS5J6BcftYTYgidYKG1VBw6TDHdST-A",
+            "filename": "SSID18982547_454269D.jpg",
+            "size": 27463,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/whYyWRBJn6zame2m41ukHA/jzte0pXQxM4J6UxvbMlzGp-YfV316wo-B6NYaZ16Ehibd32tXdTUTB6uDIrxKJZuozjU0OreMQeeq7JolVnSrQ/ZJ1ynnDjqKNAPV_--Y6d6h6N7tvVGdQNJneY7Y5Q7oM",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/y2liT-iJKfy9WEvRlX8sDA/2_MGA7a0ZoNodfhMsmpv5N-Nd40AEh91iCgF-nW96LfECP-LBawnnjHZEQR5__NqrDfudhDEdh58QFxR62fSHg/2ns7fyalipbVKxW9Cnmt5COFZiLsENCLVoi5yQ456yg",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/lKcyxIkg4Dv65y9byAAmDA/HKsz7THJTjWNM-Ro2gDKXOohuceB5CqJznPES79LRo7A734_Jt0MLc_75xkSLmzKL_uqtvDtMgC-AzGmx3q6YA/6N98S2ZtXOvcWp8_fR3wXWqFkjbcqUdE6brzAzVq_ts",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982547_454269D.jpg "
+      }
+    },
+    {
+      "id": "recgNTBnocp3YT5as",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1978.108-001",
+        "image_date": "2011-05-12",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec9lEs1uFmFoO3Vl"
+        ],
+        "Display Image": [
+          {
+            "id": "attFhpflIp1ItjrIO",
+            "width": 199,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/I5SMJv_yQKtH08SefoMOPw/AXElTeMWqG3oVKL-FIX33sovgCYpeQ3VJsbiSIBseB5x2MqMeZzbTb_Vb9bbwZRnd6A2lQ13skLskBYOCXvb8VBuKQ0lADz2Mrp72VlUBsQ/fVmAMa4OriI9nsMNVfh4IVlFxbQpLOiYgTW-m5ih8wE",
+            "filename": "SSID18982550_509990D.jpg",
+            "size": 31788,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/lmTG4EDx07tScUWDz3fS3A/YAuzOrLrHltU9g3HnypsKmzzyCLryPcNB83HWZzCORM3iHQgDIBr4oPJEVGsL3rE5tTy_DQHTKt7LyEnsCtVCA/KaryeqR9kOAlibXUyvMaYRdIgRyfalpRrhnlqNdWAaw",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/TMTtSXGR1B1r8ddpvfd6qQ/TIa44Vh9fqurNBFwwkDmHY4HEol8ra-1kkAdgPh68AsWj-SmqHs68Wka8yM83LVmKCjfnqqEKEPXFo7kIQPlEg/zqGUK-_stjSbqkbnLcRdT7Cagw2vtcw-U6jHmKh1bqs",
+                "width": 199,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/WTWWPHflE_-AQ3Dyy26bhg/5lP0stkocGHRlvVJm2jNKNLSDx-HW5asPjxPuuHIJuqttS0xbdKqUHor2vNxTnP9GPjpYhNnxyfS4_Roke4BoQ/J6c-J5A8gntnEpgdRgNA73MpK7wsVXmDNzeOMRF190M",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982550_509990D.jpg "
+      }
+    },
+    {
+      "id": "rechn5t8OtduHX0vR",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC1985001-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec40kcQ8yJTnP5O5"
+        ],
+        "Display Image": [
+          {
+            "id": "att5mMcPtZEWWav3M",
+            "width": 68,
+            "height": 150,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/emokPeSASFWLNpbhkhm_0Q/l0XnHu11QxIbxmbReU2RZt90G4R3vrXUNCTSWOsEX-1qL6ktzYKLDTSqC1d0sVJCm96yGBZtEVSAoRMfk2ax7QHVxdeT7gdBfCtc6ZPDG4V3JV0xcCLO_z_Msthztgsx/v8xLpccED2S93bFTnPBnQx9OYs6VeJTiW0QbRtUjXtg",
+            "filename": "146a973e38586622dde0898f7cc70f92 (1).jpg",
+            "size": 4574,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/aJbuQdhXhN8A07SlzsVwig/JCimprPOJj3179_qCWT7dhBekUpCCwY_ECmcS5Yj8xB7ccaFL9cmeIYoZHa9goQU0jl6FhlbMMKCEA80kVyjKQ/8bGt0shWuF4EtnRXGUNvFbu8MnjaSWveWRG0Hdux7Mc",
+                "width": 16,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/DPn9vuOPLoafZKSg89jgWw/BuK5TEXq6W0VK1TU6NM50ViJE7WaZjWsaWvAKRdfHVoRitXqLa6COtDJGoGDRaN-136Z51nFJFQfc8_glMdnNA/QOWQDXkSJIvUG06fB8gzI65uQMfWMZSWKJUGHOnDeu8",
+                "width": 68,
+                "height": 150
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/CsSkbSF6hr1O06OfdXXJAA/4ADhgEwcb7fyAEv7n1Ve5G9ZN3xwKLmGblx4y4zyypGdOs_SWhISPrnjTjLTzdmb47Q8H46mZzgPWuFoUSNMgw/eY-NIhPscyFqVWsp7Pog9A9V-wVVusDq_5rEBYsZhbI",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "146a973e38586622dde0898f7cc70f92 "
+      }
+    },
+    {
+      "id": "reckWz8WgkFSRbkkN",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1981.13.1-003",
+        "image_date": "2017-01-25",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec30efNIY2aIoSwC"
+        ],
+        "Display Image": [
+          {
+            "id": "att3nKvxL6Q4LqmCe",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/yT8rvyd8d8UULOz2IjfI0g/f-IZLYsq-zAJwRKHOxsV-i68SPIGb9PhIM2lsuK1Ax1iKlCyTccubHv0DR194ZbRzCM4dxMCDp_BfbJgFP6BwIoSy9PZV-b7VEL3MlwPcio/kIjimpvtInbvQcUjJ6sNtPAn1jc8FDl5YHtDT1jl340",
+            "filename": "SSID19000693_452533D.jpg",
+            "size": 27379,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/k-jQAS3zHa5Y8770NZKvGA/J7BZatYHHO65CkHEpDhd8jHFRcIAuyWhJBynA94ZJQbGgQQPfKC9l77Enw6e4iWF7GCKUYTg5dBSFa7u0PpVSQ/qoax7x4Ko5I-0lS1sGdB_UznXEmLT_YpbRESLmjq6yI",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/C_VbtbW6Foh17jpl9hdR1A/wFmu9UfNV4b87IeicTNHnno63mwxM5piH1Je_FZaxQXnA-c8UhiigpbOLNCmza8VVECA2ThyhQi-xmgvcB3l1g/DoxiySmXKO98c3qye0wmMoOV--kml9QeSnMTFdxRFkw",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/afXnPg9eYkRYQSQil_YD2w/syGGNO_rngwFzT-ypUE-MBK8hqz1wShwBJvYBxPUu1WN_GmVS6f_VO03COJFKOhj-APXUKz-ISfaK0guaAelmw/bmmTtQWRatu1G7UEsrdnXy65e1ge_E55JXXPb1TegjA",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID19000693_452533D.jpg "
+      }
+    },
+    {
+      "id": "reckrT77O73JQGyZn",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1840.0.2-005",
+        "image_date": "2014-06-11",
+        "image_creator": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4UvX4PhqqvJsIm"
+        ],
+        "Display Image": [
+          {
+            "id": "attbocOrkEGAXfcrr",
+            "width": 300,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/2wGyX5cXqJ1z3hkx2JKIeQ/wfR9P2Jc87I3if484a2Om5zd12og9nkLOh5GO001sILvWoNHywR3i5Z22jileRNndRaqcBZ_1cl2EWpIcjGyvw2e1uzbaR4abzPdlU2-7EQ/H0brtX962qFzjleb5FBqWTBfYDw21xghQGJD_BAKw-E",
+            "filename": "1840_0_2 (24).jpg",
+            "size": 83846,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/QpBrGXxcm8blg_Lv0Kn5lg/3XxJccfJmYbraIMWwMzbKIiA5GvLHyumkCkxUI23rK2DWlrdW-nkqkzwIrYkexeQNGgLnA2scYqktUwbURAjlw/OH6UElEtr3SOmlzkXiuKUxS1VfZQQS2-c--UvwaC3Cc",
+                "width": 54,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/lOn7VfCF9DRK9jyvWbj7-Q/zFIIPwYWJlRMPp4CAcikPwMvNbdQxzcgQ8Uggz4hiJlgYGm6Kf0VPYd0UPTCVjU73glxOS6duqgoFMyWpJVeTQ/Mf8eu5LEvuH28hFiye0qrXAVYXSizQgXOSCLs7qQic4",
+                "width": 300,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/t41UfhNnq34-8Gahw91W1w/FPn11nRptuy3sop190EF3Cf2kmIpDX47QM-FQTkWMlALBWP5dhRoXQs2XZEbdTtRJIY9aRcGQmzyYiNQalxSDQ/6sM_3frZQWsdj3QwidxIuUJhxsxoaKEvID9L1WuCQb8",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "1840_0_2 "
+      }
+    },
+    {
+      "id": "reckvefnFRFPPAGDk",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1981.13.1-001",
+        "image_date": "2017-01-25",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec30efNIY2aIoSwC"
+        ],
+        "Display Image": [
+          {
+            "id": "attQ3jZ47MV3vu5ui",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/WHa78WgzVPLAOxmiJPWZGw/4vKzewuu17BXnrkAhgWcBBFUxTvscvUytkzqFmXeYrD_aXSR755RZm0xZ-hp_ypRVjNfxTVeTB0yi7ZltZe1lYEXIA0zSrvjDH4PqrYap38/dkR9zGxbss0c85SQY-nGAz0wFt-OHEb3X0Cof2UxFjY",
+            "filename": "SSID19000691_452531D.jpg",
+            "size": 24557,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/GC6ER6otMS9-jHmvX-QeQA/u2qp3-12bgNZNhnb_vTHP56KnMTzbRGwxjLf4HvFXW0WiRVBIKIvRuU9EiV2PR3XiKJJLM5dd2EW9x55H9FWGQ/WUEXBJ5fDbOVMBD-ZK5tYm1PuDwFR2zrd11h_uABZms",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/mVieFyoa2eyENIhjEsyPIg/urrxOsO3I_vDinOGjmNMeAc5WQaHHb2Upr75OY4PyKW9-kfwtpCHvOH6tHARjjRT-XrgwHbeNn0KrnvXrbrJTw/BZppenIXk7Fv5Wm9viRIQzn27ZEF76KDBkBBUfE0j34",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/SGojcJsA44pwTN-q_YP8Yw/F0u_NK3VpT1DK_hvqPKp3v8EUmZ91hlrIQABrGLrNX9Vut2y1qnAMMbT8J8twy6yN_AGagtzOmFKruaRn_QCqQ/vMP5aIi-u0LN4R2J0CZn1--v3hP1SHLlDk9ZXGcYcT4",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID19000691_452531D.jpg "
+      }
+    },
+    {
+      "id": "recomOb0IpZ9DgPDw",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "1840.0.2-003",
+        "image_date": "2014-06-11",
+        "image_creator": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4UvX4PhqqvJsIm"
+        ],
+        "Display Image": [
+          {
+            "id": "attNPjaUF9TIfhtMp",
+            "width": 200,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/9624mNPZFoGMOD3qgMzHvw/ngcDzbko4WnVr8YFtt3YupCr4kbcWEWG696Da2yfblm0etTNxgK9fJHrpUzzIAsFTn4IQWu3C4Bw492GkLA4MQJDLlQjdhikouhhyMC87Qs/QKN8PNZj3BGEJWv61rtPo8ftXJ0k2ATL8R716WTyz-w",
+            "filename": "1840_0_2 (21).jpg",
+            "size": 42551,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/lPtjwHFw8BeYqcr8EkBDjQ/ZfxPGoK2bKezLLyxpMSBnaUPXOC6OYLwyrIY5DxxuVguro_zFkpMr-TfSo9T0bJ2QNPqahpo0phULxoi9UM5bw/9VilSp9LfzCbvYyWWu0e3XfrZKthjyKoqkVMvjz5SsU",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/7AAyZdxvqpJtGIlrJ9kUFA/FJrmnQvH47jMlG-zfaf6bdw2aCDOfUKPULko6jdhHYdSxoZDWOcelwSt9doxJatnrf5YqMIObT1yotxSPLETTg/OY_a76I3bk_I46W8dUS9-mKTOwx_uiBBiRgl8BgEQt4",
+                "width": 200,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Qbcx7PajW8ygioqCZst5RQ/BTQf9nTIHGBxRwJ-1Ub684DEYXwpGqr3pwPO18FgLXpLJlIu5tHulNsx6NkL4VHdXI4FW9_lkZc0Vi5PxsAA9Q/QEtHYvbHXbDyMYw5XOnEsJRB1KYVj-ax6vRB1cjv4Yo",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "University Of Georgia Historic Clothing And Textile Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "1840_0_2 "
+      }
+    },
+    {
+      "id": "recp1I5dk7r6rtI4k",
+      "createdTime": "2020-06-05T01:29:23.000Z",
+      "fields": {
+        "imageID": "VC2004023-004",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recXu0AGQuzYzrszJ"
+        ],
+        "Display Image": [
+          {
+            "id": "attwhSzqXYl8rMyt2",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/lxyv7ve2hO8WqFUKGllHCw/evPpZ9Ar3Nv97Ymsoo8V3PHMdP_RM2XH91RZaBzq45Co5EV4krk2qfS5gU8jItq54SDrlNilxJF5vzXQ5nFgyekYfPoNbPVJ2Gmd4Tmnw9Fz6Wr8az2s0Si4vUlxJbOD/dmkNFaK8m4XsPST8J9mRFD_EpeW9NhUynMR0fKuuIKg",
+            "filename": "57c8971d1e10028145631d6a6b5048bf.jpg",
+            "size": 6859,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/MB6HGQP6KWJoT56gj7JDbQ/i9WDQtJQON9imlj4VP1vTD-DytQHKkyrnPl0WQ3WjTOsCrJJDFNlXfJA_whglyp6nmaSjC1tpO1B9JMx-UFWVg/ynxL7WoLHXk6tSas5UlTrP3YBCnBkCgnQgYamW60uzc",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/MPgerHb11ec70Qga_87qyQ/Kq7JSNB1BCjhLZWp--kVsFHk00uUIzz2JQmhRb-JElTmhFWMSfCXi6HROdARWd2Qa9ln5iCVy300fT9NAvopaQ/zStm-HqcZxOFuKH0lIKle94wiMCBHJwK1WwwIFcguQA",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/iIwebzagaanvUCvM3FqEMQ/KzVooC2AT53CQTm1y3uxjtkwpRN619XFOtQylx8BN_X5cua0PIHNURHMgnasBaU_0DL8MVvSHn07G--olD08ew/Sfp9glHNX0ZMDVNBqLhuDqd3hAuVnOFOxbJAVoOwktw",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "57c8971d1e10028145631d6a6b5048bf.jpg "
+      }
+    },
+    {
+      "id": "recqH6yOZ7SLWLtcy",
+      "createdTime": "2020-06-05T06:37:32.000Z",
+      "fields": {
+        "imageID": "1978.42-001",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "reccBPAxjzmMrjoSr"
+        ],
+        "Display Image": [
+          {
+            "id": "attv5THkTgiGjb4Oc",
+            "width": 2002,
+            "height": 3000,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/QXiShPAuw6CQ5Cs3tRc74w/ElJYhU6YPqfw8rYNDH-eSMiqx0U54jZxlMwvLqY1uyPdcfsr-v0EA6HDmCv2xmIsSK2U2HA1XQzPWvVekJaZv3TnKw4-a51UioHlwAWQQfk/AzHnKsw7499JNByjrkoDGen7Q83mp_JeR7fSkqBPwwc",
+            "filename": "19000727.jpg",
+            "size": 695546,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/dV2k3APVtS1qIzX_clQ6-A/QUMpU-a0L21Jv3sRTPOnZCGUcX6LJg8hO3FL5zVBFxHLC_bBwXixET1XBe_OsdsI2ghUuDGt_Sz_sB3pKgRI-w/NP9VMq9cNi_CZWlKy5EnL4GltpiHTLdTPVq6kJFMszI",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/RJTu5oMv6vfIuSx1-k5RCw/8EzMzXmuYPNFKj5qIPvQQU-VyyAziSEL1_S8GqbIqC9Un-PGTljIy4xdlQ-OY1c5Jugd9HbKiKvC6l0a6KCsoA/o2-mK1SlvplHLf1WXOcop2TB85w9RD6ZoR7P0TeAClg",
+                "width": 512,
+                "height": 767
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/OzRiykEev2kfDCib1XC5qA/gJcDmtwFukdJ2k5PouUk3Ulaxut4TKivDrTSFYXa3b66NEVGEisLffmoH7H5oB2BnNBYjaDXU5df0JApN6RYFA/1j8wjavSfNS1sqLCN925f06sdY5oyEM5N2qpqPmtKQ4",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "19000727.jpg "
+      }
+    },
+    {
+      "id": "recsC12lF0VX3TNBm",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC1992087-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec29SdL7oObNGNUb"
+        ],
+        "Display Image": [
+          {
+            "id": "attQuApox2ybef6WH",
+            "width": 133,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Gk0tLnKp57mmHzh5wiRhMw/rAOv8rLPRFkqQ7TVFQD-NygPIe42exGPKuw9en4dSTCI0o70IxfqjHqi9zAIG4_D-4NZ7c9Nlh-Db74Nl8ADRW2zFXzEZOejhxYb0_kMW5y2fAdz4Zgy9EaeCMo5fz6Q/m8aCE5BA6na4k9JIFjDakQHxrhhUDHIs0895ARgYmn4",
+            "filename": "13b1911270a16828225dbfe8cc9c697b.jpg",
+            "size": 8905,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/-iUIM6TB7nC5QwzZG3lL3A/J4q_u3yrcqO7MOopjlhDobfur6NFneSMyfHean0WViicBgtwDqQGeQIsYPG5kNTqX5lDvS1wdsupYrHBPZtpXg/Xf7KSFEYnHRLPZraESOpirDruD52QbmHnEIuzQxXJLw",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/0MR_oeKqvuJVy9D5fhoRDA/mGWlZ2dMhGj9_4UA3p3NuGZi_gGEVRJjOxO8QcTQvatX9hBKvths9SfSBSvp7pyDaNc9KjLtP8qlLBkoRsL0Kw/oR7j6YXvAF6KTGVe2kcsYVJpt9hmVPSIbBDHgiOHFGk",
+                "width": 133,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/yM4GbUxCgLzPh4tFCq0o9w/C_9gtR4YcSvYnX0DtenD3iGTVfQ0iMfN7FHu0LFvwwTUaKO5FMU1swC6ycGdvkoAHBYiRKejNc5fDPDp3kcxjA/GqpiLo82lrFmC4GUBHBDpiPPmPko5OwfeU0rZ-pmiyc",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "13b1911270a16828225dbfe8cc9c697b.jpg "
+      }
+    },
+    {
+      "id": "recsOY7vT90DHvoS9",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2001080-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recguDpKmWCe3SkQ4"
+        ],
+        "Display Image": [
+          {
+            "id": "atttjU1aMCCDE7X2I",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/uGato8E7cBXzG5YRWUUKmA/xxq76BIhClLovnQD1vcBy3rneUyMfGVvDLszDXcvBDIIKASCFQM4hppgrvZ2onMSoBcZYZ3arZwITHp-FPlG3NBlcKrjh_LEbjNLMSq6Ov8gDDcNkS7kYgz7-LpFIhpZ/D9jIq_CF9k9iyqoAtrMgQK24PyMQcevicbnzpNH_gVw",
+            "filename": "c65f9d9421b3103f9f0753936d1e8a69.jpg",
+            "size": 9131,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/4pWYPNmRp7360G2fMCHsew/uwIIs1UAypKfSWp5fguxVHu55TCgV_yXMqISzWD7sMBxveYeeDAMQ18TuLTujouVhSkMBmZDYHvjOyDB5OuFOA/Uy2Qz5M4UHL9rSTf1DBfEYdLk-tzY9pSHB7oiO_zmlY",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/PFOW8HmXUQ5doDx9KnWnLQ/bvheZggtGEB1fiFL90k4bfVqZysIYgpsNlIeA1K838XFCNH_otMARDp3MEAT3Zcm8Acfm8vMZWe0myBFhJ5uWw/kpsCk3V8cpLoqfYFoPz6soBEdEf-jBgBVdbXOgVqh1Y",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/MWGhFmwFE8UMfQ0Eha4xKg/6Co6HHA7KVlpDUt9IS2W_L40przMCXBY9gcIhzsVNIk0pqfsBiMnS8yCIo4RK391EceHBu4CX1n1dXneCbftWQ/T58wsJEIygaB83E6rfjK6BdLakt0oBlOfRFnUY8mXbM",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "c65f9d9421b3103f9f0753936d1e8a69.jpg "
+      }
+    },
+    {
+      "id": "rectJcxGXZ4z4Kmee",
+      "createdTime": "2020-06-05T07:35:24.000Z",
+      "fields": {
+        "imageID": "VC2019004-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "receQe7UJoI0intKQ"
+        ],
+        "Display Image": [
+          {
+            "id": "att1QK26z25ynSvBF",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/J3B7K60yBRq2BECCcPTTvg/u_LimCeKno30li-bv7kwwyegxcQSKnbd4P3QRUGZGFVZU_2ih8hjPBXMay8OG5x6xcSJMdZ97Qyc33p6YaQ73hbXDl49Od4NKIvCtkKVd2y8n_90Yhh7-NjazNt9Qwna/sVEpfJq8MRIQd2wbl9RyDTFvJ1IsfQkBakZatcORz9E",
+            "filename": "03836537f25da4c331eaf3242fdc96df.jpg",
+            "size": 8824,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/dra-A0RbddP8G3XZMXFCfg/Ds5HzxyakUAS8PruwPZHBZ8U9uThzldp9UUEzMexQu7MYk5J2k-cuNTROLQjDjLAofUexLfuLKfY3IuNebHxSw/-Yro6sp_QIAoGkKh5VKXQ7MDM6aUlhMAdQ3D90GeWUY",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/YqzRMFl4_kS8gPl1HnNrjQ/SbaGFcXg_rmqFLP3YVZJmAJKGoUSA8ZSJg9QVz2TWN3e53vF9_owbvT6RUGk_tuE50wL9b3KHT89K-fPkyi3BA/ZjAcGBNLhCACrBIr9lyt0TmgR5ppm00BM-7sV5nvT7g",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/9nrDGffTwql4KdQdWlRxJA/05PR3M3UJK0hY0Wm73hQmPHTFwasMxQJGOPitE_4SKZzBmIl8ScOdP7pDDF3Gz4JwoomK_yvRL2IadOyK-E9wA/KOdcTIc656TkDYBV30gsCAtIw6dZt4pZ77p6Q2dnRUM",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "03836537f25da4c331eaf3242fdc96df.jpg "
+      }
+    },
+    {
+      "id": "rectQjFOMsULIp6UZ",
+      "createdTime": "2020-06-05T06:37:32.000Z",
+      "fields": {
+        "imageID": "2004.2.27-001",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec4lLWMx7qmwvdu8"
+        ],
+        "Display Image": [
+          {
+            "id": "attQWKDQn2UWUynEj",
+            "width": 2002,
+            "height": 3000,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/4v223-y8xu9FWq3OhyKZpQ/0AXnXXqZywh-V6AMy1f346Nn1OwRSyJoGmUey2bFYG7fUDOBZrk12Asmu5LUyc_vW9MUCyC2kim1p6TLMzYWXII5Bmb_ZAb1AbxfbgmRsok/8cOHxldXoG_AG_5Jv3OSy1CiVpeMpNgju0AIdtDRYyo",
+            "filename": "19000752.jpg",
+            "size": 572877,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/brrtdjvIy6uK9MyKinuIJw/paOAEx6oE6N-mjHSq2oAZRj-JV-OPq-Yi34hmM9IHAG9F4X0h75_mkz4vvmsmAF183PQhYbtcMMjUzqbPubMXA/fMKaoIyuTx5kjfqcjG0GuiDN7XyYgBJfAoh2v_r_etE",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/9LlUDJsIH1EwW0VjAqTP3Q/1_Rjl59AulB8Rp4lwbt8KmiWdlyVAMfzFrPiDKwxc7Uceo0cBQUH9dVeQqQrzqY96GgT7w8GdksUxgsQWbWbbA/zbnDVoJxMRhIdROdwhpPyZEjvn-3KgfZII2_zA0x2D0",
+                "width": 512,
+                "height": 767
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/etJ_6hbgjyK-83G7Q00Zdw/tzC1QUta5dYBaxs8D3zulfi7iBiKzRQ8QDXe1pj_NiYyIc_WJJqMBrZFX2_bsSmLG6Xz8AkF96jrZslktMJzZQ/EBE9JQSo8CQgoWsK01x4VBRGtBNYZ8rzYWq3q80vv_o",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "19000752.jpg "
+      }
+    },
+    {
+      "id": "rectbfgRJr5m3xx8T",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2007020-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "rec5FthXZvMoAtusH"
+        ],
+        "Display Image": [
+          {
+            "id": "attGMqddX7bDWaX8S",
+            "width": 133,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/t8_TZ1L7FQPNV95k4Qay5A/VvbBtODCOUsB003OlwGJ2lbkDHzIqzGuL9CgxPRpWdeH5GM4Fj9Uu4CHcrIf-WGJzjqjysOttaYDzGvMPra386m5wefzpx7EXfU_uk3IwoeGnasvHajKpl3_sOrSTk7L/atrzdsuI4greFD6eLfE_hZfzGCuQhvTOikgg_cC025g",
+            "filename": "24d03c46dffb5d9730ef0e116f0d76b9.jpg",
+            "size": 8573,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Z5s6LRSY0Js5vKpf6o_4cw/Hy_ir4IB6sA43zoJrUQPdh7pHGbzVCB1i5p9_0ImwU0R6THlDWZFzcaSmruQ9D4bnHcCJ9NaTekSClkwu-0q2g/22qZ7wC4UrBoovSycGHYt1Ytl6yss940CuxWL25beGQ",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/8znG9yDQmgLc-EAqbyAnBg/9oQgKpOoHkq22ISJ1F9ZdgFtgjKRKMUawlsqm-543xPTfJuJHLRRiHMQYJPzkTpwKJF7IvJEkVfi4sishwpmdg/znGBUc0Z6a2ehn7kEppxxVGkI-W8yoq1Clg_BWyM-iA",
+                "width": 133,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/JrMxkqjK8V2qkfx-zkC0Yw/nzKWzDWo3ku8-kIrdT5rw69BoIOwQt-pCcNDZsRtEfFEeOuaP5harZNWZMMfplVU8FkfHxr_8W5QT6WGONmKCA/XPc6zkKnp1wRSeatSKsQI_hVb1geFwFQZS9qpNdp58Y",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "24d03c46dffb5d9730ef0e116f0d76b9.jpg "
+      }
+    },
+    {
+      "id": "rectvSgSYW0vFGz6W",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "130.0a,b-002",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recvXPUUPLxgpKXYj"
+        ],
+        "Display Image": [
+          {
+            "id": "attdwtRHOUASWQizn",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/b2hi-kWDvO0JJfmz7y-tvw/rLW6wcuDdf3E5QGeaI31MLZZ6E4n5-iq5PKTSrI17CARKx3wHSDE9vkVBrEKivSCjXX4TPKLiPMwJyvKyNfG72rAZFGL_uybrqPRnMInNzc/R-VrXaPSLbx8tpWIRixvp_20EGI8FrmHPhK4IrpNdXE",
+            "filename": "SSID18982548_454270D.jpg",
+            "size": 24587,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/6sYFPUTU5XV6n3CC0Adnmw/TLzTEgOfHLFBqttLNrLzLfK_-jzkLnax8X75LdlIpqRSG2aSZRaMVgyse-t06qETd_C_-vxjKOzxjAarOdExuA/_7OLVNTHrFu2sU3_LKS39OkEbe2udvRvNvEHSraLPWs",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Tx0YMSrS3-jBbDIz7ZUFNA/ApGZYpak8GuZnDvI6FUvGEOkK8MPQWJEjzaRuFLQsdBdeXqjiSrNQFPrp5BbIMJpB6H97fMVSeXA3pZdT6TF_A/8LsB13Bgujg-uh85FuliUbG3Dju7TjVlTOZwqPPZ4H8",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/RRFo58FgrJFmt8hy8nnhCQ/L6FSQqdUvvPDGjqMMEWifyqK4kliLhfolKN_dK8wtaNW00OUUu88V-U9bsCivhvbKZzGgeyn-9BHXhD63v-yxg/sLU4wn0uB2OrsUC3FAckfMQ76a73ts2-DwijIYbquZY",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982548_454270D.jpg "
+      }
+    },
+    {
+      "id": "recuifKj2yXfDBFO9",
+      "createdTime": "2020-11-08T17:38:02.000Z",
+      "fields": {
+        "imageID": "IP2012.001.q-004.jpg",
+        "image_date": "2013-06-05",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recBV1VOeM9z7ZoMF"
+        ],
+        "Display Image": [
+          {
+            "id": "attvNoiXrKD0LBDnL",
+            "width": 533,
+            "height": 800,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/-9TlB3Ze85s9Qh7NCcyriw/0LdMAnBHolSuloAcJKJS6sREJ15GWSKUrElN91HjSGaATHTv_XfZuYWlUV3QIfdxH4Y_zz-etl_WUksUIogahVNuXYoMTvJs_WiozIvpFa4/ifNrQCS7nttYpjdnvosso2Bm2yLRr8ol210-lElSAzI",
+            "filename": "IP2012_001_q-004.jpg",
+            "size": 81180,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/4SWsknTc3tMzks1RtWh-GQ/AE1KDNryQCCL7TidOtrPCst5CtLlprbI_1pnNRmIgT6UJFsFHigT06fX6u6RfEzEvNrjpx4Gnhh45qpVzituxw/DTzPOxCqB0siDb2PkJ3wy6CrvTcEuGoQnfmdMgMifh4",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/W8GDdcm-o_xQlBqsbJQoKQ/UOkoa3cmgecI0X4qiQ1sXA_hNz4nQB6otz_HcD4F5aLeI8FpbDVTWDsUf-CZC0zD5h3H9Tm8pr5pO_oZyTX0aA/36ZVNp3lMA4EazRuEiSFEDN1D00BYDf2pM9ZB9myWnU",
+                "width": 512,
+                "height": 768
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/LGjASsBSQjNRmyPwXoipOg/1o0RNMklYkqJZdBgu9pFXU2uOUWusTYU3SrxfmUYKPmrzwSYPj5tPeq6K-1CyV2cM0RPQ55zfSX2ny7ZGl4CfQ/p384PRQxs0AM7Ns2hcn9J9w6UnE5T2rSag2m1RsZQbc",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "IP2012_001_q-004.jpg "
+      }
+    },
+    {
+      "id": "recwSpkEUva1fxHnv",
+      "createdTime": "2020-06-05T01:29:23.000Z",
+      "fields": {
+        "imageID": "IP2012002-001",
+        "image_date": "2013-06-05",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recBV1VOeM9z7ZoMF"
+        ],
+        "Display Image": [
+          {
+            "id": "attkvjv1aNsQ0ulQK",
+            "width": 133,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/d9ibzCJfVE9kWegh2-8MQQ/aPrNAw9gTN5lN4YJaP1Sdr7sVb6AbcV9XLhddNniNv-PjXRAJGpAX6JEXM6UqrgMCzX0WNf_p76BHkx73GTyI1Sxd1cwVX6013CCkn9jGwO90Pnb9mNj9A5DmD5p4-8N/nUgR7AN_zohZdo9OSWDEy7nKNpcS8EDondlBxaXLDrc",
+            "filename": "f2582d798d0f48a4c1392aa677c1b4ef (2).jpg",
+            "size": 9224,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/LOj0kYSvuAXgGnOw06LM_w/Pl3m42sG5I92YNbTldNUjUEscByzAZspiifac7e0NnQ2bom-Lo4GqYr7WvAZsxct_jiJa0FlOIg0MMqSJS6wcg/s2iEpEypcUtdXN9HeHRlEhr26ajSTpUsugoSU1vYCYM",
+                "width": 24,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/zUR03L0CBDbqMZWryzmYqA/B8QelJmMBiy-dvdfn5JuawrIg2lDuSXq4rD2MlEm55mYdOgTcBFPHvW2mVhce1TAeoBenJR4O-W2qZ9sEdBLpQ/tlkh7UX6VkvQWxxLvdRzI-By1kVNglZ3xHaCft3i5S4",
+                "width": 133,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/-ZHd87f11uwDLXlgc21yYw/Jhm6FNf9XwmKu077jExaKPy0CcGPbXqPelM0KZ3tK-6G3_rMBDxkCa2zNsKPsUUfgudUzXVyUlK1ipWV-d9J2Q/VllXUqyVFrpnKEGMeAX_UWnRGxAn9p-pw3V48duYeRM",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "f2582d798d0f48a4c1392aa677c1b4ef "
+      }
+    },
+    {
+      "id": "recxly1DJggeEFaiA",
+      "createdTime": "2020-11-08T17:38:02.000Z",
+      "fields": {
+        "imageID": "IP2012.001-006.JPG",
+        "image_date": "2013-06-03",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recBV1VOeM9z7ZoMF"
+        ],
+        "Display Image": [
+          {
+            "id": "att6JUVHcstsiz3W8",
+            "width": 800,
+            "height": 600,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Q-gkDq3RWFvCgXmld0FoIw/xhlETLH9zpXREZTFeIhGRk6W2QuzwFClHJTFQD0CWRedZwwP9odzT6iCDNG08EwJ-E0bWRSh5ehMUh7LHs9PwlVSd3zcrcL9UNXz3tXZQ9c/BG6Zs2yS7g4WjTIELKELBJ7n4FdG0F7LMArY8Sp4bfY",
+            "filename": "IP2012_001-006.JPG",
+            "size": 219824,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/AxA5MV_rj_XmoWmwyeEDgw/t564LfqneQ_PV1HuJRZpJvL0b8zCOxD3YNu8ReS6uk3i4m-DH2nxbHM2Bmw9SDnTQMxNZ2QZARUMJqNDKVfALA/FZdyCk7q_KeBGYddij1pHkynoiFptlRSGFIVFkLOZWg",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/663MsvBdegUYeFd-Z1iodw/ljbF4z2Rq62jZz7ljSRKzQvvJq_fQr7BxjwtlUamc4H3y-OUwb-p7Q1gijM16CSULVWssWiKcVvHIic-W44Nrg/YRvUmif3HFvdtxh2kj34sRvHsfWa8FZ0ePqsYGCKiJ8",
+                "width": 683,
+                "height": 512
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/ME3cUrW258PFuuzRIR5JNA/4I9pQL7KEIldh1RHxLyjuoBk6OJ2QeOXWOn24Qbr1vtf6D157A0Jbu1_15EUi4CPbQoTVo4Dri8FyPXQBQ5vVA/Qn3FQHUibquZtKjs8PTxt-6VfdmjkdBwEhWnXU8STZY",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "IP2012_001-006.JPG "
+      }
+    },
+    {
+      "id": "recyML4N86hLWvqtU",
+      "createdTime": "2020-06-05T01:29:23.000Z",
+      "fields": {
+        "imageID": "VC2004023-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recXu0AGQuzYzrszJ"
+        ],
+        "Display Image": [
+          {
+            "id": "attYPXY2eQB4AQBNh",
+            "width": 143,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/NkqPT13GKdifwczD1kTPlA/rmolXSn3LVbDXvWxCGgKV-z8ojr9_p6Qr9SJvdDT8Muhhr3s2z9DbE_jxYO1I5HbP32HrVlAxqe4-_ewoK3TGms6uxn8gu_mTq1T1_TEUOql9S1f9kqrJqwzcVdS5J2l/2LA9OXy0wstHlh2hfZ3ZRLs-Gw0T0AUkrnr2eoayB0o",
+            "filename": "f8bb5370bf36cbf0e3ed84d507aa3753.jpg",
+            "size": 11471,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/-ivRUnKQss2NOUPlcMmgiw/z9ZxHNNfH7Ccyi7KiPAE-okmBOLDeuLhijQh53hqv0Xit7aZl1-BnHRFxSvbS1Rr3RNUMMjAbM_mVuwbu9l52Q/dmi5U3AnhJjgQ95xKYDBSjtx2d_perzKemJxl2pfG2w",
+                "width": 26,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/k7fhpkakctv4MmL7LkLhHQ/Cw5Li408IALwM2ftQ2kbM14lBPoEaK1JsC7f4XeD4VH2cgf_1iLNbGwCFZ9PbQRYB5bTbNliySwGpSriq5eFYg/DzndSpPzUVwPlZOQZBPky-Lk9B3Sa3uR-0cBGJ3F_ps",
+                "width": 143,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/zg0hHBZA_YgEDPNLFwnb8Q/xsOG9pd_WKvaLxoEdrg9puAr_NxQWAvYbf8BF9PBp4tNWp-JHhQOoV9QZXFs9rkMXVT9CxUD2LCfUO8OJFPamQ/1TgnL2z1URvI0kmWrQIq2AHsRWvJMDJUDa9PlGL1BF4",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "f8bb5370bf36cbf0e3ed84d507aa3753.jpg "
+      }
+    },
+    {
+      "id": "reczKzfjourjsPkx5",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2005002-002",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "reccj1wbldlO0peQ5"
+        ],
+        "Display Image": [
+          {
+            "id": "attfbo51e0XuNlSW0",
+            "width": 150,
+            "height": 113,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/UO8c-cIlFZkAZl4QARX7Cw/oGC1kEofvARJLoc-KU4gzid_9VkzomfvO13fyqUDOXq_rU_xJxLd_VTURE17PwnRCguCE3KEqL58_z3g3sEzLYZ8y_Su4qIMn_u5jpSyW5JydJuicitahXbjAaKvOeUY/bHuuTEpfyKwCCoAbdUnS82fKgooH6IMnO9XoivLnymY",
+            "filename": "efe64e627d5f27b12ceebde303debc9c.jpg",
+            "size": 9997,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/NGOUXuJ3ObcvSjQ4nn5NvQ/s-EY0gxyysPFAIzquOmUMzn-SJvxGoyk7C6z6LsTqoPzNKxQxRLASPDOpd-ygmFfJqtCqoGUF8tMOgL62FLWJg/KaJEfmAOzcfHfudcSIA_4IivYfQlJqLStIWb22hdSUE",
+                "width": 48,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/QYVXsILhIrTPQwxd8ZT37g/SK8czR1lpj1bRAFW9x14MnYjW6AHpCW1IQwSWA_m0MzKjmTtKoImNDsF1fgX-sHbXEifg2WL3sgdvSkx8O5wLw/-iGrYJEvtyEYJnCwNappj8NYLBQpgv3nA5_divwF_wg",
+                "width": 150,
+                "height": 113
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/vV2VhfFYmabH-Mxrtic9sg/CWEtoAYptLo-wu5lXDXIbImsj4LYnERaepwoS22UWUsR7gYUX_KaX_RziJTak19b0v6VUkM6q89OSk3sQN1_ZA/AFalfOvFlve-MG09W2B4GkgJcH6szb2Xf3vqmF0UFyU",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "efe64e627d5f27b12ceebde303debc9c.jpg "
+      }
+    },
+    {
+      "id": "reczbRPeeMJwdDqk4",
+      "createdTime": "2020-06-05T08:16:21.000Z",
+      "fields": {
+        "imageID": "VC2001080-001",
+        "image_creator": "Vassar College Costume Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recguDpKmWCe3SkQ4"
+        ],
+        "Display Image": [
+          {
+            "id": "att9j2dBNQlAzeZwg",
+            "width": 150,
+            "height": 200,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/OLJUBChelwN6oUNPtWHIrw/Nbw1ppQWiUKWU5Qhq6oDWND5h9U92czPBfJPAN2Ij-2p85DOjMxcA7tN2N1eRtF19KrAwQVFzTmHbCpkTyEjo97fdfdGPwF6f7v8LyB6u6PQthgXghZXKVj1dETmZRQ2/hCCiEgAqpynz-oJ3EXNeOeE8i2b8_B9Xz7vWSTWNjPo",
+            "filename": "3e87261b1ca689fb84cab361f1a3e377.jpg",
+            "size": 10228,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/dMp48CDzOb0_RER1D9sRzw/sKzdbpXHnuAKw9Jp5i9yXjtWNUmeIJiHb-nMcdc_1DQe5gQSvkpPW3ZxPjosjYNZo14wbhua0rFzb_9wFZzlng/xMQFzevc-sqS7M30duSf74wS6ekrz_HTheg26KqBhzg",
+                "width": 27,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/3Iu2DYqlqylqLht8ICDKzA/Mc_Av8YpWPTtfrxwQXPQD1NNpRUKKQk-SYG3rUG77KWSAJbPaLPMMbMYPRX4cUE52HztrDtEIxXxPjffbNgbrg/W8zu9gAq5xz5CIx01TuW21SVbpcQhhRPi9CUQDd5ZMA",
+                "width": 150,
+                "height": 200
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/jlES9hc25KXNorZugzPAkQ/vVwULIt7kCJRQy449VbyuIsJxfYhMByMGjJhONRG2_jUnlPcJvxSPpr1IKMxmrE6D7vMg6PWt_ix-9YnmFL1sw/DEyCPiH5eb87SXVwajNS_0fIJPsNoUsHTZOnvjqtL-Q",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Vassar College Costume Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "3e87261b1ca689fb84cab361f1a3e377.jpg "
+      }
+    },
+    {
+      "id": "reczsGvAZsCA2J5Be",
+      "createdTime": "2020-04-09T23:10:45.000Z",
+      "fields": {
+        "imageID": "15.1.1-002",
+        "image_creator": "Smith College Historic Clothing Collection",
+        "image_rights_statement": "https://rightsstatements.org/vocab/InC-EDU/1.0/",
+        "object_identifier": [
+          "recfpUMHKepQVjKUG"
+        ],
+        "Display Image": [
+          {
+            "id": "attnaXg2HP6R9PeT1",
+            "width": 195,
+            "height": 300,
+            "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/qqJSOyrTCwcuwAFzrSN0Kg/c8hE9pZu851GrhqLAbMnMUd_7uIiJDeOwY1oFEayIIKMALwACrv1MCMvw4FEKlo8ll5MuG6oOnz2XfJC7VXTnYJe9tramHbJm23b5h35uJU/C1QUJ1yPv3CpqNie19A6ACtj9Lw9_2SNC9yplmidJkQ",
+            "filename": "SSID18982545_452637D.jpg",
+            "size": 33161,
+            "type": "image/jpeg",
+            "thumbnails": {
+              "small": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/ygix08izSeVxBQKw6td0hA/u75miymgJXycoyWDsF0LBsydTUZvh9ss1uN8EZUj182zKJwvN5N5iQG_xPxqwEc6wkwcBqUAEVFSh9WKl76cFw/ArhDU7Rvi3n9AJFElwYEWKF4nTcEIs1IFAUoXLYnWlU",
+                "width": 23,
+                "height": 36
+              },
+              "large": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/Wbjlcg-cOxA_h-qcg12nhQ/iqE2eYFlnQ5G2yAC0EP9OSbI2-ApkM4UgVXXc1kRCEJmVnz4iq7c0SwDOsMBRohKQqQRe__YYe23Enhi5-2OCw/0LoUFrZEYF9qAo5bNuPhY9OfGKMKF7KS6vvsPsSBRqU",
+                "width": 195,
+                "height": 300
+              },
+              "full": {
+                "url": "https://v5.airtableusercontent.com/v1/18/18/1689012000000/gPDG7qOM1jnhfynXsO48YA/ePBs98UfdmpMhdQoY9BsxbZC92bGjcpH5MolRAZg48wsK2w2ItzUqbj_JziUdXE3Pj70WwKcW64z7XnRxtO2jA/_GPJEJI0at5addZG38brLrZQnfBwlZ2lQOVehRzloII",
+                "width": 3000,
+                "height": 3000
+              }
+            }
+          }
+        ],
+        "image_rights_author": "Smith College Historic Clothing Collection",
+        "image_rights_statement_label": "In Copyright - Educational Use Permitted",
+        "Filename": "SSID18982545_452637D.jpg "
+      }
+    }
+  ]
+}
