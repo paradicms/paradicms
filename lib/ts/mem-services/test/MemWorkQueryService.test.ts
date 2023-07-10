@@ -139,15 +139,19 @@ describe("MemWorkQueryService", () => {
     );
 
     const workEvents = getWorkEvents(result);
-    for (const workEvent of workEvents) {
-      // expect(workEvent.location).to.not.be.null;
-      switch (workEvent.type) {
-        case "WorkCreation":
-          expect(workEvent.creators).to.not.be.empty;
-          break;
-      }
-    }
-    // Not all work events will have images
+    expect(
+      workEvents.some(
+        workEvent =>
+          workEvent.type === "WorkCreation" && workEvent.creators.length > 0
+      )
+    ).to.be.true;
+    expect(
+      workEvents.some(
+        workEvent =>
+          workEvent.type === "WorkModification" &&
+          workEvent.contributors.length > 0
+      )
+    ).to.be.true;
     expect(workEvents.some(workEvent => workEvent.images.length > 0)).to.be
       .true;
     expect(

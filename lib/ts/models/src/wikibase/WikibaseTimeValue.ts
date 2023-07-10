@@ -10,11 +10,13 @@ import {mapTermToNumber} from "@paradicms/rdf";
 
 import dayjsPluginTimezone from "dayjs/plugin/timezone";
 import dayjsPluginUtc from "dayjs/plugin/utc";
+import {DateTimeDescriptionDisplayStringMixin} from "../DateTimeDescriptionDisplayStringMixin";
 
 dayjs.extend(dayjsPluginUtc);
 dayjs.extend(dayjsPluginTimezone);
 
-export class WikibaseTimeValue extends Mixin(ResourceBackedModel)
+export class WikibaseTimeValue
+  extends Mixin(ResourceBackedModel, DateTimeDescriptionDisplayStringMixin)
   implements DateTimeDescription {
   get day(): number | null {
     return this.timePrecision >= 11 ? this.timeValue.day() : null;

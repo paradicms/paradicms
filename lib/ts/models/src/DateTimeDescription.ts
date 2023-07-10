@@ -7,6 +7,8 @@ export type DateTimeDescription = {
    */
   readonly day: number | null;
 
+  readonly displayString: string;
+
   /**
    * Hour of the day, 0..23 inclusive
    */

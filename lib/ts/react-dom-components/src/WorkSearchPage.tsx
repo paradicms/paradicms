@@ -43,6 +43,7 @@ import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
 import {Work} from "@paradicms/models";
 import {workSearchWorkEventJoinSelector} from "./workSearchWorkEventJoinSelector";
+import log from "loglevel";
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
@@ -134,9 +135,9 @@ export const WorkSearchPage: React.FunctionComponent<{
   );
   const [loadingWorks, setLoadingWorks] = useState<boolean>(false);
 
-  // console.debug("Work query:", JSON.stringify(worksQuery));
-  // console.debug("Works page:", worksPage);
-  // console.debug("Work agents page:", workAgentsPage);
+  log.trace("Work query:", JSON.stringify(worksQuery));
+  log.trace("Works page:", worksPage);
+  log.trace("Work agents page:", workAgentsPage);
 
   // Effect that responds to switching to the works tab
   useEffect(() => {
@@ -144,7 +145,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       (activeTabKey === "works" || getWorksResult === null) &&
       !loadingWorks
     ) {
-      // console.debug("getWorks");
+      log.trace("invoking getWorks");
       setLoadingWorks(true);
       workQueryService
         .getWorks(
@@ -158,7 +159,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           worksQuery
         )
         .then(getWorksResult => {
-          // console.debug("getWorks result:", getWorksResult.totalWorksCount);
+          log.debug("getWorks result:", getWorksResult.totalWorksCount);
           setGetWorksResult(getWorksResult);
           setLoadingWorks(false);
         });
@@ -174,7 +175,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   // Effect that responds to switching to the work agents tab
   useEffect(() => {
     if (activeTabKey === "workAgents" && !loadingWorkAgents) {
-      // console.debug("getWorkAgents");
+      log.trace("invoking getWorkAgents");
       setLoadingWorkAgents(true);
       workQueryService
         .getWorkAgents(
@@ -190,10 +191,10 @@ export const WorkSearchPage: React.FunctionComponent<{
           worksQuery
         )
         .then(getWorkAgentsResult => {
-          // console.debug(
-          //   "getWorkAgents result:",
-          //   getWorkAgentsResult.totalWorkAgentsCount
-          // );
+          log.debug(
+            "getWorkAgents result:",
+            getWorkAgentsResult.totalWorkAgentsCount
+          );
           setGetWorkAgentsResult({
             ...getWorkAgentsResult,
             workAgentKeysSet: new Set(getWorkAgentsResult.workAgentKeys),
@@ -212,7 +213,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   // Effect that responds to switching to the work events tab
   useEffect(() => {
     if (activeTabKey === "workEvents" && !loadingWorkEvents) {
-      // console.debug("getWorkEvents");
+      log.trace("invoking getWorkEvents");
       setLoadingWorkEvents(true);
       // "Paging" the timeline loads more events rather than typical pagination.
       workQueryService
@@ -226,10 +227,10 @@ export const WorkSearchPage: React.FunctionComponent<{
           worksQuery
         )
         .then(getWorkEventsResult => {
-          // console.info(
-          //   "getWorkEvents result:",
-          //   getWorkEventsResult.totalWorkEventsCount
-          // );
+          log.debug(
+            "getWorkEvents result:",
+            getWorkEventsResult.totalWorkEventsCount
+          );
           setGetWorkEventsResult({
             ...getWorkEventsResult,
             workEventKeysSet: new Set(getWorkEventsResult.workEventKeys),
@@ -242,15 +243,15 @@ export const WorkSearchPage: React.FunctionComponent<{
   // Effect that responds to switching to the work locations tab
   useEffect(() => {
     if (activeTabKey === "workLocations" && !loadingWorkLocations) {
-      // console.debug("getWorkLocations");
+      log.trace("invoking getWorkLocations");
       setLoadingWorkLocations(true);
       workQueryService
         .getWorkLocations({requireCentroids: true}, worksQuery)
         .then(getWorkLocationsResult => {
-          // console.debug(
-          //   "getWorkLocations result:",
-          //   getWorkLocationsResult.workLocations.length
-          // );
+          log.debug(
+            "getWorkLocations result:",
+            getWorkLocationsResult.workLocations.length
+          );
           setGetWorkLocationsResult(getWorkLocationsResult);
           setLoadingWorkLocations(false);
         });
@@ -352,9 +353,13 @@ export const WorkSearchPage: React.FunctionComponent<{
       title: "Map",
       content:
         getWorkLocationsResult &&
-        getWorkLocationsResult.workLocations.length > 0
-          ? renderWorkLocationsMap(getWorkLocationsResult.workLocations)
-          : null,
+        getWorkLocationsResult.workLocations.length > 0 ? (
+          renderWorkLocationsMap(getWorkLocationsResult.workLocations)
+        ) : (
+          <h4 className="text-center text-secondary">
+            No mappable work locations.
+          </h4>
+        ),
     });
   }
   tabs.push({
@@ -401,25 +406,28 @@ export const WorkSearchPage: React.FunctionComponent<{
   tabs.push({
     key: "workEvents",
     title: "Timeline",
-    content: getWorkEventsResult ? (
-      <WorkEventsTimeline
-        getAbsoluteImageSrc={getAbsoluteImageSrc}
-        page={workEventsPage}
-        pageMax={calculatePageMax({
-          objectsPerPage,
-          totalObjects: getWorkEventsResult.totalWorkEventsCount,
-        })}
-        renderWorkLink={renderWorkLink}
-        setPage={setWorkEventsPage}
-        workEvents={getWorkEventsResult.modelSet.works.flatMap(work =>
-          work.events
-            .filter(workEvent =>
-              getWorkEventsResult.workEventKeysSet.has(workEvent.key)
-            )
-            .map(workEvent => ({work, workEvent}))
-        )}
-      />
-    ) : null,
+    content:
+      getWorkEventsResult && getWorkEventsResult.workEventKeys.length > 0 ? (
+        <WorkEventsTimeline
+          getAbsoluteImageSrc={getAbsoluteImageSrc}
+          page={workEventsPage}
+          pageMax={calculatePageMax({
+            objectsPerPage,
+            totalObjects: getWorkEventsResult.totalWorkEventsCount,
+          })}
+          renderWorkLink={renderWorkLink}
+          setPage={setWorkEventsPage}
+          workEvents={getWorkEventsResult.modelSet.works.flatMap(work =>
+            work.events
+              .filter(workEvent =>
+                getWorkEventsResult.workEventKeysSet.has(workEvent.key)
+              )
+              .map(workEvent => ({work, workEvent}))
+          )}
+        />
+      ) : (
+        <h4 className="text-center text-secondary">No work events.</h4>
+      ),
   });
 
   return (

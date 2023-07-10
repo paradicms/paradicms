@@ -119,10 +119,13 @@ export const WorkPage: React.FunctionComponent<{
         workLocations.push(summarizeWorkLocation(work, event.workLocation));
       }
     }
-    if (workLocations.length > 0) {
+    const mappableWorkLocations = workLocations.filter(
+      workLocation => !!workLocation.location.centroid
+    );
+    if (mappableWorkLocations.length > 0) {
       leftColTabs.push({
         title: "Map",
-        content: renderWorkLocationsMap(workLocations),
+        content: renderWorkLocationsMap(mappableWorkLocations),
       });
     }
   }

@@ -3,14 +3,11 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Text} from "../Text";
 import {Work} from "../Work";
-import {WorkAgent} from "../WorkAgent";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {WorkLocation} from "../WorkLocation";
 import {mapTermToText} from "../mapTermToText";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
-import {getWorkAgents} from "../getWorkAgents";
-import {getWorkDisplayDate} from "../getWorkDisplayDate";
 import {isWikipediaUrl} from "../isWikipediaUrl";
 import {DcNamedModel} from "./DcNamedModel";
 import {DcImagesMixin} from "./DcImagesMixin";
@@ -22,6 +19,8 @@ import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
+import {WorkAgentsMixin} from "../WorkAgentsMixin";
 
 export class DcPhysicalObject
   extends Mixin(
@@ -29,14 +28,11 @@ export class DcPhysicalObject
     DcImagesMixin,
     DcRightsMixin,
     OwlSameAsMixin,
-    SomeImageThumbnailMixin
+    SomeImageThumbnailMixin,
+    WorkAgentsMixin,
+    WorkDisplayDateMixin
   )
   implements Work {
-  @Memoize()
-  get agents(): readonly WorkAgent[] {
-    return getWorkAgents(this);
-  }
-
   @Memoize()
   get created(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.created, term =>
@@ -49,11 +45,6 @@ export class DcPhysicalObject
     return this.findAndMapObject(dcterms.description, term =>
       mapTermToText(this, term)
     );
-  }
-
-  @Memoize()
-  get displayDate(): string | null {
-    return getWorkDisplayDate(this);
   }
 
   @Memoize()

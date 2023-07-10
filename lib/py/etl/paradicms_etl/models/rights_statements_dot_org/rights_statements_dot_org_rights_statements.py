@@ -8,7 +8,9 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 )
 
 
-class RightsStatementsDotOrgRightsStatements(ModelSingletons):
+class RightsStatementsDotOrgRightsStatements(
+    ModelSingletons[RightsStatementsDotOrgRightsStatement]
+):
     _MODEL_CLASS = RightsStatementsDotOrgRightsStatement
 
     CNE = _MODEL_CLASS.from_rdf(

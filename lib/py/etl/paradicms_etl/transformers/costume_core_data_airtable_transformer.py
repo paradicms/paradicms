@@ -1,3 +1,4 @@
+import json
 import logging
 from typing import Dict, Any, Iterable, Union
 
@@ -9,6 +10,7 @@ from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.work import Work
@@ -37,7 +39,6 @@ class CostumeCoreDataAirtableTransformer:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, *, base: Dict[str, Any], records_by_table, **kwds):
-        concepts_by_uri: Dict[URIRef, Concept] = {}
         properties_by_label: Dict[str, Property] = {}
 
         for ontology_model in CostumeCoreOntologyAirtablePipeline(
@@ -45,9 +46,10 @@ class CostumeCoreDataAirtableTransformer:
             loader=nop_loader,
         )(force_extract=False):
             if isinstance(ontology_model, Concept):
-                concept = ontology_model
-                concepts_by_uri[concept.uri] = concept
-                yield concept
+                yield ontology_model
+            elif isinstance(ontology_model, Image):
+                # To get Concept images
+                yield ontology_model
             elif isinstance(ontology_model, Property):
                 property_ = ontology_model
                 properties_by_label[property_.label] = property_
@@ -59,7 +61,7 @@ class CostumeCoreDataAirtableTransformer:
 
         for model in self.__transform_object_records(
             base_id=base["id"],
-            concepts_by_uri=concepts_by_uri,
+            image_records=records_by_table["Images"],
             name_records=records_by_table["Names"],
             object_records=records_by_table["Objects"],
             properties_by_label=properties_by_label,
@@ -75,12 +77,19 @@ class CostumeCoreDataAirtableTransformer:
         self,
         *,
         base_id: str,
-        concepts_by_uri: Dict[URIRef, Concept],
+        image_records,
         name_records,
         object_records,
         properties_by_label: Dict[str, Property],
         term_records,
     ) -> Iterable[Union[Image, Work]]:
+        image_records_by_display_image_id = {}
+        for image_record in image_records:
+            assert len(image_record["fields"]["Display Image"]) == 1, image_record["id"]
+            image_records_by_display_image_id[
+                image_record["fields"]["Display Image"][0]["id"]
+            ] = image_record
+
         name_records_by_id = {
             name_record["id"]: name_record for name_record in name_records
         }
@@ -104,6 +113,9 @@ class CostumeCoreDataAirtableTransformer:
                 uri=work_uri,
             )
 
+            if object_record["fields"].get("Date", "").strip():
+                work_builder.set_created(object_record["fields"]["Date"])
+
             for field_key, field_value in object_record["fields"].items():
                 try:
                     property_ = properties_by_label[field_key]
@@ -113,6 +125,7 @@ class CostumeCoreDataAirtableTransformer:
 
                     if field_key == "Images":
                         for image in self.__transform_object_images(
+                            image_records_by_display_image_id=image_records_by_display_image_id,
                             object_images=field_value,
                         ):
                             yield image
@@ -148,8 +161,7 @@ class CostumeCoreDataAirtableTransformer:
                         elif term_record is not None:
                             term_id = term_record["fields"]["id"]
                             term_uri = COCO[term_id]
-                            concept = concepts_by_uri[term_uri]
-                            work_builder.add(property_.uri, concept.label)
+                            work_builder.add(property_.uri, term_uri)
                         else:
                             raise NotImplementedError
                     else:
@@ -158,11 +170,36 @@ class CostumeCoreDataAirtableTransformer:
             yield work_builder.build()
 
     @staticmethod
-    def __transform_object_images(*, object_images) -> Iterable[Image]:
+    def __transform_object_images(
+        *, image_records_by_display_image_id, object_images
+    ) -> Iterable[Image]:
         for object_image in object_images:
+            image_record = image_records_by_display_image_id[object_image["id"]]
+            image_record_fields = image_record["fields"]
+            display_image = image_record_fields["Display Image"][0]
+            assert json.dumps(display_image) == json.dumps(object_image)
+
             original_image_builder = DcImage.builder(
-                uri=URIRef(object_image["url"]),
+                uri=URIRef(display_image["url"]),
             )
+            original_image_builder.set_exact_dimensions(
+                ImageDimensions(
+                    height=display_image["height"],
+                    width=display_image["width"],
+                )
+            ).set_format(display_image["type"])
+            if image_record_fields.get("imageID"):
+                original_image_builder.add_identifier(image_record_fields["imageID"])
+            if image_record_fields.get("image_creator"):
+                original_image_builder.add_creator(image_record_fields["image_creator"])
+            if image_record_fields.get("image_rights_license"):
+                original_image_builder.add_license(
+                    URIRef(image_record_fields["image_rights_license"])
+                )
+            if image_record_fields.get("image_rights_statement"):
+                original_image_builder.add_rights_statement(
+                    URIRef(image_record_fields["image_rights_statement"])
+                )
 
             # Don't include Airtable's thumbnails, make our own
             # for thumbnail in object_image["thumbnails"].values():
