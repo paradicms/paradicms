@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {Event} from "../src/Event";
 import {it} from "mocha";
 import {behavesLikeModel} from "./behavesLikeModel";
+import {behavesLikeOriginalImage} from "./behavesLikeOriginalImage";
 
 export const behavesLikeEvent = (event: Event) => {
   // it("should get the description", () => {
@@ -24,6 +25,13 @@ export const behavesLikeEvent = (event: Event) => {
       expect(date!.year!).to.be.gte(2022);
       expect(date!.month!).to.be.gte(1);
       expect(date!.day!).to.be.gte(1);
+    }
+  });
+
+  it("should get images", () => {
+    expect(event.images).to.not.be.empty;
+    for (const image of event.images) {
+      behavesLikeOriginalImage(image);
     }
   });
 
