@@ -5,8 +5,10 @@ from paradicms_etl.extractors.costume_core_data_airtable_extractor import (
 )
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.transformers.costume_core_data_airtable_transformer import (
     CostumeCoreDataAirtableTransformer,
@@ -26,9 +28,14 @@ def test_transform(data_dir_path: Path):
     models = tuple(transformer(**extract_result))
     assert models
     model_types = set(model.__class__ for model in models)
-    assert len(model_types) == 5
+    assert len(model_types) == 6
     assert SchemaCollection in model_types
     assert SchemaDefinedTerm in model_types
     assert DcImage in model_types
+    assert SchemaImageObject in model_types
     assert SchemaProperty in model_types
     assert DcPhysicalObject in model_types
+
+    for model in models:
+        if isinstance(model, Image):
+            assert model.licenses or model.rights_statements, model.uri
