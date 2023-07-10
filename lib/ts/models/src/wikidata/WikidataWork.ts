@@ -9,15 +9,17 @@ import {getWorkAgents} from "../getWorkAgents";
 import {Memoize} from "typescript-memoize";
 import {mapTermToText} from "../mapTermToText";
 import {DataFactory} from "@paradicms/rdf";
-import {getWorkDisplayDate} from "../getWorkDisplayDate";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {wdt} from "@paradicms/vocabularies";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {WikidataLocation} from "./WikidataLocation";
 import log from "loglevel";
+import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
+import {Mixin} from "ts-mixer";
 
-export class WikidataWork extends WikidataModel implements Work {
+export class WikidataWork extends Mixin(WikidataModel, WorkDisplayDateMixin)
+  implements Work {
   @Memoize()
   get agents(): readonly WorkAgent[] {
     return getWorkAgents(this);
@@ -31,10 +33,6 @@ export class WikidataWork extends WikidataModel implements Work {
       DataFactory.namedNode("http://schema.org/description"),
       term => mapTermToText(this, term)
     );
-  }
-
-  get displayDate(): string | null {
-    return getWorkDisplayDate(this);
   }
 
   @Memoize()

@@ -5,7 +5,6 @@ import {Work} from "../Work";
 import {WorkAgent} from "../WorkAgent";
 import {getWorkAgents} from "../getWorkAgents";
 import {Memoize} from "typescript-memoize";
-import {getWorkDisplayDate} from "../getWorkDisplayDate";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {WorkLocation} from "../WorkLocation";
 import {schema} from "@paradicms/vocabularies";
@@ -13,18 +12,14 @@ import {mapTermToLocation} from "../mapTermToLocation";
 import {requireNonNull} from "@paradicms/utilities";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
+import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
 
 export class SchemaCreativeWork
-  extends Mixin(SchemaNamedModel, SchemaCreativeWorkMixin)
+  extends Mixin(SchemaNamedModel, SchemaCreativeWorkMixin, WorkDisplayDateMixin)
   implements Work {
   @Memoize()
   get agents(): readonly WorkAgent[] {
     return getWorkAgents(this);
-  }
-
-  @Memoize()
-  get displayDate(): string | null {
-    return getWorkDisplayDate(this);
   }
 
   @Memoize()
