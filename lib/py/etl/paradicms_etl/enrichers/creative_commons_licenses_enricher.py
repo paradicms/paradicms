@@ -18,9 +18,7 @@ def creative_commons_licenses_enricher(models: Iterable[Model]) -> Iterable[Mode
     tracker = KnownModelTracker(
         get_references=get_references,
         model_class=License,
-        models_by_uri={
-            license.uri: license for license in CreativeCommonsLicenses.as_tuple()
-        },
+        models_by_uri=CreativeCommonsLicenses.by_uri(),
     )
 
     for model in models:

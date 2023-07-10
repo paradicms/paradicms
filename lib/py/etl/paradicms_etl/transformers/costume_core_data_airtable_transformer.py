@@ -48,6 +48,7 @@ class CostumeCoreDataAirtableTransformer:
             if isinstance(ontology_model, Concept):
                 yield ontology_model
             elif isinstance(ontology_model, Image):
+                # To get Concept images
                 yield ontology_model
             elif isinstance(ontology_model, Property):
                 property_ = ontology_model

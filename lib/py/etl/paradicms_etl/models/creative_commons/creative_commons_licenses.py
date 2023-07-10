@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from rdflib import Graph, URIRef
+
 from paradicms_etl.models.creative_commons.creative_commons_license import (
     CreativeCommonsLicense,
 )
 from paradicms_etl.models.model_singletons import ModelSingletons
 
 
-class CreativeCommonsLicenses(ModelSingletons):
+class CreativeCommonsLicenses(ModelSingletons[CreativeCommonsLicense]):
     _MODEL_CLASS = CreativeCommonsLicense
 
     BSD = _MODEL_CLASS.from_rdf(

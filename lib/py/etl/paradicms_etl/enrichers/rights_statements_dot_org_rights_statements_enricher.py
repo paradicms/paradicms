@@ -20,10 +20,7 @@ def rights_statements_dot_org_rights_statements_enricher(
     tracker = KnownModelTracker(
         get_references=get_references,
         model_class=RightsStatement,
-        models_by_uri={
-            rights_statement.uri: rights_statement
-            for rights_statement in RightsStatementsDotOrgRightsStatements.as_tuple()
-        },
+        models_by_uri=RightsStatementsDotOrgRightsStatements.by_uri(),
     )
 
     for model in models:

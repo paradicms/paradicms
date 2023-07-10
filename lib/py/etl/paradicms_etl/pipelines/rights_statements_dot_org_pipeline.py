@@ -74,7 +74,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.model_singletons import ModelSingletons
 
 
-class RightsStatementsDotOrgRightsStatements(ModelSingletons):
+class RightsStatementsDotOrgRightsStatements(ModelSingletons[RightsStatementsDotOrgRightsStatement]):
     _MODEL_CLASS = RightsStatementsDotOrgRightsStatement
 
 {rights_statement_reprs_str}

@@ -84,13 +84,9 @@ class CostumeCoreOntologyAirtableTransformer:
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
-        self.__available_licenses_by_uri: Dict[URIRef, License] = {}
-        for license_ in CreativeCommonsLicenses.as_tuple():
-            self.__available_licenses_by_uri[license_.uri] = license_
-            assert str(license_.uri).startswith("http://")
-            self.__available_licenses_by_uri[
-                URIRef("https://" + str(license_.uri)[len("http://") :])
-            ] = license_
+        self.__available_licenses_by_uri: Dict[
+            URIRef, License
+        ] = CreativeCommonsLicenses.by_uri().copy()
         odc_by_license = (
             DcLicenseDocument.builder(
                 title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
@@ -109,15 +105,9 @@ class CostumeCoreOntologyAirtableTransformer:
             self.__available_licenses_by_uri.keys()
         )
 
-        self.__available_rights_statements_by_uri: Dict[URIRef, RightsStatement] = {}
-        for rights_statement in RightsStatementsDotOrgRightsStatements.as_tuple():
-            self.__available_rights_statements_by_uri[
-                rights_statement.uri
-            ] = rights_statement
-            assert str(rights_statement.uri).startswith("http://")
-            self.__available_rights_statements_by_uri[
-                URIRef("https://" + rights_statement.uri[len("http://") :])
-            ] = rights_statement
+        self.__available_rights_statements_by_uri: Dict[
+            URIRef, RightsStatement
+        ] = RightsStatementsDotOrgRightsStatements.by_uri()
         self.__available_rights_statement_uris = frozenset(
             self.__available_rights_statements_by_uri.keys()
         )
