@@ -3,9 +3,8 @@ from typing import Generic, TypeVar, Type, Dict, Set, Iterable, Callable
 from rdflib import URIRef
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.named_model import NamedModel
 
-ModelT = TypeVar("ModelT", bound=NamedModel)
+ModelT = TypeVar("ModelT", bound=Model)
 
 
 class KnownModelTracker(Generic[ModelT]):
@@ -26,10 +25,13 @@ class KnownModelTracker(Generic[ModelT]):
         self.__referenced_model_uris: Set[URIRef] = set()
         self.__seen_model_uris_of_model_class: Set[URIRef] = set()
 
-    def __call__(self, model: ModelT) -> None:
+    def __call__(self, model: Model) -> None:
         """
         Track that the model has been seen and track the model's references to other models.
         """
+
+        if not model.uri:
+            return
 
         if isinstance(model, self.__model_class):
             self.__seen_model_uris_of_model_class.add(model.uri)

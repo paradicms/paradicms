@@ -2,7 +2,9 @@ from typing import Iterable
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.rights_mixin import RightsMixin
-from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
+    RightsStatementsDotOrgRightsStatement,
+)
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -19,7 +21,7 @@ def rights_statements_dot_org_rights_statements_enricher(
 
     tracker = KnownModelTracker(
         get_references=get_references,
-        model_class=RightsStatement,
+        model_class=RightsStatementsDotOrgRightsStatement,
         models_by_uri=RightsStatementsDotOrgRightsStatements.by_uri(),
     )
 

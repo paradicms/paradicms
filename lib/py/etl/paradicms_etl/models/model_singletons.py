@@ -57,7 +57,7 @@ class ModelSingletons(Generic[_ModelT]):
             if variant_model_uri in by_uri:
                 continue
 
-            model_resource: Graph = model.to_rdf(graph=Graph())
+            model_resource = model.to_rdf(graph=Graph())
             model_graph = model_resource.graph
             model_graph_subjects = tuple(model_graph.subjects(unique=True))
             assert len(model_graph_subjects) == 1, "can only rewrite one subject"
