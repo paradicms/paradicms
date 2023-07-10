@@ -32,8 +32,8 @@ export class SchemaModelReader extends DatasetModelReader {
 
     override readEvents(kwds: { modelSet: ModelSet }): readonly Event[] {
         return [
-            ...this.readModels<SchemaEvent>({class_: schema.Event, factory: SchemaEvent, modelSet: kwds.modelSet}),
-            ...this.readModels<SchemaExhibitionEvent>({class_: schema.ExhibitionEvent, factory: SchemaEvent, modelSet: kwds.modelSet}),
+            ...this.readModels<SchemaEvent>({class_: schema.Event, factory: SchemaEvent, includeSubclasses: false, modelSet: kwds.modelSet}),
+            ...this.readModels<SchemaExhibitionEvent>({class_: schema.ExhibitionEvent, factory: SchemaExhibitionEvent, modelSet: kwds.modelSet}),
         ];
     }
 
