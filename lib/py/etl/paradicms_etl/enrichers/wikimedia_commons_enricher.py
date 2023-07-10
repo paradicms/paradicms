@@ -488,7 +488,7 @@ class WikimediaCommonsEnricher:
                 return unquote(parsed_url.path[len(path_prefix) :])
         else:
             return None
-        self.__logger.warning(
+        self.__logger.debug(
             "unrecognized Wikimedia Commons URL pattern: %s", parsed_url
         )
         return None

@@ -36,6 +36,8 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_event import SchemaEvent
+from paradicms_etl.models.schema.schema_exhibition_event import SchemaExhibitionEvent
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
@@ -332,6 +334,24 @@ class ReferenceValidator:
         yield from self.__validate_work(work)
 
     def _validate_schema_creative_work_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_event(
+        self, schema_event: SchemaEvent
+    ) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_event_references(self) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_exhibition_event(
+        self, schema_exhibition_event: SchemaExhibitionEvent
+    ) -> Iterable[ValidationResult]:
+        return ()
+
+    def _validate_schema_exhibition_event_references(
+        self,
+    ) -> Iterable[ValidationResult]:
         return ()
 
     def _validate_schema_image_object(
