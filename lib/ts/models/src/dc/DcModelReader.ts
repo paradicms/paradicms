@@ -63,7 +63,7 @@ export class DcModelReader extends DatasetModelReader {
                 modelIdentifier: rdfInstanceQuad.subject,
             });
 
-            if (rdfInstanceQuad.subject.value.startsWith("http://rightsstatements.org/vocab/")) {
+            if (rdfInstanceQuad.subject.value.startsWith("http://rightsstatements.org/vocab/") || rdfInstanceQuad.subject.value.startsWith("https://rightsstatements.org/vocab/")) {
                 if (this.dataset.match(rdfInstanceQuad.subject, skos.prefLabel).size > 0) {
                     rightsStatements.push(
                         new RightsStatementsDotOrgRightsStatement({
