@@ -20,11 +20,12 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   if (titleParts.length === 0) {
     titleParts.push("Timeline");
   }
+  const title = titleParts.join(" - ");
 
   return (
     <>
       <Head>
-        <title>{titleParts.join(" - ")}</title>
+        <title>{}</title>
         <link
           rel="stylesheet"
           href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
@@ -36,7 +37,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
             <>
               <Link href={Hrefs.event(event)}>{event.label}</Link>
             </>
-          ) : null}
+          ) : (
+            <span className="text-primary">{title}</span>
+          )}
         </div>
       </Navbar>
       {children}
