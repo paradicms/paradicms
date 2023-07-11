@@ -71,9 +71,18 @@ export class CachingModelSet implements ModelSet {
     return indexModelsByIri(this.concepts);
   }
 
+  eventByKey(eventKey: string): Event | null {
+    return this.modelByKey(this.eventsByKeyIndex, eventKey);
+  }
+
   @Memoize()
   get events(): readonly Event[] {
     return sortModelsArray(this.modelReader.readEvents({modelSet: this}));
+  }
+
+  @Memoize()
+  private get eventsByKeyIndex(): {[index: string]: Event} {
+    return indexModelsByKey(this.events);
   }
 
   imageByIri(imageIri: string): Image | null {

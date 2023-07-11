@@ -21,6 +21,7 @@ export interface ModelSet {
   collectionByKey(collectionKey: string): Collection | null;
   conceptByIri(conceptIri: string): Concept | null;
   readonly concepts: readonly Concept[];
+  eventByKey(eventKey: string): Event | null;
   readonly events: readonly Event[];
   imageByIri(imageIri: string): Image | null;
   licenseByIri(licenseIri: string): License | null;

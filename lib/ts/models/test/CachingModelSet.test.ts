@@ -35,6 +35,11 @@ describe("CachingModelSet", () => {
       sut.conceptByIri(concept.iris[0])!.value.value
     );
 
+    expect(sut.events).to.not.be.empty;
+    for (const event of sut.events) {
+      expect(sut.eventByKey(event.key)).not.to.be.null;
+    }
+
     expect(sut.properties).to.not.be.empty;
     for (const property of sut.properties) {
       expect(property.groups).to.not.be.empty;
