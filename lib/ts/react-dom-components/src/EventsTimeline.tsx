@@ -1,4 +1,4 @@
-import {imagePlaceholderSrc} from "@paradicms/models";
+import {imagePlaceholderSrc, Text} from "@paradicms/models";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import React from "react";
 import {
@@ -20,6 +20,7 @@ import {Image, ThumbnailSelector} from "@paradicms/models";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 
 export interface EventsTimelineEvent {
+  readonly description: Text | null;
   readonly displayDate: string | null;
   readonly icon?: IconDefinition;
   readonly key: string;
@@ -74,7 +75,7 @@ const EventCard: React.FunctionComponent<{
         <CardTitle className="mb-1" tag="h5">
           {renderEventLink(event, event.label)}
         </CardTitle>
-        {thumbnail && thumbnail.requiresAttribution ? (
+        {event.description || (thumbnail && thumbnail.requiresAttribution) ? (
           <CardText tag="div">
             {thumbnail && thumbnail.requiresAttribution ? (
               <RightsParagraph
@@ -83,6 +84,18 @@ const EventCard: React.FunctionComponent<{
                 rights={thumbnail}
                 style={RIGHTS_STYLE}
               />
+            ) : null}
+            {event.description ? (
+              <>
+                <p>{event.description.value}</p>
+                {event.description?.requiresAttribution ? (
+                  <RightsParagraph
+                    material="Text"
+                    rights={event.description}
+                    style={{fontSize: "xx-small"}}
+                  />
+                ) : null}
+              </>
             ) : null}
           </CardText>
         ) : null}
