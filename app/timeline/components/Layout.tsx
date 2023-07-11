@@ -34,7 +34,6 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         <div className="navbar-brand mx-auto" style={{fontSize: "xx-large"}}>
           {event ? (
             <>
-              <span>&nbsp;/&nbsp;</span>
               <Link href={Hrefs.event(event)}>{event.label}</Link>
             </>
           ) : null}
