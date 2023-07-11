@@ -63,7 +63,7 @@ const EventPage: React.FunctionComponent<StaticProps> = ({
               {
                 centroid: requireNonNull(eventLocation.centroid),
                 icon: null,
-                label: event.label,
+                label: eventLocation.label ?? event.label,
               },
             ]}
           />
