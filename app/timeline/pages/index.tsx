@@ -6,11 +6,14 @@ import * as path from "path";
 import * as React from "react";
 import {useMemo} from "react";
 import {Layout} from "../components/Layout";
-import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
-import {EventsTimeline} from "../components/EventsTimeline";
+import {
+  EventsTimeline,
+  galleryThumbnailSelector,
+} from "@paradicms/react-dom-components";
 import {useRouter} from "next/router";
 import {Hrefs} from "../lib/Hrefs";
 import Link from "next/link";
+import "react-vertical-timeline-component/style.min.css";
 
 interface StaticProps {
   readonly modelSetString: string;
@@ -32,13 +35,14 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
-        mode="VERTICAL_ALTERNATING"
+        page={0}
+        pageMax={0}
         renderEventLink={(event, children) => (
           <Link href={Hrefs.event(event)}>
             <a>{children}</a>
           </Link>
         )}
-        thumbnailSelector={galleryThumbnailSelector}
+        setPage={() => {}}
       />
     </Layout>
   );
