@@ -1,9 +1,7 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Work, WorkEventUnion} from "@paradicms/models";
 import {getWorkEventIcon} from "./getWorkEventIcon";
 import React from "react";
-import {EventsTimeline} from "./EventsTimeline";
-import {EventsTimelineEvent} from "./EventsTimelineEvent";
+import {EventsTimeline, EventsTimelineEvent} from "./EventsTimeline";
 
 interface WorkEventsTimelineEvent extends EventsTimelineEvent {
   readonly work: Work;

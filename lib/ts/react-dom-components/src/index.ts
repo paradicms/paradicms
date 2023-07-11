@@ -1,3 +1,4 @@
+export * from "./AgentsCarousel";
 export * from "./AgentsGallery";
 export * from "./createFilterControl";
 export * from "./createFilterControls";
