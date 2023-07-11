@@ -6,11 +6,12 @@ import {
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
   defaultBootstrapStylesheetHref,
+  getWorkLocationIcon,
+  getWorkLocationLabel,
   RightsParagraph,
   WorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
-import {WorkLocationSummary} from "@paradicms/services";
 import fs from "fs";
 import {GetStaticProps} from "next";
 import dynamic from "next/dynamic";
@@ -21,14 +22,13 @@ import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {requireNonNull} from "@paradicms/utilities";
+import {LocationsMapLocation} from "../components/LocationsMap";
 
-const WorkLocationsMap = dynamic<{
-  readonly workLocations: readonly WorkLocationSummary[];
+const LocationsMap = dynamic<{
+  readonly locations: readonly LocationsMapLocation[];
 }>(
   () =>
-    import("../components/WorkLocationsMap").then(
-      module => module.WorkLocationsMap
-    ),
+    import("../components/LocationsMap").then(module => module.LocationsMap),
   {ssr: false}
 );
 
@@ -121,7 +121,13 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
                 propertyGroups={modelSet.propertyGroups}
                 renderWorkLink={(work, children) => <span>{children}</span>}
                 renderWorkLocationsMap={workLocations => (
-                  <WorkLocationsMap workLocations={workLocations} />
+                  <LocationsMap
+                    locations={workLocations.map(workLocation => ({
+                      centroid: workLocation.location.centroid!,
+                      icon: getWorkLocationIcon(workLocation),
+                      label: getWorkLocationLabel(workLocation),
+                    }))}
+                  />
                 )}
                 work={work}
               />

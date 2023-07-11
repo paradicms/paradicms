@@ -2,6 +2,7 @@ export * from "./AgentsGallery";
 export * from "./createFilterControl";
 export * from "./createFilterControls";
 export * from "./defaultBootstrapStylesheetHref";
+export * from "./EventPage";
 export * from "./EventsTimeline";
 export * from "./FilterControlsContainer";
 export * from "./FontAwesomeCarouselControl";

@@ -2,11 +2,13 @@ import {MemWorkQueryService} from "@paradicms/mem-services";
 import {ModelSet, ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
+  getWorkLocationIcon,
+  getWorkLocationLabel,
   WorkSearchPage,
   workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
-import {WorkLocationSummary, WorkQueryService} from "@paradicms/services";
+import {WorkQueryService} from "@paradicms/services";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
@@ -18,14 +20,13 @@ import {useMemo} from "react";
 import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 import path from "path";
 import fs from "fs";
+import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
 
-const WorkLocationsMap = dynamic<{
-  readonly workLocations: readonly WorkLocationSummary[];
+const LocationsMap = dynamic<{
+  readonly locations: readonly LocationsMapLocation[];
 }>(
   () =>
-    import("../components/WorkLocationsMap").then(
-      module => module.WorkLocationsMap
-    ),
+    import("../components/LocationsMap").then(module => module.LocationsMap),
   {ssr: false}
 );
 
@@ -74,7 +75,13 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
           </Link>
         )}
         renderWorkLocationsMap={workLocations => (
-          <WorkLocationsMap workLocations={workLocations} />
+          <LocationsMap
+            locations={workLocations.map(workLocation => ({
+              centroid: workLocation.location.centroid!,
+              icon: getWorkLocationIcon(workLocation),
+              label: getWorkLocationLabel(workLocation),
+            }))}
+          />
         )}
         workQueryService={workQueryService}
         {...workSearchQueryParams}
