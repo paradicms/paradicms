@@ -26,6 +26,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
     <EventsTimeline
       events={workEvents.map(
         ({work, workEvent}): WorkEventsTimelineEvent => ({
+          description: workEvent.description,
           displayDate: workEvent.displayDate,
           icon: getWorkEventIcon(workEvent),
           label: workEvent.label,
