@@ -4,6 +4,7 @@ export * from "./createFilterControl";
 export * from "./createFilterControls";
 export * from "./defaultBootstrapStylesheetHref";
 export * from "./EventPage";
+export * from "./eventPageEventJoinSelector";
 export * from "./EventsTimeline";
 export * from "./FilterControlsContainer";
 export * from "./FontAwesomeCarouselControl";

@@ -6,6 +6,6 @@ export class Hrefs {
   }
 
   static event(kwds: {key: string}): string {
-    return `/work/${encodeFileName(kwds.key)}/`;
+    return `/event/${encodeFileName(kwds.key)}/`;
   }
 }
