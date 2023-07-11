@@ -5,6 +5,7 @@ import {AgentUnion} from "./AgentUnion";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
+import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
@@ -47,17 +48,8 @@ export class CachingModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readCollections({modelSet: this}));
   }
 
-  collectionByIri(collectionIri: string): Collection | null {
-    return this.modelByIri(this.collectionsByIriIndex, collectionIri);
-  }
-
   collectionByKey(collectionKey: string): Collection | null {
     return this.modelByKey(this.collectionsByKeyIndex, collectionKey);
-  }
-
-  @Memoize()
-  private get collectionsByIriIndex(): {[index: string]: Collection} {
-    return indexModelsByIri(this.collections);
   }
 
   @Memoize()
@@ -77,6 +69,11 @@ export class CachingModelSet implements ModelSet {
   @Memoize()
   private get conceptsByIriIndex(): {[index: string]: Concept} {
     return indexModelsByIri(this.concepts);
+  }
+
+  @Memoize()
+  get events(): readonly Event[] {
+    return sortModelsArray(this.modelReader.readEvents({modelSet: this}));
   }
 
   imageByIri(imageIri: string): Image | null {

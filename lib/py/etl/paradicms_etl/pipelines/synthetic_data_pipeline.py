@@ -41,6 +41,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
+from paradicms_etl.models.schema.schema_exhibition_event import SchemaExhibitionEvent
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
@@ -164,11 +165,13 @@ class SyntheticDataPipeline(Pipeline):
             self,
             *,
             collections=2,
+            exhibition_events=4,
             freestanding_works=4,
             images_per_work=2,
             works_per_collection=4,  # Works per page is 20
         ):
             self.__collections = collections
+            self.__exhibition_events = exhibition_events
             self.__images_per_work = images_per_work
             self.__next_work_i = 0
             self.__freestanding_works = freestanding_works
@@ -197,6 +200,8 @@ class SyntheticDataPipeline(Pipeline):
             yield from self.__generate_collections(
                 agents=agents, concepts_by_value=concepts_by_value
             )
+
+            yield from self.__generate_exhibition_events()
 
             assert self.__freestanding_works >= 2
             for work_i in range(self.__freestanding_works):
@@ -463,6 +468,35 @@ class SyntheticDataPipeline(Pipeline):
                     yield concept_builder.build()
 
                     concept_urn_i += 1
+
+        def __generate_exhibition_events(self):
+            for exhibition_event_i in range(self.__exhibition_events):
+                exhibition_event_name = f"Exhibition event {exhibition_event_i}"
+                exhibition_event_uri = URIRef(
+                    f"http://example.com/exhibitionEvent{exhibition_event_i}"
+                )
+                exhibition_event_builder = SchemaExhibitionEvent.builder(
+                    uri=exhibition_event_uri if exhibition_event_i % 2 == 0 else None
+                )
+                exhibition_start_date = date(day=1, month=1, year=2022) + timedelta(
+                    weeks=4 * exhibition_event_i
+                )
+                exhibition_event_builder.set_name(exhibition_event_name)
+                exhibition_event_builder.set_start_date(exhibition_start_date)
+                exhibition_event_builder.set_end_date(
+                    exhibition_start_date + timedelta(days=7)
+                )
+
+                for image in self.__generate_images(
+                    base_uri=exhibition_event_uri,
+                    text_prefix=exhibition_event_name,
+                ):
+                    yield image
+                    if image.thumbnail_uris:
+                        # Only add original images
+                        exhibition_event_builder.add_image(image)
+
+                yield exhibition_event_builder.build()
 
         def __generate_properties(self):
             property_group_builder = CmsPropertyGroup.builder(

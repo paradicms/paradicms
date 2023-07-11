@@ -3,7 +3,7 @@ import {DateTimeDescription} from "./DateTimeDescription";
 import {Event} from "./Event";
 import log from "loglevel";
 
-export abstract class EventMixin {
+export abstract class EventDerivedDatesMixin {
   abstract readonly date: DateTimeDescription | null;
   abstract readonly key: string;
   abstract readonly endDate: DateTimeDescription | null;

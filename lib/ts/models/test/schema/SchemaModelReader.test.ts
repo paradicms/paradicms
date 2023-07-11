@@ -15,6 +15,10 @@ describe("SchemaModelReader", () => {
     expect(sut.readConcepts({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
+  it("should read at least one Event", () => {
+    expect(sut.readEvents({modelSet: dummyModelSet})).not.to.be.empty;
+  });
+
   it("should read at least one Image", () => {
     expect(sut.readImages({modelSet: dummyModelSet})).not.to.be.empty;
   });

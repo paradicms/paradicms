@@ -3,6 +3,7 @@ import {
   AppConfiguration,
   Collection,
   Concept,
+  Event,
   Image,
   License,
   Location,
@@ -33,6 +34,9 @@ export const dummyModelSet: ModelSet = {
     throw new EvalError("not implemented");
   },
   conceptByIri(conceptIri: string): Concept | null {
+    throw new EvalError("not implemented");
+  },
+  get events(): readonly Event[] {
     throw new EvalError("not implemented");
   },
   imageByIri(imageIri: string): Image | null {

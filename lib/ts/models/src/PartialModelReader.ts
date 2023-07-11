@@ -3,6 +3,7 @@ import {AppConfiguration} from "./AppConfiguration";
 import {ModelSet} from "./ModelSet";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
+import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
@@ -26,6 +27,10 @@ export class PartialModelReader implements ModelReader {
   }
 
   readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[] {
+    return [];
+  }
+
+  readEvents(kwds: {modelSet: ModelSet}): readonly Event[] {
     return [];
   }
 

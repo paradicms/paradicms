@@ -1,6 +1,7 @@
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
+import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
@@ -38,6 +39,12 @@ export class ConcatenatingModelReader implements ModelReader {
   readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[] {
     return this.modelReaders.flatMap(modelReader =>
       modelReader.readConcepts(kwds)
+    );
+  }
+
+  readEvents(kwds: {modelSet: ModelSet}): readonly Event[] {
+    return this.modelReaders.flatMap(modelReader =>
+      modelReader.readEvents(kwds)
     );
   }
 

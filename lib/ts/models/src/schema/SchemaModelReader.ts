@@ -3,6 +3,7 @@ import {Collection} from "../Collection";
 import {ModelSet} from "../ModelSet";
 import {schema} from "@paradicms/vocabularies";
 import {SchemaCollection} from "./SchemaCollection";
+import {Event} from "../Event";
 import {Work} from "../Work";
 import {SchemaCreativeWork} from "./SchemaCreativeWork";
 import {Property} from "../Property";
@@ -17,6 +18,8 @@ import {Organization} from "../Organization";
 import {SchemaOrganization} from "./SchemaOrganization";
 import {Location} from "../Location";
 import {SchemaPlace} from "./SchemaPlace";
+import {SchemaEvent} from "./SchemaEvent";
+import {SchemaExhibitionEvent} from "./SchemaExhibitionEvent";
 
 export class SchemaModelReader extends DatasetModelReader {
     override readCollections(kwds: { modelSet: ModelSet }): readonly Collection[] {
@@ -25,6 +28,13 @@ export class SchemaModelReader extends DatasetModelReader {
 
     override readConcepts(kwds: { modelSet: ModelSet }): readonly Concept[] {
         return this.readNamedModels<Concept>({class_: schema.DefinedTerm, factory: SchemaDefinedTerm, modelSet: kwds.modelSet})
+    }
+
+    override readEvents(kwds: { modelSet: ModelSet }): readonly Event[] {
+        return [
+            ...this.readModels<SchemaEvent>({class_: schema.Event, factory: SchemaEvent, includeSubclasses: false, modelSet: kwds.modelSet}),
+            ...this.readModels<SchemaExhibitionEvent>({class_: schema.ExhibitionEvent, factory: SchemaExhibitionEvent, modelSet: kwds.modelSet}),
+        ];
     }
 
     override readImages(kwds: { modelSet: ModelSet }): readonly Image[] {
