@@ -40,7 +40,7 @@ export * from "./Work";
 export * from "./WorkAgent";
 export * from "./WorkCreationEvent";
 export * from "./WorkEvent";
-export * from "./WorkEventJoinSelector";
+export * from "./EventJoinSelector";
 export * from "./WorkEventUnion";
 export * from "./WorkJoinSelector";
 export * from "./WorkLocation";

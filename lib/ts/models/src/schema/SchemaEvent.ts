@@ -9,9 +9,22 @@ import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {Location} from "../Location";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {requireNonNull} from "@paradicms/utilities";
+import {AgentUnion} from "../AgentUnion";
+import {mapTermToAgent} from "../mapTermToAgent";
 
 export class SchemaEvent extends Mixin(SchemaModel, EventDerivedDatesMixin)
   implements Event {
+  get agents(): readonly AgentUnion[] {
+    return this.contributors;
+  }
+
+  @Memoize()
+  get contributors(): readonly AgentUnion[] {
+    return this.filterAndMapObjects(schema.contributor, term =>
+        mapTermToAgent(this, term)
+    );
+  }
+
   readonly date: DateTimeDescription | null = null;
 
   @Memoize()

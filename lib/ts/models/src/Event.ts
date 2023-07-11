@@ -4,8 +4,10 @@ import {Text} from "./Text";
 import {Model} from "./Model";
 import {ImagesMixin} from "./ImagesMixin";
 import {ThumbnailMixin} from "./ThumbnailMixin";
+import {AgentUnion} from "./AgentUnion";
 
 export interface Event extends ImagesMixin, Model, ThumbnailMixin {
+  readonly agents: readonly AgentUnion[];
   compareByDate(other: Event): number;
   readonly date: DateTimeDescription | null;
   readonly description: Text | null;

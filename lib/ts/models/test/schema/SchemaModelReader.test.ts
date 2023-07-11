@@ -16,7 +16,7 @@ describe("SchemaModelReader", () => {
   });
 
   it("should read at least one Event", () => {
-    expect(sut.readEvents({modelSet: dummyModelSet})).not.to.be.empty;
+    expect(sut.readEvents({modelSet: dummyModelSet})).to.have.length(4);
   });
 
   it("should read at least one Image", () => {
