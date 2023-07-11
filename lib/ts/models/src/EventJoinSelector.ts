@@ -5,7 +5,7 @@ import {ThumbnailSelector} from "./ThumbnailSelector";
 /**
  * See note in ModelSetBuilder re: the use of this interface.
  */
-export interface WorkEventJoinSelector {
+export interface EventJoinSelector {
   agents?: AgentJoinSelector;
   location?: boolean;
   thumbnail?: ImageJoinSelector & ThumbnailSelector;

@@ -1,8 +1,10 @@
 import {EventJoinSelector} from "@paradicms/models";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 
-export const workSearchWorkEventJoinSelector: EventJoinSelector = {
-  agents: {},
+export const eventPageEventJoinSelector: EventJoinSelector = {
+  agents: {
+    thumbnail: galleryThumbnailSelector,
+  },
   location: true,
   thumbnail: galleryThumbnailSelector,
 };

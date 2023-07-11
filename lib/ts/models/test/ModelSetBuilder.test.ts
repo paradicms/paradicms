@@ -312,4 +312,22 @@ describe("ModelSetBuilder", () => {
     //   expect(workEvent.location!.longitude).not.to.eq(0);
     // }
   });
+
+  it("should get all top-level events (timeline app)", () => {
+    const eventsModelSet = sut
+      .addEvents(completeModelSet.events, {
+        agents: {},
+        thumbnail: THUMBNAIL_SELECTOR,
+      })
+      .build();
+
+    expectModelsDeepEq(completeModelSet.events, eventsModelSet.events);
+    expectModelsDeepEq(
+      completeModelSet.events.flatMap(event => event.agents),
+      completeModelSet.events.flatMap(event => event.agents)
+    );
+    expect(modelSetImageIris(eventsModelSet)).to.have.length(
+      completeModelSet.events.length * 2
+    );
+  });
 });

@@ -1,6 +1,6 @@
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import {PropertyValueJoinSelector} from "./PropertyValueJoinSelector";
-import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
+import {EventJoinSelector} from "./EventJoinSelector";
 import {ImageJoinSelector} from "./ImageJoinSelector";
 import {RightsJoinSelector} from "./RightsJoinSelector";
 
@@ -9,7 +9,7 @@ import {RightsJoinSelector} from "./RightsJoinSelector";
  */
 export interface WorkJoinSelector extends RightsJoinSelector {
   // Return all events that refer to this work.
-  events?: WorkEventJoinSelector;
+  events?: EventJoinSelector;
   // Return all Images that depict this Work.
   images?: ImageJoinSelector;
   // Return all locations referred to by this Work

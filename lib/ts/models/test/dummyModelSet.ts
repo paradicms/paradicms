@@ -36,6 +36,9 @@ export const dummyModelSet: ModelSet = {
   conceptByIri(conceptIri: string): Concept | null {
     throw new EvalError("not implemented");
   },
+  eventByKey(eventKey: string): Event | null {
+    throw new EvalError("not implemented");
+  },
   get events(): readonly Event[] {
     throw new EvalError("not implemented");
   },

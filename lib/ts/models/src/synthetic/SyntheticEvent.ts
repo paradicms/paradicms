@@ -9,8 +9,9 @@ import {Mixin} from "ts-mixer";
 import {SyntheticEventParameters} from "./SyntheticEventParameters";
 import {Image} from "../Image";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {AgentUnion} from "../AgentUnion";
 
-export class SyntheticEvent
+export abstract class SyntheticEvent
   extends Mixin(EventDerivedDatesMixin, SomeImageThumbnailMixin)
   implements Event {
   readonly date: DateTimeDescription | null;
@@ -33,6 +34,8 @@ export class SyntheticEvent
     this.location = kwds.location;
     this.startDate = kwds.startDate;
   }
+
+  abstract readonly agents: readonly AgentUnion[];
 
   get identifiers(): readonly ModelIdentifier[] {
     return [];

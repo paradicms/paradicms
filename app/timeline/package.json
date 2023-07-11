@@ -1,0 +1,27 @@
+{
+  "name": "timeline",
+  "description": "Timeline app for paradicms",
+  "version": "1.0.0",
+  "private": true,
+  "author": "Minor Gordon",
+  "license": "GPL-3.0-only",
+  "main": "n/a",
+  "dependencies": {
+    "@paradicms/next": "1.0.5",
+    "@paradicms/react-dom-components": "1.0.5",
+    "next": "12.3.1",
+    "react": "18.0.0",
+    "react-dom": "18.0.0"
+  },
+  "devDependencies": {
+    "rimraf": "3.0.2"
+  },
+  "scripts": {
+    "clean": "rimraf .next && rimraf out",
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next export",
+    "serve": "serve out",
+    "start": "next start"
+  }
+}

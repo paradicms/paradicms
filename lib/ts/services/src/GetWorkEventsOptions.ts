@@ -1,4 +1,4 @@
-import {WorkEventJoinSelector} from "@paradicms/models";
+import {EventJoinSelector} from "@paradicms/models";
 import {WorkEventsSort} from "./WorkEventsSort";
 
 export interface GetWorkEventsOptions {
@@ -6,5 +6,5 @@ export interface GetWorkEventsOptions {
   readonly offset: number;
   readonly requireDate?: boolean;
   readonly sort?: WorkEventsSort;
-  readonly workEventJoinSelector?: WorkEventJoinSelector;
+  readonly workEventJoinSelector?: EventJoinSelector;
 }

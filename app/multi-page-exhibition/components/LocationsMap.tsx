@@ -1,27 +1,25 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  getWorkLocationIcon,
-  getWorkLocationLabel,
-} from "@paradicms/react-dom-components";
-import {WorkLocationSummary} from "@paradicms/services";
+import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import * as React from "react";
 import {MapContainer, Marker, TileLayer, Tooltip} from "react-leaflet";
 import invariant from "ts-invariant";
+import {Point} from "@paradicms/models";
+import {faMapPin} from "@fortawesome/free-solid-svg-icons";
 
-export const WorkLocationsMap: React.FunctionComponent<{
-  readonly workLocations: readonly WorkLocationSummary[];
-}> = ({workLocations}) => {
-  invariant(workLocations.length > 0);
-  invariant(
-    workLocations.every(workLocation => !!workLocation.location.centroid)
-  );
+export interface LocationsMapLocation {
+  centroid: Point;
+  icon: IconDefinition | null;
+  label: string;
+}
+
+export const LocationsMap: React.FunctionComponent<{
+  readonly locations: readonly LocationsMapLocation[];
+}> = ({locations}) => {
+  invariant(locations.length > 0);
 
   return (
     <MapContainer
-      center={[
-        workLocations[0].location.centroid!.latitude,
-        workLocations[0].location.centroid!.longitude,
-      ]}
+      center={[locations[0].centroid.latitude, locations[0].centroid.longitude]}
       style={{height: "600px"}}
       zoom={13}
     >
@@ -29,16 +27,13 @@ export const WorkLocationsMap: React.FunctionComponent<{
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {workLocations.map((workLocation, workLocationIndex) => (
+      {locations.map((location, locationIndex) => (
         <Marker
           // eventHandlers={{
           //   click: () => router.push(Hrefs.work(workLocation.work.iri)),
           // }}
-          key={workLocationIndex}
-          position={[
-            workLocation.location.centroid!.latitude,
-            workLocation.location.centroid!.longitude,
-          ]}
+          key={locationIndex}
+          position={[location.centroid.latitude, location.centroid.longitude]}
         >
           <Tooltip
             direction="right"
@@ -48,10 +43,10 @@ export const WorkLocationsMap: React.FunctionComponent<{
             permanent
           >
             <FontAwesomeIcon
-              icon={getWorkLocationIcon(workLocation)}
+              icon={location.icon ?? faMapPin}
               style={{height: "16px", width: "16px"}}
             />
-            {getWorkLocationLabel(workLocation)}
+            {location.label}
           </Tooltip>
         </Marker>
       ))}

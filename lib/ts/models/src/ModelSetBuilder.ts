@@ -25,13 +25,13 @@ import {RightsMixin} from "./RightsMixin";
 import {RightsJoinSelector} from "./RightsJoinSelector";
 import {PropertyValue} from "./PropertyValue";
 import {ConceptPropertyValue} from "./ConceptPropertyValue";
-import {WorkEventJoinSelector} from "./WorkEventJoinSelector";
-import {WorkEventUnion} from "./WorkEventUnion";
+import {EventJoinSelector} from "./EventJoinSelector";
 import {ImagesMixin} from "./ImagesMixin";
 import {ThumbnailSelector} from "./ThumbnailSelector";
 import log from "loglevel";
 import {ImageJoinSelector} from "./ImageJoinSelector";
 import {ThumbnailMixin} from "./ThumbnailMixin";
+import {Event} from "./Event";
 
 /**
  * Build a ModelSet by adding models to it.
@@ -183,6 +183,66 @@ export class ModelSetBuilder {
       this.addThumbnail(concept, joinSelector.thumbnail);
     }
 
+    return this;
+  }
+
+  addEvent(event: Event, joinSelector?: EventJoinSelector): ModelSetBuilder {
+    log.debug("ModelSetBuilder: adding work event", event.key);
+    this.addModel(event);
+
+    if (!joinSelector) {
+      log.debug(
+        "ModelSetBuilder: work event",
+        event.key,
+        "has no join selector"
+      );
+      return this;
+    }
+
+    if (joinSelector.thumbnail) {
+      log.debug("ModelSetBuilder: adding work event", event.key, "thumbnail");
+      this.addThumbnail(event, joinSelector.thumbnail);
+    } else {
+      log.debug(
+        "ModelSetBuilder: not adding work event",
+        event.key,
+        "thumbnail"
+      );
+    }
+
+    if (joinSelector.location && event.location) {
+      log.debug(
+        "ModelSetBuilder: adding work event",
+        event.key,
+        "location",
+        event.location.key
+      );
+      this.addLocation(event.location);
+    }
+
+    if (joinSelector.agents) {
+      log.debug("ModelSetBuilder: adding work event", event.key, "agents");
+      for (const agent of event.agents) {
+        log.debug(
+          "ModelSetBuilder: adding work event",
+          event.key,
+          "agent",
+          agent.key
+        );
+        this.addAgent(agent, joinSelector.agents);
+      }
+    }
+
+    return this;
+  }
+
+  addEvents(
+    events: readonly Event[],
+    joinSelector?: EventJoinSelector
+  ): ModelSetBuilder {
+    for (const event of events) {
+      this.addEvent(event, joinSelector);
+    }
     return this;
   }
 
@@ -512,7 +572,7 @@ export class ModelSetBuilder {
       log.debug("ModelSetBuilder: adding work", work.key, "events");
       for (const event of work.events) {
         log.debug("ModelSetBuilder: adding work", work.key, "event", event.key);
-        this.addWorkEvent(event, joinSelector.events);
+        this.addEvent(event, joinSelector.events);
       }
     }
 
@@ -555,82 +615,6 @@ export class ModelSetBuilder {
   ): ModelSetBuilder {
     for (const work of works) {
       this.addWork(work, joinSelector);
-    }
-    return this;
-  }
-
-  addWorkEvent(
-    workEvent: WorkEventUnion,
-    joinSelector?: WorkEventJoinSelector
-  ): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding work event", workEvent.key);
-    this.addModel(workEvent);
-
-    if (!joinSelector) {
-      log.debug(
-        "ModelSetBuilder: work event",
-        workEvent.key,
-        "has no join selector"
-      );
-      return this;
-    }
-
-    if (joinSelector.thumbnail) {
-      log.debug(
-        "ModelSetBuilder: adding work event",
-        workEvent.key,
-        "thumbnail"
-      );
-      this.addThumbnail(workEvent, joinSelector.thumbnail);
-    } else {
-      log.debug(
-        "ModelSetBuilder: not adding work event",
-        workEvent.key,
-        "thumbnail"
-      );
-    }
-
-    if (joinSelector.location && workEvent.location) {
-      log.debug(
-        "ModelSetBuilder: adding work event",
-        workEvent.key,
-        "location",
-        workEvent.location.key
-      );
-      this.addLocation(workEvent.location);
-    }
-
-    switch (workEvent.type) {
-      case "WorkCreation": {
-        if (joinSelector.agents) {
-          log.debug(
-            "ModelSetBuilder: adding work event",
-            workEvent.key,
-            "agents"
-          );
-          for (const agent of workEvent.agents) {
-            log.debug(
-              "ModelSetBuilder: adding work event",
-              workEvent.key,
-              "agent",
-              agent.key
-            );
-            this.addAgent(agent, joinSelector.agents);
-          }
-        }
-        break;
-      }
-    }
-
-    return this;
-  }
-
-  addWorkEvents(
-    workEvents: readonly WorkEventUnion[],
-    joinSelector?: WorkEventJoinSelector
-  ): ModelSetBuilder {
-    for (const workEvent of workEvents) {
-      this.addWorkEvent(workEvent, joinSelector);
     }
     return this;
   }

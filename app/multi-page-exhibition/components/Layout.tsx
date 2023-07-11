@@ -31,7 +31,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
     : [];
 
   const titleParts: string[] = [];
-  if (collection) {
+  if (configuration?.title) {
+    titleParts.push(configuration.title);
+  } else if (collection) {
     titleParts.push(collection.label);
   }
   if (currentWork) {

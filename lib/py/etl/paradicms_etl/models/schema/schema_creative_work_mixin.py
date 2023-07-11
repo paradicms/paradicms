@@ -78,6 +78,7 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
                 "@id": str(SDO.dateModified),
                 "@type": str(XSD.dateTime),
             },
+            "locationCreated": {"@id": str(SDO.locationCreated), "@type": "@id"},
         }
         for property_ in (
             "contributor",

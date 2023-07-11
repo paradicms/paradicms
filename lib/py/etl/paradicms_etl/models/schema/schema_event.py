@@ -30,9 +30,24 @@ class SchemaEvent(SchemaModel, Event):
         return safe_dict_update(
             SchemaModel.json_ld_context(),
             {
+                "contributor": {
+                    "@id": str(SDO.contributor),
+                    "@type": "@id",
+                },
+                "contributorLiteral": {
+                    "@id": str(SDO.contributor),
+                },
                 "endDate": {
                     "@id": str(SDO.endDate),
                     "@type": str(XSD.dateTime),
+                },
+                "location": {"@id": str(SDO.location), "@type": "@id"},
+                "organizer": {
+                    "@id": str(SDO.organizer),
+                    "@type": "@id",
+                },
+                "organizerLiteral": {
+                    "@id": str(SDO.organizer),
                 },
                 "startDate": {
                     "@id": str(SDO.startDate),
