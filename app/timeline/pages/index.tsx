@@ -1,12 +1,16 @@
-import {ModelSetFactory} from "@paradicms/models";
-import {readModelSet} from "@paradicms/next";
+import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import fs from "fs";
 import {GetStaticProps} from "next";
 import * as path from "path";
 import * as React from "react";
 import {useMemo} from "react";
-import {Container} from "reactstrap";
 import {Layout} from "../components/Layout";
+import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
+import {EventsTimeline} from "../components/EventsTimeline";
+import {useRouter} from "next/router";
+import {Hrefs} from "../lib/Hrefs";
+import Link from "next/link";
 
 interface StaticProps {
   readonly modelSetString: string;
@@ -18,10 +22,24 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
     [modelSetString]
   );
   const configuration = modelSet.appConfiguration;
+  // log.debug("events in timeline:", modelSet.events.length);
+  const router = useRouter();
 
   return (
     <Layout configuration={configuration}>
-      <Container fluid></Container>
+      <EventsTimeline
+        events={modelSet.events}
+        getAbsoluteImageSrc={relativeImageSrc =>
+          getAbsoluteImageSrc(relativeImageSrc, router)
+        }
+        mode="VERTICAL_ALTERNATING"
+        renderEventLink={(event, children) => (
+          <Link href={Hrefs.event(event)}>
+            <a>{children}</a>
+          </Link>
+        )}
+        thumbnailSelector={galleryThumbnailSelector}
+      />
     </Layout>
   );
 };
@@ -39,7 +57,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: modelSet.toFastRdfString(),
+      modelSetString: new ModelSetBuilder()
+        .addAppConfiguration(modelSet.appConfiguration)
+        .addEvents(modelSet.events, {thumbnail: galleryThumbnailSelector})
+        .build()
+        .toFastRdfString(),
     },
   };
 };

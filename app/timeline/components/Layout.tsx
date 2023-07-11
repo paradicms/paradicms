@@ -8,7 +8,6 @@ import Head from "next/head";
 import Link from "next/link";
 import * as React from "react";
 import {Navbar} from "reactstrap";
-import invariant from "ts-invariant";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   configuration: AppConfiguration | null;
@@ -23,7 +22,9 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   if (work) {
     titleParts.push(work.label);
   }
-  invariant(titleParts.length > 0);
+  if (titleParts.length === 0) {
+    titleParts.push("Timeline");
+  }
 
   return (
     <>
@@ -39,7 +40,7 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
           {work ? (
             <>
               <span>&nbsp;/&nbsp;</span>
-              <Link href={Hrefs.work(work)}>{work.label}</Link>
+              <Link href={Hrefs.event(work)}>{work.label}</Link>
             </>
           ) : null}
           {workLinks.length > 0 ? (
