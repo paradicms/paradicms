@@ -15,7 +15,7 @@ import {mapTermToAgent} from "../mapTermToAgent";
 export class SchemaEvent extends Mixin(SchemaModel, EventDerivedDatesMixin)
   implements Event {
   get agents(): readonly AgentUnion[] {
-    return this.contributors;
+    return this.contributors.concat(this.organizers);
   }
 
   @Memoize()
@@ -42,6 +42,13 @@ export class SchemaEvent extends Mixin(SchemaModel, EventDerivedDatesMixin)
   get location(): Location | null {
     return this.findAndMapObject(schema.location, term =>
       mapTermToLocation(this, term)
+    );
+  }
+
+  @Memoize()
+  get organizers(): readonly AgentUnion[] {
+    return this.filterAndMapObjects(schema.organizer, term =>
+        mapTermToAgent(this, term)
     );
   }
 
