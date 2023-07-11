@@ -32,11 +32,12 @@ export const WorkEventsTimeline: React.FunctionComponent<{
           icon: getWorkEventIcon(workEvent),
           label: workEvent.label,
           key: workEvent.key,
-          thumbnail: workEvent.thumbnail,
+          thumbnail: selector => workEvent.thumbnail(selector),
           work: work,
         })
       )}
       getAbsoluteImageSrc={getAbsoluteImageSrc}
+      layout="1-column-left"
       page={page}
       pageMax={pageMax}
       renderEventLink={(event: EventsTimelineEvent, children) =>
