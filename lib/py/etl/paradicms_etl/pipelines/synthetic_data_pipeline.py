@@ -476,7 +476,7 @@ class SyntheticDataPipeline(Pipeline):
                     f"http://example.com/exhibitionEvent{exhibition_event_i}"
                 )
                 exhibition_event_builder = SchemaExhibitionEvent.builder(
-                    uri=exhibition_event_uri if exhibition_event_i % 2 == 0 else None
+                    uri=exhibition_event_uri
                 )
                 exhibition_start_date = date(day=1, month=1, year=2022) + timedelta(
                     weeks=4 * exhibition_event_i
