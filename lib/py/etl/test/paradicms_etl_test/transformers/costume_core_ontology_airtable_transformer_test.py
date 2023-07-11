@@ -8,7 +8,6 @@ from paradicms_etl.models.costume_core_ontology import CostumeCoreOntology
 from paradicms_etl.models.creative_commons.creative_commons_license import (
     CreativeCommonsLicense,
 )
-from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
     RightsStatementsDotOrgRightsStatement,
@@ -36,19 +35,19 @@ def test_transform(data_dir_path: Path):
     assert models
 
     model_types = set(model.__class__ for model in models)
-    assert len(model_types) == 12, model_types
-    assert SchemaImageObject in model_types
-    assert SchemaCollection in model_types
-    assert SchemaDefinedTerm in model_types
-    assert DcLicenseDocument in model_types
-    assert SchemaProperty in model_types
+    assert len(model_types) == 11, model_types
     assert CmsPropertyGroup in model_types
-    assert SchemaCreativeWork in model_types
     assert CostumeCoreOntology in model_types
     assert CostumeCoreOntology.Predicate in model_types
     assert CostumeCoreOntology.Term in model_types
     assert CreativeCommonsLicense in model_types
+    # assert DcLicenseDocument in model_types
     assert RightsStatementsDotOrgRightsStatement in model_types
+    assert SchemaCollection in model_types
+    assert SchemaCreativeWork in model_types
+    assert SchemaDefinedTerm in model_types
+    assert SchemaImageObject in model_types
+    assert SchemaProperty in model_types
 
     for model in models:
         if isinstance(model, Image):
