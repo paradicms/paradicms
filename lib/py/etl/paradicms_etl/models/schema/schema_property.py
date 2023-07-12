@@ -68,7 +68,3 @@ class SchemaProperty(SchemaModel, Property):
     @property
     def range(self) -> Optional[URIRef]:
         return self._optional_value(SDO.rangeIncludes, self._map_uri_value)
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri

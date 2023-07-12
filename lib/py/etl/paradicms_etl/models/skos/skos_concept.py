@@ -76,10 +76,6 @@ class SkosConcept(ResourceBackedModel, FoafImagesMixin, Concept):
         return tuple(self._values(RDF.type, self._map_uri_value))
 
     @property
-    def uri(self) -> URIRef:
-        return super().uri
-
-    @property
     def value(self) -> Node:
         value = self._resource.value(RDF.value)
         if value is None:

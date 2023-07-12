@@ -3,7 +3,7 @@ from typing import Tuple
 
 import pytest
 from more_itertools import consume
-from rdflib import Graph, BNode, RDF, Literal
+from rdflib import Graph, RDF, Literal
 
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
 from paradicms_etl.model import Model
@@ -11,6 +11,7 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
+from paradicms_etl.utils.uuid_urn import uuid_urn
 from paradicms_ssg.loaders.app_loader import AppLoader
 from paradicms_ssg.models.app_configuration import AppConfiguration
 from paradicms_ssg.namespaces import CONFIGURATION
@@ -26,7 +27,7 @@ def _app_configuration(app: str) -> AppConfiguration:
         return None
 
     graph = Graph()
-    resource = graph.resource(BNode())
+    resource = graph.resource(uuid_urn())
     resource.add(RDF.type, CONFIGURATION.AppConfiguration)
     resource.add(CONFIGURATION.app, Literal(app))
     return AppConfiguration.from_rdf(resource)

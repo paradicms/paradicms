@@ -1,6 +1,6 @@
 from typing import Union, Optional, Tuple
 
-from rdflib import URIRef, Graph, SDO, Literal, XSD, BNode
+from rdflib import URIRef, Graph, SDO, Literal, XSD
 from rdflib.resource import Resource
 
 from paradicms_etl.models.image import Image
@@ -13,6 +13,7 @@ from paradicms_etl.models.schema.schema_media_object_mixin import (
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
@@ -41,7 +42,7 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
             self, *, max_value: Optional[int] = None, value: Optional[int] = None
         ) -> Resource:
             quantitative_value_resource: Resource = self._resource.graph.resource(
-                BNode()
+                uuid_urn()
             )
             if max_value is not None:
                 quantitative_value_resource.set(SDO.maxValue, Literal(max_value))

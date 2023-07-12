@@ -1,10 +1,11 @@
 import logging
 from typing import Optional
 
-from rdflib import URIRef, Graph, BNode
+from rdflib import URIRef, Graph
 from rdflib.resource import Resource
 
 from paradicms_etl.model import Model
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class StubModel(Model):
@@ -37,7 +38,7 @@ class StubModel(Model):
             "to_rdf called on a stub model (%s) that should never have passed enrichement",
             self.__class__.__name__,
         )
-        return graph.resource(BNode())
+        return graph.resource(uuid_urn())
 
     @property
     def uri(self) -> URIRef:

@@ -33,9 +33,5 @@ class CreativeCommonsLicense(ResourceBackedModel, License):
         return CC.License
 
     @property
-    def uri(self) -> URIRef:
-        return super().uri
-
-    @property
     def version(self) -> Optional[str]:
         return self._optional_value(DCTERMS.hasVersion, self._map_str_value)

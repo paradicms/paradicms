@@ -55,7 +55,3 @@ class CmsPropertyGroup(CmsModel, FoafImagesMixin, PropertyGroup):
     @classmethod
     def label_property_uri(cls) -> URIRef:
         return RDFS.label
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri

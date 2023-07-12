@@ -1,11 +1,12 @@
 from typing import Optional
 
-from rdflib import URIRef, Graph, BNode, SDO, XSD
+from rdflib import URIRef, Graph, SDO, XSD
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class SchemaEvent(SchemaModel, Event):
@@ -23,7 +24,7 @@ class SchemaEvent(SchemaModel, Event):
 
     @classmethod
     def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
-        return cls.Builder(Graph().resource(uri if uri is not None else BNode()))
+        return cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
 
     @classmethod
     def json_ld_context(cls):

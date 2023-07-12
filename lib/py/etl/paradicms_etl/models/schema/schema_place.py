@@ -1,10 +1,11 @@
 from typing import Optional
 
-from rdflib import URIRef, Graph, BNode, SDO, XSD
+from rdflib import URIRef, Graph, SDO, XSD
 
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class SchemaPlace(SchemaModel, Location):
@@ -26,7 +27,7 @@ class SchemaPlace(SchemaModel, Location):
 
     @classmethod
     def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
-        return cls.Builder(Graph().resource(uri if uri is not None else BNode()))
+        return cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
 
     @classmethod
     def json_ld_context(cls):
