@@ -396,7 +396,7 @@ class WikimediaCommonsEnricher:
         if wikimedia_commons_image_info.extmetadata.copyrighted:
             if not image.rights_statements:
                 image_replacer.add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC
+                    RightsStatementsDotOrgRightsStatements.InC.uri
                 )
             else:
                 self.__logger.debug(

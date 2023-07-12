@@ -49,6 +49,8 @@ class CmsImageData(CmsModel, ImageData):
 
     def to_json_ld(self) -> Dict[str, Any]:
         return {
+            "@id": str(self.uri),
+            "@type": str(self.rdf_type_uri()),
             str(DCTERMS.format): self._format,
             str(RDF.value): {
                 "@type": str(XSD.base64Binary),

@@ -20,7 +20,7 @@ class DcImage(DcModel, Image):
     """
 
     class Builder(DcModel.Builder, Image.Builder):
-        def add_thumbnail(self, thumbnail: Union[Image, URIRef]) -> "DcImage.Builder":
+        def add_thumbnail(self, thumbnail: URIRef) -> "DcImage.Builder":
             # (thumbnail, dcterms:source, original image) in this graph.
             # Dublin Core doesn't have an inverse of dcterms:source.
             if isinstance(thumbnail, Image):

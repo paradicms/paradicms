@@ -58,7 +58,7 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             return self
 
         def add_spatial(
-            self, spatial: Union[str, Location]
+            self, spatial: Union[str, Location, URIRef]
         ) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.spatial, spatial)
             return self
@@ -98,7 +98,7 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             return self
 
         def set_spatial(
-            self, spatial: Union[str, Location]
+            self, spatial: Union[str, URIRef]
         ) -> "DctermsPropertiesMixin.Builder":
             self.set(DCTERMS.spatial, spatial)
             return self

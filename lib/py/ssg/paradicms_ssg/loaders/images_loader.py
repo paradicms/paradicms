@@ -190,7 +190,9 @@ class ImagesLoader:
                 continue
 
             for archived_thumbnail_image in archived_thumbnail_images:
-                archived_original_image_builder.add_thumbnail(archived_thumbnail_image)
+                archived_original_image_builder.add_thumbnail(
+                    archived_thumbnail_image.uri
+                )
 
             yield archived_original_image_builder.build()
             yield from archived_thumbnail_images

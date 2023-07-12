@@ -86,15 +86,11 @@ class JsonObjectToModelTransformer:
         graph = Graph()
         graph.parse(data=json_object, context=json_ld_context, format="json-ld")  # type: ignore
 
-        uri_subjects = {
-            subject for subject in graph.subjects() if isinstance(subject, URIRef)
-        }
-        if len(uri_subjects) == 1:
-            resource = graph.resource(uri_subjects.pop())
-        else:
-            raise ValueError(
-                f"{model_class.__name__} {model_id} has {len(uri_subjects)} named subjects"
+        resource = graph.resource(
+            self.__expand_json_ld_id(
+                json_ld_context=json_ld_context, json_ld_id=json_object["@id"]
             )
+        )
 
         # expected_rdf_type = getattr(CMS, model_class.__name__)
         # actual_rdf_type = resource.value(RDF.type)
@@ -115,6 +111,21 @@ class JsonObjectToModelTransformer:
                     resource.add(label_property_uri, Literal(model_id))
 
         return model_class.from_rdf(resource)
+
+    @staticmethod
+    def __expand_json_ld_id(
+        *, json_ld_context: Dict[str, Any], json_ld_id: str
+    ) -> URIRef:
+        temp_json_ld_object = {
+            "@id": json_ld_id,
+            "http://example.com/p": "http://example.com/o",
+        }
+        temp_graph = Graph()
+        temp_graph.parse(data=temp_json_ld_object, context=json_ld_context, format="json-ld")  # type: ignore
+        assert len(temp_graph) == 1
+        subject = tuple(temp_graph.subjects())[0]
+        assert isinstance(subject, URIRef)
+        return subject
 
     def __model_class_namespace(self, *, model_class: Type[Model]) -> Namespace:
         return Namespace(

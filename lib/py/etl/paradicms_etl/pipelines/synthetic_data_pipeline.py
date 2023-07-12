@@ -239,10 +239,10 @@ class SyntheticDataPipeline(Pipeline):
                 for image in self.__generate_images(
                     base_uri=organization_builder.uri, text_prefix="Organization"
                 ):
+                    yield image
                     if image.thumbnail_uris:
                         # Only add original images
-                        organization_builder.add_image(image)
-                    yield image
+                        organization_builder.add_image(image.uri)
                 yield organization_builder.build()
 
             for person_i in range(6):
@@ -283,7 +283,7 @@ class SyntheticDataPipeline(Pipeline):
                     yield image
                     if image.thumbnail_uris:
                         # Only add original images
-                        person_builder.add_image(image)
+                        person_builder.add_image(image.uri)
 
                 yield person_builder.build()
 
@@ -360,7 +360,7 @@ class SyntheticDataPipeline(Pipeline):
                         .build()
                     )
                     yield thumbnail
-                    original_image_builder.add_thumbnail(thumbnail)
+                    original_image_builder.add_thumbnail(thumbnail.uri)
 
                 yield original_image_builder.build()
 
@@ -403,7 +403,7 @@ class SyntheticDataPipeline(Pipeline):
                         yield image
                         if image.thumbnail_uris:
                             # Only add original images
-                            collection_builder.add_image(image)
+                            collection_builder.add_image(image.uri)
 
                 # For collection 0, force the GUI to use a work image
 
@@ -417,7 +417,7 @@ class SyntheticDataPipeline(Pipeline):
                     ):
                         yield model
                         if isinstance(model, Work):
-                            collection_builder.add_work(model)
+                            collection_builder.add_work(model.uri)
 
                 yield collection_builder.build()
 
@@ -463,7 +463,7 @@ class SyntheticDataPipeline(Pipeline):
                         yield image
                         if image.thumbnail_uris:
                             # Only add original images
-                            concept_builder.add_image(image)
+                            concept_builder.add_image(image.uri)
 
                     yield concept_builder.build()
 
@@ -702,7 +702,7 @@ class SyntheticDataPipeline(Pipeline):
                 yield image
                 if image.thumbnail_uris:
                     # Only add original images
-                    work_builder.add_image(image)
+                    work_builder.add_image(image.uri)
 
             yield work_builder.build()
 

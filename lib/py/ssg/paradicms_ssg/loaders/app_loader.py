@@ -129,9 +129,7 @@ class AppLoader:
             other_images: List[Image] = []
 
             for image in self.__buffered_images:
-                if image.copyable and (
-                    image.uri is not None and image.uri not in self.__thumbnail_uris
-                ):
+                if image.copyable and (image.uri not in self.__thumbnail_uris):
                     copyable_original_images.append(image)
                 else:
                     other_images.append(image)

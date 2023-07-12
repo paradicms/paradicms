@@ -227,13 +227,12 @@ class ReferenceValidator:
 
     def __validate_license(self, license_: License) -> Iterable[ValidationResult]:
         yield from self.__validate_model(license_)
-        if license_.uri is not None:
-            if license_.uri in self.__license_uris:
-                yield ValidationResult(
-                    message=f"duplicate License {license_.uri}",
-                    severity=ValidationResult.Severity.WARNING,
-                )
-            self.__license_uris.add(license_.uri)
+        if license_.uri in self.__license_uris:
+            yield ValidationResult(
+                message=f"duplicate License {license_.uri}",
+                severity=ValidationResult.Severity.WARNING,
+            )
+        self.__license_uris.add(license_.uri)
 
     def __validate_license_references(self) -> Iterable[ValidationResult]:
         yield from self.__validate_uri_references(
@@ -244,12 +243,9 @@ class ReferenceValidator:
 
     def __validate_location(self, location: Location) -> Iterable[ValidationResult]:
         yield from self.__validate_model(location)
-        if location.uri is not None:
-            self.__location_uris.add(location.uri)
+        self.__location_uris.add(location.uri)
 
     def __validate_model(self, model: Model) -> Iterable[ValidationResult]:
-        if model.uri is None:
-            return
         if model.uri not in self.__model_uris:
             self.__model_uris.add(model.uri)
         else:
@@ -262,25 +258,23 @@ class ReferenceValidator:
         self, organization: Organization
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_model(organization)
-        if organization.uri is not None:
-            if organization.uri in self.__organization_uris:
-                yield ValidationResult(
-                    message=f"duplicate Organization {organization.uri}",
-                    severity=ValidationResult.Severity.WARNING,
-                )
-            self.__organization_uris.add(organization.uri)
+        if organization.uri in self.__organization_uris:
+            yield ValidationResult(
+                message=f"duplicate Organization {organization.uri}",
+                severity=ValidationResult.Severity.WARNING,
+            )
+        self.__organization_uris.add(organization.uri)
         for image_uri in organization.image_uris:
             self.__referenced_image_uris.add(image_uri)
 
     def __validate_person(self, person: Person) -> Iterable[ValidationResult]:
         yield from self.__validate_model(person)
-        if person.uri is not None:
-            if person.uri in self.__person_uris:
-                yield ValidationResult(
-                    message=f"duplicate Person {person.uri}",
-                    severity=ValidationResult.Severity.WARNING,
-                )
-            self.__person_uris.add(person.uri)
+        if person.uri in self.__person_uris:
+            yield ValidationResult(
+                message=f"duplicate Person {person.uri}",
+                severity=ValidationResult.Severity.WARNING,
+            )
+        self.__person_uris.add(person.uri)
         for image_uri in person.image_uris:
             self.__referenced_image_uris.add(image_uri)
 
@@ -309,13 +303,12 @@ class ReferenceValidator:
         self, rights_statement: RightsStatement
     ) -> Iterable[ValidationResult]:
         yield from self.__validate_model(rights_statement)
-        if rights_statement.uri is not None:
-            if rights_statement.uri in self.__rights_statement_uris:
-                yield ValidationResult(
-                    message=f"duplicate RightsStatement {rights_statement.uri}",
-                    severity=ValidationResult.Severity.WARNING,
-                )
-            self.__rights_statement_uris.add(rights_statement.uri)
+        if rights_statement.uri in self.__rights_statement_uris:
+            yield ValidationResult(
+                message=f"duplicate RightsStatement {rights_statement.uri}",
+                severity=ValidationResult.Severity.WARNING,
+            )
+        self.__rights_statement_uris.add(rights_statement.uri)
 
     def _validate_rights_statements_dot_org_rights_statement(
         self, rights_statement: RightsStatementsDotOrgRightsStatement

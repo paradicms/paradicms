@@ -12,15 +12,13 @@ def test_transform(
     synthetic_data_models: Tuple[Model, ...], synthetic_data_rdf_file_path: Path
 ):
     remaining_synthetic_data_models_by_uri = {
-        model.uri: model for model in synthetic_data_models if model.uri is not None
+        model.uri: model for model in synthetic_data_models
     }
     assert remaining_synthetic_data_models_by_uri
 
     for transformed_model in RdfConjunctiveGraphTransformer()(
         **RdfFileExtractor(rdf_file_path=synthetic_data_rdf_file_path)()
     ):
-        if transformed_model.uri is None:
-            continue
         synthetic_data_model = remaining_synthetic_data_models_by_uri.pop(
             transformed_model.uri
         )

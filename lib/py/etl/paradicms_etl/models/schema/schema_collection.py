@@ -1,4 +1,4 @@
-from typing import Union, Tuple
+from typing import Tuple
 
 from rdflib import URIRef, Graph, SDO
 from rdflib.resource import Resource
@@ -8,7 +8,6 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
 from paradicms_etl.models.schema.schema_model import SchemaModel
-from paradicms_etl.models.work import Work
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
@@ -20,7 +19,7 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
     class Builder(
         SchemaModel.Builder, SchemaCreativeWorkMixin.Builder, Collection.Builder
     ):
-        def add_work(self, work: Union[URIRef, Work]) -> "SchemaCollection.Builder":
+        def add_work(self, work: URIRef) -> "SchemaCollection.Builder":
             self.add(SDO.hasPart, work)
             return self
 

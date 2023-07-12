@@ -25,9 +25,7 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
     """
 
     class Builder(SchemaModel.Builder, SchemaMediaObjectMixin.Builder, Image.Builder):
-        def add_thumbnail(
-            self, thumbnail: Union[Image, URIRef]
-        ) -> "SchemaImageObject.Builder":
+        def add_thumbnail(self, thumbnail: URIRef) -> "SchemaImageObject.Builder":
             self.add(SDO.thumbnail, thumbnail)
             return self
 

@@ -69,7 +69,7 @@ class CostumeCoreDataAirtableTransformer:
         ):
             yield model
             if isinstance(model, Work):
-                collection_builder.add_work(model)
+                collection_builder.add_work(model.uri)
 
         yield collection_builder.build()
 
@@ -129,7 +129,7 @@ class CostumeCoreDataAirtableTransformer:
                             object_images=field_value,
                         ):
                             yield image
-                            work_builder.add_image(image)
+                            work_builder.add_image(image.uri)
                         continue
 
                     self.__logger.warning(

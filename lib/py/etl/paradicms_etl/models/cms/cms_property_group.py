@@ -4,14 +4,13 @@ from rdflib import URIRef, RDFS, Graph, DCTERMS
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
 class CmsPropertyGroup(CmsModel, FoafImagesMixin, PropertyGroup):
     class Builder(CmsModel.Builder, FoafImagesMixin.Builder):
-        def add_property(self, property_: Union[Property, URIRef]):
+        def add_property(self, property_: URIRef):
             self.add(DCTERMS.hasPart, property_)
             return self
 

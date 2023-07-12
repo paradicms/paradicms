@@ -1,3 +1,4 @@
+import logging
 from abc import abstractmethod
 from typing import Generator, Tuple, Union, TypeVar, Any, Callable
 from typing import Optional
@@ -5,10 +6,11 @@ from typing import Optional
 from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO, OWL, DCMITYPE
 from rdflib import Graph
 from rdflib.resource import Resource
-from rdflib.term import Node, BNode
+from rdflib.term import Node
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.image_data import ImageData
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.clone_graph import clone_graph
 
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
@@ -27,11 +29,13 @@ class ResourceBackedModel(Model):
             if o is None:
                 pass
             elif isinstance(o, Model):
-                if o.uri is not None:
-                    # Assume that named models are yielded separately
-                    self._resource.add(p, o.uri)
-                else:
-                    self._resource.add(p, o.to_rdf(graph=self._resource.graph))
+                if not str(o.uri).lower().startswith("urn:uuid:"):
+                    logging.getLogger(__name__).warning(
+                        "adding non-urn:uuid model %s to model %s's graph",
+                        o.uri,
+                        self.__resource.identifier,
+                    )
+                self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node):
                 self._resource.add(p, o)
             elif isinstance(o, Resource):
@@ -106,10 +110,17 @@ class ResourceBackedModel(Model):
             if isinstance(py_value, str):
                 return py_value
         elif isinstance(value, Resource):
-            if isinstance(value.identifier, BNode):
-                from paradicms_etl.models.cms.cms_image_data import CmsImageData
+            value_type = value.value(RDF.type)
+            if isinstance(value_type, Resource):
+                assert isinstance(value.identifier, URIRef)
+                if value_type.identifier == CMS.ImageData:
+                    from paradicms_etl.models.cms.cms_image_data import CmsImageData
 
-                return CmsImageData(value)
+                    return CmsImageData(value)
+                else:
+                    raise ValueError(
+                        f"unknown ImageData rdf:type: {value_type.identifier}"
+                    )
             else:
                 assert isinstance(value.identifier, URIRef)
                 return value.identifier

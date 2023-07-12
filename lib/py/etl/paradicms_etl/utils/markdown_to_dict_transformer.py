@@ -7,6 +7,8 @@ from markdown_it.tree import SyntaxTreeNode
 from mdit_py_plugins.front_matter import front_matter_plugin
 from rdflib import SDO, RDF, DCMITYPE
 
+from paradicms_etl.utils.uuid_urn import uuid_urn
+
 
 class MarkdownToDictTransformer:
     def __init__(self, *, markdown_it: MarkdownIt):
@@ -72,6 +74,8 @@ class MarkdownToDictTransformer:
         elif isinstance(existing_value, dict):
             # #27: the frontmatter had a dict for this key
             # Assume the frontmatter was specifying properties for a Text model e.g., the license
+            if "@id" not in existing_value:
+                existing_value["@id"] = str(uuid_urn())
             if "@type" not in existing_value:
                 existing_value["@type"] = str(SDO.TextObject)
             if existing_value["@type"] == str(SDO.TextObject):

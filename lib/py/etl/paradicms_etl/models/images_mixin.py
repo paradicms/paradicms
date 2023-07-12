@@ -1,9 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Tuple, Union
+from typing import Tuple
 
 from rdflib import URIRef
-
-from paradicms_etl.models.image import Image
 
 
 class ImagesMixin(ABC):
@@ -13,7 +11,7 @@ class ImagesMixin(ABC):
 
     class Builder(ABC):
         @abstractmethod
-        def add_image(self, image: Union[Image, URIRef]) -> "ImagesMixin.Builder":
+        def add_image(self, image: URIRef) -> "ImagesMixin.Builder":
             raise NotImplementedError
 
     @property

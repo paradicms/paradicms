@@ -338,7 +338,7 @@ class CostumeCoreOntologyAirtableTransformer:
             uri=URIRef(fields["URI"]),
         )
         for work in feature_works:
-            collection_builder.add_work(work)
+            collection_builder.add_work(work.uri)
         return collection_builder.build()
 
     @staticmethod
@@ -522,7 +522,7 @@ class CostumeCoreOntologyAirtableTransformer:
             image_records=feature_value_image_records,
         ):
             yield image
-            concept_builder.add_image(image)
+            concept_builder.add_image(image.uri)
 
         yield concept_builder.build()
 
@@ -595,7 +595,7 @@ class CostumeCoreOntologyAirtableTransformer:
             image_records=feature_value_image_records,
         ):
             yield image
-            work_builder.add_image(image)
+            work_builder.add_image(image.uri)
 
         yield work_builder.build()
 
