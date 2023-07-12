@@ -1,4 +1,3 @@
-import {SchemaNamedModel} from "./SchemaNamedModel";
 import {Mixin} from "ts-mixer";
 import {Property} from "../Property";
 import {Text} from "../Text";
@@ -10,8 +9,9 @@ import {PropertyValue} from "../PropertyValue";
 import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
 import {Memoize} from "typescript-memoize";
 import {requireNonNull} from "@paradicms/utilities";
+import {SchemaModel} from "./SchemaModel";
 
-export class SchemaProperty extends Mixin(SchemaNamedModel)
+export class SchemaProperty extends Mixin(SchemaModel)
   implements Property {
   get comment(): Text | null {
     return this.description;

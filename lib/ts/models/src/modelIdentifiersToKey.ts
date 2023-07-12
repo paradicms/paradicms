@@ -10,7 +10,7 @@ export const modelIdentifiersToKey = (
   invariant(modelIdentifiers.length > 0);
   // Add extra characters at the beginning and end so it
   const modelIdentifierStrings = modelIdentifiers.map(
-    modelIdentifier => `${modelIdentifier.termType}-${modelIdentifier.value}`
+    modelIdentifier => `${modelIdentifier.value}`
   );
   invariant(
     modelIdentifierStrings.length == new Set(modelIdentifierStrings).size

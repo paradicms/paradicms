@@ -1,15 +1,19 @@
 import {WikibasePropertyDefinition} from "@paradicms/wikibase";
-import {DatasetCore} from "@rdfjs/types";
+import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import invariant from "ts-invariant";
 import {requireDefined} from "@paradicms/utilities";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {ModelSet} from "../ModelSet";
 import {Property} from "../Property";
 import {ThumbnailSelector} from "../ThumbnailSelector";
 import {Image} from "../Image";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
-export class WikidataProperty extends ResourceBackedNamedModel
-  implements Property {
+const ensureModelGraphIdentifier = (graph: Term) => {
+  invariant(graph.termType === "NamedNode");
+  return graph as NamedNode;
+};
+
+export class WikidataProperty extends ResourceBackedModel implements Property {
   private readonly wikibasePropertyDefinition: WikibasePropertyDefinition;
 
   constructor(kwds: {
@@ -19,7 +23,7 @@ export class WikidataProperty extends ResourceBackedNamedModel
   }) {
     super({
       dataset: kwds.dataset,
-      graph: kwds.wikibasePropertyDefinition.graph,
+      graph: ensureModelGraphIdentifier(kwds.wikibasePropertyDefinition.graph),
       identifier: kwds.wikibasePropertyDefinition.node,
       modelSet: kwds.modelSet,
     });

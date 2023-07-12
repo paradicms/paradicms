@@ -1,5 +1,5 @@
 import {ImagesMixin} from "./ImagesMixin";
-import {NamedModel} from "./NamedModel";
+import {Model} from "./Model";
 import {PropertyValue} from "./PropertyValue";
 import {RightsMixin} from "./RightsMixin";
 import {Text} from "./Text";
@@ -10,7 +10,7 @@ import {SameAsMixin} from "./SameAsMixin";
 import {ThumbnailMixin} from "./ThumbnailMixin";
 
 export interface Work
-  extends NamedModel,
+  extends Model,
     ImagesMixin,
     RightsMixin,
     SameAsMixin,

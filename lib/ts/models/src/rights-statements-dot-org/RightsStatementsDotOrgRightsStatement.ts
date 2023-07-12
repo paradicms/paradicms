@@ -2,11 +2,11 @@ import {requireNonNull} from "@paradicms/utilities";
 import {dcterms, skos} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {RightsStatement} from "../RightsStatement";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {mapTermToString} from "@paradicms/rdf";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class RightsStatementsDotOrgRightsStatement
-  extends Mixin(ResourceBackedNamedModel)
+  extends Mixin(ResourceBackedModel)
   implements RightsStatement {
   get definition(): string | null {
     return this.findAndMapObject(skos.definition, mapTermToString);

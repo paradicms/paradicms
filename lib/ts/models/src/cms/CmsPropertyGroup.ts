@@ -3,16 +3,16 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Property} from "../Property";
 import {PropertyGroup} from "../PropertyGroup";
-import {CmsNamedModel} from "./CmsNamedModel";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 import {Text} from "../Text";
 import {mapTermToText} from "../mapTermToText";
 import {requireNonNull} from "@paradicms/utilities";
 import {mapTermToString} from "@paradicms/rdf";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class CmsPropertyGroup
-  extends Mixin(CmsNamedModel, FoafImagesMixin, SomeImageThumbnailMixin)
+  extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
   implements PropertyGroup {
   @Memoize()
   get comment(): Text | null {

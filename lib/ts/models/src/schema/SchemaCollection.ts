@@ -1,13 +1,13 @@
 import {Mixin} from "ts-mixer";
 import {Collection} from "../Collection";
 import {Work} from "../Work";
-import {SchemaNamedModel} from "./SchemaNamedModel";
 import {requireNonNull} from "@paradicms/utilities";
 import {SchemaCreativeWorkMixin} from "./SchemaCreativeWorkMixin";
 import {schema} from "@paradicms/vocabularies";
+import {SchemaModel} from "./SchemaModel";
 
 export class SchemaCollection extends Mixin(
-  SchemaNamedModel,
+  SchemaModel,
   SchemaCreativeWorkMixin
 ) implements Collection {
   override get label(): string {

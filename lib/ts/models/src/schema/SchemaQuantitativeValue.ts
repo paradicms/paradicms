@@ -1,13 +1,13 @@
 import {Mixin} from "ts-mixer";
-import {ResourceBackedModel} from "../ResourceBackedModel";
 import {schema} from "@paradicms/vocabularies";
 import {
   mapTermToBoolean,
   mapTermToNumber,
   mapTermToString,
 } from "@paradicms/rdf";
+import {SchemaModel} from "./SchemaModel";
 
-export class SchemaQuantitativeValue extends Mixin(ResourceBackedModel) {
+export class SchemaQuantitativeValue extends Mixin(SchemaModel) {
   get maxValue(): number | null {
     return this.findAndMapObject(schema.maxValue, mapTermToNumber);
   }

@@ -6,11 +6,8 @@ import {Memoize} from "typescript-memoize";
 import {modelIdentifiersToKey} from "../modelIdentifiersToKey";
 import {hasMixin} from "ts-mixer";
 import {SchemaModel} from "../schema/SchemaModel";
-import {SchemaNamedModel} from "../schema/SchemaNamedModel";
 
-const isBestModel = (model: Model) => {
-  return hasMixin(model, SchemaModel) || hasMixin(model, SchemaNamedModel);
-};
+const isBestModel = (model: Model) => hasMixin(model, SchemaModel);
 
 export class SameAsModel<ModelT extends Model> implements Model {
   private readonly bestModels: readonly ModelT[];
@@ -120,19 +117,13 @@ export class SameAsModel<ModelT extends Model> implements Model {
     return this.models.flatMap(model => model.identifiers);
   }
 
+  get iris(): readonly string[] {
+    return this.identifiers.map(identifier => identifier.value);
+  }
+
   @Memoize()
   get key(): string {
     return modelIdentifiersToKey(this.identifiers);
-  }
-
-  get iris(): readonly string[] {
-    return this.identifiers
-      .filter(identifier => identifier.termType === "NamedNode")
-      .map(identifier => identifier.value);
-  }
-
-  protected get preferredModel(): ModelT {
-    return this.models[0];
   }
 
   toRdf(addToDataset: DatasetCore) {

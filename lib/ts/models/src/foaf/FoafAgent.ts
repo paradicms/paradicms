@@ -1,6 +1,5 @@
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
-import {FoafModel} from "./FoafModel";
 import {requireNonNull} from "@paradicms/utilities";
 import {foaf} from "@paradicms/vocabularies";
 import {mapTermToString} from "@paradicms/rdf";
@@ -10,10 +9,11 @@ import {AgentType} from "../AgentType";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {isWikipediaUrl} from "../isWikipediaUrl";
 import {Memoize} from "typescript-memoize";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export abstract class FoafAgent
   extends Mixin(
-    FoafModel,
+    ResourceBackedModel,
     FoafImagesMixin,
     OwlSameAsMixin,
     SomeImageThumbnailMixin

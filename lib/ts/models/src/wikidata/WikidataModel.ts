@@ -1,8 +1,7 @@
 import {WikibaseArticle, WikibaseItem, WikibaseStatement,} from "@paradicms/wikibase";
-import {DatasetCore, Literal, NamedNode} from "@rdfjs/types";
+import {DatasetCore, Literal, NamedNode, Term} from "@rdfjs/types";
 import {ModelSet} from "../ModelSet";
 import {Image} from "../Image";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {RightsMixin} from "../RightsMixin";
 import {License} from "../License";
 import {RightsStatement} from "../RightsStatement";
@@ -17,11 +16,18 @@ import {PropertyValue} from "../PropertyValue";
 import {WikidataProperty} from "./WikidataProperty";
 import {createPropertyValueFromTerm} from "../createPropertyValueFromTerm";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {NamedModel} from "../NamedModel";
+import {Model} from "../Model";
+import {ResourceBackedModel} from "../ResourceBackedModel";
+import invariant from "ts-invariant";
+
+const ensureModelGraphIdentifier = (graph: Term) => {
+  invariant(graph.termType === "NamedNode");
+  return graph as NamedNode;
+}
 
 export abstract class WikidataModel
-  extends Mixin(ResourceBackedNamedModel, OwlSameAsMixin, SomeImageThumbnailMixin)
-  implements NamedModel, RightsMixin, WikibaseItem {
+  extends Mixin(ResourceBackedModel, OwlSameAsMixin, SomeImageThumbnailMixin)
+  implements Model, RightsMixin, WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
   protected readonly wikibaseItemSet: WikibaseItemSet;
   protected readonly wikidataPropertiesByIri: {[index: string]: WikidataProperty};
@@ -35,7 +41,7 @@ export abstract class WikidataModel
   }) {
     super({
       dataset: kwds.dataset,
-      graph: kwds.wikibaseItem.graph,
+      graph: ensureModelGraphIdentifier(kwds.wikibaseItem.graph),
       identifier: kwds.wikibaseItem.identifier,
       modelSet: kwds.modelSet,
     });
