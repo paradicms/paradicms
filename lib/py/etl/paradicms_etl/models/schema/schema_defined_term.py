@@ -5,15 +5,15 @@ from rdflib.resource import Resource
 from rdflib.term import Node
 
 from paradicms_etl.models.concept import Concept
-from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
+from paradicms_etl.models.schema.schema_model import SchemaModel
 
 
-class SchemaDefinedTerm(SchemaNamedModel, Concept):
+class SchemaDefinedTerm(SchemaModel, Concept):
     """
     Schema.org implementation of the Concept interface using schema:DefinedTerm properties.
     """
 
-    class Builder(SchemaNamedModel.Builder):
+    class Builder(SchemaModel.Builder):
         def add_type_uri(self, type_uri: URIRef):
             self.add(RDF.type, type_uri)
             return self
@@ -26,7 +26,7 @@ class SchemaDefinedTerm(SchemaNamedModel, Concept):
             return self
 
     def __init__(self, resource: Resource):
-        SchemaNamedModel.__init__(self, resource)
+        SchemaModel.__init__(self, resource)
         self.label
 
     @classmethod
@@ -42,10 +42,6 @@ class SchemaDefinedTerm(SchemaNamedModel, Concept):
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:
         return tuple(self._values(RDF.type, self._map_uri_value))
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri
 
     @property
     def value(self) -> Node:

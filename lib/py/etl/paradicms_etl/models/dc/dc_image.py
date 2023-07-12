@@ -4,7 +4,7 @@ from rdflib import Literal, URIRef, Graph, XSD, DCMITYPE
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
-from paradicms_etl.models.dc.dc_named_model import DcNamedModel
+from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -14,12 +14,12 @@ from paradicms_etl.utils.clone_graph import clone_graph
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class DcImage(DcNamedModel, Image):
+class DcImage(DcModel, Image):
     """
     A dcmitype:Image.
     """
 
-    class Builder(DcNamedModel.Builder, Image.Builder):
+    class Builder(DcModel.Builder, Image.Builder):
         def add_thumbnail(self, thumbnail: Union[Image, URIRef]) -> "DcImage.Builder":
             # (thumbnail, dcterms:source, original image) in this graph.
             # Dublin Core doesn't have an inverse of dcterms:source.
@@ -92,7 +92,7 @@ class DcImage(DcNamedModel, Image):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            DcNamedModel.json_ld_context(),
+            DcModel.json_ld_context(),
             {
                 "copyable": {
                     "@id": str(CMS.imageCopyable),
@@ -136,7 +136,3 @@ class DcImage(DcNamedModel, Image):
             )
             if isinstance(subject, URIRef)
         )
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri

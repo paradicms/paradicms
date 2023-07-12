@@ -4,7 +4,7 @@ from typing import Dict, List, Optional, Tuple
 from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL, ConjunctiveGraph
 from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.wikibase.wikibase_article import WikibaseArticle
 from paradicms_etl.models.wikibase.wikibase_direct_claim import WikibaseDirectClaim
 from paradicms_etl.models.wikibase.wikibase_full_statement import WikibaseFullStatement
@@ -17,7 +17,7 @@ from paradicms_etl.namespaces import WIKIBASE, WDT, SDOHTTP
 logger = logging.getLogger(__name__)
 
 
-class WikibaseItem(ResourceBackedNamedModel):
+class WikibaseItem(ResourceBackedModel):
     __IGNORE_PREDICATES = {
         URIRef(SDOHTTP.description),
         URIRef(SDOHTTP.name),
@@ -32,7 +32,7 @@ class WikibaseItem(ResourceBackedNamedModel):
         exclude_redundant_statements: bool = True,
         property_definitions: Optional[Tuple[WikibasePropertyDefinition, ...]] = None,
     ):
-        ResourceBackedNamedModel.__init__(self, resource)
+        ResourceBackedModel.__init__(self, resource)
 
         if property_definitions is None:
             property_definitions = WikibasePropertyDefinition.from_rdf(

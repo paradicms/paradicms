@@ -4,13 +4,13 @@ from rdflib import URIRef, RDFS, XSD, Graph, RDF
 
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class RdfProperty(ResourceBackedNamedModel, FoafImagesMixin, Property):
-    class Builder(ResourceBackedNamedModel.Builder, FoafImagesMixin.Builder):
+class RdfProperty(ResourceBackedModel, FoafImagesMixin, Property):
+    class Builder(ResourceBackedModel.Builder, FoafImagesMixin.Builder):
         def build(self) -> "RdfProperty":
             return RdfProperty(self._resource)
 
@@ -35,7 +35,7 @@ class RdfProperty(ResourceBackedNamedModel, FoafImagesMixin, Property):
             return self
 
     def __init__(self, *args, **kwds):
-        ResourceBackedNamedModel.__init__(self, *args, **kwds)
+        ResourceBackedModel.__init__(self, *args, **kwds)
         self.label
 
     @classmethod
@@ -47,7 +47,7 @@ class RdfProperty(ResourceBackedNamedModel, FoafImagesMixin, Property):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
+            ResourceBackedModel.json_ld_context(),
             FoafImagesMixin.json_ld_context(),
             {
                 "@vocab": str(RDFS),
@@ -81,7 +81,3 @@ class RdfProperty(ResourceBackedNamedModel, FoafImagesMixin, Property):
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return RDF.Property
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri

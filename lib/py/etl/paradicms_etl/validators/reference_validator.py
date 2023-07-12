@@ -132,7 +132,7 @@ class ReferenceValidator:
     def __validate_collection(
         self, collection: Collection
     ) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(collection)
+        yield from self.__validate_model(collection)
         if collection.uri in self.__collection_uris:
             yield ValidationResult(
                 message=f"duplicate Collection {collection.uri}",
@@ -145,7 +145,7 @@ class ReferenceValidator:
             self.__referenced_work_uris.add(work_uri)
 
     def __validate_concept(self, concept: Concept) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(concept)
+        yield from self.__validate_model(concept)
         for image_uri in concept.image_uris:
             self.__referenced_image_uris.add(image_uri)
 
@@ -212,7 +212,7 @@ class ReferenceValidator:
         return ()
 
     def __validate_image(self, image: Image) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(image)
+        yield from self.__validate_model(image)
         yield from self.__validate_rights(image)
         self.__image_uris.add(image.uri)
         for thumbnail_uri in image.thumbnail_uris:
@@ -226,7 +226,7 @@ class ReferenceValidator:
         )
 
     def __validate_license(self, license_: License) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(license_)
+        yield from self.__validate_model(license_)
         if license_.uri is not None:
             if license_.uri in self.__license_uris:
                 yield ValidationResult(
@@ -243,11 +243,11 @@ class ReferenceValidator:
         )
 
     def __validate_location(self, location: Location) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(location)
+        yield from self.__validate_model(location)
         if location.uri is not None:
             self.__location_uris.add(location.uri)
 
-    def __validate_named_model(self, model: Model) -> Iterable[ValidationResult]:
+    def __validate_model(self, model: Model) -> Iterable[ValidationResult]:
         if model.uri is None:
             return
         if model.uri not in self.__model_uris:
@@ -261,7 +261,7 @@ class ReferenceValidator:
     def __validate_organization(
         self, organization: Organization
     ) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(organization)
+        yield from self.__validate_model(organization)
         if organization.uri is not None:
             if organization.uri in self.__organization_uris:
                 yield ValidationResult(
@@ -273,7 +273,7 @@ class ReferenceValidator:
             self.__referenced_image_uris.add(image_uri)
 
     def __validate_person(self, person: Person) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(person)
+        yield from self.__validate_model(person)
         if person.uri is not None:
             if person.uri in self.__person_uris:
                 yield ValidationResult(
@@ -308,7 +308,7 @@ class ReferenceValidator:
     def __validate_rights_statement(
         self, rights_statement: RightsStatement
     ) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(rights_statement)
+        yield from self.__validate_model(rights_statement)
         if rights_statement.uri is not None:
             if rights_statement.uri in self.__rights_statement_uris:
                 yield ValidationResult(
@@ -454,7 +454,7 @@ class ReferenceValidator:
         return ()
 
     def __validate_work(self, work: Work) -> Iterable[ValidationResult]:
-        yield from self.__validate_named_model(work)
+        yield from self.__validate_model(work)
         yield from self.__validate_rights(work)
         if work.uri in self.__work_uris:
             yield ValidationResult(

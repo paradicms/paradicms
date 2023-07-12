@@ -19,6 +19,8 @@ _ValueT = TypeVar("_ValueT")
 class ResourceBackedModel(Model):
     class Builder:
         def __init__(self, resource: Resource):
+            if not isinstance(resource.identifier, URIRef):
+                raise TypeError("expected URI-identified resource")
             self.__resource = resource
 
         def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
@@ -58,6 +60,8 @@ class ResourceBackedModel(Model):
 
     def __init__(self, resource: Resource):
         Model.__init__(self)
+        if not isinstance(resource.identifier, URIRef):
+            raise TypeError("expected URI-identified resource")
         resource.add(RDF.type, self.rdf_type_uri())
         self.__resource = resource
 
@@ -218,12 +222,8 @@ class ResourceBackedModel(Model):
             return graph.resource(self._resource.identifier)
 
     @property
-    def uri(self) -> Optional[URIRef]:
-        return (
-            self._resource.identifier
-            if isinstance(self._resource.identifier, URIRef)
-            else None
-        )
+    def uri(self) -> URIRef:
+        return self._resource.identifier
 
     def _values(
         self,

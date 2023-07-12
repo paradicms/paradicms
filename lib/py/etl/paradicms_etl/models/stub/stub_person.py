@@ -1,12 +1,12 @@
 from typing import Tuple
 
+from paradicms_etl.models.stub.stub_model import StubModel
 from rdflib import URIRef
 
 from paradicms_etl.models.person import Person
-from paradicms_etl.models.stub.stub_named_model import StubNamedModel
 
 
-class StubPerson(StubNamedModel, Person):
+class StubPerson(StubModel, Person):
     @property
     def image_uris(self) -> Tuple[URIRef, ...]:
         return ()

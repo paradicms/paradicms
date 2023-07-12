@@ -1,11 +1,10 @@
 from abc import abstractmethod
 
 from paradicms_etl.models.images_mixin import ImagesMixin
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.rights_mixin import RightsMixin
 
 
-class Work(NamedModel, ImagesMixin, RightsMixin):  # type: ignore
+class Work(Model, ImagesMixin, RightsMixin):  # type: ignore
     """
     Model of a work such as a painting or a garment.
 

@@ -1,6 +1,6 @@
 from typing import Dict, Any
 
-from rdflib import DCTERMS, SKOS, URIRef
+from rdflib import DCTERMS, SKOS
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
@@ -42,9 +42,3 @@ class RightsStatementsDotOrgRightsStatement(DcRightsStatement, RightsStatement):
     @property
     def pref_label(self) -> str:
         return self._required_value(SKOS.prefLabel, self._map_str_value)
-
-    @property
-    def uri(self) -> URIRef:
-        uri = super().uri
-        assert uri is not None
-        return uri
