@@ -6,6 +6,7 @@ from typing import Iterable, Set, Tuple
 from urllib.parse import urlparse
 
 from rdflib import URIRef, Graph
+from rdflib.resource import Resource
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.stub.stub_model import StubModel
@@ -51,28 +52,29 @@ class GettyEnricher:
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
 
-    def __get_getty_entity_graph(self, getty_entity_uri: URIRef) -> Graph:
+    def __get_getty_entity_resource(self, getty_entity_uri: URIRef) -> Resource:
         with open(
             self.__file_cache.get_file(getty_entity_uri, file_extension=".jsonld")
         ) as json_ld_file:
             json_ld = json.load(json_ld_file)
             assert json_ld["id"] == str(getty_entity_uri)
+            resolved_json_ld = resolve_json_ld_contexts(
+                file_cache=self.__file_cache, json_ld=json_ld
+            )
             graph = Graph()
             graph.parse(
-                data=resolve_json_ld_contexts(
-                    file_cache=self.__file_cache, json_ld=json_ld
-                ),
+                data=resolved_json_ld,  # type: ignore
                 format="json-ld",
             )
-            return graph
+            return graph.resource(getty_entity_uri)
 
     def _get_getty_object_entity(self, getty_entity_uri: URIRef) -> Model:
-        graph = self.__get_getty_entity_graph(getty_entity_uri)
+        resource = self.__get_getty_entity_resource(getty_entity_uri)
         raise NotImplementedError
 
     @staticmethod
     def __get_model_getty_entity_references(
-        *, getty_entity_type: str, model: Model
+        *, getty_entity_type: _GettyEntityType, model: Model
     ) -> Tuple[URIRef, ...]:
         """
         Get a list of Wikidata entity URIs referenced by the given model.
