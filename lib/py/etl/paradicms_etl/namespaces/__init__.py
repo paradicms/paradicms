@@ -4,7 +4,9 @@ from .bind_namespaces import bind_namespaces  # noqa: F401
 from .cc import CC  # noqa: F401
 from .cms import CMS  # noqa: F401
 from .coco import COCO  # noqa: F401
+from .crm import CRM  # noqa: F401
 from .exif import EXIF  # noqa: F401
+from .la import LA  # noqa: F401
 from .prov import PROV  # noqa: F401
 from .sdohttp import SDOHTTP  # noqa: F401
 from .time import TIME  # noqa: F401
