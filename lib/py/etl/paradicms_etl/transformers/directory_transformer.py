@@ -148,7 +148,7 @@ class DirectoryTransformer:
                         continue
                     transformed_models_by_id[transformed_model_id] = (
                         transformed_model.replacer()  # type: ignore
-                        .add_image(transformed_image)
+                        .add_image(transformed_image.uri)
                         .build()
                     )
                     self.__referenced_image_uris.add(transformed_image.uri)
