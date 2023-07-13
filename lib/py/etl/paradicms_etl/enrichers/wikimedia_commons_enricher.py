@@ -427,12 +427,11 @@ class WikimediaCommonsEnricher:
                     image.uri,
                 )
 
-        if wikimedia_commons_image_info.extmetadata.license_uri is not None:
+        license_uri = wikimedia_commons_image_info.extmetadata.license_uri
+        if license_uri is not None:
+            assert isinstance(license_uri, URIRef)
             if not image.licenses:
-                if wikimedia_commons_image_info.extmetadata.license_uri:
-                    image_replacer.add_license(
-                        wikimedia_commons_image_info.extmetadata.license_uri
-                    )
+                image_replacer.add_license(license_uri)
             else:
                 self.__logger.debug(
                     "image %s: already has a license(s), ignoring information from Wikimedia Commons",
