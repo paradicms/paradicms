@@ -7,7 +7,6 @@ export const mapSchemaQuantitativeValue = (
   term: Term
 ): SchemaQuantitativeValue | null => {
   switch (term.termType) {
-    case "BlankNode":
     case "NamedNode":
       return new SchemaQuantitativeValue({
         ...modelParameters,

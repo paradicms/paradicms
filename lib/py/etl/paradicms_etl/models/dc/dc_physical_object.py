@@ -2,13 +2,13 @@ from rdflib import URIRef, Graph, DCMITYPE
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
-from paradicms_etl.models.dc.dc_named_model import DcNamedModel
+from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.work import Work
 
 
-class DcPhysicalObject(DcNamedModel, DcImagesMixin, Work):
+class DcPhysicalObject(DcModel, DcImagesMixin, Work):
     class Builder(
-        DcNamedModel.Builder,
+        DcModel.Builder,
         DcImagesMixin.Builder,
         Work.Builder,
     ):
@@ -16,7 +16,7 @@ class DcPhysicalObject(DcNamedModel, DcImagesMixin, Work):
             return DcPhysicalObject(self._resource)
 
     def __init__(self, resource: Resource):
-        DcNamedModel.__init__(self, resource)
+        DcModel.__init__(self, resource)
         self.label
 
     @classmethod
@@ -35,7 +35,3 @@ class DcPhysicalObject(DcNamedModel, DcImagesMixin, Work):
 
     def replacer(self) -> Builder:
         return self.Builder(self._resource)
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri

@@ -1,3 +1,3 @@
-import {ResourceIdentifier} from "@paradicms/rdf";
+import {NamedNode} from "@rdfjs/types";
 
-export type ModelIdentifier = ResourceIdentifier;
+export type ModelIdentifier = NamedNode;

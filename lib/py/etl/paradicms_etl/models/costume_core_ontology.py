@@ -6,12 +6,12 @@ from rdflib.collection import Collection
 from rdflib.namespace import DCTERMS, RDF, RDFS
 from rdflib.resource import Resource
 
-from paradicms_etl.models.named_model import NamedModel
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.model import Model
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import COCO
 
 
-class CostumeCoreOntology(ResourceBackedNamedModel):
+class CostumeCoreOntology(ResourceBackedModel):
     @dataclass(frozen=True)
     class Rights:
         author: str
@@ -26,7 +26,7 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         text_en: str
 
     @dataclass(frozen=True)
-    class Term(NamedModel):
+    class Term(Model):
         display_name_en: str
         id: str
         _uri: URIRef
@@ -97,7 +97,7 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
             return self._uri
 
     @dataclass(frozen=True)
-    class Predicate(NamedModel):
+    class Predicate(Model):
         description_text_en: str
         display_name_en: str
         id: str
@@ -140,9 +140,9 @@ class CostumeCoreOntology(ResourceBackedNamedModel):
         def uri(self):
             return self._uri
 
-    class Builder(ResourceBackedNamedModel.Builder):
+    class Builder(ResourceBackedModel.Builder):
         def __init__(self):
-            ResourceBackedNamedModel.Builder.__init__(
+            ResourceBackedModel.Builder.__init__(
                 self, Graph().resource(URIRef(str(COCO)[:-1]))
             )
             self.add(DCTERMS.title, Literal("Costume Core Ontology"))

@@ -1,4 +1,3 @@
-import {SameAsNamedModel} from "./SameAsNamedModel";
 import {Work} from "../Work";
 import {Mixin} from "ts-mixer";
 import {SameAsRightsMixin} from "./SameAsRightsMixin";
@@ -10,8 +9,9 @@ import {PropertyValue} from "../PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {SameAsImagesMixin} from "./SameAsImagesMixin";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {SameAsModel} from "./SameAsModel";
 
-export class SameAsWork extends Mixin(SameAsNamedModel<Work>, SameAsImagesMixin<Work>, SameAsRightsMixin<Work>, SomeImageThumbnailMixin) implements Work {
+export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>, SameAsRightsMixin<Work>, SomeImageThumbnailMixin) implements Work {
     get agents(): readonly WorkAgent[] {
         return this.getAllValues(model => model.agents);
     }

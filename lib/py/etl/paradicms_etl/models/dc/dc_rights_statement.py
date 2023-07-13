@@ -1,12 +1,13 @@
 from typing import Union, Optional
 
-from rdflib import DCTERMS, URIRef, Graph, BNode, SKOS
+from rdflib import DCTERMS, URIRef, Graph, SKOS
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.clone_graph import clone_graph
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class DcRightsStatement(DcModel, RightsStatement):
@@ -26,7 +27,7 @@ class DcRightsStatement(DcModel, RightsStatement):
 
     @classmethod
     def builder(cls, *, title: str, uri: Optional[URIRef] = None) -> Builder:
-        builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
+        builder = cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
         builder.set_title(title)
         return builder
 

@@ -13,7 +13,6 @@ export const mapTermToText = (
   term: Term
 ): Text | null => {
   switch (term.termType) {
-    case "BlankNode":
     case "NamedNode":
       return mapTermToResourceBackedModel({
         factories: textFactories,

@@ -1,10 +1,11 @@
 from typing import Optional
 
-from rdflib import URIRef, Graph, BNode, SDO
+from rdflib import URIRef, Graph, SDO
 from rdflib.resource import Resource
 
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.schema.schema_model import SchemaModel
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class SchemaPerson(SchemaModel, Person):
@@ -30,7 +31,7 @@ class SchemaPerson(SchemaModel, Person):
 
     @classmethod
     def builder(cls, *, name: str, uri: Optional[URIRef] = None) -> Builder:
-        builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
+        builder = cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
         builder.set(SDO.name, name)
         return builder
 

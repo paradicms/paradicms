@@ -1,4 +1,4 @@
-from typing import Union, Tuple
+from typing import Tuple
 
 from rdflib import URIRef, DCTERMS
 
@@ -9,7 +9,7 @@ from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModel
 
 class DcImagesMixin(ResourceBackedModelMixin, ImagesMixin):
     class Builder(ResourceBackedModelMixin.Builder, ImagesMixin.Builder):
-        def add_image(self, image: Union[Image, URIRef]) -> "DcImagesMixin.Builder":
+        def add_image(self, image: URIRef) -> "DcImagesMixin.Builder":
             # (image, dcterms:source, this) in this graph.
             # Dublin Core doesn't have an inverse of dcterms:source.
             if isinstance(image, Image):

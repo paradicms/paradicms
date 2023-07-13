@@ -144,18 +144,14 @@ class DirectoryTransformer:
                     )
                     if transformed_image is None:
                         continue
-                    if (
-                        transformed_image.uri is not None
-                        and transformed_image.uri in self.__referenced_image_uris
-                    ):
+                    if transformed_image.uri in self.__referenced_image_uris:
                         continue
                     transformed_models_by_id[transformed_model_id] = (
                         transformed_model.replacer()  # type: ignore
-                        .add_image(transformed_image)
+                        .add_image(transformed_image.uri)
                         .build()
                     )
-                    if transformed_image.uri is not None:
-                        self.__referenced_image_uris.add(transformed_image.uri)
+                    self.__referenced_image_uris.add(transformed_image.uri)
 
         def __buffer_transformed_model(
             self,
@@ -163,11 +159,10 @@ class DirectoryTransformer:
             model_id: str,
             transformed_model: Model,
         ):
-            if transformed_model.uri is not None:
-                assert (
-                    transformed_model.uri not in self.__transformed_model_uris
-                ), transformed_model.uri
-                self.__transformed_model_uris.add(transformed_model.uri)
+            assert (
+                transformed_model.uri not in self.__transformed_model_uris
+            ), transformed_model.uri
+            self.__transformed_model_uris.add(transformed_model.uri)
 
             transformed_models_by_type = self.__transformed_models_by_class.setdefault(
                 self.__root_model_class_by_type(transformed_model.__class__), {}
@@ -259,7 +254,7 @@ class DirectoryTransformer:
                     # Put all the works in the single collection
                     transformed_collection_replacer = transformed_collection.replacer()
                     for work in transformed_works_by_id.values():
-                        transformed_collection_replacer.add_work(work)
+                        transformed_collection_replacer.add_work(work.uri)
                     transformed_collections_by_id[
                         transformed_collection_model_id
                     ] = transformed_collection_replacer.build()

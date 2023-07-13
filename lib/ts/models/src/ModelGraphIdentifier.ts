@@ -1,3 +1,3 @@
-import {ResourceGraphIdentifier} from "@paradicms/rdf";
+import {NamedNode} from "@rdfjs/types";
 
-export type ModelGraphIdentifier = ResourceGraphIdentifier;
+export type ModelGraphIdentifier = NamedNode;

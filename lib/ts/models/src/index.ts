@@ -20,7 +20,6 @@ export * from "./Model";
 export * from "./ModelSet";
 export * from "./ModelSetBuilder";
 export * from "./ModelSetFactory";
-export * from "./NamedModel";
 export * from "./Organization";
 export * from "./Person";
 export * from "./Point";

@@ -338,7 +338,7 @@ class CostumeCoreOntologyAirtableTransformer:
             uri=URIRef(fields["URI"]),
         )
         for work in feature_works:
-            collection_builder.add_work(work)
+            collection_builder.add_work(work.uri)
         return collection_builder.build()
 
     @staticmethod
@@ -379,7 +379,7 @@ class CostumeCoreOntologyAirtableTransformer:
             image_records=feature_image_records,
         ):
             yield image
-            property_builder.add_image(image)
+            property_builder.add_image(image.uri)
 
         feature_description = self.__transform_description_fields_to_text(
             record_fields=fields,
@@ -429,10 +429,10 @@ class CostumeCoreOntologyAirtableTransformer:
             ),
         ):
             yield image
-            property_group_builder.add_image(image)
+            property_group_builder.add_image(image.uri)
 
         for property_ in feature_set_properties:
-            property_group_builder.add_property(property_)
+            property_group_builder.add_property(property_.uri)
 
         yield property_group_builder.build()
 
@@ -522,7 +522,7 @@ class CostumeCoreOntologyAirtableTransformer:
             image_records=feature_value_image_records,
         ):
             yield image
-            concept_builder.add_image(image)
+            concept_builder.add_image(image.uri)
 
         yield concept_builder.build()
 
@@ -595,7 +595,7 @@ class CostumeCoreOntologyAirtableTransformer:
             image_records=feature_value_image_records,
         ):
             yield image
-            work_builder.add_image(image)
+            work_builder.add_image(image.uri)
 
         yield work_builder.build()
 

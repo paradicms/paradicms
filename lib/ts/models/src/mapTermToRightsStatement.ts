@@ -4,7 +4,6 @@ import {RightsStatement} from "./RightsStatement";
 import {LiteralRightsStatement} from "./literal/LiteralRightsStatement";
 import {rightsStatementFactories} from "./rightsStatementFactories";
 import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
-import log from "loglevel";
 
 /**
  * Map a term in a modelSet to a RightsStatement.
@@ -14,22 +13,21 @@ export const mapTermToRightsStatement = (
   term: Term
 ): RightsStatement | null => {
   switch (term.termType) {
-    case "BlankNode":
-      return mapTermToResourceBackedModel({
-        factories: rightsStatementFactories,
-        modelParameters,
-        term,
-      });
     case "Literal":
       return new LiteralRightsStatement(term);
     case "NamedNode": {
       const rightsStatement = modelParameters.modelSet.rightsStatementByIri(
         term.value
       );
-      if (!rightsStatement) {
-        log.trace("mapped term to missing rights statement:", term.value);
+      if (rightsStatement) {
+        return rightsStatement;
+      } else {
+        return mapTermToResourceBackedModel({
+          factories: rightsStatementFactories,
+          modelParameters,
+          term,
+        });
       }
-      return rightsStatement;
     }
     default:
       return null;

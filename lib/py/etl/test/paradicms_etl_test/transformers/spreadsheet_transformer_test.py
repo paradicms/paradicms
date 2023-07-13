@@ -12,6 +12,7 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_exhibition_event import SchemaExhibitionEvent
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
@@ -78,9 +79,10 @@ def test_transform_google_sheets_dressdiscover_exhibitions(tmp_path: Path):
     )
     assert models
     model_types = set(model.__class__ for model in models)
-    assert len(model_types) == 5, model_types
+    assert len(model_types) == 6, model_types
     # Don't have the AppConfiguration type here
     assert SchemaCreativeWork in model_types
+    assert SchemaExhibitionEvent in model_types
     assert SchemaImageObject in model_types
     assert SchemaOrganization in model_types
     assert SchemaPerson in model_types

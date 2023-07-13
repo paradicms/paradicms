@@ -2,10 +2,10 @@ import {requireNonNull} from "@paradicms/utilities";
 import {dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {RightsStatement} from "../RightsStatement";
-import {DcNamedModel} from "./DcNamedModel";
 import {mapTermToString} from "@paradicms/rdf";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
-export class DcRightsStatement extends Mixin(DcNamedModel)
+export class DcRightsStatement extends Mixin(ResourceBackedModel)
   implements RightsStatement {
   get label(): string {
     return this.title;

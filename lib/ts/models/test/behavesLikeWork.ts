@@ -24,24 +24,6 @@ export const behavesLikeWork = (
     expect(work.agents)
       .to.have.length.gte(4)
       .lte(6);
-    const namedAgents = work.agents.filter(
-      agent =>
-        agent.agent.identifiers.length > 0 &&
-        agent.agent.identifiers.every(
-          identifier => identifier.termType === "NamedNode"
-        )
-    );
-    expect(namedAgents)
-      .to.have.length.gte(1)
-      .lte(2);
-    expect(
-      work.agents.filter(
-        agent =>
-          !agent.agent.identifiers.some(
-            identifier => identifier.termType === "NamedNode"
-          )
-      )
-    ).to.have.length(4); // 2 blank, 2 literal
   });
 
   it("should get the work's events", () => {

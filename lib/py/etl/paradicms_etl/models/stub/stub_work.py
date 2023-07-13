@@ -1,10 +1,11 @@
+from paradicms_etl.models.stub.stub_model import StubModel
+
 from paradicms_etl.models.stub.stub_images_mixin import StubImagesMixin
-from paradicms_etl.models.stub.stub_named_model import StubNamedModel
 from paradicms_etl.models.stub.stub_rights_mixin import StubRightsMixin
 from paradicms_etl.models.work import Work
 
 
-class StubWork(StubNamedModel, StubImagesMixin, StubRightsMixin, Work):
+class StubWork(StubModel, StubImagesMixin, StubRightsMixin, Work):
     class Builder:
         pass
 

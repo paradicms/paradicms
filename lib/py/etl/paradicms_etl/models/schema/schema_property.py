@@ -3,17 +3,17 @@ from typing import Optional
 from rdflib import URIRef, SDO, Graph, XSD
 
 from paradicms_etl.models.property import Property
-from paradicms_etl.models.schema.schema_named_model import SchemaNamedModel
+from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SchemaProperty(SchemaNamedModel, Property):
+class SchemaProperty(SchemaModel, Property):
     """
     Schema.org implementation of the Property interface using schema:Property properties.
     """
 
-    class Builder(SchemaNamedModel.Builder):
+    class Builder(SchemaModel.Builder):
         def build(self) -> "SchemaProperty":
             return SchemaProperty(self._resource)
 
@@ -34,7 +34,7 @@ class SchemaProperty(SchemaNamedModel, Property):
             return self
 
     def __init__(self, *args, **kwds):
-        SchemaNamedModel.__init__(self, *args, **kwds)
+        SchemaModel.__init__(self, *args, **kwds)
         self.label
 
     @classmethod
@@ -46,7 +46,7 @@ class SchemaProperty(SchemaNamedModel, Property):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            SchemaNamedModel.json_ld_context(),
+            SchemaModel.json_ld_context(),
             {
                 "filterable": {
                     "@id": str(CMS.propertyFilterable),
@@ -68,7 +68,3 @@ class SchemaProperty(SchemaNamedModel, Property):
     @property
     def range(self) -> Optional[URIRef]:
         return self._optional_value(SDO.rangeIncludes, self._map_uri_value)
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri

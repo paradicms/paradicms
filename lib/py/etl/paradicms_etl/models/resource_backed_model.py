@@ -5,10 +5,11 @@ from typing import Optional
 from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO, OWL, DCMITYPE
 from rdflib import Graph
 from rdflib.resource import Resource
-from rdflib.term import Node, BNode
+from rdflib.term import Node
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.image_data import ImageData
+from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.clone_graph import clone_graph
 
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
@@ -19,17 +20,24 @@ _ValueT = TypeVar("_ValueT")
 class ResourceBackedModel(Model):
     class Builder:
         def __init__(self, resource: Resource):
+            if not isinstance(resource.identifier, URIRef):
+                raise TypeError("expected URI-identified resource")
             self.__resource = resource
 
         def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
             if o is None:
                 pass
             elif isinstance(o, Model):
-                if o.uri is not None:
-                    # Assume that named models are yielded separately
-                    self._resource.add(p, o.uri)
-                else:
-                    self._resource.add(p, o.to_rdf(graph=self._resource.graph))
+                if not str(o.uri).lower().startswith("urn:uuid:"):
+                    # logging.getLogger(__name__).warning(
+                    #     "adding non-urn:uuid model %s to model %s's graph",
+                    #     o.uri,
+                    #     self.__resource.identifier,
+                    # )
+                    raise ValueError(
+                        f"adding non-urn:uuid model {o.uri} to {self.__resource.identifier}'s graph"
+                    )
+                self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node):
                 self._resource.add(p, o)
             elif isinstance(o, Resource):
@@ -58,6 +66,8 @@ class ResourceBackedModel(Model):
 
     def __init__(self, resource: Resource):
         Model.__init__(self)
+        if not isinstance(resource.identifier, URIRef):
+            raise TypeError("expected URI-identified resource")
         resource.add(RDF.type, self.rdf_type_uri())
         self.__resource = resource
 
@@ -102,10 +112,17 @@ class ResourceBackedModel(Model):
             if isinstance(py_value, str):
                 return py_value
         elif isinstance(value, Resource):
-            if isinstance(value.identifier, BNode):
-                from paradicms_etl.models.cms.cms_image_data import CmsImageData
+            value_type = value.value(RDF.type)
+            if isinstance(value_type, Resource):
+                assert isinstance(value.identifier, URIRef)
+                if value_type.identifier == CMS.ImageData:
+                    from paradicms_etl.models.cms.cms_image_data import CmsImageData
 
-                return CmsImageData(value)
+                    return CmsImageData(value)
+                else:
+                    raise ValueError(
+                        f"unknown ImageData rdf:type: {value_type.identifier}"
+                    )
             else:
                 assert isinstance(value.identifier, URIRef)
                 return value.identifier
@@ -218,12 +235,8 @@ class ResourceBackedModel(Model):
             return graph.resource(self._resource.identifier)
 
     @property
-    def uri(self) -> Optional[URIRef]:
-        return (
-            self._resource.identifier
-            if isinstance(self._resource.identifier, URIRef)
-            else None
-        )
+    def uri(self) -> URIRef:
+        return self._resource.identifier
 
     def _values(
         self,

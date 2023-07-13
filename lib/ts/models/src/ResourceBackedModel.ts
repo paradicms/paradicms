@@ -23,20 +23,26 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     this.graph = kwds.graph;
   }
 
+  override get identifier(): ModelIdentifier {
+    return this._identifier as ModelIdentifier;
+  }
+
   get identifiers(): readonly ModelIdentifier[] {
     return [this.identifier];
+  }
+
+  override get iri(): string {
+    return this.identifier.value;
+  }
+
+  @Memoize()
+  get iris(): readonly string[] {
+    return [this.iri];
   }
 
   @Memoize()
   get key(): string {
     return modelIdentifiersToKey(this.identifiers);
-  }
-
-  @Memoize()
-  get iris(): readonly string[] {
-    return this.identifiers
-        .filter(identifier => identifier.termType === "NamedNode")
-        .map(identifier => identifier.value);
   }
 
   @Memoize()

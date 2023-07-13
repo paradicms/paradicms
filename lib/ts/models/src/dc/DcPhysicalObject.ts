@@ -9,7 +9,6 @@ import {mapTermToText} from "../mapTermToText";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {isWikipediaUrl} from "../isWikipediaUrl";
-import {DcNamedModel} from "./DcNamedModel";
 import {DcImagesMixin} from "./DcImagesMixin";
 import {DcRightsMixin} from "./DcRightsMixin";
 import {requireNonNull} from "@paradicms/utilities";
@@ -21,10 +20,11 @@ import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModifica
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
 import {WorkAgentsMixin} from "../WorkAgentsMixin";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class DcPhysicalObject
   extends Mixin(
-    DcNamedModel,
+    ResourceBackedModel,
     DcImagesMixin,
     DcRightsMixin,
     OwlSameAsMixin,

@@ -1,4 +1,3 @@
-import {SchemaNamedModel} from "./SchemaNamedModel";
 import {SchemaMediaObjectMixin} from "./SchemaMediaObjectMixin";
 import {Mixin} from "ts-mixer";
 import {Image} from "../Image";
@@ -11,9 +10,10 @@ import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import log from "loglevel";
 import {mapTermToImage} from "../mapTermToImage";
+import {SchemaModel} from "./SchemaModel";
 
 export class SchemaImageObject
-  extends Mixin(SchemaNamedModel, SchemaMediaObjectMixin)
+  extends Mixin(SchemaModel, SchemaMediaObjectMixin)
   implements Image {
   @Memoize()
   get caption(): string | null {

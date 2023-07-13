@@ -4,7 +4,6 @@ import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {LiteralLocation} from "./literal/LiteralLocation";
 import {locationFactories} from "./locationFactories";
 import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
-import log from "loglevel";
 
 /**
  * Map a term in a modelSet to a Location.
@@ -14,20 +13,19 @@ export const mapTermToLocation = (
   term: Term
 ): Location | null => {
   switch (term.termType) {
-    case "BlankNode":
-      return mapTermToResourceBackedModel({
-        factories: locationFactories,
-        modelParameters,
-        term,
-      });
     case "Literal":
       return new LiteralLocation(term);
     case "NamedNode": {
       const location = modelParameters.modelSet.locationByIri(term.value);
-      if (!location) {
-        log.trace("mapped term to missing location:", term.value);
+      if (location) {
+        return location;
+      } else {
+        return mapTermToResourceBackedModel({
+          factories: locationFactories,
+          modelParameters,
+          term,
+        });
       }
-      return location;
     }
     default:
       return null;

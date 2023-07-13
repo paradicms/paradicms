@@ -2,10 +2,10 @@ import {requireNonNull} from "@paradicms/utilities";
 import {dc11} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {License} from "../License";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {mapTermToString} from "@paradicms/rdf";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
-export class CreativeCommonsLicense extends Mixin(ResourceBackedNamedModel)
+export class CreativeCommonsLicense extends Mixin(ResourceBackedModel)
   implements License {
   // get identifier(): string {
   //   return requireNonNull(

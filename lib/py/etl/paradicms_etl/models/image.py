@@ -3,16 +3,16 @@ from typing import Union, Tuple
 
 from rdflib import URIRef, Literal
 
+from paradicms_etl.model import Model
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.named_model import NamedModel
 from paradicms_etl.models.rights_mixin import RightsMixin
 
 
-class Image(NamedModel, RightsMixin):
+class Image(Model, RightsMixin):
     class Builder(RightsMixin.Builder):
         @abstractmethod
-        def add_thumbnail(self, thumbnail: Union["Image", URIRef]) -> "Image.Builder":
+        def add_thumbnail(self, thumbnail: URIRef) -> "Image.Builder":
             raise NotImplementedError
 
         @abstractmethod

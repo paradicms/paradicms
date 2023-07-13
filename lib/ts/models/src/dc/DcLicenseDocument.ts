@@ -1,11 +1,12 @@
 import {requireNonNull} from "@paradicms/utilities";
 import {Mixin} from "ts-mixer";
 import {License} from "../License";
-import {DcNamedModel} from "./DcNamedModel";
 import {mapTermToString} from "@paradicms/rdf";
 import {dcterms} from "@paradicms/vocabularies";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
-export class DcLicenseDocument extends Mixin(DcNamedModel) implements License {
+export class DcLicenseDocument extends Mixin(ResourceBackedModel)
+  implements License {
   get label(): string {
     return this.title;
   }

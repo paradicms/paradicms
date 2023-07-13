@@ -7,13 +7,13 @@ from rdflib.term import Node, URIRef, Literal
 
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
-from paradicms_etl.models.resource_backed_named_model import ResourceBackedNamedModel
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
-    class Builder(ResourceBackedNamedModel.Builder, FoafImagesMixin.Builder):
+class SkosConcept(ResourceBackedModel, FoafImagesMixin, Concept):
+    class Builder(ResourceBackedModel.Builder, FoafImagesMixin.Builder):
         def add_alt_label(
             self, alt_label: Union[str, Literal]
         ) -> "SkosConcept.Builder":
@@ -37,7 +37,7 @@ class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
 
     def __init__(self, resource: Resource):
         resource.add(RDF.type, SKOS.Concept)
-        ResourceBackedNamedModel.__init__(self, resource)
+        ResourceBackedModel.__init__(self, resource)
         self.label
 
     @classmethod
@@ -49,7 +49,7 @@ class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            ResourceBackedNamedModel.json_ld_context(),
+            ResourceBackedModel.json_ld_context(),
             FoafImagesMixin.json_ld_context(),
             {
                 "altLabel": {"@id": str(SKOS.altLabel)},
@@ -74,10 +74,6 @@ class SkosConcept(ResourceBackedNamedModel, FoafImagesMixin, Concept):
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:
         return tuple(self._values(RDF.type, self._map_uri_value))
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri
 
     @property
     def value(self) -> Node:

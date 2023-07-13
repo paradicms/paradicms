@@ -30,20 +30,20 @@ const expectModelsDeepEq = <ModelT extends Model>(
       .sort()
   );
 
-const modelSetNamedAgentIris = (modelSet: ModelSet): readonly string[] =>
-  modelSetNamedModelIris(foaf.Agent, modelSet)
-    .concat(modelSetNamedModelIris(schema.Organization, modelSet))
-    .concat(modelSetNamedModelIris(schema.Person, modelSet));
+const modelSetAgentIris = (modelSet: ModelSet): readonly string[] =>
+  modelSetModelIris(foaf.Agent, modelSet)
+    .concat(modelSetModelIris(schema.Organization, modelSet))
+    .concat(modelSetModelIris(schema.Person, modelSet));
 
 const modelSetImageIris = (modelSet: ModelSet): readonly string[] =>
-  modelSetNamedModelIris(dcmitype.Image, modelSet).concat(
-    modelSetNamedModelIris(schema.ImageObject, modelSet)
+  modelSetModelIris(dcmitype.Image, modelSet).concat(
+    modelSetModelIris(schema.ImageObject, modelSet)
   );
 
-const modelSetNameLicenseIris = (modelSet: ModelSet): readonly string[] =>
-  modelSetNamedModelIris(cc.License, modelSet);
+const modelSetLicenseIris = (modelSet: ModelSet): readonly string[] =>
+  modelSetModelIris(cc.License, modelSet);
 
-const modelSetNamedModelIris = (
+const modelSetModelIris = (
   class_: NamedNode,
   modelSet: ModelSet
 ): readonly string[] =>
@@ -58,10 +58,8 @@ const modelSetNamedModelIris = (
     .filter(quad => quad.subject.termType === "NamedNode")
     .map(quad => quad.subject.value);
 
-const modelSetNamedRightsStatementIris = (
-  modelSet: ModelSet
-): readonly string[] =>
-  modelSetNamedModelIris(dcterms.RightsStatement, modelSet);
+const modelSetRightsStatementIris = (modelSet: ModelSet): readonly string[] =>
+  modelSetModelIris(dcterms.RightsStatement, modelSet);
 
 // const hasCommonIri = (
 //   leftIris: readonly string[],
@@ -101,7 +99,7 @@ describe("ModelSetBuilder", () => {
         thumbnail: THUMBNAIL_SELECTOR,
       })
       .build();
-    expect(modelSetNamedAgentIris(agentsModelSet)).to.have.length(2);
+    expect(modelSetAgentIris(agentsModelSet)).to.have.length(2);
     // The WikidataPerson isn't counted because it doesn't have an unambiguous rdf:type
     expect(modelSetImageIris(agentsModelSet)).to.have.length(5); // One original image, one thumbnail per named agent + the sameAs agent image
     // for (const namedAgent of namedAgents) {
@@ -125,9 +123,8 @@ describe("ModelSetBuilder", () => {
       propertyGroupModelSet.properties,
       propertyGroup.properties
     );
-    expect(modelSetImageIris(propertyGroupModelSet)).to.have.length(
-      propertyGroup.properties.length * 2
-    ); // One original image, one thumbnail per property
+    const imageIris = modelSetImageIris(propertyGroupModelSet);
+    expect(imageIris).to.have.length(propertyGroup.properties.length * 2); // One original image, one thumbnail per property
   });
 
   it("should get a property groups subset (worksheet edit)", () => {
@@ -250,7 +247,7 @@ describe("ModelSetBuilder", () => {
     expect(thumbnails).to.be.empty; // Didn't ask for them
 
     expect(subsetWork.licenses).not.to.be.empty;
-    expect(modelSetNameLicenseIris(workModelSet)).to.have.length(3);
+    expect(modelSetLicenseIris(workModelSet)).to.have.length(3);
 
     expectModelsDeepEq(
       workModelSet.properties,
@@ -266,7 +263,7 @@ describe("ModelSetBuilder", () => {
     );
 
     expect(subsetWork.rightsStatements).to.not.be.empty;
-    expect(modelSetNamedRightsStatementIris(workModelSet)).to.have.length(2);
+    expect(modelSetRightsStatementIris(workModelSet)).to.have.length(2);
 
     if (subsetWork.location) {
       expect(subsetWork.location!.location.iris).to.not.be.empty;

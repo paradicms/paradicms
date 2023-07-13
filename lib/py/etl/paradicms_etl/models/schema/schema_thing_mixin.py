@@ -2,7 +2,6 @@ from typing import Union, Tuple, Optional
 
 from rdflib import URIRef, SDO
 
-from paradicms_etl.models.image import Image
 from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
 from paradicms_etl.models.text import Text
@@ -12,9 +11,9 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
     """
     Mixin that supplies schema:Thing properties to other models.
 
-    This is not part of SchemaModel because SchemaNamedModel does not inherit SchemaModel.
-    SchemaModel inherits ResourceBackedModel and SchemaNamedModel inherits ResourceBackedNamedModel.
-    This mixin supplies schema:Thing properties to both SchemaModel and SchemaNamedModel and all of their descendants.
+    This is not part of SchemaModel because SchemaModel does not inherit SchemaModel.
+    SchemaModel inherits ResourceBackedModel and SchemaModel inherits ResourceBackedModel.
+    This mixin supplies schema:Thing properties to both SchemaModel and SchemaModel and all of their descendants.
     """
 
     class Builder(ResourceBackedModelMixin.Builder, ImagesMixin.Builder):
@@ -24,7 +23,7 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
             self.add(SDO.alternateName, alternate_name)
             return self
 
-        def add_image(self, image: Union[Image, URIRef]) -> "SchemaThingMixin.Builder":
+        def add_image(self, image: URIRef) -> "SchemaThingMixin.Builder":
             self.add(SDO.image, image)
             return self
 

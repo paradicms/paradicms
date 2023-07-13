@@ -14,7 +14,6 @@ export const mapTermToDateTimeDescription = (
   term: Term
 ): DateTimeDescription | null => {
   switch (term.termType) {
-    case "BlankNode":
     case "NamedNode":
       return mapTermToResourceBackedModel({
         factories: dateTimeDescriptionFactories,

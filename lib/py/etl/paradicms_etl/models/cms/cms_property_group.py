@@ -2,16 +2,15 @@ from typing import Union, Text
 
 from rdflib import URIRef, RDFS, Graph, DCTERMS
 
-from paradicms_etl.models.cms.cms_named_model import CmsNamedModel
+from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
-from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
-    class Builder(CmsNamedModel.Builder, FoafImagesMixin.Builder):
-        def add_property(self, property_: Union[Property, URIRef]):
+class CmsPropertyGroup(CmsModel, FoafImagesMixin, PropertyGroup):
+    class Builder(CmsModel.Builder, FoafImagesMixin.Builder):
+        def add_property(self, property_: URIRef):
             self.add(DCTERMS.hasPart, property_)
             return self
 
@@ -27,7 +26,7 @@ class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
             return self
 
     def __init__(self, *args, **kwds):
-        CmsNamedModel.__init__(self, *args, **kwds)
+        CmsModel.__init__(self, *args, **kwds)
         self.label
 
     @classmethod
@@ -39,7 +38,7 @@ class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
     @classmethod
     def json_ld_context(cls):
         return safe_dict_update(
-            CmsNamedModel.json_ld_context(),
+            CmsModel.json_ld_context(),
             FoafImagesMixin.json_ld_context(),
             {
                 "comment": {"@id": str(RDFS.comment)},
@@ -55,7 +54,3 @@ class CmsPropertyGroup(CmsNamedModel, FoafImagesMixin, PropertyGroup):
     @classmethod
     def label_property_uri(cls) -> URIRef:
         return RDFS.label
-
-    @property
-    def uri(self) -> URIRef:
-        return super().uri

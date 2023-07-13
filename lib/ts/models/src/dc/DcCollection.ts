@@ -2,7 +2,6 @@ import {Mixin} from "ts-mixer";
 import {Collection} from "../Collection";
 import {Work} from "../Work";
 import {dcterms} from "@paradicms/vocabularies";
-import {DcNamedModel} from "./DcNamedModel";
 import {Text} from "../Text";
 import {mapTermToText} from "../mapTermToText";
 import {DcImagesMixin} from "./DcImagesMixin";
@@ -10,9 +9,10 @@ import {Memoize} from "typescript-memoize";
 import {requireNonNull} from "@paradicms/utilities";
 import {mapTermToString} from "@paradicms/rdf";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class DcCollection
-  extends Mixin(DcNamedModel, DcImagesMixin, SomeImageThumbnailMixin)
+  extends Mixin(ResourceBackedModel, DcImagesMixin, SomeImageThumbnailMixin)
   implements Collection {
   @Memoize()
   get description(): Text | null {

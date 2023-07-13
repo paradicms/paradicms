@@ -4,7 +4,6 @@ import {License} from "./License";
 import {LiteralLicense} from "./literal/LiteralLicense";
 import {licenseFactories} from "./licenseFactories";
 import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
-import log from "loglevel";
 
 /**
  * Map a term in a modelSet to a License.
@@ -14,20 +13,19 @@ export const mapTermToLicense = (
   term: Term
 ): License | null => {
   switch (term.termType) {
-    case "BlankNode":
-      return mapTermToResourceBackedModel({
-        factories: licenseFactories,
-        modelParameters,
-        term,
-      });
     case "Literal":
       return new LiteralLicense(term);
     case "NamedNode": {
       const license = modelParameters.modelSet.licenseByIri(term.value);
-      if (!license) {
-        log.trace("mapped term to missing license:", term.value);
+      if (license) {
+        return license;
+      } else {
+        return mapTermToResourceBackedModel({
+          factories: licenseFactories,
+          modelParameters,
+          term,
+        });
       }
-      return license;
     }
     default:
       return null;

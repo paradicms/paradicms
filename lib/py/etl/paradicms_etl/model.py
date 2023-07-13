@@ -52,5 +52,5 @@ class Model(ABC):
 
     @property
     @abstractmethod
-    def uri(self) -> Optional[URIRef]:
+    def uri(self) -> URIRef:
         raise NotImplementedError

@@ -1,9 +1,10 @@
-from rdflib import RDF, Graph, BNode, URIRef, DCMITYPE
+from rdflib import RDF, Graph, URIRef, DCMITYPE
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class DcText(DcModel, Text):
@@ -17,7 +18,7 @@ class DcText(DcModel, Text):
 
     @classmethod
     def builder(cls, value: str) -> Builder:
-        builder = cls.Builder(Graph().resource(BNode()))
+        builder = cls.Builder(Graph().resource(uuid_urn()))
         builder.add(RDF.value, value)
         return builder
 

@@ -13,18 +13,14 @@ import {PropertyValue} from "../PropertyValue";
 import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
 import {PropertyGroup} from "../PropertyGroup";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {requireNonNull} from "@paradicms/utilities";
 import {Text} from "../Text";
 import {mapTermToText} from "../mapTermToText";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class RdfProperty
-  extends Mixin(
-    ResourceBackedNamedModel,
-    FoafImagesMixin,
-    SomeImageThumbnailMixin
-  )
+  extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
   implements Property {
   get comment(): Text | null {
     return this.findAndMapObject(rdfs.comment, term =>

@@ -1,4 +1,4 @@
-import {BlankNode, NamedNode} from "@rdfjs/types";
+import {NamedNode} from "@rdfjs/types";
 import {ResourceBackedModelFactories} from "./ResourceBackedModelFactories";
 import {getNamedRdfTypes} from "@paradicms/rdf";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
@@ -7,7 +7,7 @@ import log from "loglevel";
 export const mapTermToResourceBackedModel = <ResourceBackedModelT>(kwds: {
   factories: ResourceBackedModelFactories<ResourceBackedModelT>;
   modelParameters: Omit<ResourceBackedModelParameters, "identifier">;
-  term: BlankNode | NamedNode;
+  term: NamedNode;
 }): ResourceBackedModelT | null => {
   const {factories, modelParameters, term} = kwds;
   const rdfTypes = getNamedRdfTypes({

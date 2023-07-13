@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import Graph, SDO, BNode
+from rdflib import Graph, SDO
 from rdflib.resource import Resource
 
 from paradicms_etl.models.rights_mixin import RightsMixin
@@ -10,6 +10,7 @@ from paradicms_etl.models.schema.schema_media_object_mixin import (
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
@@ -34,7 +35,7 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
 
     @classmethod
     def builder(cls, text: str) -> Builder:
-        builder = cls.Builder(Graph().resource(BNode()))
+        builder = cls.Builder(Graph().resource(uuid_urn()))
         builder.set(SDO.text, text)
         return builder
 

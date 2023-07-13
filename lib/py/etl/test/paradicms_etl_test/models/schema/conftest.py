@@ -31,8 +31,8 @@ def schema_collection(
         )
         .add_alternate_name("Test collection alternate name")
         .add_same_as(URIRef("http://example.com/other"))
-        .add_image(schema_image_object)
-        .add_work(schema_creative_work)
+        .add_image(schema_image_object.uri)
+        .add_work(schema_creative_work.uri)
         .set_description(schema_text_object)
         .build()
     )
@@ -44,7 +44,7 @@ def schema_creative_work(schema_image_object: SchemaImageObject) -> SchemaCreati
         SchemaCreativeWork.builder(
             name="Test work", uri=URIRef("http://example.com/work")
         )
-        .add_image(schema_image_object)
+        .add_image(schema_image_object.uri)
         .build()
     )
 
@@ -55,7 +55,7 @@ def schema_defined_term(schema_image_object: SchemaImageObject) -> SchemaDefined
         SchemaDefinedTerm.builder(
             name="Test defined term", uri=URIRef("http://example.com/definedTerm")
         )
-        .add_image(schema_image_object)
+        .add_image(schema_image_object.uri)
         .add_alternate_name("Test defined term alternate name")
         .add_type_uri(URIRef("http://example.com/type1"))
         .add_type_uri(URIRef("http://example.com/type2"))
@@ -72,12 +72,12 @@ def schema_image_object(
 ) -> SchemaImageObject:
     return (
         SchemaImageObject.builder(uri=URIRef("http://example.com/image"))
-        .add_creator(schema_person)
-        .add_contributor(schema_organization)
-        .add_license(CreativeCommonsLicenses.BY_4_0)
+        .add_creator(schema_person.uri)
+        .add_contributor(schema_organization.uri)
+        .add_license(CreativeCommonsLicenses.BY_4_0.uri)
         .add_rights_holder("Test rights holder")
-        .add_rights_statement(RightsStatementsDotOrgRightsStatements.InC)
-        .add_thumbnail(schema_thumbnail)
+        .add_rights_statement(RightsStatementsDotOrgRightsStatements.InC.uri)
+        .add_thumbnail(schema_thumbnail.uri)
         .set_copyable(False)
         .set_exact_dimensions(ImageDimensions(height=200, width=200))
         .set_encoding_format("image/jpeg")

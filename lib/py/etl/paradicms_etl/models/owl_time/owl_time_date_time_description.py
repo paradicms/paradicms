@@ -1,11 +1,12 @@
 import datetime
 from typing import Optional
 
-from rdflib import Literal, XSD, BNode, Graph, URIRef
+from rdflib import Literal, XSD, Graph, URIRef
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import TIME
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class OwlTimeDateTimeDescription(ResourceBackedModel, DateTimeDescription):
@@ -72,7 +73,7 @@ class OwlTimeDateTimeDescription(ResourceBackedModel, DateTimeDescription):
 
     @classmethod
     def builder(cls):
-        return cls.Builder(Graph().resource(BNode()))
+        return cls.Builder(Graph().resource(uuid_urn()))
 
     @classmethod
     def from_date(cls, date: datetime.date) -> "OwlTimeDateTimeDescription":

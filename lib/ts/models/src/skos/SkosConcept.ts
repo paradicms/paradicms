@@ -5,17 +5,13 @@ import {Memoize} from "typescript-memoize";
 import {Concept} from "../Concept";
 import {mapTermToString} from "@paradicms/rdf";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
-import {ResourceBackedNamedModel} from "../ResourceBackedNamedModel";
 import {mapTermToText} from "../mapTermToText";
 import {Text} from "../Text";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class SkosConcept
-  extends Mixin(
-    ResourceBackedNamedModel,
-    FoafImagesMixin,
-    SomeImageThumbnailMixin
-  )
+  extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
   implements Concept {
   @Memoize()
   get altLabels(): readonly Literal[] {

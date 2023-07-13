@@ -1,5 +1,4 @@
 import {Mixin} from "ts-mixer";
-import {SchemaNamedModel} from "./SchemaNamedModel";
 import {SchemaCreativeWorkMixin} from "./SchemaCreativeWorkMixin";
 import {Work} from "../Work";
 import {Memoize} from "typescript-memoize";
@@ -12,9 +11,10 @@ import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEven
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
 import {WorkAgentsMixin} from "../WorkAgentsMixin";
+import {SchemaModel} from "./SchemaModel";
 
 export class SchemaCreativeWork
-  extends Mixin(SchemaNamedModel, SchemaCreativeWorkMixin, WorkAgentsMixin, WorkDisplayDateMixin)
+  extends Mixin(SchemaModel, SchemaCreativeWorkMixin, WorkAgentsMixin, WorkDisplayDateMixin)
   implements Work {
   @Memoize()
   get events(): readonly WorkEventUnion[] {

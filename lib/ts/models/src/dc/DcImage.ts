@@ -8,11 +8,11 @@ import {ThumbnailSelector} from "../ThumbnailSelector";
 import {selectThumbnail} from "../selectThumbnail";
 import {mapTermToImage} from "../mapTermToImage";
 import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
-import {DcNamedModel} from "./DcNamedModel";
 import {DcRightsMixin} from "./DcRightsMixin";
 import log from "loglevel";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
-export class DcImage extends Mixin(DcNamedModel, DcRightsMixin)
+export class DcImage extends Mixin(ResourceBackedModel, DcRightsMixin)
   implements Image {
   @Memoize()
   get exactDimensions(): ImageDimensions | null {

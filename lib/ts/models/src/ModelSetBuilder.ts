@@ -277,11 +277,11 @@ export class ModelSetBuilder {
   }
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
-    if (model.identifiers.length === 0) {
-      return this;
-    }
     const tempStore = new Store();
     model.toRdf(tempStore);
+    if (tempStore.size === 0) {
+      return this;
+    }
     const tempStoreGraphs = tempStore.getGraphs(null, null, null);
     if (
       tempStoreGraphs.every(tempStoreGraph =>
@@ -290,7 +290,7 @@ export class ModelSetBuilder {
         )
       )
     ) {
-      // If the graphs in a model's RDF correspond to the model's identifierss, then add the model
+      // If the graphs in a model's RDF correspond to the model's identifiers, then add the model
       for (const quad of tempStore) {
         this.store.add(quad);
       }

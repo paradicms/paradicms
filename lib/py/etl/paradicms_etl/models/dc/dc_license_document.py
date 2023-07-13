@@ -1,10 +1,11 @@
 from typing import Optional
 
-from rdflib import DCTERMS, URIRef, Graph, BNode
+from rdflib import DCTERMS, URIRef, Graph
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.license import License
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class DcLicenseDocument(DcModel, License):
@@ -30,7 +31,7 @@ class DcLicenseDocument(DcModel, License):
 
     @classmethod
     def builder(cls, *, title: str, uri: Optional[URIRef] = None) -> Builder:
-        builder = cls.Builder(Graph().resource(uri if uri is not None else BNode()))
+        builder = cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
         builder.set_title(title)
         return builder
 

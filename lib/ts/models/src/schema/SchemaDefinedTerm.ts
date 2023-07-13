@@ -1,11 +1,11 @@
 import {Mixin} from "ts-mixer";
-import {SchemaNamedModel} from "./SchemaNamedModel";
 import {Concept} from "../Concept";
 import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 import {rdf, schema} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
+import {SchemaModel} from "./SchemaModel";
 
-export class SchemaDefinedTerm extends Mixin(SchemaNamedModel)
+export class SchemaDefinedTerm extends Mixin(SchemaModel)
   implements Concept {
   @Memoize()
   get altLabels(): readonly Literal[] {
