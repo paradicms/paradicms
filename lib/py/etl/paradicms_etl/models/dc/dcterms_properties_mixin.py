@@ -1,4 +1,4 @@
-from typing import Union, Any, Tuple
+from typing import Union, Tuple
 
 from rdflib import DCTERMS, URIRef, XSD, OWL
 
@@ -15,15 +15,19 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             self.add(DCTERMS.alternative, alternative)
             return self
 
-        def add_contributor(self, contributor: Any) -> "DctermsPropertiesMixin.Builder":
+        def add_contributor(
+            self, contributor: Union[str, URIRef]
+        ) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.contributor, contributor)
             return self
 
-        def add_creator(self, creator: Any) -> "DctermsPropertiesMixin.Builder":
+        def add_creator(
+            self, creator: Union[str, URIRef]
+        ) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.creator, creator)
             return self
 
-        def add_part(self, part: Any) -> "DctermsPropertiesMixin.Builder":
+        def add_part(self, part: URIRef) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.hasPart, part)
             return self
 
@@ -31,8 +35,10 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             self.add(DCTERMS.identifier, identifier)
             return self
 
-        def add_license(self, license: Any) -> "DctermsPropertiesMixin.Builder":
-            self.add(DCTERMS.license, license)
+        def add_license(
+            self, license_: Union[str, URIRef]
+        ) -> "DctermsPropertiesMixin.Builder":
+            self.add(DCTERMS.license, license_)
             return self
 
         def add_provenance(self, provenance: str) -> "DctermsPropertiesMixin.Builder":
@@ -43,12 +49,14 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             self.add(DCTERMS.relation, relation)
             return self
 
-        def add_rights_holder(self, holder: Any) -> "DctermsPropertiesMixin.Builder":
+        def add_rights_holder(
+            self, holder: Union[str, URIRef]
+        ) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.rightsHolder, holder)
             return self
 
         def add_rights_statement(
-            self, rights_statement: Any
+            self, rights_statement: Union[str, URIRef]
         ) -> "DctermsPropertiesMixin.Builder":
             self.add(DCTERMS.rights, rights_statement)
             return self
@@ -98,7 +106,7 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
             return self
 
         def set_spatial(
-            self, spatial: Union[str, URIRef]
+            self, spatial: Union[str, Location, URIRef]
         ) -> "DctermsPropertiesMixin.Builder":
             self.set(DCTERMS.spatial, spatial)
             return self

@@ -1,4 +1,3 @@
-import logging
 from abc import abstractmethod
 from typing import Generator, Tuple, Union, TypeVar, Any, Callable
 from typing import Optional
@@ -30,10 +29,13 @@ class ResourceBackedModel(Model):
                 pass
             elif isinstance(o, Model):
                 if not str(o.uri).lower().startswith("urn:uuid:"):
-                    logging.getLogger(__name__).warning(
-                        "adding non-urn:uuid model %s to model %s's graph",
-                        o.uri,
-                        self.__resource.identifier,
+                    # logging.getLogger(__name__).warning(
+                    #     "adding non-urn:uuid model %s to model %s's graph",
+                    #     o.uri,
+                    #     self.__resource.identifier,
+                    # )
+                    raise ValueError(
+                        f"adding non-urn:uuid model {o.uri} to {self.__resource.identifier}'s graph"
                     )
                 self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node):

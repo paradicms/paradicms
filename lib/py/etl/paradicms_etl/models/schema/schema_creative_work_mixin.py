@@ -1,9 +1,9 @@
-from datetime import datetime, date
-from typing import Any, Union, Tuple
+from typing import Union, Tuple
 
 from rdflib import SDO, URIRef, XSD
 
-from paradicms_etl.models.date_time_description import DateTimeDescription
+from paradicms_etl.models.date_time_union import DateTimeUnion
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_thing_mixin import SchemaThingMixin
 
@@ -19,42 +19,48 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
 
     class Builder(SchemaThingMixin.Builder, RightsMixin.Builder):
         def add_contributor(
-            self, contributor: Any
+            self, contributor: Union[str, URIRef]
         ) -> "SchemaCreativeWorkMixin.Builder":
             self.add(SDO.contributor, contributor)
             return self
 
-        def add_creator(self, creator: Any) -> "SchemaCreativeWorkMixin.Builder":
+        def add_creator(
+            self, creator: Union[str, URIRef]
+        ) -> "SchemaCreativeWorkMixin.Builder":
             self.add(SDO.creator, creator)
             return self
 
-        def add_license(self, license: Any) -> "SchemaCreativeWorkMixin.Builder":
+        def add_license(
+            self, license: Union[str, URIRef]
+        ) -> "SchemaCreativeWorkMixin.Builder":
             self.add(SDO.license, license)
             return self
 
-        def add_rights_holder(self, holder: Any) -> "SchemaCreativeWorkMixin.Builder":
+        def add_rights_holder(
+            self, holder: Union[str, URIRef]
+        ) -> "SchemaCreativeWorkMixin.Builder":
             self.add(SDO.copyrightHolder, holder)
             return self
 
         def add_rights_statement(
-            self, statement: Any
+            self, statement: Union[str, URIRef]
         ) -> "SchemaCreativeWorkMixin.Builder":
             # schema:usageInfo is not a great fit
             self.add(SDO.usageInfo, statement)
             return self
 
-        def add_spatial(self, spatial: Any):
+        def add_spatial(self, spatial: Union[str, Location, URIRef]):
             self.add(SDO.spatial, spatial)
             return self
 
         def set_date_created(
-            self, date_created: Union[date, datetime, DateTimeDescription]
+            self, date_created: DateTimeUnion
         ) -> "SchemaCreativeWorkMixin.Builder":
             self.set(SDO.dateCreated, date_created)
             return self
 
         def set_date_modified(
-            self, date_modified: Union[date, datetime, DateTimeDescription]
+            self, date_modified: DateTimeUnion
         ) -> "SchemaCreativeWorkMixin.Builder":
             self.set(SDO.dateModified, date_modified)
             return self

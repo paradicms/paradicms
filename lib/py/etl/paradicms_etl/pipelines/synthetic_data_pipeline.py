@@ -296,10 +296,10 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_exact_dimensions = ImageDimensions(
                     height=1000, width=1000
                 )
-                original_image_license = CreativeCommonsLicenses.NC_1_0.uri
+                original_image_license = CreativeCommonsLicenses.NC_1_0
                 original_image_rights_holder = f"{original_image_title} rights holder"
                 original_image_rights_statement = (
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                    RightsStatementsDotOrgRightsStatements.InC_EDU
                 )
                 original_image_src = "https://paradicms.org/img/synthetic/1000x1000.png"
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
@@ -318,8 +318,8 @@ class SyntheticDataPipeline(Pipeline):
                     )
                     original_image_builder.add_rights_holder(
                         original_image_rights_holder
-                    ).add_license(original_image_license).add_rights_statement(
-                        original_image_rights_statement
+                    ).add_license(original_image_license.uri).add_rights_statement(
+                        original_image_rights_statement.uri
                     )
                 else:
                     original_image_builder = (
@@ -332,8 +332,8 @@ class SyntheticDataPipeline(Pipeline):
                     )
                     original_image_builder.add_rights_holder(
                         original_image_rights_holder
-                    ).add_license(original_image_license).add_rights_statement(
-                        original_image_rights_statement
+                    ).add_license(original_image_license.uri).add_rights_statement(
+                        original_image_rights_statement.uri
                     )
 
                 for thumbnail_dimensions in (
@@ -494,7 +494,7 @@ class SyntheticDataPipeline(Pipeline):
                     yield image
                     if image.thumbnail_uris:
                         # Only add original images
-                        exhibition_event_builder.add_image(image)
+                        exhibition_event_builder.add_image(image.uri)
 
                 yield exhibition_event_builder.build()
 
@@ -512,7 +512,7 @@ class SyntheticDataPipeline(Pipeline):
                 yield image
                 if image.thumbnail_uris:
                     # Only add original images
-                    property_group_builder.add_image(image)
+                    property_group_builder.add_image(image.uri)
 
             for property_ in self.__PROPERTIES:
                 property_model_builder: Union[
@@ -539,11 +539,11 @@ class SyntheticDataPipeline(Pipeline):
                     yield image
                     if image.thumbnail_uris:
                         # Only add original images
-                        property_model_builder.add_image(image)
+                        property_model_builder.add_image(image.uri)
 
                 property_model = property_model_builder.build()
                 yield property_model
-                property_group_builder.add_property(property_model)
+                property_group_builder.add_property(property_model.uri)
 
             yield property_group_builder.build()
 
@@ -569,11 +569,11 @@ class SyntheticDataPipeline(Pipeline):
                 f"{work_title} alternative title {i}" for i in range(2)
             ]
             work_identifiers = [f"{work_title}Id{i}" for i in range(2)]
-            work_license = CreativeCommonsLicenses.NC_1_0.uri
+            work_license = CreativeCommonsLicenses.NC_1_0
             work_page = URIRef("http://example.com/work/" + str(work_i))
             work_provenance = f"{work_title} provenance"
             work_rights_holder = f"{work_title} rights holder"
-            work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+            work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU
 
             work_builder: Union[DcPhysicalObject.Builder, SchemaCreativeWork.Builder]
             if work_i % 2 == 0:
@@ -610,9 +610,9 @@ class SyntheticDataPipeline(Pipeline):
                     if str(property_.uri).startswith(str(SDO))
                 )
 
-            work_builder.add_license(work_license)
+            work_builder.add_license(work_license.uri)
             work_builder.add_rights_holder(work_rights_holder)
-            work_builder.add_rights_statement(work_rights_statement)
+            work_builder.add_rights_statement(work_rights_statement.uri)
 
             # Faceted literal properties, which are the same across works
             for property_ in properties:
@@ -674,7 +674,7 @@ class SyntheticDataPipeline(Pipeline):
                 #     )
                 # named_location = named_location_builder.build()
                 yield named_location
-                work_builder.add_spatial(named_location)
+                work_builder.add_spatial(named_location.uri)
 
             description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
             if isinstance(work_builder, DcPhysicalObject.Builder):

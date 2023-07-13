@@ -379,7 +379,7 @@ class CostumeCoreOntologyAirtableTransformer:
             image_records=feature_image_records,
         ):
             yield image
-            property_builder.add_image(image)
+            property_builder.add_image(image.uri)
 
         feature_description = self.__transform_description_fields_to_text(
             record_fields=fields,
@@ -429,10 +429,10 @@ class CostumeCoreOntologyAirtableTransformer:
             ),
         ):
             yield image
-            property_group_builder.add_image(image)
+            property_group_builder.add_image(image.uri)
 
         for property_ in feature_set_properties:
-            property_group_builder.add_property(property_)
+            property_group_builder.add_property(property_.uri)
 
         yield property_group_builder.build()
 
