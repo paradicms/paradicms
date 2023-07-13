@@ -32,7 +32,6 @@ import log from "loglevel";
 import {ImageJoinSelector} from "./ImageJoinSelector";
 import {ThumbnailMixin} from "./ThumbnailMixin";
 import {Event} from "./Event";
-import invariant from "ts-invariant";
 
 /**
  * Build a ModelSet by adding models to it.
@@ -278,9 +277,11 @@ export class ModelSetBuilder {
   }
 
   private addModel<ModelT extends Model>(model: ModelT): ModelSetBuilder {
-    invariant(model.identifiers.length > 0);
     const tempStore = new Store();
     model.toRdf(tempStore);
+    if (tempStore.size === 0) {
+      return this;
+    }
     const tempStoreGraphs = tempStore.getGraphs(null, null, null);
     if (
       tempStoreGraphs.every(tempStoreGraph =>
