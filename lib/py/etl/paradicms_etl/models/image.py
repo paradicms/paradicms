@@ -19,6 +19,19 @@ class Image(Model, RightsMixin):
         def build(self) -> "Image":
             raise NotImplementedError
 
+        def copy_rights(self, other: "Image") -> "Image.Builder":
+            for contributor in other.contributors:
+                self.add_contributor(contributor)
+            for creator in other.creators:
+                self.add_creator(creator)
+            for license_ in other.licenses:
+                self.add_license(license_)
+            for rights_holder in other.rights_holders:
+                self.add_rights_holder(rights_holder)
+            for rights_statement in other.rights_statements:
+                self.add_rights_statement(rights_statement)
+            return self
+
         @abstractmethod
         def set_copyable(self, copyable: bool) -> "Image.Builder":
             """

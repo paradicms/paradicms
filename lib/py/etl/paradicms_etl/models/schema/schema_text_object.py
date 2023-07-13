@@ -3,7 +3,6 @@ from typing import Optional
 from rdflib import Graph, SDO
 from rdflib.resource import Resource
 
-from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_media_object_mixin import (
     SchemaMediaObjectMixin,
 )
@@ -24,10 +23,6 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
     class Builder(SchemaModel.Builder, SchemaMediaObjectMixin.Builder, Text.Builder):
         def build(self) -> "SchemaTextObject":
             return SchemaTextObject(self._resource)
-
-        def copy_rights(self, other: RightsMixin) -> "SchemaTextObject.Builder":
-            SchemaMediaObjectMixin.Builder.copy_rights(self, other)
-            return self
 
     def __init__(self, resource: Resource):
         SchemaModel.__init__(self, resource)

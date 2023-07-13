@@ -37,19 +37,6 @@ class RightsMixin(ABC):
         ) -> "RightsMixin.Builder":
             raise NotImplementedError
 
-        def copy_rights(self, other: "RightsMixin") -> "RightsMixin.Builder":
-            for contributor in other.contributors:
-                self.add_contributor(contributor)
-            for creator in other.creators:
-                self.add_creator(creator)
-            for license_ in other.licenses:
-                self.add_license(license_)
-            for rights_holder in other.rights_holders:
-                self.add_rights_holder(rights_holder)
-            for rights_statement in other.rights_statements:
-                self.add_rights_statement(rights_statement)
-            return self
-
     @property
     @abstractmethod
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:

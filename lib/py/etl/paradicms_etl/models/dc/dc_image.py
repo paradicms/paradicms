@@ -8,7 +8,6 @@ from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.clone_graph import clone_graph
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
@@ -35,8 +34,8 @@ class DcImage(DcModel, Image):
         def build(self) -> "DcImage":
             return DcImage(self._resource)
 
-        def copy_rights(self, other: RightsMixin) -> "DcImage.Builder":
-            RightsMixin.Builder.copy_rights(self, other)
+        def copy_rights(self, other: Image) -> "DcImage.Builder":
+            Image.Builder.copy_rights(self, other)
             return self
 
         def set_copyable(self, copyable: bool) -> "DcImage.Builder":
