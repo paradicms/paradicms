@@ -9,11 +9,13 @@ from paradicms_etl.models.linked_art.linked_art_human_made_object import (
 
 
 @pytest.fixture(scope="session")
-def linked_art_human_made_object() -> LinkedArtHumanMadeObject:
+def getty_linked_art_human_made_object() -> LinkedArtHumanMadeObject:
     return LinkedArtHumanMadeObject.from_rdf(
         Graph()
         .parse(
-            source=str(Path(__file__).parent / "linked_art_human_made_object.jsonld"),
+            source=str(
+                Path(__file__).parent / "getty_linked_art_human_made_object.jsonld"
+            ),
             format="json-ld",
         )
         .resource(
