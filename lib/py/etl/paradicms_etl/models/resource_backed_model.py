@@ -88,54 +88,54 @@ class ResourceBackedModel(Model):
         return cls(clone_graph(resource.graph).resource(resource.identifier))
 
     @staticmethod
-    def _map_term_to_bool(value: _StatementObject) -> Optional[bool]:
-        if isinstance(value, Literal):
-            py_value = value.toPython()
+    def _map_term_to_bool(term: _StatementObject) -> Optional[bool]:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
             if isinstance(py_value, bool):
                 return py_value
         return None
 
     @staticmethod
-    def _map_term_to_bytes(value: _StatementObject) -> Optional[bytes]:
-        if isinstance(value, Literal):
-            py_value = value.toPython()
+    def _map_term_to_bytes(term: _StatementObject) -> Optional[bytes]:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
             if isinstance(py_value, bytes):
                 return py_value
         return None
 
     @staticmethod
     def _map_term_to_image_data_or_str_or_uri(
-        value: _StatementObject,
+        term: _StatementObject,
     ) -> Union[ImageData, str, URIRef, None]:
-        if isinstance(value, Literal):
-            py_value = value.toPython()
+        if isinstance(term, Literal):
+            py_value = term.toPython()
             if isinstance(py_value, str):
                 return py_value
-        elif isinstance(value, Resource):
+        elif isinstance(term, Resource):
             from paradicms_etl.models.cms.cms_image_data import CmsImageData
 
-            model = ResourceBackedModel._map_term_to_model(CmsImageData, value)
+            model = ResourceBackedModel._map_term_to_model(CmsImageData, term)
             if model is not None:
                 return model
             else:
-                assert isinstance(value.identifier, URIRef)
-                return value.identifier
+                assert isinstance(term.identifier, URIRef)
+                return term.identifier
         return None
 
     @staticmethod
-    def _map_term_to_literal(value: _StatementObject) -> Any:
-        if isinstance(value, Literal):
-            return value.toPython()
+    def _map_term_to_literal(term: _StatementObject) -> Any:
+        if isinstance(term, Literal):
+            return term.toPython()
         return None
 
     @staticmethod
     def _map_term_to_model(
-        model_class: Type[_ModelT], value: _StatementObject
+        model_class: Type[_ModelT], term: _StatementObject
     ) -> Optional[_ModelT]:
-        if not isinstance(value, Resource):
+        if not isinstance(term, Resource):
             return None
-        resource: Resource = value
-        value_type = resource.value(RDF.type)
+        resource: Resource = term
+        value_type = resource.term(RDF.type)
         if not isinstance(value_type, Resource):
             return None
         if value_type.identifier == model_class.rdf_type_uri():
@@ -144,26 +144,26 @@ class ResourceBackedModel(Model):
             return None
 
     @staticmethod
-    def _map_term_to_str(value: _StatementObject) -> Optional[str]:
-        if isinstance(value, Literal):
-            py_value = value.toPython()
+    def _map_term_to_str(term: _StatementObject) -> Optional[str]:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
             if isinstance(py_value, str):
                 return py_value
         return None
 
     @staticmethod
     def _map_term_to_str_or_text(
-        value: _StatementObject,
+        term: _StatementObject,
     ) -> Union[str, "Text", None]:  # type: ignore # noqa
-        if isinstance(value, Literal):
-            literal: Literal = value
+        if isinstance(term, Literal):
+            literal: Literal = term
             py_value = literal.toPython()
             if isinstance(py_value, str):
                 return py_value
         else:
             from paradicms_etl.models.dc.dc_text import DcText
 
-            dc_text = ResourceBackedModel._map_term_to_model(DcText, value)
+            dc_text = ResourceBackedModel._map_term_to_model(DcText, term)
             if dc_text is not None:
                 return dc_text
 
@@ -172,7 +172,7 @@ class ResourceBackedModel(Model):
             )
 
             schema_text_object = ResourceBackedModel._map_term_to_model(
-                SchemaTextObject, value
+                SchemaTextObject, term
             )
             if schema_text_object is not None:
                 return schema_text_object
@@ -180,21 +180,21 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_term_to_str_or_uri(value: _StatementObject) -> Union[str, URIRef, None]:
-        if isinstance(value, Literal):
-            py_value = value.toPython()
+    def _map_term_to_str_or_uri(term: _StatementObject) -> Union[str, URIRef, None]:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
             if isinstance(py_value, str):
                 return py_value
-        elif isinstance(value, Resource):
-            if isinstance(value.identifier, URIRef):
-                return value.identifier
+        elif isinstance(term, Resource):
+            if isinstance(term.identifier, URIRef):
+                return term.identifier
         return None
 
     @staticmethod
-    def _map_term_to_uri(value: _StatementObject) -> Optional[URIRef]:
-        if isinstance(value, Resource):
-            if isinstance(value.identifier, URIRef):
-                return value.identifier
+    def _map_term_to_uri(term: _StatementObject) -> Optional[URIRef]:
+        if isinstance(term, Resource):
+            if isinstance(term.identifier, URIRef):
+                return term.identifier
         return None
 
     def _optional_value(
