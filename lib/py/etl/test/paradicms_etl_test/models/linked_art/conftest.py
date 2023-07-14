@@ -8,7 +8,7 @@ from paradicms_etl.models.linked_art.linked_art_human_made_object import (
 )
 
 
-@pytest.fixture
+@pytest.fixture(scope="session")
 def linked_art_human_made_object() -> LinkedArtHumanMadeObject:
     return LinkedArtHumanMadeObject.from_rdf(
         Graph()
