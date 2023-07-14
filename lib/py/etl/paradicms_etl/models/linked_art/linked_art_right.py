@@ -15,7 +15,7 @@ class LinkedArtRight(LinkedArtModel):
 
         return tuple(
             self._values(
-                CRM["P129i_is_subject_of"],
+                CRM.P129i_is_subject_of,
                 LinkedArtModel._map_linked_art_linguistic_object_value,
             )
         )
@@ -26,8 +26,8 @@ class LinkedArtRight(LinkedArtModel):
         P2_has_type returns e.g., the creativecommons.org license URI
         """
 
-        return self._required_value(CRM["P2_has_type"], self._map_uri_value)
+        return self._required_value(CRM.P2_has_type, self._map_uri_value)
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
-        return CRM["E30_Right"]
+        return CRM.E30_Right

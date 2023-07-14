@@ -38,7 +38,7 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
 
     @property
     def __p104_is_subject_to(self) -> Iterable[LinkedArtRight]:
-        return self._values(CRM["P104_is_subject_to"], self._map_linked_art_right_value)
+        return self._values(CRM.P104_is_subject_to, self._map_linked_art_right_value)
 
     @property
     def p2_has_type(self) -> Tuple[URIRef, ...]:
@@ -46,13 +46,11 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
         P2_has_type returns e.g., http://vocab.getty.edu/aat/300080091 for an "Object Description".
         """
 
-        return tuple(self._values(CRM["P2_has_type"], self._map_uri_value))
+        return tuple(self._values(CRM.P2_has_type, self._map_uri_value))
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
-        return CRM["E33_Linguistic_Object"]
+        return CRM.E33_Linguistic_Object
 
     def value(self) -> str:
-        return self._required_value(
-            CRM["P190_has_symbolic_content"], self._map_str_value
-        )
+        return self._required_value(CRM.P190_has_symbolic_content, self._map_str_value)

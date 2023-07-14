@@ -40,5 +40,5 @@ class LinkedArtModel(ResourceBackedModel):
         for value in self._values("P67i_is_referred_to_by"):
             if not isinstance(value, Resource):
                 continue
-
-        return CRM()
+            if p2_has_type is not None:
+                value_p2_has_type = value.value("")
