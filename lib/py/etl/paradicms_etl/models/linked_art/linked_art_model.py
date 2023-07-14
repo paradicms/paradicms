@@ -38,7 +38,7 @@ class LinkedArtModel(ResourceBackedModel):
     @staticmethod
     def _map_term_to_linked_art_visual_item(
         term: _StatementObject,
-    ) -> Optional["LinkedArtRight"]:  # type: ignore
+    ) -> Optional["LinkedArtVisualItem"]:  # type: ignore
         from paradicms_etl.models.linked_art.linked_art_visual_item import (
             LinkedArtVisualItem,
         )
@@ -48,18 +48,27 @@ class LinkedArtModel(ResourceBackedModel):
     def _p67i_is_referred_to_by(
         self, *, p2_has_type: Optional[URIRef] = None
     ) -> Iterable[Resource]:
+        term: _StatementObject
         for term in self._values(CRM.P67i_is_referred_to_by):
             if not isinstance(term, Resource):
                 continue
+            resource: Resource = term
 
             if p2_has_type is None:
-                yield term
+                yield resource
                 continue
 
-            for value_p2_has_type in term.objects(CRM.P2_has_type):
+            for value_p2_has_type in resource.objects(CRM.P2_has_type):
                 if (
                     isinstance(value_p2_has_type, Resource)
                     and value_p2_has_type.identifier == p2_has_type
                 ):
-                    yield term
+                    yield resource
                     break
+
+    @property
+    def _p138i_has_representation(self) -> Iterable["LinkedArtVisualItem"]:  # type: ignore
+        return self._values(
+            CRM.P138i_has_representation,
+            LinkedArtModel._map_term_to_linked_art_visual_item,
+        )

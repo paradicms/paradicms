@@ -135,7 +135,7 @@ class ResourceBackedModel(Model):
         if not isinstance(term, Resource):
             return None
         resource: Resource = term
-        value_type = resource.term(RDF.type)
+        value_type = resource.value(RDF.type)
         if not isinstance(value_type, Resource):
             return None
         if value_type.identifier == model_class.rdf_type_uri():

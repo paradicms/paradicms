@@ -6,7 +6,11 @@ def test_label(getty_linked_art_human_made_object):
 
 
 def test_image_uris(getty_linked_art_human_made_object):
-    assert getty_linked_art_human_made_object.image_uris == (URIRef(""),)
+    assert getty_linked_art_human_made_object.image_uris == (
+        URIRef(
+            "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg"
+        ),
+    )
 
 
 def test_licenses(getty_linked_art_human_made_object):

@@ -71,7 +71,7 @@ class GettyEnricher:
             )
             return graph.resource(getty_entity_uri)
 
-    def _get_getty_object_entity(self, getty_entity_uri: URIRef) -> Model:
+    def _get_getty_object_entity(self, getty_entity_uri: URIRef) -> Iterable[Model]:
         resource = self.__get_getty_entity_resource(getty_entity_uri)
         rdf_type = resource.value(RDF.type)
         if rdf_type.identifier == LinkedArtHumanMadeObject.rdf_type_uri():

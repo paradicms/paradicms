@@ -61,7 +61,7 @@ class LinkedArtHumanMadeObject(LinkedArtModel, Work):
 
     @property
     def image_uris(self) -> Tuple[URIRef, ...]:
-        return ()
+        return tuple(visual_item.uri for visual_item in self._p138i_has_representation)
 
     @property
     def licenses(self) -> Tuple[Union[str, URIRef], ...]:
