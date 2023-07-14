@@ -1,17 +1,17 @@
 from abc import abstractmethod
-from typing import Generator, Tuple, Union, TypeVar, Any, Callable
+from typing import Generator, Tuple, Union, TypeVar, Any, Callable, Type
 from typing import Optional
 
-from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, SDO, OWL, DCMITYPE
+from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, OWL
 from rdflib import Graph
 from rdflib.resource import Resource
 from rdflib.term import Node
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.image_data import ImageData
-from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.clone_graph import clone_graph
 
+_ModelT = TypeVar("_ModelT", bound=Model)
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
 _StatementObject = Union[Literal, Resource]
 _ValueT = TypeVar("_ValueT")
@@ -112,17 +112,11 @@ class ResourceBackedModel(Model):
             if isinstance(py_value, str):
                 return py_value
         elif isinstance(value, Resource):
-            value_type = value.value(RDF.type)
-            if isinstance(value_type, Resource):
-                assert isinstance(value.identifier, URIRef)
-                if value_type.identifier == CMS.ImageData:
-                    from paradicms_etl.models.cms.cms_image_data import CmsImageData
+            from paradicms_etl.models.cms.cms_image_data import CmsImageData
 
-                    return CmsImageData(value)
-                else:
-                    raise ValueError(
-                        f"unknown ImageData rdf:type: {value_type.identifier}"
-                    )
+            model = ResourceBackedModel._map_model_value(CmsImageData, value)
+            if model is not None:
+                return model
             else:
                 assert isinstance(value.identifier, URIRef)
                 return value.identifier
@@ -133,6 +127,21 @@ class ResourceBackedModel(Model):
         if isinstance(value, Literal):
             return value.toPython()
         return None
+
+    @staticmethod
+    def _map_model_value(
+        model_class: Type[_ModelT], value: _StatementObject
+    ) -> Optional[_ModelT]:
+        if not isinstance(value, Resource):
+            return None
+        resource: Resource = value
+        value_type = resource.value(RDF.type)
+        if not isinstance(value_type, Resource):
+            return None
+        if value_type.identifier == model_class.rdf_type_uri():
+            return model_class.from_rdf(resource)
+        else:
+            return None
 
     @staticmethod
     def _map_str_value(value: _StatementObject) -> Optional[str]:
@@ -151,20 +160,22 @@ class ResourceBackedModel(Model):
             py_value = literal.toPython()
             if isinstance(py_value, str):
                 return py_value
-        elif isinstance(value, Resource):
-            resource: Resource = value
-            value_type = resource.value(RDF.type)
-            if isinstance(value_type, Resource):
-                if value_type.identifier == DCMITYPE.Text:
-                    from paradicms_etl.models.dc.dc_text import DcText
+        else:
+            from paradicms_etl.models.dc.dc_text import DcText
 
-                    return DcText(value)
-                elif value_type.identifier == SDO.TextObject:
-                    from paradicms_etl.models.schema.schema_text_object import (
-                        SchemaTextObject,
-                    )
+            dc_text = ResourceBackedModel._map_model_value(DcText, value)
+            if dc_text is not None:
+                return dc_text
 
-                    return SchemaTextObject(value)
+            from paradicms_etl.models.schema.schema_text_object import (
+                SchemaTextObject,
+            )
+
+            schema_text_object = ResourceBackedModel._map_model_value(
+                SchemaTextObject, value
+            )
+            if schema_text_object is not None:
+                return schema_text_object
 
         return None
 
