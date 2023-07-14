@@ -52,5 +52,6 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
     def rdf_type_uri(cls) -> URIRef:
         return CRM.E33_Linguistic_Object
 
+    @property
     def value(self) -> str:
         return self._required_value(CRM.P190_has_symbolic_content, self._map_str_value)

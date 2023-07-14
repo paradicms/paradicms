@@ -10,6 +10,7 @@ class CRM(DefinedNamespace):
     P2_has_type: URIRef
     P104_is_subject_to: URIRef
     P129i_is_subject_of: URIRef
+    P67i_is_referred_to_by: URIRef
     P190_has_symbolic_content: URIRef
 
     # Resources
