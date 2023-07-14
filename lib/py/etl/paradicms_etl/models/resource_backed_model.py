@@ -76,7 +76,7 @@ class ResourceBackedModel(Model):
         label_property_uri = self.label_property_uri()
         if label_property_uri is None:
             return None
-        return self._optional_value(label_property_uri, self._map_str_value)
+        return self._optional_value(label_property_uri, self._map_term_to_str)
 
     @classmethod
     @abstractmethod
@@ -88,7 +88,7 @@ class ResourceBackedModel(Model):
         return cls(clone_graph(resource.graph).resource(resource.identifier))
 
     @staticmethod
-    def _map_bool_value(value: _StatementObject) -> Optional[bool]:
+    def _map_term_to_bool(value: _StatementObject) -> Optional[bool]:
         if isinstance(value, Literal):
             py_value = value.toPython()
             if isinstance(py_value, bool):
@@ -96,7 +96,7 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_bytes_value(value: _StatementObject) -> Optional[bytes]:
+    def _map_term_to_bytes(value: _StatementObject) -> Optional[bytes]:
         if isinstance(value, Literal):
             py_value = value.toPython()
             if isinstance(py_value, bytes):
@@ -104,7 +104,7 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_image_data_or_str_or_uri_value(
+    def _map_term_to_image_data_or_str_or_uri(
         value: _StatementObject,
     ) -> Union[ImageData, str, URIRef, None]:
         if isinstance(value, Literal):
@@ -114,7 +114,7 @@ class ResourceBackedModel(Model):
         elif isinstance(value, Resource):
             from paradicms_etl.models.cms.cms_image_data import CmsImageData
 
-            model = ResourceBackedModel._map_model_value(CmsImageData, value)
+            model = ResourceBackedModel._map_term_to_model(CmsImageData, value)
             if model is not None:
                 return model
             else:
@@ -123,13 +123,13 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_literal_value(value: _StatementObject) -> Any:
+    def _map_term_to_literal(value: _StatementObject) -> Any:
         if isinstance(value, Literal):
             return value.toPython()
         return None
 
     @staticmethod
-    def _map_model_value(
+    def _map_term_to_model(
         model_class: Type[_ModelT], value: _StatementObject
     ) -> Optional[_ModelT]:
         if not isinstance(value, Resource):
@@ -144,7 +144,7 @@ class ResourceBackedModel(Model):
             return None
 
     @staticmethod
-    def _map_str_value(value: _StatementObject) -> Optional[str]:
+    def _map_term_to_str(value: _StatementObject) -> Optional[str]:
         if isinstance(value, Literal):
             py_value = value.toPython()
             if isinstance(py_value, str):
@@ -152,7 +152,7 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_str_or_text_value(
+    def _map_term_to_str_or_text(
         value: _StatementObject,
     ) -> Union[str, "Text", None]:  # type: ignore # noqa
         if isinstance(value, Literal):
@@ -163,7 +163,7 @@ class ResourceBackedModel(Model):
         else:
             from paradicms_etl.models.dc.dc_text import DcText
 
-            dc_text = ResourceBackedModel._map_model_value(DcText, value)
+            dc_text = ResourceBackedModel._map_term_to_model(DcText, value)
             if dc_text is not None:
                 return dc_text
 
@@ -171,7 +171,7 @@ class ResourceBackedModel(Model):
                 SchemaTextObject,
             )
 
-            schema_text_object = ResourceBackedModel._map_model_value(
+            schema_text_object = ResourceBackedModel._map_term_to_model(
                 SchemaTextObject, value
             )
             if schema_text_object is not None:
@@ -180,7 +180,7 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_str_or_uri_value(value: _StatementObject) -> Union[str, URIRef, None]:
+    def _map_term_to_str_or_uri(value: _StatementObject) -> Union[str, URIRef, None]:
         if isinstance(value, Literal):
             py_value = value.toPython()
             if isinstance(py_value, str):
@@ -191,7 +191,7 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_uri_value(value: _StatementObject) -> Optional[URIRef]:
+    def _map_term_to_uri(value: _StatementObject) -> Optional[URIRef]:
         if isinstance(value, Resource):
             if isinstance(value.identifier, URIRef):
                 return value.identifier
@@ -215,7 +215,7 @@ class ResourceBackedModel(Model):
             raise NotImplementedError(
                 self.__class__.__name__ + ": must implement label_property_uri"
             )
-        return self._required_value(label_property_uri, self._map_str_value)
+        return self._required_value(label_property_uri, self._map_term_to_str)
 
     def _required_value(
         self,
@@ -234,7 +234,7 @@ class ResourceBackedModel(Model):
 
     @property
     def same_as_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(OWL.sameAs, self._map_uri_value))
+        return tuple(self._values(OWL.sameAs, self._map_term_to_uri))
 
     def to_rdf(self, graph: Graph) -> Resource:
         if isinstance(graph, ConjunctiveGraph):

@@ -14,7 +14,7 @@ class FoafImagesMixin(ResourceBackedModelMixin, ImagesMixin):
 
     @property
     def image_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(FOAF.depiction, self._map_uri_value))
+        return tuple(self._values(FOAF.depiction, self._map_term_to_uri))
 
     @classmethod
     def json_ld_context(cls):

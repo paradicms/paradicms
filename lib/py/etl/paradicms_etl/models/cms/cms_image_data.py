@@ -24,7 +24,7 @@ class CmsImageData(CmsModel, ImageData):
 
     @property
     def _format(self) -> str:
-        return self._required_value(DCTERMS.format, self._map_str_value)
+        return self._required_value(DCTERMS.format, self._map_term_to_str)
 
     @classmethod
     def from_pil_image(cls, pil_image: Image):
@@ -60,4 +60,4 @@ class CmsImageData(CmsModel, ImageData):
 
     @property
     def _value(self) -> bytes:
-        return self._required_value(RDF.value, self._map_bytes_value)
+        return self._required_value(RDF.value, self._map_term_to_bytes)

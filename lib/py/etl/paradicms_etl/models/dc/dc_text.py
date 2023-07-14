@@ -37,4 +37,4 @@ class DcText(DcModel, Text):
 
     @property
     def value(self) -> str:
-        return self._required_value(RDF.value, self._map_str_value)
+        return self._required_value(RDF.value, self._map_term_to_str)

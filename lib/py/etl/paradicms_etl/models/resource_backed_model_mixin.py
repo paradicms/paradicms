@@ -29,29 +29,29 @@ class ResourceBackedModelMixin(ABC):
 
     @staticmethod
     @abstractmethod
-    def _map_image_data_or_str_or_uri_value(
+    def _map_term_to_image_data_or_str_or_uri(
         value: _StatementObject,
     ) -> Union[ImageData, str, URIRef, None]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_str_or_uri_value(value: _StatementObject) -> Union[str, URIRef, None]:
+    def _map_term_to_str_or_uri(value: _StatementObject) -> Union[str, URIRef, None]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_str_or_text_value(value: _StatementObject) -> Union[str, Text, None]:
+    def _map_term_to_str_or_text(value: _StatementObject) -> Union[str, Text, None]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_str_value(value: _StatementObject) -> Optional[str]:
+    def _map_term_to_str(value: _StatementObject) -> Optional[str]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_uri_value(value: _StatementObject) -> Optional[URIRef]:
+    def _map_term_to_uri(value: _StatementObject) -> Optional[URIRef]:
         raise NotImplementedError
 
     @staticmethod

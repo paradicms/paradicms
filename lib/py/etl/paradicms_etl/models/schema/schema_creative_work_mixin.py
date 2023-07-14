@@ -67,11 +67,11 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
 
     @property
     def contributors(self) -> Tuple[Union[str, URIRef], ...]:
-        return tuple(self._values(SDO.contributor, self._map_str_or_uri_value))
+        return tuple(self._values(SDO.contributor, self._map_term_to_str_or_uri))
 
     @property
     def creators(self) -> Tuple[Union[str, URIRef], ...]:
-        return tuple(self._values(SDO.creator, self._map_str_or_uri_value))
+        return tuple(self._values(SDO.creator, self._map_term_to_str_or_uri))
 
     @classmethod
     def json_ld_context(cls):
@@ -104,12 +104,12 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
 
     @property
     def licenses(self) -> Tuple[Union[str, URIRef], ...]:
-        return tuple(self._values(SDO.license, self._map_str_or_uri_value))
+        return tuple(self._values(SDO.license, self._map_term_to_str_or_uri))
 
     @property
     def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
-        return tuple(self._values(SDO.copyrightHolder, self._map_str_or_uri_value))
+        return tuple(self._values(SDO.copyrightHolder, self._map_term_to_str_or_uri))
 
     @property
     def rights_statements(self) -> Tuple[Union[str, URIRef], ...]:
-        return tuple(self._values(SDO.usageInfo, self._map_str_or_uri_value))
+        return tuple(self._values(SDO.usageInfo, self._map_term_to_str_or_uri))

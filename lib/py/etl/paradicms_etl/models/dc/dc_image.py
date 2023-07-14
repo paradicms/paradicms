@@ -85,7 +85,7 @@ class DcImage(DcModel, Image):
 
     @property
     def copyable(self) -> bool:
-        copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
+        copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
 
     @classmethod
@@ -123,7 +123,7 @@ class DcImage(DcModel, Image):
     @property
     def src(self) -> Union[ImageData, str, URIRef, None]:
         return self._optional_value(  # type: ignore
-            CMS.imageSrc, self._map_image_data_or_str_or_uri_value
+            CMS.imageSrc, self._map_term_to_image_data_or_str_or_uri
         )
 
     @property

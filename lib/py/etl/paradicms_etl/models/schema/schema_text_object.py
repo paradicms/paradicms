@@ -36,16 +36,16 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
 
     @property
     def caption(self) -> Optional[str]:
-        return self._optional_value(SDO.caption, self._map_str_value)
+        return self._optional_value(SDO.caption, self._map_term_to_str)
 
     @property
     def copyable(self) -> bool:
-        copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
+        copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
 
     @property
     def text(self) -> str:
-        return self._required_value(SDO.text, self._map_str_value)
+        return self._required_value(SDO.text, self._map_term_to_str)
 
     @property
     def value(self) -> str:

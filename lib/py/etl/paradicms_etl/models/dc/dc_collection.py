@@ -41,4 +41,4 @@ class DcCollection(DcModel, DcImagesMixin, Collection):
 
     @property
     def work_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(DCTERMS.hasPart, self._map_uri_value))
+        return tuple(self._values(DCTERMS.hasPart, self._map_term_to_uri))
