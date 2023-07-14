@@ -5,10 +5,13 @@ from pathlib import Path
 from typing import Iterable, Set, Tuple
 from urllib.parse import urlparse
 
-from rdflib import URIRef, Graph
+from rdflib import URIRef, Graph, RDF
 from rdflib.resource import Resource
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.linked_art.linked_art_human_made_object import (
+    LinkedArtHumanMadeObject,
+)
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.resolve_json_ld_contexts import resolve_json_ld_contexts
@@ -70,7 +73,11 @@ class GettyEnricher:
 
     def _get_getty_object_entity(self, getty_entity_uri: URIRef) -> Model:
         resource = self.__get_getty_entity_resource(getty_entity_uri)
-        raise NotImplementedError
+        rdf_type = resource.value(RDF.type)
+        if rdf_type.identifier == LinkedArtHumanMadeObject.rdf_type_uri():
+            yield LinkedArtHumanMadeObject.from_rdf(resource)
+        else:
+            raise NotImplementedError(rdf_type)
 
     @staticmethod
     def __get_model_getty_entity_references(
@@ -96,6 +103,8 @@ class GettyEnricher:
         if isinstance(model, StubModel):
             if is_getty_entity_uri(model.uri):
                 return (model.uri,)
+            else:
+                return ()
         else:
             return tuple(
                 same_as_uri
