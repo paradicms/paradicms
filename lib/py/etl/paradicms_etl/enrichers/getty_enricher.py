@@ -13,6 +13,7 @@ from paradicms_etl.models.linked_art.linked_art_human_made_object import (
     LinkedArtHumanMadeObject,
 )
 from paradicms_etl.models.stub.stub_model import StubModel
+from paradicms_etl.models.work import Work
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.resolve_json_ld_contexts import resolve_json_ld_contexts
 
@@ -74,10 +75,12 @@ class GettyEnricher:
     def _get_getty_object_entity(self, getty_entity_uri: URIRef) -> Iterable[Model]:
         resource = self.__get_getty_entity_resource(getty_entity_uri)
         rdf_type = resource.value(RDF.type)
+        work: Work
         if rdf_type.identifier == LinkedArtHumanMadeObject.rdf_type_uri():
-            yield LinkedArtHumanMadeObject.from_rdf(resource)
+            work = LinkedArtHumanMadeObject.from_rdf(resource)
         else:
             raise NotImplementedError(rdf_type)
+        yield work
 
     @staticmethod
     def __get_model_getty_entity_references(

@@ -35,16 +35,6 @@ class LinkedArtModel(ResourceBackedModel):
 
         return ResourceBackedModel._map_term_to_model(LinkedArtRight, term)
 
-    @staticmethod
-    def _map_term_to_linked_art_visual_item(
-        term: _StatementObject,
-    ) -> Optional["LinkedArtVisualItem"]:  # type: ignore
-        from paradicms_etl.models.linked_art.linked_art_visual_item import (
-            LinkedArtVisualItem,
-        )
-
-        return ResourceBackedModel._map_term_to_model(LinkedArtVisualItem, term)
-
     def _p67i_is_referred_to_by(
         self, *, p2_has_type: Optional[URIRef] = None
     ) -> Iterable[Resource]:
@@ -65,10 +55,3 @@ class LinkedArtModel(ResourceBackedModel):
                 ):
                     yield resource
                     break
-
-    @property
-    def _p138i_has_representation(self) -> Iterable["LinkedArtVisualItem"]:  # type: ignore
-        return self._values(
-            CRM.P138i_has_representation,
-            LinkedArtModel._map_term_to_linked_art_visual_item,
-        )
