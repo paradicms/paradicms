@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import Union
 
-from rdflib import DC, URIRef, Graph
+from rdflib import URIRef, Graph
 
 from paradicms_etl.models.linked_art.linked_art_digital_object import (
     LinkedArtDigitalObject,
@@ -16,7 +16,7 @@ class LinkedArtVisualItem(LinkedArtModel):
             return LinkedArtVisualItem(self._resource)
 
         def set_digitally_shown_by(
-            self, digital_object: LinkedArtDigitalObject
+            self, digital_object: Union[LinkedArtDigitalObject, URIRef]
         ) -> "LinkedArtVisualItem.Builder":
             self.set(LA.digitally_shown_by, digital_object)
             return self
@@ -25,16 +25,16 @@ class LinkedArtVisualItem(LinkedArtModel):
     def builder(cls):
         return cls.Builder(Graph().resource(uuid_urn()))
 
-    @property
-    def digitally_shown_by(self) -> Optional[LinkedArtDigitalObject]:
-        model = self._optional_value(
-            LA.digitally_shown_by, self._map_term_to_linked_art_model
-        )
-        return model if isinstance(model, LinkedArtDigitalObject) else None
-
-    @property
-    def format(self) -> Optional[str]:
-        return self._optional_value(DC["format"], self._map_term_to_str)
+    # @property
+    # def digitally_shown_by(self) -> Optional[LinkedArtDigitalObject]:
+    #     model = self._optional_value(
+    #         LA.digitally_shown_by, self._map_term_to_linked_art_model
+    #     )
+    #     return model if isinstance(model, LinkedArtDigitalObject) else None
+    # @property
+    # def format(self) -> Optional[str]:
+    #     return self._optional_value(DC["format"], self._map_term_to_str)
+    #
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
