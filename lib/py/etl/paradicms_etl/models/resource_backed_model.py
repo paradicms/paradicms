@@ -1,7 +1,16 @@
 from abc import abstractmethod
-from typing import Generator, Tuple, Union, TypeVar, Any, Callable, Type
+from typing import (
+    Generator,
+    Tuple,
+    Union,
+    TypeVar,
+    Any,
+    Callable,
+    Type,
+)
 from typing import Optional
 
+import rdflib.collection
 from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, OWL
 from rdflib import Graph
 from rdflib.resource import Resource
@@ -127,6 +136,39 @@ class ResourceBackedModel(Model):
         if isinstance(term, Literal):
             return term.toPython()
         return None
+
+    @staticmethod
+    def _map_term_to_collection(
+        term: _StatementObject,
+    ) -> Optional[Tuple[Node, ...]]:
+        if not isinstance(term, Resource):
+            return None
+        resource: Resource = term
+        return tuple(rdflib.collection.Collection(resource.graph, resource.identifier))
+
+    # @staticmethod
+    # def _map_term_to_container(
+    #     term: _StatementObject,
+    # ) -> Optional[Tuple[BNode | Literal | URIRef]]:
+    #     if not isinstance(term, Resource):
+    #         return None
+    #     resource: Resource = term
+    #     result: List[BNode | Literal | URIRef] = []
+    #     container_rdf_type = resource.value(RDF.type)
+    #     container_class = rdflib.Container
+    #     if isinstance(container_rdf_type, Resource):
+    #         if container_rdf_type.identifier == RDF.Alt:
+    #             container_class = rdflib.Alt
+    #         elif container_rdf_type.identifier == RDF.Bag:
+    #             container_class = rdflib.Bag
+    #         elif container_rdf_type.identifier == RDF.Seq:
+    #             container_class = rdflib.Seq
+    #         elif container_rdf_type.identifier == RDF.List:
+    #             container_class = rdflib.List
+    #         else:
+    #             raise NotImplementedError(container_rdf_type.identifier)
+    #
+    #     return tuple(container_class(resource.graph, resource.identifier))
 
     @staticmethod
     def _map_term_to_model(

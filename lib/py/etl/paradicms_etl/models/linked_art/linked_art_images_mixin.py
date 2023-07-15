@@ -15,10 +15,10 @@ class LinkedArtImagesMixin(LinkedArtModelMixin, ImagesMixin):
 
     @property
     def image_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(visual_item.uri for visual_item in self.representations)
+        return tuple(visual_item.uri for visual_item in self.p138i_has_representation)
 
     @property
-    def representations(self) -> Tuple[LinkedArtVisualItem, ...]:
+    def p138i_has_representation(self) -> Tuple[LinkedArtVisualItem, ...]:
         from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 
         model: LinkedArtModel

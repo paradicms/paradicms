@@ -1,28 +1,33 @@
-import json
 import logging
 from enum import Enum
 from pathlib import Path
 from typing import Iterable, Tuple
 from urllib.parse import urlparse
 
-from rdflib import URIRef, Graph, RDF
-from rdflib.resource import Resource
+from rdflib import URIRef, RDF
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.iiif.iiif_presentation_api_manifest import (
+    IiifPresentationApiManifest,
+)
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.linked_art.linked_art_human_made_object import (
     LinkedArtHumanMadeObject,
 )
-from paradicms_etl.models.linked_art.linked_art_images_mixin import LinkedArtImagesMixin
+from paradicms_etl.models.linked_art.linked_art_information_object import (
+    LinkedArtInformationObject,
+)
+from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_rights_mixin import LinkedArtRightsMixin
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.utils.file_cache import FileCache
-from paradicms_etl.utils.resolve_json_ld_contexts import resolve_json_ld_contexts
+from paradicms_etl.utils.get_json_ld_resource import get_json_ld_resource
 
 
 class GettyEnricher:
@@ -50,14 +55,18 @@ class GettyEnricher:
                     yield model
                     continue
 
+                referenced_getty_entity: LinkedArtModel
                 for referenced_getty_entity_uri in referenced_getty_entity_uris:
                     for referenced_getty_entity in getattr(
                         self, f"_get_getty_{getty_entity_type}_entity"
                     )(referenced_getty_entity_uri):
                         yield referenced_getty_entity
 
-                        if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
-                            yield from referenced_getty_entity.representations
+                        self.__get_getty_entity_images(referenced_getty_entity)
+
+                        # Don't use the has_representation images, use the ones from the IIIF presentation API manifest
+                        # if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
+                        #     yield from referenced_getty_entity.p138i_has_representation
 
                         if isinstance(referenced_getty_entity, LinkedArtRightsMixin):
                             for license_uri in referenced_getty_entity.licenses:
@@ -76,29 +85,45 @@ class GettyEnricher:
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
 
-    def __get_getty_entity_resource(self, getty_entity_uri: URIRef) -> Resource:
-        with open(
-            self.__file_cache.get_file(getty_entity_uri, file_extension=".jsonld")
-        ) as json_ld_file:
-            json_ld = json.load(json_ld_file)
-            assert json_ld["id"] == str(getty_entity_uri)
-            resolved_json_ld = resolve_json_ld_contexts(
-                file_cache=self.__file_cache, json_ld=json_ld
+    def __get_getty_entity_images(
+        self, getty_entity: LinkedArtModel
+    ) -> Tuple[Image, ...]:
+        for is_subject_of_model in getty_entity.p129i_is_subject_of:
+            if not isinstance(is_subject_of_model, LinkedArtInformationObject):
+                continue
+            if (
+                URIRef("https://data.getty.edu/local/thesaurus/iiif-manifest")
+                not in is_subject_of_model.p2_has_type
+            ):
+                continue
+            return self.__get_iiif_presentation_api_manifest_images(
+                is_subject_of_model.uri
             )
-            graph = Graph()
-            graph.parse(
-                data=resolved_json_ld,  # type: ignore
-                format="json-ld",
-            )
-            return graph.resource(getty_entity_uri)
+        self.__logger.warning(
+            "entity %s is not associated with an IIIF manifest", getty_entity.uri
+        )
+        return ()
 
     def _get_getty_object_entity(self, getty_entity_uri: URIRef) -> Iterable[Model]:
-        resource = self.__get_getty_entity_resource(getty_entity_uri)
+        resource = get_json_ld_resource(
+            file_cache=self.__file_cache, json_ld_resource_uri=getty_entity_uri
+        )
         rdf_type = resource.value(RDF.type)
         if rdf_type.identifier == LinkedArtHumanMadeObject.rdf_type_uri():
             yield LinkedArtHumanMadeObject.from_rdf(resource)
         else:
             raise NotImplementedError(rdf_type)
+
+    def __get_iiif_presentation_api_manifest_images(
+        self, iiif_presentation_api_manifest_uri: URIRef
+    ) -> Tuple[Image, ...]:
+        manifest = IiifPresentationApiManifest.from_rdf(
+            get_json_ld_resource(
+                file_cache=self.__file_cache,
+                json_ld_resource_uri=iiif_presentation_api_manifest_uri,
+            )
+        )
+        return ()
 
     @staticmethod
     def __get_model_getty_entity_references(

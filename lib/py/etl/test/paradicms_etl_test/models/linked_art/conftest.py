@@ -13,10 +13,8 @@ def getty_linked_art_human_made_object() -> LinkedArtHumanMadeObject:
     return LinkedArtHumanMadeObject.from_rdf(
         Graph()
         .parse(
-            source=str(
-                Path(__file__).parent / "getty_linked_art_human_made_object.jsonld"
-            ),
-            format="json-ld",
+            # Use the .ttl in order to avoid resolving the JSON-LD context here
+            source=str(Path(__file__).parent / "getty_linked_art_human_made_object.ttl")
         )
         .resource(
             URIRef(

@@ -8,8 +8,8 @@ from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModel
 
 
 class LinkedArtModelMixin(ResourceBackedModelMixin):
-    @abstractmethod
     @staticmethod
+    @abstractmethod
     def _map_term_to_linked_art_model(
         term: Literal | Resource,
     ) -> Optional["LinkedArtModel"]:  # type: ignore

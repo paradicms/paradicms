@@ -1,0 +1,191 @@
+@prefix ns1: <http://purl.org/dc/terms/> .
+@prefix ns2: <http://iiif.io/api/presentation/2#> .
+@prefix ns3: <http://rdfs.org/sioc/services#> .
+@prefix ns4: <http://xmlns.com/foaf/0.1/> .
+@prefix ns5: <http://www.w3.org/2003/12/exif/ns#> .
+@prefix ns6: <http://www.w3.org/ns/oa#> .
+@prefix ns7: <http://usefulinc.com/ns/doap#> .
+@prefix ns8: <http://purl.org/dc/elements/1.1/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://media.getty.edu/iiif/manifest/9ab53ead-ad00-460c-ab86-559cfd4d839c> a ns2:Manifest ;
+    rdfs:label "Minerva" ;
+    ns2:attributionLabel "<p>Images provided here are believed to be in the public domain and are available under the terms of the Getty&rsquo;s <a href=\"http://www.getty.edu/about/opencontent.html\"> Open Content Program</a>.  Texts provided here are © J. Paul Getty Trust, licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/legalcode\"> CC BY 4.0</a>. Terms of use for the Getty logo can be found <a href=\"http://www.getty.edu/legal/copyright.html#logo\"> here</a>.</p>" ;
+    ns2:hasSequences ( <https://media.getty.edu/iiif/manifest/9ab53ead-ad00-460c-ab86-559cfd4d839c/default> ) ;
+    ns2:metadataLabels ( [ rdfs:label "Artist/Maker" ;
+                rdf:value "Joseph Nollekens (English, 1737 - 1823)" ] [ rdfs:label "Title" ;
+                rdf:value "Minerva" ] [ rdfs:label "Date" ;
+                rdf:value "1775" ] [ rdfs:label "Material" ;
+                rdf:value "Marble" ] [ rdfs:label "Dimensions" ;
+                rdf:value "Object: 144 cm (56 11/16 in.)" ] [ rdfs:label "Accession Number" ;
+                rdf:value "87.SA.107" ] [ rdfs:label "Collection" ;
+                rdf:value "<a href='http://www.getty.edu/art/collection/'>The J. Paul Getty Museum</a>" ] [ rdfs:label "Rights Statement" ;
+                rdf:value "<p>Images provided here are believed to be in the public domain and are available under the terms of the Getty&rsquo;s <a href=\"http://www.getty.edu/about/opencontent.html\"> Open Content Program</a>.  Texts provided here are © J. Paul Getty Trust, licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/legalcode\"> CC BY 4.0</a>. Terms of use for the Getty logo can be found <a href=\"http://www.getty.edu/legal/copyright.html#logo\"> here</a>.</p>" ] [ rdfs:label "Date Modified" ;
+                rdf:value "2023-06-09T08:06:07.549741" ] ) ;
+    ns8:description "<p>Goddess of war and wisdom, the stately Minerva stands like a majestic column as she raises her helmet. At her side rests a large shield, on which is carved the frightening head of the Medusa, used to ward off enemies. Her body is composed in a spiral, which provides interesting views from several different angles. The marble statue formed part of a Judgment of Paris group. According to ancient mythology, Paris was chosen to decide between Juno, Minerva, and Venus for the title of \"the fairest.\" Although Minerva promised him fame and glory in war, Paris chose Venus.</p>" ;
+    ns1:relation <https://www.getty.edu/art/collection/object/103RRE> ;
+    ns1:rights <https://rightsstatements.org/vocab/NoC-US/1.0/> ;
+    rdfs:seeAlso <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6> ;
+    ns4:logo <https://www.getty.edu/global/images/getty_logo_primary_blk.png> ;
+    ns4:thumbnail <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/!600,600/0/default.jpg> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6> ns8:format "application/ld+json" ;
+    ns7:implements <https://static.getty.edu/contexts/linked.art/ns/v1.1.0/linked-art.json> .
+
+<https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb/full/!600,600/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    rdfs:label "Full back, post-conservation" ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb> ;
+    ns5:height 600 ;
+    ns5:width 600 .
+
+<https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb/full/full/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb> ;
+    ns5:height 6493 ;
+    ns5:width 4307 .
+
+<https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1/full/!600,600/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    rdfs:label "Medusa head" ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1> ;
+    ns5:height 600 ;
+    ns5:width 600 .
+
+<https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1/full/full/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1> ;
+    ns5:height 780 ;
+    ns5:width 1188 .
+
+<https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716/full/!600,600/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    rdfs:label "Inscription" ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716> ;
+    ns5:height 600 ;
+    ns5:width 600 .
+
+<https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716/full/full/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716> ;
+    ns5:height 780 ;
+    ns5:width 1191 .
+
+<https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958/full/!600,600/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    rdfs:label "Right side, post-conservation" ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958> ;
+    ns5:height 600 ;
+    ns5:width 600 .
+
+<https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958/full/full/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958> ;
+    ns5:height 3691 ;
+    ns5:width 1770 .
+
+<https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8> ;
+    ns5:height 4417 ;
+    ns5:width 2976 .
+
+<https://media.getty.edu/iiif/manifest/9ab53ead-ad00-460c-ab86-559cfd4d839c/default> a ns2:Sequence ;
+    rdfs:label "Default range" ;
+    ns2:hasCanvases ( <https://media.getty.edu/iiif/manifest/canvas/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json> <https://media.getty.edu/iiif/manifest/canvas/dcca6ffd-310c-4b29-bda5-ce238891c958.json> <https://media.getty.edu/iiif/manifest/canvas/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json> <https://media.getty.edu/iiif/manifest/canvas/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json> <https://media.getty.edu/iiif/manifest/canvas/8a4fe713-1d02-454c-af9d-6f8544dcc716.json> ) ;
+    ns2:hasStartCanvas <https://media.getty.edu/iiif/manifest/canvas/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json> .
+
+<https://media.getty.edu/iiif/manifest/annotation/anno-25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json> a ns6:Annotation ;
+    ns6:hasBody <https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb/full/full/0/default.jpg> ;
+    ns6:hasTarget <https://media.getty.edu/iiif/manifest/canvas/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json> ;
+    ns6:motivatedBy ns2:painting .
+
+<https://media.getty.edu/iiif/manifest/annotation/anno-4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json> a ns6:Annotation ;
+    ns6:hasBody <https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1/full/full/0/default.jpg> ;
+    ns6:hasTarget <https://media.getty.edu/iiif/manifest/canvas/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json> ;
+    ns6:motivatedBy ns2:painting .
+
+<https://media.getty.edu/iiif/manifest/annotation/anno-8a4fe713-1d02-454c-af9d-6f8544dcc716.json> a ns6:Annotation ;
+    ns6:hasBody <https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716/full/full/0/default.jpg> ;
+    ns6:hasTarget <https://media.getty.edu/iiif/manifest/canvas/8a4fe713-1d02-454c-af9d-6f8544dcc716.json> ;
+    ns6:motivatedBy ns2:painting .
+
+<https://media.getty.edu/iiif/manifest/annotation/anno-dcca6ffd-310c-4b29-bda5-ce238891c958.json> a ns6:Annotation ;
+    ns6:hasBody <https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958/full/full/0/default.jpg> ;
+    ns6:hasTarget <https://media.getty.edu/iiif/manifest/canvas/dcca6ffd-310c-4b29-bda5-ce238891c958.json> ;
+    ns6:motivatedBy ns2:painting .
+
+<https://media.getty.edu/iiif/manifest/annotation/anno-fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json> a ns6:Annotation ;
+    ns6:hasBody <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg> ;
+    ns6:hasTarget <https://media.getty.edu/iiif/manifest/canvas/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json> ;
+    ns6:motivatedBy ns2:painting .
+
+<https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb> ns7:implements <http://iiif.io/api/image/2/level2.json> .
+
+<https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1> ns7:implements <http://iiif.io/api/image/2/level2.json> .
+
+<https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716> ns7:implements <http://iiif.io/api/image/2/level2.json> .
+
+<https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958> ns7:implements <http://iiif.io/api/image/2/level2.json> .
+
+<https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8> ns7:implements <http://iiif.io/api/image/2/level2.json> .
+
+<https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/!600,600/0/default.jpg> a <http://purl.org/dc/dcmitype/Image> ;
+    rdfs:label "Main View, full front, post-conservation" ;
+    ns8:format "image/jpeg" ;
+    ns3:has_service <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8> ;
+    ns5:height 600 ;
+    ns5:width 600 .
+
+<https://media.getty.edu/iiif/manifest/canvas/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json> a ns2:Canvas ;
+    rdfs:label "Full back, post-conservation" ;
+    ns2:hasImageAnnotations ( <https://media.getty.edu/iiif/manifest/annotation/anno-25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json> ) ;
+    ns2:metadataLabels ( [ rdfs:label "Open Content Quality" ;
+                rdf:value "Yes" ] ) ;
+    ns1:rights <https://rightsstatements.org/vocab/NoC-US/1.0/> ;
+    ns5:height 6493 ;
+    ns5:width 4307 ;
+    ns4:thumbnail <https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb/full/!600,600/0/default.jpg> .
+
+<https://media.getty.edu/iiif/manifest/canvas/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json> a ns2:Canvas ;
+    rdfs:label "Medusa head" ;
+    ns2:hasImageAnnotations ( <https://media.getty.edu/iiif/manifest/annotation/anno-4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json> ) ;
+    ns2:metadataLabels ( [ rdfs:label "Open Content Quality" ;
+                rdf:value "No" ] ) ;
+    ns1:rights <https://rightsstatements.org/vocab/NoC-US/1.0/> ;
+    ns5:height 780 ;
+    ns5:width 1188 ;
+    ns4:thumbnail <https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1/full/!600,600/0/default.jpg> .
+
+<https://media.getty.edu/iiif/manifest/canvas/8a4fe713-1d02-454c-af9d-6f8544dcc716.json> a ns2:Canvas ;
+    rdfs:label "Inscription" ;
+    ns2:hasImageAnnotations ( <https://media.getty.edu/iiif/manifest/annotation/anno-8a4fe713-1d02-454c-af9d-6f8544dcc716.json> ) ;
+    ns2:metadataLabels ( [ rdfs:label "Open Content Quality" ;
+                rdf:value "No" ] ) ;
+    ns1:rights <https://rightsstatements.org/vocab/NoC-US/1.0/> ;
+    ns5:height 780 ;
+    ns5:width 1191 ;
+    ns4:thumbnail <https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716/full/!600,600/0/default.jpg> .
+
+<https://media.getty.edu/iiif/manifest/canvas/dcca6ffd-310c-4b29-bda5-ce238891c958.json> a ns2:Canvas ;
+    rdfs:label "Right side, post-conservation" ;
+    ns2:hasImageAnnotations ( <https://media.getty.edu/iiif/manifest/annotation/anno-dcca6ffd-310c-4b29-bda5-ce238891c958.json> ) ;
+    ns2:metadataLabels ( [ rdfs:label "Open Content Quality" ;
+                rdf:value "No" ] ) ;
+    ns1:rights <https://rightsstatements.org/vocab/NoC-US/1.0/> ;
+    ns5:height 3691 ;
+    ns5:width 1770 ;
+    ns4:thumbnail <https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958/full/!600,600/0/default.jpg> .
+
+<https://media.getty.edu/iiif/manifest/canvas/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json> a ns2:Canvas ;
+    rdfs:label "Main View, full front, post-conservation" ;
+    ns2:hasImageAnnotations ( <https://media.getty.edu/iiif/manifest/annotation/anno-fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json> ) ;
+    ns2:metadataLabels ( [ rdfs:label "Open Content Quality" ;
+                rdf:value "Yes" ] ) ;
+    ns1:rights <https://rightsstatements.org/vocab/NoC-US/1.0/> ;
+    ns5:height 4417 ;
+    ns5:width 2976 ;
+    ns4:thumbnail <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/!600,600/0/default.jpg> .
+
