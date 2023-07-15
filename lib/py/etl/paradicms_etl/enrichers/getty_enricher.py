@@ -21,7 +21,7 @@ from paradicms_etl.models.linked_art.linked_art_information_object import (
     LinkedArtInformationObject,
 )
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
-from paradicms_etl.models.linked_art.linked_art_rights_mixin import LinkedArtRightsMixin
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
 )
@@ -38,14 +38,22 @@ class GettyEnricher:
             return self.value
 
     def __init__(self, *, cache_dir_path: Path):
-        self.__available_licenses_by_uri = CreativeCommonsLicenses.by_uri()
-        self.__available_rights_statements_by_uri = (
-            RightsStatementsDotOrgRightsStatements.by_uri()
-        )
         self.__file_cache = FileCache(cache_dir_path=cache_dir_path)
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
+        referenced_rights_statement_uris: Set[URIRef] = set()
+        referenced_license_uris: Set[URIRef] = set()
+
+        def __add_rights_references(rights: RightsMixin):
+            for license_uri in rights.licenses:
+                if isinstance(license_uri, URIRef):
+                    referenced_license_uris.add(license_uri)
+
+            for rights_statement_uri in rights.rights_statements:
+                if isinstance(rights_statement_uri, URIRef):
+                    referenced_rights_statement_uris.add(rights_statement_uri)
+
         for model in models:
             for getty_entity_type in self._GettyEntityType:
                 referenced_getty_entity_uris = self.__get_model_getty_entity_references(
@@ -62,34 +70,36 @@ class GettyEnricher:
                     )(referenced_getty_entity_uri):
                         yield referenced_getty_entity
 
-                        yield from self.__get_getty_entity_images(
+                        for image in self.__get_getty_entity_images(
                             referenced_getty_entity
-                        )
+                        ):
+                            yield image
+                            __add_rights_references(image)
 
                         # Don't use the has_representation images, use the ones from the IIIF presentation API manifest
                         # if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
                         #     yield from referenced_getty_entity.p138i_has_representation
 
-                        if isinstance(referenced_getty_entity, LinkedArtRightsMixin):
-                            for license_uri in referenced_getty_entity.licenses:
-                                if isinstance(license_uri, URIRef):
-                                    yield self.__available_licenses_by_uri[license_uri]
-
-                            for (
-                                rights_statement_uri
-                            ) in referenced_getty_entity.rights_statements:
-                                if isinstance(rights_statement_uri, URIRef):
-                                    yield self.__available_rights_statements_by_uri[
-                                        rights_statement_uri
-                                    ]
+                        if isinstance(referenced_getty_entity, RightsMixin):
+                            __add_rights_references(referenced_getty_entity)
 
             if not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
 
+        available_license_uris = CreativeCommonsLicenses.by_uri()
+        for license_uri in referenced_license_uris:
+            yield available_license_uris[license_uri]
+
+        available_rights_statement_uris = (
+            RightsStatementsDotOrgRightsStatements.by_uri()
+        )
+        for rights_statement_uri in referenced_rights_statement_uris:
+            yield available_rights_statement_uris[rights_statement_uri]
+
     def __get_getty_entity_images(
         self, getty_entity: LinkedArtModel
-    ) -> Iterable[Model]:
+    ) -> Iterable[Image]:
         for is_subject_of_model in getty_entity.p129i_is_subject_of:
             if not isinstance(is_subject_of_model, LinkedArtInformationObject):
                 continue
@@ -119,7 +129,7 @@ class GettyEnricher:
 
     def __get_iiif_presentation_api_manifest_images(
         self, iiif_presentation_api_manifest_uri: URIRef
-    ) -> Iterable[Model]:
+    ) -> Iterable[Image]:
         manifest = IiifPresentationApiManifest.from_rdf(
             get_json_ld_resource(
                 file_cache=self.__file_cache,
@@ -128,13 +138,8 @@ class GettyEnricher:
         )
         attribution_label = manifest.attribution_label
 
-        yielded_rights_statement_uris: Set[URIRef] = set()
         for sequence in manifest.has_sequences:
             for canvas in sequence.has_canvases:
-                if canvas.rights not in yielded_rights_statement_uris:
-                    yield self.__available_rights_statements_by_uri[canvas.rights]
-                    yielded_rights_statement_uris.add(canvas.rights)
-
                 for image_annotation in canvas.has_image_annotations:
                     image = image_annotation.has_body
                     assert isinstance(image, Image)
