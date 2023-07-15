@@ -1,5 +1,6 @@
 from typing import Tuple, Union, Iterable, List
 
+from more_itertools import flatten
 from rdflib import URIRef
 
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
@@ -22,7 +23,7 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
 
     @property
     def licenses(self) -> Tuple[Union[str, URIRef], ...]:
-        return tuple(right.p2_has_type for right in self.__p104_is_subject_to)
+        return tuple(flatten(right.p2_has_type for right in self.__p104_is_subject_to))
 
     @property
     def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
@@ -46,14 +47,6 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
             )
             if isinstance(model, LinkedArtRight)
         )
-
-    @property
-    def p2_has_type(self) -> Tuple[URIRef, ...]:
-        """
-        P2_has_type returns e.g., http://vocab.getty.edu/aat/300080091 for an "Object Description".
-        """
-
-        return tuple(self._values(CRM.P2_has_type, self._map_term_to_uri))
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

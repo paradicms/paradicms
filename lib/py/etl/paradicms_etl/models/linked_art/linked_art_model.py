@@ -63,6 +63,10 @@ class LinkedArtModel(ResourceBackedModel):
             )
         )
 
+    @property
+    def p2_has_type(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(CRM.P2_has_type, self._map_term_to_uri))
+
     def p67i_is_referred_to_by(
         self, *, p2_has_type: Optional[URIRef] = None
     ) -> Tuple["LinkedArtModel", ...]:

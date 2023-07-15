@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, List
 
 from rdflib import URIRef
 
@@ -19,11 +19,13 @@ class LinkedArtImagesMixin(LinkedArtModelMixin, ImagesMixin):
 
     @property
     def representations(self) -> Tuple[LinkedArtVisualItem, ...]:
-        return tuple(
-            model
-            for model in self._values(
-                CRM.P138i_has_representation,
-                self._map_term_to_linked_art_model,
-            )
-            if isinstance(model, LinkedArtVisualItem)
-        )
+        from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
+
+        model: LinkedArtModel
+        representations: List[LinkedArtVisualItem] = []
+        for model in self._values(
+            CRM.P138i_has_representation, self._map_term_to_linked_art_model
+        ):
+            if isinstance(model, LinkedArtVisualItem):
+                representations.append(model)
+        return tuple(representations)

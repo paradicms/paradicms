@@ -55,17 +55,22 @@ class GettyEnricher:
                         self, f"_get_getty_{getty_entity_type}_entity"
                     )(referenced_getty_entity_uri):
                         yield referenced_getty_entity
+
                         if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
                             yield from referenced_getty_entity.representations
+
                         if isinstance(referenced_getty_entity, LinkedArtRightsMixin):
                             for license_uri in referenced_getty_entity.licenses:
-                                yield self.__available_licenses_by_uri[license_uri]
+                                if isinstance(license_uri, URIRef):
+                                    yield self.__available_licenses_by_uri[license_uri]
+
                             for (
                                 rights_statement_uri
                             ) in referenced_getty_entity.rights_statements:
-                                yield self.__available_rights_statements_by_uri[
-                                    rights_statement_uri
-                                ]
+                                if isinstance(rights_statement_uri, URIRef):
+                                    yield self.__available_rights_statements_by_uri[
+                                        rights_statement_uri
+                                    ]
 
             if not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
