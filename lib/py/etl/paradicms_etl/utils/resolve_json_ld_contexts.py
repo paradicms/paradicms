@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any
 from urllib.parse import urlparse
 
 from rdflib import URIRef
@@ -57,7 +57,7 @@ def __resolve_json_ld_context(*, file_cache: FileCache, json_ld_context: Any) ->
         raise TypeError(json_ld_context)
 
 
-def resolve_json_ld_contexts(*, file_cache: FileCache, json_ld: Any) -> Dict[str, Any]:
+def resolve_json_ld_contexts(*, file_cache: FileCache, json_ld: Any) -> Any:
     """
     Recursively resolve any JSON-LD @context URLs from the file cache.
     :param json_ld: any JSON-LD construct, from the top-level object to an individual value
