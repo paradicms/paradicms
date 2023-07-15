@@ -13,6 +13,11 @@ _LinkedArtModelT = TypeVar("_LinkedArtModelT")
 
 
 class LinkedArtModel(ResourceBackedModel):
+    class Builder(ResourceBackedModel.Builder):
+        def set_label(self, label: str) -> "LinkedArtModel.Builder":
+            self.set(RDFS.label, label)
+            return self
+
     @classmethod
     def label_property_uri(cls) -> URIRef:
         return RDFS.label

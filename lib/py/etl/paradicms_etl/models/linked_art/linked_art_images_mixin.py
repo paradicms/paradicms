@@ -1,3 +1,4 @@
+from abc import abstractmethod
 from typing import Tuple
 
 from rdflib import URIRef
@@ -29,3 +30,7 @@ class LinkedArtImagesMixin(LinkedArtModelMixin, ImagesMixin):
                 CRM.P138i_has_representation, self._map_term_to_linked_art_model
             )
         )
+
+    @abstractmethod
+    def replacer(self) -> Builder:
+        raise NotImplementedError

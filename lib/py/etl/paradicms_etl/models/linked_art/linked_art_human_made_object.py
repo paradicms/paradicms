@@ -16,9 +16,6 @@ class LinkedArtHumanMadeObject(
         LinkedArtRightsMixin.Builder,
         Work.Builder,
     ):
-        def add_image(self, image: URIRef) -> "LinkedArtHumanMadeObject.Builder":
-            raise NotImplementedError
-
         def build(self) -> "LinkedArtHumanMadeObject":
             return LinkedArtHumanMadeObject(self._resource)
 

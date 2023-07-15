@@ -17,10 +17,12 @@ from paradicms_etl.models.image import Image
 from paradicms_etl.models.linked_art.linked_art_human_made_object import (
     LinkedArtHumanMadeObject,
 )
+from paradicms_etl.models.linked_art.linked_art_images_mixin import LinkedArtImagesMixin
 from paradicms_etl.models.linked_art.linked_art_information_object import (
     LinkedArtInformationObject,
 )
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
+from paradicms_etl.models.linked_art.linked_art_visual_item import LinkedArtVisualItem
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -68,17 +70,28 @@ class GettyEnricher:
                     for referenced_getty_entity in getattr(
                         self, f"_get_getty_{getty_entity_type}_entity"
                     )(referenced_getty_entity_uri):
-                        yield referenced_getty_entity
+                        assert isinstance(referenced_getty_entity, LinkedArtModel)
 
-                        for image in self.__get_getty_entity_images(
-                            referenced_getty_entity
-                        ):
-                            yield image
-                            __add_rights_references(image)
+                        if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
+                            # Don't use the has_representation images that came with the entity's RDF, use the ones from the IIIF presentation API manifest
+                            referenced_getty_entity_replacer = (
+                                referenced_getty_entity.replacer()
+                            )
 
-                        # Don't use the has_representation images, use the ones from the IIIF presentation API manifest
-                        # if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
-                        #     yield from referenced_getty_entity.p138i_has_representation
+                            for image in self.__get_getty_entity_images(
+                                referenced_getty_entity
+                            ):
+                                yield image
+                                __add_rights_references(image)
+
+                                referenced_getty_entity_replacer.add_image(
+                                    LinkedArtVisualItem.builder().set_digitally_shown_by(
+                                        image.uri
+                                    )
+                                )
+                            yield referenced_getty_entity_replacer.build()
+                        else:
+                            yield referenced_getty_entity
 
                         if isinstance(referenced_getty_entity, RightsMixin):
                             __add_rights_references(referenced_getty_entity)

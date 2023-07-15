@@ -1,42 +1,36 @@
-from typing import Optional, Union, Tuple
+from typing import Optional
 
-from rdflib import DC, URIRef, Literal
+from rdflib import DC, URIRef, Graph
 
-from paradicms_etl.models.image import Image
-from paradicms_etl.models.image_data import ImageData
-from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.linked_art.linked_art_digital_object import (
+    LinkedArtDigitalObject,
+)
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
-from paradicms_etl.models.linked_art.linked_art_rights_mixin import LinkedArtRightsMixin
-from paradicms_etl.namespaces import CRM
+from paradicms_etl.namespaces import CRM, LA
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
-class LinkedArtVisualItem(LinkedArtModel, LinkedArtRightsMixin, Image):
-    class Builder(LinkedArtModel.Builder, LinkedArtRightsMixin.Builder, Image.Builder):
-        def add_thumbnail(self, thumbnail: URIRef) -> "Image.Builder":
-            raise NotImplementedError
+class LinkedArtVisualItem(LinkedArtModel):
+    class Builder(LinkedArtModel.Builder):
+        def build(self) -> "LinkedArtVisualItem":
+            return LinkedArtVisualItem(self._resource)
 
-        def build(self) -> "Image":
-            raise NotImplementedError
+        def set_digitally_shown_by(
+            self, digital_object: LinkedArtDigitalObject
+        ) -> "LinkedArtVisualItem.Builder":
+            self.set(LA.digitally_shown_by, digital_object)
+            return self
 
-        def set_copyable(self, copyable: bool) -> "Image.Builder":
-            raise NotImplementedError
-
-        def set_exact_dimensions(
-            self, exact_dimensions: ImageDimensions
-        ) -> "Image.Builder":
-            raise NotImplementedError
-
-        def set_src(
-            self, src: Union[str, ImageData, Literal, URIRef]
-        ) -> "Image.Builder":
-            raise NotImplementedError
-
-        def set_title(self, title: str) -> "Image.Builder":
-            raise NotImplementedError
+    @classmethod
+    def builder(cls):
+        return cls.Builder(Graph().resource(uuid_urn()))
 
     @property
-    def copyable(self) -> bool:
-        return True
+    def digitally_shown_by(self) -> Optional[LinkedArtDigitalObject]:
+        model = self._optional_value(
+            LA.digitally_shown_by, self._map_term_to_linked_art_model
+        )
+        return model if isinstance(model, LinkedArtDigitalObject) else None
 
     @property
     def format(self) -> Optional[str]:
@@ -45,13 +39,3 @@ class LinkedArtVisualItem(LinkedArtModel, LinkedArtRightsMixin, Image):
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return CRM.E36_Visual_Item
-
-    def replacer(self) -> Builder:
-        return self.Builder(self._resource)
-
-    def src(self) -> Union[ImageData, str, None]:
-        return None
-
-    @property
-    def thumbnail_uris(self) -> Tuple[URIRef, ...]:
-        raise NotImplementedError

@@ -5,6 +5,7 @@ from .cc import CC  # noqa: F401
 from .cms import CMS  # noqa: F401
 from .coco import COCO  # noqa: F401
 from .crm import CRM  # noqa: F401
+from .dig import DIG  # noqa: F401
 from .exif import EXIF  # noqa: F401
 from .la import LA  # noqa: F401
 from .prov import PROV  # noqa: F401

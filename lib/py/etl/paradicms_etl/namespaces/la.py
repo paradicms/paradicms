@@ -1,3 +1,11 @@
-from rdflib import Namespace
+from rdflib import Namespace, URIRef
+from rdflib.namespace import DefinedNamespace
 
-LA = Namespace("https://linked.art/ns/terms/")
+
+class LA(DefinedNamespace):
+    _fail = True
+    _NS = Namespace("https://linked.art/ns/terms/")
+
+    # Properties
+    access_point: URIRef
+    digitally_shown_by: URIRef
