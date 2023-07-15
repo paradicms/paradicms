@@ -1,8 +1,7 @@
-from typing import Union, Optional
+from typing import Optional
 
 from rdflib import URIRef, Graph
 
-from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_type import LinkedArtType
 from paradicms_etl.namespaces import LA, CRM
@@ -16,7 +15,7 @@ class LinkedArtDigitalObject(LinkedArtModel):
             return LinkedArtDigitalObject(self._resource)
 
         def set_access_point(
-            self, access_point: Union[ImageData, str, URIRef, None]
+            self, access_point: URIRef
         ) -> "LinkedArtDigitalObject.Builder":
             self.set(LA.access_point, access_point)
             return self
@@ -30,18 +29,6 @@ class LinkedArtDigitalObject(LinkedArtModel):
     @classmethod
     def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
         return cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
-
-    # @classmethod
-    # def from_image(cls, image: Image) -> "LinkedArtDigitalObject":
-    #     builder = cls.builder(uri=image.uri)
-    #     if image.src:
-    #         builder.set_access_point(image.src)
-    #     builder.set_p2_has_type(
-    #         LinkedArtType.builder(uri=URIRef("http://vocab.getty.edu/aat/300215302"))
-    #         .set_label("Digital Image")
-    #         .build()
-    #     )
-    #     return builder.build()
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
