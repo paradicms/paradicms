@@ -29,7 +29,8 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
         rights_holders: List[str] = []
         for right in self.__p104_is_subject_to:
             for acknowledgment in right.p129i_is_subject_of:
-                rights_holders.append(acknowledgment.value)
+                if isinstance(acknowledgment, LinkedArtLinguisticObject):
+                    rights_holders.append(acknowledgment.value)
         return tuple(rights_holders)
 
     @property

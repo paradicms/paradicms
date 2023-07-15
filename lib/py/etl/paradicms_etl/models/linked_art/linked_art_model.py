@@ -50,6 +50,19 @@ class LinkedArtModel(ResourceBackedModel):
 
         return None
 
+    @property
+    def p129i_is_subject_of(self) -> Tuple["LinkedArtModel", ...]:  # type: ignore
+        """
+        The E30 right is the P129 subject of acknowledgments.
+        """
+
+        return tuple(
+            self._values(
+                CRM.P129i_is_subject_of,
+                self._map_term_to_linked_art_model,
+            )
+        )
+
     def p67i_is_referred_to_by(
         self, *, p2_has_type: Optional[URIRef] = None
     ) -> Tuple["LinkedArtModel", ...]:
