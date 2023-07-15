@@ -8,7 +8,7 @@ from paradicms_etl.namespaces import CRM
 
 class LinkedArtRight(LinkedArtModel):
     @property
-    def p129i_is_subject_of(self) -> Tuple["LinkedArtLinguisticObject", ...]:  # type: ignore
+    def p129i_is_subject_of(self) -> Tuple[LinkedArtModel, ...]:  # type: ignore
         """
         The E30 right is the P129 subject of acknowledgments.
         """
@@ -16,7 +16,7 @@ class LinkedArtRight(LinkedArtModel):
         return tuple(
             self._values(
                 CRM.P129i_is_subject_of,
-                LinkedArtModel._map_term_to_linked_art_linguistic_object,
+                LinkedArtModel._map_term_to_linked_art_model,
             )
         )
 

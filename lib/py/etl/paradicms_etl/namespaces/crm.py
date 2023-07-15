@@ -18,3 +18,4 @@ class CRM(DefinedNamespace):
     E30_Right: URIRef
     E33_Linguistic_Object: URIRef
     E36_Visual_Item: URIRef
+    E73_Information_Object: URIRef

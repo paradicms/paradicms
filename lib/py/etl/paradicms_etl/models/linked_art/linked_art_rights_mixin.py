@@ -46,10 +46,11 @@ class LinkedArtRightsMixin(LinkedArtModelMixin, RightsMixin):
 
     @property
     def description(self) -> Optional[LinkedArtLinguisticObject]:
-        for resource in self._p67i_is_referred_to_by(
+        for model in self.p67i_is_referred_to_by(
             p2_has_type=URIRef("http://vocab.getty.edu/aat/300080091")
         ):
-            return LinkedArtLinguisticObject.from_rdf(resource)
+            if isinstance(model, LinkedArtLinguisticObject):
+                return model
         return None
 
     @property
@@ -71,8 +72,8 @@ class LinkedArtRightsMixin(LinkedArtModelMixin, RightsMixin):
     @property
     def rights_statements(self) -> Tuple[Union[str, URIRef], ...]:
         return tuple(
-            resource.identifier
-            for resource in self._p67i_is_referred_to_by(
+            model.uri
+            for model in self.p67i_is_referred_to_by(
                 p2_has_type=URIRef("http://vocab.getty.edu/aat/300417696")
             )
         )

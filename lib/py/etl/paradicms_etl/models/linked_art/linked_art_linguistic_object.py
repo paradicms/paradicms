@@ -38,7 +38,13 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
 
     @property
     def __p104_is_subject_to(self) -> Iterable[LinkedArtRight]:
-        return self._values(CRM.P104_is_subject_to, self._map_term_to_linked_art_right)
+        yield from (
+            model
+            for model in self._values(
+                CRM.P104_is_subject_to, self._map_term_to_linked_art_model
+            )
+            if isinstance(model, LinkedArtRight)
+        )
 
     @property
     def p2_has_type(self) -> Tuple[URIRef, ...]:
