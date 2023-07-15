@@ -1,7 +1,7 @@
 import logging
 from enum import Enum
 from pathlib import Path
-from typing import Iterable, Tuple
+from typing import Iterable, Tuple, Set
 from urllib.parse import urlparse
 
 from rdflib import URIRef, RDF
@@ -62,7 +62,9 @@ class GettyEnricher:
                     )(referenced_getty_entity_uri):
                         yield referenced_getty_entity
 
-                        self.__get_getty_entity_images(referenced_getty_entity)
+                        yield from self.__get_getty_entity_images(
+                            referenced_getty_entity
+                        )
 
                         # Don't use the has_representation images, use the ones from the IIIF presentation API manifest
                         # if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
@@ -87,7 +89,7 @@ class GettyEnricher:
 
     def __get_getty_entity_images(
         self, getty_entity: LinkedArtModel
-    ) -> Tuple[Image, ...]:
+    ) -> Iterable[Model]:
         for is_subject_of_model in getty_entity.p129i_is_subject_of:
             if not isinstance(is_subject_of_model, LinkedArtInformationObject):
                 continue
@@ -96,9 +98,10 @@ class GettyEnricher:
                 not in is_subject_of_model.p2_has_type
             ):
                 continue
-            return self.__get_iiif_presentation_api_manifest_images(
+            yield from self.__get_iiif_presentation_api_manifest_images(
                 is_subject_of_model.uri
             )
+            return
         self.__logger.warning(
             "entity %s is not associated with an IIIF manifest", getty_entity.uri
         )
@@ -116,14 +119,33 @@ class GettyEnricher:
 
     def __get_iiif_presentation_api_manifest_images(
         self, iiif_presentation_api_manifest_uri: URIRef
-    ) -> Tuple[Image, ...]:
+    ) -> Iterable[Model]:
         manifest = IiifPresentationApiManifest.from_rdf(
             get_json_ld_resource(
                 file_cache=self.__file_cache,
                 json_ld_resource_uri=iiif_presentation_api_manifest_uri,
             )
         )
-        return ()
+        attribution_label = manifest.attribution_label
+
+        yielded_rights_statement_uris: Set[URIRef] = set()
+        for sequence in manifest.has_sequences:
+            for canvas in sequence.has_canvases:
+                if canvas.rights not in yielded_rights_statement_uris:
+                    yield self.__available_rights_statements_by_uri[canvas.rights]
+                    yielded_rights_statement_uris.add(canvas.rights)
+
+                for image_annotation in canvas.has_image_annotations:
+                    image = image_annotation.has_body
+                    assert isinstance(image, Image)
+
+                    # Propagate the rights and attribution label to the image RDF
+                    assert not image.rights_holders
+                    assert not image.rights_statements
+                    image_replacer = image.replacer()
+                    image_replacer.add_rights_holder(attribution_label)
+                    image_replacer.add_rights_statement(canvas.rights)
+                    yield image_replacer.build()
 
     @staticmethod
     def __get_model_getty_entity_references(

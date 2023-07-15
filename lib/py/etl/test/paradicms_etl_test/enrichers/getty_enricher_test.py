@@ -21,15 +21,13 @@ def test_enrich_stub_work(data_dir_path: Path):
             (stub_work,)
         )
     )
-    assert len(enriched_models) == 4  # Enricher should eat the stub
-    assert any(
-        isinstance(model, Image)
-        for model in enriched_models
-        if model.uri
-        == URIRef(
-            "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg"
-        )
-    )
+    assert len(enriched_models) == 9  # Enricher should eat the stub
+    images = tuple(model for model in enriched_models if isinstance(model, Image))
+    assert len(images) == 5
+    for image in images:
+        assert image.rights_holders
+        assert image.rights_statements
+    # There may be duplicate RightsStatements and Licenses
     assert any(
         isinstance(model, License)
         for model in enriched_models
