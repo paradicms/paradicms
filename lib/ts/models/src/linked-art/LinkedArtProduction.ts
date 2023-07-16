@@ -44,6 +44,10 @@ export class LinkedArtProduction
     return null;
   }
 
+  override get displayDate(): string | null {
+    return this.hasTimeSpan?.label ?? super.displayDate;
+  }
+
   get endDate(): DateTimeDescription | null {
     return this.hasTimeSpan?.endOfTheEnd ?? null;
   }

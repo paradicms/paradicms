@@ -1,6 +1,7 @@
 import {textFactories} from "./textFactories";
 import {
   cc,
+  crm,
   dcmitype,
   dcterms,
   foaf,
@@ -26,6 +27,14 @@ import {SchemaPlace} from "./schema/SchemaPlace";
 import {DcText} from "./dc/DcText";
 import {DcImage} from "./dc/DcImage";
 import {WikibaseTimeValue} from "./wikibase/WikibaseTimeValue";
+import {LinkedArtProduction} from "./linked-art/LinkedArtProduction";
+import {LinkedArtPerson} from "./linked-art/LinkedArtPerson";
+import {LinkedArtRight} from "./linked-art/LinkedArtRight";
+import {LinkedArtLinguisticAppellation} from "./linked-art/LinkedArtLinguisticAppellation";
+import {LinkedArtLinguisticObject} from "./linked-art/LinkedArtLinguisticObject";
+import {LinkedArtVisualItem} from "./linked-art/LinkedArtVisualItem";
+import {LinkedArtTimeSpan} from "./linked-art/LinkedArtTimeSpan";
+import {linkedArtModelFactories} from "./linked-art/linkedArtModelFactories";
 
 export const registerResourceBackedModelFactories = () => {
   agentFactories.register(foaf.Organization, FoafOrganization);
@@ -42,6 +51,20 @@ export const registerResourceBackedModelFactories = () => {
 
   licenseFactories.register(dcterms.LicenseDocument, DcLicenseDocument);
   licenseFactories.register(cc.License, CreativeCommonsLicense);
+
+  linkedArtModelFactories.register(crm.E12_Production, LinkedArtProduction);
+  linkedArtModelFactories.register(crm.E21_Person, LinkedArtPerson);
+  linkedArtModelFactories.register(crm.E30_Right, LinkedArtRight);
+  linkedArtModelFactories.register(
+    crm.E33_E41_Linguistic_Appellation,
+    LinkedArtLinguisticAppellation
+  );
+  linkedArtModelFactories.register(
+    crm.E33_Linguistic_Object,
+    LinkedArtLinguisticObject
+  );
+  linkedArtModelFactories.register(crm.E36_Visual_Item, LinkedArtVisualItem);
+  linkedArtModelFactories.register(crm.E52_Time_Span, LinkedArtTimeSpan);
 
   locationFactories.register(schema.Place, SchemaPlace);
 
