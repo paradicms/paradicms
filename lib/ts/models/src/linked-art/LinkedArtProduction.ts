@@ -54,7 +54,7 @@ export class LinkedArtProduction
 
   @Memoize()
   get hasTimeSpan(): LinkedArtTimeSpan | null {
-    return this.findAndMapObject(crm.P4_has_time_span, term => {
+    return this.findAndMapObject(crm["P4_has_time-span"], term => {
       const model = mapTermToLinkedArtModel(this, term);
       return model instanceof LinkedArtTimeSpan
         ? (model as LinkedArtTimeSpan)

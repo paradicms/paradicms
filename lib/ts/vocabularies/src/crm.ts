@@ -9,7 +9,7 @@ interface Crm {
     "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by"
   >;
   P2_has_type: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/P2_has_type">;
-  P4_has_time_span: NamedNode<
+  "P4_has_time-span": NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span"
   >;
   P14_carried_out_by: NamedNode<
@@ -45,7 +45,7 @@ interface Crm {
     "http://www.cidoc-crm.org/cidoc-crm/E12_Production"
   >;
   E21_Person: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/E21_Person">;
-  E22_Human_Made_Object: NamedNode<
+  "E22_Human-Made_Object": NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E22_Human-Made_Object"
   >;
   E30_Right: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/E30_Right">;

@@ -7,7 +7,7 @@ import {LinkedArtHumanMadeObject} from "./LinkedArtHumanMadeObject";
 export class LinkedArtModelReader extends DatasetModelReader {
     override readWorks(kwds: { modelSet: ModelSet }): readonly Work[] {
         return this.readNamedModels({
-            class_: crm.E22_Human_Made_Object,
+            class_: crm["E22_Human-Made_Object"],
             factory: LinkedArtHumanMadeObject,
             ...kwds,
         });
