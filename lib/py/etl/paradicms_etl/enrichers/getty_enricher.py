@@ -10,6 +10,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.iiif.iiif_presentation_api_manifest import (
     IiifPresentationApiManifest,
 )
@@ -28,6 +29,7 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
     RightsStatementsDotOrgRightsStatements,
 )
 from paradicms_etl.models.stub.stub_model import StubModel
+from paradicms_etl.models.work import Work
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.get_json_ld_resource import get_json_ld_resource
 
@@ -95,6 +97,11 @@ class GettyEnricher:
 
                         if isinstance(referenced_getty_entity, RightsMixin):
                             __add_rights_references(referenced_getty_entity)
+                        elif isinstance(referenced_getty_entity, Work):
+                            if referenced_getty_entity.description:
+                                __add_rights_references(
+                                    referenced_getty_entity.description
+                                )
 
             if not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
@@ -155,15 +162,19 @@ class GettyEnricher:
             for canvas in sequence.has_canvases:
                 for image_annotation in canvas.has_image_annotations:
                     image = image_annotation.has_body
-                    assert isinstance(image, Image)
+                    assert isinstance(image, DcImage)
 
+                    # Rebuild the Image so we don't carry along the entire IIIF manifest RDF in every Image
+                    concise_image_builder = DcImage.builder(uri=image.uri)
+                    # Reuse the exact dimensions
+                    assert image.exact_dimensions
+                    concise_image_builder.set_exact_dimensions(image.exact_dimensions)
                     # Propagate the rights and attribution label to the image RDF
                     assert not image.rights_holders
+                    concise_image_builder.add_rights_holder(attribution_label)
                     assert not image.rights_statements
-                    image_replacer = image.replacer()
-                    image_replacer.add_rights_holder(attribution_label)
-                    image_replacer.add_rights_statement(canvas.rights)
-                    yield image_replacer.build()
+                    concise_image_builder.add_rights_statement(canvas.rights)
+                    yield concise_image_builder.build()
 
     @staticmethod
     def __get_model_getty_entity_references(
