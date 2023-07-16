@@ -58,7 +58,9 @@ interface Crm {
   E36_Visual_Item: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E36_Visual_Item"
   >;
-  E52_Time_Span: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span">;
+  "E52_Time-Span": NamedNode<
+    "http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span"
+  >;
   E55_Type: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/E55_Type">;
   E73_Information_Object: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object"

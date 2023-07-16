@@ -10,21 +10,20 @@ export class LinkedArtTimeSpan extends Mixin(
   LinkedArtModel,
   LinkedArtIsIdentifiedByMixin
 ) {
-  override get label(): string | null {
-    if (super.label) {
-      return this.label;
-    } else if (this.isIdentifiedBy.length > 0) {
-      return this.isIdentifiedBy[0].label;
-    } else {
-      return null;
-    }
-  }
-
   @Memoize()
   get beginOfTheBegin(): DateTimeDescription | null {
     return this.findAndMapObject(crm.P82a_begin_of_the_begin, term =>
       mapTermToDateTimeDescription(this, term)
     );
+  }
+
+  get displayDate(): string | null {
+    for (const isIdentifiedBy of this.isIdentifiedBy) {
+      for (const symbolicContent of isIdentifiedBy.hasSymbolicContent) {
+        return symbolicContent.value;
+      }
+    }
+    return null;
   }
 
   @Memoize()

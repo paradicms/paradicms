@@ -45,7 +45,7 @@ export class LinkedArtProduction
   }
 
   override get displayDate(): string | null {
-    return this.hasTimeSpan?.label ?? super.displayDate;
+    return this.hasTimeSpan?.displayDate ?? super.displayDate;
   }
 
   get endDate(): DateTimeDescription | null {

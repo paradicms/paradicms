@@ -26,7 +26,7 @@ export class LinkedArtHumanMadeObject
   }
 
   get displayDate(): string | null {
-    return this.wasProducedBy?.hasTimeSpan?.label ?? null;
+    return this.wasProducedBy?.hasTimeSpan?.displayDate ?? null;
   }
 
   get events(): readonly WorkEventUnion[] {

@@ -64,7 +64,7 @@ export const registerResourceBackedModelFactories = () => {
     LinkedArtLinguisticObject
   );
   linkedArtModelFactories.register(crm.E36_Visual_Item, LinkedArtVisualItem);
-  linkedArtModelFactories.register(crm.E52_Time_Span, LinkedArtTimeSpan);
+  linkedArtModelFactories.register(crm["E52_Time-Span"], LinkedArtTimeSpan);
 
   locationFactories.register(schema.Place, SchemaPlace);
 
