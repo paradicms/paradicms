@@ -1,12 +1,12 @@
 import json
-from typing import Any
+from typing import Any, Dict
 from urllib.parse import urlparse
 
 from rdflib import URIRef
 
 from paradicms_etl.utils.file_cache import FileCache
 
-__RESOLVED_JSON_LD_CONTEXT_CACHE = {}
+__RESOLVED_JSON_LD_CONTEXT_CACHE: Dict[str, Any] = {}
 
 
 def __recursively_resolve_json_ld_context(
