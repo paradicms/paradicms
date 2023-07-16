@@ -1,10 +1,11 @@
 from typing import Union
 
-from rdflib import URIRef, Graph, DCMITYPE
+from rdflib import URIRef, Graph, DCMITYPE, DCTERMS
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
 from paradicms_etl.models.dc.dc_model import DcModel
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 
@@ -15,6 +16,36 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
         DcImagesMixin.Builder,
         Work.Builder,
     ):
+        def add_alternative(self, alternative: str) -> "DcPhysicalObject.Builder":
+            self.add(DCTERMS.alternative, alternative)
+            return self
+
+        def add_contributor(
+            self, contributor: Union[str, URIRef]
+        ) -> "DcPhysicalObject.Builder":
+            self.add(DCTERMS.contributor, contributor)
+            return self
+
+        def add_creator(
+            self, creator: Union[str, URIRef]
+        ) -> "DcPhysicalObject.Builder":
+            self.add(DCTERMS.creator, creator)
+            return self
+
+        def add_identifier(self, identifier: str) -> "DcPhysicalObject.Builder":
+            self.add(DCTERMS.identifier, identifier)
+            return self
+
+        def add_provenance(self, provenance: str) -> "DcPhysicalObject.Builder":
+            self.add(DCTERMS.provenance, provenance)
+            return self
+
+        def add_spatial(
+            self, spatial: Union[str, Location, URIRef]
+        ) -> "DcPhysicalObject.Builder":
+            self.add(DCTERMS.spatial, spatial)
+            return self
+
         def build(self) -> "DcPhysicalObject":
             return DcPhysicalObject(self._resource)
 
@@ -30,7 +61,7 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
 
     @property
     def description(self) -> Union[str, Text, None]:
-        return DcModel.description.fget(self)  # type: ignore
+        return self._optional_value(DCTERMS.description, self._map_term_to_str_or_text)  # type: ignore
 
     @property
     def label(self) -> str:

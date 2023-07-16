@@ -12,7 +12,7 @@ class DcCollection(DcModel, DcImagesMixin, Collection):
     class Builder(DcModel.Builder, DcImagesMixin.Builder, Collection.Builder):
         def add_work(self, work: URIRef) -> "DcCollection.Builder":
             # dcterms:hasPart is only supposed to be for sub-collections, hi-jacking it here
-            self.add_part(work)
+            self.add(DCTERMS.hasPart, work)
             return self
 
         def build(self) -> "DcCollection":

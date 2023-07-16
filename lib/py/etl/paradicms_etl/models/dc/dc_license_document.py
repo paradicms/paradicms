@@ -18,11 +18,11 @@ class DcLicenseDocument(DcModel, License):
             return DcLicenseDocument(self._resource)
 
         def set_identifier(self, identifier: str) -> "DcLicenseDocument.Builder":
-            super().set_identifier(identifier)
+            self.set(DCTERMS.identifier, identifier)
             return self
 
         def set_version(self, version: str) -> "DcLicenseDocument.Builder":
-            super().set_version(version)
+            self.set(DCTERMS.hasVersion, version)
             return self
 
     def __init__(self, resource: Resource):

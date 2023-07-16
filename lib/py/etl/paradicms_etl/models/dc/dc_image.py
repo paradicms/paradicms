@@ -5,6 +5,7 @@ from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.dc.dc_model import DcModel
+from paradicms_etl.models.dc.dc_rights_mixin import DcRightsMixin
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
@@ -13,12 +14,16 @@ from paradicms_etl.utils.clone_graph import clone_graph
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 
-class DcImage(DcModel, Image):
+class DcImage(DcModel, DcRightsMixin, Image):
     """
     A dcmitype:Image.
     """
 
-    class Builder(DcModel.Builder, Image.Builder):
+    class Builder(DcModel.Builder, DcRightsMixin.Builder, Image.Builder):
+        def add_identifier(self, identifier: str) -> "DcImage.Builder":
+            self.add(DCTERMS.identifier, identifier)
+            return self
+
         def add_thumbnail(self, thumbnail: URIRef) -> "DcImage.Builder":
             # (thumbnail, dcterms:source, original image) in this graph.
             # Dublin Core doesn't have an inverse of dcterms:source.
@@ -54,7 +59,7 @@ class DcImage(DcModel, Image):
             return self
 
         def set_format(self, format_: str) -> "DcImage.Builder":
-            super().set_format(format_)
+            self.set(DCTERMS["format"], format_)
             return self
 
         def set_max_dimensions(
