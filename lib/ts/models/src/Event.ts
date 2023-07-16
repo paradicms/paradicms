@@ -1,16 +1,19 @@
 import {DateTimeDescription} from "./DateTimeDescription";
 import {Location} from "./Location";
-import {Text} from "./Text";
 import {Model} from "./Model";
 import {ImagesMixin} from "./ImagesMixin";
 import {ThumbnailMixin} from "./ThumbnailMixin";
 import {AgentUnion} from "./AgentUnion";
+import {DescriptionMixin} from "./DescriptionMixin";
 
-export interface Event extends ImagesMixin, Model, ThumbnailMixin {
+export interface Event
+  extends DescriptionMixin,
+    ImagesMixin,
+    Model,
+    ThumbnailMixin {
   readonly agents: readonly AgentUnion[];
   compareByDate(other: Event): number;
   readonly date: DateTimeDescription | null;
-  readonly description: Text | null;
   readonly displayDate: string | null;
   readonly label: string;
   readonly endDate: DateTimeDescription | null;
