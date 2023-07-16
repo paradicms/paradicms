@@ -20,10 +20,10 @@ class LinkedArtDigitalObject(LinkedArtModel):
             self.set(LA.access_point, access_point)
             return self
 
-        def set_p2_has_type(
-            self, p2_has_type: LinkedArtType
+        def set_has_type(
+            self, has_type: LinkedArtType
         ) -> "LinkedArtDigitalObject.Builder":
-            self.set(CRM.P2_has_type, p2_has_type)
+            self.set(CRM.P2_has_type, has_type)
             return self
 
     @classmethod

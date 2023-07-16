@@ -16,19 +16,19 @@ class LinkedArtImagesMixin(LinkedArtModelMixin, ImagesMixin):
             return self
 
     @property
-    def image_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(
-            model.uri
-            for model in self.p138i_has_representation
-            if isinstance(model, LinkedArtVisualItem)
-        )
-
-    @property
-    def p138i_has_representation(self) -> Tuple["LinkedArtModel", ...]:  # type: ignore
+    def has_representation(self) -> Tuple["LinkedArtModel", ...]:  # type: ignore
         return tuple(
             self._values(
                 CRM.P138i_has_representation, self._map_term_to_linked_art_model
             )
+        )
+
+    @property
+    def image_uris(self) -> Tuple[URIRef, ...]:
+        return tuple(
+            model.uri
+            for model in self.has_representation
+            if isinstance(model, LinkedArtVisualItem)
         )
 
     @abstractmethod

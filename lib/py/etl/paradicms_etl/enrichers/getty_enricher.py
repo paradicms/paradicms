@@ -113,12 +113,12 @@ class GettyEnricher:
     def __get_getty_entity_images(
         self, getty_entity: LinkedArtModel
     ) -> Iterable[Image]:
-        for is_subject_of_model in getty_entity.p129i_is_subject_of:
+        for is_subject_of_model in getty_entity.is_subject_of:
             if not isinstance(is_subject_of_model, LinkedArtInformationObject):
                 continue
             if (
                 URIRef("https://data.getty.edu/local/thesaurus/iiif-manifest")
-                not in is_subject_of_model.p2_has_type
+                not in is_subject_of_model.has_type
             ):
                 continue
             yield from self.__get_iiif_presentation_api_manifest_images(

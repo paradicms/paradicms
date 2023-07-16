@@ -23,13 +23,13 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
 
     @property
     def licenses(self) -> Tuple[Union[str, URIRef], ...]:
-        return tuple(flatten(right.p2_has_type for right in self.__p104_is_subject_to))
+        return tuple(flatten(right.has_type for right in self.__is_subject_to))
 
     @property
     def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
         rights_holders: List[str] = []
-        for right in self.__p104_is_subject_to:
-            for acknowledgment in right.p129i_is_subject_of:
+        for right in self.__is_subject_to:
+            for acknowledgment in right.is_subject_of:
                 if isinstance(acknowledgment, LinkedArtLinguisticObject):
                     rights_holders.append(acknowledgment.value)
         return tuple(rights_holders)
@@ -39,7 +39,7 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
         return ()
 
     @property
-    def __p104_is_subject_to(self) -> Iterable[LinkedArtRight]:
+    def __is_subject_to(self) -> Iterable[LinkedArtRight]:
         yield from (
             model
             for model in self._values(

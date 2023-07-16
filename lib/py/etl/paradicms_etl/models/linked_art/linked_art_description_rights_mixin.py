@@ -9,31 +9,31 @@ from paradicms_etl.models.linked_art.linked_art_model_mixin import LinkedArtMode
 from paradicms_etl.models.rights_mixin import RightsMixin
 
 
-class LinkedArtRightsMixin(LinkedArtModelMixin, RightsMixin):
+class LinkedArtDescriptionRightsMixin(LinkedArtModelMixin, RightsMixin):
     class Builder(RightsMixin.Builder):
         def add_contributor(
             self, contributor: Union[str, URIRef]
-        ) -> "LinkedArtRightsMixin.Builder":
+        ) -> "LinkedArtDescriptionRightsMixin.Builder":
             raise NotImplementedError
 
         def add_creator(
             self, creator: Union[str, URIRef]
-        ) -> "LinkedArtRightsMixin.Builder":
+        ) -> "LinkedArtDescriptionRightsMixin.Builder":
             raise NotImplementedError
 
         def add_license(
             self, license: Union[str, URIRef]
-        ) -> "LinkedArtRightsMixin.Builder":
+        ) -> "LinkedArtDescriptionRightsMixin.Builder":
             raise NotImplementedError
 
         def add_rights_holder(
             self, holder: Union[str, URIRef]
-        ) -> "LinkedArtRightsMixin.Builder":
+        ) -> "LinkedArtDescriptionRightsMixin.Builder":
             raise NotImplementedError
 
         def add_rights_statement(
             self, statement: Union[str, URIRef]
-        ) -> "LinkedArtRightsMixin.Builder":
+        ) -> "LinkedArtDescriptionRightsMixin.Builder":
             raise NotImplementedError
 
     @property
@@ -46,10 +46,12 @@ class LinkedArtRightsMixin(LinkedArtModelMixin, RightsMixin):
 
     @property
     def description(self) -> Optional[LinkedArtLinguisticObject]:
-        for model in self.p67i_is_referred_to_by(
-            p2_has_type=URIRef("http://vocab.getty.edu/aat/300080091")
-        ):
-            if isinstance(model, LinkedArtLinguisticObject):
+        description_type = URIRef("http://vocab.getty.edu/aat/300080091")
+        for model in self.is_referred_to_by:
+            if (
+                isinstance(model, LinkedArtLinguisticObject)
+                and description_type in model.has_type
+            ):
                 return model
         return None
 
@@ -71,9 +73,9 @@ class LinkedArtRightsMixin(LinkedArtModelMixin, RightsMixin):
 
     @property
     def rights_statements(self) -> Tuple[Union[str, URIRef], ...]:
+        rights_statement_type = URIRef("http://vocab.getty.edu/aat/300417696")
         return tuple(
             model.uri
-            for model in self.p67i_is_referred_to_by(
-                p2_has_type=URIRef("http://vocab.getty.edu/aat/300417696")
-            )
+            for model in self.is_referred_to_by
+            if rights_statement_type in model.has_type
         )
