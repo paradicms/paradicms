@@ -1,4 +1,4 @@
-from typing import Union, Tuple
+from typing import Union, Tuple, Optional
 
 from rdflib import Literal, URIRef, Graph, XSD, DCMITYPE
 from rdflib.namespace import DCTERMS
@@ -87,6 +87,15 @@ class DcImage(DcModel, Image):
     def copyable(self) -> bool:
         copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
+
+    @property
+    def exact_dimensions(self) -> Optional[ImageDimensions]:
+        height = self._optional_value(EXIF.height, self._map_term_to_int)
+        width = self._optional_value(EXIF.width, self._map_term_to_int)
+        if height is not None and width is not None:
+            return ImageDimensions(height=height, width=width)
+        else:
+            return None
 
     @classmethod
     def json_ld_context(cls):

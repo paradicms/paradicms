@@ -133,6 +133,14 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
+    def _map_term_to_int(term: _StatementObject) -> Optional[int]:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
+            if isinstance(py_value, int):
+                return py_value
+        return None
+
+    @staticmethod
     def _map_term_to_literal(term: _StatementObject) -> Any:
         if isinstance(term, Literal):
             return term.toPython()

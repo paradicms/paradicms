@@ -38,6 +38,11 @@ class ResourceBackedModelMixin(ABC):
 
     @staticmethod
     @abstractmethod
+    def _map_term_to_int(term: _StatementObject) -> Optional[int]:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
     def _map_term_to_model(
         model_class: Type[_ModelT], term: _StatementObject
     ) -> Optional[_ModelT]:
