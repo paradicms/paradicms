@@ -1,6 +1,5 @@
 import {Work} from "../Work";
 import {Mixin} from "ts-mixer";
-import {SameAsRightsMixin} from "./SameAsRightsMixin";
 import {WorkAgent} from "../WorkAgent";
 import {Text} from "../Text";
 import {WorkEventUnion} from "../WorkEventUnion";
@@ -10,10 +9,19 @@ import {Memoize} from "typescript-memoize";
 import {SameAsImagesMixin} from "./SameAsImagesMixin";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {SameAsModel} from "./SameAsModel";
+import {AgentUnion} from "../AgentUnion";
 
-export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>, SameAsRightsMixin<Work>, SomeImageThumbnailMixin) implements Work {
+export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>, SomeImageThumbnailMixin) implements Work {
     get agents(): readonly WorkAgent[] {
         return this.getAllValues(model => model.agents);
+    }
+
+    get contributors(): readonly AgentUnion[] {
+        return this.getUniqueLinkedModels(model => model.contributors);
+    }
+
+    get creators(): readonly AgentUnion[] {
+        return this.getUniqueLinkedModels(model => model.creators);
     }
 
     get description(): Text | null {

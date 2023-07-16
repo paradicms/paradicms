@@ -1,4 +1,4 @@
-from typing import Union, Tuple
+from typing import Union, Tuple, Optional
 
 from rdflib import Literal, URIRef, Graph, XSD, DCMITYPE
 from rdflib.namespace import DCTERMS
@@ -8,7 +8,6 @@ from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.clone_graph import clone_graph
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
@@ -35,8 +34,8 @@ class DcImage(DcModel, Image):
         def build(self) -> "DcImage":
             return DcImage(self._resource)
 
-        def copy_rights(self, other: RightsMixin) -> "DcImage.Builder":
-            RightsMixin.Builder.copy_rights(self, other)
+        def copy_rights(self, other: Image) -> "DcImage.Builder":
+            Image.Builder.copy_rights(self, other)
             return self
 
         def set_copyable(self, copyable: bool) -> "DcImage.Builder":
@@ -86,8 +85,17 @@ class DcImage(DcModel, Image):
 
     @property
     def copyable(self) -> bool:
-        copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
+        copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
+
+    @property
+    def exact_dimensions(self) -> Optional[ImageDimensions]:
+        height = self._optional_value(EXIF.height, self._map_term_to_int)
+        width = self._optional_value(EXIF.width, self._map_term_to_int)
+        if height is not None and width is not None:
+            return ImageDimensions(height=height, width=width)
+        else:
+            return None
 
     @classmethod
     def json_ld_context(cls):
@@ -124,7 +132,7 @@ class DcImage(DcModel, Image):
     @property
     def src(self) -> Union[ImageData, str, URIRef, None]:
         return self._optional_value(  # type: ignore
-            CMS.imageSrc, self._map_image_data_or_str_or_uri_value
+            CMS.imageSrc, self._map_term_to_image_data_or_str_or_uri
         )
 
     @property

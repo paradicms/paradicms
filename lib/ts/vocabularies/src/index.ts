@@ -1,7 +1,8 @@
 export {strict as cms} from "./cms";
 export {strict as configuration} from "./configuration";
+export {strict as crm} from "./crm";
+export {strict as la} from "./la";
 export {strict as schema} from "./schema";
-export {strict as vra} from "./vra";
 export {loose as wd} from "./wd";
 export {loose as wdt} from "./wdt";
 export {strict as wikibase} from "./wikibase";

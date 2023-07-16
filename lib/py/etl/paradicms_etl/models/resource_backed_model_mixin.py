@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Union, Tuple, Callable, Optional, Generator, Any
+from typing import TypeVar, Union, Tuple, Callable, Optional, Generator, Any, Type
 
 from rdflib import URIRef, Literal
 from rdflib.resource import Resource
 
+from paradicms_etl.model import Model
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.text import Text
 
+_ModelT = TypeVar("_ModelT", bound=Model)
 _Predicates = Union[URIRef, Tuple[URIRef, ...]]
 _StatementObject = Union[Literal, Resource]
 _ValueT = TypeVar("_ValueT")
@@ -29,29 +31,41 @@ class ResourceBackedModelMixin(ABC):
 
     @staticmethod
     @abstractmethod
-    def _map_image_data_or_str_or_uri_value(
-        value: _StatementObject,
+    def _map_term_to_image_data_or_str_or_uri(
+        term: _StatementObject,
     ) -> Union[ImageData, str, URIRef, None]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_str_or_uri_value(value: _StatementObject) -> Union[str, URIRef, None]:
+    def _map_term_to_int(term: _StatementObject) -> Optional[int]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_str_or_text_value(value: _StatementObject) -> Union[str, Text, None]:
+    def _map_term_to_model(
+        model_class: Type[_ModelT], term: _StatementObject
+    ) -> Optional[_ModelT]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_str_value(value: _StatementObject) -> Optional[str]:
+    def _map_term_to_str_or_uri(term: _StatementObject) -> Union[str, URIRef, None]:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_uri_value(value: _StatementObject) -> Optional[URIRef]:
+    def _map_term_to_str_or_text(term: _StatementObject) -> Union[str, Text, None]:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def _map_term_to_str(term: _StatementObject) -> Optional[str]:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def _map_term_to_uri(term: _StatementObject) -> Optional[URIRef]:
         raise NotImplementedError
 
     @staticmethod

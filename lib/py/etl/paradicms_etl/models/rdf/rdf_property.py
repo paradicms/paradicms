@@ -76,7 +76,7 @@ class RdfProperty(ResourceBackedModel, FoafImagesMixin, Property):
 
     @property
     def range(self) -> Optional[URIRef]:
-        return self._optional_value(RDFS.range, self._map_uri_value)
+        return self._optional_value(RDFS.range, self._map_term_to_uri)
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

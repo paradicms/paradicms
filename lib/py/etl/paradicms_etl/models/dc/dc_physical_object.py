@@ -1,8 +1,11 @@
+from typing import Union
+
 from rdflib import URIRef, Graph, DCMITYPE
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
 from paradicms_etl.models.dc.dc_model import DcModel
+from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 
 
@@ -24,6 +27,10 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
         builder = cls.Builder(Graph().resource(uri))
         builder.set_title(title)
         return builder
+
+    @property
+    def description(self) -> Union[str, Text, None]:
+        return DcModel.description.fget(self)  # type: ignore
 
     @property
     def label(self) -> str:

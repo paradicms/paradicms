@@ -12,6 +12,7 @@ import {SkosModelReader} from "./skos/SkosModelReader";
 import {FoafModelReader} from "./foaf/FoafModelReader";
 import {RdfModelReader} from "./rdf/RdfModelReader";
 import {DcModelReader} from "./dc/DcModelReader";
+import {LinkedArtModelReader} from "./linked-art/LinkedArtModelReader";
 
 export class ModelSetFactory {
   static fromFastRdfString(fastRdfString: string): ModelSet {
@@ -26,6 +27,7 @@ export class ModelSetFactory {
         new CreativeCommonsModelReader(dataset),
         new DcModelReader(dataset),
         new FoafModelReader(dataset),
+        new LinkedArtModelReader(dataset),
         new RdfModelReader(dataset),
         new SchemaModelReader(dataset),
         new SkosModelReader(dataset),

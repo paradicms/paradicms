@@ -6,7 +6,6 @@ from rdflib.resource import Resource
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_media_object_mixin import (
     SchemaMediaObjectMixin,
 )
@@ -32,8 +31,8 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         def build(self) -> "SchemaImageObject":
             return SchemaImageObject(self._resource)
 
-        def copy_rights(self, other: RightsMixin) -> "SchemaImageObject.Builder":
-            SchemaMediaObjectMixin.Builder.copy_rights(self, other)
+        def copy_rights(self, other: Image) -> "SchemaImageObject.Builder":
+            Image.Builder.copy_rights(self, other)
             return self
 
         def __create_quantitative_value_resource(
@@ -109,11 +108,11 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
 
     @property
     def caption(self) -> Optional[str]:
-        return self._optional_value(SDO.caption, self._map_str_value)
+        return self._optional_value(SDO.caption, self._map_term_to_str)
 
     @property
     def copyable(self) -> bool:
-        copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
+        copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
 
     @classmethod
@@ -152,9 +151,9 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
     @property
     def src(self) -> Union[ImageData, str, URIRef, None]:
         return self._optional_value(  # type:ignore
-            SDO.contentUrl, self._map_image_data_or_str_or_uri_value
+            SDO.contentUrl, self._map_term_to_image_data_or_str_or_uri
         )
 
     @property
     def thumbnail_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(SDO.thumbnail, self._map_uri_value))
+        return tuple(self._values(SDO.thumbnail, self._map_term_to_uri))

@@ -11,7 +11,7 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 class CreativeCommonsLicense(ResourceBackedModel, License):
     @property
     def identifier(self) -> str:
-        return self._required_value(DC.identifier, self._map_str_value)
+        return self._required_value(DC.identifier, self._map_term_to_str)
 
     @classmethod
     def json_ld_context(cls) -> Dict[str, Any]:
@@ -34,4 +34,4 @@ class CreativeCommonsLicense(ResourceBackedModel, License):
 
     @property
     def version(self) -> Optional[str]:
-        return self._optional_value(DCTERMS.hasVersion, self._map_str_value)
+        return self._optional_value(DCTERMS.hasVersion, self._map_term_to_str)

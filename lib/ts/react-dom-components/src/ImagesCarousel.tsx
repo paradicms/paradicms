@@ -1,6 +1,6 @@
 import {Image, imagePlaceholderSrc} from "@paradicms/models";
 import * as React from "react";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useState} from "react";
 import ImageZoom from "react-medium-image-zoom";
 import {Carousel, CarouselItem} from "reactstrap";
 import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
@@ -78,16 +78,9 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
     );
   };
 
-  useEffect(() => {
-    if (onShowImage && originalImages.length > 0) {
-      // Invoke onChange with the first image
-      onShowImage(originalImages[0]);
-    }
-  }, [originalImages]);
-
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const onClickNext = useCallback(() => {
+  const onNext = useCallback(() => {
     // if (animating) return;
     const nextIndex =
       activeIndex === originalImages.length - 1 ? 0 : activeIndex + 1;
@@ -97,7 +90,7 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
     }
   }, [activeIndex]);
 
-  const onClickPrevious = useCallback(() => {
+  const onPrevious = useCallback(() => {
     // if (animating) return;
     const nextIndex =
       activeIndex === 0 ? originalImages.length - 1 : activeIndex - 1;
@@ -120,9 +113,8 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
   return (
     <Carousel
       activeIndex={activeIndex}
-      autoPlay={false}
-      next={onClickNext}
-      previous={onClickPrevious}
+      next={onNext}
+      previous={onPrevious}
       slide={false}
     >
       {/*<CarouselIndicators*/}
@@ -145,12 +137,12 @@ export const ImagesCarousel: React.FunctionComponent<ImagesCarouselProps> = ({
         className="text-primary"
         direction="prev"
         directionText="Previous"
-        onClickHandler={onClickPrevious}
+        onClickHandler={onPrevious}
       />
       <FontAwesomeCarouselControl
         direction="next"
         directionText="Next"
-        onClickHandler={onClickNext}
+        onClickHandler={onNext}
       />
     </Carousel>
   );

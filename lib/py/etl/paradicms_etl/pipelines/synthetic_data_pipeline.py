@@ -7,6 +7,7 @@ from urllib.parse import quote
 from rdflib import DCTERMS, Literal, URIRef, SDO
 
 from paradicms_etl.enricher import Enricher
+from paradicms_etl.enrichers.getty_enricher import GettyEnricher
 from paradicms_etl.enrichers.ncsu_enricher import NcsuEnricher
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
@@ -57,6 +58,11 @@ class SyntheticDataPipeline(Pipeline):
     ID = "synthetic_data"
 
     class __SyntheticDataTransformer:
+        __DESCRIPTION_LICENSE = CreativeCommonsLicenses.BY_4_0
+        __DESCRIPTION_RIGHTS_STATEMENT = RightsStatementsDotOrgRightsStatements.NoC_US
+        __IMAGE_LICENSE = CreativeCommonsLicenses.NC_1_0
+        __IMAGE_RIGHTS_STATEMENT = RightsStatementsDotOrgRightsStatements.InC_EDU
+
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
 
         @dataclass(frozen=True)
@@ -296,11 +302,7 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_exact_dimensions = ImageDimensions(
                     height=1000, width=1000
                 )
-                original_image_license = CreativeCommonsLicenses.NC_1_0
                 original_image_rights_holder = f"{original_image_title} rights holder"
-                original_image_rights_statement = (
-                    RightsStatementsDotOrgRightsStatements.InC_EDU
-                )
                 original_image_src = "https://paradicms.org/img/synthetic/1000x1000.png"
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
@@ -318,8 +320,8 @@ class SyntheticDataPipeline(Pipeline):
                     )
                     original_image_builder.add_rights_holder(
                         original_image_rights_holder
-                    ).add_license(original_image_license.uri).add_rights_statement(
-                        original_image_rights_statement.uri
+                    ).add_license(self.__IMAGE_LICENSE.uri).add_rights_statement(
+                        self.__IMAGE_RIGHTS_STATEMENT.uri
                     )
                 else:
                     original_image_builder = (
@@ -332,8 +334,8 @@ class SyntheticDataPipeline(Pipeline):
                     )
                     original_image_builder.add_rights_holder(
                         original_image_rights_holder
-                    ).add_license(original_image_license.uri).add_rights_statement(
-                        original_image_rights_statement.uri
+                    ).add_license(self.__IMAGE_LICENSE.uri).add_rights_statement(
+                        self.__IMAGE_RIGHTS_STATEMENT.uri
                     )
 
                 for thumbnail_dimensions in (
@@ -390,8 +392,8 @@ class SyntheticDataPipeline(Pipeline):
                 description_builder = DcText.builder(self.__LOREM_IPSUM)
                 description_builder.add_rights_holder(
                     f"{collection_name} description rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                ).add_license(self.__DESCRIPTION_LICENSE.uri).add_rights_statement(
+                    self.__DESCRIPTION_RIGHTS_STATEMENT.uri
                 )
                 collection_builder.set_description(description_builder.build())
 
@@ -569,11 +571,8 @@ class SyntheticDataPipeline(Pipeline):
                 f"{work_title} alternative title {i}" for i in range(2)
             ]
             work_identifiers = [f"{work_title}Id{i}" for i in range(2)]
-            work_license = CreativeCommonsLicenses.NC_1_0
             work_page = URIRef("http://example.com/work/" + str(work_i))
             work_provenance = f"{work_title} provenance"
-            work_rights_holder = f"{work_title} rights holder"
-            work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU
 
             work_builder: Union[DcPhysicalObject.Builder, SchemaCreativeWork.Builder]
             if work_i % 2 == 0:
@@ -610,9 +609,9 @@ class SyntheticDataPipeline(Pipeline):
                     if str(property_.uri).startswith(str(SDO))
                 )
 
-            work_builder.add_license(work_license.uri)
-            work_builder.add_rights_holder(work_rights_holder)
-            work_builder.add_rights_statement(work_rights_statement.uri)
+            # work_builder.add_license(work_license.uri)
+            # work_builder.add_rights_holder(work_rights_holder)
+            # work_builder.add_rights_statement(work_rights_statement.uri)
 
             # Faceted literal properties, which are the same across works
             for property_ in properties:
@@ -675,6 +674,12 @@ class SyntheticDataPipeline(Pipeline):
                 # named_location = named_location_builder.build()
                 yield named_location
                 work_builder.add_spatial(named_location.uri)
+            elif work_i == 4:
+                work_builder.add_same_as(
+                    URIRef(
+                        "https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6"
+                    )
+                )
 
             description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
             if isinstance(work_builder, DcPhysicalObject.Builder):
@@ -688,8 +693,8 @@ class SyntheticDataPipeline(Pipeline):
 
             description_builder.add_rights_holder(
                 f"{work_title} description rights holder"
-            ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+            ).add_license(self.__DESCRIPTION_LICENSE.uri).add_rights_statement(
+                self.__DESCRIPTION_RIGHTS_STATEMENT.uri
             )
             description = description_builder.build()
 
@@ -729,6 +734,7 @@ class SyntheticDataPipeline(Pipeline):
 
         # Help mypy out
         enrichers: List[Enricher] = [
+            GettyEnricher(cache_dir_path=cache_dir_path / "getty"),
             NcsuEnricher(cache_dir_path=cache_dir_path / "ncsu"),
             WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
             WikimediaCommonsEnricher(

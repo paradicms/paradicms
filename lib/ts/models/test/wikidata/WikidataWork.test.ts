@@ -22,6 +22,8 @@ describe("WikidataWork", () => {
     expect(sut.description!.value).to.eq(
       "painting by Lucas Cranach the Elder (Metropolitan Museum of Art)"
     );
+    expect(sut.description!.licenses).not.to.be.empty;
+    expect(sut.description!.rightsStatements).not.to.be.empty;
   });
 
   it("should get the work's display date", () => {

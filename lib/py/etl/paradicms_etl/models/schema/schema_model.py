@@ -33,4 +33,4 @@ class SchemaModel(ResourceBackedModel, SchemaThingMixin):
 
     @property
     def same_as_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(SDO.sameAs, self._map_uri_value))
+        return tuple(self._values(SDO.sameAs, self._map_term_to_uri))

@@ -7,13 +7,15 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
   agents: {
     thumbnail: galleryThumbnailSelector,
   },
+  description: {
+    licenses: true,
+    rightsStatements: true,
+  },
   events: workSearchWorkEventJoinSelector,
-  licenses: true,
   location: true,
   propertyValues: {
     property: {},
     thumbnail: valueThumbnailSelector,
   },
-  rightsStatements: true,
   thumbnail: galleryThumbnailSelector,
 };

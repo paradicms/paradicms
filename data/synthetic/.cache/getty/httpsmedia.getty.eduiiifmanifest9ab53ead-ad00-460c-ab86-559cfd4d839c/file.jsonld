@@ -1,0 +1,322 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json", 
+  "@id": "https://media.getty.edu/iiif/manifest/9ab53ead-ad00-460c-ab86-559cfd4d839c", 
+  "@type": "sc:Manifest", 
+  "attribution": "<p>Images provided here are believed to be in the public domain and are available under the terms of the Getty&rsquo;s <a href=\"http://www.getty.edu/about/opencontent.html\"> Open Content Program</a>.  Texts provided here are © J. Paul Getty Trust, licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/legalcode\"> CC BY 4.0</a>. Terms of use for the Getty logo can be found <a href=\"http://www.getty.edu/legal/copyright.html#logo\"> here</a>.</p>", 
+  "description": [
+    "<p>Goddess of war and wisdom, the stately Minerva stands like a majestic column as she raises her helmet. At her side rests a large shield, on which is carved the frightening head of the Medusa, used to ward off enemies. Her body is composed in a spiral, which provides interesting views from several different angles. The marble statue formed part of a Judgment of Paris group. According to ancient mythology, Paris was chosen to decide between Juno, Minerva, and Venus for the title of \"the fairest.\" Although Minerva promised him fame and glory in war, Paris chose Venus.</p>"
+  ], 
+  "label": "Minerva", 
+  "license": "https://rightsstatements.org/vocab/NoC-US/1.0/", 
+  "logo": "https://www.getty.edu/global/images/getty_logo_primary_blk.png", 
+  "metadata": [
+    {
+      "label": "Artist/Maker", 
+      "value": [
+        "Joseph Nollekens (English, 1737 - 1823)"
+      ]
+    }, 
+    {
+      "label": "Title", 
+      "value": "Minerva"
+    }, 
+    {
+      "label": "Date", 
+      "value": [
+        "1775"
+      ]
+    }, 
+    {
+      "label": "Material", 
+      "value": [
+        "Marble"
+      ]
+    }, 
+    {
+      "label": "Dimensions", 
+      "value": [
+        "Object: 144 cm (56 11/16 in.)"
+      ]
+    }, 
+    {
+      "label": "Accession Number", 
+      "value": [
+        "87.SA.107"
+      ]
+    }, 
+    {
+      "label": "Collection", 
+      "value": "<a href='http://www.getty.edu/art/collection/'>The J. Paul Getty Museum</a>"
+    }, 
+    {
+      "label": "Rights Statement", 
+      "value": "<p>Images provided here are believed to be in the public domain and are available under the terms of the Getty&rsquo;s <a href=\"http://www.getty.edu/about/opencontent.html\"> Open Content Program</a>.  Texts provided here are © J. Paul Getty Trust, licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/legalcode\"> CC BY 4.0</a>. Terms of use for the Getty logo can be found <a href=\"http://www.getty.edu/legal/copyright.html#logo\"> here</a>.</p>"
+    }, 
+    {
+      "label": "Date Modified", 
+      "value": "2023-06-09T08:06:07.549741"
+    }
+  ], 
+  "related": "https://www.getty.edu/art/collection/object/103RRE", 
+  "seeAlso": {
+    "@id": "https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6", 
+    "format": "application/ld+json", 
+    "profile": "https://static.getty.edu/contexts/linked.art/ns/v1.1.0/linked-art.json"
+  }, 
+  "sequences": [
+    {
+      "@id": "https://media.getty.edu/iiif/manifest/9ab53ead-ad00-460c-ab86-559cfd4d839c/default", 
+      "@type": "sc:Sequence", 
+      "canvases": [
+        {
+          "@id": "https://media.getty.edu/iiif/manifest/canvas/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json", 
+          "@type": "sc:Canvas", 
+          "height": 4417, 
+          "images": [
+            {
+              "@id": "https://media.getty.edu/iiif/manifest/annotation/anno-fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json", 
+              "@type": "oa:Annotation", 
+              "motivation": "sc:painting", 
+              "on": "https://media.getty.edu/iiif/manifest/canvas/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json", 
+              "resource": {
+                "@id": "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg", 
+                "@type": "dctypes:Image", 
+                "format": "image/jpeg", 
+                "height": 4417, 
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json", 
+                  "@id": "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8", 
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }, 
+                "width": 2976
+              }
+            }
+          ], 
+          "label": "Main View, full front, post-conservation", 
+          "license": "https://rightsstatements.org/vocab/NoC-US/1.0/", 
+          "metadata": [
+            {
+              "label": "Open Content Quality", 
+              "value": "Yes"
+            }
+          ], 
+          "thumbnail": {
+            "@id": "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/!600,600/0/default.jpg", 
+            "@type": "dctypes:Image", 
+            "format": "image/jpeg", 
+            "height": 600, 
+            "label": "Main View, full front, post-conservation", 
+            "service": {
+              "@context": "http://iiif.io/api/image/2/context.json", 
+              "@id": "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8", 
+              "profile": "http://iiif.io/api/image/2/level2.json"
+            }, 
+            "width": 600
+          }, 
+          "width": 2976
+        }, 
+        {
+          "@id": "https://media.getty.edu/iiif/manifest/canvas/dcca6ffd-310c-4b29-bda5-ce238891c958.json", 
+          "@type": "sc:Canvas", 
+          "height": 3691, 
+          "images": [
+            {
+              "@id": "https://media.getty.edu/iiif/manifest/annotation/anno-dcca6ffd-310c-4b29-bda5-ce238891c958.json", 
+              "@type": "oa:Annotation", 
+              "motivation": "sc:painting", 
+              "on": "https://media.getty.edu/iiif/manifest/canvas/dcca6ffd-310c-4b29-bda5-ce238891c958.json", 
+              "resource": {
+                "@id": "https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958/full/full/0/default.jpg", 
+                "@type": "dctypes:Image", 
+                "format": "image/jpeg", 
+                "height": 3691, 
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json", 
+                  "@id": "https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958", 
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }, 
+                "width": 1770
+              }
+            }
+          ], 
+          "label": "Right side, post-conservation", 
+          "license": "https://rightsstatements.org/vocab/NoC-US/1.0/", 
+          "metadata": [
+            {
+              "label": "Open Content Quality", 
+              "value": "No"
+            }
+          ], 
+          "thumbnail": {
+            "@id": "https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958/full/!600,600/0/default.jpg", 
+            "@type": "dctypes:Image", 
+            "format": "image/jpeg", 
+            "height": 600, 
+            "label": "Right side, post-conservation", 
+            "service": {
+              "@context": "http://iiif.io/api/image/2/context.json", 
+              "@id": "https://media.getty.edu/iiif/image/dcca6ffd-310c-4b29-bda5-ce238891c958", 
+              "profile": "http://iiif.io/api/image/2/level2.json"
+            }, 
+            "width": 600
+          }, 
+          "width": 1770
+        }, 
+        {
+          "@id": "https://media.getty.edu/iiif/manifest/canvas/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json", 
+          "@type": "sc:Canvas", 
+          "height": 6493, 
+          "images": [
+            {
+              "@id": "https://media.getty.edu/iiif/manifest/annotation/anno-25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json", 
+              "@type": "oa:Annotation", 
+              "motivation": "sc:painting", 
+              "on": "https://media.getty.edu/iiif/manifest/canvas/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb.json", 
+              "resource": {
+                "@id": "https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb/full/full/0/default.jpg", 
+                "@type": "dctypes:Image", 
+                "format": "image/jpeg", 
+                "height": 6493, 
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json", 
+                  "@id": "https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb", 
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }, 
+                "width": 4307
+              }
+            }
+          ], 
+          "label": "Full back, post-conservation", 
+          "license": "https://rightsstatements.org/vocab/NoC-US/1.0/", 
+          "metadata": [
+            {
+              "label": "Open Content Quality", 
+              "value": "Yes"
+            }
+          ], 
+          "thumbnail": {
+            "@id": "https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb/full/!600,600/0/default.jpg", 
+            "@type": "dctypes:Image", 
+            "format": "image/jpeg", 
+            "height": 600, 
+            "label": "Full back, post-conservation", 
+            "service": {
+              "@context": "http://iiif.io/api/image/2/context.json", 
+              "@id": "https://media.getty.edu/iiif/image/25ebfd39-29d9-45f9-b6a8-bcfd65fcd2bb", 
+              "profile": "http://iiif.io/api/image/2/level2.json"
+            }, 
+            "width": 600
+          }, 
+          "width": 4307
+        }, 
+        {
+          "@id": "https://media.getty.edu/iiif/manifest/canvas/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json", 
+          "@type": "sc:Canvas", 
+          "height": 780, 
+          "images": [
+            {
+              "@id": "https://media.getty.edu/iiif/manifest/annotation/anno-4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json", 
+              "@type": "oa:Annotation", 
+              "motivation": "sc:painting", 
+              "on": "https://media.getty.edu/iiif/manifest/canvas/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1.json", 
+              "resource": {
+                "@id": "https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1/full/full/0/default.jpg", 
+                "@type": "dctypes:Image", 
+                "format": "image/jpeg", 
+                "height": 780, 
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json", 
+                  "@id": "https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1", 
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }, 
+                "width": 1188
+              }
+            }
+          ], 
+          "label": "Medusa head", 
+          "license": "https://rightsstatements.org/vocab/NoC-US/1.0/", 
+          "metadata": [
+            {
+              "label": "Open Content Quality", 
+              "value": "No"
+            }
+          ], 
+          "thumbnail": {
+            "@id": "https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1/full/!600,600/0/default.jpg", 
+            "@type": "dctypes:Image", 
+            "format": "image/jpeg", 
+            "height": 600, 
+            "label": "Medusa head", 
+            "service": {
+              "@context": "http://iiif.io/api/image/2/context.json", 
+              "@id": "https://media.getty.edu/iiif/image/4e2ed1e3-bc74-4b07-b4dc-a7dfd9fdaac1", 
+              "profile": "http://iiif.io/api/image/2/level2.json"
+            }, 
+            "width": 600
+          }, 
+          "width": 1188
+        }, 
+        {
+          "@id": "https://media.getty.edu/iiif/manifest/canvas/8a4fe713-1d02-454c-af9d-6f8544dcc716.json", 
+          "@type": "sc:Canvas", 
+          "height": 780, 
+          "images": [
+            {
+              "@id": "https://media.getty.edu/iiif/manifest/annotation/anno-8a4fe713-1d02-454c-af9d-6f8544dcc716.json", 
+              "@type": "oa:Annotation", 
+              "motivation": "sc:painting", 
+              "on": "https://media.getty.edu/iiif/manifest/canvas/8a4fe713-1d02-454c-af9d-6f8544dcc716.json", 
+              "resource": {
+                "@id": "https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716/full/full/0/default.jpg", 
+                "@type": "dctypes:Image", 
+                "format": "image/jpeg", 
+                "height": 780, 
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json", 
+                  "@id": "https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716", 
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                }, 
+                "width": 1191
+              }
+            }
+          ], 
+          "label": "Inscription", 
+          "license": "https://rightsstatements.org/vocab/NoC-US/1.0/", 
+          "metadata": [
+            {
+              "label": "Open Content Quality", 
+              "value": "No"
+            }
+          ], 
+          "thumbnail": {
+            "@id": "https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716/full/!600,600/0/default.jpg", 
+            "@type": "dctypes:Image", 
+            "format": "image/jpeg", 
+            "height": 600, 
+            "label": "Inscription", 
+            "service": {
+              "@context": "http://iiif.io/api/image/2/context.json", 
+              "@id": "https://media.getty.edu/iiif/image/8a4fe713-1d02-454c-af9d-6f8544dcc716", 
+              "profile": "http://iiif.io/api/image/2/level2.json"
+            }, 
+            "width": 600
+          }, 
+          "width": 1191
+        }
+      ], 
+      "label": "Default range", 
+      "startCanvas": "https://media.getty.edu/iiif/manifest/canvas/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8.json"
+    }
+  ], 
+  "thumbnail": {
+    "@id": "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/!600,600/0/default.jpg", 
+    "@type": "dctypes:Image", 
+    "format": "image/jpeg", 
+    "label": "Main View, full front, post-conservation", 
+    "service": {
+      "@context": "http://iiif.io/api/image/2/context.json", 
+      "@id": "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8", 
+      "profile": "http://iiif.io/api/image/2/level2.json"
+    }
+  }
+}

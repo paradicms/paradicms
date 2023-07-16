@@ -49,7 +49,7 @@ class CmsPropertyGroup(CmsModel, FoafImagesMixin, PropertyGroup):
 
     @property
     def label(self) -> str:
-        return self._required_value(self.label_property_uri(), self._map_str_value)
+        return self._required_value(self.label_property_uri(), self._map_term_to_str)
 
     @classmethod
     def label_property_uri(cls) -> URIRef:

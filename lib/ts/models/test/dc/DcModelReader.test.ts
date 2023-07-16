@@ -23,7 +23,7 @@ describe("DcModelReader", () => {
     const rightsStatements = sut.readNamedRightsStatements({
       modelSet: dummyModelSet,
     });
-    expect(rightsStatements).to.have.length(2);
+    expect(rightsStatements).to.have.length(4);
     for (const rightsStatement of rightsStatements) {
       expect(rightsStatement.iris).not.to.be.empty;
       expect(rightsStatement.label).not.to.be.empty;

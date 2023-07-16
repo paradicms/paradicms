@@ -1,0 +1,1624 @@
+@prefix crm: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix la: <https://linked.art/ns/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6> a crm:E22_Human-Made_Object ;
+    rdfs:label "Minerva" ;
+    crm:P108i_was_produced_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production> ;
+    crm:P128_carries <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/signature/dad3bb7b-490b-4ac5-995f-35e40ce81f53> ;
+    crm:P129i_is_subject_of <https://media.getty.edu/iiif/manifest/9ab53ead-ad00-460c-ab86-559cfd4d839c>,
+        <https://www.getty.edu/art/collection/object/103RRE> ;
+    crm:P138i_has_representation <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg> ;
+    crm:P1_is_identified_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/5cfa0475-1ffd-435f-994a-0ebdb5c1986f>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/dor-id>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/dor-uuid>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/ea5b291b-88d5-5ecc-8094-b87ee3b753b6>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/tms-id>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/name/2013d5aa-8b8c-4286-9bd3-6d9db893b301> ;
+    crm:P24i_changed_ownership_through <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/3867f84f-863d-561c-a2f6-bc9a9f348996/acquisition>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/c7bc651e-f37f-548d-a2fd-5a999ac0127a/acquisition>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d56d05b2-fb54-5255-927f-8786c540785d/acquisition>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d6efee12-3cb4-5fcf-8619-9338d21fe103/acquisition> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300047090>,
+        <http://vocab.getty.edu/aat/300133025>,
+        <https://data.getty.edu/local/thesaurus/object-record-structure-whole> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimension/66c789cc-87ce-40f1-a5e2-32c126bd4f6a>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/sort-number> ;
+    crm:P50_has_current_keeper <https://data.getty.edu/museum/collection/group/d05ab85a-988f-4dde-891a-035fcc7676e0> ;
+    crm:P52_has_current_owner <https://data.getty.edu/museum/collection/group/c496a7b4-6087-4deb-a1ac-0f21bd3fd87b> ;
+    crm:P55_has_current_location <https://data.getty.edu/museum/collection/place/5ab470c8-a4fe-4fee-b2d1-70d4403613a7> ;
+    crm:P65_shows_visual_item <https://data.getty.edu/media/image/1c913532-86fc-51aa-aee4-ad3d21108503>,
+        <https://data.getty.edu/media/image/272bfc6f-c37f-5370-8840-d44286ffbfa8>,
+        <https://data.getty.edu/media/image/38958ac5-4345-5887-80ce-3a1e58a2d9bc>,
+        <https://data.getty.edu/media/image/48a166e2-2c03-5fed-8d48-e40a53f02fa4>,
+        <https://data.getty.edu/media/image/bb58d8d4-05ff-5685-9bd9-c7afd0278a03> ;
+    crm:P67i_is_referred_to_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/1191c2d5-6163-458f-b2f1-5670e82b4c86>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/26662315-50d0-4412-8ee2-57491b72b58b>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/29ff4e04-c86a-4be9-8cfc-b62923d65439>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/347d656f-37d2-4796-9897-f766209a64b7>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/55ce7185-1af7-4f69-9b3c-9dde3d5940ea>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/791de498-eb5d-4a58-851c-2c3d8476c8e2>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/849d574b-5f91-4987-934e-e6fca6ae9ea4>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/9c25a0b2-8213-4265-8675-bb86557bfbe9>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c2717eb8-21d1-40aa-89a8-44a31fc2e815>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c4148394-8c3e-4ae3-8b65-b37943b2952d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/d941afd9-c55b-4586-ac18-91a06516fdbd>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/ea04e747-7314-41aa-aa57-b0d4fcf5e2f4>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/f2f4e41d-111f-41af-9c58-3b1ee3261f6c>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/culture/20e4ef57-1162-4783-a6d2-756f4658d0c2>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/048f02b7-2646-5d4c-8740-265848eea8d2>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/1fa79f63-71c5-5723-a7b2-850eb1f7b645>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/element>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/materials-description/d5919c0d-b424-403f-93fb-6b55bfdfa677>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/place/created>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/0bb3e0eb-7f25-4191-8939-3cdd8cd45eef>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/12e1b134-95aa-48c2-82d3-25d9c1611f5b>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/15fc6380-5c87-433a-af38-2a970f777999>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/272761e4-0fd4-49f6-b851-1f8861185e4a>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/46d37124-9d93-4a6a-b271-c7a4d46cc4ed>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/85e84bc4-fabc-40a3-9271-6c0859e0ca87>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9758b339-088c-4878-81b5-43ab46114330>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9df43c24-280f-4109-98ec-a3e9e6d75cd0>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/c25d5fed-2c4d-4e7a-8747-93ff383f4d67>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/text/3386f1f9-e503-4bd8-b7f3-d09687d2a80d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/type>,
+        <https://rightsstatements.org/vocab/NoC-US/1.0/> .
+
+<http://iiif.io/api/presentation> a crm:E73_Information_Object ;
+    rdfs:label "IIIF Presentation API" .
+
+<http://vocab.getty.edu/aat/300025103> a crm:E55_Type ;
+    rdfs:label "Artists (Visual Artists)" .
+
+<http://vocab.getty.edu/aat/300028705> a crm:E55_Type ;
+    rdfs:label "Signature (Names)" .
+
+<http://vocab.getty.edu/aat/300047090> a crm:E55_Type ;
+    rdfs:label "Sculpture (Visual Works)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300435444> .
+
+<http://vocab.getty.edu/aat/300055644> a crm:E55_Type ;
+    rdfs:label "Height" .
+
+<http://vocab.getty.edu/aat/300055768> a crm:E55_Type ;
+    rdfs:label "Culture" .
+
+<http://vocab.getty.edu/aat/300133025> a crm:E55_Type ;
+    rdfs:label "Artwork" .
+
+<http://vocab.getty.edu/aat/300240057> a crm:E55_Type ;
+    rdfs:label "Galleries (Display Spaces) [Object On Display]" .
+
+<http://vocab.getty.edu/aat/300312355> a crm:E55_Type ;
+    rdfs:label "Accession Number" .
+
+<http://vocab.getty.edu/aat/300379098> a crm:E58_Measurement_Unit ;
+    rdfs:label "Centimeters (Measurements)" .
+
+<http://vocab.getty.edu/aat/300404626> a crm:E55_Type ;
+    rdfs:label "Identification Number" .
+
+<http://vocab.getty.edu/aat/300404764> a crm:E55_Type ;
+    rdfs:label "Sources (General Concept)" .
+
+<http://vocab.getty.edu/aat/300417193> a crm:E55_Type ;
+    rdfs:label "Titles (General, Names)" .
+
+<http://vocab.getty.edu/aat/300417227> a crm:E55_Type ;
+    rdfs:label "Alternate Title" .
+
+<http://vocab.getty.edu/aat/300417696> a crm:E55_Type ;
+    rdfs:label "Rights (Legal Concept)" .
+
+<http://vocab.getty.edu/aat/300435418> a crm:E55_Type ;
+    rdfs:label "Credit Line" .
+
+<http://vocab.getty.edu/aat/300435429> a crm:E55_Type ;
+    rdfs:label "Materials Description" .
+
+<http://vocab.getty.edu/aat/300435430> a crm:E55_Type ;
+    rdfs:label "Dimensions Description" .
+
+<http://vocab.getty.edu/aat/300435443> a crm:E55_Type ;
+    rdfs:label "Object/Work Type (Category)" .
+
+<http://vocab.getty.edu/aat/300435444> a crm:E55_Type ;
+    rdfs:label "Classification (Category)" .
+
+<http://vocab.getty.edu/aat/300435448> a crm:E55_Type ;
+    rdfs:label "Creation Place Description" .
+
+<http://vocab.getty.edu/aat/300444172> a crm:E55_Type ;
+    rdfs:label "Provenance Sales Statement" .
+
+<http://vocab.getty.edu/ulan/500000003> a crm:E55_Type ;
+    rdfs:label "Corporate Bodies" .
+
+<http://vocab.getty.edu/ulan/500115987> a crm:E74_Group ;
+    rdfs:label "The J. Paul Getty Trust, Los Angeles, California" ;
+    crm:P2_has_type <http://vocab.getty.edu/ulan/500000003> .
+
+<http://www.getty.edu/publications/virtuallibrary/0892362081.html> a crm:E33_Linguistic_Object ;
+    rdfs:label "Penny, Nicholas. \"Lord Rockingham's Sculpture Collection and The Judgment of Paris by Nollekens.\" <i>The J. Paul Getty Museum Journal</i> 19 (1991), pp. 5, 23-24, 27, 30, 32, figs. 23, 26." ;
+    dc:format "text/html" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300264578> .
+
+<http://www.getty.edu/publications/virtuallibrary/0892364882.html> a crm:E33_Linguistic_Object ;
+    rdfs:label "Fusco, Peter. <i>Summary Catalogue of European Sculpture in the J. Paul Getty Museum</i> (Los Angeles: J. Paul Getty Museum, 1997), p. 36, ill." ;
+    dc:format "text/html" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300264578> .
+
+<http://www.getty.edu/publications/virtuallibrary/0892367237.html> a crm:E33_Linguistic_Object ;
+    rdfs:label "True, Marion. \"Changing Approaches to Conservation.\" In <i>History of Restoration of Ancient Stone Sculptures, Symposium at the J. Paul Getty Museum, October 25-27, 2001.</i> Janet Burnett Grossmann, ed. (Los Angeles: J. Paul Getty Museum, 2003), pp. 3-4, fig. 2A." ;
+    dc:format "text/html" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300264578> .
+
+<https://data.getty.edu/local/thesaurus/dimensions-measurement-element> a crm:E55_Type ;
+    rdfs:label "Dimensions Measurment (Element)" .
+
+<https://data.getty.edu/local/thesaurus/dimensions-measurement-formatted> a crm:E55_Type ;
+    rdfs:label "Dimensions Measurment (Formatted)" .
+
+<https://data.getty.edu/local/thesaurus/dor-id> a crm:E55_Type ;
+    rdfs:label "Getty DOR ID" .
+
+<https://data.getty.edu/local/thesaurus/dor-uuid> a crm:E55_Type ;
+    rdfs:label "Getty DOR UUID" .
+
+<https://data.getty.edu/local/thesaurus/iiif-manifest> a crm:E55_Type ;
+    rdfs:label "IIIF Manifest" .
+
+<https://data.getty.edu/local/thesaurus/nationality-and-dates> a crm:E55_Type ;
+    rdfs:label "Producer Nationality & Dates" .
+
+<https://data.getty.edu/local/thesaurus/object-record-structure-type> a crm:E55_Type ;
+    rdfs:label "Object Record Structure Type" .
+
+<https://data.getty.edu/local/thesaurus/object-record-structure-whole> a crm:E55_Type ;
+    rdfs:label "Object Record Structure: Whole" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/object-record-structure-type> .
+
+<https://data.getty.edu/local/thesaurus/object-title-primary> a crm:E55_Type ;
+    rdfs:label "Primary Title" .
+
+<https://data.getty.edu/local/thesaurus/producer-description> a crm:E55_Type ;
+    rdfs:label "Producer Description" .
+
+<https://data.getty.edu/local/thesaurus/producer-name> a crm:E55_Type ;
+    rdfs:label "Producer Name" .
+
+<https://data.getty.edu/local/thesaurus/producer-role-statement> a crm:E55_Type ;
+    rdfs:label "Artist/Maker (Producer) Role Statement" .
+
+<https://data.getty.edu/local/thesaurus/provenance-sale-note> a crm:E55_Type ;
+    rdfs:label "Provenance Sale Note" .
+
+<https://data.getty.edu/local/thesaurus/rights-statement> a crm:E55_Type ;
+    rdfs:label "Rights Statement" .
+
+<https://data.getty.edu/local/thesaurus/slug-identifier> a crm:E55_Type ;
+    rdfs:label "Slug Identifier" .
+
+<https://data.getty.edu/local/thesaurus/sort-number> a crm:E55_Type ;
+    rdfs:label "Sort Number" .
+
+<https://data.getty.edu/local/thesaurus/tms-id> a crm:E55_Type ;
+    rdfs:label "Gallery Systems' TMS ID" .
+
+<https://data.getty.edu/media/image/1c913532-86fc-51aa-aee4-ad3d21108503> a crm:E36_Visual_Item ;
+    rdfs:label "Related Media (Image): 00136101 - 3b726668830917e1fac4657c62ef17bf2dbbcfe3" ;
+    dc:format "application/ld+json" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/7f726f8d-279e-420d-bc8a-6660d7e48413/sequence-assignment> ;
+    crm:P1_is_identified_by <https://data.getty.edu/media/image/1c913532-86fc-51aa-aee4-ad3d21108503/id/asset>,
+        <https://data.getty.edu/media/image/1c913532-86fc-51aa-aee4-ad3d21108503/id/name> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300215302> .
+
+<https://data.getty.edu/media/image/1c913532-86fc-51aa-aee4-ad3d21108503/id/asset> a crm:E42_Identifier ;
+    rdfs:label "Asset ID" ;
+    crm:P190_has_symbolic_content "3b726668830917e1fac4657c62ef17bf2dbbcfe3" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-identifier> .
+
+<https://data.getty.edu/media/image/1c913532-86fc-51aa-aee4-ad3d21108503/id/name> a crm:E42_Identifier ;
+    rdfs:label "Asset Name" ;
+    crm:P190_has_symbolic_content "00136101" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-name> .
+
+<https://data.getty.edu/media/image/272bfc6f-c37f-5370-8840-d44286ffbfa8> a crm:E36_Visual_Item ;
+    rdfs:label "Related Media (Image): 001361D1V1 - e69815a43320f2c0be24f4a964d3de13893a32e2" ;
+    dc:format "application/ld+json" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/e70ee8d8-ef4a-415d-858d-ea008d2291ea/sequence-assignment> ;
+    crm:P1_is_identified_by <https://data.getty.edu/media/image/272bfc6f-c37f-5370-8840-d44286ffbfa8/id/asset>,
+        <https://data.getty.edu/media/image/272bfc6f-c37f-5370-8840-d44286ffbfa8/id/name> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300215302> .
+
+<https://data.getty.edu/media/image/272bfc6f-c37f-5370-8840-d44286ffbfa8/id/asset> a crm:E42_Identifier ;
+    rdfs:label "Asset ID" ;
+    crm:P190_has_symbolic_content "e69815a43320f2c0be24f4a964d3de13893a32e2" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-identifier> .
+
+<https://data.getty.edu/media/image/272bfc6f-c37f-5370-8840-d44286ffbfa8/id/name> a crm:E42_Identifier ;
+    rdfs:label "Asset Name" ;
+    crm:P190_has_symbolic_content "001361D1V1" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-name> .
+
+<https://data.getty.edu/media/image/38958ac5-4345-5887-80ce-3a1e58a2d9bc> a crm:E36_Visual_Item ;
+    rdfs:label "Related Media (Image): 001361D2V1 - 1a7e2330a8afdec722fd632abb29149ed9478ffe" ;
+    dc:format "application/ld+json" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/d7bdee0b-6371-4a51-aac1-199d39740332/sequence-assignment> ;
+    crm:P1_is_identified_by <https://data.getty.edu/media/image/38958ac5-4345-5887-80ce-3a1e58a2d9bc/id/asset>,
+        <https://data.getty.edu/media/image/38958ac5-4345-5887-80ce-3a1e58a2d9bc/id/name> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300215302> .
+
+<https://data.getty.edu/media/image/38958ac5-4345-5887-80ce-3a1e58a2d9bc/id/asset> a crm:E42_Identifier ;
+    rdfs:label "Asset ID" ;
+    crm:P190_has_symbolic_content "1a7e2330a8afdec722fd632abb29149ed9478ffe" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-identifier> .
+
+<https://data.getty.edu/media/image/38958ac5-4345-5887-80ce-3a1e58a2d9bc/id/name> a crm:E42_Identifier ;
+    rdfs:label "Asset Name" ;
+    crm:P190_has_symbolic_content "001361D2V1" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-name> .
+
+<https://data.getty.edu/media/image/48a166e2-2c03-5fed-8d48-e40a53f02fa4> a crm:E36_Visual_Item ;
+    rdfs:label "Related Media (Image): 001361F1V1 - 4f0473b56da9c9571dd6a6edaa0bfa9b960e3199" ;
+    dc:format "application/ld+json" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/ba4021e3-f58a-46d9-830b-013b6285b11c/sequence-assignment> ;
+    crm:P1_is_identified_by <https://data.getty.edu/media/image/48a166e2-2c03-5fed-8d48-e40a53f02fa4/id/asset>,
+        <https://data.getty.edu/media/image/48a166e2-2c03-5fed-8d48-e40a53f02fa4/id/name> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300215302> .
+
+<https://data.getty.edu/media/image/48a166e2-2c03-5fed-8d48-e40a53f02fa4/id/asset> a crm:E42_Identifier ;
+    rdfs:label "Asset ID" ;
+    crm:P190_has_symbolic_content "4f0473b56da9c9571dd6a6edaa0bfa9b960e3199" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-identifier> .
+
+<https://data.getty.edu/media/image/48a166e2-2c03-5fed-8d48-e40a53f02fa4/id/name> a crm:E42_Identifier ;
+    rdfs:label "Asset Name" ;
+    crm:P190_has_symbolic_content "001361F1V1" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-name> .
+
+<https://data.getty.edu/media/image/bb58d8d4-05ff-5685-9bd9-c7afd0278a03> a crm:E36_Visual_Item ;
+    rdfs:label "Related Media (Image): 001361F12V1 - c7a94f914433c795b821be1a64729efa4ce78ec7" ;
+    dc:format "application/ld+json" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/478a1eac-406a-4fa0-85e1-8cdeb09d5580/sequence-assignment> ;
+    crm:P1_is_identified_by <https://data.getty.edu/media/image/bb58d8d4-05ff-5685-9bd9-c7afd0278a03/id/asset>,
+        <https://data.getty.edu/media/image/bb58d8d4-05ff-5685-9bd9-c7afd0278a03/id/name> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300215302> .
+
+<https://data.getty.edu/media/image/bb58d8d4-05ff-5685-9bd9-c7afd0278a03/id/asset> a crm:E42_Identifier ;
+    rdfs:label "Asset ID" ;
+    crm:P190_has_symbolic_content "c7a94f914433c795b821be1a64729efa4ce78ec7" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-identifier> .
+
+<https://data.getty.edu/media/image/bb58d8d4-05ff-5685-9bd9-c7afd0278a03/id/name> a crm:E42_Identifier ;
+    rdfs:label "Asset Name" ;
+    crm:P190_has_symbolic_content "001361F12V1" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-name> .
+
+<https://data.getty.edu/museum/collection/document/0bb3e0eb-7f25-4191-8939-3cdd8cd45eef> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - German (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/1191c2d5-6163-458f-b2f1-5670e82b4c86> a crm:E33_Linguistic_Object ;
+    rdfs:label "Seddon, Richard. \"Some Payments by an 18th Century Collector.\" The Antique Collector (1972)" .
+
+<https://data.getty.edu/museum/collection/document/12e1b134-95aa-48c2-82d3-25d9c1611f5b> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - Korean (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/15fc6380-5c87-433a-af38-2a970f777999> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - Spanish (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/26662315-50d0-4412-8ee2-57491b72b58b> a crm:E33_Linguistic_Object ;
+    rdfs:label "Gunnis, Rupert. Dictionary of British Sculptors, 1660-1851 (London: The Abbey Library, 1968)" .
+
+<https://data.getty.edu/museum/collection/document/272761e4-0fd4-49f6-b851-1f8861185e4a> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - Japanese (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/29ff4e04-c86a-4be9-8cfc-b62923d65439> a crm:E33_Linguistic_Object ;
+    rdfs:label "Baker, Malcolm. Figured in Marble: The Making and Viewing of Eighteenth-Century Sculpture (Los Angeles: The J. Paul Getty Museum, 2000)" .
+
+<https://data.getty.edu/museum/collection/document/347d656f-37d2-4796-9897-f766209a64b7> a crm:E33_Linguistic_Object ;
+    rdfs:label "Penny, Nicholas. \"Lord Rockingham's Sculpture Collection and The Judgment of Paris by Nollekens.\" The J. Paul Getty Museum Journal 19 (1991)" .
+
+<https://data.getty.edu/museum/collection/document/46d37124-9d93-4a6a-b271-c7a4d46cc4ed> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - French (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/55ce7185-1af7-4f69-9b3c-9dde3d5940ea> a crm:E33_Linguistic_Object ;
+    rdfs:label "Christie's, London. Important European Sculpture and Works of Art. July 15, 1986." .
+
+<https://data.getty.edu/museum/collection/document/791de498-eb5d-4a58-851c-2c3d8476c8e2> a crm:E33_Linguistic_Object ;
+    rdfs:label "Warner, Richard. A Tour through the Northern Countries of England and the Borders of Scotland. Rev. ed. (Bath: R. Cruttwell 1802), vol. 1 (1802)" .
+
+<https://data.getty.edu/museum/collection/document/849d574b-5f91-4987-934e-e6fca6ae9ea4> a crm:E33_Linguistic_Object ;
+    rdfs:label "Roscoe, Ingrid and Emma Hardy, eds. A Biographical Dictionary of Sculptors in Britain, 1660-1851 (London: Yale University Press, 2009)" .
+
+<https://data.getty.edu/museum/collection/document/85e84bc4-fabc-40a3-9271-6c0859e0ca87> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - Mandarin (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/9758b339-088c-4878-81b5-43ab46114330> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - Italian (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/9c25a0b2-8213-4265-8675-bb86557bfbe9> a crm:E33_Linguistic_Object ;
+    rdfs:label "Whinney, Margaret Dickens. Sculpture in Britain, 1530-1830 (Harmondsworth, Middlesex, Baltimore: Penguin Books, 1964)" .
+
+<https://data.getty.edu/museum/collection/document/9df43c24-280f-4109-98ec-a3e9e6d75cd0> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - Portuguese (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/c25d5fed-2c4d-4e7a-8747-93ff383f4d67> a crm:E33_Linguistic_Object ;
+    rdfs:label "Venus, Minerva, Juno - English (Highlights)" .
+
+<https://data.getty.edu/museum/collection/document/c2717eb8-21d1-40aa-89a8-44a31fc2e815> a crm:E33_Linguistic_Object ;
+    rdfs:label "Rauser, Amelia. The Age of Undress: Art, Fashion, and the Classical Ideal in the 1790s (New Haven: Yale University Press, 2020)" .
+
+<https://data.getty.edu/museum/collection/document/c4148394-8c3e-4ae3-8b65-b37943b2952d> a crm:E33_Linguistic_Object ;
+    rdfs:label "True, Marion. \"Changing Approaches to Conservation.\" In History of Restoration of Ancient Stone Sculptures, Symposium at the J. Paul Getty Museum, October 25-27, 2001. Janet Burnett Grossmann, ed. (Los Angeles: J. Paul Getty Museum, 2003)" .
+
+<https://data.getty.edu/museum/collection/document/d941afd9-c55b-4586-ac18-91a06516fdbd> a crm:E33_Linguistic_Object ;
+    rdfs:label "Whinney, Margaret Dickens. Sculpture in Britain, 1530 to 1830. John Physick, ed. Rev. ed. (London: Penguin Books, 1988)" .
+
+<https://data.getty.edu/museum/collection/document/ea04e747-7314-41aa-aa57-b0d4fcf5e2f4> a crm:E33_Linguistic_Object ;
+    rdfs:label "Graves, Algernon. The Royal Academy of Arts: A Complete Dictionary of Contributors and Their Work from Its Foundation in 1769 to 1904 (1905; repr., London: S.R. Publishers LTD. And Kingsmead Reprints, 1970)" .
+
+<https://data.getty.edu/museum/collection/document/f2f4e41d-111f-41af-9c58-3b1ee3261f6c> a crm:E33_Linguistic_Object ;
+    rdfs:label "Fusco, Peter. Summary Catalogue of European Sculpture in the J. Paul Getty Museum (Los Angeles: J. Paul Getty Museum, 1997)" .
+
+<https://data.getty.edu/museum/collection/group/7c22656d-cbea-4333-a056-be8644da4235> a crm:E74_Group ;
+    rdfs:label "Cyril Humphris, S.A." ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/group/7c22656d-cbea-4333-a056-be8644da4235/attribution> .
+
+<https://data.getty.edu/museum/collection/group/7c22656d-cbea-4333-a056-be8644da4235/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Actor Presentation Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/group/7c22656d-cbea-4333-a056-be8644da4235/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/group/7c22656d-cbea-4333-a056-be8644da4235/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Actor Presentation Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/group/b69975cf-2b78-4532-8f45-e68f2f0a5e85> a crm:E74_Group ;
+    rdfs:label "Wentworth Fitzwilliam Family" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/group/b69975cf-2b78-4532-8f45-e68f2f0a5e85/attribution> .
+
+<https://data.getty.edu/museum/collection/group/b69975cf-2b78-4532-8f45-e68f2f0a5e85/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Actor Presentation Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/group/b69975cf-2b78-4532-8f45-e68f2f0a5e85/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/group/b69975cf-2b78-4532-8f45-e68f2f0a5e85/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Actor Presentation Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/group/d05ab85a-988f-4dde-891a-035fcc7676e0> a crm:E74_Group ;
+    rdfs:label "Sculpture & Decorative Arts (Curatorial Department)" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/1191c2d5-6163-458f-b2f1-5670e82b4c86> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/1191c2d5-6163-458f-b2f1-5670e82b4c86> ;
+    crm:P190_has_symbolic_content "Seddon, Richard. \"Some Payments by an 18th Century Collector.\" <i>The Antique Collector</i> (1972), p. 81." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/1191c2d5-6163-458f-b2f1-5670e82b4c86/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/1191c2d5-6163-458f-b2f1-5670e82b4c86/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 5 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/26662315-50d0-4412-8ee2-57491b72b58b> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/26662315-50d0-4412-8ee2-57491b72b58b> ;
+    crm:P190_has_symbolic_content "Gunnis, Rupert. <i>Dictionary of British Sculptors, 1660-1851</i> (London: The Abbey Library, 1968), p. 277." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/26662315-50d0-4412-8ee2-57491b72b58b/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/26662315-50d0-4412-8ee2-57491b72b58b/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 3 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/29ff4e04-c86a-4be9-8cfc-b62923d65439> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/29ff4e04-c86a-4be9-8cfc-b62923d65439> ;
+    crm:P190_has_symbolic_content "Baker, Malcolm. <i>Figured in Marble: The Making and Viewing of Eighteenth-Century Sculpture</i> (Los Angeles: The J. Paul Getty Museum, 2000), pp. 36-38, fig. 25." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/29ff4e04-c86a-4be9-8cfc-b62923d65439/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/29ff4e04-c86a-4be9-8cfc-b62923d65439/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 10 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/347d656f-37d2-4796-9897-f766209a64b7> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/347d656f-37d2-4796-9897-f766209a64b7> ;
+    crm:P129i_is_subject_of <http://www.getty.edu/publications/virtuallibrary/0892362081.html> ;
+    crm:P190_has_symbolic_content "Penny, Nicholas. \"Lord Rockingham's Sculpture Collection and The Judgment of Paris by Nollekens.\" <i>The J. Paul Getty Museum Journal</i> 19 (1991), pp. 5, 23-24, 27, 30, 32, figs. 23, 26." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/347d656f-37d2-4796-9897-f766209a64b7/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/347d656f-37d2-4796-9897-f766209a64b7/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 8 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/55ce7185-1af7-4f69-9b3c-9dde3d5940ea> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/55ce7185-1af7-4f69-9b3c-9dde3d5940ea> ;
+    crm:P190_has_symbolic_content "Christie's, London. <i>Important European Sculpture and Works of Art.</i> July 15, 1986, pp. 68-69, lot 86, ill." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/55ce7185-1af7-4f69-9b3c-9dde3d5940ea/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/55ce7185-1af7-4f69-9b3c-9dde3d5940ea/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 6 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/791de498-eb5d-4a58-851c-2c3d8476c8e2> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/791de498-eb5d-4a58-851c-2c3d8476c8e2> ;
+    crm:P190_has_symbolic_content "Warner, Richard. <i>A Tour through the Northern Countries of England and the Borders of Scotland.</i> Rev. ed. (Bath: R. Cruttwell 1802), vol. 1 (1802), pp. 219-20 (mentioned among statues at Wentworth Woodhouse)." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/791de498-eb5d-4a58-851c-2c3d8476c8e2/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/791de498-eb5d-4a58-851c-2c3d8476c8e2/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/849d574b-5f91-4987-934e-e6fca6ae9ea4> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/849d574b-5f91-4987-934e-e6fca6ae9ea4> ;
+    crm:P190_has_symbolic_content "Roscoe, Ingrid and Emma Hardy, eds. <i>A Biographical Dictionary of Sculptors in Britain, 1660-1851</i> (London: Yale University Press, 2009), pp. 897, 904, no. 157." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/849d574b-5f91-4987-934e-e6fca6ae9ea4/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/849d574b-5f91-4987-934e-e6fca6ae9ea4/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 12 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/9c25a0b2-8213-4265-8675-bb86557bfbe9> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/9c25a0b2-8213-4265-8675-bb86557bfbe9> ;
+    crm:P190_has_symbolic_content "Whinney, Margaret Dickens. <i>Sculpture in Britain, 1530-1830</i> (Harmondsworth, Middlesex, Baltimore: Penguin Books, 1964), p. 159." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/9c25a0b2-8213-4265-8675-bb86557bfbe9/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/9c25a0b2-8213-4265-8675-bb86557bfbe9/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 2 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c2717eb8-21d1-40aa-89a8-44a31fc2e815> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/c2717eb8-21d1-40aa-89a8-44a31fc2e815> ;
+    crm:P190_has_symbolic_content "Rauser, Amelia. <em>The Age of Undress: Art, Fashion, and the Classical Ideal in the 1790s </em>(New Haven: Yale University Press, 2020), pp. 103-4, fig. 89." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c2717eb8-21d1-40aa-89a8-44a31fc2e815/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c2717eb8-21d1-40aa-89a8-44a31fc2e815/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 13 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c4148394-8c3e-4ae3-8b65-b37943b2952d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/c4148394-8c3e-4ae3-8b65-b37943b2952d> ;
+    crm:P129i_is_subject_of <http://www.getty.edu/publications/virtuallibrary/0892367237.html> ;
+    crm:P190_has_symbolic_content "True, Marion. \"Changing Approaches to Conservation.\" In <i>History of Restoration of Ancient Stone Sculptures, Symposium at the J. Paul Getty Museum, October 25-27, 2001.</i> Janet Burnett Grossmann, ed. (Los Angeles: J. Paul Getty Museum, 2003), pp. 3-4, fig. 2A." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c4148394-8c3e-4ae3-8b65-b37943b2952d/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/c4148394-8c3e-4ae3-8b65-b37943b2952d/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 11 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/d941afd9-c55b-4586-ac18-91a06516fdbd> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/d941afd9-c55b-4586-ac18-91a06516fdbd> ;
+    crm:P190_has_symbolic_content "Whinney, Margaret Dickens. <i>Sculpture in Britain, 1530 to 1830.</i> John Physick, ed. Rev. ed. (London: Penguin Books, 1988), p. 288." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/d941afd9-c55b-4586-ac18-91a06516fdbd/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/d941afd9-c55b-4586-ac18-91a06516fdbd/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 7 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/ea04e747-7314-41aa-aa57-b0d4fcf5e2f4> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/ea04e747-7314-41aa-aa57-b0d4fcf5e2f4> ;
+    crm:P190_has_symbolic_content "Graves, Algernon. <i>The Royal Academy of Arts: A Complete Dictionary of Contributors and Their Work from Its Foundation in 1769 to 1904</i> (1905; repr., London: S.R. Publishers LTD. And Kingsmead Reprints, 1970), vol. 3 (1970), vol. 3 (1970), p. 381." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/ea04e747-7314-41aa-aa57-b0d4fcf5e2f4/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/ea04e747-7314-41aa-aa57-b0d4fcf5e2f4/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 4 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/f2f4e41d-111f-41af-9c58-3b1ee3261f6c> a crm:E33_Linguistic_Object ;
+    rdfs:label "Citation (Bibliographic Reference)" ;
+    dc:format "text/html" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/f2f4e41d-111f-41af-9c58-3b1ee3261f6c> ;
+    crm:P129i_is_subject_of <http://www.getty.edu/publications/virtuallibrary/0892364882.html> ;
+    crm:P190_has_symbolic_content "Fusco, Peter. <i>Summary Catalogue of European Sculpture in the J. Paul Getty Museum</i> (Los Angeles: J. Paul Getty Museum, 1997), p. 36, ill." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/f2f4e41d-111f-41af-9c58-3b1ee3261f6c/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/citation/f2f4e41d-111f-41af-9c58-3b1ee3261f6c/sequence> a crm:E54_Dimension ;
+    rdfs:label "Citation (Bibliographic Reference) Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 9 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/culture/20e4ef57-1162-4783-a6d2-756f4658d0c2> a crm:E33_Linguistic_Object ;
+    rdfs:label "Culture Statement" ;
+    crm:P190_has_symbolic_content "English" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055768>,
+        <http://vocab.getty.edu/aat/300418049> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/048f02b7-2646-5d4c-8740-265848eea8d2> a crm:E33_Linguistic_Object ;
+    rdfs:label "Object Description" ;
+    dc:format "text/html" ;
+    crm:P104_is_subject_to <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/048f02b7-2646-5d4c-8740-265848eea8d2/licensing> ;
+    crm:P190_has_symbolic_content "<p>Goddess of war and wisdom, the stately Minerva stands like a majestic column as she raises her helmet. At her side rests a large shield, on which is carved the frightening head of the Medusa, used to ward off enemies. Her body is composed in a spiral, which provides interesting views from several different angles. The marble statue formed part of a Judgment of Paris group. According to ancient mythology, Paris was chosen to decide between Juno, Minerva, and Venus for the title of \"the fairest.\" Although Minerva promised him fame and glory in war, Paris chose Venus.</p>" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300080091>,
+        <http://vocab.getty.edu/aat/300418049> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/048f02b7-2646-5d4c-8740-265848eea8d2/licensing> a crm:E30_Right ;
+    rdfs:label "License for Object Description" ;
+    crm:P129i_is_subject_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/048f02b7-2646-5d4c-8740-265848eea8d2/licensing/acknowledgements> ;
+    crm:P2_has_type <http://creativecommons.org/licenses/by/4.0/> ;
+    crm:P75i_is_possessed_by <https://data.getty.edu/museum/collection/group/c496a7b4-6087-4deb-a1ac-0f21bd3fd87b> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/048f02b7-2646-5d4c-8740-265848eea8d2/licensing/acknowledgements> a crm:E33_Linguistic_Object ;
+    rdfs:label "Acknowledgements for Object Description" ;
+    crm:P190_has_symbolic_content "Text provided by the J. Paul Getty Museum. Licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300026687> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/1fa79f63-71c5-5723-a7b2-850eb1f7b645> a crm:E33_Linguistic_Object ;
+    rdfs:label "Object Description" ;
+    dc:format "text/markdown" ;
+    crm:P104_is_subject_to <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/1fa79f63-71c5-5723-a7b2-850eb1f7b645/licensing> ;
+    crm:P190_has_symbolic_content "Goddess of war and wisdom, the stately Minerva stands like a majestic column as she raises her helmet. At her side rests a large shield, on which is carved the frightening head of the Medusa, used to ward off enemies. Her body is composed in a spiral, which provides interesting views from several different angles. The marble statue formed part of a Judgment of Paris group. According to ancient mythology, Paris was chosen to decide between Juno, Minerva, and Venus for the title of \"the fairest.\" Although Minerva promised him fame and glory in war, Paris chose Venus." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300080091>,
+        <http://vocab.getty.edu/aat/300418049> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/1fa79f63-71c5-5723-a7b2-850eb1f7b645/licensing> a crm:E30_Right ;
+    rdfs:label "License for Object Description" ;
+    crm:P129i_is_subject_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/1fa79f63-71c5-5723-a7b2-850eb1f7b645/licensing/acknowledgements> ;
+    crm:P2_has_type <http://creativecommons.org/licenses/by/4.0/> ;
+    crm:P75i_is_possessed_by <https://data.getty.edu/museum/collection/group/c496a7b4-6087-4deb-a1ac-0f21bd3fd87b> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/description/1fa79f63-71c5-5723-a7b2-850eb1f7b645/licensing/acknowledgements> a crm:E33_Linguistic_Object ;
+    rdfs:label "Acknowledgements for Object Description" ;
+    crm:P190_has_symbolic_content "Text provided by the J. Paul Getty Museum. Licensed under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/)." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300026687> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimension/66c789cc-87ce-40f1-a5e2-32c126bd4f6a> a crm:E54_Dimension ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimension/66c789cc-87ce-40f1-a5e2-32c126bd4f6a/attribute/sequence>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted/attribute/technique> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055644> ;
+    crm:P90_has_value "143.9865000000" ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300379098> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimension/66c789cc-87ce-40f1-a5e2-32c126bd4f6a/attribute/sequence> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Dimensions Sequence" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimension/66c789cc-87ce-40f1-a5e2-32c126bd4f6a/attribute/sequence/position> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimension/66c789cc-87ce-40f1-a5e2-32c126bd4f6a/attribute/sequence/position> a crm:E54_Dimension ;
+    rdfs:label "Dimensions Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec> a crm:E33_Linguistic_Object ;
+    rdfs:label "Dimensions Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/attribute/sequence>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/attribute/technique> ;
+    crm:P190_has_symbolic_content "Object: 144 cm (56 11/16 in.)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300435430> ;
+    la:member_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/attribute/sequence> a crm:E13_Attribute_Assignment ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/attribute/sequence/position> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/attribute/sequence/position> a crm:E54_Dimension ;
+    rdfs:label "Dimensions Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/attribute/technique> a crm:E13_Attribute_Assignment ;
+    crm:P32_used_general_technique <https://data.getty.edu/local/thesaurus/dimensions-measured-object> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/element> a crm:E33_Linguistic_Object ;
+    rdfs:label "Dimensions Measurement (Element)" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/element/attribute/sequence> ;
+    crm:P190_has_symbolic_content "Object" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/dimensions-measurement-element> ;
+    la:member_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/element/attribute/sequence> a crm:E13_Attribute_Assignment ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/element/attribute/sequence/position> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/element/attribute/sequence/position> a crm:E54_Dimension ;
+    rdfs:label "Dimensions Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted> a crm:E33_Linguistic_Object ;
+    rdfs:label "Dimensions Measurement (Formatted)" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted/attribute/sequence> ;
+    crm:P190_has_symbolic_content "144 cm (56 11/16 in.)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/dimensions-measurement-formatted> ;
+    la:member_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted/attribute/sequence> a crm:E13_Attribute_Assignment ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted/attribute/sequence/position> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted/attribute/sequence/position> a crm:E54_Dimension ;
+    rdfs:label "Dimensions Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/formatted/attribute/technique> a crm:E13_Attribute_Assignment ;
+    crm:P32_used_general_technique <https://data.getty.edu/local/thesaurus/dimensions-measured-object> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/5cfa0475-1ffd-435f-994a-0ebdb5c1986f> a crm:E42_Identifier ;
+    rdfs:label "Accession Number" ;
+    crm:P190_has_symbolic_content "87.SA.107" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300312355>,
+        <http://vocab.getty.edu/aat/300404626>,
+        <http://vocab.getty.edu/aat/300404670> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/dor-id> a crm:E42_Identifier ;
+    rdfs:label "Getty DOR ID" ;
+    crm:P190_has_symbolic_content "1158" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/dor-id>,
+        <https://data.getty.edu/museum/ontology/linked-data/dor-id> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/dor-uuid> a crm:E42_Identifier ;
+    rdfs:label "Getty DOR UUID" ;
+    crm:P190_has_symbolic_content "4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/dor-uuid>,
+        <https://data.getty.edu/museum/ontology/linked-data/dor-uuid> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/ea5b291b-88d5-5ecc-8094-b87ee3b753b6> a crm:E42_Identifier ;
+    rdfs:label "Slug Identifier" ;
+    crm:P190_has_symbolic_content "urn:getty-local:idm:object:slug/103RRE" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/slug-identifier> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/identifier/tms-id> a crm:E42_Identifier ;
+    rdfs:label "Gallery Systems' TMS ID" ;
+    crm:P190_has_symbolic_content "1361" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/tms-id>,
+        <https://data.getty.edu/museum/ontology/linked-data/tms-id> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/materials-description/d5919c0d-b424-403f-93fb-6b55bfdfa677> a crm:E33_Linguistic_Object ;
+    rdfs:label "Materials Description" ;
+    crm:P190_has_symbolic_content "Marble" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300435429> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/name/2013d5aa-8b8c-4286-9bd3-6d9db893b301> a crm:E33_E41_Linguistic_Appellation ;
+    rdfs:label "Preferred Title",
+        "Primary Title" ;
+    crm:P190_has_symbolic_content "Minerva" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404670>,
+        <http://vocab.getty.edu/aat/300417193>,
+        <http://vocab.getty.edu/aat/300417227>,
+        <https://data.getty.edu/local/thesaurus/object-title-primary>,
+        <https://data.getty.edu/museum/ontology/linked-data/tms/object/titles/primary-title> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/place/created> a crm:E33_Linguistic_Object ;
+    rdfs:label "Place Created" ;
+    crm:P190_has_symbolic_content "England" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300435448> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production> a crm:E12_Production ;
+    rdfs:label "Production of Artwork" ;
+    crm:P14_carried_out_by <https://data.getty.edu/museum/collection/person/69bfa010-7ebd-446d-a74b-73d5e81e4f61> ;
+    crm:P4_has_time-span <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/timespan> ;
+    crm:P67i_is_referred_to_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/producer-description>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/producer-name>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/producer-nationality-and-dates> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/producer-description> a crm:E33_Linguistic_Object ;
+    rdfs:label "Artist/Maker (Producer) Description" ;
+    crm:P190_has_symbolic_content "Joseph Nollekens (English, 1737 - 1823)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/producer-description>,
+        <https://data.getty.edu/museum/ontology/linked-data/tms/object/producer-description> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/producer-name> a crm:E33_Linguistic_Object ;
+    rdfs:label "Artist/Maker (Producer) Name" ;
+    crm:P190_has_symbolic_content "Joseph Nollekens" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/producer-name> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/producer-nationality-and-dates> a crm:E33_Linguistic_Object ;
+    rdfs:label "Artist/Maker (Producer) Nationality & Dates" ;
+    crm:P190_has_symbolic_content "English, 1737 - 1823" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/nationality-and-dates> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/role-statement> a crm:E33_Linguistic_Object ;
+    rdfs:label "Artist/Maker (Producer) Role Statement" ;
+    crm:P190_has_symbolic_content "Artists (Visual Artists)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/producer-role-statement>,
+        <https://data.getty.edu/museum/ontology/linked-data/object/artist-maker-role-statement> ;
+    skos:closeMatch <http://vocab.getty.edu/aat/300025103> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/timespan> a crm:E52_Time-Span ;
+    crm:P1_is_identified_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/timespan/name> ;
+    crm:P82a_begin_of_the_begin "1775-01-01T00:00:00"^^xsd:dateTime ;
+    crm:P82b_end_of_the_end "1775-12-31T23:59:59"^^xsd:dateTime .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/timespan/name> a crm:E33_E41_Linguistic_Appellation ;
+    rdfs:label "Date" ;
+    crm:P190_has_symbolic_content "1775" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/citation/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Citation" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/citation/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> ;
+    crm:P190_has_symbolic_content "The sculpture was seen at Wentworth Woodhouse in 1802 by Richard Warner (Warner, A Tour through [...], vol. 1 (1802), pp. 219-20)." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/provenance-citation> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/citation/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Citation Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/citation/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/citation/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Citation Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/location/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Location" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/location/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> ;
+    crm:P190_has_symbolic_content "Wentworth Woodhouse, Yorkshire, England" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444175>,
+        <https://data.getty.edu/local/thesaurus/provenance-location> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/location/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/location/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/location/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/proofed-statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Proofed Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/proofed-statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> ;
+    crm:P190_has_symbolic_content "No problems" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/proofed-statement> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/proofed-statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/proofed-statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/proofed-statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> ;
+    crm:P190_has_symbolic_content "brought from London to Wentworth Woodhouse between 1782 and 1802, by inheritance within the Wentworth Fitzwilliam family." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444174>,
+        <https://data.getty.edu/local/thesaurus/provenance-statement> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Statement Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Statement Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/timespan> a crm:E52_Time-Span ;
+    rdfs:label "Provenance Activity TimeSpan" ;
+    crm:P1_is_identified_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/timespan/name> ;
+    crm:P82a_begin_of_the_begin "1782-01-01T00:00:00"^^xsd:dateTime ;
+    crm:P82b_end_of_the_end "1833-12-31T23:59:59"^^xsd:dateTime .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/timespan/name> a crm:E33_E41_Linguistic_Appellation ;
+    rdfs:label "Provenance Activity TimeSpan Display Name" ;
+    crm:P190_has_symbolic_content "1782 - 1833" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/3867f84f-863d-561c-a2f6-bc9a9f348996/acquisition> a crm:E8_Acquisition ;
+    rdfs:label "Provenance Acquisition for 87.SA.107 associated with Cyril Humphris, S.A." ;
+    crm:P22_transferred_title_to <https://data.getty.edu/museum/collection/group/7c22656d-cbea-4333-a056-be8644da4235> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300157782> ;
+    crm:P9i_forms_part_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/location/ac9091c8-2ef3-472c-9062-51590fa50df6> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Location" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/location/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution> ;
+    crm:P190_has_symbolic_content "Wentworth Woodhouse, Yorkshire, England" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444175>,
+        <https://data.getty.edu/local/thesaurus/provenance-location> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/location/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/location/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/location/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/proofed-statement/ac9091c8-2ef3-472c-9062-51590fa50df6> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Proofed Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/proofed-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution> ;
+    crm:P190_has_symbolic_content "No problems" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/proofed-statement> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/proofed-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/proofed-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/proofed-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/sales-statement/ac9091c8-2ef3-472c-9062-51590fa50df6> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Sales Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/sales-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution> ;
+    crm:P190_has_symbolic_content "sold, Christie's, London, July 15, 1986, lot 86, to Cyril Humphris." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444172>,
+        <https://data.getty.edu/local/thesaurus/provenance-sale-note> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/sales-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Sales Statement Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/sales-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/sales-statement/ac9091c8-2ef3-472c-9062-51590fa50df6/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Sales Statement Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/timespan> a crm:E52_Time-Span ;
+    rdfs:label "Provenance Activity TimeSpan" ;
+    crm:P1_is_identified_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/timespan/name> ;
+    crm:P82a_begin_of_the_begin "1833-01-01T00:00:00"^^xsd:dateTime ;
+    crm:P82b_end_of_the_end "1986-12-31T23:59:59"^^xsd:dateTime .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/timespan/name> a crm:E33_E41_Linguistic_Appellation ;
+    rdfs:label "Provenance Activity TimeSpan Display Name" ;
+    crm:P190_has_symbolic_content "1833 - 1986" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/location/bf2c313b-f781-4efd-8531-81e3fe8a40e5> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Location" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/location/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution> ;
+    crm:P190_has_symbolic_content "London, England" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444175>,
+        <https://data.getty.edu/local/thesaurus/provenance-location> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/location/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/location/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/location/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/proofed-statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Proofed Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/proofed-statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution> ;
+    crm:P190_has_symbolic_content "No problems" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/proofed-statement> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/proofed-statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/proofed-statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/proofed-statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution> ;
+    crm:P190_has_symbolic_content "sold to the J. Paul Getty Museum, 1987." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444174>,
+        <https://data.getty.edu/local/thesaurus/provenance-statement> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Statement Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Statement Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/timespan> a crm:E52_Time-Span ;
+    rdfs:label "Provenance Activity TimeSpan" ;
+    crm:P1_is_identified_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/timespan/name> ;
+    crm:P82a_begin_of_the_begin "1986-01-01T00:00:00"^^xsd:dateTime ;
+    crm:P82b_end_of_the_end "1987-12-31T23:59:59"^^xsd:dateTime .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/timespan/name> a crm:E33_E41_Linguistic_Appellation ;
+    rdfs:label "Provenance Activity TimeSpan Display Name" ;
+    crm:P190_has_symbolic_content "1986 - 1987" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/c7bc651e-f37f-548d-a2fd-5a999ac0127a/acquisition> a crm:E8_Acquisition ;
+    rdfs:label "Provenance Acquisition for 87.SA.107 associated with William Wentworth, 4th earl Fitzwilliam" ;
+    crm:P22_transferred_title_to <https://data.getty.edu/museum/collection/person/746d94c4-1b66-4f35-812c-f239a699b096> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300157782> ;
+    crm:P9i_forms_part_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/citation/d1e4509c-4d15-4beb-bf86-144d79a7568d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Citation" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/citation/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> ;
+    crm:P190_has_symbolic_content "Penny, 1991, p. 28, refers to payments to the artist, and p. 23, mentions the 1782 inventory for the location." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300311705>,
+        <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/provenance-citation> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/citation/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Citation Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/citation/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/citation/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Citation Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/location/d1e4509c-4d15-4beb-bf86-144d79a7568d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Location" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/location/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> ;
+    crm:P190_has_symbolic_content "London, England" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444175>,
+        <https://data.getty.edu/local/thesaurus/provenance-location> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/location/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/location/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/location/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/proofed-statement/d1e4509c-4d15-4beb-bf86-144d79a7568d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Proofed Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/proofed-statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> ;
+    crm:P190_has_symbolic_content "No problems" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/proofed-statement> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/proofed-statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Biography Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/proofed-statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/proofed-statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Biography Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/statement/d1e4509c-4d15-4beb-bf86-144d79a7568d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Provenance Statement" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> ;
+    crm:P190_has_symbolic_content "commissioned by him from Nollekens as part of the Judgment of Paris group, displayed in his Grosvenor Square House (London, England), by inheritance to his nephew William Wentworth, fourth earl Fitzwilliam." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300444174>,
+        <https://data.getty.edu/local/thesaurus/provenance-statement> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Statement Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/statement/d1e4509c-4d15-4beb-bf86-144d79a7568d/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Statement Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/timespan> a crm:E52_Time-Span ;
+    rdfs:label "Provenance Activity TimeSpan" ;
+    crm:P1_is_identified_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/timespan/name> ;
+    crm:P82a_begin_of_the_begin "1776-01-01T00:00:00"^^xsd:dateTime ;
+    crm:P82b_end_of_the_end "1782-12-31T23:59:59"^^xsd:dateTime .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/timespan/name> a crm:E33_E41_Linguistic_Appellation ;
+    rdfs:label "Provenance Activity TimeSpan Display Name" ;
+    crm:P190_has_symbolic_content "possibly 1776 - 1782" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d56d05b2-fb54-5255-927f-8786c540785d/acquisition> a crm:E8_Acquisition ;
+    rdfs:label "Provenance Acquisition for 87.SA.107 associated with Wentworth Fitzwilliam Family" ;
+    crm:P22_transferred_title_to <https://data.getty.edu/museum/collection/group/b69975cf-2b78-4532-8f45-e68f2f0a5e85> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300157782> ;
+    crm:P9i_forms_part_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d6efee12-3cb4-5fcf-8619-9338d21fe103/acquisition> a crm:E8_Acquisition ;
+    rdfs:label "Provenance Acquisition for 87.SA.107 associated with Charles Watson-Wentworth, 2nd marquis of Rockingham" ;
+    crm:P22_transferred_title_to <https://data.getty.edu/museum/collection/person/f6e3b5e2-6615-45ea-9c9d-e92a9739b489> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300157782> ;
+    crm:P9i_forms_part_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/0bb3e0eb-7f25-4191-8939-3cdd8cd45eef> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/0bb3e0eb-7f25-4191-8939-3cdd8cd45eef> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - German (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/0bb3e0eb-7f25-4191-8939-3cdd8cd45eef/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/0bb3e0eb-7f25-4191-8939-3cdd8cd45eef/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 8 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/12e1b134-95aa-48c2-82d3-25d9c1611f5b> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/12e1b134-95aa-48c2-82d3-25d9c1611f5b> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - Korean (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/12e1b134-95aa-48c2-82d3-25d9c1611f5b/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/12e1b134-95aa-48c2-82d3-25d9c1611f5b/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 6 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/15fc6380-5c87-433a-af38-2a970f777999> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/15fc6380-5c87-433a-af38-2a970f777999> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - Spanish (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/15fc6380-5c87-433a-af38-2a970f777999/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/15fc6380-5c87-433a-af38-2a970f777999/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 2 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/272761e4-0fd4-49f6-b851-1f8861185e4a> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/272761e4-0fd4-49f6-b851-1f8861185e4a> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - Japanese (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/272761e4-0fd4-49f6-b851-1f8861185e4a/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/272761e4-0fd4-49f6-b851-1f8861185e4a/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 7 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/46d37124-9d93-4a6a-b271-c7a4d46cc4ed> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/46d37124-9d93-4a6a-b271-c7a4d46cc4ed> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - French (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/46d37124-9d93-4a6a-b271-c7a4d46cc4ed/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/46d37124-9d93-4a6a-b271-c7a4d46cc4ed/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 3 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/85e84bc4-fabc-40a3-9271-6c0859e0ca87> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/85e84bc4-fabc-40a3-9271-6c0859e0ca87> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - Mandarin (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/85e84bc4-fabc-40a3-9271-6c0859e0ca87/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/85e84bc4-fabc-40a3-9271-6c0859e0ca87/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 9 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9758b339-088c-4878-81b5-43ab46114330> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/9758b339-088c-4878-81b5-43ab46114330> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - Italian (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9758b339-088c-4878-81b5-43ab46114330/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9758b339-088c-4878-81b5-43ab46114330/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 5 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9df43c24-280f-4109-98ec-a3e9e6d75cd0> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/9df43c24-280f-4109-98ec-a3e9e6d75cd0> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - Portuguese (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9df43c24-280f-4109-98ec-a3e9e6d75cd0/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/9df43c24-280f-4109-98ec-a3e9e6d75cd0/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 4 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/c25d5fed-2c4d-4e7a-8747-93ff383f4d67> a crm:E33_Linguistic_Object ;
+    rdfs:label "Related Media (Audio)" ;
+    crm:P129_is_about <https://data.getty.edu/museum/collection/document/c25d5fed-2c4d-4e7a-8747-93ff383f4d67> ;
+    crm:P190_has_symbolic_content "Venus, Minerva, Juno - English (Highlights)" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028633>,
+        <http://vocab.getty.edu/aat/300230425> ;
+    crm:P43_has_dimension <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/c25d5fed-2c4d-4e7a-8747-93ff383f4d67/sequence> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/audio/c25d5fed-2c4d-4e7a-8747-93ff383f4d67/sequence> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/478a1eac-406a-4fa0-85e1-8cdeb09d5580/sequence-assignment> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Related Media Sequence Assignment" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/478a1eac-406a-4fa0-85e1-8cdeb09d5580/sequence-position> ;
+    crm:P16_used_specific_object <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/478a1eac-406a-4fa0-85e1-8cdeb09d5580/sequence-position> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 3 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/7f726f8d-279e-420d-bc8a-6660d7e48413/sequence-assignment> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Related Media Sequence Assignment" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/7f726f8d-279e-420d-bc8a-6660d7e48413/sequence-position> ;
+    crm:P16_used_specific_object <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/7f726f8d-279e-420d-bc8a-6660d7e48413/sequence-position> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/ba4021e3-f58a-46d9-830b-013b6285b11c/sequence-assignment> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Related Media Sequence Assignment" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/ba4021e3-f58a-46d9-830b-013b6285b11c/sequence-position> ;
+    crm:P16_used_specific_object <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/ba4021e3-f58a-46d9-830b-013b6285b11c/sequence-position> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 2 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/d7bdee0b-6371-4a51-aac1-199d39740332/sequence-assignment> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Related Media Sequence Assignment" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/d7bdee0b-6371-4a51-aac1-199d39740332/sequence-position> ;
+    crm:P16_used_specific_object <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/d7bdee0b-6371-4a51-aac1-199d39740332/sequence-position> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 5 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/e70ee8d8-ef4a-415d-858d-ea008d2291ea/sequence-assignment> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Related Media Sequence Assignment" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/e70ee8d8-ef4a-415d-858d-ea008d2291ea/sequence-position> ;
+    crm:P16_used_specific_object <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/set> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/e70ee8d8-ef4a-415d-858d-ea008d2291ea/sequence-position> a crm:E54_Dimension ;
+    rdfs:label "Related Media Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 4 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/signature/dad3bb7b-490b-4ac5-995f-35e40ce81f53> a crm:E33_Linguistic_Object ;
+    rdfs:label "Object Signatures" ;
+    crm:P190_has_symbolic_content "Signed and dated: Nollekens F[ ] : 1775. [Superscript t]." ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300028705>,
+        <http://vocab.getty.edu/aat/300418049> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/sort-number> a crm:E54_Dimension ;
+    rdfs:label "Sort Number" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339>,
+        <https://data.getty.edu/local/thesaurus/sort-number> ;
+    crm:P90_has_value "    87  107                                                                     " ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/text/3386f1f9-e503-4bd8-b7f3-d09687d2a80d> a crm:E33_Linguistic_Object ;
+    rdfs:label "Source Credit Line" ;
+    crm:P190_has_symbolic_content "The J. Paul Getty Museum, Los Angeles" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300404764>,
+        <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300435418> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/type> a crm:E33_Linguistic_Object ;
+    rdfs:label "Object Type" ;
+    crm:P190_has_symbolic_content "Sculpture" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300418049>,
+        <http://vocab.getty.edu/aat/300435443> .
+
+<https://data.getty.edu/museum/collection/person/69bfa010-7ebd-446d-a74b-73d5e81e4f61> a crm:E21_Person ;
+    rdfs:label "Joseph Nollekens" ;
+    crm:P67i_is_referred_to_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/production/12975cfd-46a8-4a20-8737-fa7afc69e096/role-statement> .
+
+<https://data.getty.edu/museum/collection/person/746d94c4-1b66-4f35-812c-f239a699b096> a crm:E21_Person ;
+    rdfs:label "William Wentworth, 4th earl Fitzwilliam" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/person/746d94c4-1b66-4f35-812c-f239a699b096/attribution> .
+
+<https://data.getty.edu/museum/collection/person/746d94c4-1b66-4f35-812c-f239a699b096/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Actor Presentation Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/person/746d94c4-1b66-4f35-812c-f239a699b096/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/person/746d94c4-1b66-4f35-812c-f239a699b096/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Actor Presentation Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/person/f6e3b5e2-6615-45ea-9c9d-e92a9739b489> a crm:E21_Person ;
+    rdfs:label "Charles Watson-Wentworth, 2nd marquis of Rockingham" ;
+    crm:P141i_was_assigned_by <https://data.getty.edu/museum/collection/person/f6e3b5e2-6615-45ea-9c9d-e92a9739b489/attribution> .
+
+<https://data.getty.edu/museum/collection/person/f6e3b5e2-6615-45ea-9c9d-e92a9739b489/attribution> a crm:E13_Attribute_Assignment ;
+    rdfs:label "Provenance Actor Presentation Sequence Attribution" ;
+    crm:P141_assigned <https://data.getty.edu/museum/collection/person/f6e3b5e2-6615-45ea-9c9d-e92a9739b489/attribution/dimension> ;
+    crm:P177_assigned_property_type crm:P43_has_dimension .
+
+<https://data.getty.edu/museum/collection/person/f6e3b5e2-6615-45ea-9c9d-e92a9739b489/attribution/dimension> a crm:E54_Dimension ;
+    rdfs:label "Provenance Actor Presentation Sequence" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300010269>,
+        <http://vocab.getty.edu/aat/300192339> ;
+    crm:P90_has_value 1 ;
+    crm:P91_has_unit <http://vocab.getty.edu/aat/300055665> .
+
+<https://data.getty.edu/museum/collection/place/5ab470c8-a4fe-4fee-b2d1-70d4403613a7> a crm:E53_Place ;
+    rdfs:label "Getty Center, Museum West Pavilion, Gallery W101" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300240057> .
+
+<https://data.getty.edu/museum/ontology/linked-data/dor-id> a crm:E55_Type ;
+    rdfs:label "Getty DOR ID" .
+
+<https://data.getty.edu/museum/ontology/linked-data/dor-uuid> a crm:E55_Type ;
+    rdfs:label "Getty DOR UUID" .
+
+<https://data.getty.edu/museum/ontology/linked-data/object/artist-maker-role-statement> a crm:E55_Type ;
+    rdfs:label "Artist/Maker (Producer) Role Statement" .
+
+<https://data.getty.edu/museum/ontology/linked-data/object/rights-statement> a crm:E55_Type ;
+    rdfs:label "Rights Statement" .
+
+<https://data.getty.edu/museum/ontology/linked-data/tms-id> a crm:E55_Type ;
+    rdfs:label "Gallery Systems' TMS ID" .
+
+<https://data.getty.edu/museum/ontology/linked-data/tms/object/producer-description> a crm:E55_Type ;
+    rdfs:label "Producer Description" .
+
+<https://data.getty.edu/museum/ontology/linked-data/tms/object/titles/primary-title> a crm:E55_Type ;
+    rdfs:label "Primary Title" .
+
+<https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg> a crm:E36_Visual_Item ;
+    rdfs:label "Object Overall Image (00136101)" ;
+    dc:format "image/jpeg" ;
+    crm:P1_is_identified_by <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg/id/asset>,
+        <https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg/id/name> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300215302> .
+
+<https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg/id/asset> a crm:E42_Identifier ;
+    rdfs:label "Asset ID" ;
+    crm:P190_has_symbolic_content "3b726668830917e1fac4657c62ef17bf2dbbcfe3" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-identifier> .
+
+<https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg/id/name> a crm:E42_Identifier ;
+    rdfs:label "Asset Name" ;
+    crm:P190_has_symbolic_content "00136101" ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/asset-name> .
+
+<https://media.getty.edu/iiif/manifest/9ab53ead-ad00-460c-ab86-559cfd4d839c> a crm:E73_Information_Object ;
+    rdfs:label "IIIF Manifest URL" ;
+    dc:format "application/ld+json;profile=\"http://iiif.io/api/presentation/2/context.json\"" ;
+    dcterms:conformsTo <http://iiif.io/api/presentation> ;
+    crm:P2_has_type <https://data.getty.edu/local/thesaurus/iiif-manifest> .
+
+<https://rightsstatements.org/vocab/NoC-US/1.0/> a crm:E33_Linguistic_Object ;
+    rdfs:label "RightsStatements.org Rights Assertion" ;
+    crm:P190_has_symbolic_content "No Copyright - United States" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300417696>,
+        <http://vocab.getty.edu/aat/300418049>,
+        <https://data.getty.edu/local/thesaurus/rights-statement>,
+        <https://data.getty.edu/museum/ontology/linked-data/object/rights-statement> .
+
+<https://www.getty.edu/art/collection/object/103RRE> a crm:E33_Linguistic_Object ;
+    rdfs:label "Homepage for Object" ;
+    dc:format "text/html" ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300264578>,
+        <http://vocab.getty.edu/aat/300404670> .
+
+<http://creativecommons.org/licenses/by/4.0/> a crm:E55_Type ;
+    rdfs:label "Attribution 4.0 International (CC BY 4.0)" .
+
+<http://vocab.getty.edu/aat/300026687> a crm:E55_Type ;
+    rdfs:label "Acknowledgements" .
+
+<http://vocab.getty.edu/aat/300080091> a crm:E55_Type ;
+    rdfs:label "Description" .
+
+<https://data.getty.edu/local/thesaurus/dimensions-measured-object> a crm:E55_Type ;
+    rdfs:label "Dimensions Measured: Object" .
+
+<https://data.getty.edu/local/thesaurus/provenance-citation> a crm:E55_Type ;
+    rdfs:label "Provenance Citation" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity> a crm:E7_Activity ;
+    rdfs:label "Provenance Activity for 87.SA.107",
+        "Provenance Activity for 87.SA.107 associated with Cyril Humphris, S.A." ;
+    crm:P183i_starts_after_the_end_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055863> ;
+    crm:P4_has_time-span <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/timespan> ;
+    crm:P67i_is_referred_to_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/location/bf2c313b-f781-4efd-8531-81e3fe8a40e5>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/proofed-statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity/statement/bf2c313b-f781-4efd-8531-81e3fe8a40e5> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity> a crm:E7_Activity ;
+    rdfs:label "Provenance Activity for 87.SA.107",
+        "Provenance Activity for 87.SA.107 associated with Charles Watson-Wentworth, 2nd marquis of Rockingham" ;
+    crm:P183_ends_before_the_start_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055863> ;
+    crm:P4_has_time-span <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/timespan> ;
+    crm:P67i_is_referred_to_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/citation/d1e4509c-4d15-4beb-bf86-144d79a7568d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/location/d1e4509c-4d15-4beb-bf86-144d79a7568d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/proofed-statement/d1e4509c-4d15-4beb-bf86-144d79a7568d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity/statement/d1e4509c-4d15-4beb-bf86-144d79a7568d> .
+
+<http://vocab.getty.edu/aat/300404670> a crm:E55_Type ;
+    rdfs:label "Preferred Term",
+        "Primary" .
+
+<http://vocab.getty.edu/aat/300444174> a crm:E55_Type ;
+    rdfs:label "Provenance Statement" .
+
+<https://data.getty.edu/local/thesaurus/provenance-statement> a crm:E55_Type ;
+    rdfs:label "Provenance Statement" .
+
+<https://data.getty.edu/museum/collection/group/c496a7b4-6087-4deb-a1ac-0f21bd3fd87b> a crm:E74_Group ;
+    rdfs:label "J. Paul Getty Museum, Los Angeles, California" ;
+    crm:P107i_is_current_or_former_member_of <http://vocab.getty.edu/ulan/500115987> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/dimensions/065dd7ce-60dc-4095-8656-43cdd219feec/set> a la:Set ;
+    rdfs:label "Dimensions Set: Object" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity> a crm:E7_Activity ;
+    rdfs:label "Provenance Activity for 87.SA.107",
+        "Provenance Activity for 87.SA.107 associated with William Wentworth, 4th earl Fitzwilliam" ;
+    crm:P183_ends_before_the_start_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity> ;
+    crm:P183i_starts_after_the_end_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/d1e4509c-4d15-4beb-bf86-144d79a7568d/activity> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055863> ;
+    crm:P4_has_time-span <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/timespan> ;
+    crm:P67i_is_referred_to_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/citation/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/location/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/proofed-statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity/statement/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d> .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity> a crm:E7_Activity ;
+    rdfs:label "Provenance Activity for 87.SA.107",
+        "Provenance Activity for 87.SA.107 associated with Wentworth Fitzwilliam Family" ;
+    crm:P183_ends_before_the_start_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/bf2c313b-f781-4efd-8531-81e3fe8a40e5/activity> ;
+    crm:P183i_starts_after_the_end_of <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/22ac39e3-2bc3-44ee-9f4a-1d16a9a5684d/activity> ;
+    crm:P2_has_type <http://vocab.getty.edu/aat/300055863> ;
+    crm:P4_has_time-span <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/timespan> ;
+    crm:P67i_is_referred_to_by <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/location/ac9091c8-2ef3-472c-9062-51590fa50df6>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/proofed-statement/ac9091c8-2ef3-472c-9062-51590fa50df6>,
+        <https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/provenance/ac9091c8-2ef3-472c-9062-51590fa50df6/activity/sales-statement/ac9091c8-2ef3-472c-9062-51590fa50df6> .
+
+<http://vocab.getty.edu/aat/300055863> a crm:E55_Type ;
+    rdfs:label "Provenance Activity" .
+
+<http://vocab.getty.edu/aat/300157782> a crm:E55_Type ;
+    rdfs:label "Acquisition (Collections Management)" .
+
+<http://vocab.getty.edu/aat/300264578> a crm:E55_Type ;
+    rdfs:label "Web Page" .
+
+<http://vocab.getty.edu/aat/300444175> a crm:E55_Type ;
+    rdfs:label "Provenance Location Statement" .
+
+<https://data.getty.edu/local/thesaurus/proofed-statement> a crm:E55_Type ;
+    rdfs:label "Provenance Proofed Statement" .
+
+<https://data.getty.edu/local/thesaurus/provenance-location> a crm:E55_Type ;
+    rdfs:label "Provenance Location" .
+
+<https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6/related/media/set> a la:Set ;
+    rdfs:label "Related Media Set for 87.SA.107" .
+
+<http://vocab.getty.edu/aat/300215302> a crm:E55_Type ;
+    rdfs:label "Digital Image" .
+
+<https://data.getty.edu/local/thesaurus/asset-identifier> a crm:E55_Type ;
+    rdfs:label "Asset ID" .
+
+<https://data.getty.edu/local/thesaurus/asset-name> a crm:E55_Type ;
+    rdfs:label "Asset Name" .
+
+<http://vocab.getty.edu/aat/300028633> a crm:E55_Type ;
+    rdfs:label "Sound Recordings" .
+
+<http://vocab.getty.edu/aat/300230425> a crm:E55_Type ;
+    rdfs:label "Information Artifacts" .
+
+<http://vocab.getty.edu/aat/300311705> a crm:E55_Type ;
+    rdfs:label "Citations (Bibliographic References)" .
+
+<http://vocab.getty.edu/aat/300418049> a crm:E55_Type ;
+    rdfs:label "Brief Text" .
+
+<http://vocab.getty.edu/aat/300010269> a crm:E55_Type ;
+    rdfs:label "Positional Attributes" .
+
+<http://vocab.getty.edu/aat/300055665> a crm:E58_Measurement_Unit ;
+    rdfs:label "Numbers" .
+
+<http://vocab.getty.edu/aat/300192339> a crm:E55_Type ;
+    rdfs:label "Sequences" .

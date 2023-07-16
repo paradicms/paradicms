@@ -70,7 +70,6 @@ def test_from_rdf(data_dir_path: Path, test_wikidata_item_file: TestWikidataItem
     assert len(items) == test_wikidata_item_file.items_count
     file_item = next(item for item in items if item.uri == test_wikidata_item_file.uri)
     assert file_item
-    assert len(file_item.articles) == test_wikidata_item_file.articles_count
     assert (
         len(
             tuple(

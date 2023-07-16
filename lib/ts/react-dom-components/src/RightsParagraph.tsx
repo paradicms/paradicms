@@ -49,7 +49,8 @@ export const RightsParagraph: React.FunctionComponent<{
       }
       pushRightsElement(
         <span>
-          <i>Holder</i>: {rigthsHolder.label}
+          <i>Holder</i>:{" "}
+          <span dangerouslySetInnerHTML={{__html: rigthsHolder.label}} />
         </span>
       );
     }

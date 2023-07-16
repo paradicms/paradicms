@@ -26,10 +26,6 @@ describe("WikidataModel", () => {
     expect(sut.articles).not.to.be.empty;
   });
 
-  it("should have creators", () => {
-    expect(sut.creators).not.to.be.empty;
-  });
-
   it("should return images from Wikidata", () => {
     expect(sut.images).to.have.length(1);
     const image = sut.images[0];
@@ -44,14 +40,6 @@ describe("WikidataModel", () => {
     expect(sut.label).not.to.be.empty;
   });
 
-  it("should have a single license", () => {
-    expect(sut.licenses).to.have.length(1);
-    expect(sut.licenses[0].iris).to.have.length(1);
-    expect(sut.licenses[0].iris[0]).to.eq(
-      "http://creativecommons.org/licenses/by-sa/3.0/"
-    );
-  });
-
   it("should have a prefLabel", () => {
     expect(sut.prefLabel).not.to.be.null;
   });
@@ -62,18 +50,6 @@ describe("WikidataModel", () => {
 
   it("should have property values for a specific IRI", () => {
     expect(sut.propertyValuesByPropertyIri(wd["P1476"].value)).not.to.be.empty;
-  });
-
-  it("should require attribution", () => {
-    expect(sut.requiresAttribution).to.be.true;
-  });
-
-  it("should have a single rights statement", () => {
-    expect(sut.rightsStatements).to.have.length(1);
-    expect(sut.rightsStatements[0].iris).to.have.length(1);
-    expect(sut.rightsStatements[0].iris[0]).to.eq(
-      "http://rightsstatements.org/vocab/InC/1.0/"
-    );
   });
 
   it("should have Wikibase statements", () => {

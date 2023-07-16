@@ -5,7 +5,6 @@ from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL, ConjunctiveGrap
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.models.wikibase.wikibase_article import WikibaseArticle
 from paradicms_etl.models.wikibase.wikibase_direct_claim import WikibaseDirectClaim
 from paradicms_etl.models.wikibase.wikibase_full_statement import WikibaseFullStatement
 from paradicms_etl.models.wikibase.wikibase_property_definition import (
@@ -19,10 +18,11 @@ logger = logging.getLogger(__name__)
 
 class WikibaseItem(ResourceBackedModel):
     __IGNORE_PREDICATES = {
-        URIRef(SDOHTTP.description),
-        URIRef(SDOHTTP.name),
+        SDOHTTP.description,
+        SDOHTTP.name,
         RDF.type,
         RDFS.label,
+        SKOS.altLabel,
     }
 
     def __init__(
@@ -39,24 +39,9 @@ class WikibaseItem(ResourceBackedModel):
                 graph=resource.graph
             )
 
-        alt_labels = []
-        articles = []
-        description = None
         direct_claims = []
         full_statements = []
         pref_label = None
-
-        for article_uri in resource.graph.subjects(
-            predicate=SDOHTTP.about,
-            object=resource.identifier,
-        ):
-
-            if tuple(resource.graph.triples((article_uri, RDF.type, SDOHTTP.Article))):
-                article = WikibaseArticle.from_rdf(
-                    resource=resource.graph.resource(article_uri)
-                )
-                if article is not None:
-                    articles.append(article)
 
         for predicate, object_ in resource.graph.predicate_objects(
             subject=resource.identifier
@@ -70,14 +55,8 @@ class WikibaseItem(ResourceBackedModel):
                     )
                     continue
 
-                if predicate == SKOS.altLabel:
-                    alt_labels.append(object_.value)
-                    continue
-                elif predicate == SKOS.prefLabel:
+                if predicate == SKOS.prefLabel:
                     pref_label = object_.value
-                    continue
-                elif predicate == SDOHTTP.description:
-                    description = object_.value
                     continue
 
             if predicate in self.__IGNORE_PREDICATES:
@@ -161,9 +140,6 @@ class WikibaseItem(ResourceBackedModel):
         else:
             statements = direct_claims + full_statements  # type: ignore
 
-        self.__alt_labels = tuple(sorted(alt_labels))
-        self.__articles = tuple(articles)
-        self.__description = description
         self.__pref_label = pref_label
         self.__statements = tuple(statements)
         self.__statements_by_property_label: Optional[
@@ -174,18 +150,6 @@ class WikibaseItem(ResourceBackedModel):
         if not isinstance(other, WikibaseItem):
             return False
         return self.uri == other.uri
-
-    @property
-    def alt_labels(self) -> Tuple[str, ...]:
-        return self.__alt_labels
-
-    @property
-    def articles(self) -> Tuple[WikibaseArticle, ...]:
-        return self.__articles
-
-    @property
-    def description(self) -> Optional[str]:
-        return self.__description
 
     @property
     def label(self):

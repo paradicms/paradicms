@@ -5,7 +5,6 @@ import {Collection} from "../Collection";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {Text} from "../Text";
 import {Memoize} from "typescript-memoize";
-import {mapTermToText} from "../mapTermToText";
 import {DataFactory} from "@paradicms/rdf";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {wdt} from "@paradicms/vocabularies";
@@ -15,6 +14,8 @@ import {WikidataLocation} from "./WikidataLocation";
 import log from "loglevel";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
 import {Mixin} from "ts-mixer";
+import {AgentUnion} from "../AgentUnion";
+import {WikidataText} from "./WikidataText";
 import {WorkAgentsMixin} from "../WorkAgentsMixin";
 
 export class WikidataWork
@@ -22,11 +23,28 @@ export class WikidataWork
   implements Work {
   readonly collections: readonly Collection[] = [];
 
+  get contributors(): readonly AgentUnion[] {
+    return [];
+  }
+
+  @Memoize()
+  get creators(): readonly AgentUnion[] {
+    return this.filterAndMapStatements(wdt["P170"], statement => {
+      if (statement.value.termType !== "NamedNode") {
+        return null;
+      }
+      return this.modelSet.agentByIri(statement.value.value);
+    });
+  }
+
   @Memoize()
   get description(): Text | null {
     return this.findAndMapObject(
       DataFactory.namedNode("http://schema.org/description"),
-      term => mapTermToText(this, term)
+      term =>
+        term.termType === "Literal"
+          ? new WikidataText({literal: term, modelSet: this.modelSet})
+          : null
     );
   }
 

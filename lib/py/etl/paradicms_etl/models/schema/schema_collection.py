@@ -52,4 +52,4 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
 
     @property
     def work_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(SDO.hasPart, self._map_uri_value))
+        return tuple(self._values(SDO.hasPart, self._map_term_to_uri))

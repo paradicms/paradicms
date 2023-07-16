@@ -7,13 +7,13 @@ from rdflib import Graph
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def test_pil_image(test_image_file_path: Path) -> Image:
     with Image.open(str(test_image_file_path)) as pil_image:
         return pil_image.copy().convert("RGB")
 
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def test_image_data(test_pil_image: Image) -> CmsImageData:
     return CmsImageData.from_pil_image(test_pil_image)
 

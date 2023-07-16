@@ -9,7 +9,7 @@ describe("CreativeCommonsModelReader", () => {
 
   it("should read license", () => {
     const licenses = sut.readNamedLicenses({modelSet: dummyModelSet});
-    expect(licenses).to.have.length(3);
+    expect(licenses).to.have.length(4); // 2 with http-only and 1 with http+https
     for (const license of licenses) {
       expect(license.iris).not.to.be.empty;
       expect(license.label).not.to.be.empty;

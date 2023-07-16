@@ -73,7 +73,7 @@ class SkosConcept(ResourceBackedModel, FoafImagesMixin, Concept):
 
     @property
     def type_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(RDF.type, self._map_uri_value))
+        return tuple(self._values(RDF.type, self._map_term_to_uri))
 
     @property
     def value(self) -> Node:

@@ -3,7 +3,6 @@ from typing import Optional
 from rdflib import Graph, SDO
 from rdflib.resource import Resource
 
-from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_media_object_mixin import (
     SchemaMediaObjectMixin,
 )
@@ -25,10 +24,6 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
         def build(self) -> "SchemaTextObject":
             return SchemaTextObject(self._resource)
 
-        def copy_rights(self, other: RightsMixin) -> "SchemaTextObject.Builder":
-            SchemaMediaObjectMixin.Builder.copy_rights(self, other)
-            return self
-
     def __init__(self, resource: Resource):
         SchemaModel.__init__(self, resource)
         self.value
@@ -41,16 +36,16 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
 
     @property
     def caption(self) -> Optional[str]:
-        return self._optional_value(SDO.caption, self._map_str_value)
+        return self._optional_value(SDO.caption, self._map_term_to_str)
 
     @property
     def copyable(self) -> bool:
-        copyable = self._optional_value(CMS.imageCopyable, self._map_bool_value)
+        copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
 
     @property
     def text(self) -> str:
-        return self._required_value(SDO.text, self._map_str_value)
+        return self._required_value(SDO.text, self._map_term_to_str)
 
     @property
     def value(self) -> str:

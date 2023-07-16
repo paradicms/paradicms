@@ -38,7 +38,6 @@ class WikidataEnricher:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
-        yielded_wikidata_entity_uris: Set[URIRef] = set()
         yielded_wikidata_rights_models = False
         for model in models:
             referenced_wikidata_entity_uris = (
@@ -49,15 +48,12 @@ class WikidataEnricher:
                 continue
 
             for referenced_wikidata_entity_uri in referenced_wikidata_entity_uris:
-                if referenced_wikidata_entity_uri in yielded_wikidata_entity_uris:
-                    continue
                 referenced_wikidata_entity = (
                     self.__get_wikidata_entity_with_superclass_tree(
                         referenced_wikidata_entity_uri
                     )
                 )
                 yield referenced_wikidata_entity
-                yielded_wikidata_entity_uris.add(referenced_wikidata_entity_uri)
 
                 if not yielded_wikidata_rights_models:
                     yield CreativeCommonsLicenses.BY_SA_3_0
@@ -74,20 +70,7 @@ class WikidataEnricher:
                         self.__get_wikidata_entity_creators(referenced_wikidata_entity),
                         self.__get_wikidata_entity_subjects(referenced_wikidata_entity),
                     ):
-                        for connected_model in connected_models:
-                            if isinstance(connected_model, WikibaseItem):
-                                connected_wikidata_entity = connected_model
-                                if (
-                                    connected_wikidata_entity.uri
-                                    in yielded_wikidata_entity_uris
-                                ):
-                                    continue
-                                yield connected_wikidata_entity
-                                yielded_wikidata_entity_uris.add(
-                                    connected_wikidata_entity.uri
-                                )
-                            else:
-                                yield connected_model
+                        yield from connected_models
 
             if not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
@@ -156,14 +139,9 @@ class WikidataEnricher:
 
     @staticmethod
     def __get_wikidata_entity_images(wikidata_entity: WikibaseItem) -> Iterable[Image]:
-        yielded_image_uris: Set[URIRef] = set()
         for statement in wikidata_entity.statements_by_property_label.get("image", []):
             assert isinstance(statement.value, URIRef)
-            image_uri = statement.value
-            if image_uri in yielded_image_uris:
-                continue
-            yield SchemaImageObject.builder(uri=image_uri).build()
-            yielded_image_uris.add(image_uri)
+            yield SchemaImageObject.builder(uri=statement.value).build()
 
     def __get_wikidata_entity_creators(
         self, wikidata_entity: WikibaseItem
