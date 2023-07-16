@@ -29,6 +29,8 @@ describe("LinkedArtHumanMadeObject", () => {
     expect(sut.images).to.have.length(5);
     for (const image of sut.images) {
       expect(image.exactDimensions).not.to.be.null;
+      expect(image.rightsHolders).not.to.be.empty;
+      expect(image.rightsStatements).not.to.be.empty;
     }
   });
 
