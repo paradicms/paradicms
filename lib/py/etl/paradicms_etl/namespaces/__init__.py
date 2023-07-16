@@ -11,8 +11,6 @@ from .la import LA  # noqa: F401
 from .prov import PROV  # noqa: F401
 from .sdohttp import SDOHTTP  # noqa: F401
 from .time import TIME  # noqa: F401
-from .vra import VRA  # noqa: F401
 from .wd import WD  # noqa: F401
 from .wdt import WDT  # noqa: F401
-from .wgs import WGS  # noqa: F401
 from .wikibase import WIKIBASE  # noqa: F401
