@@ -611,9 +611,9 @@ class SyntheticDataPipeline(Pipeline):
                     if str(property_.uri).startswith(str(SDO))
                 )
 
-            work_builder.add_license(work_license.uri)
-            work_builder.add_rights_holder(work_rights_holder)
-            work_builder.add_rights_statement(work_rights_statement.uri)
+            # work_builder.add_license(work_license.uri)
+            # work_builder.add_rights_holder(work_rights_holder)
+            # work_builder.add_rights_statement(work_rights_statement.uri)
 
             # Faceted literal properties, which are the same across works
             for property_ in properties:

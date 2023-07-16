@@ -127,6 +127,10 @@ class DctermsPropertiesMixin(ResourceBackedModelMixin, RightsMixin):
     def creators(self) -> Tuple[Union[str, URIRef], ...]:
         return tuple(self._values(DCTERMS.creator, self._map_term_to_str_or_uri))
 
+    @property
+    def description(self) -> Union[str, Text, None]:
+        return self._optional_value(DCTERMS.description, self._map_term_to_str_or_text)  # type: ignore
+
     @classmethod
     def json_ld_context(cls):
         json_ld_context = {

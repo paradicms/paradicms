@@ -67,10 +67,6 @@ class LinkedArtModel(ResourceBackedModel):
 
     @property
     def is_subject_of(self) -> Tuple["LinkedArtModel", ...]:  # type: ignore
-        """
-        The E30 right is the P129 subject of acknowledgments.
-        """
-
         return tuple(
             self._values(
                 CRM.P129i_is_subject_of,

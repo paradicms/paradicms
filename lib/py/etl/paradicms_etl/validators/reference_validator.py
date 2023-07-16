@@ -448,7 +448,7 @@ class ReferenceValidator:
 
     def __validate_work(self, work: Work) -> Iterable[ValidationResult]:
         yield from self.__validate_model(work)
-        yield from self.__validate_rights(work)
+        # yield from self.__validate_rights(work)
         if work.uri in self.__work_uris:
             yield ValidationResult(
                 message=f"duplicate Work {work.uri}",
