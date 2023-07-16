@@ -570,11 +570,8 @@ class SyntheticDataPipeline(Pipeline):
                 f"{work_title} alternative title {i}" for i in range(2)
             ]
             work_identifiers = [f"{work_title}Id{i}" for i in range(2)]
-            work_license = CreativeCommonsLicenses.NC_1_0
             work_page = URIRef("http://example.com/work/" + str(work_i))
             work_provenance = f"{work_title} provenance"
-            work_rights_holder = f"{work_title} rights holder"
-            work_rights_statement = RightsStatementsDotOrgRightsStatements.InC_EDU
 
             work_builder: Union[DcPhysicalObject.Builder, SchemaCreativeWork.Builder]
             if work_i % 2 == 0:
