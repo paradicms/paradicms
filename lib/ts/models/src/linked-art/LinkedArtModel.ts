@@ -4,6 +4,7 @@ import {ResourceBackedModel} from "../ResourceBackedModel";
 import {mapTermToString} from "@paradicms/rdf";
 import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
 import {NamedNode} from "@rdfjs/types";
+import {LinkedArtLinguisticAppellation} from "./LinkedArtLinguisticAppellation";
 
 export class LinkedArtModel extends ResourceBackedModel {
   @Memoize()
@@ -16,6 +17,15 @@ export class LinkedArtModel extends ResourceBackedModel {
     return this.filterAndMapObjects(crm.P2_has_type, term =>
       term.termType === "NamedNode" ? (term as NamedNode) : null
     );
+  }
+
+  @Memoize()
+  get isIdentifiedBy(): readonly LinkedArtLinguisticAppellation[] {
+    return this.filterAndMapObjects(crm.P1_is_identified_by, term =>
+      mapTermToLinkedArtModel(this, term)
+    ).filter(
+      model => model instanceof LinkedArtLinguisticAppellation
+    ) as LinkedArtLinguisticAppellation[];
   }
 
   @Memoize()

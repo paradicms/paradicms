@@ -8,11 +8,12 @@ import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
 import {RightsStatement} from "../RightsStatement";
 import {Text} from "../Text";
 import {Memoize} from "typescript-memoize";
-import {requireNonNull} from "@paradicms/utilities";
 import {LiteralAgent} from "../literal/LiteralAgent";
-import {Literal} from "@rdfjs/types";
+import {LinkedArtHasSymbolicContentMixin} from "./LinkedArtHasSymbolicContentMixin";
+import invariant from "ts-invariant";
 
-export class LinkedArtLinguisticObject extends Mixin(LinkedArtModel)
+export class LinkedArtLinguisticObject
+  extends Mixin(LinkedArtModel, LinkedArtHasSymbolicContentMixin)
   implements Text {
   get contributors(): readonly AgentUnion[] {
     return [];
@@ -57,7 +58,10 @@ export class LinkedArtLinguisticObject extends Mixin(LinkedArtModel)
         if (!(acknowledgment instanceof LinkedArtLinguisticObject)) {
           continue;
         }
-        rightsHolders.push(new LiteralAgent(acknowledgment.valueLiteral));
+        invariant(acknowledgment.hasSymbolicContent.length > 0);
+        rightsHolders.push(
+          new LiteralAgent(acknowledgment.hasSymbolicContent[0])
+        );
       }
     }
     return rightsHolders;
@@ -68,15 +72,7 @@ export class LinkedArtLinguisticObject extends Mixin(LinkedArtModel)
   }
 
   get value(): string {
-    return this.valueLiteral.value;
-  }
-
-  @Memoize()
-  get valueLiteral(): Literal {
-    return requireNonNull(
-      this.findAndMapObject(crm.P190_has_symbolic_content, term =>
-        term.termType === "Literal" ? (term as Literal) : null
-      )
-    );
+    invariant(this.hasSymbolicContent.length > 0);
+    return this.hasSymbolicContent[0].value;
   }
 }

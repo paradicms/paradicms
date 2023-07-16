@@ -5,6 +5,9 @@ interface Crm {
   "": NamedNode<"http://www.cidoc-crm.org/cidoc-crm/">;
 
   // Properties
+  P1_is_identified_by: NamedNode<
+    "http://www.cidoc-crm.org/cidoc-crm/P1_is_identified_by"
+  >;
   P2_has_type: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/P2_has_type">;
   P4_has_time_span: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/P4_has_time-span"
@@ -17,6 +20,12 @@ interface Crm {
   >;
   P67i_is_referred_to_by: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/P67i_is_referred_to_by"
+  >;
+  P82a_begin_of_the_begin: NamedNode<
+    "http://www.cidoc-crm.org/cidoc-crm/P82a_begin_of_the_begin"
+  >;
+  P82b_end_of_the_end: NamedNode<
+    "http://www.cidoc-crm.org/cidoc-crm/P82b_end_of_the_end"
   >;
   P108i_was_produced_by: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/P108i_was_produced_by"
@@ -35,6 +44,7 @@ interface Crm {
   E12_Production: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E12_Production"
   >;
+  E21_Person: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/E21_Person">;
   E22_Human_Made_Object: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E22_Human-Made_Object"
   >;
@@ -42,9 +52,13 @@ interface Crm {
   E33_Linguistic_Object: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E33_Linguistic_Object"
   >;
+  E33_E41_Linguistic_Appellation: NamedNode<
+    "http://www.cidoc-crm.org/cidoc-crm/E33_E41_Linguistic_Appellation"
+  >;
   E36_Visual_Item: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E36_Visual_Item"
   >;
+  E52_Time_Span: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/E52_Time-Span">;
   E55_Type: NamedNode<"http://www.cidoc-crm.org/cidoc-crm/E55_Type">;
   E73_Information_Object: NamedNode<
     "http://www.cidoc-crm.org/cidoc-crm/E73_Information_Object"
