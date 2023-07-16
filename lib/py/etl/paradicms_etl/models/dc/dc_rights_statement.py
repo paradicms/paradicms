@@ -1,4 +1,5 @@
 from typing import Union, Optional
+from urllib.parse import urlparse
 
 from rdflib import DCTERMS, URIRef, Graph, SKOS
 from rdflib.resource import Resource
@@ -36,8 +37,11 @@ class DcRightsStatement(DcModel, RightsStatement):
         resource_clone = clone_graph(resource.graph).resource(resource.identifier)
 
         if isinstance(resource.identifier, URIRef):
-            if str(resource.identifier).startswith(
-                "http://rightsstatements.org/vocab/"
+            parsed_identifier = urlparse(str(resource.identifier).lower())
+            if (
+                parsed_identifier.scheme in ("http", "https")
+                and parsed_identifier.netloc == "rightsstatements.org"
+                and parsed_identifier.path.startswith("/vocab/")
             ):
                 if resource.value(SKOS.prefLabel) is not None:
                     from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statement import (
