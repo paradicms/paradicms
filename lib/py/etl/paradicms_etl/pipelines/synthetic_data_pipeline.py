@@ -58,6 +58,11 @@ class SyntheticDataPipeline(Pipeline):
     ID = "synthetic_data"
 
     class __SyntheticDataTransformer:
+        __DESCRIPTION_LICENSE = CreativeCommonsLicenses.BY_4_0
+        __DESCRIPTION_RIGHTS_STATEMENT = RightsStatementsDotOrgRightsStatements.NoC_US
+        __IMAGE_LICENSE = CreativeCommonsLicenses.NC_1_0
+        __IMAGE_RIGHTS_STATEMENT = RightsStatementsDotOrgRightsStatements.InC_EDU
+
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
 
         @dataclass(frozen=True)
@@ -297,11 +302,7 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_exact_dimensions = ImageDimensions(
                     height=1000, width=1000
                 )
-                original_image_license = CreativeCommonsLicenses.NC_1_0
                 original_image_rights_holder = f"{original_image_title} rights holder"
-                original_image_rights_statement = (
-                    RightsStatementsDotOrgRightsStatements.InC_EDU
-                )
                 original_image_src = "https://paradicms.org/img/synthetic/1000x1000.png"
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
@@ -319,8 +320,8 @@ class SyntheticDataPipeline(Pipeline):
                     )
                     original_image_builder.add_rights_holder(
                         original_image_rights_holder
-                    ).add_license(original_image_license.uri).add_rights_statement(
-                        original_image_rights_statement.uri
+                    ).add_license(self.__IMAGE_LICENSE.uri).add_rights_statement(
+                        self.__IMAGE_RIGHTS_STATEMENT.uri
                     )
                 else:
                     original_image_builder = (
@@ -333,8 +334,8 @@ class SyntheticDataPipeline(Pipeline):
                     )
                     original_image_builder.add_rights_holder(
                         original_image_rights_holder
-                    ).add_license(original_image_license.uri).add_rights_statement(
-                        original_image_rights_statement.uri
+                    ).add_license(self.__IMAGE_LICENSE.uri).add_rights_statement(
+                        self.__IMAGE_RIGHTS_STATEMENT.uri
                     )
 
                 for thumbnail_dimensions in (
@@ -391,8 +392,8 @@ class SyntheticDataPipeline(Pipeline):
                 description_builder = DcText.builder(self.__LOREM_IPSUM)
                 description_builder.add_rights_holder(
                     f"{collection_name} description rights holder"
-                ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                    RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+                ).add_license(self.__DESCRIPTION_LICENSE.uri).add_rights_statement(
+                    self.__DESCRIPTION_RIGHTS_STATEMENT.uri
                 )
                 collection_builder.set_description(description_builder.build())
 
@@ -692,8 +693,8 @@ class SyntheticDataPipeline(Pipeline):
 
             description_builder.add_rights_holder(
                 f"{work_title} description rights holder"
-            ).add_license(CreativeCommonsLicenses.NC_1_0.uri).add_rights_statement(
-                RightsStatementsDotOrgRightsStatements.InC_EDU.uri
+            ).add_license(self.__DESCRIPTION_LICENSE.uri).add_rights_statement(
+                self.__DESCRIPTION_RIGHTS_STATEMENT.uri
             )
             description = description_builder.build()
 

@@ -28,8 +28,9 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
         builder.set_title(title)
         return builder
 
+    @property
     def description(self) -> Union[str, Text, None]:
-        return super().description
+        return DcModel.description.fget(self)  # type: ignore
 
     @property
     def label(self) -> str:

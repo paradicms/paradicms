@@ -18,6 +18,13 @@ export const behavesLikeWork = (
   it("should get the work's description", () => {
     expect(work.description).not.to.be.null;
     expect(work.description!.value).to.not.be.empty;
+    behavesLikeRightsMixin(work.description!, {
+      requireContributors: true,
+      requireCreators: true,
+      requireLicense: true,
+      requireRightsHolders: true,
+      requireRightsStatement: true,
+    });
   });
 
   it("should get the work's agents", () => {
@@ -73,12 +80,5 @@ export const behavesLikeWork = (
 
   behavesLikeNamedModel(work);
   behavesLikeImagesMixin(work);
-  behavesLikeRightsMixin(work, {
-    requireContributors: true,
-    requireCreators: true,
-    requireLicense: true,
-    requireRightsHolders: true,
-    requireRightsStatement: true,
-  });
   behavesLikeThumbnailMixin(work);
 };

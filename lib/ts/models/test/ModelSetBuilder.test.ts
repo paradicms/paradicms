@@ -93,7 +93,7 @@ describe("ModelSetBuilder", () => {
     const work = completeModelSet.works[0];
     const agents = work.agents.map(agent => agent.agent);
     const namedAgents = agents.filter(agent => agent.iris.length > 0);
-    expect(namedAgents.length).to.be.lt(agents.length);
+    expect(namedAgents.length).to.be.lte(agents.length);
     const agentsModelSet = sut
       .addAgents(agents, {
         thumbnail: THUMBNAIL_SELECTOR,
@@ -196,7 +196,16 @@ describe("ModelSetBuilder", () => {
           agents: {
             thumbnail: THUMBNAIL_SELECTOR,
           },
+          description: {
+            agents: {},
+            licenses: true,
+            rightsStatements: true,
+          },
           events: {
+            description: {
+              licenses: true,
+              rightsStatements: true,
+            },
             location: true,
           },
           images: {
@@ -204,14 +213,12 @@ describe("ModelSetBuilder", () => {
             licenses: true,
             rightsStatements: true,
           },
-          licenses: true,
           location: true,
           propertyValues: {
             property: {
               groups: {},
             },
           },
-          rightsStatements: true,
         }
       )
       .build();
@@ -232,7 +239,7 @@ describe("ModelSetBuilder", () => {
 
     expect(modelSetImageIris(workModelSet)).to.have.length(8); // 3 work original images, 2 agent original images, 2 agent thumbnails + 1 sameAs
 
-    expect(subsetWork.agents).to.have.length(7); // 3 named agents + 2 blank node agents + 2 literal agents
+    expect(subsetWork.agents).to.have.length(5); // Doesn't include description agents
     const agentImages = subsetWork.agents.flatMap(agent => agent.agent.images);
     expect(agentImages).to.have.length(3);
     const agentThumbnails = agentImages.flatMap(
@@ -242,12 +249,15 @@ describe("ModelSetBuilder", () => {
 
     expect(workModelSet.concepts).to.have.length(16);
 
+    expect(subsetWork.description!.licenses).not.to.be.empty;
+    expect(modelSetLicenseIris(workModelSet)).to.have.length(4);
+    expect(subsetWork.description!.rightsHolders).not.to.be.empty;
+    expect(subsetWork.description!.rightsStatements).to.not.be.empty;
+    expect(modelSetRightsStatementIris(workModelSet)).to.have.length(3);
+
     expect(subsetWork.images).to.have.length(3); // 1 DcImage and 1 SchemaImageObject in the data, 1 SchemaImageObject from Wikimedia Commons
     const thumbnails = subsetWork.images.flatMap(image => image.thumbnails);
     expect(thumbnails).to.be.empty; // Didn't ask for them
-
-    expect(subsetWork.licenses).not.to.be.empty;
-    expect(modelSetLicenseIris(workModelSet)).to.have.length(3);
 
     expectModelsDeepEq(
       workModelSet.properties,
@@ -261,9 +271,6 @@ describe("ModelSetBuilder", () => {
       workModelSet.propertyGroups,
       completeModelSet.propertyGroups
     );
-
-    expect(subsetWork.rightsStatements).to.not.be.empty;
-    expect(modelSetRightsStatementIris(workModelSet)).to.have.length(2);
 
     if (subsetWork.location) {
       expect(subsetWork.location!.location.iris).to.not.be.empty;

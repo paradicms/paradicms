@@ -69,15 +69,16 @@ describe("CachingModelSet", () => {
           .worksByAgentIri(creator.iris[0]!)
           .some(agentWork => agentWork.iris[0] === work.iris[0])
       ).to.be.true;
-      expect(work.images).to.not.be.empty;
-      expect(work.licenses).to.not.be.empty;
-      for (const license of work.licenses) {
+      expect(work.description).not.to.be.null;
+      expect(work.description!.licenses).to.not.be.empty;
+      for (const license of work.description!.licenses) {
         expect(license.iris[0]).to.not.be.empty;
       }
-      expect(work.rightsStatements).to.not.be.empty;
-      for (const rightsStatement of work.rightsStatements) {
+      expect(work.description!.rightsStatements).to.not.be.empty;
+      for (const rightsStatement of work.description!.rightsStatements) {
         expect(rightsStatement.iris[0]).to.not.be.empty;
       }
+      expect(work.images).to.not.be.empty;
     }
   });
 
