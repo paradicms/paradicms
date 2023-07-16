@@ -12,6 +12,9 @@ from paradicms_etl.models.dc.dc_physical_object import DcPhysicalObject
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
 from paradicms_etl.models.foaf.foaf_organization import FoafOrganization
 from paradicms_etl.models.foaf.foaf_person import FoafPerson
+from paradicms_etl.models.linked_art.linked_art_human_made_object import (
+    LinkedArtHumanMadeObject,
+)
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
@@ -40,6 +43,7 @@ __ROOT_MODEL_CLASSES: Tuple[Type[Model], ...] = (
     CreativeCommonsLicense,
     FoafOrganization,
     FoafPerson,
+    LinkedArtHumanMadeObject,
     RdfProperty,
     SchemaCollection,
     SchemaCreativeWork,
