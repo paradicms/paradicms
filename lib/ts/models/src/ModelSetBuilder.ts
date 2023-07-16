@@ -561,7 +561,12 @@ export class ModelSetBuilder {
     }
 
     log.debug("ModelSetBuilder: adding work", work.key, "rights");
-    this.addRights(joinSelector, work);
+    if (joinSelector.agents) {
+      log.debug("ModelSetBuilder: adding work", work.key, "agents");
+      for (const agents of [work.contributors, work.creators]) {
+        this.addAgents(agents, joinSelector.agents);
+      }
+    }
 
     if (work.description) {
       log.debug("ModelSetBuilder: adding work", work.key, "description rights");

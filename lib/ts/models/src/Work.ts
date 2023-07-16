@@ -1,22 +1,24 @@
 import {ImagesMixin} from "./ImagesMixin";
 import {Model} from "./Model";
 import {PropertyValue} from "./PropertyValue";
-import {RightsMixin} from "./RightsMixin";
-import {Text} from "./Text";
 import {WorkAgent} from "./WorkAgent";
 import {WorkLocation} from "./WorkLocation";
 import {WorkEventUnion} from "./WorkEventUnion";
 import {SameAsMixin} from "./SameAsMixin";
 import {ThumbnailMixin} from "./ThumbnailMixin";
+import {CreatorsMixin} from "./CreatorsMixin";
+import {ContributorsMixin} from "./ContributorsMixin";
+import {DescriptionMixin} from "./DescriptionMixin";
 
 export interface Work
   extends Model,
+    ContributorsMixin,
+    CreatorsMixin,
+    DescriptionMixin,
     ImagesMixin,
-    RightsMixin,
     SameAsMixin,
     ThumbnailMixin {
   readonly agents: readonly WorkAgent[];
-  readonly description: Text | null;
   readonly displayDate: string | null;
   readonly events: readonly WorkEventUnion[];
   readonly label: string;

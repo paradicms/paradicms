@@ -2,15 +2,10 @@ import {WikibaseArticle, WikibaseItem, WikibaseStatement,} from "@paradicms/wiki
 import {DatasetCore, Literal, NamedNode, Term} from "@rdfjs/types";
 import {ModelSet} from "../ModelSet";
 import {Image} from "../Image";
-import {RightsMixin} from "../RightsMixin";
-import {License} from "../License";
-import {RightsStatement} from "../RightsStatement";
-import {AgentUnion} from "../AgentUnion";
 import {Memoize} from "typescript-memoize";
 import {wdt} from "@paradicms/vocabularies";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {Mixin} from "ts-mixer";
-import {requireNonNull} from "@paradicms/utilities";
 import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
 import {PropertyValue} from "../PropertyValue";
 import {WikidataProperty} from "./WikidataProperty";
@@ -27,7 +22,7 @@ const ensureModelGraphIdentifier = (graph: Term) => {
 
 export abstract class WikidataModel
   extends Mixin(ResourceBackedModel, OwlSameAsMixin, SomeImageThumbnailMixin)
-  implements Model, RightsMixin, WikibaseItem {
+  implements Model, WikibaseItem {
   private readonly wikibaseItem: WikibaseItem;
   protected readonly wikibaseItemSet: WikibaseItemSet;
   protected readonly wikidataPropertiesByIri: {[index: string]: WikidataProperty};
@@ -56,19 +51,6 @@ export abstract class WikidataModel
 
   get articles(): readonly WikibaseArticle[] {
     return this.wikibaseItem.articles;
-  }
-
-  get contributors(): readonly AgentUnion[] {
-    return [];
-  }
-
-  get creators(): readonly AgentUnion[] {
-    return this.filterAndMapStatements(wdt["P170"], statement => {
-      if (statement.value.termType !== "NamedNode") {
-        return null;
-      }
-      return this.modelSet.agentByIri(statement.value.value);
-    });
   }
 
   protected findAndMapStatement<T>(
@@ -141,13 +123,6 @@ export abstract class WikidataModel
     return null;
   }
 
-  get licenses(): readonly License[] {
-    // All structured data from the main, Property, Lexeme, and EntitySchema namespaces is available under the Creative Commons CC0 License; text in the other namespaces is available under the Creative Commons Attribution-ShareAlike License; additional terms may apply.
-    return [requireNonNull(this.modelSet.licenseByIri(
-        "http://creativecommons.org/licenses/by-sa/3.0/"
-    ))];
-  }
-
   get prefLabel(): string | null {
     return this.wikibaseItem.prefLabel;
   }
@@ -174,20 +149,6 @@ export abstract class WikidataModel
       return [];
     }
     return this.propertyValuesByWikidataProperty(wikidataProperty);
-  }
-
-  get requiresAttribution(): boolean {
-    return true;
-  }
-
-  get rightsHolders(): readonly AgentUnion[] {
-    return [];
-  }
-
-  get rightsStatements(): readonly RightsStatement[] {
-    return [requireNonNull(this.modelSet.rightsStatementByIri(
-      "http://rightsstatements.org/vocab/InC/1.0/"
-    ))];
   }
 
   get statements(): readonly WikibaseStatement[] {

@@ -10,8 +10,8 @@ import {requireNonNull} from "@paradicms/utilities";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
-import {WorkAgentsMixin} from "../WorkAgentsMixin";
 import {SchemaModel} from "./SchemaModel";
+import {WorkAgentsMixin} from "../WorkAgentsMixin";
 
 export class SchemaCreativeWork
   extends Mixin(SchemaModel, SchemaCreativeWorkMixin, WorkAgentsMixin, WorkDisplayDateMixin)
