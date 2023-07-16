@@ -64,7 +64,7 @@ export const WorkPage: React.FunctionComponent<{
   const [
     workImagesCarouselImage,
     setCurrentWorkImagesCarouselImage,
-  ] = useState<Image | null>(null);
+  ] = useState<Image | null>(work.images.length > 0 ? work.images[0] : null);
 
   const [activeLeftColTabIndex, setActiveLeftColTabIndex] = useState(0);
 
