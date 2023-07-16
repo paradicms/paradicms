@@ -7,6 +7,7 @@ from urllib.parse import quote
 from rdflib import DCTERMS, Literal, URIRef, SDO
 
 from paradicms_etl.enricher import Enricher
+from paradicms_etl.enrichers.getty_enricher import GettyEnricher
 from paradicms_etl.enrichers.ncsu_enricher import NcsuEnricher
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
 from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
@@ -675,6 +676,12 @@ class SyntheticDataPipeline(Pipeline):
                 # named_location = named_location_builder.build()
                 yield named_location
                 work_builder.add_spatial(named_location.uri)
+            elif work_i == 4:
+                work_builder.add_same_as(
+                    URIRef(
+                        "https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6"
+                    )
+                )
 
             description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
             if isinstance(work_builder, DcPhysicalObject.Builder):
@@ -729,6 +736,7 @@ class SyntheticDataPipeline(Pipeline):
 
         # Help mypy out
         enrichers: List[Enricher] = [
+            GettyEnricher(cache_dir_path=cache_dir_path / "getty"),
             NcsuEnricher(cache_dir_path=cache_dir_path / "ncsu"),
             WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
             WikimediaCommonsEnricher(

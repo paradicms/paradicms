@@ -85,9 +85,9 @@ class GettyEnricher:
                                 __add_rights_references(image)
 
                                 referenced_getty_entity_replacer.add_image(
-                                    LinkedArtVisualItem.builder().set_digitally_shown_by(
-                                        image.uri
-                                    )
+                                    LinkedArtVisualItem.builder()
+                                    .set_digitally_shown_by(image.uri)
+                                    .build()
                                 )
                             yield referenced_getty_entity_replacer.build()
                         else:
