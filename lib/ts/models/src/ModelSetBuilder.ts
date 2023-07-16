@@ -120,6 +120,17 @@ export class ModelSetBuilder {
       return this;
     }
 
+    if (joinSelector.description) {
+      if (collection.description) {
+        log.debug(
+          "ModelSetBuilder: adding collection",
+          collection.key,
+          "description rights"
+        );
+        this.addRights(joinSelector.description, collection.description);
+      }
+    }
+
     if (joinSelector.thumbnail) {
       log.debug(
         "ModelSetBuilder: adding collection",
@@ -187,50 +198,53 @@ export class ModelSetBuilder {
   }
 
   addEvent(event: Event, joinSelector?: EventJoinSelector): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding work event", event.key);
+    log.debug("ModelSetBuilder: adding event", event.key);
     this.addModel(event);
 
     if (!joinSelector) {
-      log.debug(
-        "ModelSetBuilder: work event",
-        event.key,
-        "has no join selector"
-      );
+      log.debug("ModelSetBuilder: event", event.key, "has no join selector");
       return this;
     }
 
-    if (joinSelector.thumbnail) {
-      log.debug("ModelSetBuilder: adding work event", event.key, "thumbnail");
-      this.addThumbnail(event, joinSelector.thumbnail);
-    } else {
-      log.debug(
-        "ModelSetBuilder: not adding work event",
-        event.key,
-        "thumbnail"
-      );
-    }
-
-    if (joinSelector.location && event.location) {
-      log.debug(
-        "ModelSetBuilder: adding work event",
-        event.key,
-        "location",
-        event.location.key
-      );
-      this.addLocation(event.location);
-    }
-
     if (joinSelector.agents) {
-      log.debug("ModelSetBuilder: adding work event", event.key, "agents");
+      log.debug("ModelSetBuilder: adding event", event.key, "agents");
       for (const agent of event.agents) {
         log.debug(
-          "ModelSetBuilder: adding work event",
+          "ModelSetBuilder: adding event",
           event.key,
           "agent",
           agent.key
         );
         this.addAgent(agent, joinSelector.agents);
       }
+    }
+
+    if (joinSelector.description) {
+      if (event.description) {
+        log.debug(
+          "ModelSetBuilder: adding event",
+          event.key,
+          "description rights"
+        );
+        this.addRights(joinSelector.description, event.description);
+      }
+    }
+
+    if (joinSelector.thumbnail) {
+      log.debug("ModelSetBuilder: adding event", event.key, "thumbnail");
+      this.addThumbnail(event, joinSelector.thumbnail);
+    } else {
+      log.debug("ModelSetBuilder: not adding event", event.key, "thumbnail");
+    }
+
+    if (joinSelector.location && event.location) {
+      log.debug(
+        "ModelSetBuilder: adding event",
+        event.key,
+        "location",
+        event.location.key
+      );
+      this.addLocation(event.location);
     }
 
     return this;
@@ -562,15 +576,20 @@ export class ModelSetBuilder {
 
     log.debug("ModelSetBuilder: adding work", work.key, "rights");
     if (joinSelector.agents) {
-      log.debug("ModelSetBuilder: adding work", work.key, "agents");
       for (const agents of [work.contributors, work.creators]) {
         this.addAgents(agents, joinSelector.agents);
       }
     }
 
-    if (work.description) {
-      log.debug("ModelSetBuilder: adding work", work.key, "description rights");
-      this.addRights(joinSelector, work.description);
+    if (joinSelector.description) {
+      if (work.description) {
+        log.debug(
+          "ModelSetBuilder: adding work",
+          work.key,
+          "description rights"
+        );
+        this.addRights(joinSelector.description, work.description);
+      }
     }
 
     if (joinSelector.events) {

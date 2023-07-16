@@ -6,7 +6,15 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
   agents: {
     thumbnail: imagesCarouselThumbnailSelector,
   },
+  description: {
+    licenses: true,
+    rightsStatements: true,
+  },
   events: {
+    description: {
+      licenses: true,
+      rightsStatements: true,
+    },
     location: true,
     thumbnail: galleryThumbnailSelector,
   },
@@ -15,12 +23,10 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
     licenses: true,
     rightsStatements: true,
   },
-  licenses: true,
   location: true,
   propertyValues: {
     property: {
       groups: {},
     },
   },
-  rightsStatements: true,
 };
