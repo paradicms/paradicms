@@ -1,14 +1,11 @@
 import logging
 from enum import Enum
 from pathlib import Path
-from typing import Iterable, Tuple, Set
+from typing import Iterable, Tuple
 
 from rdflib import URIRef, RDF
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.creative_commons.creative_commons_licenses import (
-    CreativeCommonsLicenses,
-)
 from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.iiif.iiif_presentation_api_v2_manifest import (
     IiifPresentationApiV2Manifest,
@@ -23,12 +20,7 @@ from paradicms_etl.models.linked_art.linked_art_information_object import (
 )
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_visual_item import LinkedArtVisualItem
-from paradicms_etl.models.rights_mixin import RightsMixin
-from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
-    RightsStatementsDotOrgRightsStatements,
-)
 from paradicms_etl.models.stub.stub_model import StubModel
-from paradicms_etl.models.work import Work
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.get_json_ld_resource import get_json_ld_resource
 from paradicms_etl.utils.match_url import match_url
@@ -46,18 +38,6 @@ class GettyEnricher:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
-        referenced_rights_statement_uris: Set[URIRef] = set()
-        referenced_license_uris: Set[URIRef] = set()
-
-        def __add_rights_references(rights: RightsMixin):
-            for license_uri in rights.licenses:
-                if isinstance(license_uri, URIRef):
-                    referenced_license_uris.add(license_uri)
-
-            for rights_statement_uri in rights.rights_statements:
-                if isinstance(rights_statement_uri, URIRef):
-                    referenced_rights_statement_uris.add(rights_statement_uri)
-
         for model in models:
             for getty_entity_type in self._GettyEntityType:
                 referenced_getty_entity_uris = self.__get_model_getty_entity_references(
@@ -84,7 +64,6 @@ class GettyEnricher:
                                 referenced_getty_entity
                             ):
                                 yield image
-                                __add_rights_references(image)
 
                                 referenced_getty_entity_replacer.add_image(
                                     LinkedArtVisualItem.builder()
@@ -95,27 +74,9 @@ class GettyEnricher:
                         else:
                             yield referenced_getty_entity
 
-                        if isinstance(referenced_getty_entity, RightsMixin):
-                            __add_rights_references(referenced_getty_entity)
-                        elif isinstance(referenced_getty_entity, Work):
-                            if referenced_getty_entity.description:
-                                __add_rights_references(
-                                    referenced_getty_entity.description
-                                )
-
             if not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
-
-        available_license_uris = CreativeCommonsLicenses.by_uri()
-        for license_uri in referenced_license_uris:
-            yield available_license_uris[license_uri]
-
-        available_rights_statement_uris = (
-            RightsStatementsDotOrgRightsStatements.by_uri()
-        )
-        for rights_statement_uri in referenced_rights_statement_uris:
-            yield available_rights_statement_uris[rights_statement_uri]
 
     def __get_getty_entity_images(
         self, getty_entity: LinkedArtModel
