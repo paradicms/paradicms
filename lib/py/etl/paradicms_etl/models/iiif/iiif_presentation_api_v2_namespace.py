@@ -2,7 +2,7 @@ from rdflib import URIRef
 from rdflib.namespace import DefinedNamespace, Namespace
 
 
-class IiifPresentationApiNamespace(DefinedNamespace):
+class IiifPresentationApiV2Namespace(DefinedNamespace):
     _fail = True
     _NS = Namespace("http://iiif.io/api/presentation/2#")
 

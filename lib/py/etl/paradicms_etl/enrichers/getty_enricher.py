@@ -11,8 +11,8 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
 from paradicms_etl.models.dc.dc_image import DcImage
-from paradicms_etl.models.iiif.iiif_presentation_api_manifest import (
-    IiifPresentationApiManifest,
+from paradicms_etl.models.iiif.iiif_presentation_api_v2_manifest import (
+    IiifPresentationApiV2Manifest,
 )
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.linked_art.linked_art_human_made_object import (
@@ -150,7 +150,7 @@ class GettyEnricher:
     def __get_iiif_presentation_api_manifest_images(
         self, iiif_presentation_api_manifest_uri: URIRef
     ) -> Iterable[Image]:
-        manifest = IiifPresentationApiManifest.from_rdf(
+        manifest = IiifPresentationApiV2Manifest.from_rdf(
             get_json_ld_resource(
                 file_cache=self.__file_cache,
                 json_ld_resource_uri=iiif_presentation_api_manifest_uri,

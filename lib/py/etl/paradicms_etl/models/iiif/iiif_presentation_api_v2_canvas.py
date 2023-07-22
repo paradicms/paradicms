@@ -3,16 +3,16 @@ from typing import Tuple
 from rdflib import URIRef, RDFS, DCTERMS
 from rdflib.term import Identifier
 
-from paradicms_etl.models.iiif.iiif_presentation_api_namespace import (
-    IiifPresentationApiNamespace,
+from paradicms_etl.models.iiif.iiif_presentation_api_v2_namespace import (
+    IiifPresentationApiV2Namespace,
 )
 from paradicms_etl.models.oa.oa_annotation import OaAnnotation
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 
-SC = IiifPresentationApiNamespace
+SC = IiifPresentationApiV2Namespace
 
 
-class IiifPresentationApiCanvas(ResourceBackedModel):
+class IiifPresentationApiV2Canvas(ResourceBackedModel):
     @property
     def has_image_annotations(self) -> Tuple[OaAnnotation, ...]:
         return tuple(
