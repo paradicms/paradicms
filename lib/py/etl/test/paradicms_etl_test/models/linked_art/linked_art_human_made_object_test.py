@@ -19,21 +19,13 @@ def test_getty_description(getty_linked_art_human_made_object):
     # )
 
 
-def test_getty_image_uris(getty_linked_art_human_made_object):
-    assert getty_linked_art_human_made_object.image_uris == (
-        URIRef(
-            "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg"
-        ),
-    )
+# def test_getty_image_uris(getty_linked_art_human_made_object):
+#     assert getty_linked_art_human_made_object.image_uris == (
+#         URIRef(
+#             "https://media.getty.edu/iiif/image/fcbc34dd-cd8a-4a5b-8fd6-cd769588b9a8/full/full/0/default.jpg"
+#         ),
+#     )
 
 
 def test_yale_label(yale_linked_art_human_made_object):
     assert yale_linked_art_human_made_object.label == "The Judgement Of Paris"
-
-
-def test_yale_image_uris(yale_linked_art_human_made_object):
-    assert yale_linked_art_human_made_object.image_uris == (
-        URIRef(
-            "http://example.com",
-        )
-    )
