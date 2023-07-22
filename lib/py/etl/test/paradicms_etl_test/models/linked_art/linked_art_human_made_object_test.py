@@ -29,3 +29,11 @@ def test_getty_image_uris(getty_linked_art_human_made_object):
 
 def test_yale_label(yale_linked_art_human_made_object):
     assert yale_linked_art_human_made_object.label == "The Judgement Of Paris"
+
+
+def test_yale_image_uris(yale_linked_art_human_made_object):
+    assert yale_linked_art_human_made_object.image_uris == (
+        URIRef(
+            "http://example.com",
+        )
+    )
