@@ -89,7 +89,7 @@ class GettyEnricher:
                 not in is_subject_of_model.has_type
             ):
                 continue
-            yield from self.__get_iiif_presentation_api_manifest_images(
+            yield from self.__get_iiif_presentation_api_v2_manifest_images(
                 is_subject_of_model.uri
             )
             return
@@ -108,13 +108,13 @@ class GettyEnricher:
         else:
             raise NotImplementedError(rdf_type)
 
-    def __get_iiif_presentation_api_manifest_images(
-        self, iiif_presentation_api_manifest_uri: URIRef
+    def __get_iiif_presentation_api_v2_manifest_images(
+        self, iiif_presentation_api_v2_manifest_uri: URIRef
     ) -> Iterable[Image]:
         manifest = IiifPresentationApiV2Manifest.from_rdf(
             get_json_ld_resource(
                 file_cache=self.__file_cache,
-                json_ld_resource_uri=iiif_presentation_api_manifest_uri,
+                json_ld_resource_uri=iiif_presentation_api_v2_manifest_uri,
             )
         )
         attribution_label = manifest.attribution_label
