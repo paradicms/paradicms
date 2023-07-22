@@ -1,0 +1,163 @@
+import logging
+from enum import Enum
+from pathlib import Path
+from typing import Iterable, Tuple
+
+from rdflib import URIRef, RDF
+
+from paradicms_etl.model import Model
+from paradicms_etl.models.dc.dc_image import DcImage
+from paradicms_etl.models.iiif.iiif_presentation_api_v2_manifest import (
+    IiifPresentationApiV2Manifest,
+)
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.linked_art.linked_art_human_made_object import (
+    LinkedArtHumanMadeObject,
+)
+from paradicms_etl.models.linked_art.linked_art_images_mixin import LinkedArtImagesMixin
+from paradicms_etl.models.linked_art.linked_art_information_object import (
+    LinkedArtInformationObject,
+)
+from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
+from paradicms_etl.models.linked_art.linked_art_visual_item import LinkedArtVisualItem
+from paradicms_etl.models.stub.stub_model import StubModel
+from paradicms_etl.utils.file_cache import FileCache
+from paradicms_etl.utils.get_json_ld_resource import get_json_ld_resource
+from paradicms_etl.utils.match_url import match_url
+
+
+class YaleEnricher:
+    class _YaleEntityType(Enum):
+        OBJECT = "object"
+
+        def __str__(self):
+            return self.value
+
+    def __init__(self, *, cache_dir_path: Path):
+        self.__file_cache = FileCache(cache_dir_path=cache_dir_path)
+        self.__logger = logging.getLogger(__name__)
+
+    def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
+        for model in models:
+            for yale_entity_type in self._YaleEntityType:
+                referenced_yale_entity_uris = self.__get_model_yale_entity_references(
+                    yale_entity_type=yale_entity_type, model=model
+                )
+                if not referenced_yale_entity_uris:
+                    yield model
+                    continue
+
+                referenced_yale_entity: LinkedArtModel
+                for referenced_yale_entity_uri in referenced_yale_entity_uris:
+                    for referenced_yale_entity in getattr(
+                        self, f"_get_yale_{yale_entity_type}_entity"
+                    )(referenced_yale_entity_uri):
+                        assert isinstance(referenced_yale_entity, LinkedArtModel)
+
+                        if isinstance(referenced_yale_entity, LinkedArtImagesMixin):
+                            # Don't use the has_representation images that came with the entity's RDF, use the ones from the IIIF presentation API manifest
+                            referenced_yale_entity_replacer = (
+                                referenced_yale_entity.replacer()
+                            )
+
+                            for image in self.__get_yale_entity_images(
+                                referenced_yale_entity
+                            ):
+                                yield image
+
+                                referenced_yale_entity_replacer.add_image(
+                                    LinkedArtVisualItem.builder()
+                                    .set_digitally_shown_by(image.uri)
+                                    .build()
+                                )
+                            yield referenced_yale_entity_replacer.build()
+                        else:
+                            yield referenced_yale_entity
+
+            if not isinstance(model, StubModel):
+                # A StubModel is "replaced" by the Wikidata entity model
+                yield model
+
+    def __get_yale_entity_images(self, yale_entity: LinkedArtModel) -> Iterable[Image]:
+        for is_subject_of_model in yale_entity.is_subject_of:
+            if not isinstance(is_subject_of_model, LinkedArtInformationObject):
+                continue
+            if (
+                URIRef("https://data.yale.edu/local/thesaurus/iiif-manifest")
+                not in is_subject_of_model.has_type
+            ):
+                continue
+            yield from self.__get_iiif_presentation_api_v2_manifest_images(
+                is_subject_of_model.uri
+            )
+            return
+        self.__logger.warning(
+            "entity %s is not associated with an IIIF manifest", yale_entity.uri
+        )
+        return ()
+
+    def _get_yale_object_entity(self, yale_entity_uri: URIRef) -> Iterable[Model]:
+        resource = get_json_ld_resource(
+            file_cache=self.__file_cache, json_ld_resource_uri=yale_entity_uri
+        )
+        rdf_type = resource.value(RDF.type)
+        if rdf_type.identifier == LinkedArtHumanMadeObject.rdf_type_uri():
+            yield LinkedArtHumanMadeObject.from_rdf(resource)
+        else:
+            raise NotImplementedError(rdf_type)
+
+    def __get_iiif_presentation_api_v2_manifest_images(
+        self, iiif_presentation_api_v2_manifest_uri: URIRef
+    ) -> Iterable[Image]:
+        manifest = IiifPresentationApiV2Manifest.from_rdf(
+            get_json_ld_resource(
+                file_cache=self.__file_cache,
+                json_ld_resource_uri=iiif_presentation_api_v2_manifest_uri,
+            )
+        )
+        attribution_label = manifest.attribution_label
+
+        for sequence in manifest.has_sequences:
+            for canvas in sequence.has_canvases:
+                for image_annotation in canvas.has_image_annotations:
+                    image = image_annotation.has_body
+                    assert isinstance(image, DcImage)
+
+                    # Rebuild the Image so we don't carry along the entire IIIF manifest RDF in every Image
+                    concise_image_builder = DcImage.builder(uri=image.uri)
+                    # Reuse the exact dimensions
+                    assert image.exact_dimensions
+                    concise_image_builder.set_exact_dimensions(image.exact_dimensions)
+                    # Propagate the rights and attribution label to the image RDF
+                    assert not image.rights_holders
+                    concise_image_builder.add_rights_holder(attribution_label)
+                    assert not image.rights_statements
+                    concise_image_builder.add_rights_statement(canvas.rights)
+                    yield concise_image_builder.build()
+
+    @staticmethod
+    def __get_model_yale_entity_references(
+        *, yale_entity_type: _YaleEntityType, model: Model
+    ) -> Tuple[URIRef, ...]:
+        """
+        Get a list of Wikidata entity URIs referenced by the given model.
+        """
+
+        def is_yale_entity_uri(uri: URIRef):
+            return match_url(
+                uri,
+                match_netloc="data.yale.edu",
+                match_path_prefix=f"/museum/collection/{yale_entity_type}/",
+            )
+
+        if isinstance(model, StubModel):
+            if is_yale_entity_uri(model.uri):
+                return (model.uri,)
+            else:
+                return ()
+        else:
+            return tuple(
+                same_as_uri
+                for same_as_uri in model.same_as_uris
+                if is_yale_entity_uri(same_as_uri)
+            )
