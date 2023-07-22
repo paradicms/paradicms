@@ -38,4 +38,4 @@ def match_url(
         ):
             return False
 
-    return False
+    return True
