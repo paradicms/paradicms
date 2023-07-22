@@ -22,3 +22,19 @@ def getty_linked_art_human_made_object() -> LinkedArtHumanMadeObject:
             )
         )
     )
+
+
+@pytest.fixture(scope="session")
+def yale_linked_art_human_made_object() -> LinkedArtHumanMadeObject:
+    return LinkedArtHumanMadeObject.from_rdf(
+        Graph()
+        .parse(
+            # Use the .ttl in order to avoid resolving the JSON-LD context here
+            source=str(Path(__file__).parent / "yale_linked_art_human_made_object.ttl"),
+        )
+        .resource(
+            URIRef(
+                "https://lux.collections.yale.edu/data/object/25a33e3e-5ac3-4154-9d01-2cbbf87713ed"
+            )
+        )
+    )
