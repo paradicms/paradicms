@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Iterable, Set, Tuple, List, Dict, Sequence
+from typing import Iterable, Set, Tuple, Dict, Sequence
 
 from rdflib import Graph, URIRef
 
@@ -19,9 +19,7 @@ from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import WDT
-from paradicms_etl.utils.canonicalize_wikidata_entity_uri import (
-    canonicalize_wikidata_entity_uri,
-)
+from paradicms_etl.utils.is_wikidata_entity_uri import is_wikidata_entity_uri
 
 
 class WikidataEnricher:
@@ -94,20 +92,14 @@ class WikidataEnricher:
         Get a list of Wikidata entity URIs referenced by the given model.
         """
         if isinstance(model, StubModel):
-            try:
-                return (canonicalize_wikidata_entity_uri(model.uri),)
-            except ValueError:
-                return ()
+            if is_wikidata_entity_uri(model.uri):
+                return (model.uri,)
 
-        wikidata_entity_uris: List[URIRef] = []
-        for same_as_uri in model.same_as_uris:
-            try:
-                wikidata_entity_uris.append(
-                    canonicalize_wikidata_entity_uri(same_as_uri)
-                )
-            except ValueError:
-                continue
-        return tuple(wikidata_entity_uris)
+        return tuple(
+            same_as_uri
+            for same_as_uri in model.same_as_uris
+            if is_wikidata_entity_uri(same_as_uri)
+        )
 
     def __get_wikidata_entity(self, wikidata_entity_uri: URIRef) -> WikibaseItem:
         """

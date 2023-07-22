@@ -4,9 +4,6 @@ from typing import Tuple, List
 
 from rdflib import Graph, URIRef
 
-from paradicms_etl.utils.canonicalize_wikidata_entity_uri import (
-    canonicalize_wikidata_entity_uri,
-)
 from paradicms_etl.utils.file_cache import FileCache
 
 
@@ -24,9 +21,7 @@ class WikidataEntityExtractor:
             cache_dir_path=cache_dir_path,
             ssl_context=ssl_context,
         )
-        self.__entity_uris = (
-            canonicalize_wikidata_entity_uri(entity_uri) for entity_uri in entity_uris
-        )
+        self.__entity_uris = entity_uris
 
     def __call__(self, *, force: bool, **kwds):
         rdf_file_paths: List[Path] = []

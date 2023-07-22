@@ -2,7 +2,6 @@ import logging
 from enum import Enum
 from pathlib import Path
 from typing import Iterable, Tuple, Set
-from urllib.parse import urlparse
 
 from rdflib import URIRef, RDF
 
@@ -32,6 +31,7 @@ from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.models.work import Work
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.get_json_ld_resource import get_json_ld_resource
+from paradicms_etl.utils.match_url import match_url
 
 
 class GettyEnricher:
@@ -185,17 +185,11 @@ class GettyEnricher:
         """
 
         def is_getty_entity_uri(uri: URIRef):
-            parsed_uri = urlparse(str(uri))
-            if parsed_uri.scheme.lower() not in ("http", "https"):
-                return False
-            if parsed_uri.netloc.lower() != "data.getty.edu":
-                return False
-            path_prefix = f"/museum/collection/{getty_entity_type}/"
-            if not parsed_uri.path.lower().startswith(path_prefix) or len(
-                parsed_uri.path
-            ) == len(path_prefix):
-                return False
-            return True
+            return match_url(
+                uri,
+                match_netloc="data.getty.edu",
+                match_path_prefix=f"/museum/collection/{getty_entity_type}/",
+            )
 
         if isinstance(model, StubModel):
             if is_getty_entity_uri(model.uri):
