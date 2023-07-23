@@ -1,0 +1,159 @@
+{
+  "@context": "http://iiif.io/api/presentation/2/context.json",
+  "@type": "sc:Manifest",
+  "@id": "https://manifests.collections.yale.edu/v2/ycba/obj/38102",
+  "label": "Francesco Bartolozzi RA, 1728–1815, Italian, active in Britain (1764–99), The Judgement Of Paris, 1788",
+  "metadata": [
+    {
+      "label": "Copyright Statement",
+      "value": "Public Domain"
+    },
+    {
+      "label": "Creator",
+      "value": "Francesco Bartolozzi RA, 1728–1815, Italian, active in Britain (1764–99)"
+    },
+    {
+      "label": "Title",
+      "value": "The Judgement Of Paris"
+    },
+    {
+      "label": "Medium",
+      "value": "Stipple engraving"
+    },
+    {
+      "label": "Credit Line",
+      "value": "Yale Center for British Art, Paul Mellon Collection"
+    },
+    {
+      "label": "Institution",
+      "value": "Yale Center for British Art"
+    },
+    {
+      "label": "Collection",
+      "value": "Prints and Drawings"
+    },
+    {
+      "label": "Call Number",
+      "value": "B1977.14.19767"
+    }
+  ],
+  "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+  "attribution": "Metadata describing Yale Center for British Art collections is public domain under CC0. Copyright or other restrictions may apply to cultural works or images of those works in this record.",
+  "logo": "https://static.britishart.yale.edu/images/ycba_logo.jpg",
+  "related": {
+    "@id": "https://collections.britishart.yale.edu/catalog/tms:38102",
+    "format": "text/html"
+  },
+  "seeAlso": [
+    {
+      "@id": "https://harvester-bl.britishart.yale.edu/oaicatmuseum/OAIHandler?verb=GetRecord\u0026identifier=oai:tms.ycba.yale.edu:38102\u0026metadataPrefix=lido",
+      "foramt": "text/xml",
+      "profile": "http://www.lido-schema.org/schema/v1.0/lido-v1.0.xsd"
+    },
+    {
+      "@id": "http://collection.britishart.yale.edu/id/page/object/38102",
+      "foramt": "text/rdf+n3",
+      "profile": ""
+    }
+  ],
+  "sequences": [
+    {
+      "@id": "https://manifests.collections.yale.edu/v2/ycba/obj/38102/sequence/0",
+      "@type": "sc:Sequence",
+      "canvases": [
+        {
+          "@id": "https://manifests.collections.yale.edu/canvas/ycba/a7b39e62-d972-4e6a-a3e7-0bdc12aeddff",
+          "@type": "sc:Canvas",
+          "label": "recto, cropped to image",
+          "height": 4321,
+          "width": 4746,
+          "images": [
+            {
+              "@type": "oa:Annotation",
+              "@id": "https://manifests.collections.yale.edu/annotation/ycba/a7b39e62-d972-4e6a-a3e7-0bdc12aeddff",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "https://images.collections.yale.edu/iiif/2/ycba:a7b39e62-d972-4e6a-a3e7-0bdc12aeddff/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://images.collections.yale.edu/iiif/2/ycba:a7b39e62-d972-4e6a-a3e7-0bdc12aeddff",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                },
+                "height": 4321,
+                "width": 4746
+              },
+              "on": "https://manifests.collections.yale.edu/canvas/ycba/a7b39e62-d972-4e6a-a3e7-0bdc12aeddff"
+            }
+          ],
+          "rendering": [
+            {
+              "@id": "https://media.collections.yale.edu/tiff/ycba/a7b39e62-d972-4e6a-a3e7-0bdc12aeddff.tif",
+              "label": "TIFF for download",
+              "format": "image/tiff"
+            }
+          ],
+          "thumbnail": {
+            "@id": "https://media.collections.yale.edu/thumbnail/ycba/a7b39e62-d972-4e6a-a3e7-0bdc12aeddff",
+            "@type": "dctypes:Image",
+            "width": 480,
+            "height": 437
+          },
+          "metadata": [
+            {
+              "label": "Image Use Rights",
+              "value": "No Copyright: You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. (CC0 1.0)"
+            }
+          ]
+        },
+        {
+          "@id": "https://manifests.collections.yale.edu/canvas/ycba/d18bc467-fa1a-4de3-b1f4-020fd9ba4b1b",
+          "@type": "sc:Canvas",
+          "label": "recto",
+          "height": 5693,
+          "width": 5463,
+          "images": [
+            {
+              "@type": "oa:Annotation",
+              "@id": "https://manifests.collections.yale.edu/annotation/ycba/d18bc467-fa1a-4de3-b1f4-020fd9ba4b1b",
+              "motivation": "sc:painting",
+              "resource": {
+                "@id": "https://images.collections.yale.edu/iiif/2/ycba:d18bc467-fa1a-4de3-b1f4-020fd9ba4b1b/full/full/0/default.jpg",
+                "@type": "dctypes:Image",
+                "format": "image/jpeg",
+                "service": {
+                  "@context": "http://iiif.io/api/image/2/context.json",
+                  "@id": "https://images.collections.yale.edu/iiif/2/ycba:d18bc467-fa1a-4de3-b1f4-020fd9ba4b1b",
+                  "profile": "http://iiif.io/api/image/2/level2.json"
+                },
+                "height": 5693,
+                "width": 5463
+              },
+              "on": "https://manifests.collections.yale.edu/canvas/ycba/d18bc467-fa1a-4de3-b1f4-020fd9ba4b1b"
+            }
+          ],
+          "rendering": [
+            {
+              "@id": "https://media.collections.yale.edu/tiff/ycba/d18bc467-fa1a-4de3-b1f4-020fd9ba4b1b.tif",
+              "label": "TIFF for download",
+              "format": "image/tiff"
+            }
+          ],
+          "thumbnail": {
+            "@id": "https://media.collections.yale.edu/thumbnail/ycba/d18bc467-fa1a-4de3-b1f4-020fd9ba4b1b",
+            "@type": "dctypes:Image",
+            "width": 461,
+            "height": 480
+          },
+          "metadata": [
+            {
+              "label": "Image Use Rights",
+              "value": "No Copyright: You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission. (CC0 1.0)"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
