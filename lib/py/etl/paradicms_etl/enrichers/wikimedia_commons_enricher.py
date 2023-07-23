@@ -467,7 +467,9 @@ class WikimediaCommonsEnricher:
 
     def __get_wikimedia_commons_file_name(self, url: str) -> Optional[str]:
         try:
-            parsed_url = urlparse(url.lower())
+            parsed_url = urlparse(
+                url
+            )  # Don't lower() this, since we test case-sensitive paths below
         except ValueError:
             self.__logger.warning("error parsing URL: %s", url)
             return None
