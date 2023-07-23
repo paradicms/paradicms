@@ -22,7 +22,9 @@ def test_transform(
         synthetic_data_model = remaining_synthetic_data_models_by_uri.pop(
             transformed_model.uri
         )
-        assert synthetic_data_model.label == transformed_model.label
+        assert (
+            synthetic_data_model.label == transformed_model.label
+        ), transformed_model.uri
     assert len(remaining_synthetic_data_models_by_uri) == 0, len(
         remaining_synthetic_data_models_by_uri
     )
