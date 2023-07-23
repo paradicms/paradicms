@@ -117,7 +117,7 @@ class WikidataEnricher:
         graph = RdfUrlExtractor(
             cache_dir_path=self.__cache_dir_path,
             rdf_url=URIRef(str(wikidata_entity_uri) + ".ttl"),
-        )(force=False)["conjunctive_graph"].default_context
+        )(force=False)["graph"]
         extracted_wikidata_items = WikibaseItems.from_rdf(
             graph=graph,
             uris=(wikidata_entity_uri,),
