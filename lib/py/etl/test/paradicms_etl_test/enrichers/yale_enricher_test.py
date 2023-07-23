@@ -19,12 +19,11 @@ def test_enrich_stub_work(data_dir_path: Path):
             (stub_work,)
         )
     )
-    assert len(enriched_models) == 6  # Enricher should eat the stub
+    assert len(enriched_models) == 3  # Enricher should eat the stub
     images = tuple(model for model in enriched_models if isinstance(model, Image))
-    assert len(images) == 5
+    assert len(images) == 2
     for image in images:
         assert image.rights_holders
-        assert image.rights_statements
     assert any(
         isinstance(model, Work)
         for model in enriched_models

@@ -6,7 +6,6 @@ from typing import Iterable, Tuple
 from rdflib import URIRef, RDF
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.dc.dc_image import DcImage
 from paradicms_etl.models.iiif.iiif_presentation_api_v2_manifest import (
     IiifPresentationApiV2Manifest,
 )
@@ -89,9 +88,12 @@ class GettyEnricher:
                 not in is_subject_of_model.has_type
             ):
                 continue
-            yield from self.__get_iiif_presentation_api_v2_manifest_images(
-                is_subject_of_model.uri
-            )
+            yield from IiifPresentationApiV2Manifest.from_rdf(
+                get_json_ld_resource(
+                    file_cache=self.__file_cache,
+                    json_ld_resource_uri=is_subject_of_model.uri,
+                )
+            ).images
             return
         self.__logger.warning(
             "entity %s is not associated with an IIIF manifest", getty_entity.uri
@@ -107,35 +109,6 @@ class GettyEnricher:
             yield LinkedArtHumanMadeObject.from_rdf(resource)
         else:
             raise NotImplementedError(rdf_type)
-
-    def __get_iiif_presentation_api_v2_manifest_images(
-        self, iiif_presentation_api_v2_manifest_uri: URIRef
-    ) -> Iterable[Image]:
-        manifest = IiifPresentationApiV2Manifest.from_rdf(
-            get_json_ld_resource(
-                file_cache=self.__file_cache,
-                json_ld_resource_uri=iiif_presentation_api_v2_manifest_uri,
-            )
-        )
-        attribution_label = manifest.attribution_label
-
-        for sequence in manifest.has_sequences:
-            for canvas in sequence.has_canvases:
-                for image_annotation in canvas.has_image_annotations:
-                    image = image_annotation.has_body
-                    assert isinstance(image, DcImage)
-
-                    # Rebuild the Image so we don't carry along the entire IIIF manifest RDF in every Image
-                    concise_image_builder = DcImage.builder(uri=image.uri)
-                    # Reuse the exact dimensions
-                    assert image.exact_dimensions
-                    concise_image_builder.set_exact_dimensions(image.exact_dimensions)
-                    # Propagate the rights and attribution label to the image RDF
-                    assert not image.rights_holders
-                    concise_image_builder.add_rights_holder(attribution_label)
-                    assert not image.rights_statements
-                    concise_image_builder.add_rights_statement(canvas.rights)
-                    yield concise_image_builder.build()
 
     @staticmethod
     def __get_model_getty_entity_references(

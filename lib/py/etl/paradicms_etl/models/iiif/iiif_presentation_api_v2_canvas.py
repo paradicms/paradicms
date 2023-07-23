@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Optional
 
 from rdflib import URIRef, RDFS, DCTERMS
 from rdflib.term import Identifier
@@ -33,5 +33,5 @@ class IiifPresentationApiV2Canvas(ResourceBackedModel):
         return SC.Canvas
 
     @property
-    def rights(self) -> URIRef:
-        return self._required_value(DCTERMS.rights, self._map_term_to_uri)
+    def rights(self) -> Optional[URIRef]:
+        return self._optional_value(DCTERMS.rights, self._map_term_to_uri)
