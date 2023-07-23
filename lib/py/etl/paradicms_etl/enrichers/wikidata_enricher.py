@@ -4,7 +4,7 @@ from typing import Iterable, Set, Tuple, Dict, Sequence
 
 from rdflib import Graph, URIRef
 
-from paradicms_etl.extractors.wikidata_entity_extractor import WikidataEntityExtractor
+from paradicms_etl.extractors.rdf_url_extractor import RdfUrlExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
@@ -114,10 +114,10 @@ class WikidataEnricher:
         if cached_wikidata_entity is not None:
             return cached_wikidata_entity
 
-        graph = WikidataEntityExtractor(
+        graph = RdfUrlExtractor(
             cache_dir_path=self.__cache_dir_path,
-            entity_uris=(wikidata_entity_uri,),
-        )(force=False)["graph"]
+            rdf_url=URIRef(str(wikidata_entity_uri) + ".ttl"),
+        )(force=False)["conjunctive_graph"].default_context
         extracted_wikidata_items = WikibaseItems.from_rdf(
             graph=graph,
             uris=(wikidata_entity_uri,),
