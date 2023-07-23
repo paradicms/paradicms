@@ -38,13 +38,15 @@ class RdfConjunctiveGraphTransformer:
                 root_model_class.rdf_type_uri()
             ] = root_model_class
 
-    def __call__(self, *, conjunctive_graph: ConjunctiveGraph) -> Iterable[Model]:
-        for graph in conjunctive_graph.contexts():
-            root_model_rdf_types = tuple(graph.objects(graph.identifier, RDF.type))
+    def __call__(self, *, graph: ConjunctiveGraph) -> Iterable[Model]:
+        for graph_context in graph.contexts():
+            root_model_rdf_types = tuple(
+                graph_context.objects(graph_context.identifier, RDF.type)
+            )
 
             if len(root_model_rdf_types) == 0:
                 self.__logger.warning(
-                    "graph %s does not contain a root model?", graph.identifier
+                    "graph %s does not contain a root model?", graph_context.identifier
                 )
                 continue
 
@@ -61,10 +63,12 @@ class RdfConjunctiveGraphTransformer:
             if root_model_class is None:
                 self.__logger.warning(
                     "graph %s contains a root model with unknown rdf:types %s",
-                    graph.identifier,
+                    graph_context.identifier,
                     root_model_rdf_types,
                 )
                 continue
 
-            root_model = root_model_class.from_rdf(graph.resource(graph.identifier))
+            root_model = root_model_class.from_rdf(
+                graph_context.resource(graph_context.identifier)
+            )
             yield root_model

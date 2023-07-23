@@ -544,7 +544,7 @@ export class ModelSetBuilder {
       //     maxDimensions: image.maxDimensions,
       //   })
       // );
-      const thumbnail = imagesMixin.thumbnail(selector);
+      const thumbnail = image.thumbnail(selector);
       if (thumbnail) {
         log.debug(
           "ModelSetBuilder: adding original image",
@@ -557,6 +557,16 @@ export class ModelSetBuilder {
         this.addImage(thumbnail, selector);
         return true;
       }
+    }
+    if (imagesMixin.images.length > 0) {
+      const image = imagesMixin.images[0];
+      log.debug(
+        "ModelSetBuilder: adding an original image",
+        image.key,
+        "as a thumbnail"
+      );
+      this.addImage(image, selector);
+      return true;
     }
     log.debug(
       "ModelSetBuilder: no thumbnail found for selector",

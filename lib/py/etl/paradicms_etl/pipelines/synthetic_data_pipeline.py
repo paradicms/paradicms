@@ -680,6 +680,12 @@ class SyntheticDataPipeline(Pipeline):
                         "https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6"
                     )
                 )
+            elif work_i == 5:
+                work_builder.add_same_as(
+                    URIRef(
+                        "https://lux.collections.yale.edu/data/object/25a33e3e-5ac3-4154-9d01-2cbbf87713ed"
+                    )
+                )
 
             description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
             if isinstance(work_builder, DcPhysicalObject.Builder):

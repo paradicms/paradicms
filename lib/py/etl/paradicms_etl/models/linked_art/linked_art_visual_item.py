@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Union, Optional
 
 from rdflib import URIRef, Graph
 
@@ -25,16 +25,12 @@ class LinkedArtVisualItem(LinkedArtModel):
     def builder(cls):
         return cls.Builder(Graph().resource(uuid_urn()))
 
-    # @property
-    # def digitally_shown_by(self) -> Optional[LinkedArtDigitalObject]:
-    #     model = self._optional_value(
-    #         LA.digitally_shown_by, self._map_term_to_linked_art_model
-    #     )
-    #     return model if isinstance(model, LinkedArtDigitalObject) else None
-    # @property
-    # def format(self) -> Optional[str]:
-    #     return self._optional_value(DC["format"], self._map_term_to_str)
-    #
+    @property
+    def digitally_shown_by(self) -> Optional[LinkedArtDigitalObject]:
+        model = self._optional_value(
+            LA.digitally_shown_by, self._map_term_to_linked_art_model
+        )
+        return model if isinstance(model, LinkedArtDigitalObject) else None
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

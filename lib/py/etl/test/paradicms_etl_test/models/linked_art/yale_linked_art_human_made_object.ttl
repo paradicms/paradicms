@@ -1,0 +1,309 @@
+@prefix ns1: <http://www.cidoc-crm.org/cidoc-crm/> .
+@prefix ns2: <http://purl.org/dc/elements/1.1/> .
+@prefix ns3: <http://purl.org/dc/terms/> .
+@prefix ns4: <https://linked.art/ns/terms/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://lux.collections.yale.edu/data/object/25a33e3e-5ac3-4154-9d01-2cbbf87713ed> a ns1:E22_Human-Made_Object ;
+    rdfs:label "The Judgement Of Paris" ;
+    ns1:P108i_was_produced_by <http://paradicms.org/bnode/N6f2f65e847fd4106a61ca4f0a53c4618> ;
+    ns1:P129i_is_subject_of <http://paradicms.org/bnode/N32ce9ecc5df74ba094eb1949fae8a3e1>,
+        <http://paradicms.org/bnode/N338483458e4f4e1b95a80b36a2dd07ba>,
+        <http://paradicms.org/bnode/Nd098a034860f425281ab8e829df2432a> ;
+    ns1:P138i_has_representation <http://paradicms.org/bnode/N5cfe0d968d36462d81368fa43710f18b>,
+        <http://paradicms.org/bnode/N972a3e9944744938a21f95d3ae209aaa> ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/N35794f722daa4a2ebe005dd61b432bab>,
+        <http://paradicms.org/bnode/N51d007045c9240bc830b095f4543e755>,
+        <http://paradicms.org/bnode/Nbf1e91e3ee094295aca5d191132a294d> ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/326a3b0b-c184-4c3a-aba2-21eae7da0a2e>,
+        <https://lux.collections.yale.edu/data/concept/4a172143-a50e-4d91-a88b-a9931bceecf1>,
+        <https://lux.collections.yale.edu/data/concept/b34ad31c-4a2f-4cef-aee3-ae8d824e42a2>,
+        <https://lux.collections.yale.edu/data/concept/ba4f9d2d-bdd0-4ac8-9b73-aff1095aa028> ;
+    ns1:P45_consists_of <https://lux.collections.yale.edu/data/concept/698354e0-331a-4aa3-b963-f44c7d3a33bb> ;
+    ns1:P52_has_current_owner <https://lux.collections.yale.edu/data/group/0e8bc04a-6538-4792-b82a-9e0751857e7d> ;
+    ns1:P55_has_current_location <https://lux.collections.yale.edu/data/place/0a73efa8-c306-4e1e-821e-5b2f35ebb28a> ;
+    ns1:P65_shows_visual_item <https://lux.collections.yale.edu/data/visual/e36a2c2a-a25c-4330-9895-1c21ef7a8fab> ;
+    ns1:P67i_is_referred_to_by <http://paradicms.org/bnode/N2f7a71b87f2b4941a48967b124b4e08a>,
+        <http://paradicms.org/bnode/N43b00615477f43f7855999d6b8e243f2>,
+        <http://paradicms.org/bnode/Naedda8e0804d4009bd49cd0b34c097ec>,
+        <http://paradicms.org/bnode/Nedc0259450144ef1a61a44a227ae8bc8>,
+        <http://paradicms.org/bnode/Nfda9b39ab64f496db40cf77702e056f5> ;
+    ns4:equivalent <http://www.wikidata.org/entity/Q110075388>,
+        <https://ycba-lux.s3.amazonaws.com/v3/object/70/70f25903-4720-4569-a20e-47b4d70b0eb9.json> ;
+    ns4:member_of <https://lux.collections.yale.edu/data/set/56dc1a97-4dfa-4a30-b028-f816575da1ab> .
+
+<http://creativecommons.org/publicdomain/zero/1.0/deed.en> a ns1:E55_Type ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/Nbeb1415764834ff49aea3bec0220d083> .
+
+<http://iiif.io/api/presentation/2/context.json> a ns1:E73_Information_Object .
+
+<http://iiif.io/api/presentation/3/context.json> a ns1:E73_Information_Object .
+
+<http://paradicms.org/bnode/N043b68965f884aa88d3b34e3bb8b387c> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "IIIF v2 manifest for \"The Judgement Of Paris\"" .
+
+<http://paradicms.org/bnode/N0500fe8a5d774877a82bbae859a55efb> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "The Judgement of Paris title QS:P1476,en:\"The Judgement of Paris \" label QS:Len,\"The Judgement of Paris \"" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/f7ef5bb4-e7fb-443d-9c6b-371a23e717ec> .
+
+<http://paradicms.org/bnode/N077bfaa9e97c4cf79b9a39c5a6d20acf> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> ;
+    rdfs:label "Online home page for \"The Judgement Of Paris\"" ;
+    ns2:format "text/html" ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/Nf295970bf4664f0ab7fa2ef45be9b0c0> ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/2eca07bd-be42-4ef5-9ec5-87c1bbfe639d> ;
+    ns4:access_point <https://collections.britishart.yale.edu/catalog/tms:38102> .
+
+<http://paradicms.org/bnode/N09bb7fb3a82848a4b0c08e4e2b29e153> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> ;
+    rdfs:label "IIIF v3 manifest for \"The Judgement Of Paris\"" ;
+    ns2:format "application/ld+json" ;
+    ns3:conformsTo <http://iiif.io/api/presentation/3/context.json> ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/N795c6312fcde4af48b736a75f8fd79cc> ;
+    ns4:access_point <https://manifests.collections.yale.edu/ycba/obj/38102> .
+
+<http://paradicms.org/bnode/N2f7a71b87f2b4941a48967b124b4e08a> a ns1:E33_Linguistic_Object ;
+    ns1:P190_has_symbolic_content "engraving - Francesco Bartolozzi RA" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b9d84f17-662e-46ef-ab8b-7499717f8337> ;
+    ns1:P72_has_language <https://lux.collections.yale.edu/data/concept/1fda962d-1edc-4fd7-bfa9-0c10e3153449> .
+
+<http://paradicms.org/bnode/N32ce9ecc5df74ba094eb1949fae8a3e1> a ns1:E33_Linguistic_Object ;
+    rdfs:label "IIIF v3 manifest for \"The Judgement Of Paris\"" ;
+    ns4:digitally_carried_by <http://paradicms.org/bnode/N09bb7fb3a82848a4b0c08e4e2b29e153> .
+
+<http://paradicms.org/bnode/N338483458e4f4e1b95a80b36a2dd07ba> a ns1:E33_Linguistic_Object ;
+    rdfs:label "Home page for \"The Judgement Of Paris\"" ;
+    ns4:digitally_carried_by <http://paradicms.org/bnode/N077bfaa9e97c4cf79b9a39c5a6d20acf> .
+
+<http://paradicms.org/bnode/N35794f722daa4a2ebe005dd61b432bab> a ns1:E42_Identifier ;
+    ns1:P141i_was_assigned_by <http://paradicms.org/bnode/Nc621d0e9fc374246b598fb1fc2009d22> ;
+    ns1:P190_has_symbolic_content "B1977.14.19767" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/3d9696be-0b9a-4a3d-b380-7584fbf96ac7> .
+
+<http://paradicms.org/bnode/N43b00615477f43f7855999d6b8e243f2> a ns1:E33_Linguistic_Object ;
+    ns1:P190_has_symbolic_content "Yale Center for British Art, Paul Mellon Collection" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/7c0ba119-47cb-4ade-8aa3-32a1e66c8ca9> .
+
+<http://paradicms.org/bnode/N46b461778c4c4d2fbcb2f8371f276759> a ns1:E12_Production ;
+    ns1:P15_was_influenced_by <https://lux.collections.yale.edu/data/person/2c28b4b9-6055-4b86-9eed-8e7349e59290> ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/d6290bdb-d6be-4d3a-ac64-5d091eb7a439> .
+
+<http://paradicms.org/bnode/N4a535ed395eb4edd8cf63768d326b0ae> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "1788" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/5088ec29-065b-4c66-b49e-e61d3c8f3717> .
+
+<http://paradicms.org/bnode/N5017e4aaa21e45acba8b027b07be32a6> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> ;
+    rdfs:label "IIIF v2 manifest for \"The Judgement Of Paris\"" ;
+    ns2:format "application/ld+json" ;
+    ns3:conformsTo <http://iiif.io/api/presentation/2/context.json> ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/N043b68965f884aa88d3b34e3bb8b387c> ;
+    ns4:access_point <https://manifests.collections.yale.edu/v2/ycba/obj/38102> .
+
+<http://paradicms.org/bnode/N51d007045c9240bc830b095f4543e755> a ns1:E42_Identifier ;
+    rdfs:label "Local System Number" ;
+    ns1:P141i_was_assigned_by <http://paradicms.org/bnode/N56536faa18e64767a3170a8763d6ad22> ;
+    ns1:P190_has_symbolic_content "38102" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/89630361-18a3-4c4b-bcd7-16894d95defd> .
+
+<http://paradicms.org/bnode/N56536faa18e64767a3170a8763d6ad22> a ns1:E13_Attribute_Assignment ;
+    ns1:P14_carried_out_by <https://lux.collections.yale.edu/data/group/0e8bc04a-6538-4792-b82a-9e0751857e7d> .
+
+<http://paradicms.org/bnode/N58773dfbd21a4fdd84396f9380768b5e> a ns1:E30_Right ;
+    ns1:P2_has_type <http://creativecommons.org/publicdomain/zero/1.0/deed.en> .
+
+<http://paradicms.org/bnode/N5cfe0d968d36462d81368fa43710f18b> a ns1:E36_Visual_Item ;
+    rdfs:label "Wikidata Image" ;
+    ns4:digitally_shown_by <http://paradicms.org/bnode/Nf2a9378fb9fe40a48945f0d49d3c18f5> .
+
+<http://paradicms.org/bnode/N6f2f65e847fd4106a61ca4f0a53c4618> a ns1:E12_Production ;
+    ns1:P32_used_general_technique <https://lux.collections.yale.edu/data/concept/9174d1f8-541e-43a7-a214-d43391a83a2a> ;
+    ns1:P4_has_time-span <http://paradicms.org/bnode/Nd8987526431543c8956648e76acebf0b> ;
+    ns1:P9_consists_of <http://paradicms.org/bnode/N46b461778c4c4d2fbcb2f8371f276759>,
+        <http://paradicms.org/bnode/Ne391286fb1004166be5a18f11a2b7a3a> .
+
+<http://paradicms.org/bnode/N795c6312fcde4af48b736a75f8fd79cc> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "IIIF v3 manifest for \"The Judgement Of Paris\"" .
+
+<http://paradicms.org/bnode/N972a3e9944744938a21f95d3ae209aaa> a ns1:E36_Visual_Item ;
+    rdfs:label "Primary Image" ;
+    ns4:digitally_shown_by <http://paradicms.org/bnode/Ncb0915bebcd9432b8cd6222e194171dc> .
+
+<http://paradicms.org/bnode/N9e0e181f6e1c4e80b7baf05e22ac7fbc> a ns1:E33_Linguistic_Object ;
+    ns1:P190_has_symbolic_content """The Judgement of Paris title QS:P1476,en:"The Judgement of Paris " label QS:Len,"The Judgement of Paris " by Francesco Bartolozzi
+ Yale Center for British Art , CC0""" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/4030679e-c6e0-4e5e-b3c0-48ee1b8cfe60> .
+
+<http://paradicms.org/bnode/Naedda8e0804d4009bd49cd0b34c097ec> a ns1:E33_Linguistic_Object ;
+    ns1:P190_has_symbolic_content "Accessible by request in the study Room" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/03f4eb19-0611-4f31-8e09-fc111c52f898> .
+
+<http://paradicms.org/bnode/Nbeb1415764834ff49aea3bec0220d083> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "Creative Commons Zero, Public Domain Dedication" .
+
+<http://paradicms.org/bnode/Nbf1e91e3ee094295aca5d191132a294d> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "The Judgement Of Paris" ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/Nf4ecfd08723142a5b957ae242f5730ab> ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/31497b4e-24ad-47fe-88ad-af2007d7fb5a>,
+        <https://lux.collections.yale.edu/data/concept/f7ef5bb4-e7fb-443d-9c6b-371a23e717ec> ;
+    ns1:P72_has_language <https://lux.collections.yale.edu/data/concept/1fda962d-1edc-4fd7-bfa9-0c10e3153449> .
+
+<http://paradicms.org/bnode/Nc621d0e9fc374246b598fb1fc2009d22> a ns1:E13_Attribute_Assignment ;
+    ns1:P14_carried_out_by <https://lux.collections.yale.edu/data/group/0e8bc04a-6538-4792-b82a-9e0751857e7d> .
+
+<http://paradicms.org/bnode/Ncb0915bebcd9432b8cd6222e194171dc> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> ;
+    rdfs:label "Primary Image" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b28a48ef-4d40-44d1-81c9-27f0411b030b> ;
+    ns4:access_point <https://media.collections.yale.edu/thumbnail/ycba/obj/38102> .
+
+<http://paradicms.org/bnode/Nd098a034860f425281ab8e829df2432a> a ns1:E33_Linguistic_Object ;
+    rdfs:label "IIIF v2 manifest for \"The Judgement Of Paris\"" ;
+    ns4:digitally_carried_by <http://paradicms.org/bnode/N5017e4aaa21e45acba8b027b07be32a6> .
+
+<http://paradicms.org/bnode/Nd8987526431543c8956648e76acebf0b> a ns1:E52_Time-Span ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/N4a535ed395eb4edd8cf63768d326b0ae> ;
+    ns1:P81a_end_of_the_begin "1788-12-31T23:59:59+00:00"^^xsd:dateTime ;
+    ns1:P81b_begin_of_the_end "1788-01-01T00:00:00+00:00"^^xsd:dateTime ;
+    ns1:P82a_begin_of_the_begin "1788-01-01T00:00:00+00:00"^^xsd:dateTime ;
+    ns1:P82b_end_of_the_end "1788-12-31T23:59:59+00:00"^^xsd:dateTime .
+
+<http://paradicms.org/bnode/Ne391286fb1004166be5a18f11a2b7a3a> a ns1:E12_Production ;
+    ns1:P14_carried_out_by <https://lux.collections.yale.edu/data/person/fe601b39-f4d3-4f78-aab1-c223bb2c66aa> ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/21c449ff-7ad8-4f08-ae5f-68bde74bc5ca> .
+
+<http://paradicms.org/bnode/Nedc0259450144ef1a61a44a227ae8bc8> a ns1:E33_Linguistic_Object ;
+    ns1:P190_has_symbolic_content "Lettered, lower left: \"Angelica Kauffman R.A. pinxt.\"; lettered, lower right: \"Frans. Bartolozzi R.A. Engraver to his Majesty sculpt.\"; lettered, center: \"THE JUDGMENT OF PARIS.  -  LE JUDGEMENT DE PARIS. | From the Original Picture in the Collection of George Bowles Esqr. | This Prints is with the greatest respect Dedicated by Permission to the Right Honourable Lady Hawkesbury. | by her Ladyships | most obedient and very humble Servant | S. Watts. | London Published as the Act directs, 30 July 1788, by S. Watts, No. 28 Walcot Place Lambeth.\"" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/a016cca7-9bf0-48aa-8d32-78ced1b3751f> .
+
+<http://paradicms.org/bnode/Nf295970bf4664f0ab7fa2ef45be9b0c0> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "View this record on the Yale Center for British Art website" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/f7ef5bb4-e7fb-443d-9c6b-371a23e717ec> .
+
+<http://paradicms.org/bnode/Nf2a9378fb9fe40a48945f0d49d3c18f5> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> ;
+    ns1:P104_is_subject_to <http://paradicms.org/bnode/N58773dfbd21a4fdd84396f9380768b5e> ;
+    ns1:P1_is_identified_by <http://paradicms.org/bnode/N0500fe8a5d774877a82bbae859a55efb> ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b28a48ef-4d40-44d1-81c9-27f0411b030b> ;
+    ns1:P67i_is_referred_to_by <http://paradicms.org/bnode/N9e0e181f6e1c4e80b7baf05e22ac7fbc> .
+
+<http://paradicms.org/bnode/Nf4ecfd08723142a5b957ae242f5730ab> a ns1:E33_E41_Linguistic_Appellation ;
+    ns1:P190_has_symbolic_content "Current Title" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/5088ec29-065b-4c66-b49e-e61d3c8f3717> .
+
+<http://paradicms.org/bnode/Nfda9b39ab64f496db40cf77702e056f5> a ns1:E33_Linguistic_Object ;
+    ns1:P190_has_symbolic_content "Stipple engraving" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/a51a170c-211c-4cc1-bb11-52e24836117f> .
+
+<http://www.wikidata.org/entity/Q110075388> a ns1:E22_Human-Made_Object ;
+    rdfs:label "The Judgement of Paris" .
+
+<https://collections.britishart.yale.edu/catalog/tms:38102> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> .
+
+<https://lux.collections.yale.edu/data/concept/03f4eb19-0611-4f31-8e09-fc111c52f898> a ns1:E55_Type ;
+    rdfs:label "Access Statement" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b079998d-bb47-470a-ad7d-d938bd091f8a> .
+
+<https://lux.collections.yale.edu/data/concept/21c449ff-7ad8-4f08-ae5f-68bde74bc5ca> a ns1:E55_Type ;
+    rdfs:label "Primary Artist" .
+
+<https://lux.collections.yale.edu/data/concept/2eca07bd-be42-4ef5-9ec5-87c1bbfe639d> a ns1:E55_Type ;
+    rdfs:label "Web Page" .
+
+<https://lux.collections.yale.edu/data/concept/31497b4e-24ad-47fe-88ad-af2007d7fb5a> a ns1:E55_Type ;
+    rdfs:label "Sort Name" .
+
+<https://lux.collections.yale.edu/data/concept/326a3b0b-c184-4c3a-aba2-21eae7da0a2e> a ns1:E55_Type ;
+    rdfs:label "Print" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/4ea65dc4-76bc-45b7-b54c-a1ca4783d4e2> .
+
+<https://lux.collections.yale.edu/data/concept/3d9696be-0b9a-4a3d-b380-7584fbf96ac7> a ns1:E55_Type ;
+    rdfs:label "Accession Number" .
+
+<https://lux.collections.yale.edu/data/concept/3fdac98e-1396-4e75-bb52-33894863c571> a ns1:E55_Type ;
+    rdfs:label "Super Type" .
+
+<https://lux.collections.yale.edu/data/concept/4030679e-c6e0-4e5e-b3c0-48ee1b8cfe60> a ns1:E55_Type ;
+    rdfs:label "Copyright/License Statement" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b079998d-bb47-470a-ad7d-d938bd091f8a> .
+
+<https://lux.collections.yale.edu/data/concept/4a172143-a50e-4d91-a88b-a9931bceecf1> a ns1:E55_Type ;
+    rdfs:label "Visual Works" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/3fdac98e-1396-4e75-bb52-33894863c571> .
+
+<https://lux.collections.yale.edu/data/concept/698354e0-331a-4aa3-b963-f44c7d3a33bb> a ns1:E57_Material .
+
+<https://lux.collections.yale.edu/data/concept/7c0ba119-47cb-4ade-8aa3-32a1e66c8ca9> a ns1:E55_Type ;
+    rdfs:label "Credit Line" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b079998d-bb47-470a-ad7d-d938bd091f8a> .
+
+<https://lux.collections.yale.edu/data/concept/89630361-18a3-4c4b-bcd7-16894d95defd> a ns1:E55_Type ;
+    rdfs:label "System-Assigned Number" .
+
+<https://lux.collections.yale.edu/data/concept/9174d1f8-541e-43a7-a214-d43391a83a2a> a ns1:E55_Type ;
+    rdfs:label "stipple engraving" .
+
+<https://lux.collections.yale.edu/data/concept/a016cca7-9bf0-48aa-8d32-78ced1b3751f> a ns1:E55_Type ;
+    rdfs:label "Inscription" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b079998d-bb47-470a-ad7d-d938bd091f8a> .
+
+<https://lux.collections.yale.edu/data/concept/a51a170c-211c-4cc1-bb11-52e24836117f> a ns1:E55_Type ;
+    rdfs:label "Material Statement" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b079998d-bb47-470a-ad7d-d938bd091f8a> .
+
+<https://lux.collections.yale.edu/data/concept/b34ad31c-4a2f-4cef-aee3-ae8d824e42a2> a ns1:E55_Type ;
+    rdfs:label "Collection Item" .
+
+<https://lux.collections.yale.edu/data/concept/b9d84f17-662e-46ef-ab8b-7499717f8337> a ns1:E55_Type ;
+    rdfs:label "Description" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/b079998d-bb47-470a-ad7d-d938bd091f8a> .
+
+<https://lux.collections.yale.edu/data/concept/ba4f9d2d-bdd0-4ac8-9b73-aff1095aa028> a ns1:E55_Type ;
+    rdfs:label "intaglio print" ;
+    ns1:P2_has_type <https://lux.collections.yale.edu/data/concept/4ea65dc4-76bc-45b7-b54c-a1ca4783d4e2> .
+
+<https://lux.collections.yale.edu/data/concept/d6290bdb-d6be-4d3a-ac64-5d091eb7a439> a ns1:E55_Type ;
+    rdfs:label "after" .
+
+<https://lux.collections.yale.edu/data/person/2c28b4b9-6055-4b86-9eed-8e7349e59290> a ns1:E21_Person ;
+    rdfs:label "Angelica Kauffmann RA" .
+
+<https://lux.collections.yale.edu/data/person/fe601b39-f4d3-4f78-aab1-c223bb2c66aa> a ns1:E21_Person ;
+    rdfs:label "Francesco Bartolozzi RA" .
+
+<https://lux.collections.yale.edu/data/place/0a73efa8-c306-4e1e-821e-5b2f35ebb28a> a ns1:E53_Place ;
+    rdfs:label "Yale Center for British Art" .
+
+<https://lux.collections.yale.edu/data/set/56dc1a97-4dfa-4a30-b028-f816575da1ab> a ns4:Set ;
+    rdfs:label "Prints and Drawings Collection, Yale Center for British Art" .
+
+<https://lux.collections.yale.edu/data/visual/e36a2c2a-a25c-4330-9895-1c21ef7a8fab> a ns1:E36_Visual_Item ;
+    rdfs:label "\"The Judgement Of Paris\" - Visual Content" .
+
+<https://manifests.collections.yale.edu/v2/ycba/obj/38102> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> .
+
+<https://manifests.collections.yale.edu/ycba/obj/38102> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> .
+
+<https://media.collections.yale.edu/thumbnail/ycba/obj/38102> a <http://www.ics.forth.gr/isl/CRMdig/D1_Digital_Object> .
+
+<https://ycba-lux.s3.amazonaws.com/v3/object/70/70f25903-4720-4569-a20e-47b4d70b0eb9.json> a ns1:E22_Human-Made_Object ;
+    rdfs:label "The Judgement Of Paris" .
+
+<https://lux.collections.yale.edu/data/concept/1fda962d-1edc-4fd7-bfa9-0c10e3153449> a ns1:E56_Language ;
+    rdfs:label "English" .
+
+<https://lux.collections.yale.edu/data/concept/4ea65dc4-76bc-45b7-b54c-a1ca4783d4e2> a ns1:E55_Type ;
+    rdfs:label "Type of Work" .
+
+<https://lux.collections.yale.edu/data/concept/5088ec29-065b-4c66-b49e-e61d3c8f3717> a ns1:E55_Type ;
+    rdfs:label "Display Title" .
+
+<https://lux.collections.yale.edu/data/concept/b28a48ef-4d40-44d1-81c9-27f0411b030b> a ns1:E55_Type ;
+    rdfs:label "Digital Image" .
+
+<https://lux.collections.yale.edu/data/concept/f7ef5bb4-e7fb-443d-9c6b-371a23e717ec> a ns1:E55_Type ;
+    rdfs:label "Primary",
+        "Primary Name" .
+
+<https://lux.collections.yale.edu/data/group/0e8bc04a-6538-4792-b82a-9e0751857e7d> a ns1:E74_Group ;
+    rdfs:label "Yale Center for British Art" .
+
+<https://lux.collections.yale.edu/data/concept/b079998d-bb47-470a-ad7d-d938bd091f8a> a ns1:E55_Type ;
+    rdfs:label "Brief Text" .
+

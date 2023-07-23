@@ -12,7 +12,6 @@ import {DateTimeDescription} from "../DateTimeDescription";
 import {Text} from "../Text";
 import {Image} from "../Image";
 import {ThumbnailSelector} from "../ThumbnailSelector";
-import {requireNonNull} from "@paradicms/utilities";
 
 export class LinkedArtProduction
   extends Mixin(LinkedArtModel, EventDerivedDatesMixin)
@@ -67,7 +66,11 @@ export class LinkedArtProduction
   }
 
   override get label(): string {
-    return requireNonNull(super.label);
+    if (super.label) {
+      return super.label;
+    } else {
+      return "Production";
+    }
   }
 
   readonly location = null;
