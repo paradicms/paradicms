@@ -250,7 +250,7 @@ describe("ModelSetBuilder", () => {
     expect(workModelSet.concepts).to.have.length(16);
 
     expect(subsetWork.description!.licenses).not.to.be.empty;
-    expect(modelSetLicenseIris(workModelSet)).to.have.length(3);
+    expect(modelSetLicenseIris(workModelSet)).to.have.length(4);
     expect(subsetWork.description!.rightsHolders).not.to.be.empty;
     expect(subsetWork.description!.rightsStatements).to.not.be.empty;
     expect(modelSetRightsStatementIris(workModelSet)).to.have.length(3);
