@@ -1,12 +1,15 @@
-from typing import Tuple, Union, Iterable, List
+from typing import Tuple, Union, Iterable, List, Optional
 
 from more_itertools import flatten
 from rdflib import URIRef
 
+from paradicms_etl.models.linked_art.linked_art_digital_object import (
+    LinkedArtDigitalObject,
+)
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_right import LinkedArtRight
 from paradicms_etl.models.text import Text
-from paradicms_etl.namespaces import CRM
+from paradicms_etl.namespaces import CRM, LA
 
 
 class LinkedArtLinguisticObject(LinkedArtModel, Text):
@@ -20,6 +23,13 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
     @property
     def creators(self) -> Tuple[Union[str, URIRef], ...]:
         return ()
+
+    @property
+    def digitally_carried_by(self) -> Optional[LinkedArtDigitalObject]:
+        model = self._optional_value(
+            LA.digitally_carried_by, self._map_term_to_linked_art_model
+        )
+        return model if isinstance(model, LinkedArtDigitalObject) else None
 
     @property
     def licenses(self) -> Tuple[Union[str, URIRef], ...]:

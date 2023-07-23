@@ -8,4 +8,5 @@ class LA(DefinedNamespace):
 
     # Properties
     access_point: URIRef
+    digitally_carried_by: URIRef
     digitally_shown_by: URIRef

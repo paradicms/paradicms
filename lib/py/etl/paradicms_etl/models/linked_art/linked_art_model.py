@@ -33,6 +33,9 @@ class LinkedArtModel(ResourceBackedModel):
         if not isinstance(value_type, Resource):
             return None
 
+        from paradicms_etl.models.linked_art.linked_art_digital_object import (
+            LinkedArtDigitalObject,
+        )
         from paradicms_etl.models.linked_art.linked_art_information_object import (
             LinkedArtInformationObject,
         )
@@ -45,6 +48,7 @@ class LinkedArtModel(ResourceBackedModel):
         )
 
         for model_class in (
+            LinkedArtDigitalObject,
             LinkedArtInformationObject,
             LinkedArtLinguisticObject,
             LinkedArtRight,

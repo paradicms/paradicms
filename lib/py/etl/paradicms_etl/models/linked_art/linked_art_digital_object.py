@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import Optional, Tuple
 
-from rdflib import URIRef, Graph
+from rdflib import URIRef, Graph, DCTERMS
 
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_type import LinkedArtType
@@ -29,6 +29,14 @@ class LinkedArtDigitalObject(LinkedArtModel):
     @classmethod
     def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
         return cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
+
+    @property
+    def access_point(self) -> Optional[URIRef]:
+        return self._optional_value(LA.access_point, self._map_term_to_uri)
+
+    @property
+    def conforms_to(self) -> Tuple[URIRef, ...]:
+        return tuple(self._values(DCTERMS.conformsTo, self._map_term_to_uri))
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

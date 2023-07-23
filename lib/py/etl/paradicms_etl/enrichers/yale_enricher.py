@@ -15,8 +15,8 @@ from paradicms_etl.models.linked_art.linked_art_human_made_object import (
     LinkedArtHumanMadeObject,
 )
 from paradicms_etl.models.linked_art.linked_art_images_mixin import LinkedArtImagesMixin
-from paradicms_etl.models.linked_art.linked_art_information_object import (
-    LinkedArtInformationObject,
+from paradicms_etl.models.linked_art.linked_art_linguistic_object import (
+    LinkedArtLinguisticObject,
 )
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_visual_item import LinkedArtVisualItem
@@ -24,6 +24,7 @@ from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.get_json_ld_resource import get_json_ld_resource
 from paradicms_etl.utils.match_url import match_url
+from paradicms_etl.utils.skolemize import skolemize
 
 
 class YaleEnricher:
@@ -80,15 +81,23 @@ class YaleEnricher:
 
     def __get_yale_entity_images(self, yale_entity: LinkedArtModel) -> Iterable[Image]:
         for is_subject_of_model in yale_entity.is_subject_of:
-            if not isinstance(is_subject_of_model, LinkedArtInformationObject):
+            if not isinstance(is_subject_of_model, LinkedArtLinguisticObject):
+                continue
+            digitally_carried_by_model = is_subject_of_model.digitally_carried_by
+            if digitally_carried_by_model is None:
                 continue
             if (
-                URIRef("https://data.yale.edu/local/thesaurus/iiif-manifest")
-                not in is_subject_of_model.has_type
+                URIRef("http://iiif.io/api/presentation/2/context.json")
+                not in digitally_carried_by_model.conforms_to
             ):
                 continue
+            if digitally_carried_by_model.access_point is None:
+                self.__logger.warning(
+                    "IIIF presentation API v2 manifest DigitalObject has no access_point"
+                )
+                continue
             yield from self.__get_iiif_presentation_api_v2_manifest_images(
-                is_subject_of_model.uri
+                digitally_carried_by_model.access_point
             )
             return
         self.__logger.warning(
@@ -100,9 +109,10 @@ class YaleEnricher:
         resource = get_json_ld_resource(
             file_cache=self.__file_cache, json_ld_resource_uri=yale_entity_uri
         )
-        rdf_type = resource.value(RDF.type)
+        skolemized_resource = skolemize(resource.graph).resource(resource.identifier)
+        rdf_type = skolemized_resource.value(RDF.type)
         if rdf_type.identifier == LinkedArtHumanMadeObject.rdf_type_uri():
-            yield LinkedArtHumanMadeObject.from_rdf(resource)
+            yield LinkedArtHumanMadeObject.from_rdf(skolemized_resource)
         else:
             raise NotImplementedError(rdf_type)
 
@@ -146,8 +156,8 @@ class YaleEnricher:
         def is_yale_entity_uri(uri: URIRef):
             return match_url(
                 uri,
-                match_netloc="data.yale.edu",
-                match_path_prefix=f"/museum/collection/{yale_entity_type}/",
+                match_netloc="lux.collections.yale.edu",
+                match_path_prefix=f"/data/{yale_entity_type}/",
             )
 
         if isinstance(model, StubModel):
