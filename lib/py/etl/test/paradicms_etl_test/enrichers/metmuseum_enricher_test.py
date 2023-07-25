@@ -12,10 +12,14 @@ from paradicms_etl.models.work import Work
 @pytest.mark.parametrize(
     "uri",
     (
+        # Vincent Van Gogh - Wheat Field with Cypresses
         URIRef("https://www.metmuseum.org/art/collection/search/436535"),
+        # ibid
         URIRef(
             "https://collectionapi.metmuseum.org/public/collection/v1/objects/436535"
         ),
+        # Lucas Cranach the Elder: Judgment of Paris
+        URIRef("https://www.metmuseum.org/art/collection/search/436037"),
     ),
 )
 def test_enrich_stub_work(data_dir_path: Path, uri: URIRef):
