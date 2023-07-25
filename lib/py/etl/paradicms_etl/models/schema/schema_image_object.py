@@ -10,6 +10,9 @@ from paradicms_etl.models.schema.schema_media_object_mixin import (
     SchemaMediaObjectMixin,
 )
 from paradicms_etl.models.schema.schema_model import SchemaModel
+from paradicms_etl.models.schema.schema_quantitative_value import (
+    SchemaQuantitativeValue,
+)
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from paradicms_etl.utils.uuid_urn import uuid_urn
@@ -35,18 +38,6 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
             Image.Builder.copy_rights(self, other)
             return self
 
-        def __create_quantitative_value_resource(
-            self, *, max_value: Optional[int] = None, value: Optional[int] = None
-        ) -> Resource:
-            quantitative_value_resource: Resource = self._resource.graph.resource(
-                uuid_urn()
-            )
-            if max_value is not None:
-                quantitative_value_resource.set(SDO.maxValue, Literal(max_value))
-            if value is not None:
-                quantitative_value_resource.set(SDO.value, Literal(value))
-            return quantitative_value_resource
-
         def set_caption(self, caption: str) -> "SchemaImageObject.Builder":
             self.set(SDO.caption, caption)
             return self
@@ -66,13 +57,15 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         ) -> "SchemaImageObject.Builder":
             self.set(
                 SDO.height,
-                self.__create_quantitative_value_resource(
-                    value=exact_dimensions.height
-                ),
+                SchemaQuantitativeValue.builder()
+                .set_value(exact_dimensions.height)
+                .build(),
             )
             self.set(
                 SDO.width,
-                self.__create_quantitative_value_resource(value=exact_dimensions.width),
+                SchemaQuantitativeValue.builder()
+                .set_value(exact_dimensions.width)
+                .build(),
             )
             return self
 
@@ -81,15 +74,15 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         ) -> "SchemaImageObject.Builder":
             self.set(
                 SDO.height,
-                self.__create_quantitative_value_resource(
-                    max_value=max_dimensions.height
-                ),
+                SchemaQuantitativeValue.builder()
+                .set_max_value(max_dimensions.height)
+                .build(),
             )
             self.set(
                 SDO.width,
-                self.__create_quantitative_value_resource(
-                    max_value=max_dimensions.width
-                ),
+                SchemaQuantitativeValue.builder()
+                .set_max_value(max_dimensions.width)
+                .build(),
             )
             return self
 
