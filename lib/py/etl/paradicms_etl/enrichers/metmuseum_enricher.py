@@ -2,7 +2,6 @@ import json
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from pprint import pprint
 from typing import Iterable, Dict, Tuple, List, Optional
 from urllib.parse import urlparse
 
@@ -10,6 +9,10 @@ from dataclasses_json import dataclass_json
 from rdflib import URIRef
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_postal_address import SchemaPostalAddress
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.match_url import match_url
@@ -521,11 +524,131 @@ class MetmuseumEnricher:
         with open(
             self.__file_cache.get_file(metmuseum_collection_api_url)
         ) as metmuseum_collection_api_json_file:
-            collection_api_object = self._CollectionApiObject.from_dict(
-                json.load(metmuseum_collection_api_json_file)
+            collection_api_object: MetmuseumEnricher._CollectionApiObject = (
+                self._CollectionApiObject.from_dict(
+                    json.load(metmuseum_collection_api_json_file)
+                )
             )
-        pprint(collection_api_object)
-        x = 1
+
+        assert collection_api_object.title
+        work_builder = SchemaCreativeWork.builder(
+            name=collection_api_object.title, uri=metmuseum_collection_api_url
+        )
+
+        if (
+            collection_api_object.artistDisplayName
+            and collection_api_object.artistULAN_URL
+        ):
+            artist_builder = SchemaPerson.builder(
+                name=collection_api_object.artistDisplayName,
+                uri=URIRef(collection_api_object.artistULAN_URL),
+            )
+        else:
+            artist_builder = None
+
+        postal_address_builder: Optional[SchemaPostalAddress.Builder] = None
+
+        # Ignore accessionNumber
+        # Ignore accessionYear
+
+        # additionalImages
+        for additional_image_url in collection_api_object.additionalImages:
+            additional_image = SchemaImageObject.builder(
+                uri=URIRef(additional_image_url)
+            ).build()
+            yield additional_image
+            work_builder.add_image(additional_image.uri)
+
+        # Ignore artistAlphaSort
+
+        # artistBeginDate
+        if artist_builder is not None and collection_api_object.artistBeginDate:
+            artist_builder.set_birth_date(collection_api_object.artistBeginDate)
+
+        # artistDisplayBio
+        if artist_builder is not None and collection_api_object.artistDisplayBio:
+            artist_builder.set_description(collection_api_object.artistDisplayBio)
+
+        # Handled artistDisplayName above
+
+        # artistEndDate
+        if artist_builder is not None and collection_api_object.artistEndDate:
+            artist_builder.set_death_date(collection_api_object.artistEndDate)
+
+        # Ignore artistGender
+
+        # artistNationality
+        if artist_builder is not None and collection_api_object.artistNationality:
+            artist_builder.set_nationality(
+                collection_api_object.artistNationality
+            )  # Should be a schema:Country, not str
+
+        # Ignore artistPrefix
+        # Ignore artistRole
+        # Ignore artistSuffix
+
+        # Used artistULAN_URL as the artist URI
+
+        # artistWikidata_URL
+        if artist_builder is not None and collection_api_object.artistWikidata_URL:
+            artist_builder.add_same_as(URIRef(collection_api_object.artistWikidata_URL))
+
+        # city
+        if collection_api_object.city:
+            if postal_address_builder is None:
+                postal_address_builder = SchemaPostalAddress.builder()
+            postal_address_builder.set_address_locality(collection_api_object.city)
+
+        # Ignore classification
+
+        # constituents
+        for constituent in collection_api_object.constituents:
+            if constituent.role == "Artist":
+                continue
+            raise NotImplementedError(constituent.role)
+
+        # country
+        if collection_api_object.country:
+            if postal_address_builder is None:
+                postal_address_builder = SchemaPostalAddress.builder()
+            postal_address_builder.set_address_country(collection_api_object.country)
+
+        # county and state
+        if collection_api_object.state:
+            if postal_address_builder is None:
+                postal_address_builder = SchemaPostalAddress.builder()
+            postal_address_builder.set_address_region(collection_api_object.state)
+        elif collection_api_object.county:
+            if postal_address_builder is None:
+                postal_address_builder = SchemaPostalAddress.builder()
+            postal_address_builder.set_address_region(collection_api_object.county)
+
+        # creditLine
+        if collection_api_object.creditLine:
+            work_builder.set_credit_text(collection_api_object.creditLine)
+
+        # Ignore culture
+
+        # Ignore department
+
+        # dimensions and dimensionsParsed
+        if collection_api_object.dimensionsParsed:
+            pass
+        elif collection_api_object.dimensions:
+            work_builder.set_size(collection_api_object.size)
+
+        # Ignore GalleryNumber
+
+        # primaryImage
+        assert collection_api_object.primaryImage
+        primary_image = SchemaImageObject.builder(
+            uri=URIRef(collection_api_object.primaryImage)
+        ).build()
+        yield primary_image
+        work_builder.add_image(primary_image.uri)
+        # Ignore primaryImageSmall
+
+        yield work_builder.build()
 
     @staticmethod
     def __get_model_met_object_references(*, model: Model) -> Dict[URIRef, URIRef]:
