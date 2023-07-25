@@ -53,6 +53,12 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             self.add(SDO.spatial, spatial)
             return self
 
+        def set_credit_text(
+            self, credit_text: str
+        ) -> "SchemaCreativeWorkMixin.Builder":
+            self.set(SDO.creditText, credit_text)
+            return self
+
         def set_date_created(
             self, date_created: DateTimeUnion
         ) -> "SchemaCreativeWorkMixin.Builder":
