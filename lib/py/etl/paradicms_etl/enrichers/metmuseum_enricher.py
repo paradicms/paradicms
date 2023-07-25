@@ -16,6 +16,7 @@ from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_postal_address import SchemaPostalAddress
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.utils.file_cache import FileCache
@@ -535,11 +536,7 @@ class MetmuseumEnricher:
                 )
             )
 
-        assert collection_api_object.title
-        work_builder = SchemaCreativeWork.builder(
-            name=collection_api_object.title, uri=metmuseum_collection_api_url
-        )
-
+        # Lazily create builders except for the Work builder
         if collection_api_object.artistDisplayName:
             artist_builder = SchemaPerson.builder(
                 name=collection_api_object.artistDisplayName,
@@ -551,6 +548,11 @@ class MetmuseumEnricher:
             artist_builder = None
 
         postal_address_builder: Optional[SchemaPostalAddress.Builder] = None
+
+        assert collection_api_object.title
+        work_builder = SchemaCreativeWork.builder(
+            name=collection_api_object.title, uri=metmuseum_collection_api_url
+        )
 
         # Ignore accessionNumber
 
@@ -740,6 +742,18 @@ class MetmuseumEnricher:
             work_builder.add_about(defined_term.uri)
 
         # title handled above
+
+        if artist_builder is not None:
+            artist = artist_builder.build()
+            yield artist
+            work_builder.add_creator(artist.uri)
+
+        if postal_address_builder is not None:
+            work_builder.add_spatial(
+                SchemaPlace.builder()
+                .set_address(postal_address_builder.build())
+                .build()
+            )
 
         yield work_builder.build()
 

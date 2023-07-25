@@ -4,6 +4,7 @@ import pytest
 from rdflib import URIRef
 
 from paradicms_etl.enrichers.metmuseum_enricher import MetmuseumEnricher
+from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.stub.stub_work import StubWork
@@ -28,7 +29,7 @@ def test_enrich_stub_work(data_dir_path: Path, uri: URIRef):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "metmuseum"
         )((stub_work,))
     )
-    assert len(enriched_models) == 9  # Enricher should eat the stub
+    assert len(enriched_models) == 10  # Enricher should eat the stub
 
     concepts = tuple(model for model in enriched_models if isinstance(model, Concept))
     assert len(concepts) == 3
@@ -37,6 +38,9 @@ def test_enrich_stub_work(data_dir_path: Path, uri: URIRef):
 
     images = tuple(model for model in enriched_models if isinstance(model, Image))
     assert len(images) == 5  # One primary + four additional
+
+    agents = tuple(model for model in enriched_models if isinstance(model, Agent))
+    assert len(agents) == 1
 
     assert any(
         isinstance(model, Work)
