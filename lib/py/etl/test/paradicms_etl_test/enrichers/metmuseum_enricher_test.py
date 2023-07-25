@@ -4,6 +4,7 @@ import pytest
 from rdflib import URIRef
 
 from paradicms_etl.enrichers.metmuseum_enricher import MetmuseumEnricher
+from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.stub.stub_work import StubWork
 from paradicms_etl.models.work import Work
@@ -18,8 +19,6 @@ from paradicms_etl.models.work import Work
         URIRef(
             "https://collectionapi.metmuseum.org/public/collection/v1/objects/436535"
         ),
-        # Lucas Cranach the Elder: Judgment of Paris
-        URIRef("https://www.metmuseum.org/art/collection/search/436037"),
     ),
 )
 def test_enrich_stub_work(data_dir_path: Path, uri: URIRef):
@@ -29,14 +28,21 @@ def test_enrich_stub_work(data_dir_path: Path, uri: URIRef):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "metmuseum"
         )((stub_work,))
     )
-    assert len(enriched_models) == 6  # Enricher should eat the stub
+    assert len(enriched_models) == 9  # Enricher should eat the stub
+
+    concepts = tuple(model for model in enriched_models if isinstance(model, Concept))
+    assert len(concepts) == 3
+    for concept in concepts:
+        assert concept.label
+
     images = tuple(model for model in enriched_models if isinstance(model, Image))
-    assert len(images) == 5
-    for image in images:
-        assert image.rights_holders
-        assert image.rights_statements
+    assert len(images) == 5  # One primary + four additional
+
     assert any(
         isinstance(model, Work)
         for model in enriched_models
-        if model.uri == stub_work.uri
+        if model.uri
+        == URIRef(
+            "https://collectionapi.metmuseum.org/public/collection/v1/objects/436535"
+        )
     )

@@ -9,13 +9,18 @@ from dataclasses_json import dataclass_json
 from rdflib import URIRef
 
 from paradicms_etl.model import Model
+from paradicms_etl.models.creative_commons.creative_commons_licenses import (
+    CreativeCommonsLicenses,
+)
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_postal_address import SchemaPostalAddress
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_etl.utils.match_url import match_url
+from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class MetmuseumEnricher:
@@ -525,7 +530,7 @@ class MetmuseumEnricher:
             self.__file_cache.get_file(metmuseum_collection_api_url)
         ) as metmuseum_collection_api_json_file:
             collection_api_object: MetmuseumEnricher._CollectionApiObject = (
-                self._CollectionApiObject.from_dict(
+                self._CollectionApiObject.from_dict(  # type: ignore
                     json.load(metmuseum_collection_api_json_file)
                 )
             )
@@ -535,13 +540,12 @@ class MetmuseumEnricher:
             name=collection_api_object.title, uri=metmuseum_collection_api_url
         )
 
-        if (
-            collection_api_object.artistDisplayName
-            and collection_api_object.artistULAN_URL
-        ):
+        if collection_api_object.artistDisplayName:
             artist_builder = SchemaPerson.builder(
                 name=collection_api_object.artistDisplayName,
-                uri=URIRef(collection_api_object.artistULAN_URL),
+                uri=URIRef(collection_api_object.artistULAN_URL)
+                if collection_api_object.artistULAN_URL
+                else uuid_urn(),
             )
         else:
             artist_builder = None
@@ -549,6 +553,7 @@ class MetmuseumEnricher:
         postal_address_builder: Optional[SchemaPostalAddress.Builder] = None
 
         # Ignore accessionNumber
+
         # Ignore accessionYear
 
         # additionalImages
@@ -584,10 +589,12 @@ class MetmuseumEnricher:
             )  # Should be a schema:Country, not str
 
         # Ignore artistPrefix
+
         # Ignore artistRole
+
         # Ignore artistSuffix
 
-        # Used artistULAN_URL as the artist URI
+        # Used artistULAN_URL as the artist URI if available
 
         # artistWikidata_URL
         if artist_builder is not None and collection_api_object.artistWikidata_URL:
@@ -625,7 +632,7 @@ class MetmuseumEnricher:
 
         # creditLine
         if collection_api_object.creditLine:
-            work_builder.set_credit_text(collection_api_object.creditLine)
+            self.text = work_builder.add_credit_text(collection_api_object.creditLine)
 
         # Ignore culture
 
@@ -633,11 +640,65 @@ class MetmuseumEnricher:
 
         # dimensions and dimensionsParsed
         if collection_api_object.dimensionsParsed:
-            pass
+            self.__logger.warning(
+                "dimensionsParsed handling not implemented: %s",
+                collection_api_object.dimensionsParsed,
+            )
         elif collection_api_object.dimensions:
-            work_builder.set_size(collection_api_object.size)
+            work_builder.set_size(collection_api_object.dimensions)
+
+        # Ignore dynasty
+
+        # Ignore excavation
 
         # Ignore GalleryNumber
+
+        # Ignore geographyType
+
+        # Ignore isHighlight
+
+        # isPublicDomain
+        if collection_api_object.isPublicDomain:
+            work_builder.add_license(CreativeCommonsLicenses.MARK_1_0.uri)
+
+        # Ignore isTimelineWork
+
+        # linkResource
+        if collection_api_object.linkResource:
+            work_builder.add_url(URIRef(collection_api_object.linkResource))
+
+        # Ignore locale
+
+        # Ignore locus
+
+        # Ignore measurements
+
+        # medium
+        if collection_api_object.medium:
+            work_builder.add_material(collection_api_object.medium)
+
+        # metadataDate?
+
+        # Ignore objectBeginDate
+
+        # objectDate
+        if collection_api_object.objectDate:
+            work_builder.set_date_created(collection_api_object.objectDate)
+
+        # Ignore objectEndDate
+
+        # Ignore objectID
+
+        # Ignore objectName
+
+        # Ignore objectURL
+
+        if collection_api_object.objectWikidata_URL:
+            work_builder.add_same_as(URIRef(collection_api_object.objectWikidata_URL))
+
+        # Ignore period
+
+        # Ignore portfolio
 
         # primaryImage
         assert collection_api_object.primaryImage
@@ -647,6 +708,38 @@ class MetmuseumEnricher:
         yield primary_image
         work_builder.add_image(primary_image.uri)
         # Ignore primaryImageSmall
+
+        # Ignore region
+
+        # Ignore reign
+
+        # Ignore repository
+
+        # rightsAndReproduction
+        if collection_api_object.rightsAndReproduction:
+            work_builder.add_rights_holder(collection_api_object.rightsAndReproduction)
+
+        # Ignore river
+
+        # state handled above
+
+        # Ignore subregion
+
+        # tags
+        for tag in collection_api_object.tags:
+            if not tag.term:
+                continue
+            defined_term_builder = SchemaDefinedTerm.builder(
+                name=tag.term,
+                uri=URIRef(tag.AAT_URL) if tag.AAT_URL else uuid_urn(),
+            )
+            if tag.Wikidata_URL:
+                defined_term_builder.add_same_as(URIRef(tag.Wikidata_URL))
+            defined_term = defined_term_builder.build()
+            yield defined_term
+            work_builder.add_about(defined_term.uri)
+
+        # title handled above
 
         yield work_builder.build()
 
