@@ -74,7 +74,7 @@ class GettyEnricher:
                             yield referenced_getty_entity
 
             if not isinstance(model, StubModel):
-                # A StubModel is "replaced" by the Wikidata entity model
+                # A StubModel is "replaced"
                 yield model
 
     def __get_getty_entity_images(
@@ -115,7 +115,7 @@ class GettyEnricher:
         *, getty_entity_type: _GettyEntityType, model: Model
     ) -> Tuple[URIRef, ...]:
         """
-        Get a list of Wikidata entity URIs referenced by the given model.
+        Get a list of Getty entity URIs referenced by the given model.
         """
 
         def is_getty_entity_uri(uri: URIRef):

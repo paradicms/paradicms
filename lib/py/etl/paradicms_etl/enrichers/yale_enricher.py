@@ -75,7 +75,7 @@ class YaleEnricher:
                             yield referenced_yale_entity
 
             if not isinstance(model, StubModel):
-                # A StubModel is "replaced" by the Wikidata entity model
+                # A StubModel is "replaced"
                 yield model
 
     def __get_yale_entity_images(self, yale_entity: LinkedArtModel) -> Iterable[Image]:
