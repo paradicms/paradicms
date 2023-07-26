@@ -1,7 +1,6 @@
 from typing import Union, Optional, Tuple
 
 from rdflib import URIRef, Graph, SDO, Literal, XSD
-from rdflib.resource import Resource
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
@@ -15,7 +14,6 @@ from paradicms_etl.models.schema.schema_quantitative_value import (
 )
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-from paradicms_etl.utils.uuid_urn import uuid_urn
 
 
 class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):

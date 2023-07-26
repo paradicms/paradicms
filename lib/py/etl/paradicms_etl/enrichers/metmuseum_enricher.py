@@ -96,7 +96,6 @@ class MetmuseumEnricher:
         Type: array
         Notes: An array containing URLs to the additional images of an object in JPEG format
         Example: ["https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-004.jpg", "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-003.jpg", "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-002.jpg", "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-001.jpg"]
-          
         """
         additionalImages: List[str]
 
@@ -312,8 +311,8 @@ class MetmuseumEnricher:
 
         """
         Type: array
-        Notes: Array of elements, each with a name, description, and set of measurements.  Spatial measurements are in centimeters; weights are in kg. 
-        Example: 
+        Notes: Array of elements, each with a name, description, and set of measurements.  Spatial measurements are in centimeters; weights are in kg.
+        Example:
             [
                 {
                 "elementName": "Overall",
@@ -325,7 +324,6 @@ class MetmuseumEnricher:
                 }
               }
             ]
-         
         """
         measurements: List[_CollectionApiObjectMeasurements]
 
@@ -436,7 +434,7 @@ class MetmuseumEnricher:
 
         """
         Type: string
-        Notes: 
+        Notes:
         Example: "Metropolitan Museum of Art, New York, NY"
         """
         repository: str
