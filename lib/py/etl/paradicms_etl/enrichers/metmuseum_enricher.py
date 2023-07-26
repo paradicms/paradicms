@@ -12,6 +12,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.image import Image
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
@@ -554,17 +555,25 @@ class MetmuseumEnricher:
             name=collection_api_object.title, uri=work_uri
         )
 
+        def add_image(image_url: str) -> Image:
+            image_builder = SchemaImageObject.builder(uri=URIRef(image_url))
+            if collection_api_object.isPublicDomain:
+                image_builder.add_license(CreativeCommonsLicenses.MARK_1_0.uri)
+            if collection_api_object.rightsAndReproduction:
+                image_builder.add_rights_holder(
+                    collection_api_object.rightsAndReproduction
+                )
+            image = image_builder.build()
+            work_builder.add_image(image.uri)
+            return image
+
         # Ignore accessionNumber
 
         # Ignore accessionYear
 
         # additionalImages
         for additional_image_url in collection_api_object.additionalImages:
-            additional_image = SchemaImageObject.builder(
-                uri=URIRef(additional_image_url)
-            ).build()
-            yield additional_image
-            work_builder.add_image(additional_image.uri)
+            yield add_image(additional_image_url)
 
         # Ignore artistAlphaSort
 
@@ -703,12 +712,8 @@ class MetmuseumEnricher:
         # Ignore portfolio
 
         # primaryImage
-        assert collection_api_object.primaryImage
-        primary_image = SchemaImageObject.builder(
-            uri=URIRef(collection_api_object.primaryImage)
-        ).build()
-        yield primary_image
-        work_builder.add_image(primary_image.uri)
+        if collection_api_object.primaryImage:
+            yield add_image(collection_api_object.primaryImage)
         # Ignore primaryImageSmall
 
         # Ignore region
