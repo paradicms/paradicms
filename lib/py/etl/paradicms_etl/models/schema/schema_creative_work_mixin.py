@@ -18,6 +18,12 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
     """
 
     class Builder(SchemaThingMixin.Builder, RightsMixin.Builder):
+        def add_about(
+            self, about: Union[str, URIRef]
+        ) -> "SchemaCreativeWorkMixin.Builder":
+            self.add(SDO.about, about)
+            return self
+
         def add_contributor(
             self, contributor: Union[str, URIRef]
         ) -> "SchemaCreativeWorkMixin.Builder":
@@ -30,10 +36,20 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             self.add(SDO.creator, creator)
             return self
 
+        def add_credit_text(
+            self, credit_text: str
+        ) -> "SchemaCreativeWorkMixin.Builder":
+            self.add(SDO.creditText, credit_text)
+            return self
+
         def add_license(
             self, license: Union[str, URIRef]
         ) -> "SchemaCreativeWorkMixin.Builder":
             self.add(SDO.license, license)
+            return self
+
+        def add_material(self, material: str) -> "SchemaCreativeWorkMixin.Builder":
+            self.add(SDO.material, material)
             return self
 
         def add_rights_holder(
@@ -63,6 +79,10 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             self, date_modified: DateTimeUnion
         ) -> "SchemaCreativeWorkMixin.Builder":
             self.set(SDO.dateModified, date_modified)
+            return self
+
+        def set_size(self, size: str) -> "SchemaCreativeWorkMixin.Builder":
+            self.set(SDO.size, size)
             return self
 
     @property

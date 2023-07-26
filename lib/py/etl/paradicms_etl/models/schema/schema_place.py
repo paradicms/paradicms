@@ -1,9 +1,10 @@
-from typing import Optional
+from typing import Optional, Union
 
 from rdflib import URIRef, Graph, SDO, XSD
 
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.schema.schema_model import SchemaModel
+from paradicms_etl.models.schema.schema_postal_address import SchemaPostalAddress
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 from paradicms_etl.utils.uuid_urn import uuid_urn
 
@@ -16,6 +17,12 @@ class SchemaPlace(SchemaModel, Location):
     class Builder(SchemaModel.Builder):
         def build(self) -> "SchemaPlace":
             return SchemaPlace(self._resource)
+
+        def set_address(
+            self, address: Union[SchemaPostalAddress, str]
+        ) -> "SchemaPlace.Builder":
+            self.set(SDO.address, address)
+            return self
 
         def set_latitude(self, latitude: float) -> "SchemaPlace.Builder":
             self.set(SDO.latitude, latitude)

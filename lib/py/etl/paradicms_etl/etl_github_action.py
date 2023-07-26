@@ -1,16 +1,12 @@
 import dataclasses
 from abc import ABC
 from pathlib import Path
-from typing import Type, Optional, Tuple, List
+from typing import Type, Optional, Tuple
 
 from configargparse import ArgParser
 from more_itertools import consume
 
 from paradicms_etl.enricher import Enricher
-from paradicms_etl.enrichers.getty_enricher import GettyEnricher
-from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
-from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
-from paradicms_etl.enrichers.yale_enricher import YaleEnricher
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.github_action import GitHubAction
 from paradicms_etl.loader import Loader
@@ -74,16 +70,7 @@ class EtlGitHubAction(GitHubAction, ABC):
         loader: Optional[Loader] = None
     ):
         if enrichers is None:
-            enrichers_list: List[Enricher] = [
-                GettyEnricher(cache_dir_path=self._cache_dir_path / "getty"),
-                WikidataEnricher(cache_dir_path=self._cache_dir_path / "wikidata"),
-                WikimediaCommonsEnricher(
-                    cache_dir_path=self._cache_dir_path / "wikimedia_commons"
-                ),
-                YaleEnricher(cache_dir_path=self._cache_dir_path / "yale"),
-            ]
-            enrichers_list.extend(Pipeline.ENRICHERS_DEFAULT)
-            enrichers = tuple(enrichers_list)
+            enrichers = Pipeline.default_enrichers(cache_dir_path=self._cache_dir_path)
 
         if loader is None:
             loader = RdfFileLoader(

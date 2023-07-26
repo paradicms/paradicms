@@ -6,11 +6,6 @@ from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef, SDO
 
-from paradicms_etl.enricher import Enricher
-from paradicms_etl.enrichers.getty_enricher import GettyEnricher
-from paradicms_etl.enrichers.ncsu_enricher import NcsuEnricher
-from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
-from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
@@ -686,6 +681,10 @@ class SyntheticDataPipeline(Pipeline):
                         "https://lux.collections.yale.edu/data/object/25a33e3e-5ac3-4154-9d01-2cbbf87713ed"
                     )
                 )
+            elif work_i == 6:
+                work_builder.add_same_as(
+                    URIRef("https://www.metmuseum.org/art/collection/search/436535")
+                )
 
             description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
             if isinstance(work_builder, DcPhysicalObject.Builder):
@@ -722,7 +721,6 @@ class SyntheticDataPipeline(Pipeline):
             Path(__file__).absolute().parent.parent.parent.parent.parent.parent
         )
         data_dir_path = root_dir_path / "data" / "synthetic"
-        cache_dir_path = data_dir_path / ".cache"
 
         if loader is None:
             rdf_file_path = data_dir_path / "synthetic_data.trig"
@@ -738,20 +736,11 @@ class SyntheticDataPipeline(Pipeline):
                 )
             )
 
-        # Help mypy out
-        enrichers: List[Enricher] = [
-            GettyEnricher(cache_dir_path=cache_dir_path / "getty"),
-            NcsuEnricher(cache_dir_path=cache_dir_path / "ncsu"),
-            WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
-            WikimediaCommonsEnricher(
-                cache_dir_path=cache_dir_path / "wikimedia_commons"
-            ),
-        ]
-        enrichers.extend(Pipeline.ENRICHERS_DEFAULT)
-
         Pipeline.__init__(
             self,
-            enrichers=tuple(enrichers),
+            enrichers=Pipeline.default_enrichers(
+                cache_dir_path=data_dir_path / ".cache"
+            ),
             extractor=nop_extractor,
             id=self.ID,
             loader=loader,
