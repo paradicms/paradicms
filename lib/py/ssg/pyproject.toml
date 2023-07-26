@@ -6,7 +6,7 @@ authors = ["Minor G. <minorg@server.fake>"]
 license = "GPLv3"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9,<3.12"
 boto3 = "1.16.11"
 boto3-stubs = "1.16.11.0"
 mypy-boto3-cloudfront = "1.16.11.0"
