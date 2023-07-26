@@ -1,7 +1,7 @@
 import logging
 from abc import ABC
 from pathlib import Path
-from typing import Dict, Optional, Any, Iterable, Tuple
+from typing import Dict, Optional, Any, Iterable, Tuple, List
 
 from configargparse import ArgParser
 from more_itertools import consume
@@ -10,9 +10,15 @@ from paradicms_etl.enricher import Enricher
 from paradicms_etl.enrichers.creative_commons_licenses_enricher import (
     creative_commons_licenses_enricher,
 )
+from paradicms_etl.enrichers.getty_enricher import GettyEnricher
+from paradicms_etl.enrichers.metmuseum_enricher import MetmuseumEnricher
+from paradicms_etl.enrichers.ncsu_enricher import NcsuEnricher
 from paradicms_etl.enrichers.rights_statements_dot_org_rights_statements_enricher import (
     rights_statements_dot_org_rights_statements_enricher,
 )
+from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
+from paradicms_etl.enrichers.wikimedia_commons_enricher import WikimediaCommonsEnricher
+from paradicms_etl.enrichers.yale_enricher import YaleEnricher
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.model import Model
@@ -26,11 +32,6 @@ from paradicms_etl.validators.reference_validator import ReferenceValidator
 
 
 class Pipeline(ABC):
-    ENRICHERS_DEFAULT: Tuple[Enricher, ...] = (
-        creative_commons_licenses_enricher,
-        rights_statements_dot_org_rights_statements_enricher,
-    )
-
     def __init__(
         self,
         *,
@@ -52,7 +53,7 @@ class Pipeline(ABC):
         """
 
         if enrichers is None:
-            enrichers = self.ENRICHERS_DEFAULT
+            enrichers = Pipeline.default_enrichers()
         self.__enrichers = enrichers
         self.__extractor = extractor
         self.__id = id
@@ -111,6 +112,32 @@ class Pipeline(ABC):
                 self.__enrich(self.__transform(self.__extract(force=force_extract)))
             )
         )
+
+    @classmethod
+    def default_enrichers(
+        cls, *, cache_dir_path: Optional[Path] = None
+    ) -> Tuple[Enricher, ...]:
+        enrichers: List[Enricher] = []
+        if cache_dir_path is not None:
+            enrichers.extend(
+                (
+                    GettyEnricher(cache_dir_path=cache_dir_path / "getty"),
+                    MetmuseumEnricher(cache_dir_path=cache_dir_path / "metmuseum"),
+                    NcsuEnricher(cache_dir_path=cache_dir_path / "ncsu"),
+                    YaleEnricher(cache_dir_path=cache_dir_path / "yale"),
+                    WikidataEnricher(cache_dir_path=cache_dir_path / "wikidata"),
+                    WikimediaCommonsEnricher(
+                        cache_dir_path=cache_dir_path / "wikimedia_commons"
+                    ),
+                )
+            )
+        enrichers.extend(
+            (
+                creative_commons_licenses_enricher,
+                rights_statements_dot_org_rights_statements_enricher,
+            )
+        )
+        return tuple(enrichers)
 
     def __enrich(self, models: Iterable[Model]) -> Iterable[Model]:
         enriched_models = models
