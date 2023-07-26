@@ -45,8 +45,5 @@ def test_enrich_stub_work(data_dir_path: Path, uri: URIRef):
     assert any(
         isinstance(model, Work)
         for model in enriched_models
-        if model.uri
-        == URIRef(
-            "https://collectionapi.metmuseum.org/public/collection/v1/objects/436535"
-        )
+        if model.uri == stub_work.uri
     )

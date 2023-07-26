@@ -551,7 +551,7 @@ class MetmuseumEnricher:
 
         assert collection_api_object.title
         work_builder = SchemaCreativeWork.builder(
-            name=collection_api_object.title, uri=metmuseum_collection_api_url
+            name=collection_api_object.title, uri=work_uri
         )
 
         # Ignore accessionNumber
