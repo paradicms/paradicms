@@ -1,14 +1,10 @@
 import logging
 from dataclasses import dataclass
-from datetime import datetime
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Union
 
-from rdflib import Graph, Literal, PROV, RDF, URIRef
+from rdflib import Literal, PROV, RDF, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.owl_time.owl_time_date_time_description import (
-    OwlTimeDateTimeDescription,
-)
 from paradicms_etl.models.wikibase.wikibase_property_definition import (
     WikibasePropertyDefinition,
 )
@@ -30,14 +26,16 @@ class WikibaseFullStatement(WikibaseStatement):
         property_definitions: Tuple[WikibasePropertyDefinition, ...],
         resource: Resource
     ) -> "WikibaseFullStatement":
-        normalized_value = None
+        normalized_values: Tuple[Union[Literal, URIRef], ...] = ()
         qualifiers = []
-        value = None
+        values: Tuple[Union[Literal, URIRef], ...] = ()
         value_property_definition = None
 
-        def get_value(predicate: Optional[URIRef]):
+        def get_values(
+            predicate: Optional[URIRef],
+        ) -> Tuple[Union[URIRef, Literal], ...]:
             if predicate is None:
-                return None
+                return ()
             value_objects = tuple(
                 object_
                 for object_ in resource.graph.objects(
@@ -45,24 +43,9 @@ class WikibaseFullStatement(WikibaseStatement):
                     predicate=predicate,
                 )
             )
-            if not value_objects:
-                return None
-            if len(value_objects) != 1:
-                logger.warning(
-                    "predicate %s has %d value objects: %s",
-                    predicate,
-                    len(value_objects),
-                    value_objects,
-                )
-                return None
-            value_object = value_objects[0]
-            if isinstance(value_object, Literal):
-                return value_object
-            assert isinstance(value_object, URIRef)
-            return cls.__parse_value(
-                graph=resource.graph,
-                value_uri=value_object,
-            )
+            for value_object in value_objects:
+                assert isinstance(value_object, (Literal, URIRef))
+            return value_objects
 
         handled_predicates = set()
         for (
@@ -84,24 +67,28 @@ class WikibaseFullStatement(WikibaseStatement):
                 handled_predicates.add(predicate)
                 continue
 
+            assert isinstance(object_, (Literal, URIRef))
+
             for property_definition in property_definitions:
                 if predicate == property_definition.statement_property_uri:
                     handled_predicates.add(predicate)
 
-                    assert value is None
-                    value = object_
+                    assert not values
+                    values = (object_,)
                     value_property_definition = property_definition
 
-                    statement_value = get_value(property_definition.statement_value_uri)
-                    if statement_value is not None:
-                        value = statement_value
+                    statement_values = get_values(
+                        property_definition.statement_value_uri
+                    )
+                    if statement_values:
+                        values = statement_values
                     handled_predicates.add(property_definition.statement_value_uri)
 
-                    statement_value_normalized = get_value(
+                    statement_values_normalized = get_values(
                         property_definition.statement_value_normalized_uri
                     )
-                    if statement_value_normalized is not None:
-                        normalized_value = statement_value_normalized
+                    if statement_values_normalized:
+                        normalized_values = statement_values_normalized
                     handled_predicates.add(
                         property_definition.statement_value_normalized_uri
                     )
@@ -110,10 +97,12 @@ class WikibaseFullStatement(WikibaseStatement):
                 elif predicate == property_definition.qualifier_uri:
                     handled_predicates.add(predicate)
 
-                    qualifier_value = get_value(property_definition.qualifier_value_uri)
+                    qualifier_values = get_values(
+                        property_definition.qualifier_value_uri
+                    )
                     handled_predicates.add(property_definition.qualifier_value_uri)
 
-                    qualifier_value_normalized = get_value(
+                    qualifier_values_normalized = get_values(
                         property_definition.qualifier_value_normalized_uri
                     )
                     handled_predicates.add(
@@ -123,10 +112,8 @@ class WikibaseFullStatement(WikibaseStatement):
                     qualifiers.append(
                         cls.Qualifier(
                             property_definition=property_definition,
-                            normalized_value=qualifier_value_normalized,
-                            value=qualifier_value
-                            if qualifier_value is not None
-                            else object_,
+                            normalized_values=qualifier_values_normalized,
+                            values=qualifier_values if qualifier_values else (object_,),
                         )
                     )
 
@@ -136,82 +123,18 @@ class WikibaseFullStatement(WikibaseStatement):
             if predicate in handled_predicates:
                 continue
             logger.warning(
-                "full statement parser: unknown triple (%s, %s, %s)",
+                "full statement parser: unknown predicate (%s, %s)",
                 resource.identifier,
                 predicate,
-                object_,
             )
 
-        if value is None:
-            raise ValueError("unable to parse value of full statement")
+        if not values:
+            raise ValueError("unable to parse values of full statement")
 
         assert value_property_definition is not None
         return cls(
-            normalized_value=normalized_value,
+            normalized_values=normalized_values,
             property_definition=value_property_definition,
             qualifiers=tuple(qualifiers),
-            value=value,
+            values=values,
         )
-
-    @classmethod
-    def __parse_value(cls, *, graph: Graph, value_uri: URIRef):
-        # Parse a TimeValue or other value object
-        value_types = tuple(graph.objects(subject=value_uri, predicate=RDF.type))
-        if not value_types:
-            return value_uri  # Refers to an authority URI outside the graph
-        assert len(value_types) == 1
-        value_type = value_types[0]
-        if value_type in cls.__IGNORE_VALUE_TYPES:
-            logger.debug("ignoring %s %s", value_types, value_uri)
-            return None
-        elif value_type == WIKIBASE.TimeValue:
-            time_value_literal = tuple(
-                graph.objects(subject=value_uri, predicate=WIKIBASE.timeValue)
-            )[0]
-            assert isinstance(time_value_literal, Literal)
-            time_value = time_value_literal.toPython()
-            if not isinstance(time_value, datetime):
-                logger.debug("ignoring malformed time value: %s", time_value)
-                return None
-
-            time_precision_literal = tuple(
-                graph.objects(subject=value_uri, predicate=WIKIBASE.timePrecision)
-            )[0]
-            assert isinstance(time_precision_literal, Literal)
-            time_precision = time_precision_literal.toPython()
-            assert isinstance(time_precision, int)
-
-            if time_precision < 9:  # 9 = year
-                return None
-            month = day = hour = minute = second = None
-            year = time_value.year
-            if time_precision >= 10:
-                month = time_value.month
-            if time_precision >= 11:
-                day = time_value.day
-            if time_precision >= 12:
-                hour = time_value.hour
-            if time_precision >= 13:
-                minute = time_value.minute
-            if time_precision >= 14:
-                second = time_value.second
-
-            parsed_value = (
-                OwlTimeDateTimeDescription.builder()
-                .set_year(year)
-                .set_month(month)
-                .set_day(day)
-                .set_hour(hour)
-                .set_minute(minute)
-                .set_second(second)
-                .build()
-            )
-            logger.debug(
-                "parsed %s from %s with precision=%d",
-                parsed_value,
-                time_value_literal.value,
-                time_precision,
-            )
-            return parsed_value
-        else:
-            raise NotImplementedError(str(value_type))

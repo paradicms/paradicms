@@ -79,10 +79,11 @@ class WikidataEnricher:
         for statement in wikidata_entity.statements_by_property_label.get(
             connected_by_property_label, []
         ):
-            assert isinstance(statement.value, URIRef)
-            yield self.__get_wikidata_entity_with_superclass_tree(
-                root_wikidata_entity_uri=statement.value
-            )
+            for statement_value in statement.values:
+                assert isinstance(statement_value, URIRef)
+                yield self.__get_wikidata_entity_with_superclass_tree(
+                    root_wikidata_entity_uri=statement_value
+                )
 
     def __get_model_wikidata_entity_references(
         self, model: Model
@@ -148,8 +149,9 @@ class WikidataEnricher:
     @staticmethod
     def __get_wikidata_entity_images(wikidata_entity: WikibaseItem) -> Iterable[Image]:
         for statement in wikidata_entity.statements_by_property_label.get("image", []):
-            assert isinstance(statement.value, URIRef)
-            yield SchemaImageObject.builder(uri=statement.value).build()
+            for statement_value in statement.values:
+                assert isinstance(statement_value, URIRef)
+                yield SchemaImageObject.builder(uri=statement_value).build()
 
     def __get_wikidata_entity_creators(
         self, wikidata_entity: WikibaseItem
@@ -227,8 +229,9 @@ class WikidataEnricher:
                     for statement in wikidata_entity.statements_by_property_label.get(
                         type_property_label, []
                     ):
-                        assert isinstance(statement.value, URIRef)
-                        type_wikidata_entity_uris.append(statement.value)
+                        for statement_value in statement.values:
+                            assert isinstance(statement_value, URIRef)
+                            type_wikidata_entity_uris.append(statement_value)
 
                 if len(type_wikidata_entity_uris) == 0:
                     continue
