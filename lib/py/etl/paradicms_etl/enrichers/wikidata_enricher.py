@@ -107,9 +107,11 @@ class WikidataEnricher:
                 match_path_prefix="/wiki/",
             ):
                 if not isinstance(model, StubModel):
-                    raise NotImplementedError(
-                        f"can only reference Wikidata /wiki/ URIs from stub models: {same_as_uri}"
+                    self.__logger.debug(
+                        "can only reference Wikidata /wiki/ URIs from stub models: %s",
+                        same_as_uri,
                     )
+                    continue
                 result[same_as_uri] = URIRef(
                     f"http://www.wikidata.org/entity/{urlparse(same_as_uri).path[len('/wiki/'):]}"
                 )
