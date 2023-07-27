@@ -29,11 +29,11 @@ export class WikidataWork
 
   @Memoize()
   get creators(): readonly AgentUnion[] {
-    return this.filterAndMapStatements(wdt["P170"], statement => {
-      if (statement.value.termType !== "NamedNode") {
+    return this.filterAndMapStatementValues(wdt["P170"], statementValue => {
+      if (statementValue.termType !== "NamedNode") {
         return null;
       }
-      return this.modelSet.agentByIri(statement.value.value);
+      return this.modelSet.agentByIri(statementValue.value);
     });
   }
 

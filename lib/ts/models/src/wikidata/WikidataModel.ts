@@ -1,5 +1,5 @@
-import {WikibaseArticle, WikibaseItem, WikibaseStatement,} from "@paradicms/wikibase";
-import {DatasetCore, Literal, NamedNode, Term} from "@rdfjs/types";
+import {WikibaseArticle, WikibaseItem, WikibaseStatement, WikibaseStatementValue,} from "@paradicms/wikibase";
+import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import {ModelSet} from "../ModelSet";
 import {Image} from "../Image";
 import {Memoize} from "typescript-memoize";
@@ -53,65 +53,51 @@ export abstract class WikidataModel
     return this.wikibaseItem.articles;
   }
 
-  protected findAndMapStatement<T>(
-    directClaimProperty: NamedNode,
-    callback: (statement: WikibaseStatement) => NonNullable<T> | null
+  protected findAndMapStatementValue<T>(
+      directClaimProperty: NamedNode,
+      callback: (value: WikibaseStatementValue, statement: WikibaseStatement) => NonNullable<T> | null
   ): NonNullable<T> | null {
     for (const statement of this.statementsByDirectPropertyIri(
-      directClaimProperty.value
+        directClaimProperty.value
     )) {
-      const mappedObject: T | null = callback(statement);
-      if (mappedObject !== null) {
-        return mappedObject as NonNullable<T>;
+      for (const statementValue of statement.values) {
+        const mappedObject = callback(statementValue, statement);
+        if (mappedObject !== null) {
+          return mappedObject;
+        }
       }
     }
     return null;
   }
 
-  protected findAndMapStatementValue<T>(
-    directClaimProperty: NamedNode,
-    callback: (value: Literal | NamedNode) => NonNullable<T> | null
-  ): NonNullable<T> | null {
-    return this.findAndMapStatement(directClaimProperty, statement =>
-      callback(statement.value)
-    );
-  }
-
-  protected filterAndMapStatements<T>(
-    directClaimProperty: NamedNode,
-    callback: (statement: WikibaseStatement) => NonNullable<T> | null
-  ): readonly NonNullable<T>[] {
-    const mappedObjects: NonNullable<T>[] = [];
-    for (const statement of this.statementsByDirectPropertyIri(
-      directClaimProperty.value
-    )) {
-      const mappedObject: T | null = callback(statement);
-      if (mappedObject !== null) {
-        mappedObjects.push(mappedObject as NonNullable<T>);
-      }
-    }
-    return mappedObjects;
-  }
-
   protected filterAndMapStatementValues<T>(
     directClaimProperty: NamedNode,
-    callback: (value: Literal | NamedNode) => NonNullable<T> | null
+    callback: (value: WikibaseStatementValue, statement: WikibaseStatement) => NonNullable<T> | null
   ): readonly NonNullable<T>[] {
-    return this.filterAndMapStatements(directClaimProperty, statement =>
-      callback(statement.value)
-    );
+    const result: NonNullable<T>[] = [];
+    for (const statement of this.statementsByDirectPropertyIri(
+        directClaimProperty.value
+    )) {
+      for (const statementValue of statement.values) {
+        const mappedObject = callback(statementValue, statement);
+        if (mappedObject !== null) {
+          result.push(mappedObject);
+        }
+      }
+    }
+    return result;
   }
 
   @Memoize()
   get images(): readonly Image[] {
-    return this.filterAndMapStatements(wdt["P18"], statement => {
-      if (statement.value.termType !== "NamedNode") {
+    return this.filterAndMapStatementValues(wdt["P18"], statementValue => {
+      if (statementValue.termType !== "NamedNode") {
         return null;
       }
       // Here we've got a wdt:P18 <image URI> statement.
       // The image may not be in the model set if e.g., another thumbnail was selected, but we'll still have the wdt:P18
       // statement pointing out it.
-      return this.modelSet.imageByIri(statement.value.value);
+      return this.modelSet.imageByIri(statementValue.value);
     });
   }
 
@@ -133,13 +119,13 @@ export abstract class WikidataModel
   }
 
   private propertyValuesByWikidataProperty(wikidataProperty: WikidataProperty): readonly PropertyValue[] {
-    return this.statements.filter(statement => statement.propertyDefinition.node.equals(wikidataProperty.identifier)).flatMap(statement => createPropertyValueFromTerm({
+    return this.statements.filter(statement => statement.propertyDefinition.node.equals(wikidataProperty.identifier)).flatMap(statement => statement.values.flatMap(statementValue => createPropertyValueFromTerm({
       dataset: this.dataset,
       modelSet: this.modelSet,
       property: wikidataProperty,
-      term: statement.value,
+      term: statementValue,
       termGraph: this.graph
-    }) ?? []);
+    }) ?? []));
   }
 
   @Memoize()
