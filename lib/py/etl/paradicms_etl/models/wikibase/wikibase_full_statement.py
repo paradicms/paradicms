@@ -1,6 +1,6 @@
 import logging
 from dataclasses import dataclass
-from typing import Optional, Tuple, Union
+from typing import Optional, Tuple, Union, List
 
 from rdflib import Literal, PROV, RDF, URIRef
 from rdflib.resource import Resource
@@ -43,9 +43,17 @@ class WikibaseFullStatement(WikibaseStatement):
                     predicate=predicate,
                 )
             )
+            non_bnode_value_objects: List[Union[Literal, URIRef]] = []
             for value_object in value_objects:
-                assert isinstance(value_object, (Literal, URIRef))
-            return value_objects
+                if isinstance(value_object, (Literal, URIRef)):
+                    non_bnode_value_objects.append(value_object)
+                else:
+                    logger.debug(
+                        "blank node statement value on statement %s",
+                        resource.identifier,
+                    )
+                    continue
+            return tuple(non_bnode_value_objects)
 
         handled_predicates = set()
         for (
@@ -67,7 +75,11 @@ class WikibaseFullStatement(WikibaseStatement):
                 handled_predicates.add(predicate)
                 continue
 
-            assert isinstance(object_, (Literal, URIRef))
+            if not isinstance(object_, (Literal, URIRef)):
+                logger.debug(
+                    "blank node statement value on statement %s", resource.identifier
+                )
+                continue
 
             for property_definition in property_definitions:
                 if predicate == property_definition.statement_property_uri:
@@ -122,7 +134,7 @@ class WikibaseFullStatement(WikibaseStatement):
         for predicate in resource.graph.predicates(subject=resource.identifier):
             if predicate in handled_predicates:
                 continue
-            logger.warning(
+            logger.debug(
                 "full statement parser: unknown predicate (%s, %s)",
                 resource.identifier,
                 predicate,

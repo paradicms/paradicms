@@ -80,7 +80,8 @@ class WikidataEnricher:
             connected_by_property_label, []
         ):
             for statement_value in statement.values:
-                assert isinstance(statement_value, URIRef)
+                if not isinstance(statement_value, URIRef):
+                    continue
                 yield self.__get_wikidata_entity_with_superclass_tree(
                     root_wikidata_entity_uri=statement_value
                 )
