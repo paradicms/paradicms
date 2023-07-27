@@ -1,5 +1,6 @@
 from pathlib import Path
 
+import pytest
 from rdflib import URIRef
 
 from paradicms_etl.enrichers.wikidata_enricher import WikidataEnricher
@@ -12,8 +13,15 @@ from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.work import Work
 
 
-def test_enrich_stub_person(data_dir_path: Path):
-    person = StubPerson(URIRef("http://www.wikidata.org/entity/Q7251"))
+@pytest.mark.parametrize(
+    "wikidata_uri",
+    (
+        URIRef("http://www.wikidata.org/entity/Q7251"),
+        URIRef("http://www.wikidata.org/wiki/Q7251"),
+    ),
+)
+def test_enrich_stub_person(data_dir_path: Path, wikidata_uri: URIRef):
+    person = StubPerson(wikidata_uri)
     enriched_models = tuple(
         WikidataEnricher(
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"

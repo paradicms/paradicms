@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 from typing import Iterable, Set, Tuple, Dict, Sequence
+from urllib.parse import urlparse
 
 from rdflib import Graph, URIRef
 
@@ -19,12 +20,10 @@ from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import WDT
-from paradicms_etl.utils.is_wikidata_entity_uri import is_wikidata_entity_uri
+from paradicms_etl.utils.match_url import match_url
 
 
 class WikidataEnricher:
-    __WIKIDATA_ENTITY_BASE_URI = "http://www.wikidata.org/entity/"
-
     def __init__(self, *, cache_dir_path: Path):
         self.__cache_dir_path = cache_dir_path
         self.__cached_wikidata_entities_without_related_by_uri: Dict[
@@ -38,14 +37,14 @@ class WikidataEnricher:
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
         yielded_wikidata_rights_models = False
         for model in models:
-            referenced_wikidata_entity_uris = (
-                self.__get_model_wikidata_entity_references(model)
+            referenced_wikidata_uris = self.__get_model_wikidata_entity_references(
+                model
             )
-            if not referenced_wikidata_entity_uris:
+            if not referenced_wikidata_uris:
                 yield model
                 continue
 
-            for referenced_wikidata_entity_uri in referenced_wikidata_entity_uris:
+            for referenced_wikidata_entity_uri in referenced_wikidata_uris.values():
                 referenced_wikidata_entity = (
                     self.__get_wikidata_entity_with_superclass_tree(
                         referenced_wikidata_entity_uri
@@ -87,19 +86,36 @@ class WikidataEnricher:
 
     def __get_model_wikidata_entity_references(
         self, model: Model
-    ) -> Tuple[URIRef, ...]:
+    ) -> Dict[URIRef, URIRef]:
         """
         Get a list of Wikidata entity URIs referenced by the given model.
         """
-        if isinstance(model, StubModel):
-            if is_wikidata_entity_uri(model.uri):
-                return (model.uri,)
 
-        return tuple(
-            same_as_uri
-            for same_as_uri in model.same_as_uris
-            if is_wikidata_entity_uri(same_as_uri)
-        )
+        result: Dict[URIRef, URIRef] = {}
+        for same_as_uri in (
+            (model.uri,) if isinstance(model, StubModel) else model.same_as_uris
+        ):
+            if match_url(
+                same_as_uri,
+                match_netloc_suffix="wikidata.org",
+                match_path_prefix="/entity/",
+            ):
+                result[same_as_uri] = same_as_uri
+            elif match_url(
+                same_as_uri,
+                match_netloc_suffix="wikidata.org",
+                match_path_prefix="/wiki/",
+            ):
+                if not isinstance(model, StubModel):
+                    self.__logger.debug(
+                        "can only reference Wikidata /wiki/ URIs from stub models: %s",
+                        same_as_uri,
+                    )
+                    continue
+                result[same_as_uri] = URIRef(
+                    f"http://www.wikidata.org/entity/{urlparse(same_as_uri).path[len('/wiki/'):]}"
+                )
+        return result
 
     def __get_wikidata_entity(self, wikidata_entity_uri: URIRef) -> WikibaseItem:
         """
