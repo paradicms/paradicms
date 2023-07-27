@@ -2,7 +2,7 @@ import json
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Dict, Tuple, List, Optional
+from typing import Iterable, Dict, List, Optional
 from urllib.parse import urlparse
 
 from dataclasses_json import dataclass_json
@@ -769,14 +769,10 @@ class MetmuseumEnricher:
           or their human-readable collection pages (https://www.metmuseum.org/art/collection/search/436535).
         """
 
-        same_as_uris: Tuple[URIRef, ...]
-        if isinstance(model, StubModel):
-            same_as_uris = (model.uri,)
-        else:
-            same_as_uris = model.same_as_uris
-
         result: Dict[URIRef, URIRef] = {}
-        for same_as_uri in same_as_uris:
+        for same_as_uri in (
+            (model.uri,) if isinstance(model, StubModel) else model.same_as_uris
+        ):
             if match_url(
                 same_as_uri,
                 match_netloc="collectionapi.metmuseum.org",
