@@ -121,7 +121,7 @@ class WikibaseItem(ResourceBackedModel):
                 for full_statement in full_statements_by_property_definition.get(
                     id(direct_claim.property_definition), []
                 ):
-                    if full_statement.value == direct_claim.value:
+                    if full_statement.values == direct_claim.values:
                         duplicate = True
                         break
                 if duplicate:

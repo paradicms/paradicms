@@ -42,7 +42,7 @@ class WikibaseDirectClaim(WikibaseStatement):
 
         return cls(
             property_definition=property_definition,
-            normalized_value=normalized_value,
+            normalized_values=(normalized_value,) if normalized_value else (),
             qualifiers=tuple(),
-            value=object_,
+            values=(object_,),
         )

@@ -8,6 +8,7 @@ import {WikibaseStatementQualifier} from "./WikibaseStatementQualifier";
 import invariant from "ts-invariant";
 import {WikibaseArticle} from "./WikibaseArticle";
 import {BlankNode, DefaultGraph} from "n3";
+import {WikibaseStatementValue} from "./WikibaseStatementValue";
 
 const ignoreItemPredicateIris: Set<string> = new Set([
   schema.description.value,
@@ -24,7 +25,7 @@ const ignoreStatementPredicateIris: Set<string> = new Set([
 const getDirectClaimWikibaseStatement = (kwds: {
   dataset: DatasetCore;
   statementGraph: Quad_Graph;
-  statementObject: Literal | NamedNode;
+  statementObject: WikibaseStatementValue;
   statementPropertyDefinition: WikibasePropertyDefinition;
   statementSubject: NamedNode;
 }): WikibaseStatement => {
@@ -36,7 +37,7 @@ const getDirectClaimWikibaseStatement = (kwds: {
     statementObject,
   } = kwds;
 
-  let normalizedValue: Literal | NamedNode | null = null;
+  const normalizedValues: WikibaseStatementValue[] = [];
   if (statementPropertyDefinition.directClaimNormalized !== null) {
     for (const valueQuad of dataset.match(
       statementSubject,
@@ -47,18 +48,18 @@ const getDirectClaimWikibaseStatement = (kwds: {
       switch (valueQuad.object.termType) {
         case "Literal":
         case "NamedNode":
-          normalizedValue = valueQuad.object;
+          normalizedValues.push(valueQuad.object);
           break;
       }
       break;
     }
   }
   return {
-    normalizedValue,
+    normalizedValues,
     propertyDefinition: statementPropertyDefinition,
     qualifiers: [],
     type: "Direct",
-    value: statementObject,
+    values: [statementObject],
   };
 };
 
@@ -70,12 +71,13 @@ const getFullWikibaseStatement = (kwds: {
 }): WikibaseStatement | null => {
   const {dataset, propertyDefinitions, statementGraph, statementNode} = kwds;
 
-  const getValue = (
+  const getValues = (
     predicate: NamedNode | null
-  ): Literal | NamedNode | null => {
+  ): readonly WikibaseStatementValue[] => {
     if (predicate === null) {
-      return null;
+      return [];
     }
+    const values: WikibaseStatementValue[] = [];
     for (const valueQuad of dataset.match(
       statementNode,
       predicate,
@@ -85,15 +87,15 @@ const getFullWikibaseStatement = (kwds: {
       switch (valueQuad.object.termType) {
         case "Literal":
         case "NamedNode":
-          return valueQuad.object;
+          values.push(valueQuad.object);
       }
     }
-    return null;
+    return values;
   };
 
-  let normalizedValue: Literal | NamedNode | null = null;
+  let normalizedValues: readonly WikibaseStatementValue[] = [];
   const qualifiers: WikibaseStatementQualifier[] = [];
-  let value: Literal | NamedNode | null = null;
+  let values: readonly WikibaseStatementValue[] = [];
   let valuePropertyDefinition: WikibasePropertyDefinition | null = null;
 
   for (const statementQuad of dataset.match(
@@ -118,37 +120,40 @@ const getFullWikibaseStatement = (kwds: {
       if (
         statementQuad.predicate.equals(propertyDefinition.statementProperty)
       ) {
-        invariant(value === null);
-        value = statementQuad.object;
+        invariant(values.length === 0);
+        values = [statementQuad.object];
         valuePropertyDefinition = propertyDefinition;
 
-        const statementValue = getValue(propertyDefinition.statementValue);
-        if (statementValue) {
-          value = statementValue;
+        const statementValues = getValues(propertyDefinition.statementValue);
+        if (statementValues.length > 0) {
+          values = statementValues;
         }
 
-        const statementValueNormalized = getValue(
+        const statementValuesNormalized = getValues(
           propertyDefinition.statementValueNormalized
         );
-        if (statementValueNormalized) {
-          normalizedValue = statementValueNormalized;
+        if (statementValuesNormalized.length > 0) {
+          normalizedValues = statementValuesNormalized;
         }
         break;
       } else if (statementQuad.predicate.equals(propertyDefinition.qualifier)) {
+        const qualifierValues = getValues(propertyDefinition.qualifierValue);
         qualifiers.push({
-          normalizedValue: getValue(
+          normalizedValues: getValues(
             propertyDefinition.qualifierValueNormalized
           ),
           propertyDefinition,
-          value:
-            getValue(propertyDefinition.qualifierValue) ?? statementQuad.object,
+          values:
+            qualifierValues.length > 0
+              ? qualifierValues
+              : [statementQuad.object as WikibaseStatementValue],
         });
         break;
       }
     }
   }
 
-  if (!value) {
+  if (values.length === 0) {
     return null;
   }
   invariant(
@@ -156,11 +161,11 @@ const getFullWikibaseStatement = (kwds: {
     "value property definition must be set if value is"
   );
   return {
-    normalizedValue,
+    normalizedValues,
     propertyDefinition: valuePropertyDefinition!,
     qualifiers,
     type: "Full",
-    value,
+    values,
   };
 };
 
