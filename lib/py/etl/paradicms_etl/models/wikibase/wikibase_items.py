@@ -3,17 +3,15 @@ from typing import Tuple, Optional
 from rdflib import Graph, URIRef, RDF
 
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
-from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.namespaces import WIKIBASE
 
 
 class WikibaseItems:
     @classmethod
-    def from_wikibase_entity_rdf(
+    def from_rdf(
         cls,
         *,
         graph: Graph,
-        properties: Tuple[WikibaseProperty, ...],
         uris: Optional[Tuple[URIRef, ...]] = None,
     ) -> Tuple["WikibaseItem", ...]:
         """
@@ -31,8 +29,7 @@ class WikibaseItems:
             )
         for uri in uris:
             items.append(
-                WikibaseItem.from_wikibase_entity_rdf(
-                    properties=properties,
+                WikibaseItem.from_rdf(
                     resource=graph.resource(uri),
                 )
             )

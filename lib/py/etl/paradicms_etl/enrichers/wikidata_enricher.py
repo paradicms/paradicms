@@ -1,9 +1,9 @@
 import logging
 from pathlib import Path
-from typing import Iterable, Set, Tuple, Dict, Sequence
+from typing import Iterable, Set, Tuple, Dict, Sequence, Union, Optional
 from urllib.parse import urlparse
 
-from rdflib import Graph, URIRef
+from rdflib import Graph, URIRef, OWL
 
 from paradicms_etl.extractors.rdf_url_extractor import RdfUrlExtractor
 from paradicms_etl.model import Model
@@ -19,6 +19,7 @@ from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.models.wikibase.wikibase_properties import WikibaseProperties
+from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import WDT
 from paradicms_etl.utils.match_url import match_url
@@ -46,13 +47,15 @@ class WikidataEnricher:
                 continue
 
             for referenced_wikidata_entity_uri in referenced_wikidata_uris.values():
-                referenced_wikidata_entity = (
-                    self.__get_wikidata_entity_with_superclass_tree(
-                        referenced_wikidata_entity_uri
-                    )
-                )
-                yield referenced_wikidata_entity
-                yield from referenced_wikidata_entity.properties
+                referenced_wikidata_entity: Optional[WikibaseItem] = None
+                for wikidata_entity in self.__get_wikidata_entity_with_superclass_tree(
+                    referenced_wikidata_entity_uri
+                ):
+                    if isinstance(wikidata_entity, WikibaseItem):
+                        referenced_wikidata_entity = wikidata_entity
+                    yield wikidata_entity
+
+                assert referenced_wikidata_entity is not None
 
                 if not yielded_wikidata_rights_models:
                     yield CreativeCommonsLicenses.BY_SA_3_0
@@ -76,16 +79,12 @@ class WikidataEnricher:
                 yield model
 
     def __get_connected_wikidata_entities(
-        self, *, connected_by_property_label: str, wikidata_entity: WikibaseItem
+        self, *, direct_claim_uri: URIRef, wikidata_entity: WikibaseItem
     ) -> Iterable[WikibaseItem]:
-        for statement in wikidata_entity.statements_by_property_label.get(
-            connected_by_property_label, []
-        ):
-            for statement_value in statement.values:
-                if not isinstance(statement_value, URIRef):
-                    continue
-                yield self.__get_wikidata_entity_with_superclass_tree(
-                    root_wikidata_entity_uri=statement_value
+        for value in wikidata_entity.direct_claim_values(direct_claim_uri):
+            if isinstance(value, URIRef):
+                yield from self.__get_wikidata_entity_with_superclass_tree(
+                    root_wikidata_entity_uri=value
                 )
 
     def __get_model_wikidata_entity_references(
@@ -138,9 +137,8 @@ class WikidataEnricher:
             cache_dir_path=self.__cache_dir_path,
             rdf_url=URIRef(str(wikidata_entity_uri) + ".ttl"),
         )(force=False)["graph"]
-        extracted_wikidata_items = WikibaseItems.from_wikibase_entity_rdf(
+        extracted_wikidata_items = WikibaseItems.from_rdf(
             graph=graph,
-            properties=WikibaseProperties.from_rdf(graph),
             uris=(wikidata_entity_uri,),
         )
         assert len(extracted_wikidata_items) == 1
@@ -152,16 +150,15 @@ class WikidataEnricher:
 
     @staticmethod
     def __get_wikidata_entity_images(wikidata_entity: WikibaseItem) -> Iterable[Image]:
-        for statement in wikidata_entity.statements_by_property_label.get("image", []):
-            for statement_value in statement.values:
-                assert isinstance(statement_value, URIRef)
-                yield SchemaImageObject.builder(uri=statement_value).build()
+        for value in wikidata_entity.direct_claim_values(WDT["P18"]):
+            assert isinstance(value, URIRef)
+            yield SchemaImageObject.builder(uri=value).build()
 
     def __get_wikidata_entity_creators(
         self, wikidata_entity: WikibaseItem
     ) -> Iterable[Model]:
         for creator_wikidata_entity in self.__get_connected_wikidata_entities(
-            connected_by_property_label="creator", wikidata_entity=wikidata_entity
+            direct_claim_uri=WDT.P170, wikidata_entity=wikidata_entity
         ):
             yield creator_wikidata_entity
             yield from self.__get_wikidata_entity_images(creator_wikidata_entity)
@@ -171,12 +168,10 @@ class WikidataEnricher:
         wikidata_entity: WikibaseItem,
     ) -> Iterable[WikibaseItem]:
         for location_wikidata_entity in self.__get_connected_wikidata_entities(
-            connected_by_property_label="location", wikidata_entity=wikidata_entity
+            direct_claim_uri=WDT.P276, wikidata_entity=wikidata_entity
         ):
             yield location_wikidata_entity
-            if not location_wikidata_entity.statements_by_property_label.get(
-                "coordinate location"
-            ):
+            if not location_wikidata_entity.direct_claim_values(WDT.P625):
                 # Keep chasing "location" until we get one with coordinates
                 yield from self.__get_wikidata_entity_locations(
                     location_wikidata_entity
@@ -186,12 +181,13 @@ class WikidataEnricher:
         self, wikidata_entity: WikibaseItem
     ) -> Iterable[Model]:
         yield from self.__get_connected_wikidata_entities(
-            connected_by_property_label="main subject", wikidata_entity=wikidata_entity
+            direct_claim_uri=WDT.P921,
+            wikidata_entity=wikidata_entity,
         )
 
     def __get_wikidata_entity_with_superclass_tree(
         self, root_wikidata_entity_uri: URIRef
-    ) -> WikibaseItem:
+    ) -> Iterable[Union[WikibaseItem, WikibaseProperty]]:
         """
         Get a Wikidata entity as well as all of its superclass tree (in the form of P279 "subclass of" statements) in
         one WikibaseItem Graph.
@@ -204,7 +200,7 @@ class WikidataEnricher:
 
         def get_type_wikidata_entities(
             resolving_wikidata_entity_uris: Set[URIRef],
-            type_property_labels: Tuple[str, ...],
+            type_property_uris: Tuple[URIRef, ...],
             wikidata_entity: WikibaseItem,
         ) -> None:
             """
@@ -224,18 +220,15 @@ class WikidataEnricher:
                 "resolving Wikidata entities related to %s", wikidata_entity.uri
             )
 
-            for type_property_label in type_property_labels:
+            for type_property_uri in type_property_uris:
                 type_wikidata_entity_uris: Sequence[URIRef]
-                if type_property_label == "same as":
+                if type_property_uri == OWL.sameAs:
                     type_wikidata_entity_uris = wikidata_entity.same_as_uris
                 else:
                     type_wikidata_entity_uris = []
-                    for statement in wikidata_entity.statements_by_property_label.get(
-                        type_property_label, []
-                    ):
-                        for statement_value in statement.values:
-                            assert isinstance(statement_value, URIRef)
-                            type_wikidata_entity_uris.append(statement_value)
+                    for value in wikidata_entity.direct_claim_values(type_property_uri):
+                        assert isinstance(value, URIRef)
+                        type_wikidata_entity_uris.append(value)
 
                 if len(type_wikidata_entity_uris) == 0:
                     continue
@@ -244,7 +237,7 @@ class WikidataEnricher:
                     self.__logger.debug(
                         "%s %s %s",
                         wikidata_entity.uri,
-                        type_property_label,
+                        type_property_uri,
                         type_wikidata_entity_uri,
                     )
                     type_wikidata_entity = wikidata_entities_by_uri.get(
@@ -261,7 +254,7 @@ class WikidataEnricher:
                         )
 
                     get_type_wikidata_entities(
-                        type_property_labels=("same as", "subclass of"),
+                        type_property_uris=(OWL.sameAs, WDT.P279),
                         resolving_wikidata_entity_uris=resolving_wikidata_entity_uris,
                         wikidata_entity=type_wikidata_entity,
                     )
@@ -279,7 +272,7 @@ class WikidataEnricher:
 
         get_type_wikidata_entities(
             resolving_wikidata_entity_uris=set(),
-            type_property_labels=("same as", "subclass of", "instance of"),
+            type_property_uris=(OWL.sameAs, WDT.P279, WDT.P31),
             wikidata_entity=root_wikidata_entity,
         )
 
@@ -290,9 +283,9 @@ class WikidataEnricher:
                 wikidata_entity.to_rdf(graph=combined_graph)
             else:
                 wikidata_entity.to_type_rdf(
-                    graph=combined_graph, subclass_of_property_uri=WDT["P279"]
+                    graph=combined_graph, subclass_of_property_uri=WDT.P279
                 )
-        return WikibaseItem(
-            properties=root_wikidata_entity.properties,
+        yield WikibaseItem(
             resource=combined_graph.resource(root_wikidata_entity_uri),
         )
+        yield from WikibaseProperties.from_rdf(root_wikidata_entity._resource.graph)
