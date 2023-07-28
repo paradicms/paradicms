@@ -43,10 +43,10 @@ export class WikidataModelReader extends DatasetModelReader {
   // If at some point we want to be able to filter on arbitrary Wikidata properties, will have to enable readProperties here.
 
   private readWikidataProperties(kwds: { modelSet: ModelSet }): readonly WikidataProperty[] {
-    return this.getWikibaseItemsResult.wikibasePropertyDefinitions.map(wikibasePropertyDefinition => new WikidataProperty({
+    return this.getWikibaseItemsResult.wikibaseProperties.map(wikibaseProperty => new WikidataProperty({
       dataset: this.dataset,
       modelSet: kwds.modelSet,
-      wikibasePropertyDefinition
+      wikibaseProperty
     }))
   }
 

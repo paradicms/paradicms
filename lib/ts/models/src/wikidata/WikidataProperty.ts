@@ -1,4 +1,4 @@
-import {WikibasePropertyDefinition} from "@paradicms/wikibase";
+import {WikibaseProperty} from "@paradicms/wikibase";
 import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import invariant from "ts-invariant";
 import {requireDefined} from "@paradicms/utilities";
@@ -14,20 +14,20 @@ const ensureModelGraphIdentifier = (graph: Term) => {
 };
 
 export class WikidataProperty extends ResourceBackedModel implements Property {
-  private readonly wikibasePropertyDefinition: WikibasePropertyDefinition;
+  private readonly wikibaseProperty: WikibaseProperty;
 
   constructor(kwds: {
     dataset: DatasetCore;
     modelSet: ModelSet;
-    wikibasePropertyDefinition: WikibasePropertyDefinition;
+    wikibaseProperty: WikibaseProperty;
   }) {
     super({
       dataset: kwds.dataset,
-      graph: ensureModelGraphIdentifier(kwds.wikibasePropertyDefinition.graph),
-      identifier: kwds.wikibasePropertyDefinition.node,
+      graph: ensureModelGraphIdentifier(kwds.wikibaseProperty.graph),
+      identifier: kwds.wikibaseProperty.node,
       modelSet: kwds.modelSet,
     });
-    this.wikibasePropertyDefinition = kwds.wikibasePropertyDefinition;
+    this.wikibaseProperty = kwds.wikibaseProperty;
   }
 
   readonly comment = null;
@@ -44,9 +44,9 @@ export class WikidataProperty extends ResourceBackedModel implements Property {
   }
 
   get label(): string {
-    invariant(this.wikibasePropertyDefinition.labels.length > 0);
+    invariant(this.wikibaseProperty.labels.length > 0);
     return requireDefined(
-      this.wikibasePropertyDefinition.labels.find(
+      this.wikibaseProperty.labels.find(
         literal => literal.language === "" || literal.language === "en"
       )
     ).value;

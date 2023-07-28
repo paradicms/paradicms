@@ -119,7 +119,7 @@ export abstract class WikidataModel
   }
 
   private propertyValuesByWikidataProperty(wikidataProperty: WikidataProperty): readonly PropertyValue[] {
-    return this.statements.filter(statement => statement.propertyDefinition.node.equals(wikidataProperty.identifier)).flatMap(statement => statement.values.flatMap(statementValue => createPropertyValueFromTerm({
+    return this.statements.filter(statement => statement.property.node.equals(wikidataProperty.identifier)).flatMap(statement => statement.values.flatMap(statementValue => createPropertyValueFromTerm({
       dataset: this.dataset,
       modelSet: this.modelSet,
       property: wikidataProperty,
@@ -147,7 +147,7 @@ export abstract class WikidataModel
   ): readonly WikibaseStatement[] {
     return this.statements.filter(
       statement =>
-        statement.propertyDefinition.directClaim?.value ===
+        statement.property.directClaim?.value ===
         directClaimPropertyIri
     );
   }
