@@ -14,11 +14,11 @@ logger = logging.getLogger(__name__)
 
 
 class WikibaseItem(ResourceBackedModel):
-    __IGNORE_PREDICATES = {
-        SDOHTTP.description,
-        SDOHTTP.name,
+    __INCLUDE_PREDICATES = {
+        OWL.sameAs,
         RDF.type,
         RDFS.label,
+        SDOHTTP.description,
         SKOS.altLabel,
         SKOS.prefLabel,
     }
@@ -54,23 +54,22 @@ class WikibaseItem(ResourceBackedModel):
                 ):
                     minimal_graph.add(article_triple)
 
-        # Add direct claims, rdf:type, and owl:sameAs
-        for p, o in resource.graph.predicate_objects(subject=resource.identifier):
-            if str(p).startswith(str(WDT)) or p == RDF.type or p == OWL.sameAs:
-                minimal_graph.add((resource.identifier, p, o))
-
-        # Add full statements that don't duplicate direct claims
         STATEMENT_PROPERTY_BASE_URI = "http://www.wikidata.org/prop/statement/"
-        for statement_uri in resource.graph.subjects(
-            predicate=RDF.type, object=WIKIBASE.Statement, unique=True
-        ):
-            statement_duplicates_direct_claim = False
-            statement_triples = tuple(
-                resource.graph.triples((statement_uri, None, None))
-            )
-            if len(statement_triples) == 4:
-                statement_property_triples = []
-                for statement_triple in statement_triples:
+        for p, o in resource.graph.predicate_objects(subject=resource.identifier):
+            if str(p).startswith(str(WDT)) or str(p).startswith(
+                "http://www.wikidata.org/prop/direct-normalized/"
+            ):
+                # Add a direct claim
+                minimal_graph.add((resource.identifier, p, o))
+            elif str(p).startswith("http://www.wikidata.org/prop/"):
+                # A full statement
+                assert isinstance(o, URIRef)
+                assert o.startswith("http://www.wikidata.org/entity/statement/")
+                statement_uri = o
+                statement_duplicates_direct_claim = True
+                for statement_triple in resource.graph.triples(
+                    (statement_uri, None, None)
+                ):
                     if (
                         statement_triple[1] == RDF.type
                         or statement_triple[1] == PROV.wasDerivedFrom
@@ -81,35 +80,49 @@ class WikibaseItem(ResourceBackedModel):
                     elif str(statement_triple[1]).startswith(
                         STATEMENT_PROPERTY_BASE_URI
                     ):
-                        statement_property_triples.append(statement_triple)
+                        statement_property_triple = statement_triple
+                        statement_value = statement_property_triple[2]
+                        direct_values = tuple(
+                            resource.graph.objects(
+                                predicate=WDT[
+                                    str(statement_property_triple[1])[
+                                        len(STATEMENT_PROPERTY_BASE_URI) :
+                                    ]
+                                ],
+                                subject=resource.identifier,
+                            )
+                        )
+                        if not any(
+                            direct_value == statement_value
+                            for direct_value in direct_values
+                        ):
+                            logger.debug(
+                                "statement (%s) has value (%s) that's not present in direct values (%s)",
+                                statement_uri,
+                                statement_value,
+                                direct_values,
+                            )
+                            statement_duplicates_direct_claim = False
+                            break
                     else:
                         logger.debug(
                             "unrecognized statement triple: %s", statement_triple
                         )
-                        statement_property_triples = []
+                        statement_duplicates_direct_claim = False
                         break
-                if len(statement_property_triples) == 1:
-                    statement_property_triple = statement_property_triples[0]
-                    statement_value = statement_property_triple[2]
-                    property_id = str(statement_property_triple[1])[
-                        len(STATEMENT_PROPERTY_BASE_URI) :
-                    ]
-                    for direct_value in resource.graph.objects(
-                        predicate=WDT[property_id], subject=resource.identifier
+                if not statement_duplicates_direct_claim:
+                    # Add the full statement
+                    minimal_graph.add((resource.identifier, p, o))
+                    for statement_p, statement_o in resource.graph.predicate_objects(
+                        subject=statement_uri
                     ):
-                        if isinstance(direct_value, Resource):
-                            if direct_value.identifier == statement_value:
-                                statement_duplicates_direct_claim = True
-                                break
-                        elif direct_value == statement_value:
-                            statement_duplicates_direct_claim = True
-                            break
-            if not statement_duplicates_direct_claim:
-                # Add the full statement
-                for statement_p, statement_o in resource.graph.predicate_objects(
-                    subject=statement_uri
-                ):
-                    minimal_graph.add((statement_uri, statement_p, statement_o))
+                        minimal_graph.add((statement_uri, statement_p, statement_o))
+            elif p in cls.__INCLUDE_PREDICATES:
+                # Some other predicates
+                if not isinstance(o, Literal) or o.language == "en":
+                    minimal_graph.add((resource.identifier, p, o))
+
+        # Add full statements that don't duplicate direct claims
 
         return cls(minimal_graph.resource(resource.identifier))
 
