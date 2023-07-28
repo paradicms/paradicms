@@ -30,14 +30,9 @@ class WikibaseItem(ResourceBackedModel):
         resource: Resource,
         *,
         exclude_redundant_statements: bool = True,
-        property_definitions: Optional[Tuple[WikibasePropertyDefinition, ...]] = None,
+        property_definitions: Tuple[WikibasePropertyDefinition, ...],
     ):
         ResourceBackedModel.__init__(self, resource)
-
-        if property_definitions is None:
-            property_definitions = WikibasePropertyDefinition.from_rdf(
-                graph=resource.graph
-            )
 
         direct_claims = []
         full_statements = []

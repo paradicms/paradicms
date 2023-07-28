@@ -15,6 +15,7 @@ class WikibaseItems:
         cls,
         *,
         graph: Graph,
+        property_definitions: Tuple[WikibasePropertyDefinition, ...],
         exclude_redundant_statements: bool = True,
         uris: Optional[Tuple[URIRef, ...]] = None,
     ) -> Tuple["WikibaseItem", ...]:
@@ -23,8 +24,6 @@ class WikibaseItems:
 
         If the expected URIs (uris) is not specified, reads all wikibase:Item's.
         """
-
-        property_definitions = WikibasePropertyDefinition.from_rdf(graph=graph)
 
         items = []
         if uris is None:
