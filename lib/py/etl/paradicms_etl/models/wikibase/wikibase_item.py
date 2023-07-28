@@ -23,120 +23,14 @@ class WikibaseItem(ResourceBackedModel):
         RDF.type,
         RDFS.label,
         SKOS.altLabel,
+        SKOS.prefLabel,
     }
 
-    def __init__(
-        self,
-        resource: Resource,
-        *,
-        properties: Tuple[WikibaseProperty, ...],
-        exclude_redundant_statements: bool = True,
-    ):
+    def __init__(self, resource: Resource, *, properties: Tuple[WikibaseProperty, ...]):
         ResourceBackedModel.__init__(self, resource)
 
-        direct_claims = []
-        full_statements = []
-        pref_label = None
-
-        for predicate, object_ in resource.graph.predicate_objects(
-            subject=resource.identifier
-        ):
-            if isinstance(object_, Literal):
-                if object_.language != "en":
-                    logger.debug(
-                        "item %s: ignoring non-English literal: %s",
-                        resource.identifier,
-                        object_,
-                    )
-                    continue
-
-                if predicate == SKOS.prefLabel:
-                    pref_label = object_.value
-                    continue
-
-            if predicate in self.__IGNORE_PREDICATES:
-                logger.debug(
-                    "item %s: ignoring predicate %s", resource.identifier, predicate
-                )
-                continue
-
-            added_property = False
-            for property_ in properties:
-                if predicate == property_.claim_uri:
-                    try:
-                        full_statements.append(
-                            WikibaseFullStatement.from_rdf(
-                                properties=properties,
-                                resource=resource.graph.resource(object_),
-                            )
-                        )
-                        added_property = True
-                        break
-                    except ValueError:
-                        pass
-                elif predicate == property_.direct_claim_uri:
-                    direct_claims.append(
-                        WikibaseDirectClaim.from_rdf(
-                            graph=resource.graph,
-                            object_=object_,
-                            property_=property_,
-                            subject=resource.identifier,
-                        )
-                    )
-                    added_property = True
-                    break
-                elif predicate == property_.direct_claim_normalized_uri:
-                    # Will be picked up by the direct claim parse above
-                    added_property = True
-                    break
-            if not added_property:
-                logger.debug(
-                    "item parser: unknown triple (%s, %s, %s)",
-                    resource.identifier,
-                    predicate,
-                    object_,
-                )
-
-        statements: List[WikibaseStatement]
-        if exclude_redundant_statements:
-            # Direct claims often duplicate full statements
-            # Only retain the full statement
-            statements = []
-            full_statements_by_property_definition: Dict[
-                int, List[WikibaseFullStatement]
-            ] = {}
-            for full_statement in full_statements:
-                full_statements_by_property_definition.setdefault(
-                    id(full_statement.property_), []
-                ).append(full_statement)
-                # Assume full statements don't duplicate each other
-                statements.append(full_statement)
-            for direct_claim in direct_claims:
-                duplicate = False
-                for full_statement in full_statements_by_property_definition.get(
-                    id(direct_claim.property_), []
-                ):
-                    if full_statement.values == direct_claim.values:
-                        duplicate = True
-                        break
-                if duplicate:
-                    logger.debug(
-                        "item %s: direct claim %s has a corresponding full statement, eliding",
-                        resource.identifier,
-                        direct_claim.property_.direct_claim_uri,
-                    )
-                else:
-                    logger.debug(
-                        "item %s: direct claim %s has no corresponding full statement",
-                        resource.identifier,
-                        direct_claim.property_.direct_claim_uri,
-                    )
-                    statements.append(direct_claim)
-        else:
-            statements = direct_claims + full_statements  # type: ignore
-
-        self.__pref_label = pref_label
-        self.__statements = tuple(statements)
+        self.__properties = properties
+        self.__statements = Optional[Tuple[WikibaseStatement, ...]] = None
         self.__statements_by_property_label: Optional[
             Dict[str, Tuple[WikibaseStatement, ...]]
         ] = None
@@ -146,17 +40,9 @@ class WikibaseItem(ResourceBackedModel):
             return False
         return self.uri == other.uri
 
-    @property
-    def label(self):
-        return self.pref_label
-
     @classmethod
     def label_property_uri(cls) -> Optional[URIRef]:
-        raise NotImplementedError
-
-    @property
-    def pref_label(self) -> Optional[str]:
-        return self.__pref_label
+        return SKOS.prefLabel
 
     @classmethod
     def rdf_type_uri(cls):
@@ -164,6 +50,69 @@ class WikibaseItem(ResourceBackedModel):
 
     @property
     def statements(self) -> Tuple[WikibaseStatement, ...]:
+        if self.__statements is None:
+            direct_claims = []
+            full_statements = []
+
+            for predicate, object_ in self._resource.graph.predicate_objects(
+                subject=self._resource.identifier
+            ):
+                if isinstance(object_, Literal):
+                    if object_.language != "en":
+                        logger.debug(
+                            "item %s: ignoring non-English literal: %s",
+                            self._resource.identifier,
+                            object_,
+                        )
+                        continue
+
+                if predicate in self.__IGNORE_PREDICATES:
+                    logger.debug(
+                        "item %s: ignoring predicate %s",
+                        self._resource.identifier,
+                        predicate,
+                    )
+                    continue
+
+                added_property = False
+                for property_ in self.__properties:
+                    if predicate == property_.claim_uri:
+                        try:
+                            full_statements.append(
+                                WikibaseFullStatement.from_rdf(
+                                    properties=self.__properties,
+                                    resource=self._resource.graph.resource(object_),
+                                )
+                            )
+                            added_property = True
+                            break
+                        except ValueError:
+                            pass
+                    elif predicate == property_.direct_claim_uri:
+                        direct_claims.append(
+                            WikibaseDirectClaim.from_rdf(
+                                graph=self._resource.graph,
+                                object_=object_,
+                                property_=property_,
+                                subject=self._resource.identifier,
+                            )
+                        )
+                        added_property = True
+                        break
+                    elif predicate == property_.direct_claim_normalized_uri:
+                        # Will be picked up by the direct claim parse above
+                        added_property = True
+                        break
+                if not added_property:
+                    logger.debug(
+                        "item parser: unknown triple (%s, %s, %s)",
+                        self._resource.identifier,
+                        predicate,
+                        object_,
+                    )
+
+            self.__statements = tuple(full_statements + direct_claims)
+
         return self.__statements
 
     @property
