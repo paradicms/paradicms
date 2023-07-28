@@ -128,6 +128,11 @@ class WikibaseItem(ResourceBackedModel):
                 for p, o in resource.graph.predicate_objects(subject=s):
                     minimal_graph.add((s, p, o))
 
+        # Add all wdt:P279 (subclass of) statements
+        # These are not part of the item but we need to keep them through multiple to_rdf and from_rdf passes.
+        for triple in resource.graph.triples((None, WDT.P279, None)):
+            minimal_graph.add(triple)
+
         return cls(minimal_graph.resource(resource.identifier))
 
     @classmethod
