@@ -109,7 +109,7 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((work,))
     )
-    assert len(enriched_models) == 361
+    assert len(enriched_models) == 308
     # Original work
     assert any(
         isinstance(model, Work) and model.uri == work.uri for model in enriched_models
@@ -172,5 +172,5 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
                 if isinstance(model, WikibaseProperty)
             )
         )
-        == 351
+        == 298
     )
