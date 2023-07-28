@@ -38,13 +38,11 @@ class GettyEnricher:
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
+            enriched_model = False
             for getty_entity_type in self._GettyEntityType:
                 referenced_getty_entity_uris = self.__get_model_getty_entity_references(
                     getty_entity_type=getty_entity_type, model=model
                 )
-                if not referenced_getty_entity_uris:
-                    yield model
-                    continue
 
                 referenced_getty_entity: LinkedArtModel
                 for referenced_getty_entity_uri in referenced_getty_entity_uris:
@@ -52,6 +50,7 @@ class GettyEnricher:
                         self, f"_get_getty_{getty_entity_type}_entity"
                     )(referenced_getty_entity_uri):
                         assert isinstance(referenced_getty_entity, LinkedArtModel)
+                        enriched_model = True
 
                         if isinstance(referenced_getty_entity, LinkedArtImagesMixin):
                             # Don't use the has_representation images that came with the entity's RDF, use the ones from the IIIF presentation API manifest
@@ -73,7 +72,7 @@ class GettyEnricher:
                         else:
                             yield referenced_getty_entity
 
-            if not isinstance(model, StubModel):
+            if not enriched_model or not isinstance(model, StubModel):
                 # A StubModel is "replaced"
                 yield model
 

@@ -29,17 +29,15 @@ class NcsuEnricher:
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
-            yielded_ncsu_catalog_items_count = 0
+            enriched_model = False
             for item_uri in self.__get_ncsu_catalog_item_references(model):
                 item_model = self.__get_ncsu_catalog_item(item_uri)
                 if item_model is not None:
                     yield item_model
-                    yielded_ncsu_catalog_items_count += 1
+                    enriched_model = True
 
-            if isinstance(model, StubModel) and yielded_ncsu_catalog_items_count > 0:
-                # A StubModel is "replaced" by the Wikidata entity model
-                continue
-            else:
+            if not enriched_model or not isinstance(model, StubModel):
+                # A StubModel is "replaced"
                 yield model
 
     def __get_ncsu_catalog_item(self, item_uri: URIRef) -> Optional[Model]:

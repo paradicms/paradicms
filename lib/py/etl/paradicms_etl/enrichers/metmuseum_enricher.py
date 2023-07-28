@@ -496,23 +496,17 @@ class MetmuseumEnricher:
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
-            referenced_met_object_uris = self.__get_model_met_object_references(
-                model=model
-            )
-            if not referenced_met_object_uris:
-                yield model
-                continue
-
+            enriched_model = False
             for (
                 work_uri,
                 metmuseum_collection_api_url,
-            ) in referenced_met_object_uris.items():
+            ) in self.__get_model_met_object_references(model=model).items():
                 yield from self.__get_met_object(
                     metmuseum_collection_api_url=metmuseum_collection_api_url,
                     work_uri=work_uri,
                 )
-
-            if not isinstance(model, StubModel):
+                enriched_model = True
+            if not enriched_model or not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
 

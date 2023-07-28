@@ -6,6 +6,7 @@ from urllib.parse import urlparse
 
 from rdflib import Graph, URIRef, OWL
 
+from paradicms_etl.deduplicator import Deduplicator
 from paradicms_etl.extractors.rdf_url_extractor import RdfUrlExtractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
@@ -41,16 +42,15 @@ class WikidataEnricher:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
+        yield from Deduplicator()(self.__enrich(models))
+
+    def __enrich(self, models: Iterable[Model]) -> Iterable[Model]:
         yielded_wikidata_rights_models = False
         for model in models:
-            referenced_wikidata_uris = self.__get_model_wikidata_entity_references(
-                model
-            )
-            if not referenced_wikidata_uris:
-                yield model
-                continue
-
-            for referenced_wikidata_entity_uri in referenced_wikidata_uris.values():
+            enriched_model = False
+            for (
+                referenced_wikidata_entity_uri
+            ) in self.__get_model_wikidata_entity_references(model).values():
                 referenced_wikidata_entity: Optional[WikibaseItem] = None
                 for wikidata_entity in self.__get_wikidata_entity_with_superclass_tree(
                     referenced_wikidata_entity_uri
@@ -59,6 +59,7 @@ class WikidataEnricher:
                         referenced_wikidata_entity = wikidata_entity
                     yield wikidata_entity
 
+                enriched_model = True
                 assert referenced_wikidata_entity is not None
 
                 if not yielded_wikidata_rights_models:
@@ -78,7 +79,7 @@ class WikidataEnricher:
                     ):
                         yield from connected_models
 
-            if not isinstance(model, StubModel):
+            if not enriched_model or not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
                 yield model
 

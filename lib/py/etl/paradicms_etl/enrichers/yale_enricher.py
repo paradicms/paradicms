@@ -39,20 +39,19 @@ class YaleEnricher:
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
         for model in models:
+            enriched_model = False
             for yale_entity_type in self._YaleEntityType:
-                referenced_yale_entity_uris = self.__get_model_yale_entity_references(
-                    yale_entity_type=yale_entity_type, model=model
-                )
-                if not referenced_yale_entity_uris:
-                    yield model
-                    continue
-
                 referenced_yale_entity: LinkedArtModel
-                for referenced_yale_entity_uri in referenced_yale_entity_uris:
+                for (
+                    referenced_yale_entity_uri
+                ) in self.__get_model_yale_entity_references(
+                    yale_entity_type=yale_entity_type, model=model
+                ):
                     for referenced_yale_entity in getattr(
                         self, f"_get_yale_{yale_entity_type}_entity"
                     )(referenced_yale_entity_uri):
                         assert isinstance(referenced_yale_entity, LinkedArtModel)
+                        enriched_model = True
 
                         if isinstance(referenced_yale_entity, LinkedArtImagesMixin):
                             # Don't use the has_representation images that came with the entity's RDF, use the ones from the IIIF presentation API manifest
@@ -74,7 +73,7 @@ class YaleEnricher:
                         else:
                             yield referenced_yale_entity
 
-            if not isinstance(model, StubModel):
+            if not enriched_model or not isinstance(model, StubModel):
                 # A StubModel is "replaced"
                 yield model
 
