@@ -122,7 +122,11 @@ class WikibaseItem(ResourceBackedModel):
                 if not isinstance(o, Literal) or o.language == "en":
                     minimal_graph.add((resource.identifier, p, o))
 
-        # Add full statements that don't duplicate direct claims
+        # Add all values
+        for s in resource.graph.subjects():
+            if str(s).startswith("http://www.wikidata.org/value/"):
+                for p, o in resource.graph.predicate_objects(subject=s):
+                    minimal_graph.add((s, p, o))
 
         return cls(minimal_graph.resource(resource.identifier))
 

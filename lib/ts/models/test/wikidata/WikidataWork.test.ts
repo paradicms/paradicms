@@ -30,6 +30,10 @@ describe("WikidataWork", () => {
     expect(sut.displayDate).to.eq("1528");
   });
 
+  it("should get the work's images", () => {
+    expect(sut.images).not.to.be.empty;
+  });
+
   it("should get the work's events", () => {
     expect(sut.events).to.have.length(1);
     const workCreation: WorkCreationEvent = sut.events[0] as WorkCreationEvent;
