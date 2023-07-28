@@ -32,6 +32,7 @@ from paradicms_etl.models.stub.stub_location import StubLocation
 from paradicms_etl.models.stub.stub_person import StubPerson
 from paradicms_etl.models.stub.stub_work import StubWork
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
+from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 
 __ROOT_MODEL_CLASSES: Tuple[Type[Model], ...] = (
     CmsPropertyGroup,
@@ -61,6 +62,7 @@ __ROOT_MODEL_CLASSES: Tuple[Type[Model], ...] = (
     StubPerson,
     StubWork,
     WikibaseItem,
+    WikibaseProperty,
 )
 
 ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[Model]] = {}
