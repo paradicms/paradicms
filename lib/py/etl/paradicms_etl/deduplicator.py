@@ -82,8 +82,10 @@ class Deduplicator:
 
     def _on_shallow_duplicate_model(self, left: _ModelWrapper, right: _ModelWrapper):
         self._logger.warning(
-            "shallow duplicate models with same type (%s) and URI (%s):\n%s",
+            "shallow duplicate models with same type (%s) and URI (%s):\nLeft: %s\nRight: %s\nDiff: %s",
             left.model.__class__.__name__,
             left.model.uri,
+            left,
+            right,
             "\n".join(left.diff(right)),
         )
