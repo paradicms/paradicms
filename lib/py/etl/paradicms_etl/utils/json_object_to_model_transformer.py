@@ -137,4 +137,4 @@ class JsonObjectToModelTransformer:
 
     @property
     def __pipeline_namespace(self) -> Namespace:
-        return Namespace(f"urn:paradicms_etl:pipeline:{self.__pipeline_id}:")
+        return Namespace(f"urn:paradicms:etl:pipeline:{self.__pipeline_id}:")

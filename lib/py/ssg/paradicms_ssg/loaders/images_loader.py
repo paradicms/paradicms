@@ -120,7 +120,7 @@ class ImagesLoader:
             # We could use the UUID URI scheme as an easy out, but it wouldn't be deterministic.
             # Tacking on a fragment or similar to an arbitrary original_image.uri is also dicey.
             archived_thumbnail_uri = URIRef(
-                f"urn:paradicms_etl:thumbnail:{quote(str(original_image.uri))}:{thumbnail_max_dimensions.width}x{thumbnail_max_dimensions.height}"
+                f"urn:paradicms:etl:thumbnail:{quote(str(original_image.uri))}:{thumbnail_max_dimensions.width}x{thumbnail_max_dimensions.height}"
             )
 
             archived_thumbnail_images.append(
