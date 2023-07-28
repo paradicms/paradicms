@@ -55,13 +55,21 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         ) -> "SchemaImageObject.Builder":
             self.set(
                 SDO.height,
-                SchemaQuantitativeValue.builder()
+                SchemaQuantitativeValue.builder(
+                    uri=URIRef(
+                        f"urn:paradicms:etl:image:exactHeight:{exact_dimensions.height}"
+                    )
+                )
                 .set_value(exact_dimensions.height)
                 .build(),
             )
             self.set(
                 SDO.width,
-                SchemaQuantitativeValue.builder()
+                SchemaQuantitativeValue.builder(
+                    uri=URIRef(
+                        f"urn:paradicms:etl:image:exactWidth:{exact_dimensions.height}"
+                    )
+                )
                 .set_value(exact_dimensions.width)
                 .build(),
             )
@@ -72,13 +80,21 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         ) -> "SchemaImageObject.Builder":
             self.set(
                 SDO.height,
-                SchemaQuantitativeValue.builder()
+                SchemaQuantitativeValue.builder(
+                    uri=URIRef(
+                        f"urn:paradicms:etl:image:maxHeight:{max_dimensions.height}"
+                    )
+                )
                 .set_max_value(max_dimensions.height)
                 .build(),
             )
             self.set(
                 SDO.width,
-                SchemaQuantitativeValue.builder()
+                SchemaQuantitativeValue.builder(
+                    uri=URIRef(
+                        f"urn:paradicms:etl:image:maxWidth:{max_dimensions.width}"
+                    )
+                )
                 .set_max_value(max_dimensions.width)
                 .build(),
             )
