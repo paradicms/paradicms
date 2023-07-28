@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List, Optional, Tuple
 
-from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL, ConjunctiveGraph
+from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -11,7 +11,7 @@ from paradicms_etl.models.wikibase.wikibase_property import (
     WikibaseProperty,
 )
 from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
-from paradicms_etl.namespaces import WIKIBASE, WDT, SDOHTTP
+from paradicms_etl.namespaces import WIKIBASE, WDT, SDOHTTP, PROV
 
 logger = logging.getLogger(__name__)
 
@@ -29,8 +29,9 @@ class WikibaseItem(ResourceBackedModel):
     def __init__(self, resource: Resource, *, properties: Tuple[WikibaseProperty, ...]):
         ResourceBackedModel.__init__(self, resource)
 
+        assert properties
         self.__properties = properties
-        self.__statements = Optional[Tuple[WikibaseStatement, ...]] = None
+        self.__statements: Optional[Tuple[WikibaseStatement, ...]] = None
         self.__statements_by_property_label: Optional[
             Dict[str, Tuple[WikibaseStatement, ...]]
         ] = None
@@ -41,8 +42,97 @@ class WikibaseItem(ResourceBackedModel):
         return self.uri == other.uri
 
     @classmethod
+    def from_wikibase_entity_rdf(
+        cls, *, properties: Tuple[WikibaseProperty, ...], resource: Resource
+    ) -> "WikibaseItem":
+        """
+        Parse a minimal version of a single WikibaseItem from the given resource's graph, rather than trying to
+        retain it all.
+        Reuse the 1+ properties in the given tuple rather than trying to re-parse them from the graph.
+        """
+
+        # Cut down the Graph to the essentials
+        minimal_graph = Graph()
+
+        # Add all English articles about an item
+        for article_subject in resource.graph.subjects(
+            predicate=SDOHTTP.about, object=resource.identifier
+        ):
+            if (article_subject, SDOHTTP.inLanguage, Literal("en")) in resource.graph:
+                for article_triple in resource.graph.triples(
+                    (article_subject, None, None)
+                ):
+                    minimal_graph.add(article_triple)
+
+        # Add direct claims, rdf:type, and owl:sameAs
+        for p, o in resource.graph.predicate_objects(subject=resource.identifier):
+            if str(p).startswith(str(WDT)) or p == RDF.type or p == OWL.sameAs:
+                minimal_graph.add((resource.identifier, p, o))
+
+        # Add full statements that don't duplicate direct claims
+        STATEMENT_PROPERTY_BASE_URI = "http://www.wikidata.org/prop/statement/"
+        for statement_uri in resource.graph.subjects(
+            predicate=RDF.type, object=WIKIBASE.Statement, unique=True
+        ):
+            statement_duplicates_direct_claim = False
+            statement_triples = tuple(
+                resource.graph.triples((statement_uri, None, None))
+            )
+            if len(statement_triples) == 4:
+                statement_property_triples = []
+                for statement_triple in statement_triples:
+                    if (
+                        statement_triple[1] == RDF.type
+                        or statement_triple[1] == PROV.wasDerivedFrom
+                    ):
+                        continue
+                    elif str(statement_triple[1]).startswith(str(WIKIBASE)):
+                        continue
+                    elif str(statement_triple[1]).startswith(
+                        STATEMENT_PROPERTY_BASE_URI
+                    ):
+                        statement_property_triples.append(statement_triple)
+                    else:
+                        logger.debug(
+                            "unrecognized statement triple: %s", statement_triple
+                        )
+                        statement_property_triples = []
+                        break
+                if len(statement_property_triples) == 1:
+                    statement_property_triple = statement_property_triples[0]
+                    statement_value = statement_property_triple[2]
+                    property_id = str(statement_property_triple[1])[
+                        len(STATEMENT_PROPERTY_BASE_URI) :
+                    ]
+                    for direct_value in resource.graph.objects(
+                        predicate=WDT[property_id], subject=resource.identifier
+                    ):
+                        if isinstance(direct_value, Resource):
+                            if direct_value.identifier == statement_value:
+                                statement_duplicates_direct_claim = True
+                                break
+                        elif direct_value == statement_value:
+                            statement_duplicates_direct_claim = True
+                            break
+            if not statement_duplicates_direct_claim:
+                # Add the full statement
+                for statement_p, statement_o in resource.graph.predicate_objects(
+                    subject=statement_uri
+                ):
+                    minimal_graph.add((statement_uri, statement_p, statement_o))
+
+        return cls(
+            minimal_graph.resource(resource.identifier),
+            properties=properties,
+        )
+
+    @classmethod
     def label_property_uri(cls) -> Optional[URIRef]:
         return SKOS.prefLabel
+
+    @property
+    def properties(self) -> Tuple[WikibaseProperty, ...]:
+        return self.__properties
 
     @classmethod
     def rdf_type_uri(cls):
@@ -51,21 +141,21 @@ class WikibaseItem(ResourceBackedModel):
     @property
     def statements(self) -> Tuple[WikibaseStatement, ...]:
         if self.__statements is None:
-            direct_claims = []
-            full_statements = []
+            direct_claims: List[WikibaseStatement] = []
+            full_statements: List[WikibaseStatement] = []
 
             for predicate, object_ in self._resource.graph.predicate_objects(
                 subject=self._resource.identifier
             ):
-                if isinstance(object_, Literal):
-                    if object_.language != "en":
-                        logger.debug(
-                            "item %s: ignoring non-English literal: %s",
-                            self._resource.identifier,
-                            object_,
-                        )
-                        continue
-
+                # if isinstance(object_, Literal):
+                #     if object_.language != "en":
+                #         logger.debug(
+                #             "item %s: ignoring non-English literal: %s",
+                #             self._resource.identifier,
+                #             object_,
+                #         )
+                #         continue
+                #
                 if predicate in self.__IGNORE_PREDICATES:
                     logger.debug(
                         "item %s: ignoring predicate %s",
@@ -127,147 +217,6 @@ class WikibaseItem(ResourceBackedModel):
                 key: tuple(value) for key, value in statements_by_property_label.items()
             }
         return self.__statements_by_property_label
-
-    def to_concise_rdf(
-        self,
-        *,
-        graph: Graph,
-        include_non_english_articles=False,
-        include_non_english_literals=False,
-    ) -> Resource:
-        if isinstance(graph, ConjunctiveGraph):
-            context = graph.get_context(self._resource.identifier())
-        else:
-            context = graph
-
-        if not include_non_english_literals:
-            for s, p, o in self._resource.graph:
-                if (
-                    isinstance(o, Literal)
-                    and o.language is not None
-                    and o.language != "en"
-                ):
-                    continue
-                context.add((s, p, o))
-
-        if not include_non_english_articles:
-            for article_subject, article_in_language in tuple(
-                context.subject_objects(predicate=SDOHTTP.inLanguage)
-            ):
-                assert isinstance(article_in_language, Literal)
-                if article_in_language.toPython() != "en":
-                    context.remove((article_subject, None, None))
-
-        # Remove the schema:DatasetCore declaration
-        for schema_dataset_subject_uri in tuple(
-            context.subjects(
-                predicate=RDF.type, object=SDOHTTP.DatasetCore, unique=True
-            )
-        ):
-            context.remove((schema_dataset_subject_uri, None, None))
-
-        # Remove full statements that don't add anything on a direct statement
-        #     <http://www.wikidata.org/entity/statement/Q215627-45c7dda3-4ac2-1264-1fd0-602159435ee8> a wikibase:BestRank,
-        #     wikibase:Statement ;
-        # wikibase:rank wikibase:NormalRank ;
-        # ns197:P1552 wd:Q3968640 .
-        STATEMENT_PROPERTY_BASE_URI = "http://www.wikidata.org/prop/statement/"
-        for statement_uri in context.subjects(
-            predicate=RDF.type, object=WIKIBASE.Statement, unique=True
-        ):
-            statement_triples = tuple(context.triples((statement_uri, None, None)))
-            if len(statement_triples) != 4:
-                continue
-            statement_property_triples = []
-            for statement_triple in statement_triples:
-                if statement_triple[1] == RDF.type:
-                    continue
-                elif str(statement_triple[1]).startswith(str(WIKIBASE)):
-                    continue
-                elif str(statement_triple[1]).startswith(STATEMENT_PROPERTY_BASE_URI):
-                    statement_property_triples.append(statement_triple)
-                else:
-                    statement_property_triples = []
-                    break
-            if len(statement_property_triples) != 1:
-                continue
-            statement_property_triple = statement_property_triples[0]
-            property_id = str(statement_property_triple[1])[
-                len(STATEMENT_PROPERTY_BASE_URI) :
-            ]
-            have_statement_value_as_direct_value = False
-            for direct_value in self._resource.objects(WDT[property_id]):
-                if isinstance(direct_value, Resource):
-                    if direct_value.identifier == statement_property_triple[2]:
-                        have_statement_value_as_direct_value = True
-                        break
-                elif direct_value == statement_property_triple[2]:
-                    have_statement_value_as_direct_value = True
-                    break
-            if not have_statement_value_as_direct_value:
-                continue
-            # Full statement only has one actual property -- the rest is wikibase: metadata -- and the value of that
-            # property is the same as the direct value
-            # Remove all of the full statement's triples
-            context.remove((statement_uri, None, None))
-            # Remove all references to the statement
-            context.remove((None, None, statement_uri))
-
-        # Remove wikibase:wikiGroup statements
-        context.remove((None, WIKIBASE.wikiGroup, None))
-
-        # Remove rdf:type OWL type nodes
-        for owl_property_type_uri in (OWL.DatatypeProperty, OWL.ObjectProperty):
-            context.remove((None, None, owl_property_type_uri))
-
-        # Remove owl:Restriction blank nodes
-        for owl_restriction_subject in tuple(
-            context.subjects(predicate=RDF.type, object=OWL.Restriction, unique=True)
-        ):
-            context.remove((owl_restriction_subject, None, None))
-
-        # Remove prop/novalue OWL detritus
-        #     <http://www.wikidata.org/prop/novalue/P10017> a owl:Class ;
-        #         owl:complementOf [ ] .
-        for prop_novalue_subject in tuple(
-            context.subjects(predicate=RDF.type, object=OWL.Class)
-        ):
-            context.remove((prop_novalue_subject, None, None))
-
-        # Remove non-primary items
-        # Statements about these may be added back by to_type_rdf
-        for wikibase_item_subject_uri in tuple(
-            context.subjects(predicate=RDF.type, object=WIKIBASE.Item, unique=True)
-        ):
-            if wikibase_item_subject_uri == self._resource.identifier:
-                continue
-            for property_uri in (
-                RDF.type,
-                RDFS.label,
-                SDOHTTP.description,
-                SDOHTTP.name,
-                SKOS.prefLabel,
-            ):
-                context.remove((wikibase_item_subject_uri, property_uri, None))
-
-        # Remove some unnecessary property properties
-        for wikibase_property_subject_uri in tuple(
-            context.subjects(predicate=RDF.type, object=WIKIBASE.Property, unique=True)
-        ):
-            # Leave rdfs:label
-            for property_uri in (
-                SDOHTTP.description,
-                SDOHTTP.name,
-                SKOS.prefLabel,
-                WIKIBASE.novalue,
-                WIKIBASE.propertyType,
-                WIKIBASE.reference,
-                WIKIBASE.referenceValue,
-                WIKIBASE.referenceValueNormalized,
-            ):
-                context.remove((wikibase_property_subject_uri, property_uri, None))
-
-        return context.resource(self._resource.identifier)
 
     def to_type_rdf(
         self,

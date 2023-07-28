@@ -18,6 +18,7 @@ from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
+from paradicms_etl.models.wikibase.wikibase_properties import WikibaseProperties
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import WDT
 from paradicms_etl.utils.match_url import match_url
@@ -51,6 +52,7 @@ class WikidataEnricher:
                     )
                 )
                 yield referenced_wikidata_entity
+                yield from referenced_wikidata_entity.properties
 
                 if not yielded_wikidata_rights_models:
                     yield CreativeCommonsLicenses.BY_SA_3_0
@@ -136,8 +138,9 @@ class WikidataEnricher:
             cache_dir_path=self.__cache_dir_path,
             rdf_url=URIRef(str(wikidata_entity_uri) + ".ttl"),
         )(force=False)["graph"]
-        extracted_wikidata_items = WikibaseItems.from_rdf(
+        extracted_wikidata_items = WikibaseItems.from_wikibase_entity_rdf(
             graph=graph,
+            properties=WikibaseProperties.from_rdf(graph),
             uris=(wikidata_entity_uri,),
         )
         assert len(extracted_wikidata_items) == 1
@@ -284,15 +287,12 @@ class WikidataEnricher:
         combined_graph = Graph()
         for wikidata_entity in wikidata_entities_by_uri.values():
             if wikidata_entity.uri == root_wikidata_entity.uri:
-                wikidata_entity.to_concise_rdf(graph=combined_graph)
+                wikidata_entity.to_rdf(graph=combined_graph)
             else:
                 wikidata_entity.to_type_rdf(
-                    graph=combined_graph,
-                    subclass_of_property_uri=WDT["P279"],
+                    graph=combined_graph, subclass_of_property_uri=WDT["P279"]
                 )
-        combined_wikidata_items = WikibaseItems.from_rdf(graph=combined_graph)
-        assert (
-            len(combined_wikidata_items) == 1
-        )  # The rdf:type wikibase:Item statements should have been elided from everything but the root Wikidata entity
-        assert combined_wikidata_items[0].uri == root_wikidata_entity_uri
-        return combined_wikidata_items[0]
+        return WikibaseItem(
+            properties=root_wikidata_entity.properties,
+            resource=combined_graph.resource(root_wikidata_entity_uri),
+        )

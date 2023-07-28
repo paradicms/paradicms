@@ -10,7 +10,7 @@ from paradicms_etl.namespaces import WIKIBASE
 
 class WikibaseProperties:
     @staticmethod
-    def from_rdf(*, graph: Graph) -> Tuple[WikibaseProperty, ...]:
+    def from_rdf(graph: Graph) -> Tuple[WikibaseProperty, ...]:
         """
         Return property definitions from the graph and return a tuple of them.
         """

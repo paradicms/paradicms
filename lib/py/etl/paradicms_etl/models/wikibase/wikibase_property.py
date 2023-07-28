@@ -41,9 +41,12 @@ class WikibaseProperty(ResourceBackedModel):
 
     @classmethod
     def from_rdf(cls, resource: Resource) -> "WikibaseProperty":
-        # Only retain immediate properties of the resource
+        """
+        Parse the minimal subset of the given resource's graph needed to represent a single WikibaseProperty.
+        """
+
         isolated_graph = Graph()
-        for p, o in resource.predicate_objects():
+        for p, o in resource.graph.predicate_objects(subject=resource.identifier):
             isolated_graph.add((resource.identifier, p, o))
         return cls(isolated_graph.resource(resource.identifier))
 
