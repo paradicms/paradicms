@@ -1,4 +1,5 @@
 import logging
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable, Set, Tuple, Dict, Sequence, Union, Optional
 from urllib.parse import urlparse
@@ -26,13 +27,16 @@ from paradicms_etl.utils.match_url import match_url
 
 
 class WikidataEnricher:
+    @dataclass(frozen=True)
+    class __WikidataEntityGraph:
+        graph: Graph
+        wikidata_properties: Tuple[WikibaseProperty, ...]
+        wikidata_entity: WikibaseItem
+
     def __init__(self, *, cache_dir_path: Path):
         self.__cache_dir_path = cache_dir_path
-        self.__cached_wikidata_entities_without_related_by_uri: Dict[
-            URIRef, WikibaseItem
-        ] = {}
-        self.__cached_wikidata_entities_with_related_by_uri: Dict[
-            URIRef, WikibaseItem
+        self.__cached_wikidata_entity_graphs_by_uri: Dict[
+            URIRef, WikidataEnricher.__WikidataEntityGraph
         ] = {}
         self.__logger = logging.getLogger(__name__)
 
@@ -80,7 +84,7 @@ class WikidataEnricher:
 
     def __get_connected_wikidata_entities(
         self, *, direct_claim_uri: URIRef, wikidata_entity: WikibaseItem
-    ) -> Iterable[WikibaseItem]:
+    ) -> Iterable[Union[WikibaseItem, WikibaseProperty]]:
         for value in wikidata_entity.direct_claim_values(direct_claim_uri):
             if isinstance(value, URIRef):
                 yield from self.__get_wikidata_entity_with_superclass_tree(
@@ -120,18 +124,18 @@ class WikidataEnricher:
                 )
         return result
 
-    def __get_wikidata_entity(self, wikidata_entity_uri: URIRef) -> WikibaseItem:
+    def __get_wikidata_entity_graph(
+        self, wikidata_entity_uri: URIRef
+    ) -> __WikidataEntityGraph:
         """
         Get a single Wikidata entity by its id.
         """
 
-        cached_wikidata_entity = (
-            self.__cached_wikidata_entities_without_related_by_uri.get(
-                wikidata_entity_uri
-            )
+        cached_wikidata_entity_graph = self.__cached_wikidata_entity_graphs_by_uri.get(
+            wikidata_entity_uri
         )
-        if cached_wikidata_entity is not None:
-            return cached_wikidata_entity
+        if cached_wikidata_entity_graph is not None:
+            return cached_wikidata_entity_graph
 
         graph = RdfUrlExtractor(
             cache_dir_path=self.__cache_dir_path,
@@ -142,11 +146,14 @@ class WikidataEnricher:
             uris=(wikidata_entity_uri,),
         )
         assert len(extracted_wikidata_items) == 1
-        extracted_wikidata_item = extracted_wikidata_items[0]
-        self.__cached_wikidata_entities_without_related_by_uri[
+        wikidata_entity_graph = self.__cached_wikidata_entity_graphs_by_uri[
             wikidata_entity_uri
-        ] = extracted_wikidata_item
-        return extracted_wikidata_item
+        ] = self.__WikidataEntityGraph(
+            graph=graph,
+            wikidata_entity=extracted_wikidata_items[0],
+            wikidata_properties=WikibaseProperties.from_rdf(graph),
+        )
+        return wikidata_entity_graph
 
     @staticmethod
     def __get_wikidata_entity_images(wikidata_entity: WikibaseItem) -> Iterable[Image]:
@@ -161,21 +168,23 @@ class WikidataEnricher:
             direct_claim_uri=WDT.P170, wikidata_entity=wikidata_entity
         ):
             yield creator_wikidata_entity
-            yield from self.__get_wikidata_entity_images(creator_wikidata_entity)
+            if isinstance(creator_wikidata_entity, WikibaseItem):
+                yield from self.__get_wikidata_entity_images(creator_wikidata_entity)
 
     def __get_wikidata_entity_locations(
         self,
         wikidata_entity: WikibaseItem,
-    ) -> Iterable[WikibaseItem]:
+    ) -> Iterable[Model]:
         for location_wikidata_entity in self.__get_connected_wikidata_entities(
             direct_claim_uri=WDT.P276, wikidata_entity=wikidata_entity
         ):
             yield location_wikidata_entity
-            if not location_wikidata_entity.direct_claim_values(WDT.P625):
-                # Keep chasing "location" until we get one with coordinates
-                yield from self.__get_wikidata_entity_locations(
-                    location_wikidata_entity
-                )
+            if isinstance(location_wikidata_entity, WikibaseItem):
+                if not location_wikidata_entity.direct_claim_values(WDT.P625):
+                    # Keep chasing "location" until we get one with coordinates
+                    yield from self.__get_wikidata_entity_locations(
+                        location_wikidata_entity
+                    )
 
     def __get_wikidata_entity_subjects(
         self, wikidata_entity: WikibaseItem
@@ -249,9 +258,9 @@ class WikidataEnricher:
                         self.__logger.debug("related miss", type_wikidata_entity_uri)
                         wikidata_entities_by_uri[
                             type_wikidata_entity_uri
-                        ] = type_wikidata_entity = self.__get_wikidata_entity(
+                        ] = type_wikidata_entity = self.__get_wikidata_entity_graph(
                             wikidata_entity_uri=type_wikidata_entity_uri
-                        )
+                        ).wikidata_entity
 
                     get_type_wikidata_entities(
                         type_property_uris=(OWL.sameAs, WDT.P279),
@@ -267,19 +276,23 @@ class WikidataEnricher:
                 # Only one will be relevant. We don't care what a class is an instance of, for example.
                 return
 
-        root_wikidata_entity = self.__get_wikidata_entity(root_wikidata_entity_uri)
-        wikidata_entities_by_uri[root_wikidata_entity_uri] = root_wikidata_entity
+        root_wikidata_entity_graph = self.__get_wikidata_entity_graph(
+            root_wikidata_entity_uri
+        )
+        wikidata_entities_by_uri[
+            root_wikidata_entity_uri
+        ] = root_wikidata_entity_graph.wikidata_entity
 
         get_type_wikidata_entities(
             resolving_wikidata_entity_uris=set(),
             type_property_uris=(OWL.sameAs, WDT.P279, WDT.P31),
-            wikidata_entity=root_wikidata_entity,
+            wikidata_entity=root_wikidata_entity_graph.wikidata_entity,
         )
 
         # Combine the root Wikidata entity and all of its superclass tree statements in one Graph
         combined_graph = Graph()
         for wikidata_entity in wikidata_entities_by_uri.values():
-            if wikidata_entity.uri == root_wikidata_entity.uri:
+            if wikidata_entity.uri == root_wikidata_entity_uri:
                 wikidata_entity.to_rdf(graph=combined_graph)
             else:
                 wikidata_entity.to_type_rdf(
@@ -288,4 +301,4 @@ class WikidataEnricher:
         yield WikibaseItem(
             resource=combined_graph.resource(root_wikidata_entity_uri),
         )
-        yield from WikibaseProperties.from_rdf(root_wikidata_entity._resource.graph)
+        yield from root_wikidata_entity_graph.wikidata_properties
