@@ -3,8 +3,8 @@ from typing import Dict, Tuple, Union
 
 from rdflib import Literal, URIRef
 
-from paradicms_etl.models.wikibase.wikibase_property_definition import (
-    WikibasePropertyDefinition,
+from paradicms_etl.models.wikibase.wikibase_property import (
+    WikibaseProperty,
 )
 
 
@@ -12,11 +12,11 @@ from paradicms_etl.models.wikibase.wikibase_property_definition import (
 class WikibaseStatement:
     @dataclass
     class Qualifier:
-        property_definition: WikibasePropertyDefinition
+        property_: WikibaseProperty
         normalized_values: Tuple[Union[Literal, URIRef], ...]
         values: Tuple[Union[Literal, URIRef], ...]
 
-    property_definition: WikibasePropertyDefinition
+    property_: WikibaseProperty
     normalized_values: Tuple[Union[Literal, URIRef], ...]  # type: ignore # noqa
     qualifiers: Tuple[
         Qualifier, ...
@@ -26,6 +26,6 @@ class WikibaseStatement:
     def qualifiers_by_property_label(self) -> Dict[str, Qualifier]:
         result = {}
         for qualifier in self.qualifiers:
-            assert qualifier.property_definition.label not in result
-            result[qualifier.property_definition.label] = qualifier
+            assert qualifier.property_.label not in result
+            result[qualifier.property_.label] = qualifier
         return result

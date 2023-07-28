@@ -5,8 +5,8 @@ from typing import Optional, Tuple, Union, List
 from rdflib import Literal, PROV, RDF, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.wikibase.wikibase_property_definition import (
-    WikibasePropertyDefinition,
+from paradicms_etl.models.wikibase.wikibase_property import (
+    WikibaseProperty,
 )
 from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
 from paradicms_etl.namespaces import WIKIBASE
@@ -21,10 +21,7 @@ class WikibaseFullStatement(WikibaseStatement):
 
     @classmethod
     def from_rdf(
-        cls,
-        *,
-        property_definitions: Tuple[WikibasePropertyDefinition, ...],
-        resource: Resource
+        cls, *, properties: Tuple[WikibaseProperty, ...], resource: Resource
     ) -> "WikibaseFullStatement":
         normalized_values: Tuple[Union[Literal, URIRef], ...] = ()
         qualifiers = []
@@ -81,49 +78,41 @@ class WikibaseFullStatement(WikibaseStatement):
                 )
                 continue
 
-            for property_definition in property_definitions:
-                if predicate == property_definition.statement_property_uri:
+            for property_ in properties:
+                if predicate == property_.statement_property_uri:
                     handled_predicates.add(predicate)
 
                     assert not values
                     values = (object_,)
-                    value_property_definition = property_definition
+                    value_property_definition = property_
 
-                    statement_values = get_values(
-                        property_definition.statement_value_uri
-                    )
+                    statement_values = get_values(property_.statement_value_uri)
                     if statement_values:
                         values = statement_values
-                    handled_predicates.add(property_definition.statement_value_uri)
+                    handled_predicates.add(property_.statement_value_uri)
 
                     statement_values_normalized = get_values(
-                        property_definition.statement_value_normalized_uri
+                        property_.statement_value_normalized_uri
                     )
                     if statement_values_normalized:
                         normalized_values = statement_values_normalized
-                    handled_predicates.add(
-                        property_definition.statement_value_normalized_uri
-                    )
+                    handled_predicates.add(property_.statement_value_normalized_uri)
 
                     break
-                elif predicate == property_definition.qualifier_uri:
+                elif predicate == property_.qualifier_uri:
                     handled_predicates.add(predicate)
 
-                    qualifier_values = get_values(
-                        property_definition.qualifier_value_uri
-                    )
-                    handled_predicates.add(property_definition.qualifier_value_uri)
+                    qualifier_values = get_values(property_.qualifier_value_uri)
+                    handled_predicates.add(property_.qualifier_value_uri)
 
                     qualifier_values_normalized = get_values(
-                        property_definition.qualifier_value_normalized_uri
+                        property_.qualifier_value_normalized_uri
                     )
-                    handled_predicates.add(
-                        property_definition.qualifier_value_normalized_uri
-                    )
+                    handled_predicates.add(property_.qualifier_value_normalized_uri)
 
                     qualifiers.append(
                         cls.Qualifier(
-                            property_definition=property_definition,
+                            property_=property_,
                             normalized_values=qualifier_values_normalized,
                             values=qualifier_values if qualifier_values else (object_,),
                         )
@@ -146,7 +135,7 @@ class WikibaseFullStatement(WikibaseStatement):
         assert value_property_definition is not None
         return cls(
             normalized_values=normalized_values,
-            property_definition=value_property_definition,
+            property_=value_property_definition,
             qualifiers=tuple(qualifiers),
             values=values,
         )

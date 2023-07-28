@@ -7,8 +7,8 @@ from rdflib.resource import Resource
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.wikibase.wikibase_direct_claim import WikibaseDirectClaim
 from paradicms_etl.models.wikibase.wikibase_full_statement import WikibaseFullStatement
-from paradicms_etl.models.wikibase.wikibase_property_definition import (
-    WikibasePropertyDefinition,
+from paradicms_etl.models.wikibase.wikibase_property import (
+    WikibaseProperty,
 )
 from paradicms_etl.models.wikibase.wikibase_statement import WikibaseStatement
 from paradicms_etl.namespaces import WIKIBASE, WDT, SDOHTTP
@@ -29,8 +29,8 @@ class WikibaseItem(ResourceBackedModel):
         self,
         resource: Resource,
         *,
+        properties: Tuple[WikibaseProperty, ...],
         exclude_redundant_statements: bool = True,
-        property_definitions: Tuple[WikibasePropertyDefinition, ...],
     ):
         ResourceBackedModel.__init__(self, resource)
 
@@ -61,12 +61,12 @@ class WikibaseItem(ResourceBackedModel):
                 continue
 
             added_property = False
-            for property_definition in property_definitions:
-                if predicate == property_definition.claim_uri:
+            for property_ in properties:
+                if predicate == property_.claim_uri:
                     try:
                         full_statements.append(
                             WikibaseFullStatement.from_rdf(
-                                property_definitions=property_definitions,
+                                properties=properties,
                                 resource=resource.graph.resource(object_),
                             )
                         )
@@ -74,18 +74,18 @@ class WikibaseItem(ResourceBackedModel):
                         break
                     except ValueError:
                         pass
-                elif predicate == property_definition.direct_claim_uri:
+                elif predicate == property_.direct_claim_uri:
                     direct_claims.append(
                         WikibaseDirectClaim.from_rdf(
                             graph=resource.graph,
                             object_=object_,
-                            property_definition=property_definition,
+                            property_=property_,
                             subject=resource.identifier,
                         )
                     )
                     added_property = True
                     break
-                elif predicate == property_definition.direct_claim_normalized_uri:
+                elif predicate == property_.direct_claim_normalized_uri:
                     # Will be picked up by the direct claim parse above
                     added_property = True
                     break
@@ -107,14 +107,14 @@ class WikibaseItem(ResourceBackedModel):
             ] = {}
             for full_statement in full_statements:
                 full_statements_by_property_definition.setdefault(
-                    id(full_statement.property_definition), []
+                    id(full_statement.property_), []
                 ).append(full_statement)
                 # Assume full statements don't duplicate each other
                 statements.append(full_statement)
             for direct_claim in direct_claims:
                 duplicate = False
                 for full_statement in full_statements_by_property_definition.get(
-                    id(direct_claim.property_definition), []
+                    id(direct_claim.property_), []
                 ):
                     if full_statement.values == direct_claim.values:
                         duplicate = True
@@ -123,13 +123,13 @@ class WikibaseItem(ResourceBackedModel):
                     logger.debug(
                         "item %s: direct claim %s has a corresponding full statement, eliding",
                         resource.identifier,
-                        direct_claim.property_definition.direct_claim_uri,
+                        direct_claim.property_.direct_claim_uri,
                     )
                 else:
                     logger.debug(
                         "item %s: direct claim %s has no corresponding full statement",
                         resource.identifier,
-                        direct_claim.property_definition.direct_claim_uri,
+                        direct_claim.property_.direct_claim_uri,
                     )
                     statements.append(direct_claim)
         else:
@@ -172,7 +172,7 @@ class WikibaseItem(ResourceBackedModel):
             statements_by_property_label: Dict[str, List[WikibaseStatement]] = {}
             for statement in self.statements:
                 statements_by_property_label.setdefault(
-                    statement.property_definition.label, []
+                    statement.property_.label, []
                 ).append(statement)
             self.__statements_by_property_label = {
                 key: tuple(value) for key, value in statements_by_property_label.items()
