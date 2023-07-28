@@ -64,12 +64,12 @@ const getDirectClaimWikibaseStatement = (kwds: {
 };
 
 const getFullWikibaseStatement = (kwds: {
-  propertys: readonly WikibaseProperty[];
+  properties: readonly WikibaseProperty[];
   dataset: DatasetCore;
   statementGraph: Quad_Graph;
   statementNode: NamedNode;
 }): WikibaseStatement | null => {
-  const {dataset, propertys, statementGraph, statementNode} = kwds;
+  const {dataset, properties, statementGraph, statementNode} = kwds;
 
   const getValues = (
     predicate: NamedNode | null
@@ -116,7 +116,7 @@ const getFullWikibaseStatement = (kwds: {
         continue;
     }
 
-    for (const property of propertys) {
+    for (const property of properties) {
       if (statementQuad.predicate.equals(property.statementProperty)) {
         invariant(values.length === 0);
         values = [statementQuad.object];
@@ -167,14 +167,14 @@ const getWikibaseItem = (kwds: {
   graph: BlankNode | DefaultGraph | NamedNode;
   identifier: NamedNode;
   includeRedundantStatements?: boolean;
-  propertys: readonly WikibaseProperty[];
+  properties: readonly WikibaseProperty[];
 }): WikibaseItem | null => {
   const {
     dataset,
     graph,
     includeRedundantStatements,
     identifier,
-    propertys,
+    properties,
   } = kwds;
 
   const articles: WikibaseArticle[] = [];
@@ -248,14 +248,14 @@ const getWikibaseItem = (kwds: {
       continue;
     }
 
-    for (const property of propertys) {
+    for (const property of properties) {
       let statement: WikibaseStatement;
       if (propertyQuad.predicate.equals(property.claim)) {
         if (propertyQuad.object.termType === "NamedNode") {
           // Full statement
           const fullStatement = getFullWikibaseStatement({
             dataset,
-            propertys,
+            properties,
             statementGraph: propertyQuad.graph,
             statementNode: propertyQuad.object,
           });
@@ -343,7 +343,7 @@ export const getWikibaseItems = (kwds: {
       graph: quad.graph as BlankNode | DefaultGraph | NamedNode,
       includeRedundantStatements,
       identifier: quad.subject,
-      propertys: wikibaseProperties,
+      properties: wikibaseProperties,
     });
     if (item !== null) {
       wikibaseItemsByIri[item.identifier.value] = item;
@@ -408,21 +408,21 @@ const getWikibaseProperty = (kwds: {
 const getWikibaseProperties = (
   dataset: DatasetCore
 ): readonly WikibaseProperty[] => {
-  const propertysByIri: {
+  const propertiesByIri: {
     [index: string]: WikibaseProperty;
   } = {};
   for (const quad of dataset.match(null, rdf.type, wikibase.Property)) {
     if (quad.subject.termType !== "NamedNode") {
       continue;
     }
-    if (propertysByIri[quad.subject.value]) {
+    if (propertiesByIri[quad.subject.value]) {
       continue;
     }
-    propertysByIri[quad.subject.value] = getWikibaseProperty({
+    propertiesByIri[quad.subject.value] = getWikibaseProperty({
       dataset,
       graph: quad.graph,
       node: quad.subject,
     });
   }
-  return Object.values(propertysByIri);
+  return Object.values(propertiesByIri);
 };
