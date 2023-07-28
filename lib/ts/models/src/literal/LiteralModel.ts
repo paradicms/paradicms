@@ -5,6 +5,10 @@ import {ModelIdentifier} from "../ModelIdentifier";
 export class LiteralModel implements Model {
   constructor(protected readonly literal: Literal) {}
 
+  get dependencies(): readonly Model[] {
+    return [];
+  }
+
   get identifiers(): readonly ModelIdentifier[] {
     return [];
   }

@@ -3,6 +3,11 @@ import {ModelIdentifier} from "./ModelIdentifier";
 
 export interface Model {
   /**
+   * Other models this model depends on. The ModelSetBuilder will ensure these are added.
+   */
+  readonly dependencies: readonly Model[];
+
+  /**
    * All identifiers of this model. Must not be empty.
    *
    * A model may have multiple identifiers if it e.g., it's a facade for other models.

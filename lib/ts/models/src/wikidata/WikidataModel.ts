@@ -53,6 +53,10 @@ export abstract class WikidataModel
     return this.wikibaseItem.articles;
   }
 
+  override get dependencies(): readonly Model[] {
+    return Object.values(this.wikidataPropertiesByIri);
+  }
+
   protected findAndMapStatementValue<T>(
       directClaimProperty: NamedNode,
       callback: (value: WikibaseStatementValue, statement: WikibaseStatement) => NonNullable<T> | null

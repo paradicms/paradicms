@@ -10,6 +10,7 @@ import {SyntheticEventParameters} from "./SyntheticEventParameters";
 import {Image} from "../Image";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {AgentUnion} from "../AgentUnion";
+import {Model} from "../Model";
 
 export abstract class SyntheticEvent
   extends Mixin(EventDerivedDatesMixin, SomeImageThumbnailMixin)
@@ -36,6 +37,10 @@ export abstract class SyntheticEvent
   }
 
   abstract readonly agents: readonly AgentUnion[];
+
+  get dependencies(): readonly Model[] {
+    return [];
+  }
 
   get identifiers(): readonly ModelIdentifier[] {
     return [];

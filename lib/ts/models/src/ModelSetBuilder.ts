@@ -314,6 +314,12 @@ export class ModelSetBuilder {
         "tried to add a model that belongs to another model's graph:",
         model.key
       );
+      return this;
+    }
+
+    for (const dependency of model.dependencies) {
+      log.debug("adding model", model.key, "dependency", dependency.key);
+      this.addModel(dependency);
     }
 
     return this;
