@@ -28,6 +28,10 @@ export class SameAsModel<ModelT extends Model> implements Model {
     this.otherModels = otherModels;
   }
 
+  get dependencies(): readonly Model[] {
+    return this.getUniqueLinkedModels(model => model.dependencies);
+  }
+
   protected getAllValues<T>(
     getValues: (model: ModelT) => readonly T[]
   ): readonly T[] {

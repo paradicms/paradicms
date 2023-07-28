@@ -14,7 +14,7 @@ export class WikidataLocation extends WikidataModel implements Location {
           log.debug("wdt:P625 points to non-geo:wktLiteral");
           return null;
         }
-        const geoJson = wktToGeoJSON(term.value);
+        const geoJson = wktToGeoJSON(term.value.toUpperCase());
         if (geoJson.type !== "Point") {
           log.debug("wdt:P625 points to non-WKT Point");
           return null;

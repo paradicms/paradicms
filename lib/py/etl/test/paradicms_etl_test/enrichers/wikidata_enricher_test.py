@@ -10,6 +10,7 @@ from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.stub.stub_person import StubPerson
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
+from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
 
 
@@ -27,7 +28,7 @@ def test_enrich_stub_person(data_dir_path: Path, wikidata_uri: URIRef):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((person,))
     )
-    assert len(enriched_models) == 4  # WikidataEnricher should eat the stub
+    assert len(enriched_models) == 211  # WikidataEnricher should eat the stub
     assert any(isinstance(model, License) for model in enriched_models)
     assert any(isinstance(model, RightsStatement) for model in enriched_models)
     wikidata_entity_uri = URIRef("http://www.wikidata.org/entity/Q7251")
@@ -43,6 +44,16 @@ def test_enrich_stub_person(data_dir_path: Path, wikidata_uri: URIRef):
         )
         for model in enriched_models
     )
+    assert (
+        len(
+            tuple(
+                model
+                for model in enriched_models
+                if isinstance(model, WikibaseProperty)
+            )
+        )
+        == 207
+    )
 
 
 def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
@@ -52,7 +63,7 @@ def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((person,))
     )
-    assert len(enriched_models) == 5
+    assert len(enriched_models) == 212
     # Original Person
     assert any(
         isinstance(model, Person) and model.uri == person.uri
@@ -77,6 +88,16 @@ def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
         )
         for model in enriched_models
     )
+    assert (
+        len(
+            tuple(
+                model
+                for model in enriched_models
+                if isinstance(model, WikibaseProperty)
+            )
+        )
+        == 207
+    )
 
 
 def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
@@ -88,7 +109,7 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((work,))
     )
-    assert len(enriched_models) == 10
+    assert len(enriched_models) == 308
     # Original work
     assert any(
         isinstance(model, Work) and model.uri == work.uri for model in enriched_models
@@ -142,4 +163,14 @@ def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
         isinstance(model, WikibaseItem)
         and model.uri == URIRef("http://www.wikidata.org/entity/Q191748")
         for model in enriched_models
+    )
+    assert (
+        len(
+            tuple(
+                model
+                for model in enriched_models
+                if isinstance(model, WikibaseProperty)
+            )
+        )
+        == 298
     )

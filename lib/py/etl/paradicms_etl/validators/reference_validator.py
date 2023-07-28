@@ -248,11 +248,12 @@ class ReferenceValidator:
     def __validate_model(self, model: Model) -> Iterable[ValidationResult]:
         if model.uri not in self.__model_uris:
             self.__model_uris.add(model.uri)
-        else:
-            yield ValidationResult(
-                message=f"duplicate model URI: {model.uri}",
-                severity=ValidationResult.Severity.INFO,
-            )
+        return ()
+        # else:
+        # yield ValidationResult(
+        #     message=f"duplicate model URI: {model.uri}",
+        #     severity=ValidationResult.Severity.INFO,
+        # )
 
     def __validate_organization(
         self, organization: Organization

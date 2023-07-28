@@ -46,7 +46,7 @@ describe("getWikibaseItems", () => {
         dataset: store,
         includeRedundantStatements: true,
       });
-      expect(result.wikibasePropertyDefinitions).not.to.be.empty;
+      expect(result.wikibaseProperties).not.to.be.empty;
       const items = Object.values(result.wikibaseItemsByIri);
       expect(items).to.have.length(testWikidataItemFile.itemsCount);
       const fileItem = items.find(

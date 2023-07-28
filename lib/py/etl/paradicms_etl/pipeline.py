@@ -6,6 +6,7 @@ from typing import Dict, Optional, Any, Iterable, Tuple, List
 from configargparse import ArgParser
 from more_itertools import consume
 
+from paradicms_etl.deduplicator import Deduplicator
 from paradicms_etl.enricher import Enricher
 from paradicms_etl.enrichers.creative_commons_licenses_enricher import (
     creative_commons_licenses_enricher,
@@ -109,7 +110,9 @@ class Pipeline(ABC):
     def __call__(self, *, force_extract: bool = False) -> Iterable[Model]:
         return self.__load(
             self.__validate(
-                self.__enrich(self.__transform(self.__extract(force=force_extract)))
+                Deduplicator()(
+                    self.__enrich(self.__transform(self.__extract(force=force_extract)))
+                )
             )
         )
 

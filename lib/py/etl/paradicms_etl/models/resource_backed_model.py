@@ -38,9 +38,11 @@ class ResourceBackedModel(Model):
             if o is None:
                 pass
             elif isinstance(o, Model):
-                if not str(o.uri).lower().startswith("urn:uuid:"):
+                if not str(o.uri).lower().startswith("urn:uuid:") and not str(
+                    o.uri
+                ).lower().startswith("urn:paradicms:"):
                     logging.getLogger(__name__).warning(
-                        "adding non-urn:uuid model %s to model %s's graph",
+                        "adding non-urn: model %s to model %s's graph",
                         o.uri,
                         self.__resource.identifier,
                     )

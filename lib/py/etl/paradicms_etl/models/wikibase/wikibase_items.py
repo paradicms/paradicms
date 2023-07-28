@@ -3,9 +3,6 @@ from typing import Tuple, Optional
 from rdflib import Graph, URIRef, RDF
 
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
-from paradicms_etl.models.wikibase.wikibase_property_definition import (
-    WikibasePropertyDefinition,
-)
 from paradicms_etl.namespaces import WIKIBASE
 
 
@@ -15,7 +12,6 @@ class WikibaseItems:
         cls,
         *,
         graph: Graph,
-        exclude_redundant_statements: bool = True,
         uris: Optional[Tuple[URIRef, ...]] = None,
     ) -> Tuple["WikibaseItem", ...]:
         """
@@ -23,8 +19,6 @@ class WikibaseItems:
 
         If the expected URIs (uris) is not specified, reads all wikibase:Item's.
         """
-
-        property_definitions = WikibasePropertyDefinition.from_rdf(graph=graph)
 
         items = []
         if uris is None:
@@ -35,9 +29,7 @@ class WikibaseItems:
             )
         for uri in uris:
             items.append(
-                WikibaseItem(
-                    exclude_redundant_statements=exclude_redundant_statements,
-                    property_definitions=property_definitions,
+                WikibaseItem.from_rdf(
                     resource=graph.resource(uri),
                 )
             )

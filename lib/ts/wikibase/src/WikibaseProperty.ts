@@ -1,6 +1,6 @@
 import {BlankNode, DefaultGraph, Literal, NamedNode} from "@rdfjs/types";
 
-export interface WikibasePropertyDefinition {
+export interface WikibaseProperty {
   readonly claim: NamedNode | null;
   readonly directClaimNormalized: NamedNode | null;
   readonly directClaim: NamedNode | null;

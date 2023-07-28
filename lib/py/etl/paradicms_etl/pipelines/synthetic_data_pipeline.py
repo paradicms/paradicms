@@ -71,7 +71,7 @@ class SyntheticDataPipeline(Pipeline):
             @property
             def range(self) -> URIRef:
                 return URIRef(
-                    f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:property_range:{quote(self.label)}"
+                    f"urn:paradicms:etl:pipeline:{SyntheticDataPipeline.ID}:property_range:{quote(self.label)}"
                 )
 
         __PROPERTIES = (
@@ -426,7 +426,7 @@ class SyntheticDataPipeline(Pipeline):
                 for property_value in property_.values:
                     concept_pref_label = f"Concept {concept_urn_i}"
                     concept_uri = URIRef(
-                        f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
+                        f"urn:paradicms:etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                     )
 
                     concept_builder: Union[
@@ -499,7 +499,7 @@ class SyntheticDataPipeline(Pipeline):
             property_group_builder = CmsPropertyGroup.builder(
                 label="Synthetic data properties",
                 uri=URIRef(
-                    f"urn:paradicms_etl:pipeline:{SyntheticDataPipeline.ID}:property_group"
+                    f"urn:paradicms:etl:pipeline:{SyntheticDataPipeline.ID}:property_group"
                 ),
             )
             for image in self.__generate_images(
