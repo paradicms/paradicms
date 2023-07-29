@@ -1,4 +1,4 @@
-import {datasetToFastRdfString} from "@paradicms/rdf";
+import {datasetToFastRdfString, datasetToJsonLd} from "@paradicms/rdf";
 import {DatasetCore} from "rdf-js";
 import {Memoize} from "typescript-memoize";
 import {AgentUnion} from "./AgentUnion";
@@ -234,6 +234,10 @@ export class CachingModelSet implements ModelSet {
   @Memoize()
   private get rightsStatementsByIriIndex(): {[index: string]: RightsStatement} {
     return indexModelsByIri(this.namedRightsStatements);
+  }
+
+  toJsonLd(): Promise<any> {
+    return datasetToJsonLd(this.toRdf());
   }
 
   toFastRdfString(): string {

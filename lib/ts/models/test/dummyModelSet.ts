@@ -78,6 +78,9 @@ export const dummyModelSet: ModelSet = {
   toFastRdfString(): string {
     throw new EvalError("not implemented");
   },
+  toJsonLd(): Promise<any> {
+    throw new EvalError("not implemented");
+  },
   toRdf(): DatasetCore {
     throw new EvalError("not implemented");
   },
