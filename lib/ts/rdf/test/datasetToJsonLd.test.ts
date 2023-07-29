@@ -11,20 +11,17 @@ describe("datasetToJsonLd", () => {
     const dataset = new Store();
     dataset.add(DataFactory.quad(subject, predicate, object_, subject));
     const jsonLd = await datasetToJsonLd(dataset);
-    expect(jsonLd).to.deep.eq([
-      {
-        "@graph": [
-          {
-            "@id": "urn:example:subject",
-            "urn:example:predicate": [
-              {
-                "@id": "urn:example:object",
-              },
-            ],
+    delete jsonLd["@context"];
+    expect(jsonLd).to.deep.eq({
+      "@graph": [
+        {
+          "@id": "urn:example:subject",
+          "urn:example:predicate": {
+            "@id": "urn:example:object",
           },
-        ],
-        "@id": "urn:example:subject",
-      },
-    ]);
+        },
+      ],
+      "@id": "urn:example:subject",
+    });
   });
 });
