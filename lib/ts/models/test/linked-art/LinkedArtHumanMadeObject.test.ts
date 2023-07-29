@@ -13,7 +13,12 @@ describe("LinkedArtHumanMadeObject", () => {
       .readWorks({
         modelSet: testModelSet,
       })
-      .find(model => model instanceof LinkedArtHumanMadeObject)
+      .find(
+        model =>
+          model.iris.length === 1 &&
+          model.iris[0] ===
+            "https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6"
+      )
   ) as LinkedArtHumanMadeObject;
 
   it("should have the Linked Art creator", () => {

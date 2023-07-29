@@ -8,7 +8,7 @@ import {CmsPropertyGroup} from "../../src/cms/CmsPropertyGroup";
 describe("CmsPropertyGroup", () => {
   const propertyGroup = requireNonNull(
     testModelSet.propertyGroupByIri(
-      "urn:paradicms_etl:pipeline:synthetic_data:property_group"
+      "urn:paradicms:etl:pipeline:synthetic_data:property_group"
     )
   );
 

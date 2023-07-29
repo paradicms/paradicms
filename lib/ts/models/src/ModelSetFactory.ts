@@ -1,4 +1,4 @@
-import {fastRdfStringToDataset} from "@paradicms/rdf";
+import {fastRdfStringToDataset, Store} from "@paradicms/rdf";
 import {DatasetCore} from "@rdfjs/types";
 import {SameAsModelReader} from "./same-as/SameAsModelReader";
 import {CmsModelReader} from "./cms/CmsModelReader";
@@ -13,8 +13,16 @@ import {FoafModelReader} from "./foaf/FoafModelReader";
 import {RdfModelReader} from "./rdf/RdfModelReader";
 import {DcModelReader} from "./dc/DcModelReader";
 import {LinkedArtModelReader} from "./linked-art/LinkedArtModelReader";
+import * as jsonld from "jsonld";
 
 export class ModelSetFactory {
+  static async fromJsonLd(jsonLd: any): Promise<ModelSet> {
+    const quads: any = await jsonld.toRDF(jsonLd);
+    const dataset = new Store();
+    dataset.addQuads(quads);
+    return ModelSetFactory.fromDataset(dataset);
+  }
+
   static fromFastRdfString(fastRdfString: string): ModelSet {
     return ModelSetFactory.fromDataset(fastRdfStringToDataset(fastRdfString));
   }
