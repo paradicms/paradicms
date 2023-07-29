@@ -16,14 +16,11 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import * as React from "react";
-import {useEffect, useMemo, useState} from "react";
+import {useMemo} from "react";
 import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 import path from "path";
 import fs from "fs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
-import * as jsonld from "jsonld";
-import {Quad} from "@rdfjs/types";
-import {Store} from "@paradicms/rdf";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -35,38 +32,30 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionLabel: string | null;
-  readonly modelSetJsonLd: any;
+  readonly modelSetString: string;
 }
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionLabel,
-  modelSetJsonLd,
+  modelSetString,
 }) => {
-  const [modelSet, setModelSet] = useState<ModelSet | null>(null);
-  useEffect(
-    () => ModelSetFactory.fromJsonLd(modelSetJsonLd).then(setModelSet),
-    [modelSetJsonLd]
+  const modelSet = useMemo<ModelSet>(
+    () => ModelSetFactory.fromFastRdfString(modelSetString),
+    [modelSetString]
   );
+  const configuration = modelSet.appConfiguration;
   const router = useRouter();
-  const workQueryService = useMemo<WorkQueryService | null>(
+  const workQueryService = useMemo<WorkQueryService>(
     () =>
-      modelSet
-        ? new MemWorkQueryService({
-            modelSet,
-          })
-        : null,
-    [modelSet]
+      new MemWorkQueryService({
+        modelSet,
+      }),
+    [configuration, modelSet]
   );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
-    filters: modelSet ? getDefaultWorksQueryFilters(modelSet.properties) : [],
+    filters: getDefaultWorksQueryFilters(modelSet.properties),
   });
-
-  if (!modelSet || !workQueryService) {
-    return null;
-  }
-
-  const configuration = modelSet.appConfiguration;
 
   return (
     <Layout
@@ -118,11 +107,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].label
           : null,
-      modelSetJsonLd: await new ModelSetBuilder()
+      modelSetString: new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addWorks(completeModelSet.works, workSearchWorkJoinSelector)
         .build()
-        .toJsonLd(),
+        .toFastRdfString(),
     },
   };
 };
