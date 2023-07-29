@@ -28,7 +28,7 @@ describe("CachingModelSet", () => {
     }
 
     // const concept = sut.conceptByIri(
-    //   "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
+    //   "urn:paradicms:etl:pipeline:synthetic_data:concept:0"
     // );
     const concept = sut.concepts[0];
     expect(concept.value.value).to.eq(

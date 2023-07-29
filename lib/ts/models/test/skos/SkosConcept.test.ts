@@ -8,7 +8,7 @@ import {SkosConcept} from "../../src/skos/SkosConcept";
 describe("SkosConcept", () => {
   const concept = requireNonNull(
     testModelSet.conceptByIri(
-      "urn:paradicms_etl:pipeline:synthetic_data:concept:0"
+      "urn:paradicms:etl:pipeline:synthetic_data:concept:0"
     )
   );
 

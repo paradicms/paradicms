@@ -8,7 +8,7 @@ import {behavesLikeConcept} from "../behavesLikeConcept";
 describe("SchemaDefinedTerm", () => {
   const concept = requireNonNull(
     testModelSet.conceptByIri(
-      "urn:paradicms_etl:pipeline:synthetic_data:concept:81"
+      "urn:paradicms:etl:pipeline:synthetic_data:concept:81"
     )
   );
 
