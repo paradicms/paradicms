@@ -82,7 +82,7 @@ describe("CachingModelSet", () => {
     }
   });
 
-  it("should serialize itself", () => {
-    expect(sut.toFastRdfString()).to.not.be.empty;
+  it("should serialize itself", async () => {
+    expect(await sut.toJsonLd()).to.not.be.empty;
   });
 });

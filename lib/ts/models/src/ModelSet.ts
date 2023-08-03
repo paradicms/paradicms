@@ -35,7 +35,6 @@ export interface ModelSet {
   propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[];
   readonly propertyGroups: readonly PropertyGroup[];
   rightsStatementByIri(rightsStatementIri: string): RightsStatement | null;
-  toFastRdfString(): string;
   toJsonLd(): Promise<JsonLd>;
   toRdf(): DatasetCore;
   workByIri(workIri: string): Work | null;
