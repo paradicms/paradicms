@@ -1,6 +1,6 @@
 import {
+  ModelSet,
   ModelSetBuilder,
-  ModelSetFactory,
   selectExhibitionWorks,
 } from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
@@ -8,6 +8,7 @@ import {
   defaultBootstrapStylesheetHref,
   getWorkLocationIcon,
   getWorkLocationLabel,
+  ModelSetJsonLdParser,
   RightsParagraph,
   WorkPage,
   workPageWorkJoinSelector,
@@ -34,19 +35,14 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionKey: string | null;
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: any;
   readonly workKeys: readonly string[];
 }
 
-const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collectionKey,
-  modelSetString,
-  workKeys,
-}) => {
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const IndexPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({collectionKey, modelSet, workKeys}) => {
   const configuration = modelSet.appConfiguration;
 
   const pages: React.ReactElement[] = useMemo(() => {
@@ -163,6 +159,16 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
+const IndexPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
+
 export default IndexPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
@@ -186,7 +192,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   return {
     props: {
       collectionKey: collection?.key ?? null,
-      modelSetString: completeModelSet.toFastRdfString(),
+      modelSetJsonLd: await completeModelSet.toJsonLd(),
       workKeys: works.map(work => work.key),
     },
   };
