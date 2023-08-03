@@ -12,27 +12,30 @@ import {decodeFileName, encodeFileName, readModelSet} from "@paradicms/next";
 import path from "path";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {useRouter} from "next/router";
-import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
+import {
+  galleryThumbnailSelector,
+  ModelSetJsonLdParser,
+} from "@paradicms/react-dom-components";
 import {requireNonNull} from "@paradicms/utilities";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 interface StaticProps {
   readonly featureSetIri: string;
   readonly featureIri: string;
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
 }
 
-const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
+const WorksheetFeatureEditPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({
   featureSetIri,
   featureIri,
-  modelSetString,
+  modelSet,
 }) => {
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
   const configuration = modelSet.appConfiguration;
   const routeWorksheetMark = useRouteWorksheetMark({
     featureSetIri,
@@ -109,6 +112,18 @@ const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
+const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => (
+      <WorksheetFeatureEditPageImpl modelSet={modelSet} {...otherProps} />
+    )}
+  />
+);
+
 export default WorksheetFeatureEditPage;
 
 const readFile = (filePath: string) =>
@@ -158,7 +173,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       featureSetIri,
       featureIri,
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addProperty(
           requireNonNull(completeModelSet.propertyByIri(featureIri)),
@@ -174,7 +189,7 @@ export const getStaticProps: GetStaticProps = async ({
           },
         })
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
     },
   };
 };

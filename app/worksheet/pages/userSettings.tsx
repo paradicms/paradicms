@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {useCurrentUser} from "~/hooks/useCurrentUser";
 import {Hrefs} from "~/Hrefs";
 import {WorksheetConfiguration} from "~/models/WorksheetConfiguration";
@@ -33,21 +33,20 @@ import {GoogleSheetsWorksheetStateConfigurationContainer} from "~/components/Goo
 import {readModelSet} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
-import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
+import {JsonLd} from "jsonld/jsonld-spec";
+import {ModelSetJsonLdParser} from "@paradicms/react-dom-components";
 
 interface StaticProps {
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
 }
 
-const UserSettingsPage: React.FunctionComponent<StaticProps> = ({
-  modelSetString,
-}) => {
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const UserSettingsPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
   const configuration = modelSet.appConfiguration;
   const currentUser = useCurrentUser();
   const [
@@ -167,6 +166,18 @@ const UserSettingsPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
+const UserSettingsPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => (
+      <UserSettingsPageImpl modelSet={modelSet} {...otherProps} />
+    )}
+  />
+);
+
 export default UserSettingsPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
@@ -180,10 +191,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
     },
   };
 };

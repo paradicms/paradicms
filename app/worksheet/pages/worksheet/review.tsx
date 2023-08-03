@@ -11,7 +11,7 @@ import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetS
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
 import {useWorksheet} from "~/hooks/useWorksheet";
-import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {readModelSet} from "@paradicms/next";
@@ -20,6 +20,8 @@ import fs from "fs";
 import {GetStaticProps} from "next";
 import Link from "next/link";
 import CopyToClipboard from "react-copy-to-clipboard";
+import {JsonLd} from "jsonld/jsonld-spec";
+import {ModelSetJsonLdParser} from "@paradicms/react-dom-components";
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),
@@ -29,16 +31,13 @@ const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
 ];
 
 interface StaticProps {
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
 }
 
-const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
-  modelSetString,
-}) => {
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
   const configuration = modelSet.appConfiguration;
   const routeWorksheetMark = useRouteWorksheetMark({review: true});
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
@@ -278,6 +277,18 @@ const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
+const WorksheetReviewPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => (
+      <WorksheetReviewPageImpl modelSet={modelSet} {...otherProps} />
+    )}
+  />
+);
+
 export default WorksheetReviewPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
@@ -291,7 +302,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addPropertyGroups(completeModelSet.propertyGroups, {
           properties: {
@@ -299,7 +310,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
           },
         })
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
     },
   };
 };
