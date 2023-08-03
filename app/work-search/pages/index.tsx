@@ -1,9 +1,10 @@
 import {MemWorkQueryService} from "@paradicms/mem-services";
-import {ModelSet, ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
   getWorkLocationIcon,
   getWorkLocationLabel,
+  ModelSetJsonLdParser,
   WorkSearchPage,
   workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
@@ -32,17 +33,13 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionLabel: string | null;
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: any;
 }
 
-const IndexPage: React.FunctionComponent<StaticProps> = ({
-  collectionLabel,
-  modelSetString,
-}) => {
-  const modelSet = useMemo<ModelSet>(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const IndexPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({collectionLabel, modelSet}) => {
   const configuration = modelSet.appConfiguration;
   const router = useRouter();
   const workQueryService = useMemo<WorkQueryService>(
@@ -90,6 +87,16 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
+const IndexPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
+
 export default IndexPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
@@ -107,11 +114,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].label
           : null,
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addWorks(completeModelSet.works, workSearchWorkJoinSelector)
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
     },
   };
 };

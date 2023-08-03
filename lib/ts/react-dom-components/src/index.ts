@@ -17,6 +17,7 @@ export * from "./getWorkLocationLabel";
 export * from "./ImagesCarousel";
 export * from "./imagesCarouselThumbnailSelector";
 export * from "./LicenseLink";
+export * from "./ModelSetJsonLdParser";
 export * from "./NavbarSearchForm";
 export * from "./Pagination";
 export * from "./RightsParagraph";
