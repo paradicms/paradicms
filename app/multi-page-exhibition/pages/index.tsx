@@ -1,32 +1,33 @@
-import {ModelSetFactory, selectExhibitionWorks} from "@paradicms/models";
+import {ModelSet, selectExhibitionWorks} from "@paradicms/models";
 import {readModelSet} from "@paradicms/next";
-import {RightsParagraph} from "@paradicms/react-dom-components";
+import {
+  ModelSetJsonLdParser,
+  RightsParagraph,
+} from "@paradicms/react-dom-components";
 import fs from "fs";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import * as path from "path";
 import * as React from "react";
-import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
 
 interface StaticProps {
   readonly collectionKey: string | null;
   readonly firstWorkKey: string;
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: any;
 }
 
-const IndexPage: React.FunctionComponent<StaticProps> = ({
+const IndexPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({
   collectionKey,
-  modelSetString,
   firstWorkKey,
+  modelSet,
 }) => {
   const router = useRouter();
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
   const collection = collectionKey
     ? modelSet.collectionByKey(collectionKey)
     : null;
@@ -75,6 +76,16 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({
   );
 };
 
+const IndexPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
+
 export default IndexPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
@@ -92,7 +103,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       collectionKey: collection?.key ?? null,
       firstWorkKey: works[0].key,
-      modelSetString: modelSet.toFastRdfString(),
+      modelSetJsonLd: await modelSet.toJsonLd(),
     },
   };
 };
