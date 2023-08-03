@@ -22,6 +22,7 @@ import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 import path from "path";
 import fs from "fs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -33,7 +34,7 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionLabel: string | null;
-  readonly modelSetJsonLd: any;
+  readonly modelSetJsonLd: JsonLd;
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<

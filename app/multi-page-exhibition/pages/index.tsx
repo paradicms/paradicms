@@ -12,11 +12,12 @@ import * as path from "path";
 import * as React from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 interface StaticProps {
   readonly collectionKey: string | null;
   readonly firstWorkKey: string;
-  readonly modelSetJsonLd: any;
+  readonly modelSetJsonLd: JsonLd;
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<

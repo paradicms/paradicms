@@ -29,6 +29,7 @@ import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
 import Link from "next/link";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -41,7 +42,7 @@ const LocationsMap = dynamic<{
 interface StaticProps {
   readonly collectionKey: string | null;
   readonly currentWorkKey: string;
-  readonly modelSetJsonLd: any;
+  readonly modelSetJsonLd: JsonLd;
   readonly nextWorkKey: string | null;
   readonly previousWorkKey: string | null;
 }

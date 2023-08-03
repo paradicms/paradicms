@@ -24,6 +24,7 @@ import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
 import {requireNonNull} from "@paradicms/utilities";
 import {LocationsMapLocation} from "../components/LocationsMap";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -35,7 +36,7 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionKey: string | null;
-  readonly modelSetJsonLd: any;
+  readonly modelSetJsonLd: JsonLd;
   readonly workKeys: readonly string[];
 }
 

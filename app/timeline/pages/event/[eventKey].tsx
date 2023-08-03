@@ -1,9 +1,4 @@
-import {
-  Event,
-  ModelSet,
-  ModelSetBuilder,
-  ModelSetFactory,
-} from "@paradicms/models";
+import {Event, ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
@@ -13,6 +8,7 @@ import {
 import {
   EventPage as DelegateEventPage,
   eventPageEventJoinSelector,
+  ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
 import {Layout} from "components/Layout";
 import fs from "fs";
@@ -20,10 +16,10 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
 import * as React from "react";
-import {useMemo} from "react";
 import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -35,17 +31,13 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly eventKey: string;
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
 }
 
-const EventPage: React.FunctionComponent<StaticProps> = ({
-  eventKey,
-  modelSetString,
-}) => {
-  const modelSet = useMemo<ModelSet>(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const EventPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({eventKey, modelSet}) => {
   const configuration = modelSet.appConfiguration;
   const event: Event = requireNonNull(modelSet.eventByKey(eventKey));
   const router = useRouter();
@@ -72,6 +64,16 @@ const EventPage: React.FunctionComponent<StaticProps> = ({
     </Layout>
   );
 };
+
+const EventPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <EventPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
 
 export default EventPage;
 
@@ -106,14 +108,14 @@ export const getStaticProps: GetStaticProps = async ({
   return {
     props: {
       eventKey,
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addEvent(
           requireNonNull(completeModelSet.eventByKey(eventKey)),
           eventPageEventJoinSelector
         )
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
     },
   };
 };

@@ -24,8 +24,11 @@ import {
   wikibase,
   xsd,
 } from "@paradicms/vocabularies";
+import {JsonLd} from "jsonld/jsonld-spec";
 
-export const datasetToJsonLd = async (dataset: DatasetCore): Promise<any> => {
+export const datasetToJsonLd = async (
+  dataset: DatasetCore
+): Promise<JsonLd> => {
   const jsonLd = await jsonld.fromRDF(dataset, {
     useNativeTypes: true,
   });

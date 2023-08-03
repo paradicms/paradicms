@@ -24,6 +24,7 @@ import {requireNonNull} from "@paradicms/utilities";
 import Link from "next/link";
 import {Hrefs} from "../../lib/Hrefs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -35,7 +36,7 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionLabel: string | null;
-  readonly modelSetJsonLd: any;
+  readonly modelSetJsonLd: JsonLd;
   readonly workKey: string;
 }
 
@@ -86,9 +87,7 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 }) => (
   <ModelSetJsonLdParser
     modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => (
-      <WorkPageImpl modelSet={modelSetJsonLd} {...otherProps} />
-    )}
+    render={modelSet => <WorkPageImpl modelSet={modelSet} {...otherProps} />}
   />
 );
 
