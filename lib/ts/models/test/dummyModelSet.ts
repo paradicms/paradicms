@@ -16,6 +16,7 @@ import {
   Work,
 } from "../src";
 import {DatasetCore} from "@rdfjs/types";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 export const dummyModelSet: ModelSet = {
   agentByIri(agentIri: string): AgentUnion | null {
@@ -75,10 +76,7 @@ export const dummyModelSet: ModelSet = {
   rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
     throw new EvalError("not implemented");
   },
-  toFastRdfString(): string {
-    throw new EvalError("not implemented");
-  },
-  toJsonLd(): Promise<any> {
+  toJsonLd(): Promise<JsonLd> {
     throw new EvalError("not implemented");
   },
   toRdf(): DatasetCore {

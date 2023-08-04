@@ -1,29 +1,29 @@
-import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import fs from "fs";
 import {GetStaticProps} from "next";
 import * as path from "path";
 import * as React from "react";
-import {useMemo} from "react";
 import {Layout} from "../components/Layout";
 import {
   EventsTimeline,
   galleryThumbnailSelector,
+  ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
 import {useRouter} from "next/router";
 import {Hrefs} from "../lib/Hrefs";
 import Link from "next/link";
 import "react-vertical-timeline-component/style.min.css";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 interface StaticProps {
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
 }
 
-const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const IndexPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
   const configuration = modelSet.appConfiguration;
   // log.debug("events in timeline:", modelSet.events.length);
   const router = useRouter();
@@ -48,6 +48,16 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
   );
 };
 
+const IndexPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
+
 export default IndexPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
@@ -61,11 +71,11 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(modelSet.appConfiguration)
         .addEvents(modelSet.events, {thumbnail: galleryThumbnailSelector})
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
     },
   };
 };

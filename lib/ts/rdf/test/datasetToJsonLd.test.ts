@@ -10,7 +10,7 @@ describe("datasetToJsonLd", () => {
   it("should serialize a simple dataset", async () => {
     const dataset = new Store();
     dataset.add(DataFactory.quad(subject, predicate, object_, subject));
-    const jsonLd = await datasetToJsonLd(dataset);
+    const jsonLd: any = await datasetToJsonLd(dataset);
     delete jsonLd["@context"];
     expect(jsonLd).to.deep.eq({
       "@graph": [

@@ -13,6 +13,7 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 export interface ModelSet {
   agentByIri(agentIri: string): AgentUnion | null;
@@ -34,8 +35,7 @@ export interface ModelSet {
   propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[];
   readonly propertyGroups: readonly PropertyGroup[];
   rightsStatementByIri(rightsStatementIri: string): RightsStatement | null;
-  toFastRdfString(): string;
-  toJsonLd(): Promise<any>;
+  toJsonLd(): Promise<JsonLd>;
   toRdf(): DatasetCore;
   workByIri(workIri: string): Work | null;
   workByKey(workKey: string): Work | null;

@@ -1,4 +1,4 @@
-import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
@@ -9,6 +9,7 @@ import {
   getNamedModelLinks,
   getWorkLocationIcon,
   getWorkLocationLabel,
+  ModelSetJsonLdParser,
   WorkPage as DelegateWorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
@@ -18,12 +19,12 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
 import * as React from "react";
-import {useMemo} from "react";
 import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
 import Link from "next/link";
 import {Hrefs} from "../../lib/Hrefs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -35,19 +36,14 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionLabel: string | null;
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
   readonly workKey: string;
 }
 
-const WorkPage: React.FunctionComponent<StaticProps> = ({
-  collectionLabel,
-  modelSetString,
-  workKey,
-}) => {
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const WorkPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({collectionLabel, modelSet, workKey}) => {
   const router = useRouter();
   const work = requireNonNull(modelSet.workByKey(workKey));
 
@@ -84,6 +80,16 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     </Layout>
   );
 };
+
+const WorkPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <WorkPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
 
 export default WorkPage;
 
@@ -127,14 +133,14 @@ export const getStaticProps: GetStaticProps = async ({
         completeModelSet.collections.length === 1
           ? completeModelSet.collections[0].label
           : null,
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .addWork(
           requireNonNull(completeModelSet.workByKey(workKey)),
           workPageWorkJoinSelector
         )
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
       workKey: workKey,
     },
   };

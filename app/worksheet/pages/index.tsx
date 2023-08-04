@@ -33,10 +33,12 @@ import {readModelSet} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
-import {ModelSetBuilder, ModelSetFactory} from "@paradicms/models";
+import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
+import {JsonLd} from "jsonld/jsonld-spec";
+import {ModelSetJsonLdParser} from "@paradicms/react-dom-components";
 
 const ExistingWorksheetStatesCard: React.FunctionComponent<{
   existingWorksheetStateIds: readonly string[];
@@ -346,14 +348,13 @@ const WorksheetStateConfigurationHeadline: React.FunctionComponent = () => {
 // (WorksheetStartPage as any).whyDidYouRender = true;
 
 interface StaticProps {
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
 }
 
-const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
-  const modelSet = useMemo(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
+const IndexPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
   const configuration = modelSet.appConfiguration;
   const [exception, setException] = useState<Exception | null>(null);
   const [existingWorksheetStateIds, setExistingWorksheetStateIds] = useState<
@@ -516,6 +517,16 @@ const IndexPage: React.FunctionComponent<StaticProps> = ({modelSetString}) => {
   );
 };
 
+const IndexPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
+
 export default IndexPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
@@ -529,10 +540,10 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetString: new ModelSetBuilder()
+      modelSetJsonLd: await new ModelSetBuilder()
         .addAppConfiguration(completeModelSet.appConfiguration)
         .build()
-        .toFastRdfString(),
+        .toJsonLd(),
     },
   };
 };

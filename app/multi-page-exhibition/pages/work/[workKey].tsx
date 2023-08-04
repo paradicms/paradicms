@@ -1,7 +1,6 @@
 import {
   ModelSet,
   ModelSetBuilder,
-  ModelSetFactory,
   selectExhibitionWorks,
 } from "@paradicms/models";
 import {
@@ -13,6 +12,7 @@ import {
 import {
   getWorkLocationIcon,
   getWorkLocationLabel,
+  ModelSetJsonLdParser,
   WorkPage as DelegateWorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
@@ -23,12 +23,13 @@ import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
 import * as React from "react";
-import {useCallback, useMemo} from "react";
+import {useCallback} from "react";
 import Hammer from "react-hammerjs";
 import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
 import Link from "next/link";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
+import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -41,22 +42,21 @@ const LocationsMap = dynamic<{
 interface StaticProps {
   readonly collectionKey: string | null;
   readonly currentWorkKey: string;
-  readonly modelSetString: string;
+  readonly modelSetJsonLd: JsonLd;
   readonly nextWorkKey: string | null;
   readonly previousWorkKey: string | null;
 }
 
-const WorkPage: React.FunctionComponent<StaticProps> = ({
+const WorkPageImpl: React.FunctionComponent<Omit<
+  StaticProps,
+  "modelSetJsonLd"
+> & {readonly modelSet: ModelSet}> = ({
   collectionKey,
   currentWorkKey,
-  modelSetString,
+  modelSet,
   nextWorkKey,
   previousWorkKey,
 }) => {
-  const modelSet = useMemo<ModelSet>(
-    () => ModelSetFactory.fromFastRdfString(modelSetString),
-    [modelSetString]
-  );
   const collection = collectionKey
     ? modelSet.collectionByKey(collectionKey)
     : null;
@@ -133,6 +133,16 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
     </Layout>
   );
 };
+
+const WorkPage: React.FunctionComponent<StaticProps> = ({
+  modelSetJsonLd,
+  ...otherProps
+}) => (
+  <ModelSetJsonLdParser
+    modelSetJsonLd={modelSetJsonLd}
+    render={modelSet => <WorkPageImpl modelSet={modelSet} {...otherProps} />}
+  />
+);
 
 export default WorkPage;
 
@@ -211,7 +221,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionKey: collection?.key ?? null,
       currentWorkKey: workKey,
-      modelSetString: modelSetBuilder.build().toFastRdfString(),
+      modelSetJsonLd: await modelSetBuilder.build().toJsonLd(),
       nextWorkKey: nextWorkKey,
       previousWorkKey: previousWorkKey,
     },
