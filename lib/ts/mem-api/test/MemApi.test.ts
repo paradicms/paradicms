@@ -17,7 +17,7 @@ import {
 import {syntheticData} from "@paradicms/test";
 import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
-import {MemWorkQueryService} from "../src/MemWorkQueryService";
+import {MemApi} from "../src/MemApi";
 import {requireDefined, requireNonNull} from "@paradicms/utilities";
 import {describe} from "mocha";
 
@@ -27,9 +27,9 @@ const THUMBNAIL_SELECTOR: ImageJoinSelector & ThumbnailSelector = {
   targetDimensions: {height: 200, width: 200},
 };
 
-describe("MemWorkQueryService", () => {
+describe("MemApi", () => {
   const modelSet = ModelSetFactory.fromDataset(syntheticData);
-  const sut = new MemWorkQueryService({
+  const sut = new MemApi({
     modelSet,
   });
 

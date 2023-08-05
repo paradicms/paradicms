@@ -8,7 +8,7 @@ import {
   GetWorksResult,
   WorkAgentsSort,
   WorkLocationSummary,
-  WorkQueryService,
+  Api,
   WorksQuery,
   WorksSort,
 } from "@paradicms/api";
@@ -83,7 +83,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   workAgentsSort: WorkAgentsSort;
   workEventsPage: number;
   worksQuery: WorksQuery;
-  workQueryService: WorkQueryService;
+  api: Api;
   worksPage: number;
   worksSort: WorksSort;
 }> = ({
@@ -101,7 +101,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   workAgentsSort,
   workEventsPage,
   worksQuery,
-  workQueryService,
+  api,
   worksPage,
   worksSort,
 }) => {
@@ -147,7 +147,7 @@ export const WorkSearchPage: React.FunctionComponent<{
     ) {
       log.trace("invoking getWorks");
       setLoadingWorks(true);
-      workQueryService
+      api
         .getWorks(
           {
             limit: objectsPerPage,
@@ -164,20 +164,14 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorks(false);
         });
     }
-  }, [
-    activeTabKeyQueryParam,
-    worksQuery,
-    workQueryService,
-    worksPage,
-    worksSort,
-  ]);
+  }, [activeTabKeyQueryParam, worksQuery, api, worksPage, worksSort]);
 
   // Effect that responds to switching to the work agents tab
   useEffect(() => {
     if (activeTabKey === "workAgents" && !loadingWorkAgents) {
       log.trace("invoking getWorkAgents");
       setLoadingWorkAgents(true);
-      workQueryService
+      api
         .getWorkAgents(
           {
             agentJoinSelector: {
@@ -202,13 +196,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorkAgents(false);
         });
     }
-  }, [
-    activeTabKeyQueryParam,
-    worksQuery,
-    workQueryService,
-    workAgentsPage,
-    workAgentsSort,
-  ]);
+  }, [activeTabKeyQueryParam, worksQuery, api, workAgentsPage, workAgentsSort]);
 
   // Effect that responds to switching to the work events tab
   useEffect(() => {
@@ -216,7 +204,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       log.trace("invoking getWorkEvents");
       setLoadingWorkEvents(true);
       // "Paging" the timeline loads more events rather than typical pagination.
-      workQueryService
+      api
         .getWorkEvents(
           {
             limit: (workEventsPage + 1) * objectsPerPage,
@@ -238,14 +226,14 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorkEvents(false);
         });
     }
-  }, [activeTabKeyQueryParam, worksQuery, workQueryService, workEventsPage]);
+  }, [activeTabKeyQueryParam, worksQuery, api, workEventsPage]);
 
   // Effect that responds to switching to the work locations tab
   useEffect(() => {
     if (activeTabKey === "workLocations" && !loadingWorkLocations) {
       log.trace("invoking getWorkLocations");
       setLoadingWorkLocations(true);
-      workQueryService
+      api
         .getWorkLocations({requireCentroids: true}, worksQuery)
         .then(getWorkLocationsResult => {
           log.debug(
@@ -256,7 +244,7 @@ export const WorkSearchPage: React.FunctionComponent<{
           setLoadingWorkLocations(false);
         });
     }
-  }, [activeTabKeyQueryParam, worksQuery, workQueryService, workAgentsPage]);
+  }, [activeTabKeyQueryParam, worksQuery, api, workAgentsPage]);
 
   const [showFilters, setShowFilters] = useState<boolean>(false);
 

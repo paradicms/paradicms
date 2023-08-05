@@ -28,7 +28,7 @@ export * from "./ValueFilterState";
 export * from "./WorkAgentsSort";
 export * from "./WorkAgentsSortProperty";
 export * from "./WorkLocationSummary";
-export * from "./WorkQueryService";
+export * from "./Api";
 export * from "./WorkEventsSort";
 export * from "./WorkEventsSortProperty";
 export * from "./WorksQuery";

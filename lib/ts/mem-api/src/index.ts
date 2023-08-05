@@ -1,1 +1,1 @@
-export * from "./MemWorkQueryService";
+export * from "./MemApi";

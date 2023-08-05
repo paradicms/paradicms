@@ -8,7 +8,7 @@ import {GetWorkEventsResult} from "./GetWorkEventsResult";
 import {GetWorkLocationsOptions} from "./GetWorkLocationsOptions";
 import {GetWorkLocationsResult} from "./GetWorkLocationsResult";
 
-export interface WorkQueryService {
+export interface Api {
   /**
    * Get agents associated with any of the works matched by the query.
    */

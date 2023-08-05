@@ -9,6 +9,7 @@ import {
   WorkEvent,
 } from "@paradicms/models";
 import {
+  Api,
   defaultWorkAgentsSort,
   defaultWorkEventsSort,
   defaultWorksSort,
@@ -34,7 +35,6 @@ import {
   WorkEventsSort,
   WorkEventsSortProperty,
   WorkLocationSummary,
-  WorkQueryService,
   WorksQuery,
   WorksSort,
   WorksSortProperty,
@@ -69,7 +69,7 @@ interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
 type WorkAgentWithWorkKey = {workAgent: WorkAgent; workKey: string};
 type WorkEventWithWorkKey = {workEvent: WorkEvent; workKey: string};
 
-export class MemWorkQueryService implements WorkQueryService {
+export class MemApi implements Api {
   private readonly index: Index;
   private readonly modelSet: ModelSet;
 
@@ -90,7 +90,7 @@ export class MemWorkQueryService implements WorkQueryService {
     this.index = lunr(function() {
       const propertyFieldNamesByIri: {[index: string]: string} = {};
       for (const propertyIri of searchablePropertyIris) {
-        const fieldName = MemWorkQueryService.encodeFieldName(propertyIri);
+        const fieldName = MemApi.encodeFieldName(propertyIri);
         propertyFieldNamesByIri[propertyIri] = fieldName;
         this.field(fieldName);
       }
@@ -147,7 +147,7 @@ export class MemWorkQueryService implements WorkQueryService {
                   label: propertyValue.label,
                   value: propertyValueString,
                   thumbnail: valueFacetValueThumbnailSelector
-                    ? MemWorkQueryService.toValueFacetValueThumbnail(
+                    ? MemApi.toValueFacetValueThumbnail(
                         propertyValue.thumbnail(
                           valueFacetValueThumbnailSelector
                         )
@@ -185,7 +185,7 @@ export class MemWorkQueryService implements WorkQueryService {
       switch (filter.type) {
         case "StringPropertyValue": {
           filteredWorks = filteredWorks.filter(work =>
-            MemWorkQueryService.testValueFilter(
+            MemApi.testValueFilter(
               filter as StringPropertyValueFilter,
               work
                 .propertyValuesByPropertyIri(
@@ -221,7 +221,7 @@ export class MemWorkQueryService implements WorkQueryService {
       );
 
       const sortedWorkAgents = workAgents;
-      MemWorkQueryService.sortWorkAgentsInPlace(
+      MemApi.sortWorkAgentsInPlace(
         options.sort ?? defaultWorkAgentsSort,
         workAgents
       );
@@ -286,10 +286,7 @@ export class MemWorkQueryService implements WorkQueryService {
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
       const sortedWorks = filteredWorks.concat();
-      MemWorkQueryService.sortWorksInPlace(
-        options.sort ?? defaultWorksSort,
-        sortedWorks
-      );
+      MemApi.sortWorksInPlace(options.sort ?? defaultWorksSort, sortedWorks);
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
@@ -345,10 +342,7 @@ export class MemWorkQueryService implements WorkQueryService {
         );
         return;
       default:
-        MemWorkQueryService.sortWorkAgentsInPlace(
-          defaultWorkAgentsSort,
-          workAgents
-        );
+        MemApi.sortWorkAgentsInPlace(defaultWorkAgentsSort, workAgents);
         return;
     }
   }
@@ -373,10 +367,7 @@ export class MemWorkQueryService implements WorkQueryService {
         );
         return;
       default:
-        MemWorkQueryService.sortWorkEventsInPlace(
-          defaultWorkEventsSort,
-          workEvents
-        );
+        MemApi.sortWorkEventsInPlace(defaultWorkEventsSort, workEvents);
         return;
     }
   }
@@ -394,7 +385,7 @@ export class MemWorkQueryService implements WorkQueryService {
         // Works are already sorted by relevance
         return;
       default:
-        MemWorkQueryService.sortWorksInPlace(defaultWorksSort, works);
+        MemApi.sortWorksInPlace(defaultWorksSort, works);
         return;
     }
   }
@@ -496,7 +487,7 @@ export class MemWorkQueryService implements WorkQueryService {
       }
 
       const sortedWorkEvents = workEvents;
-      MemWorkQueryService.sortWorkEventsInPlace(
+      MemApi.sortWorkEventsInPlace(
         options.sort ?? defaultWorkEventsSort,
         sortedWorkEvents
       );
