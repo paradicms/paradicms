@@ -11,7 +11,7 @@ import {useWorksheet} from "~/hooks/useWorksheet";
 import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
 import {WorksheetMode} from "~/models/WorksheetMode";
 import {useRouter} from "next/router";
-import {decodeFileName, encodeFileName, readModelSet} from "@paradicms/next";
+import {decodeFileName, encodeFileName, getStaticApi} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticPaths, GetStaticProps} from "next";
@@ -180,7 +180,7 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const modelSet = await readModelSet({
+  const modelSet = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
@@ -208,7 +208,7 @@ export const getStaticProps: GetStaticProps = async ({
 }> => {
   const featureSetIri = decodeFileName(params!.featureSetIri as string);
 
-  const completeModelSet = await readModelSet({
+  const completeModelSet = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });

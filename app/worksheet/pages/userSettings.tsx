@@ -30,7 +30,7 @@ import {WorksheetStateConfiguration} from "~/models/WorksheetStateConfiguration"
 import {CurrentUser} from "~/models/CurrentUser";
 import {UserIdentityProvider} from "~/models/UserIdentityProvider";
 import {GoogleSheetsWorksheetStateConfigurationContainer} from "~/components/GoogleSheetsWorksheetStateConfigurationContainer";
-import {readModelSet} from "@paradicms/next";
+import {getStaticApi} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {ModelSet, ModelSetBuilder} from "@paradicms/models";
@@ -183,7 +183,7 @@ export default UserSettingsPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await readModelSet({
+  const completeModelSet = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),

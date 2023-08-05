@@ -3,7 +3,7 @@ import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readModelSet,
+  getStaticApi,
 } from "@paradicms/next";
 import {
   EventPage as DelegateEventPage,
@@ -81,7 +81,7 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const modelSet = await readModelSet({
+  const modelSet = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
@@ -99,7 +99,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const completeModelSet = await readModelSet({
+  const completeModelSet = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });

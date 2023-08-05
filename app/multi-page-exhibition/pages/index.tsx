@@ -1,5 +1,5 @@
 import {ModelSet, selectExhibitionWorks} from "@paradicms/models";
-import {readModelSet} from "@paradicms/next";
+import {getStaticApi} from "@paradicms/next";
 import {
   ModelSetJsonLdParser,
   RightsParagraph,
@@ -92,7 +92,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSet({
+  const modelSet = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
