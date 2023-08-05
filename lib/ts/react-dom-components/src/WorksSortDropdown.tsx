@@ -1,4 +1,4 @@
-import {WorksSort, WorksSortProperty} from "@paradicms/services";
+import {WorksSort, WorksSortProperty} from "@paradicms/api";
 import React from "react";
 import {SortDropdown} from "./SortDropdown";
 

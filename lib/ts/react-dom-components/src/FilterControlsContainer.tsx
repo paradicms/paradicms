@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FilterUnion} from "@paradicms/services";
+import {FilterUnion} from "@paradicms/api";
 import {Col, Container, Row} from "reactstrap";
 
 export const FilterControlsContainer: React.FunctionComponent<{

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {FacetUnion, FilterUnion} from "@paradicms/services";
+import {FacetUnion, FilterUnion} from "@paradicms/api";
 import {createFilterControl} from "./createFilterControl";
 
 export const createFilterControls = (kwds: {

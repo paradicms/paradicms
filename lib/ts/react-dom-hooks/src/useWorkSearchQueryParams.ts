@@ -11,7 +11,7 @@ import {
   WorksQuery,
   WorksSort,
   WorksSortProperty,
-} from "@paradicms/services";
+} from "@paradicms/api";
 import {usePageQueryParam} from "./usePageQueryParam";
 import {useSortQueryParams} from "./useSortQueryParams";
 

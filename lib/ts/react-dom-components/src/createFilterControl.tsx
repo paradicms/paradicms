@@ -4,7 +4,7 @@ import {
   StringPropertyValueFacet,
   StringPropertyValueFilter,
   visitFilter,
-} from "@paradicms/services";
+} from "@paradicms/api";
 import React from "react";
 import {ValueFilterSelect} from "./ValueFilterSelect";
 

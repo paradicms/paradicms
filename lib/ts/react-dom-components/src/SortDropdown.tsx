@@ -1,4 +1,4 @@
-import {Sort} from "@paradicms/services";
+import {Sort} from "@paradicms/api";
 import React, {useState} from "react";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 

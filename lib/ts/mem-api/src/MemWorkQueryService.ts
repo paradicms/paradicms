@@ -38,7 +38,7 @@ import {
   WorksQuery,
   WorksSort,
   WorksSortProperty,
-} from "@paradicms/services";
+} from "@paradicms/api";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {requireNonNull} from "@paradicms/utilities";

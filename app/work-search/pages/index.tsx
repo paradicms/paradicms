@@ -1,4 +1,4 @@
-import {MemWorkQueryService} from "@paradicms/mem-services";
+import {MemWorkQueryService} from "@paradicms/mem-api";
 import {ModelSet, ModelSetBuilder} from "@paradicms/models";
 import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
 import {
@@ -9,7 +9,7 @@ import {
   workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
-import {WorkQueryService} from "@paradicms/services";
+import {WorkQueryService} from "@paradicms/api";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";

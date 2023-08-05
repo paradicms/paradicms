@@ -6,7 +6,7 @@ import {
   ValueFacetValueThumbnail,
   ValueFilter,
   ValueFilterState,
-} from "@paradicms/services";
+} from "@paradicms/api";
 import Select from "react-select";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 

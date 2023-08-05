@@ -7,7 +7,7 @@
   "license": "GPL-3.0-only",
   "main": "n/a",
   "dependencies": {
-    "@paradicms/mem-services": "1.0.5",
+    "@paradicms/mem-api": "1.0.5",
     "@paradicms/next": "1.0.5",
     "@paradicms/react-dom-components": "1.0.5",
     "@paradicms/react-dom-hooks": "1.0.5",

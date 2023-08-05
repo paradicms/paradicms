@@ -1,4 +1,4 @@
-import {WorkAgentsSort, WorkAgentsSortProperty} from "@paradicms/services";
+import {WorkAgentsSort, WorkAgentsSortProperty} from "@paradicms/api";
 import React from "react";
 import {SortDropdown} from "./SortDropdown";
 

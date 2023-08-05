@@ -13,7 +13,7 @@ import {
   StringPropertyValueFilter,
   WorkEventsSortProperty,
   WorksSortProperty,
-} from "@paradicms/services";
+} from "@paradicms/api";
 import {syntheticData} from "@paradicms/test";
 import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";

@@ -11,7 +11,7 @@ import {
   WorkQueryService,
   WorksQuery,
   WorksSort,
-} from "@paradicms/services";
+} from "@paradicms/api";
 import {calculatePageMax} from "@paradicms/utilities";
 import * as React from "react";
 import {useEffect, useState} from "react";

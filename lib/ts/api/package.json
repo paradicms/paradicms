@@ -1,13 +1,10 @@
 {
   "author": "Minor Gordon",
-  "name": "@paradicms/mem-services",
-  "description": "Paradicms memory-backed service implementations",
+  "name": "@paradicms/api",
+  "description": "Paradicms services library",
   "dependencies": {
-    "@paradicms/services": "1.0.5",
-    "@types/lunr": "^2.3.3",
-    "base-x": "^3.0.8",
-    "lunr": "^2.3.8",
-    "ts-invariant": "0.9.0"
+    "@paradicms/models": "1.0.5",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@paradicms/test": "1.0.5",
@@ -25,7 +22,6 @@
     "clean": "rimraf dist",
     "rebuild": "rimraf dist && tsc -b",
     "test": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register 'test/**/*.ts'",
-    "test-profile": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -r mocha-profiler 'test/**/*.ts'",
     "test-watch": "env NODE_ENV=test TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\"}' mocha -r ts-node/register -w 'test/**/*.ts'",
     "watch": "tsc -w --preserveWatchOutput"
   },
