@@ -15,7 +15,9 @@ import {
   defaultWorksSort,
   FacetUnion,
   FilterUnion,
-  GetNamedWorkAgentsOptions,
+  GetCollectionsOptions,
+  GetCollectionsResult,
+  GetWorkAgentsOptions,
   GetWorkAgentsResult,
   GetWorkEventsOptions,
   GetWorkEventsResult,
@@ -200,13 +202,45 @@ export class MemApi implements Api {
     return filteredWorks;
   }
 
+  getCollections(
+    options: GetCollectionsOptions
+  ): Promise<GetCollectionsResult> {
+    const {collectionJoinSelector, limit, offset, requireWorks} = options;
+
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      const allCollections = this.modelSet.collections;
+      const filteredCollections = requireWorks
+        ? allCollections.filter(collection => collection.works.length > 0)
+        : allCollections;
+      const slicedCollections = filteredCollections.slice(
+        offset,
+        offset + limit
+      );
+
+      const slicedCollectionsModelSetBuilder = new ModelSetBuilder();
+      for (const collection of slicedCollections) {
+        slicedCollectionsModelSetBuilder.addCollection(
+          collection,
+          collectionJoinSelector
+        );
+      }
+
+      resolve({
+        modelSet: slicedCollectionsModelSetBuilder.build(),
+        totalCollectionsCount: allCollections.length,
+      });
+    });
+  }
+
   getWorkAgents(
-    options: GetNamedWorkAgentsOptions,
+    options: GetWorkAgentsOptions,
     query: WorksQuery
   ): Promise<GetWorkAgentsResult> {
     const {agentJoinSelector, limit, offset} = options;
 
-    invariant(!!query, "query must be defined");
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
@@ -259,7 +293,6 @@ export class MemApi implements Api {
       valueFacetValueThumbnailSelector,
       workJoinSelector,
     } = options;
-    invariant(!!query, "query must be defined");
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
@@ -466,7 +499,6 @@ export class MemApi implements Api {
   ): Promise<GetWorkEventsResult> {
     const {limit, offset, requireDate, workEventJoinSelector} = options;
 
-    invariant(!!query, "query must be defined");
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
@@ -519,7 +551,6 @@ export class MemApi implements Api {
     options: GetWorkLocationsOptions,
     query: WorksQuery
   ): Promise<GetWorkLocationsResult> {
-    invariant(!!query, "query must be defined");
     const {requireCentroids} = options;
 
     return new Promise(resolve => {

@@ -33,6 +33,20 @@ describe("MemApi", () => {
     modelSet,
   });
 
+  it("getCollections returns all available collections", async () => {
+    const {
+      modelSet: collectionsModelSet,
+      totalCollectionsCount,
+    } = await sut.getCollections({
+      limit: Number.MAX_SAFE_INTEGER,
+      offset: 0,
+    });
+    expect(totalCollectionsCount).to.eq(modelSet.collections.length);
+    expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
+      collectionsModelSet.collections.map(collection => collection.key)
+    );
+  });
+
   const getWorkAgents = (result: GetWorkAgentsResult): readonly WorkAgent[] => {
     const workAgentsByKey: {[index: string]: WorkAgent} = {};
     for (const work of result.modelSet.works) {

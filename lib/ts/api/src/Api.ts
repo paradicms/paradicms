@@ -1,19 +1,26 @@
 import {WorksQuery} from "./WorksQuery";
 import {GetWorksResult} from "./GetWorksResult";
 import {GetWorksOptions} from "./GetWorksOptions";
-import {GetNamedWorkAgentsOptions} from "./GetNamedWorkAgentsOptions";
+import {GetWorkAgentsOptions} from "./GetWorkAgentsOptions";
 import {GetWorkAgentsResult} from "./GetWorkAgentsResult";
 import {GetWorkEventsOptions} from "./GetWorkEventsOptions";
 import {GetWorkEventsResult} from "./GetWorkEventsResult";
 import {GetWorkLocationsOptions} from "./GetWorkLocationsOptions";
 import {GetWorkLocationsResult} from "./GetWorkLocationsResult";
+import {GetCollectionsOptions} from "./GetCollectionsOptions";
+import {GetCollectionsResult} from "./GetCollectionsResult";
 
 export interface Api {
+  /**
+   * Get available collections.
+   */
+  getCollections(options: GetCollectionsOptions): Promise<GetCollectionsResult>;
+
   /**
    * Get agents associated with any of the works matched by the query.
    */
   getWorkAgents(
-    options: GetNamedWorkAgentsOptions,
+    options: GetWorkAgentsOptions,
     query: WorksQuery
   ): Promise<GetWorkAgentsResult>;
 
