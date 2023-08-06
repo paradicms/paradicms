@@ -1,4 +1,5 @@
 import {
+  AppConfiguration,
   defaultProperties,
   Image,
   ModelSet,
@@ -228,6 +229,10 @@ export class MemApi implements Api {
       }
     }
     return filteredWorks;
+  }
+
+  getAppConfiguration(): Promise<AppConfiguration | null> {
+    return Promise.resolve(this.modelSet.appConfiguration?.toJson() ?? null);
   }
 
   getCollections(

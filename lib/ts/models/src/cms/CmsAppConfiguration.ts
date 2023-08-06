@@ -2,6 +2,7 @@ import {configuration} from "@paradicms/vocabularies";
 import {ResourceBackedModel} from "../ResourceBackedModel";
 import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
 import {AppConfiguration} from "../AppConfiguration";
+import {JsonAppConfiguration} from "../json/JsonAppConfiguration";
 
 export class CmsAppConfiguration extends ResourceBackedModel
   implements AppConfiguration {
@@ -19,5 +20,13 @@ export class CmsAppConfiguration extends ResourceBackedModel
 
   get title(): string | null {
     return this.findAndMapObject(configuration.title, mapTermToString);
+  }
+
+  toJson(): JsonAppConfiguration {
+    return {
+      objectsPerPage: this.objectsPerPage,
+      title: this.title,
+      stylesheet: this.stylesheet,
+    };
   }
 }

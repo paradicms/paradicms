@@ -13,6 +13,7 @@ export * from "./Event";
 export * from "./Image";
 export * from "./ImageDimensions";
 export * from "./ImageJoinSelector";
+export * from "./json/JsonAppConfiguration";
 export * from "./License";
 export * from "./LiteralPropertyValue";
 export * from "./Location";

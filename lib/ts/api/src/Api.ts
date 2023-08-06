@@ -10,8 +10,11 @@ import {GetWorkLocationsResult} from "./GetWorkLocationsResult";
 import {GetCollectionsOptions} from "./GetCollectionsOptions";
 import {GetCollectionsResult} from "./GetCollectionsResult";
 import {GetWorkKeysResult} from "./GetWorkKeysResult";
+import {JsonAppConfiguration} from "@paradicms/models";
 
 export interface Api {
+  getAppConfiguration(): Promise<JsonAppConfiguration | null>;
+
   /**
    * Get available collections.
    */
