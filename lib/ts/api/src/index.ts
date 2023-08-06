@@ -11,6 +11,8 @@ export * from "./GetWorkAgentsOptions";
 export * from "./GetWorkAgentsResult";
 export * from "./GetWorkEventsOptions";
 export * from "./GetWorkEventsResult";
+export * from "./GetWorkKeysOptions";
+export * from "./GetWorkKeysResult";
 export * from "./GetWorkLocationsOptions";
 export * from "./GetWorkLocationsResult";
 export * from "./GetWorksOptions";

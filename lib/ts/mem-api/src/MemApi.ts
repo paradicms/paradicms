@@ -21,6 +21,8 @@ import {
   GetWorkAgentsResult,
   GetWorkEventsOptions,
   GetWorkEventsResult,
+  GetWorkKeysOptions,
+  GetWorkKeysResult,
   GetWorkLocationsOptions,
   GetWorkLocationsResult,
   GetWorksOptions,
@@ -45,6 +47,7 @@ import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {requireNonNull} from "@paradicms/utilities";
 import log from "loglevel";
+import {CollectionValueFilter} from "@paradicms/api/dist/CollectionValueFilter";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -74,6 +77,10 @@ type WorkEventWithWorkKey = {workEvent: WorkEvent; workKey: string};
 export class MemApi implements Api {
   private readonly index: Index;
   private readonly modelSet: ModelSet;
+  // Index of work key -> keys of collections containing that work
+  private readonly workCollectionKeys: {
+    [index: string]: readonly string[];
+  };
 
   constructor(kwds: {readonly modelSet: ModelSet}) {
     this.modelSet = kwds.modelSet;
@@ -113,6 +120,17 @@ export class MemApi implements Api {
         this.add(doc);
       }
     });
+
+    const workCollectionKeys: {[index: string]: string[]} = {};
+    for (const collection of kwds.modelSet.collections) {
+      for (const work of collection.works) {
+        if (!workCollectionKeys[work.key]) {
+          workCollectionKeys[work.key] = [];
+        }
+        workCollectionKeys[work.key].push(collection.key);
+      }
+    }
+    this.workCollectionKeys = workCollectionKeys;
   }
 
   private static encodeFieldName(value: string) {
@@ -185,6 +203,15 @@ export class MemApi implements Api {
     let filteredWorks = works;
     for (const filter of filters) {
       switch (filter.type) {
+        case "CollectionValue": {
+          filteredWorks = filteredWorks.filter(work =>
+            MemApi.testValueFilter(
+              filter as CollectionValueFilter,
+              this.workCollectionKeys[work.key] ?? []
+            )
+          );
+          break;
+        }
         case "StringPropertyValue": {
           filteredWorks = filteredWorks.filter(work =>
             MemApi.testValueFilter(
@@ -196,6 +223,7 @@ export class MemApi implements Api {
                 .map(propertyValue => propertyValue.value)
             )
           );
+          break;
         }
       }
     }
@@ -279,6 +307,123 @@ export class MemApi implements Api {
         workAgentKeys: slicedWorkAgents.map(
           workAgent => workAgent.workAgent.agent.key
         ),
+      });
+    });
+  }
+
+  getWorkEvents(
+    options: GetWorkEventsOptions,
+    query: WorksQuery
+  ): Promise<GetWorkEventsResult> {
+    const {limit, offset, requireDate, workEventJoinSelector} = options;
+
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      const works = this.filterWorks({
+        filters: query.filters,
+        works: this.searchWorks(query),
+      });
+
+      const workEvents: WorkEventWithWorkKey[] = [];
+      for (const work of works) {
+        for (const workEvent of work.events) {
+          if (requireDate && workEvent.sortDate === null) {
+            continue;
+          }
+          workEvents.push({workEvent, workKey: work.key});
+        }
+      }
+
+      const sortedWorkEvents = workEvents;
+      MemApi.sortWorkEventsInPlace(
+        options.sort ?? defaultWorkEventsSort,
+        sortedWorkEvents
+      );
+
+      const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
+
+      const slicedWorkEventsModelSetBuilder = new ModelSetBuilder();
+      for (const workKey of new Set(
+        slicedWorkEvents.map(workEvent => workEvent.workKey)
+      )) {
+        // Add all of a work's events
+        slicedWorkEventsModelSetBuilder.addWork(
+          requireNonNull(this.modelSet.workByKey(workKey)),
+          {events: workEventJoinSelector ?? {}}
+        );
+      }
+
+      resolve({
+        modelSet: slicedWorkEventsModelSetBuilder.build(),
+        totalWorkEventsCount: workEvents.length,
+        workEventKeys: slicedWorkEvents.map(
+          workEvent => workEvent.workEvent.key
+        ),
+      });
+    });
+  }
+
+  getWorkKeys(
+    options: GetWorkKeysOptions,
+    query: WorksQuery
+  ): Promise<GetWorkKeysResult> {
+    const {limit, offset} = options;
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      const filteredWorks = this.filterWorks({
+        filters: query.filters,
+        works: this.searchWorks(query),
+      });
+
+      const sortedWorks = filteredWorks.concat();
+      MemApi.sortWorksInPlace(options.sort ?? defaultWorksSort, sortedWorks);
+
+      const slicedWorks = sortedWorks.slice(offset, offset + limit);
+
+      resolve({
+        totalWorksCount: filteredWorks.length,
+        workKeys: slicedWorks.map(work => work.key),
+      });
+    });
+  }
+
+  getWorkLocations(
+    options: GetWorkLocationsOptions,
+    query: WorksQuery
+  ): Promise<GetWorkLocationsResult> {
+    const {requireCentroids} = options;
+
+    return new Promise(resolve => {
+      const works = this.filterWorks({
+        filters: query.filters,
+        works: this.searchWorks(query),
+      });
+
+      const workLocations = works.flatMap(work => {
+        const workWorkLocations: WorkLocationSummary[] = [];
+        if (work.location) {
+          if (!requireCentroids || work.location.location.centroid) {
+            workWorkLocations.push(summarizeWorkLocation(work, work.location));
+          }
+        }
+        for (const event of work.events) {
+          if (event.workLocation) {
+            if (!requireCentroids || event.workLocation.location.centroid) {
+              workWorkLocations.push(
+                summarizeWorkLocation(work, event.workLocation)
+              );
+            }
+          }
+        }
+        return workWorkLocations;
+      });
+
+      resolve({
+        workLocations,
       });
     });
   }
@@ -491,96 +636,5 @@ export class MemApi implements Api {
       ),
       src: imageSrc,
     };
-  }
-
-  getWorkEvents(
-    options: GetWorkEventsOptions,
-    query: WorksQuery
-  ): Promise<GetWorkEventsResult> {
-    const {limit, offset, requireDate, workEventJoinSelector} = options;
-
-    invariant(limit > 0, "limit must be > 0");
-    invariant(offset >= 0, "offset must be >= 0");
-
-    return new Promise(resolve => {
-      const works = this.filterWorks({
-        filters: query.filters,
-        works: this.searchWorks(query),
-      });
-
-      const workEvents: WorkEventWithWorkKey[] = [];
-      for (const work of works) {
-        for (const workEvent of work.events) {
-          if (requireDate && workEvent.sortDate === null) {
-            continue;
-          }
-          workEvents.push({workEvent, workKey: work.key});
-        }
-      }
-
-      const sortedWorkEvents = workEvents;
-      MemApi.sortWorkEventsInPlace(
-        options.sort ?? defaultWorkEventsSort,
-        sortedWorkEvents
-      );
-
-      const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
-
-      const slicedWorkEventsModelSetBuilder = new ModelSetBuilder();
-      for (const workKey of new Set(
-        slicedWorkEvents.map(workEvent => workEvent.workKey)
-      )) {
-        // Add all of a work's events
-        slicedWorkEventsModelSetBuilder.addWork(
-          requireNonNull(this.modelSet.workByKey(workKey)),
-          {events: workEventJoinSelector ?? {}}
-        );
-      }
-
-      resolve({
-        modelSet: slicedWorkEventsModelSetBuilder.build(),
-        totalWorkEventsCount: workEvents.length,
-        workEventKeys: slicedWorkEvents.map(
-          workEvent => workEvent.workEvent.key
-        ),
-      });
-    });
-  }
-
-  getWorkLocations(
-    options: GetWorkLocationsOptions,
-    query: WorksQuery
-  ): Promise<GetWorkLocationsResult> {
-    const {requireCentroids} = options;
-
-    return new Promise(resolve => {
-      const works = this.filterWorks({
-        filters: query.filters,
-        works: this.searchWorks(query),
-      });
-
-      const workLocations = works.flatMap(work => {
-        const workWorkLocations: WorkLocationSummary[] = [];
-        if (work.location) {
-          if (!requireCentroids || work.location.location.centroid) {
-            workWorkLocations.push(summarizeWorkLocation(work, work.location));
-          }
-        }
-        for (const event of work.events) {
-          if (event.workLocation) {
-            if (!requireCentroids || event.workLocation.location.centroid) {
-              workWorkLocations.push(
-                summarizeWorkLocation(work, event.workLocation)
-              );
-            }
-          }
-        }
-        return workWorkLocations;
-      });
-
-      resolve({
-        workLocations,
-      });
-    });
   }
 }

@@ -248,6 +248,29 @@ describe("MemApi", () => {
     }
   });
 
+  it("getWorkKeys returns a collection's work keys (multi-page-exhibition)", async () => {
+    const collection = modelSet.collections[0];
+    expect(collection.works).not.to.be.empty;
+    const result = await sut.getWorkKeys(
+      {
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
+      },
+      {
+        filters: [
+          {
+            includeValues: [collection.key],
+            label: "Collection",
+            type: "CollectionValue",
+          },
+        ],
+      }
+    );
+    expect(result.totalWorksCount).to.be.lt(modelSet.works.length);
+    expect(result.totalWorksCount).to.eq(collection.works.length);
+    expect(result.workKeys).to.deep.eq(collection.works.map(work => work.key));
+  });
+
   it("getWorks returns facets with thumbnails", async () => {
     const result = await sut.getWorks(
       {
