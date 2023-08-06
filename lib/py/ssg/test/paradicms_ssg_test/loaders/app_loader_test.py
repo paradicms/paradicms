@@ -14,6 +14,7 @@ from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransf
 from paradicms_etl.utils.uuid_urn import uuid_urn
 from paradicms_ssg.loaders.app_loader import AppLoader
 from paradicms_ssg.models.app_configuration import AppConfiguration
+from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
 from paradicms_ssg.namespaces import CONFIGURATION
 from .nop_image_archiver import NopImageArchiver
 
@@ -30,7 +31,7 @@ def _app_configuration(app: str) -> AppConfiguration:
     resource = graph.resource(uuid_urn())
     resource.add(RDF.type, CONFIGURATION.AppConfiguration)
     resource.add(CONFIGURATION.app, Literal(app))
-    return AppConfiguration.from_rdf(resource)
+    return CmsAppConfiguration.from_rdf(resource)
 
 
 @pytest.mark.parametrize(

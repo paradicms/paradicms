@@ -1,6 +1,6 @@
 @prefix : <http://www.paradicms.org/ns/configuration#> .
 
-[] a :AppConfiguration;
+<http://example.com/appConfiguration> a :AppConfiguration;
   :app "single-page-exhibition" ;
   :stylesheet <https://minorgordon.net/minorgordon.net.css> ;
   :title "Test title" ;

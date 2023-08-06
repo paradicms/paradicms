@@ -4,7 +4,7 @@ import pytest
 from rdflib import Graph, RDF
 from rdflib.resource import Resource
 
-from paradicms_ssg.models.app_configuration import AppConfiguration
+from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
 from paradicms_ssg.namespaces import CONFIGURATION
 
 
@@ -20,5 +20,5 @@ def test_app_configuration_resource(data_dir_path: Path) -> Resource:
 
 
 def test_from_rdf(test_app_configuration_resource: Resource):
-    app_configuration = AppConfiguration.from_rdf(test_app_configuration_resource)
+    app_configuration = CmsAppConfiguration.from_rdf(test_app_configuration_resource)
     assert app_configuration.app == "single-page-exhibition"
