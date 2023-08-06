@@ -48,5 +48,4 @@ export * from "./createPropertyValuesFromQuadObjects";
 export * from "./createPropertyValuesFromQuadSubjects";
 export * from "./defaultProperties";
 export * from "./imagePlaceholderSrc";
-export * from "./selectExhibitionWorks";
 export * from "./selectThumbnail";

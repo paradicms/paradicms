@@ -1,8 +1,4 @@
-import {
-  ModelSet,
-  ModelSetBuilder,
-  selectExhibitionWorks,
-} from "@paradicms/models";
+import {ModelSet} from "@paradicms/models";
 import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
 import {
   defaultBootstrapStylesheetHref,
@@ -175,26 +171,29 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await getStaticApi({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
   });
 
-  const {collection, works} = selectExhibitionWorks(completeModelSet);
+  const {modelSet} = await api.getCollections({
+    collectionJoinSelector: {
+      works: workPageWorkJoinSelector,
+    },
+    limit: 1,
+    offset: 0,
+    requireWorks: true,
+  });
 
-  const modelSetBuilder = new ModelSetBuilder()
-    .addAppConfiguration(completeModelSet.appConfiguration)
-    .addWorks(works, workPageWorkJoinSelector);
-  if (collection) {
-    modelSetBuilder.addCollection(collection);
-  }
+  const collection =
+    modelSet.collections.length > 0 ? modelSet.collections[0] : null;
 
   return {
     props: {
       collectionKey: collection?.key ?? null,
-      modelSetJsonLd: await completeModelSet.toJsonLd(),
-      workKeys: works.map(work => work.key),
+      modelSetJsonLd: await modelSet.toJsonLd(),
+      workKeys: collection?.works.map(work => work.key) ?? [],
     },
   };
 };
