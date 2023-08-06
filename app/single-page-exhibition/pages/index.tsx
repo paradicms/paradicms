@@ -1,4 +1,4 @@
-import {ModelSet} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
 import {
   defaultBootstrapStylesheetHref,
@@ -31,6 +31,7 @@ const LocationsMap = dynamic<{
 );
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly collectionKey: string | null;
   readonly modelSetJsonLd: JsonLd;
   readonly workKeys: readonly string[];
@@ -39,9 +40,12 @@ interface StaticProps {
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({collectionKey, modelSet, workKeys}) => {
-  const configuration = modelSet.appConfiguration;
-
+> & {readonly modelSet: ModelSet}> = ({
+  configuration,
+  collectionKey,
+  modelSet,
+  workKeys,
+}) => {
   const pages: React.ReactElement[] = useMemo(() => {
     const collection = collectionKey
       ? modelSet.collectionByKey(collectionKey)
@@ -191,6 +195,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
+      configuration: await api.getAppConfiguration(),
       collectionKey: collection?.key ?? null,
       modelSetJsonLd: await modelSet.toJsonLd(),
       workKeys: collection?.works.map(work => work.key) ?? [],
