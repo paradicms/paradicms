@@ -7,5 +7,5 @@
 import {LocationsFilter} from "./LocationsFilter";
 
 export interface LocationsQuery {
-  readonly filters: readonly LocationsFilter[];
+  readonly filters?: readonly LocationsFilter[];
 }

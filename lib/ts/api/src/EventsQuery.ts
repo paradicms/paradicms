@@ -7,5 +7,5 @@
 import {EventsFilter} from "./EventsFilter";
 
 export interface EventsQuery {
-  readonly filters: readonly EventsFilter[];
+  readonly filters?: readonly EventsFilter[];
 }

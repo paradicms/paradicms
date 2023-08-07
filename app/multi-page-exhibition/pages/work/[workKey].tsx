@@ -194,21 +194,18 @@ export const getStaticProps: GetStaticProps = async ({
   const previousWorkKey = currentWorkI > 0 ? workKeys[currentWorkI - 1] : null;
 
   const currentWorkModelSet = (
-    await api.getWorks(
-      {
-        limit: 1,
-        offset: 0,
-        workJoinSelector: workPageWorkJoinSelector,
-      },
-      {
+    await api.getWorks({
+      limit: 1,
+      query: {
         filters: [
           {
             includeKeys: [currentWorkKey],
             type: "Key",
           },
         ],
-      }
-    )
+      },
+      workJoinSelector: workPageWorkJoinSelector,
+    })
   ).modelSet;
   invariant(
     currentWorkModelSet.works.length == 1,

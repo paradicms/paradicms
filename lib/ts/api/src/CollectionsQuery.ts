@@ -7,5 +7,5 @@
 import {CollectionsFilter} from "./CollectionsFilter";
 
 export interface CollectionsQuery {
-  readonly filters: readonly CollectionsFilter[];
+  readonly filters?: readonly CollectionsFilter[];
 }

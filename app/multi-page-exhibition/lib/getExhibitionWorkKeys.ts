@@ -10,8 +10,14 @@ export const getExhibitionWorkKeys = async (
 }> => {
   const {modelSet: collectionModelSet} = await api.getCollections({
     limit: 1,
-    offset: 0,
-    requireWorks: true,
+    query: {
+      filters: [
+        {
+          excludeUnknown: true,
+          type: "CollectionWorksExistence",
+        },
+      ],
+    },
   });
 
   const collection =
@@ -20,12 +26,8 @@ export const getExhibitionWorkKeys = async (
       : null;
 
   const workKeys = (
-    await api.getWorkKeys(
-      {
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
-      },
-      {
+    await api.getWorkKeys({
+      query: {
         filters: collection
           ? [
               {
@@ -34,8 +36,8 @@ export const getExhibitionWorkKeys = async (
               },
             ]
           : [],
-      }
-    )
+      },
+    })
   ).workKeys;
 
   return {collection, collectionModelSet, workKeys};

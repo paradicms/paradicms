@@ -186,8 +186,14 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       works: workPageWorkJoinSelector,
     },
     limit: 1,
-    offset: 0,
-    requireWorks: true,
+    query: {
+      filters: [
+        {
+          excludeUnknown: true,
+          type: "CollectionWorksExistence",
+        },
+      ],
+    },
   });
 
   const collection =

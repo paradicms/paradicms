@@ -7,6 +7,6 @@
 import {WorksFilter} from "./WorksFilter";
 
 export interface WorksQuery {
-  readonly filters: readonly WorksFilter[];
+  readonly filters?: readonly WorksFilter[];
   readonly text?: string;
 }

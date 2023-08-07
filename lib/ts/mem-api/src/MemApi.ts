@@ -56,6 +56,9 @@ const encodeLunrFieldName = (value: string) => {
   return base58.encode(new TextEncoder().encode(value));
 };
 
+const LIMIT_DEFAULT = Number.MAX_SAFE_INTEGER;
+const OFFSET_DEFAULT = 0;
+
 export class MemApi implements Api {
   private readonly index: Index;
   private readonly modelSet: ModelSet;
@@ -120,9 +123,14 @@ export class MemApi implements Api {
   }
 
   getCollections(
-    kwds: GetCollectionsOptions & {query: CollectionsQuery}
+    kwds?: GetCollectionsOptions & {query?: CollectionsQuery}
   ): Promise<GetCollectionsResult> {
-    const {collectionJoinSelector, limit, offset, query} = kwds;
+    const {
+      collectionJoinSelector,
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as CollectionsQuery,
+    } = kwds ?? {};
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
@@ -130,7 +138,7 @@ export class MemApi implements Api {
     return new Promise(resolve => {
       const filteredCollections = filterCollections({
         collections: this.modelSet.collections,
-        filters: query.filters,
+        filters: query.filters ?? [],
       });
 
       const slicedCollections = filteredCollections.slice(
@@ -154,11 +162,17 @@ export class MemApi implements Api {
   }
 
   getEvents(
-    kwds: GetEventsOptions & {
-      query: EventsQuery;
+    kwds?: GetEventsOptions & {
+      query?: EventsQuery;
     }
   ): Promise<GetEventsResult> {
-    const {eventJoinSelector, limit, offset, query, sort} = kwds;
+    const {
+      eventJoinSelector,
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as EventsQuery,
+      sort = defaultEventsSort,
+    } = kwds ?? {};
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
@@ -166,11 +180,11 @@ export class MemApi implements Api {
     return new Promise(resolve => {
       const filteredEvents = filterEvents({
         events: this.modelSet.events,
-        filters: query.filters,
+        filters: query.filters ?? [],
       });
 
       const sortedEvents = filteredEvents.concat();
-      sortEvents(sortedEvents, sort ?? defaultEventsSort);
+      sortEvents(sortedEvents, sort);
 
       const slicedEvents = sortedEvents.slice(offset, offset + limit);
 
@@ -184,18 +198,24 @@ export class MemApi implements Api {
   }
 
   getWorkAgents(
-    kwds: GetWorkAgentsOptions & {
-      worksQuery: WorksQuery;
+    kwds?: GetWorkAgentsOptions & {
+      worksQuery?: WorksQuery;
     }
   ): Promise<GetWorkAgentsResult> {
-    const {agentJoinSelector, limit, offset, sort, worksQuery} = kwds;
+    const {
+      agentJoinSelector,
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      sort = defaultAgentsSort,
+      worksQuery = {} as WorksQuery,
+    } = kwds ?? {};
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
       const works = filterWorks({
-        filters: worksQuery.filters,
+        filters: worksQuery.filters ?? [],
         workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(worksQuery),
       });
@@ -213,7 +233,7 @@ export class MemApi implements Api {
       );
 
       const sortedWorkAgents = workAgentsWithContext;
-      sortAgents(workAgentsWithContext, sort ?? defaultAgentsSort);
+      sortAgents(workAgentsWithContext, sort);
 
       const slicedWorkAgents = sortedWorkAgents.slice(offset, offset + limit);
 
@@ -239,26 +259,26 @@ export class MemApi implements Api {
   }
 
   getWorkEvents(
-    kwds: GetWorkEventsOptions & {
-      workEventsQuery: EventsQuery;
-      worksQuery: WorksQuery;
+    kwds?: GetWorkEventsOptions & {
+      workEventsQuery?: EventsQuery;
+      worksQuery?: WorksQuery;
     }
   ): Promise<GetWorkEventsResult> {
     const {
-      limit,
-      offset,
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
       eventJoinSelector,
-      sort,
-      workEventsQuery,
-      worksQuery,
-    } = kwds;
+      sort = defaultEventsSort,
+      workEventsQuery = {} as EventsQuery,
+      worksQuery = {} as WorksQuery,
+    } = kwds ?? {};
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
       const works = filterWorks({
-        filters: worksQuery.filters,
+        filters: worksQuery.filters ?? [],
         workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(worksQuery),
       });
@@ -286,7 +306,7 @@ export class MemApi implements Api {
 
       const filteredWorkEvents = filterEvents({
         events: workEvents,
-        filters: workEventsQuery.filters,
+        filters: workEventsQuery.filters ?? [],
       });
 
       const sortedWorkEvents = filteredWorkEvents.concat();
@@ -314,23 +334,28 @@ export class MemApi implements Api {
   }
 
   getWorkKeys(
-    kwds: GetWorkKeysOptions & {
-      query: WorksQuery;
+    kwds?: GetWorkKeysOptions & {
+      query?: WorksQuery;
     }
   ): Promise<GetWorkKeysResult> {
-    const {limit, offset, query, sort} = kwds;
+    const {
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as WorksQuery,
+      sort = defaultWorksSort,
+    } = kwds ?? {};
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
       const filteredWorks = filterWorks({
-        filters: query.filters,
+        filters: query.filters ?? [],
         workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(query),
       });
 
       const sortedWorks = filteredWorks.concat();
-      sortWorks(sort ?? defaultWorksSort, sortedWorks);
+      sortWorks(sort, sortedWorks);
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
@@ -342,16 +367,19 @@ export class MemApi implements Api {
   }
 
   getWorkLocations(
-    kwds: GetWorkLocationsOptions & {
-      locationsQuery: LocationsQuery;
-      worksQuery: WorksQuery;
+    kwds?: GetWorkLocationsOptions & {
+      locationsQuery?: LocationsQuery;
+      worksQuery?: WorksQuery;
     }
   ): Promise<GetWorkLocationsResult> {
-    const {locationsQuery, worksQuery} = kwds;
+    const {
+      locationsQuery = {} as LocationsQuery,
+      worksQuery = {} as WorksQuery,
+    } = kwds ?? {};
 
     return new Promise(resolve => {
       const works = filterWorks({
-        filters: worksQuery.filters,
+        filters: worksQuery.filters ?? [],
         workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(worksQuery),
       });
@@ -379,7 +407,7 @@ export class MemApi implements Api {
           }
         }
         return filterLocations({
-          filters: locationsQuery.filters,
+          filters: locationsQuery.filters ?? [],
           locations: workLocationsWithContext,
         }).map(location => summarizeWorkLocation(work, location.workLocation));
       });
@@ -391,16 +419,16 @@ export class MemApi implements Api {
   }
 
   getWorks(
-    kwds: GetWorksOptions & {query: WorksQuery}
+    kwds?: GetWorksOptions & {query?: WorksQuery}
   ): Promise<GetWorksResult> {
     const {
-      limit,
-      offset,
-      query,
-      sort,
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as WorksQuery,
+      sort = defaultWorksSort,
       valueFacetValueThumbnailSelector,
       workJoinSelector,
-    } = kwds;
+    } = kwds ?? {};
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
@@ -410,7 +438,7 @@ export class MemApi implements Api {
 
       // Calculate facets on the universe before filtering it
       const facets = facetizeWorks({
-        filters: query.filters,
+        filters: query.filters ?? [],
         valueFacetValueThumbnailSelector,
         works: searchedWorks,
       });
@@ -418,7 +446,7 @@ export class MemApi implements Api {
       log.debug("Search facets:", JSON.stringify(facets));
 
       const filteredWorks = filterWorks({
-        filters: query.filters,
+        filters: query.filters ?? [],
         workCollectionKeys: this.workCollectionKeys,
         works: searchedWorks,
       });
@@ -457,7 +485,7 @@ export class MemApi implements Api {
   }
 
   private searchWorks(query: WorksQuery): readonly Work[] {
-    if (query.text) {
+    if (query?.text) {
       // Anything matching the fulltext search
       return this.index
         .search(query.text)

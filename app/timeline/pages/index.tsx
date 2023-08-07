@@ -80,8 +80,6 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       modelSetJsonLd: await (
         await api.getEvents({
           eventJoinSelector: {thumbnail: galleryThumbnailSelector},
-          limit: Number.MAX_SAFE_INTEGER,
-          offset: 0,
         })
       ).modelSet.toJsonLd(),
     },

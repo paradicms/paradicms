@@ -37,10 +37,7 @@ describe("MemApi", () => {
     const {
       modelSet: collectionsModelSet,
       totalCollectionsCount,
-    } = await sut.getCollections({
-      limit: Number.MAX_SAFE_INTEGER,
-      offset: 0,
-    });
+    } = await sut.getCollections();
     expect(totalCollectionsCount).to.eq(modelSet.collections.length);
     expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
       collectionsModelSet.collections.map(collection => collection.key)
@@ -48,14 +45,16 @@ describe("MemApi", () => {
   });
 
   it("getEvents returns all available events (timeline)", async () => {
-    const {modelSet: eventsModelSet, totalEventsCount} = await sut.getEvents(
-      {
-        filters: [],
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
+    const {modelSet: eventsModelSet, totalEventsCount} = await sut.getEvents({
+      query: {
+        filters: [
+          {
+            excludeUnknown: true,
+            type: "EventSortDateExistence",
+          },
+        ],
       },
-      {filters: []}
-    );
+    });
     expect(totalEventsCount).to.eq(modelSet.events.length);
     expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
       eventsModelSet.collections.map(collection => collection.key)
@@ -78,10 +77,7 @@ describe("MemApi", () => {
 
   it("getWorkAgents returns at least one agent from an empty query", async () => {
     const result = await sut.getWorkAgents(
-      {
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
-      },
+      {},
       {
         filters: [],
       }

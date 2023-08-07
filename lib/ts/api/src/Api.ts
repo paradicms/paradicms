@@ -38,16 +38,16 @@ export interface Api {
    * Get agents associated with any of the works matched by the query.
    */
   getWorkAgents(
-    kwds: GetWorkAgentsOptions & {worksQuery: WorksQuery}
+    kwds?: GetWorkAgentsOptions & {worksQuery?: WorksQuery}
   ): Promise<GetWorkAgentsResult>;
 
   /**
    * Get events associated with any of the works matched by the query. Limit + offset is applied after the events are sorted by date ascending.
    */
   getWorkEvents(
-    kwds: GetWorkEventsOptions & {
-      workEventsQuery: EventsQuery;
-      worksQuery: WorksQuery;
+    kwds?: GetWorkEventsOptions & {
+      workEventsQuery?: EventsQuery;
+      worksQuery?: WorksQuery;
     }
   ): Promise<GetWorkEventsResult>;
 
@@ -55,8 +55,8 @@ export interface Api {
    * Get the keys of works matched by the query.
    */
   getWorkKeys(
-    kwds: GetWorksOptions & {
-      query: WorksQuery;
+    kwds?: GetWorksOptions & {
+      query?: WorksQuery;
     }
   ): Promise<GetWorkKeysResult>;
 
@@ -64,9 +64,9 @@ export interface Api {
    * Get locations associated with any of the works matched by the query.
    */
   getWorkLocations(
-    kwds: GetWorkLocationsOptions & {
-      locationsQuery: LocationsQuery;
-      worksQuery: WorksQuery;
+    kwds?: GetWorkLocationsOptions & {
+      locationsQuery?: LocationsQuery;
+      worksQuery?: WorksQuery;
     }
   ): Promise<GetWorkLocationsResult>;
 
@@ -74,8 +74,8 @@ export interface Api {
    * Get works matched by the query.
    */
   getWorks(
-    kwds: GetWorksOptions & {
-      query: WorksQuery;
+    kwds?: GetWorksOptions & {
+      query?: WorksQuery;
     }
   ): Promise<GetWorksResult>;
 }
