@@ -7,6 +7,7 @@ import {
 } from "@paradicms/models";
 import {
   Api,
+  CollectionsQuery,
   defaultEventsSort,
   defaultWorkAgentsSort,
   defaultWorksSort,
@@ -41,6 +42,7 @@ import {filterWorks} from "./filterWorks";
 import {EventsQuery} from "@paradicms/api/dist/EventsQuery";
 import {filterEvents} from "./filterEvents";
 import {sortEvents} from "./sortEvents";
+import {filterCollections} from "./filterCollections";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -114,18 +116,19 @@ export class MemApi implements Api {
   }
 
   getCollections(
-    options: GetCollectionsOptions
+    kwds: GetCollectionsOptions & {query: CollectionsQuery}
   ): Promise<GetCollectionsResult> {
-    const {collectionJoinSelector, limit, offset, requireWorks} = options;
+    const {collectionJoinSelector, limit, offset, query} = kwds;
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
-      const allCollections = this.modelSet.collections;
-      const filteredCollections = requireWorks
-        ? allCollections.filter(collection => collection.works.length > 0)
-        : allCollections;
+      const filteredCollections = filterCollections({
+        collections: this.modelSet.collections,
+        filters: query.filters,
+      });
+
       const slicedCollections = filteredCollections.slice(
         offset,
         offset + limit
@@ -141,16 +144,17 @@ export class MemApi implements Api {
 
       resolve({
         modelSet: slicedCollectionsModelSetBuilder.build(),
-        totalCollectionsCount: allCollections.length,
+        totalCollectionsCount: filteredCollections.length,
       });
     });
   }
 
   getEvents(
-    options: GetEventsOptions,
-    query: EventsQuery
+    kwds: GetEventsOptions & {
+      query: EventsQuery;
+    }
   ): Promise<GetEventsResult> {
-    const {eventJoinSelector, limit, offset} = options;
+    const {eventJoinSelector, limit, offset, query, sort} = kwds;
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
@@ -162,7 +166,7 @@ export class MemApi implements Api {
       });
 
       const sortedEvents = filteredEvents.concat();
-      sortEvents(sortedEvents, options.sort ?? defaultEventsSort);
+      sortEvents(sortedEvents, sort ?? defaultEventsSort);
 
       const slicedEvents = sortedEvents.slice(offset, offset + limit);
 
@@ -176,19 +180,20 @@ export class MemApi implements Api {
   }
 
   getWorkAgents(
-    options: GetWorkAgentsOptions,
-    query: WorksQuery
+    kwds: GetWorkAgentsOptions & {
+      worksQuery: WorksQuery;
+    }
   ): Promise<GetWorkAgentsResult> {
-    const {agentJoinSelector, limit, offset} = options;
+    const {agentJoinSelector, limit, offset, sort, worksQuery} = kwds;
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
       const works = filterWorks({
-        filters: query.filters,
+        filters: worksQuery.filters,
         workCollectionKeys: this.workCollectionKeys,
-        works: this.searchWorks(query),
+        works: this.searchWorks(worksQuery),
       });
 
       // @ts-ignore
@@ -201,7 +206,7 @@ export class MemApi implements Api {
       );
 
       const sortedWorkAgents = workAgents;
-      sortWorkAgents(options.sort ?? defaultWorkAgentsSort, workAgents);
+      sortWorkAgents(sort ?? defaultWorkAgentsSort, workAgents);
 
       const slicedWorkAgents = sortedWorkAgents.slice(offset, offset + limit);
 
@@ -225,19 +230,28 @@ export class MemApi implements Api {
   }
 
   getWorkEvents(
-    options: GetWorkEventsOptions,
-    query: WorksQuery
+    kwds: GetWorkEventsOptions & {
+      workEventsQuery: EventsQuery;
+      worksQuery: WorksQuery;
+    }
   ): Promise<GetWorkEventsResult> {
-    const {filters, limit, offset, eventJoinSelector} = options;
+    const {
+      limit,
+      offset,
+      eventJoinSelector,
+      sort,
+      workEventsQuery,
+      worksQuery,
+    } = kwds;
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
       const works = filterWorks({
-        filters: query.filters,
+        filters: worksQuery.filters,
         workCollectionKeys: this.workCollectionKeys,
-        works: this.searchWorks(query),
+        works: this.searchWorks(worksQuery),
       });
 
       const workEvents: WorkEventWithWorkKey[] = [];
@@ -250,10 +264,13 @@ export class MemApi implements Api {
         }
       }
 
-      const filteredWorkEvents = filterEvents({events: workEvents, filters});
+      const filteredWorkEvents = filterEvents({
+        events: workEvents,
+        filters: workEventsQuery.filters,
+      });
 
       const sortedWorkEvents = filteredWorkEvents.concat();
-      sortEvents(sortedWorkEvents, options.sort ?? defaultEventsSort);
+      sortEvents(sortedWorkEvents, sort ?? defaultEventsSort);
 
       const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
 
@@ -277,10 +294,11 @@ export class MemApi implements Api {
   }
 
   getWorkKeys(
-    options: GetWorkKeysOptions,
-    query: WorksQuery
+    kwds: GetWorkKeysOptions & {
+      query: WorksQuery;
+    }
   ): Promise<GetWorkKeysResult> {
-    const {limit, offset} = options;
+    const {limit, offset, query, sort} = kwds;
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
@@ -292,7 +310,7 @@ export class MemApi implements Api {
       });
 
       const sortedWorks = filteredWorks.concat();
-      sortWorks(options.sort ?? defaultWorksSort, sortedWorks);
+      sortWorks(sort ?? defaultWorksSort, sortedWorks);
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
@@ -304,8 +322,7 @@ export class MemApi implements Api {
   }
 
   getWorkLocations(
-    options: GetWorkLocationsOptions,
-    query: WorksQuery
+    kwds: GetWorkLocationsOptions & {worksQuery: WorksQuery}
   ): Promise<GetWorkLocationsResult> {
     const {requireCentroids} = options;
 

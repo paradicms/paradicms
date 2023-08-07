@@ -14,6 +14,7 @@ import {JsonAppConfiguration} from "@paradicms/models";
 import {GetEventsOptions} from "./GetEventsOptions";
 import {GetEventsResult} from "./GetEventsResult";
 import {EventsQuery} from "./EventsQuery";
+import {CollectionsQuery} from "./CollectionsQuery";
 
 export interface Api {
   getAppConfiguration(): Promise<JsonAppConfiguration | null>;
@@ -21,53 +22,58 @@ export interface Api {
   /**
    * Get available collections.
    */
-  getCollections(options: GetCollectionsOptions): Promise<GetCollectionsResult>;
+  getCollections(
+    kwds: GetCollectionsOptions & {query: CollectionsQuery}
+  ): Promise<GetCollectionsResult>;
 
   /**
    * Get events matched by the query.
    */
   getEvents(
-    options: GetEventsOptions,
-    query: EventsQuery
+    kwds: GetEventsOptions & {query: EventsQuery}
   ): Promise<GetEventsResult>;
 
   /**
    * Get agents associated with any of the works matched by the query.
    */
   getWorkAgents(
-    options: GetWorkAgentsOptions,
-    query: WorksQuery
+    kwds: GetWorkAgentsOptions & {worksQuery: WorksQuery}
   ): Promise<GetWorkAgentsResult>;
 
   /**
    * Get events associated with any of the works matched by the query. Limit + offset is applied after the events are sorted by date ascending.
    */
   getWorkEvents(
-    options: GetWorkEventsOptions,
-    query: WorksQuery
+    kwds: GetWorkEventsOptions & {
+      workEventsQuery: EventsQuery;
+      worksQuery: WorksQuery;
+    }
   ): Promise<GetWorkEventsResult>;
 
   /**
    * Get the keys of works matched by the query.
    */
   getWorkKeys(
-    options: GetWorksOptions,
-    query: WorksQuery
+    kwds: GetWorksOptions & {
+      worksQuery: WorksQuery;
+    }
   ): Promise<GetWorkKeysResult>;
 
   /**
    * Get locations associated with any of the works matched by the query.
    */
   getWorkLocations(
-    options: GetWorkLocationsOptions,
-    query: WorksQuery
+    kwds: GetWorkLocationsOptions & {
+      worksQuery: WorksQuery;
+    }
   ): Promise<GetWorkLocationsResult>;
 
   /**
    * Get works matched by the query.
    */
   getWorks(
-    options: GetWorksOptions,
-    query: WorksQuery
+    kwds: GetWorksOptions & {
+      worksQuery: WorksQuery;
+    }
   ): Promise<GetWorksResult>;
 }

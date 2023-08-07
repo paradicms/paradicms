@@ -1,4 +1,7 @@
 export * from "./Api";
+export * from "./CollectionsFilter";
+export * from "./CollectionsQuery";
+export * from "./CollectionWorksExistenceFilter";
 export * from "./defaultWorkAgentsSort";
 export * from "./defaultEventsSort";
 export * from "./defaultWorksSort";

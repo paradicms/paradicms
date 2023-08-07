@@ -47,7 +47,20 @@ describe("MemApi", () => {
     );
   });
 
-  it("getEvents returns all available events", async () => {});
+  it("getEvents returns all available events (timeline)", async () => {
+    const {modelSet: eventsModelSet, totalEventsCount} = await sut.getEvents(
+      {
+        filters: [],
+        limit: Number.MAX_SAFE_INTEGER,
+        offset: 0,
+      },
+      {filters: []}
+    );
+    expect(totalEventsCount).to.eq(modelSet.events.length);
+    expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
+      eventsModelSet.collections.map(collection => collection.key)
+    );
+  });
 
   const getWorkAgents = (result: GetWorkAgentsResult): readonly WorkAgent[] => {
     const workAgentsByKey: {[index: string]: WorkAgent} = {};
@@ -127,6 +140,9 @@ describe("MemApi", () => {
       {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
+      },
+      {
+        filters: [],
       },
       {
         filters: [],
