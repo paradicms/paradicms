@@ -3,12 +3,19 @@ import {
   EventsSort,
   EventsSortProperty,
 } from "@paradicms/api";
-import {Event} from "@paradicms/models";
 
 /**
  * Sort events in place.
  */
-export const sortEvents = (events: Event[], sort: EventsSort): void => {
+export const sortEvents = <
+  EventT extends {
+    compareByDate(other: EventT): number;
+    readonly label: string;
+  }
+>(
+  events: EventT[],
+  sort: EventsSort
+): void => {
   const compareMultiplier = sort.ascending ? 1 : -1;
   switch (sort.property) {
     case EventsSortProperty.DATE:

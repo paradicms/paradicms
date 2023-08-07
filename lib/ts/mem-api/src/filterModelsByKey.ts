@@ -1,7 +1,6 @@
-import {Model} from "@paradicms/models";
 import {KeyFilter} from "@paradicms/api/dist/KeyFilter";
 
-export const filterModelsByKey = <ModelT extends Model>(kwds: {
+export const filterModelsByKey = <ModelT extends {readonly key: string}>(kwds: {
   filter: KeyFilter;
   models: readonly ModelT[];
 }): readonly ModelT[] => {

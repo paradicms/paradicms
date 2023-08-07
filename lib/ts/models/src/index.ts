@@ -10,6 +10,7 @@ export * from "./ConceptPropertyValue";
 export * from "./DateTimeDescription";
 export * from "./DcmiTypePropertyValue";
 export * from "./Event";
+export * from "./EventSortDate";
 export * from "./Image";
 export * from "./ImageDimensions";
 export * from "./ImageJoinSelector";

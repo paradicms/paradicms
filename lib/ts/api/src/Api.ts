@@ -15,6 +15,7 @@ import {GetEventsOptions} from "./GetEventsOptions";
 import {GetEventsResult} from "./GetEventsResult";
 import {EventsQuery} from "./EventsQuery";
 import {CollectionsQuery} from "./CollectionsQuery";
+import {LocationsQuery} from "./LocationsQuery";
 
 export interface Api {
   getAppConfiguration(): Promise<JsonAppConfiguration | null>;
@@ -55,7 +56,7 @@ export interface Api {
    */
   getWorkKeys(
     kwds: GetWorksOptions & {
-      worksQuery: WorksQuery;
+      query: WorksQuery;
     }
   ): Promise<GetWorkKeysResult>;
 
@@ -64,6 +65,7 @@ export interface Api {
    */
   getWorkLocations(
     kwds: GetWorkLocationsOptions & {
+      locationsQuery: LocationsQuery;
       worksQuery: WorksQuery;
     }
   ): Promise<GetWorkLocationsResult>;
@@ -73,7 +75,7 @@ export interface Api {
    */
   getWorks(
     kwds: GetWorksOptions & {
-      worksQuery: WorksQuery;
+      query: WorksQuery;
     }
   ): Promise<GetWorksResult>;
 }

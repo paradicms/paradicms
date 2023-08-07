@@ -278,7 +278,7 @@ describe("MemApi", () => {
         filters: [
           {
             includeValues: [collection.key],
-            type: "CollectionValue",
+            type: "WorkCollectionValue",
           },
         ],
       }

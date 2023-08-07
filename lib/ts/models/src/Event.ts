@@ -24,11 +24,7 @@ export interface Event
    *
    * The returned properties have the same semantics as PartialDateTime.
    */
-  readonly sortDate: {
-    day: number | null;
-    month: number | null;
-    year: number;
-  } | null;
+  readonly sortDate: EventSortDate | null;
 
   readonly startDate: DateTimeDescription | null;
 }

@@ -30,7 +30,7 @@ export const getExhibitionWorkKeys = async (
           ? [
               {
                 includeValues: [collection.key],
-                type: "CollectionValue",
+                type: "WorkCollectionValue",
               },
             ]
           : [],

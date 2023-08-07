@@ -1,9 +1,9 @@
 import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
-import {CollectionValueFilter} from "./CollectionValueFilter";
+import {WorkCollectionValueFilter} from "./WorkCollectionValueFilter";
 import {KeyFilter} from "./KeyFilter";
 
 // Discriminated union on "type"
 export type WorksFilter =
-  | CollectionValueFilter
   | KeyFilter
-  | StringPropertyValueFilter;
+  | StringPropertyValueFilter
+  | WorkCollectionValueFilter;

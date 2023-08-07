@@ -1,15 +1,20 @@
 import {
   defaultProperties,
+  EventSortDate,
   JsonAppConfiguration,
   ModelSet,
   ModelSetBuilder,
+  Point,
   Work,
+  WorkAgent,
+  WorkEvent,
+  WorkLocation,
 } from "@paradicms/models";
 import {
   Api,
   CollectionsQuery,
+  defaultAgentsSort,
   defaultEventsSort,
-  defaultWorkAgentsSort,
   defaultWorksSort,
   GetCollectionsOptions,
   GetCollectionsResult,
@@ -25,8 +30,8 @@ import {
   GetWorkLocationsResult,
   GetWorksOptions,
   GetWorksResult,
+  LocationsQuery,
   summarizeWorkLocation,
-  WorkLocationSummary,
   WorksQuery,
 } from "@paradicms/api";
 import lunr, {Index} from "lunr";
@@ -35,14 +40,13 @@ import {requireNonNull} from "@paradicms/utilities";
 import log from "loglevel";
 import {facetizeWorks} from "facetizeWorks";
 import {sortWorks} from "./sortWorks";
-import {WorkEventWithWorkKey} from "./WorkEventWithWorkKey";
-import {sortWorkAgents} from "./sortWorkAgents";
-import {WorkAgentWithWorkKey} from "./WorkAgentWithWorkKey";
+import {sortAgents} from "./sortAgents";
 import {filterWorks} from "./filterWorks";
 import {EventsQuery} from "@paradicms/api/dist/EventsQuery";
 import {filterEvents} from "./filterEvents";
 import {sortEvents} from "./sortEvents";
 import {filterCollections} from "./filterCollections";
+import {filterLocations} from "./filterLocations";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -196,17 +200,20 @@ export class MemApi implements Api {
         works: this.searchWorks(worksQuery),
       });
 
-      // @ts-ignore
-      const workAgents: WorkAgentWithWorkKey[] = works.flatMap(work =>
-        work.agents.map(workAgent => {
-          // @ts-ignore
-          workAgent["workKey"] = work.key;
-          return workAgent;
-        })
+      const workAgentsWithContext: {
+        readonly label: string;
+        readonly workAgent: WorkAgent;
+        readonly workKey: string;
+      }[] = works.flatMap(work =>
+        work.agents.map(workAgent => ({
+          label: workAgent.agent.label,
+          workAgent,
+          workKey: work.key,
+        }))
       );
 
-      const sortedWorkAgents = workAgents;
-      sortWorkAgents(sort ?? defaultWorkAgentsSort, workAgents);
+      const sortedWorkAgents = workAgentsWithContext;
+      sortAgents(workAgentsWithContext, sort ?? defaultAgentsSort);
 
       const slicedWorkAgents = sortedWorkAgents.slice(offset, offset + limit);
 
@@ -223,8 +230,10 @@ export class MemApi implements Api {
 
       resolve({
         modelSet: slicedWorkAgentsModelSetBuilder.build(),
-        totalWorkAgentsCount: workAgents.length,
-        workAgentKeys: slicedWorkAgents.map(workAgent => workAgent.agent.key),
+        totalWorkAgentsCount: workAgentsWithContext.length,
+        workAgentKeys: slicedWorkAgents.map(
+          workAgent => workAgent.workAgent.agent.key
+        ),
       });
     });
   }
@@ -254,15 +263,26 @@ export class MemApi implements Api {
         works: this.searchWorks(worksQuery),
       });
 
-      const workEvents: WorkEventWithWorkKey[] = [];
-      for (const work of works) {
-        for (const workEvent of work.events) {
-          // @ts-ignore
-          workEvent["workKey"] = work.key;
-          // @ts-ignore
-          workEvents.push(workEvent);
-        }
-      }
+      type WorkEventWithContext = {
+        readonly key: string;
+        compareByDate(other: WorkEventWithContext): number;
+        readonly label: string;
+        readonly sortDate: EventSortDate | null;
+        readonly workEvent: WorkEvent;
+        readonly workKey: string;
+      };
+      const workEvents: WorkEventWithContext[] = works.flatMap(work =>
+        work.events.map(workEvent => ({
+          compareByDate(other: WorkEventWithContext): number {
+            return workEvent.compareByDate(other.workEvent);
+          },
+          key: workEvent.key,
+          label: workEvent.label,
+          sortDate: workEvent.sortDate,
+          workEvent,
+          workKey: work.key,
+        }))
+      );
 
       const filteredWorkEvents = filterEvents({
         events: workEvents,
@@ -322,52 +342,65 @@ export class MemApi implements Api {
   }
 
   getWorkLocations(
-    kwds: GetWorkLocationsOptions & {worksQuery: WorksQuery}
+    kwds: GetWorkLocationsOptions & {
+      locationsQuery: LocationsQuery;
+      worksQuery: WorksQuery;
+    }
   ): Promise<GetWorkLocationsResult> {
-    const {requireCentroids} = options;
+    const {locationsQuery, worksQuery} = kwds;
 
     return new Promise(resolve => {
       const works = filterWorks({
-        filters: query.filters,
+        filters: worksQuery.filters,
         workCollectionKeys: this.workCollectionKeys,
-        works: this.searchWorks(query),
+        works: this.searchWorks(worksQuery),
       });
 
-      const workLocations = works.flatMap(work => {
-        const workWorkLocations: WorkLocationSummary[] = [];
+      const workLocationSummaries = works.flatMap(work => {
+        const workLocationsWithContext: {
+          readonly centroid: Point | null;
+          readonly key: string;
+          readonly workLocation: WorkLocation;
+        }[] = [];
         if (work.location) {
-          if (!requireCentroids || work.location.location.centroid) {
-            workWorkLocations.push(summarizeWorkLocation(work, work.location));
-          }
+          workLocationsWithContext.push({
+            centroid: work.location.location.centroid,
+            key: work.location.location.key,
+            workLocation: work.location,
+          });
         }
         for (const event of work.events) {
           if (event.workLocation) {
-            if (!requireCentroids || event.workLocation.location.centroid) {
-              workWorkLocations.push(
-                summarizeWorkLocation(work, event.workLocation)
-              );
-            }
+            workLocationsWithContext.push({
+              centroid: event.workLocation.location.centroid,
+              key: event.workLocation.location.key,
+              workLocation: event.workLocation,
+            });
           }
         }
-        return workWorkLocations;
+        return filterLocations({
+          filters: locationsQuery.filters,
+          locations: workLocationsWithContext,
+        }).map(location => summarizeWorkLocation(work, location.workLocation));
       });
 
       resolve({
-        workLocations,
+        workLocations: workLocationSummaries,
       });
     });
   }
 
   getWorks(
-    options: GetWorksOptions,
-    query: WorksQuery
+    kwds: GetWorksOptions & {query: WorksQuery}
   ): Promise<GetWorksResult> {
     const {
       limit,
       offset,
+      query,
+      sort,
       valueFacetValueThumbnailSelector,
       workJoinSelector,
-    } = options;
+    } = kwds;
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
 
@@ -395,7 +428,7 @@ export class MemApi implements Api {
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
       const sortedWorks = filteredWorks.concat();
-      sortWorks(options.sort ?? defaultWorksSort, sortedWorks);
+      sortWorks(sort ?? defaultWorksSort, sortedWorks);
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 

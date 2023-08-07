@@ -2,8 +2,8 @@ import {useWorksQueryParam} from "./useWorksQueryParam";
 import {
   AgentsSort,
   AgentsSortProperty,
+  defaultAgentsSort,
   defaultEventsSort,
-  defaultWorkAgentsSort,
   defaultWorksSort,
   EventsSort,
   EventsSortProperty,
@@ -40,7 +40,7 @@ export const useWorkSearchQueryParams = (defaultWorksQuery: {
   );
   const [workAgentsSort, setWorkAgentsSort] = useSortQueryParams<
     AgentsSortProperty
-  >(defaultWorkAgentsSort, "workAgentsSort");
+  >(defaultAgentsSort, "workAgentsSort");
 
   const [workEventsPage, setWorkEventsPage] = usePageQueryParam(
     "workEventsPage"
