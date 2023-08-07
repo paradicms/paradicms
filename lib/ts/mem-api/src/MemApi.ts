@@ -16,6 +16,7 @@ import {
   defaultAgentsSort,
   defaultEventsSort,
   defaultWorksSort,
+  EventsQuery,
   GetCollectionsOptions,
   GetCollectionsResult,
   GetEventsOptions,
@@ -42,7 +43,6 @@ import {facetizeWorks} from "facetizeWorks";
 import {sortWorks} from "./sortWorks";
 import {sortAgents} from "./sortAgents";
 import {filterWorks} from "./filterWorks";
-import {EventsQuery} from "@paradicms/api/dist/EventsQuery";
 import {filterEvents} from "./filterEvents";
 import {sortEvents} from "./sortEvents";
 import {filterCollections} from "./filterCollections";

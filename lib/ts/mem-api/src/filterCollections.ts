@@ -10,7 +10,7 @@ export const filterCollections = (kwds: {
   let filteredCollections = collections;
   for (const filter of filters) {
     switch (filter.type) {
-      case "CollectionWorksExistenceFilter": {
+      case "CollectionWorksExistence": {
         filteredCollections = filteredCollections.filter(
           collection => collection.works.length > 0
         );

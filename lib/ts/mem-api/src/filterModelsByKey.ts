@@ -1,4 +1,4 @@
-import {KeyFilter} from "@paradicms/api/dist/KeyFilter";
+import {KeyFilter} from "@paradicms/api";
 
 export const filterModelsByKey = <ModelT extends {readonly key: string}>(kwds: {
   filter: KeyFilter;
