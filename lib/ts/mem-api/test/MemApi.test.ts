@@ -260,7 +260,6 @@ describe("MemApi", () => {
         filters: [
           {
             includeValues: [collection.key],
-            label: "Collection",
             type: "CollectionValue",
           },
         ],
@@ -395,5 +394,29 @@ describe("MemApi", () => {
     ).modelSet.works.map(work => work.key);
 
     expect(sortedWorkKeys).not.to.deep.eq(allWorkKeys);
+  });
+
+  it("getWorks return a single work by key (multi-page-exhibition work page)", async () => {
+    const expectedWork = modelSet.works[0];
+
+    const actualWorks = (
+      await sut.getWorks(
+        {
+          limit: 1, //Number.MAX_SAFE_INTEGER,
+          offset: 0,
+        },
+        {
+          filters: [
+            {
+              includeKeys: [expectedWork.key],
+              type: "Key",
+            },
+          ],
+        }
+      )
+    ).modelSet.works;
+
+    expect(actualWorks).to.have.length(1);
+    expect(actualWorks[0].key).to.eq(expectedWork.key);
   });
 });

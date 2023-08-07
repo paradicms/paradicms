@@ -41,6 +41,7 @@ export const createFilterControl = (kwds: {
           <ValueFilterSelect
             facet={facet}
             filter={filter}
+            filterLabel={filter.label}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
             onChange={onChangeFilter}
           />

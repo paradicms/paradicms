@@ -51,10 +51,11 @@ export const ValueFilterSelect = <
 >(props: {
   facet: ValueFacet<ValueT>;
   filter: ValueFilterT;
+  filterLabel: string;
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   onChange: (newFilter: ValueFilterT) => void;
 }) => {
-  const {facet, filter, getAbsoluteImageSrc, onChange} = props;
+  const {facet, filter, filterLabel, getAbsoluteImageSrc, onChange} = props;
 
   const useThumbnails = facet.values.every(value => !!value.thumbnail);
 
@@ -125,9 +126,9 @@ export const ValueFilterSelect = <
             switch (option.type) {
               case "Known":
               case "Unknown":
-                return `${filter.label}: ${option.type}`;
+                return `${filterLabel}: ${option.type}`;
               case "Value":
-                return `${filter.label}: ${option.label}`;
+                return `${filterLabel}: ${option.label}`;
             }
         }
       }}
@@ -184,7 +185,7 @@ export const ValueFilterSelect = <
         }
       }}
       options={options}
-      placeholder={filter.label}
+      placeholder={filterLabel}
       value={
         state.includesAll
           ? []

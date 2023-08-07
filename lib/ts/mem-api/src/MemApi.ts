@@ -1,7 +1,7 @@
 import {
-  AppConfiguration,
   defaultProperties,
   Image,
+  JsonAppConfiguration,
   ModelSet,
   ModelSetBuilder,
   ThumbnailSelector,
@@ -213,6 +213,26 @@ export class MemApi implements Api {
           );
           break;
         }
+        case "Key": {
+          const excludeKeysSet: Set<string> = filter.excludeKeys
+            ? new Set(filter.excludeKeys)
+            : new Set();
+          const includeKeysSet: Set<string> = filter.includeKeys
+            ? new Set(filter.includeKeys)
+            : new Set();
+
+          filteredWorks = filteredWorks.filter(work => {
+            if (excludeKeysSet.size > 0 && excludeKeysSet.has(work.key)) {
+              return false;
+            }
+            if (includeKeysSet.size > 0 && !includeKeysSet.has(work.key)) {
+              return false;
+            }
+            return true;
+          });
+
+          break;
+        }
         case "StringPropertyValue": {
           filteredWorks = filteredWorks.filter(work =>
             MemApi.testValueFilter(
@@ -231,7 +251,7 @@ export class MemApi implements Api {
     return filteredWorks;
   }
 
-  getAppConfiguration(): Promise<AppConfiguration | null> {
+  getAppConfiguration(): Promise<JsonAppConfiguration | null> {
     return Promise.resolve(this.modelSet.appConfiguration?.toJson() ?? null);
   }
 
