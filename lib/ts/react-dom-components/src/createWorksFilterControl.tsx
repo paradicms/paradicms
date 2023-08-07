@@ -1,6 +1,6 @@
 import {
-  FacetUnion,
-  FilterUnion,
+  WorksFacet,
+  WorksFilter,
   StringPropertyValueFacet,
   StringPropertyValueFilter,
   visitFilter,
@@ -11,11 +11,11 @@ import {ValueFilterSelect} from "./ValueFilterSelect";
 /**
  * Create a control React element for a filter. Delegates to the factory for UI-framework specific elements.
  */
-export const createFilterControl = (kwds: {
-  facets: readonly FacetUnion[];
-  filter: FilterUnion;
+export const createWorksFilterControl = (kwds: {
+  facets: readonly WorksFacet[];
+  filter: WorksFilter;
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
-  onChangeFilter: (newFilter: FilterUnion) => void;
+  onChangeFilter: (newFilter: WorksFilter) => void;
 }): React.ReactElement | null => {
   const {facets, filter, getAbsoluteImageSrc, onChangeFilter} = kwds;
 

@@ -14,8 +14,6 @@ import {
   defaultWorkAgentsSort,
   defaultWorkEventsSort,
   defaultWorksSort,
-  FacetUnion,
-  FilterUnion,
   GetCollectionsOptions,
   GetCollectionsResult,
   GetWorkAgentsOptions,
@@ -40,6 +38,8 @@ import {
   WorkEventsSort,
   WorkEventsSortProperty,
   WorkLocationSummary,
+  WorksFacet,
+  WorksFilter,
   WorksQuery,
   WorksSort,
   WorksSortProperty,
@@ -139,12 +139,12 @@ export class MemApi implements Api {
   }
 
   private facetizeWorks(kwds: {
-    filters: readonly FilterUnion[];
+    filters: readonly WorksFilter[];
     valueFacetValueThumbnailSelector?: ThumbnailSelector;
     works: readonly Work[];
-  }): readonly FacetUnion[] {
+  }): readonly WorksFacet[] {
     const {filters, valueFacetValueThumbnailSelector, works} = kwds;
-    const facets: FacetUnion[] = [];
+    const facets: WorksFacet[] = [];
     for (const filter of filters) {
       switch (filter.type) {
         case "StringPropertyValue": {
@@ -197,7 +197,7 @@ export class MemApi implements Api {
   }
 
   private filterWorks(kwds: {
-    filters: readonly FilterUnion[];
+    filters: readonly WorksFilter[];
     works: readonly Work[];
   }): readonly Work[] {
     const {filters, works} = kwds;

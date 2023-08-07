@@ -1,7 +1,7 @@
 import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  FilterUnion,
+  WorksFilter,
   GetWorkAgentsResult,
   GetWorkEventsResult,
   GetWorkLocationsResult,
@@ -37,7 +37,7 @@ import {WorkAgentsSortDropdown} from "./WorkAgentsSortDropdown";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
 import {WorksGallery} from "./WorksGallery";
 import {WorksSortDropdown} from "./WorksSortDropdown";
-import {createFilterControls} from "./createFilterControls";
+import {createWorksFilterControls} from "./createWorksFilterControls";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {workSearchWorkJoinSelector} from "./workSearchWorkJoinSelector";
@@ -68,7 +68,7 @@ const worksPageMax = (kwds: {
 export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
-  onChangeFilters: (filters: readonly FilterUnion[]) => void;
+  onChangeFilters: (filters: readonly WorksFilter[]) => void;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactElement;
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]
@@ -256,7 +256,7 @@ export const WorkSearchPage: React.FunctionComponent<{
   //   return <h3>No matching works found.</h3>;
   // }
 
-  const filterControls = createFilterControls({
+  const filterControls = createWorksFilterControls({
     facets: getWorksResult.facets,
     filters: worksQuery.filters,
     getAbsoluteImageSrc,

@@ -1,4 +1,4 @@
-import {FilterUnion, StringPropertyValueFilter} from "@paradicms/api";
+import {StringPropertyValueFilter, WorksFilter} from "@paradicms/api";
 import {defaultProperties} from "@paradicms/models";
 
 export const getDefaultWorksQueryFilters = (
@@ -7,12 +7,12 @@ export const getDefaultWorksQueryFilters = (
     readonly iris: readonly string[];
     readonly label: string;
   }[]
-): readonly FilterUnion[] => {
+): readonly WorksFilter[] => {
   if (properties.length === 0) {
     properties = defaultProperties;
   }
 
-  const filters: FilterUnion[] = [];
+  const filters: WorksFilter[] = [];
   for (const property of properties) {
     if (!property.filterable) {
       continue;

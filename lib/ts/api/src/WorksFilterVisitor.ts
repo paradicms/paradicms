@@ -1,13 +1,13 @@
 import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
 import {StringPropertyValueFacet} from "./StringPropertyValueFacet";
-import {FilterUnion} from "./FilterUnion";
-import {FacetUnion} from "./FacetUnion";
+import {WorksFilter} from "./WorksFilter";
+import {WorksFacet} from "./WorksFacet";
 import log from "loglevel";
 
 /**
  * Filter visitor interface. Optionally includes the search results facet corresponding to the query filter.
  */
-export interface FilterVisitor<T> {
+export interface WorksFilterVisitor<T> {
   visitStringPropertyValueFilter(
     filter: StringPropertyValueFilter,
     facet?: StringPropertyValueFacet
@@ -15,9 +15,9 @@ export interface FilterVisitor<T> {
 }
 
 export const visitFilter = <T>(
-  filter: FilterUnion,
-  visitor: FilterVisitor<T>,
-  facets?: readonly FacetUnion[]
+  filter: WorksFilter,
+  visitor: WorksFilterVisitor<T>,
+  facets?: readonly WorksFacet[]
 ): T => {
   switch (filter.type) {
     case "StringPropertyValue": {
