@@ -56,8 +56,8 @@ describe("MemApi", () => {
       },
     });
     expect(totalEventsCount).to.eq(modelSet.events.length);
-    expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
-      eventsModelSet.collections.map(collection => collection.key)
+    expect(modelSet.events.map(event => event.key)).to.deep.eq(
+      eventsModelSet.events.map(event => event.key)
     );
   });
 
@@ -76,30 +76,18 @@ describe("MemApi", () => {
   };
 
   it("getWorkAgents returns at least one agent from an empty query", async () => {
-    const result = await sut.getWorkAgents(
-      {},
-      {
-        filters: [],
-      }
-    );
+    const result = await sut.getWorkAgents();
 
     expect(getWorkAgents(result)).not.to.be.empty;
   });
 
   it("getWorkAgents returns the other models associated with an agent", async () => {
-    const result = await sut.getWorkAgents(
-      {
-        agentJoinSelector: {
-          thumbnail: THUMBNAIL_SELECTOR,
-          works: {},
-        },
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
+    const result = await sut.getWorkAgents({
+      agentJoinSelector: {
+        thumbnail: THUMBNAIL_SELECTOR,
+        works: {},
       },
-      {
-        filters: [],
-      }
-    );
+    });
 
     const workAgents = getWorkAgents(result);
     expect(workAgents).not.to.be.empty;
@@ -132,18 +120,7 @@ describe("MemApi", () => {
   };
 
   it("getWorkEvents returns at least one event from an empty query", async () => {
-    const result = await sut.getWorkEvents(
-      {
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
-      },
-      {
-        filters: [],
-      },
-      {
-        filters: [],
-      }
-    );
+    const result = await sut.getWorkEvents();
 
     const workEvents = getWorkEvents(result);
     expect(result.totalWorkEventsCount).to.be.gt(0);
@@ -151,20 +128,13 @@ describe("MemApi", () => {
   });
 
   it("getWorkEvents returns the other models associated with an event", async () => {
-    const result = await sut.getWorkEvents(
-      {
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
-        eventJoinSelector: {
-          agents: {},
-          location: true,
-          thumbnail: THUMBNAIL_SELECTOR,
-        },
+    const result = await sut.getWorkEvents({
+      eventJoinSelector: {
+        agents: {},
+        location: true,
+        thumbnail: THUMBNAIL_SELECTOR,
       },
-      {
-        filters: [],
-      }
-    );
+    });
 
     const workEvents = getWorkEvents(result);
     expect(
@@ -190,19 +160,14 @@ describe("MemApi", () => {
   });
 
   it("getWorkEvents sorted by date", async () => {
-    const result = await sut.getWorkEvents(
-      {
-        limit: 2,
-        offset: 0,
-        sort: {
-          ascending: false,
-          property: EventsSortProperty.DATE,
-        },
+    const result = await sut.getWorkEvents({
+      limit: 2,
+      offset: 0,
+      sort: {
+        ascending: false,
+        property: EventsSortProperty.DATE,
       },
-      {
-        filters: [],
-      }
-    );
+    });
 
     const workEvents = getWorkEvents(result);
     expect(workEvents).to.have.length(2);
@@ -210,19 +175,14 @@ describe("MemApi", () => {
   });
 
   it("getWorkEvents sorts by title", async () => {
-    const result = await sut.getWorkEvents(
-      {
-        limit: 2,
-        offset: 0,
-        sort: {
-          ascending: false,
-          property: EventsSortProperty.LABEL,
-        },
+    const result = await sut.getWorkEvents({
+      limit: 2,
+      offset: 0,
+      sort: {
+        ascending: false,
+        property: EventsSortProperty.LABEL,
       },
-      {
-        filters: [],
-      }
-    );
+    });
 
     const workEvents = getWorkEvents(result);
     expect(workEvents).to.have.length(2);
@@ -230,12 +190,7 @@ describe("MemApi", () => {
   });
 
   it("getWorkLocations returns all work locations", async () => {
-    const result = await sut.getWorkLocations(
-      {requireCentroids: true},
-      {
-        filters: [],
-      }
-    );
+    const result = await sut.getWorkLocations();
 
     for (const work of modelSet.works) {
       const expectResultWorkLocation = (expectedWorkLocation: WorkLocation) => {
@@ -265,42 +220,24 @@ describe("MemApi", () => {
   it("getWorkKeys returns a collection's work keys (multi-page-exhibition)", async () => {
     const collection = modelSet.collections[0];
     expect(collection.works).not.to.be.empty;
-    const result = await sut.getWorkKeys(
-      {
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
-      },
-      {
+    const result = await sut.getWorkKeys({
+      query: {
         filters: [
           {
             includeValues: [collection.key],
             type: "WorkCollectionValue",
           },
         ],
-      }
-    );
+      },
+    });
     expect(result.totalWorksCount).to.be.lt(modelSet.works.length);
     expect(result.totalWorksCount).to.eq(collection.works.length);
     expect(result.workKeys).to.deep.eq(collection.works.map(work => work.key));
   });
 
   it("getWorks returns facets with thumbnails", async () => {
-    const result = await sut.getWorks(
-      {
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
-        valueFacetValueThumbnailSelector: {
-          maxDimensions: {
-            height: 200,
-            width: 200,
-          },
-          targetDimensions: {
-            height: 200,
-            width: 200,
-          },
-        },
-      },
-      {
+    const result = await sut.getWorks({
+      query: {
         filters: [
           {
             label: "Publisher",
@@ -308,8 +245,18 @@ describe("MemApi", () => {
             type: "StringPropertyValue",
           } as StringPropertyValueFilter,
         ],
-      }
-    );
+      },
+      valueFacetValueThumbnailSelector: {
+        maxDimensions: {
+          height: 200,
+          width: 200,
+        },
+        targetDimensions: {
+          height: 200,
+          width: 200,
+        },
+      },
+    });
 
     expect(
       result.facets.some(facet => {
@@ -330,46 +277,26 @@ describe("MemApi", () => {
   });
 
   it("getWorks returns at least one work from an empty query", async () => {
-    const result = await sut.getWorks(
-      {
-        limit: Number.MAX_SAFE_INTEGER,
-        offset: 0,
-        valueFacetValueThumbnailSelector: {
-          targetDimensions: {
-            height: 200,
-            width: 200,
-          },
+    const result = await sut.getWorks({
+      valueFacetValueThumbnailSelector: {
+        targetDimensions: {
+          height: 200,
+          width: 200,
         },
       },
-      {
-        filters: [],
-      }
-    );
+    });
 
     expect(result.modelSet.works).to.not.be.empty;
   });
 
   it("getWorks returns fewer works from a freetext query", async () => {
-    const allResult = await sut.getWorks(
-      {
-        offset: 0,
-        limit: Number.MAX_SAFE_INTEGER,
-      },
-      {
-        filters: [],
-      }
-    );
+    const allResult = await sut.getWorks();
 
-    const fewerResult = await sut.getWorks(
-      {
-        offset: 0,
-        limit: Number.MAX_SAFE_INTEGER,
-      },
-      {
-        filters: []!,
+    const fewerResult = await sut.getWorks({
+      query: {
         text: "Collection0Work2",
-      }
-    );
+      },
+    });
 
     expect(allResult.modelSet.works).to.not.be.empty;
     expect(fewerResult.modelSet.works).to.not.be.empty;
@@ -380,31 +307,21 @@ describe("MemApi", () => {
 
   it("getWorks sorts by label", async () => {
     const allWorkKeys = (
-      await sut.getWorks(
-        {
-          offset: 0,
-          limit: 4,
-        },
-        {
-          filters: [],
-        }
-      )
+      await sut.getWorks({
+        offset: 0,
+        limit: 4,
+      })
     ).modelSet.works.map(work => work.key);
 
     const sortedWorkKeys = (
-      await sut.getWorks(
-        {
-          offset: 0,
-          limit: 4,
-          sort: {
-            ascending: false,
-            property: WorksSortProperty.LABEL,
-          },
+      await sut.getWorks({
+        offset: 0,
+        limit: 4,
+        sort: {
+          ascending: false,
+          property: WorksSortProperty.LABEL,
         },
-        {
-          filters: [],
-        }
-      )
+      })
     ).modelSet.works.map(work => work.key);
 
     expect(sortedWorkKeys).not.to.deep.eq(allWorkKeys);
@@ -414,20 +331,18 @@ describe("MemApi", () => {
     const expectedWork = modelSet.works[0];
 
     const actualWorks = (
-      await sut.getWorks(
-        {
-          limit: 1, //Number.MAX_SAFE_INTEGER,
-          offset: 0,
-        },
-        {
+      await sut.getWorks({
+        limit: 1, //Number.MAX_SAFE_INTEGER,
+        offset: 0,
+        query: {
           filters: [
             {
               includeKeys: [expectedWork.key],
               type: "Key",
             },
           ],
-        }
-      )
+        },
+      })
     ).modelSet.works;
 
     expect(actualWorks).to.have.length(1);

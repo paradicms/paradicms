@@ -39,7 +39,7 @@ import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {requireNonNull} from "@paradicms/utilities";
 import log from "loglevel";
-import {facetizeWorks} from "facetizeWorks";
+import {facetizeWorks} from "./facetizeWorks";
 import {sortWorks} from "./sortWorks";
 import {sortAgents} from "./sortAgents";
 import {filterWorks} from "./filterWorks";
