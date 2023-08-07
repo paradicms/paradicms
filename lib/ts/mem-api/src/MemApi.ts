@@ -1,13 +1,9 @@
 import {
   defaultProperties,
-  Image,
   JsonAppConfiguration,
   ModelSet,
   ModelSetBuilder,
-  ThumbnailSelector,
   Work,
-  WorkAgent,
-  WorkEvent,
 } from "@paradicms/models";
 import {
   Api,
@@ -16,6 +12,8 @@ import {
   defaultWorksSort,
   GetCollectionsOptions,
   GetCollectionsResult,
+  GetEventsOptions,
+  GetEventsResult,
   GetWorkAgentsOptions,
   GetWorkAgentsResult,
   GetWorkEventsOptions,
@@ -26,54 +24,31 @@ import {
   GetWorkLocationsResult,
   GetWorksOptions,
   GetWorksResult,
-  JsonPrimitiveType,
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
   summarizeWorkLocation,
-  ValueFacetValue,
-  ValueFacetValueThumbnail,
-  ValueFilter,
-  WorkAgentsSort,
-  WorkAgentsSortProperty,
-  WorkEventsSort,
-  WorkEventsSortProperty,
   WorkLocationSummary,
-  WorksFacet,
-  WorksFilter,
   WorksQuery,
-  WorksSort,
-  WorksSortProperty,
 } from "@paradicms/api";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
 import {requireNonNull} from "@paradicms/utilities";
 import log from "loglevel";
-import {CollectionValueFilter} from "@paradicms/api/dist/CollectionValueFilter";
+import {facetizeWorks} from "facetizeWorks";
+import {sortWorks} from "./sortWorks";
+import {sortWorkEvents} from "./sortWorkEvents";
+import {WorkEventWithWorkKey} from "./WorkEventWithWorkKey";
+import {sortWorkAgents} from "./sortWorkAgents";
+import {WorkAgentWithWorkKey} from "./WorkAgentWithWorkKey";
+import {filterWorks} from "./filterWorks";
+import {EventsQuery} from "@paradicms/api/dist/EventsQuery";
+import {filterEvents} from "./filterEvents";
 
 const basex = require("base-x");
 const base58 = basex(
   "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 );
-
-// function intersection<T>(a: Set<T>, b: Set<T>) {
-//   if (a.size === 0) {
-//     return a;
-//   } else if (b.size === 0) {
-//     return b;
-//   } else if (a.size <= b.size) {
-//     return new Set([...a].filter((value) => b.has(value)));
-//   } else {
-//     return new Set([...b].filter((value) => a.has(value)));
-//   }
-// }
-
-interface MutableValueFacetValue<ValueT extends JsonPrimitiveType>
-  extends Omit<ValueFacetValue<ValueT>, "count"> {
-  count: number;
-}
-
-type WorkAgentWithWorkKey = {workAgent: WorkAgent; workKey: string};
-type WorkEventWithWorkKey = {workEvent: WorkEvent; workKey: string};
+const encodeLunrFieldName = (value: string) => {
+  return base58.encode(new TextEncoder().encode(value));
+};
 
 export class MemApi implements Api {
   private readonly index: Index;
@@ -100,7 +75,7 @@ export class MemApi implements Api {
     this.index = lunr(function() {
       const propertyFieldNamesByIri: {[index: string]: string} = {};
       for (const propertyIri of searchablePropertyIris) {
-        const fieldName = MemApi.encodeFieldName(propertyIri);
+        const fieldName = encodeLunrFieldName(propertyIri);
         propertyFieldNamesByIri[propertyIri] = fieldName;
         this.field(fieldName);
       }
@@ -132,123 +107,6 @@ export class MemApi implements Api {
       }
     }
     this.workCollectionKeys = workCollectionKeys;
-  }
-
-  private static encodeFieldName(value: string) {
-    return base58.encode(new TextEncoder().encode(value));
-  }
-
-  private facetizeWorks(kwds: {
-    filters: readonly WorksFilter[];
-    valueFacetValueThumbnailSelector?: ThumbnailSelector;
-    works: readonly Work[];
-  }): readonly WorksFacet[] {
-    const {filters, valueFacetValueThumbnailSelector, works} = kwds;
-    const facets: WorksFacet[] = [];
-    for (const filter of filters) {
-      switch (filter.type) {
-        case "StringPropertyValue": {
-          const concreteFilter: StringPropertyValueFilter = filter as StringPropertyValueFilter;
-          let unknownCount: number = 0;
-          const facetValues: {
-            [index: string]: MutableValueFacetValue<string>;
-          } = {};
-          for (const work of works) {
-            let workHasProperty = false;
-            for (const propertyValue of work.propertyValuesByPropertyIri(
-              concreteFilter.propertyIri
-            )) {
-              const propertyValueString: string = propertyValue.value;
-              const facetValue = facetValues[propertyValueString];
-              if (facetValue) {
-                facetValue.count++;
-              } else {
-                facetValues[propertyValueString] = {
-                  count: 1,
-                  label: propertyValue.label,
-                  value: propertyValueString,
-                  thumbnail: valueFacetValueThumbnailSelector
-                    ? MemApi.toValueFacetValueThumbnail(
-                        propertyValue.thumbnail(
-                          valueFacetValueThumbnailSelector
-                        )
-                      )
-                    : null,
-                };
-              }
-              workHasProperty = true;
-            }
-            if (!workHasProperty) {
-              unknownCount++;
-            }
-          }
-          const facet: StringPropertyValueFacet = {
-            propertyIri: concreteFilter.propertyIri,
-            type: "StringPropertyValue",
-            unknownCount,
-            values: Object.values(facetValues),
-          };
-          facets.push(facet);
-          break;
-        }
-      }
-    }
-    return facets;
-  }
-
-  private filterWorks(kwds: {
-    filters: readonly WorksFilter[];
-    works: readonly Work[];
-  }): readonly Work[] {
-    const {filters, works} = kwds;
-    let filteredWorks = works;
-    for (const filter of filters) {
-      switch (filter.type) {
-        case "CollectionValue": {
-          filteredWorks = filteredWorks.filter(work =>
-            MemApi.testValueFilter(
-              filter as CollectionValueFilter,
-              this.workCollectionKeys[work.key] ?? []
-            )
-          );
-          break;
-        }
-        case "Key": {
-          const excludeKeysSet: Set<string> = filter.excludeKeys
-            ? new Set(filter.excludeKeys)
-            : new Set();
-          const includeKeysSet: Set<string> = filter.includeKeys
-            ? new Set(filter.includeKeys)
-            : new Set();
-
-          filteredWorks = filteredWorks.filter(work => {
-            if (excludeKeysSet.size > 0 && excludeKeysSet.has(work.key)) {
-              return false;
-            }
-            if (includeKeysSet.size > 0 && !includeKeysSet.has(work.key)) {
-              return false;
-            }
-            return true;
-          });
-
-          break;
-        }
-        case "StringPropertyValue": {
-          filteredWorks = filteredWorks.filter(work =>
-            MemApi.testValueFilter(
-              filter as StringPropertyValueFilter,
-              work
-                .propertyValuesByPropertyIri(
-                  (filter as StringPropertyValueFilter).propertyIri
-                )
-                .map(propertyValue => propertyValue.value)
-            )
-          );
-          break;
-        }
-      }
-    }
-    return filteredWorks;
   }
 
   getAppConfiguration(): Promise<JsonAppConfiguration | null> {
@@ -288,6 +146,33 @@ export class MemApi implements Api {
     });
   }
 
+  getEvents(
+    options: GetEventsOptions,
+    query: EventsQuery
+  ): Promise<GetEventsResult> {
+    const {eventJoinSelector, limit, offset} = options;
+
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      const filteredEvents = filterEvents({
+        events: this.modelSet.events,
+        filters: query.filters,
+      });
+
+      // const sortedWorks = filteredWorks.concat();
+      // sortWorks(options.sort ?? defaultWorksSort, sortedWorks);
+      //
+      // const slicedWorks = sortedWorks.slice(offset, offset + limit);
+      //
+      // resolve({
+      //   totalWorksCount: filteredWorks.length,
+      //   workKeys: slicedWorks.map(work => work.key),
+      // });
+    });
+  }
+
   getWorkAgents(
     options: GetWorkAgentsOptions,
     query: WorksQuery
@@ -298,8 +183,9 @@ export class MemApi implements Api {
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
-      const works = this.filterWorks({
+      const works = filterWorks({
         filters: query.filters,
+        workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(query),
       });
 
@@ -308,10 +194,7 @@ export class MemApi implements Api {
       );
 
       const sortedWorkAgents = workAgents;
-      MemApi.sortWorkAgentsInPlace(
-        options.sort ?? defaultWorkAgentsSort,
-        workAgents
-      );
+      sortWorkAgents(options.sort ?? defaultWorkAgentsSort, workAgents);
 
       const slicedWorkAgents = sortedWorkAgents.slice(offset, offset + limit);
 
@@ -346,8 +229,9 @@ export class MemApi implements Api {
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
-      const works = this.filterWorks({
+      const works = filterWorks({
         filters: query.filters,
+        workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(query),
       });
 
@@ -362,10 +246,7 @@ export class MemApi implements Api {
       }
 
       const sortedWorkEvents = workEvents;
-      MemApi.sortWorkEventsInPlace(
-        options.sort ?? defaultWorkEventsSort,
-        sortedWorkEvents
-      );
+      sortWorkEvents(options.sort ?? defaultWorkEventsSort, sortedWorkEvents);
 
       const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
 
@@ -399,13 +280,14 @@ export class MemApi implements Api {
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
-      const filteredWorks = this.filterWorks({
+      const filteredWorks = filterWorks({
         filters: query.filters,
+        workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(query),
       });
 
       const sortedWorks = filteredWorks.concat();
-      MemApi.sortWorksInPlace(options.sort ?? defaultWorksSort, sortedWorks);
+      sortWorks(options.sort ?? defaultWorksSort, sortedWorks);
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
@@ -423,8 +305,9 @@ export class MemApi implements Api {
     const {requireCentroids} = options;
 
     return new Promise(resolve => {
-      const works = this.filterWorks({
+      const works = filterWorks({
         filters: query.filters,
+        workCollectionKeys: this.workCollectionKeys,
         works: this.searchWorks(query),
       });
 
@@ -471,7 +354,7 @@ export class MemApi implements Api {
       const searchedWorks: readonly Work[] = this.searchWorks(query);
 
       // Calculate facets on the universe before filtering it
-      const facets = this.facetizeWorks({
+      const facets = facetizeWorks({
         filters: query.filters,
         valueFacetValueThumbnailSelector,
         works: searchedWorks,
@@ -479,8 +362,9 @@ export class MemApi implements Api {
 
       log.debug("Search facets:", JSON.stringify(facets));
 
-      const filteredWorks = this.filterWorks({
+      const filteredWorks = filterWorks({
         filters: query.filters,
+        workCollectionKeys: this.workCollectionKeys,
         works: searchedWorks,
       });
 
@@ -489,7 +373,7 @@ export class MemApi implements Api {
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
       const sortedWorks = filteredWorks.concat();
-      MemApi.sortWorksInPlace(options.sort ?? defaultWorksSort, sortedWorks);
+      sortWorks(options.sort ?? defaultWorksSort, sortedWorks);
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
@@ -527,139 +411,5 @@ export class MemApi implements Api {
       // All works
       return this.modelSet.works;
     }
-  }
-
-  private static sortWorkAgentsInPlace(
-    sort: WorkAgentsSort,
-    workAgents: WorkAgentWithWorkKey[]
-  ): void {
-    const compareMultiplier = sort.ascending ? 1 : -1;
-    switch (sort.property) {
-      case WorkAgentsSortProperty.NAME:
-        workAgents.sort(
-          (left, right) =>
-            compareMultiplier *
-            left.workAgent.agent.label.localeCompare(
-              right.workAgent.agent.label
-            )
-        );
-        return;
-      default:
-        MemApi.sortWorkAgentsInPlace(defaultWorkAgentsSort, workAgents);
-        return;
-    }
-  }
-
-  private static sortWorkEventsInPlace(
-    sort: WorkEventsSort,
-    workEvents: WorkEventWithWorkKey[]
-  ): void {
-    const compareMultiplier = sort.ascending ? 1 : -1;
-    switch (sort.property) {
-      case WorkEventsSortProperty.DATE:
-        workEvents.sort(
-          (left, right) =>
-            compareMultiplier * left.workEvent.compareByDate(right.workEvent)
-        );
-        return;
-      case WorkEventsSortProperty.LABEL:
-        workEvents.sort(
-          (left, right) =>
-            compareMultiplier *
-            left.workEvent.label.localeCompare(right.workEvent.label)
-        );
-        return;
-      default:
-        MemApi.sortWorkEventsInPlace(defaultWorkEventsSort, workEvents);
-        return;
-    }
-  }
-
-  private static sortWorksInPlace(sort: WorksSort, works: Work[]): void {
-    const compareMultiplier = sort.ascending ? 1 : -1;
-    switch (sort.property) {
-      case WorksSortProperty.LABEL:
-        works.sort(
-          (left, right) =>
-            compareMultiplier * left.label.localeCompare(right.label)
-        );
-        return;
-      case WorksSortProperty.RELEVANCE:
-        // Works are already sorted by relevance
-        return;
-      default:
-        MemApi.sortWorksInPlace(defaultWorksSort, works);
-        return;
-    }
-  }
-
-  private static testValueFilter<T extends JsonPrimitiveType>(
-    filter: ValueFilter<T>,
-    values: readonly T[]
-  ): boolean {
-    if (values.length === 0) {
-      if (filter.excludeUnknown) {
-        return false;
-      }
-    } else {
-      if (filter.excludeKnown) {
-        return false;
-      }
-    }
-
-    const excludeValues: readonly T[] = filter.excludeValues ?? [];
-    const includeValues: readonly T[] = filter.includeValues ?? [];
-    if (excludeValues.length === 0 && includeValues.length === 0) {
-      return true;
-    }
-    if (excludeValues.length > 0) {
-      // If an work has any value that is excluded, then exclude the work
-      for (const value of values) {
-        if (excludeValues.some(excludeValue => excludeValue === value)) {
-          return false;
-        }
-      }
-    }
-
-    if (includeValues.length > 0) {
-      // If the work has any value that is included, then include the work
-      // Conversely, if any values are included and an work doesn't have one of them, exclude the work.
-      let include = false;
-      for (const value of values) {
-        if (includeValues.some(includeValue => includeValue === value)) {
-          include = true;
-          break;
-        }
-      }
-      if (!include) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  private static toValueFacetValueThumbnail(
-    image: Image | null
-  ): ValueFacetValueThumbnail | null {
-    if (!image) {
-      return null;
-    }
-    const imageSrc = image.src;
-    if (!imageSrc) {
-      return null;
-    }
-
-    return {
-      creators: image.creators.map(creator => creator.label),
-      licenses: image.licenses.map(license => license.label),
-      exactDimensions: image.exactDimensions,
-      maxDimensions: image.maxDimensions,
-      rightsHolders: image.rightsHolders.map(holder => holder.label),
-      rightsStatements: image.rightsStatements.map(
-        rightsStatement => rightsStatement.label
-      ),
-      src: imageSrc,
-    };
   }
 }
