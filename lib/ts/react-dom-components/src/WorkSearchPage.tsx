@@ -6,7 +6,7 @@ import {
   GetWorkEventsResult,
   GetWorkLocationsResult,
   GetWorksResult,
-  WorkAgentsSort,
+  AgentsSort,
   WorkLocationSummary,
   Api,
   WorksQuery,
@@ -74,13 +74,13 @@ export const WorkSearchPage: React.FunctionComponent<{
     workLocations: readonly WorkLocationSummary[]
   ) => React.ReactElement;
   setWorkAgentsPage: (page: number | undefined) => void;
-  setWorkAgentsSort: (sort: WorkAgentsSort | undefined) => void;
+  setWorkAgentsSort: (sort: AgentsSort | undefined) => void;
   setWorkEventsPage: (page: number | undefined) => void;
   setWorksPage: (page: number | undefined) => void;
   setWorksQuery: (worksQuery: WorksQuery) => void;
   setWorksSort: (sort: WorksSort | undefined) => void;
   workAgentsPage: number;
-  workAgentsSort: WorkAgentsSort;
+  workAgentsSort: AgentsSort;
   workEventsPage: number;
   worksQuery: WorksQuery;
   api: Api;
@@ -207,10 +207,15 @@ export const WorkSearchPage: React.FunctionComponent<{
       api
         .getWorkEvents(
           {
+            eventJoinSelector: workSearchWorkEventJoinSelector,
+            filters: [
+              {
+                excludeUnknown: true,
+                type: "EventSortDateExistence",
+              },
+            ],
             limit: (workEventsPage + 1) * objectsPerPage,
             offset: 0,
-            requireDate: true,
-            workEventJoinSelector: workSearchWorkEventJoinSelector,
           },
           worksQuery
         )

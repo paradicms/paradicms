@@ -1,4 +1,6 @@
-export interface KeyFilter {
+import {Filter} from "./Filter";
+
+export interface KeyFilter extends Filter {
   /**
    * Exclude models that have the given keys.
    *

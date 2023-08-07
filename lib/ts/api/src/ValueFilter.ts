@@ -1,8 +1,8 @@
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
-import {Filter} from "./Filter";
+import {ExistenceFilter} from "./ExistenceFilter";
 
 /**
- * Filter that excludes/includes specific values where (model, filtered property, value).
+ * Filter that excludes/includes models based on existence and values of (model, filtered property, value).
  *
  * This filter is a companion to ValueFacet, which describes the universe of possible values for a given property.
  *
@@ -12,21 +12,8 @@ import {Filter} from "./Filter";
  *
  * If the filter is empty (i.e., none of exclude* or include* is set), then all models are implicitly included.
  */
-export interface ValueFilter<T extends JsonPrimitiveType> extends Filter {
-  /**
-   * If true, exclude all models that have the filtered property.
-   *
-   * This is shorthand for excludeValues with all values from the universe.
-   */
-  readonly excludeKnown?: boolean;
-
-  /**
-   * If true, exclude all models that do not have the filtered property.
-   * If false or undefined, include those models.
-   * This switch is independent of exclusion/inclusion of known values.
-   */
-  readonly excludeUnknown?: boolean;
-
+export interface ValueFilter<T extends JsonPrimitiveType>
+  extends ExistenceFilter {
   /**
    * Exclude models that have the filtered property with the given value.
    *

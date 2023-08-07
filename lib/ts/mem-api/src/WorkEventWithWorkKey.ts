@@ -1,3 +1,3 @@
 import {WorkEvent} from "@paradicms/models";
 
-export type WorkEventWithWorkKey = {workEvent: WorkEvent; workKey: string};
+export type WorkEventWithWorkKey = WorkEvent & {readonly workKey: string};

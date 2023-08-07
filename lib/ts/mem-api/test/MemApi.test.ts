@@ -7,11 +7,11 @@ import {
   WorkLocation,
 } from "@paradicms/models";
 import {
+  EventsSortProperty,
   GetWorkAgentsResult,
   GetWorkEventsResult,
   StringPropertyValueFacet,
   StringPropertyValueFilter,
-  WorkEventsSortProperty,
   WorksSortProperty,
 } from "@paradicms/api";
 import {syntheticData} from "@paradicms/test";
@@ -46,6 +46,8 @@ describe("MemApi", () => {
       collectionsModelSet.collections.map(collection => collection.key)
     );
   });
+
+  it("getEvents returns all available events", async () => {});
 
   const getWorkAgents = (result: GetWorkAgentsResult): readonly WorkAgent[] => {
     const workAgentsByKey: {[index: string]: WorkAgent} = {};
@@ -141,7 +143,7 @@ describe("MemApi", () => {
       {
         limit: Number.MAX_SAFE_INTEGER,
         offset: 0,
-        workEventJoinSelector: {
+        eventJoinSelector: {
           agents: {},
           location: true,
           thumbnail: THUMBNAIL_SELECTOR,
@@ -182,7 +184,7 @@ describe("MemApi", () => {
         offset: 0,
         sort: {
           ascending: false,
-          property: WorkEventsSortProperty.DATE,
+          property: EventsSortProperty.DATE,
         },
       },
       {
@@ -202,7 +204,7 @@ describe("MemApi", () => {
         offset: 0,
         sort: {
           ascending: false,
-          property: WorkEventsSortProperty.LABEL,
+          property: EventsSortProperty.LABEL,
         },
       },
       {

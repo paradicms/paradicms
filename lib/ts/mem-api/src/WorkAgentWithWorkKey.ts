@@ -1,3 +1,3 @@
 import {WorkAgent} from "@paradicms/models";
 
-export type WorkAgentWithWorkKey = {workAgent: WorkAgent; workKey: string};
+export type WorkAgentWithWorkKey = WorkAgent & {readonly workKey: string};

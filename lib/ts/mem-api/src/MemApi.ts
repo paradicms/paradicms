@@ -7,8 +7,8 @@ import {
 } from "@paradicms/models";
 import {
   Api,
+  defaultEventsSort,
   defaultWorkAgentsSort,
-  defaultWorkEventsSort,
   defaultWorksSort,
   GetCollectionsOptions,
   GetCollectionsResult,
@@ -34,13 +34,13 @@ import {requireNonNull} from "@paradicms/utilities";
 import log from "loglevel";
 import {facetizeWorks} from "facetizeWorks";
 import {sortWorks} from "./sortWorks";
-import {sortWorkEvents} from "./sortWorkEvents";
 import {WorkEventWithWorkKey} from "./WorkEventWithWorkKey";
 import {sortWorkAgents} from "./sortWorkAgents";
 import {WorkAgentWithWorkKey} from "./WorkAgentWithWorkKey";
 import {filterWorks} from "./filterWorks";
 import {EventsQuery} from "@paradicms/api/dist/EventsQuery";
 import {filterEvents} from "./filterEvents";
+import {sortEvents} from "./sortEvents";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -161,15 +161,17 @@ export class MemApi implements Api {
         filters: query.filters,
       });
 
-      // const sortedWorks = filteredWorks.concat();
-      // sortWorks(options.sort ?? defaultWorksSort, sortedWorks);
-      //
-      // const slicedWorks = sortedWorks.slice(offset, offset + limit);
-      //
-      // resolve({
-      //   totalWorksCount: filteredWorks.length,
-      //   workKeys: slicedWorks.map(work => work.key),
-      // });
+      const sortedEvents = filteredEvents.concat();
+      sortEvents(sortedEvents, options.sort ?? defaultEventsSort);
+
+      const slicedEvents = sortedEvents.slice(offset, offset + limit);
+
+      resolve({
+        modelSet: new ModelSetBuilder()
+          .addEvents(slicedEvents, eventJoinSelector)
+          .build(),
+        totalEventsCount: filteredEvents.length,
+      });
     });
   }
 
@@ -189,8 +191,13 @@ export class MemApi implements Api {
         works: this.searchWorks(query),
       });
 
+      // @ts-ignore
       const workAgents: WorkAgentWithWorkKey[] = works.flatMap(work =>
-        work.agents.map(workAgent => ({workAgent, workKey: work.key}))
+        work.agents.map(workAgent => {
+          // @ts-ignore
+          workAgent["workKey"] = work.key;
+          return workAgent;
+        })
       );
 
       const sortedWorkAgents = workAgents;
@@ -212,9 +219,7 @@ export class MemApi implements Api {
       resolve({
         modelSet: slicedWorkAgentsModelSetBuilder.build(),
         totalWorkAgentsCount: workAgents.length,
-        workAgentKeys: slicedWorkAgents.map(
-          workAgent => workAgent.workAgent.agent.key
-        ),
+        workAgentKeys: slicedWorkAgents.map(workAgent => workAgent.agent.key),
       });
     });
   }
@@ -223,7 +228,7 @@ export class MemApi implements Api {
     options: GetWorkEventsOptions,
     query: WorksQuery
   ): Promise<GetWorkEventsResult> {
-    const {limit, offset, requireDate, workEventJoinSelector} = options;
+    const {filters, limit, offset, eventJoinSelector} = options;
 
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
@@ -238,15 +243,17 @@ export class MemApi implements Api {
       const workEvents: WorkEventWithWorkKey[] = [];
       for (const work of works) {
         for (const workEvent of work.events) {
-          if (requireDate && workEvent.sortDate === null) {
-            continue;
-          }
-          workEvents.push({workEvent, workKey: work.key});
+          // @ts-ignore
+          workEvent["workKey"] = work.key;
+          // @ts-ignore
+          workEvents.push(workEvent);
         }
       }
 
-      const sortedWorkEvents = workEvents;
-      sortWorkEvents(options.sort ?? defaultWorkEventsSort, sortedWorkEvents);
+      const filteredWorkEvents = filterEvents({events: workEvents, filters});
+
+      const sortedWorkEvents = filteredWorkEvents.concat();
+      sortEvents(sortedWorkEvents, options.sort ?? defaultEventsSort);
 
       const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
 
@@ -257,16 +264,14 @@ export class MemApi implements Api {
         // Add all of a work's events
         slicedWorkEventsModelSetBuilder.addWork(
           requireNonNull(this.modelSet.workByKey(workKey)),
-          {events: workEventJoinSelector ?? {}}
+          {events: eventJoinSelector ?? {}}
         );
       }
 
       resolve({
         modelSet: slicedWorkEventsModelSetBuilder.build(),
         totalWorkEventsCount: workEvents.length,
-        workEventKeys: slicedWorkEvents.map(
-          workEvent => workEvent.workEvent.key
-        ),
+        workEventKeys: slicedWorkEvents.map(workEvent => workEvent.key),
       });
     });
   }

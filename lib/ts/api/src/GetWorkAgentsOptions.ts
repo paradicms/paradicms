@@ -1,9 +1,9 @@
 import {AgentJoinSelector} from "@paradicms/models";
-import {WorkAgentsSort} from "./WorkAgentsSort";
+import {AgentsSort} from "./AgentsSort";
 
 export interface GetWorkAgentsOptions {
   readonly agentJoinSelector?: AgentJoinSelector;
   readonly limit: number;
   readonly offset: number;
-  readonly sort?: WorkAgentsSort;
+  readonly sort?: AgentsSort;
 }
