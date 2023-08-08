@@ -1,4 +1,4 @@
-import {KeyFilter} from "./KeyFilter";
-import {CollectionWorksExistenceFilter} from "./CollectionWorksExistenceFilter";
+import {collectionsFilterSchema} from "./collectionsFilterSchema";
+import {z} from "zod";
 
-export type CollectionsFilter = CollectionWorksExistenceFilter | KeyFilter;
+export type CollectionsFilter = z.infer<typeof collectionsFilterSchema>;

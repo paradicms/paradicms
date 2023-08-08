@@ -1,5 +1,6 @@
-import {ExistenceFilter} from "./ExistenceFilter";
+import {z} from "zod";
+import {collectionWorksExistenceFilterSchema} from "./collectionWorksExistenceFilterSchema";
 
-export interface CollectionWorksExistenceFilter extends ExistenceFilter {
-  readonly type: "CollectionWorksExistence";
-}
+export type CollectionWorksExistenceFilter = z.infer<
+  typeof collectionWorksExistenceFilterSchema
+>;

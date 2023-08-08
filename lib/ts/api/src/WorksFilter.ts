@@ -1,9 +1,4 @@
-import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
-import {WorkCollectionValueFilter} from "./WorkCollectionValueFilter";
-import {KeyFilter} from "./KeyFilter";
+import {worksFilterSchema} from "./worksFilterSchema";
+import {z} from "zod";
 
-// Discriminated union on "type"
-export type WorksFilter =
-  | KeyFilter
-  | StringPropertyValueFilter
-  | WorkCollectionValueFilter;
+export type WorksFilter = z.infer<typeof worksFilterSchema>;
