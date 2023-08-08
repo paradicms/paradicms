@@ -1,7 +1,3 @@
-import {z} from "zod";
-import {filterSchema} from "./filterSchema";
+import {existenceFilterSchema} from "./existenceFilterSchema";
 
-export const valueFilterSchema = filterSchema.extend({
-  excludeKnown: z.boolean().optional(),
-  excludeUnknown: z.boolean().optional(),
-});
+export const valueFilterSchema = existenceFilterSchema;
