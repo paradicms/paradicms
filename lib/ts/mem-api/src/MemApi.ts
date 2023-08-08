@@ -122,9 +122,7 @@ export class MemApi implements Api {
     return Promise.resolve(this.modelSet.appConfiguration?.toJson() ?? null);
   }
 
-  getCollections(
-    kwds?: GetCollectionsOptions & {query?: CollectionsQuery}
-  ): Promise<GetCollectionsResult> {
+  getCollections(kwds?: GetCollectionsOptions): Promise<GetCollectionsResult> {
     const {
       collectionJoinSelector,
       limit = LIMIT_DEFAULT,
@@ -161,11 +159,7 @@ export class MemApi implements Api {
     });
   }
 
-  getEvents(
-    kwds?: GetEventsOptions & {
-      query?: EventsQuery;
-    }
-  ): Promise<GetEventsResult> {
+  getEvents(kwds?: GetEventsOptions): Promise<GetEventsResult> {
     const {
       eventJoinSelector,
       limit = LIMIT_DEFAULT,
@@ -197,11 +191,7 @@ export class MemApi implements Api {
     });
   }
 
-  getWorkAgents(
-    kwds?: GetWorkAgentsOptions & {
-      worksQuery?: WorksQuery;
-    }
-  ): Promise<GetWorkAgentsResult> {
+  getWorkAgents(kwds?: GetWorkAgentsOptions): Promise<GetWorkAgentsResult> {
     const {
       agentJoinSelector,
       limit = LIMIT_DEFAULT,
@@ -258,18 +248,13 @@ export class MemApi implements Api {
     });
   }
 
-  getWorkEvents(
-    kwds?: GetWorkEventsOptions & {
-      workEventsQuery?: EventsQuery;
-      worksQuery?: WorksQuery;
-    }
-  ): Promise<GetWorkEventsResult> {
+  getWorkEvents(kwds?: GetWorkEventsOptions): Promise<GetWorkEventsResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       eventJoinSelector,
       sort = defaultEventsSort,
-      workEventsQuery = {} as EventsQuery,
+      eventsQuery = {} as EventsQuery,
       worksQuery = {} as WorksQuery,
     } = kwds ?? {};
 
@@ -306,7 +291,7 @@ export class MemApi implements Api {
 
       const filteredWorkEvents = filterEvents({
         events: workEvents,
-        filters: workEventsQuery.filters ?? [],
+        filters: eventsQuery.filters ?? [],
       });
 
       const sortedWorkEvents = filteredWorkEvents.concat();
@@ -333,11 +318,7 @@ export class MemApi implements Api {
     });
   }
 
-  getWorkKeys(
-    kwds?: GetWorkKeysOptions & {
-      query?: WorksQuery;
-    }
-  ): Promise<GetWorkKeysResult> {
+  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetWorkKeysResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
@@ -367,10 +348,7 @@ export class MemApi implements Api {
   }
 
   getWorkLocations(
-    kwds?: GetWorkLocationsOptions & {
-      locationsQuery?: LocationsQuery;
-      worksQuery?: WorksQuery;
-    }
+    kwds?: GetWorkLocationsOptions
   ): Promise<GetWorkLocationsResult> {
     const {
       locationsQuery = {} as LocationsQuery,
@@ -418,9 +396,7 @@ export class MemApi implements Api {
     });
   }
 
-  getWorks(
-    kwds?: GetWorksOptions & {query?: WorksQuery}
-  ): Promise<GetWorksResult> {
+  getWorks(kwds?: GetWorksOptions): Promise<GetWorksResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
