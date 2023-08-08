@@ -1,5 +1,6 @@
-import {PropertyValueFilter} from "./PropertyValueFilter";
+import {z} from "zod";
+import {stringPropertyValueFilterSchema} from "./stringPropertyValueFilterSchema";
 
-export interface StringPropertyValueFilter extends PropertyValueFilter<string> {
-  readonly type: "StringPropertyValue";
-}
+export type StringPropertyValueFilter = z.infer<
+  typeof stringPropertyValueFilterSchema
+>;

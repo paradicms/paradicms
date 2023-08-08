@@ -1,5 +1,6 @@
-import {ValueFilter} from "./ValueFilter";
+import {z} from "zod";
+import {workCollectionValueFilterSchema} from "./workCollectionValueFilterSchema";
 
-export interface WorkCollectionValueFilter extends ValueFilter<string> {
-  readonly type: "WorkCollectionValue";
-}
+export type WorkCollectionValueFilter = z.infer<
+  typeof workCollectionValueFilterSchema
+>;
