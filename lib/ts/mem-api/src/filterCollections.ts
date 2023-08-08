@@ -11,9 +11,17 @@ export const filterCollections = (kwds: {
   for (const filter of filters) {
     switch (filter.type) {
       case "CollectionWorksExistence": {
-        filteredCollections = filteredCollections.filter(
-          collection => collection.works.length > 0
-        );
+        if (typeof filter.exists !== "undefined") {
+          if (filter.exists) {
+            filteredCollections = filteredCollections.filter(
+              collection => collection.works.length > 0
+            );
+          } else {
+            filteredCollections = filteredCollections.filter(
+              collection => collection.works.length === 0
+            );
+          }
+        }
         break;
       }
       case "Key": {

@@ -16,7 +16,13 @@ export const filterEvents = <
   for (const filter of filters) {
     switch (filter.type) {
       case "EventSortDateExistence": {
-        filteredEvents = filteredEvents.filter(event => !!event.sortDate);
+        if (typeof filter.exists !== "undefined") {
+          if (filter.exists) {
+            filteredEvents = filteredEvents.filter(event => !!event.sortDate);
+          } else {
+            filteredEvents = filteredEvents.filter(event => !event.sortDate);
+          }
+        }
         break;
       }
       case "Key": {
