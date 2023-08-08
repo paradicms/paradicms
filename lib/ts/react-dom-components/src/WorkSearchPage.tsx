@@ -148,16 +148,14 @@ export const WorkSearchPage: React.FunctionComponent<{
       log.trace("invoking getWorks");
       setLoadingWorks(true);
       api
-        .getWorks(
-          {
-            limit: objectsPerPage,
-            offset: worksPage * objectsPerPage,
-            sort: worksSort,
-            valueFacetValueThumbnailSelector: valueThumbnailSelector,
-            workJoinSelector: workSearchWorkJoinSelector,
-          },
-          worksQuery
-        )
+        .getWorks({
+          limit: objectsPerPage,
+          offset: worksPage * objectsPerPage,
+          query: worksQuery,
+          sort: worksSort,
+          valueFacetValueThumbnailSelector: valueThumbnailSelector,
+          workJoinSelector: workSearchWorkJoinSelector,
+        })
         .then(getWorksResult => {
           log.debug("getWorks result:", getWorksResult.totalWorksCount);
           setGetWorksResult(getWorksResult);
@@ -172,18 +170,16 @@ export const WorkSearchPage: React.FunctionComponent<{
       log.trace("invoking getWorkAgents");
       setLoadingWorkAgents(true);
       api
-        .getWorkAgents(
-          {
-            agentJoinSelector: {
-              thumbnail: galleryThumbnailSelector,
-              works: {},
-            },
-            limit: objectsPerPage,
-            offset: workAgentsPage * objectsPerPage,
-            sort: workAgentsSort,
+        .getWorkAgents({
+          agentJoinSelector: {
+            thumbnail: galleryThumbnailSelector,
+            works: {},
           },
-          worksQuery
-        )
+          limit: objectsPerPage,
+          offset: workAgentsPage * objectsPerPage,
+          sort: workAgentsSort,
+          worksQuery,
+        })
         .then(getWorkAgentsResult => {
           log.debug(
             "getWorkAgents result:",
@@ -205,20 +201,20 @@ export const WorkSearchPage: React.FunctionComponent<{
       setLoadingWorkEvents(true);
       // "Paging" the timeline loads more events rather than typical pagination.
       api
-        .getWorkEvents(
-          {
-            eventJoinSelector: workSearchWorkEventJoinSelector,
+        .getWorkEvents({
+          eventJoinSelector: workSearchWorkEventJoinSelector,
+          limit: (workEventsPage + 1) * objectsPerPage,
+          offset: 0,
+          workEventsQuery: {
             filters: [
               {
-                excludeUnknown: true,
+                exists: true,
                 type: "EventSortDateExistence",
               },
             ],
-            limit: (workEventsPage + 1) * objectsPerPage,
-            offset: 0,
           },
-          worksQuery
-        )
+          worksQuery,
+        })
         .then(getWorkEventsResult => {
           log.debug(
             "getWorkEvents result:",
@@ -239,7 +235,17 @@ export const WorkSearchPage: React.FunctionComponent<{
       log.trace("invoking getWorkLocations");
       setLoadingWorkLocations(true);
       api
-        .getWorkLocations({requireCentroids: true}, worksQuery)
+        .getWorkLocations({
+          locationsQuery: {
+            filters: [
+              {
+                exists: true,
+                type: "LocationCentroidExistence",
+              },
+            ],
+          },
+          worksQuery,
+        })
         .then(getWorkLocationsResult => {
           log.debug(
             "getWorkLocations result:",
@@ -263,7 +269,7 @@ export const WorkSearchPage: React.FunctionComponent<{
 
   const filterControls = createWorksFilterControls({
     facets: getWorksResult.facets,
-    filters: worksQuery.filters,
+    filters: worksQuery.filters ?? [],
     getAbsoluteImageSrc,
     onChangeFilters,
   });
