@@ -5,17 +5,9 @@ import {Filter} from "./Filter";
  */
 export interface ExistenceFilter extends Filter {
   /**
-   * If true, exclude all models that have the filtered property .
-   *
-   * This is shorthand for excludeValues with all values from the universe.
+   * If true, include models that have the filtered property and exclude those that do not.
+   * If false, include models that do not have the filtered property and exclude those that do.
+   * If undefined, no effect / include all models.
    */
-  readonly excludeKnown?: boolean;
-
-  /**
-   * If true, exclude all models that do not have the filtered property.
-   * If false or undefined, include those models.
-   *
-   * This switch is independent of exclusion/inclusion of known values.
-   */
-  readonly excludeUnknown?: boolean;
+  readonly exists?: boolean;
 }
