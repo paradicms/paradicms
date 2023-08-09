@@ -51,6 +51,7 @@ import {sortPropertyGroups} from "./sortPropertyGroups";
 import {PropertyGroupsQuery} from "@paradicms/api/dist/PropertyGroupsQuery";
 import {getModels} from "./getModels";
 import {getModelKeys} from "./getModelKeys";
+import {GetPropertyGroupKeysOptions} from "@paradicms/api/dist/GetPropertyGroupKeysOptions";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -184,6 +185,25 @@ export class MemApi implements Api {
       limit,
       offset,
       sortModels: events => sortEvents(events, sort),
+    });
+  }
+
+  getPropertyGroupKeys(
+    kwds?: GetPropertyGroupKeysOptions
+  ): Promise<GetModelKeysResult> {
+    const {
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as PropertyGroupsQuery,
+    } = kwds ?? {};
+
+    return getModelKeys({
+      allModels: this.modelSet.propertyGroups,
+      filterModels: propertyGroups =>
+        filterPropertyGroups({propertyGroups, filters: query.filters ?? []}),
+      limit,
+      offset,
+      sortModels: sortPropertyGroups,
     });
   }
 

@@ -12,6 +12,7 @@ import {GetWorkKeysOptions} from "./GetWorkKeysOptions";
 import {GetEventKeysOptions} from "./GetEventKeysOptions";
 import {GetModelKeysResult} from "./GetModelKeysResult";
 import {GetPropertyGroupsOptions} from "./GetPropertyGroupsOptions";
+import {GetPropertyGroupKeysOptions} from "./GetPropertyGroupKeysOptions";
 
 export interface Api {
   getAppConfiguration(): Promise<JsonAppConfiguration | null>;
@@ -30,6 +31,13 @@ export interface Api {
    * Get events matched by the query.
    */
   getEvents(kwds?: GetEventsOptions): Promise<GetModelsResult>;
+
+  /**
+   * Get property group keys matched by the query.
+   */
+  getPropertyGroupKeys(
+    kwds?: GetPropertyGroupKeysOptions
+  ): Promise<GetModelKeysResult>;
 
   /**
    * Get property groups matched by the query.

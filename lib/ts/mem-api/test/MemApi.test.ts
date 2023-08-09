@@ -112,6 +112,19 @@ describe("MemApi", () => {
     expect(actualModelSet.events[0].key).to.eq(expectedEvent.key);
   });
 
+  it("getPropertyGroupKeys returns all property group keys (worksheet feature set edit)", async () => {
+    const {
+      modelKeys: actualPropertyGroupKeys,
+      totalModelsCount: actualTotalPropertyGroupsCount,
+    } = await sut.getPropertyGroupKeys();
+    expect(actualTotalPropertyGroupsCount).to.eq(
+      modelSet.propertyGroups.length
+    );
+    expect(actualPropertyGroupKeys).to.deep.eq(
+      modelSet.propertyGroups.map(propertyGroup => propertyGroup.key)
+    );
+  });
+
   it("getPropertyGroups returns all property groups (worksheet edit)", async () => {
     const {
       modelSet: actualModelSet,
