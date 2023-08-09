@@ -46,6 +46,11 @@ import {filterEvents} from "./filterEvents";
 import {sortEvents} from "./sortEvents";
 import {filterCollections} from "./filterCollections";
 import {filterLocations} from "./filterLocations";
+import {filterPropertyGroups} from "./filterPropertyGroups";
+import {sortPropertyGroups} from "./sortPropertyGroups";
+import {PropertyGroupsQuery} from "@paradicms/api/dist/PropertyGroupsQuery";
+import {getModels} from "./getModels";
+import {getModelKeys} from "./getModelKeys";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -129,33 +134,17 @@ export class MemApi implements Api {
       query = {} as CollectionsQuery,
     } = kwds ?? {};
 
-    invariant(limit > 0, "limit must be > 0");
-    invariant(offset >= 0, "offset must be >= 0");
-
-    return new Promise(resolve => {
-      const filteredCollections = filterCollections({
-        collections: this.modelSet.collections,
-        filters: query.filters ?? [],
-      });
-
-      const slicedCollections = filteredCollections.slice(
-        offset,
-        offset + limit
-      );
-
-      const slicedCollectionsModelSetBuilder = new ModelSetBuilder();
-      for (const collection of slicedCollections) {
-        slicedCollectionsModelSetBuilder.addCollection(
-          collection,
-          collectionJoinSelector
-        );
-      }
-
-      resolve({
-        modelKeys: slicedCollections.map(collection => collection.key),
-        modelSet: slicedCollectionsModelSetBuilder.build(),
-        totalModelsCount: filteredCollections.length,
-      });
+    return getModels({
+      addModelsToModelSet: (collections, modelSetBuilder) =>
+        collections.forEach(collection =>
+          modelSetBuilder.addCollection(collection, collectionJoinSelector)
+        ),
+      allModels: this.modelSet.collections,
+      filterModels: collections =>
+        filterCollections({collections, filters: query.filters ?? []}),
+      limit,
+      offset,
+      sortModels: () => {},
     });
   }
 
@@ -167,24 +156,13 @@ export class MemApi implements Api {
       sort = defaultEventsSort,
     } = kwds ?? {};
 
-    invariant(limit > 0, "limit must be > 0");
-    invariant(offset >= 0, "offset must be >= 0");
-
-    return new Promise(resolve => {
-      const filteredEvents = filterEvents({
-        events: this.modelSet.events,
-        filters: query.filters ?? [],
-      });
-
-      const sortedEvents = filteredEvents.concat();
-      sortEvents(sortedEvents, sort);
-
-      const slicedEvents = sortedEvents.slice(offset, offset + limit);
-
-      resolve({
-        modelKeys: slicedEvents.map(event => event.key),
-        totalModelsCount: filteredEvents.length,
-      });
+    return getModelKeys({
+      allModels: this.modelSet.events,
+      filterModels: events =>
+        filterEvents({events, filters: query.filters ?? []}),
+      sortModels: events => sortEvents(events, sort),
+      limit,
+      offset,
     });
   }
 
@@ -197,34 +175,41 @@ export class MemApi implements Api {
       sort = defaultEventsSort,
     } = kwds ?? {};
 
-    invariant(limit > 0, "limit must be > 0");
-    invariant(offset >= 0, "offset must be >= 0");
-
-    return new Promise(resolve => {
-      const filteredEvents = filterEvents({
-        events: this.modelSet.events,
-        filters: query.filters ?? [],
-      });
-
-      const sortedEvents = filteredEvents.concat();
-      sortEvents(sortedEvents, sort);
-
-      const slicedEvents = sortedEvents.slice(offset, offset + limit);
-
-      resolve({
-        modelKeys: slicedEvents.map(event => event.key),
-        modelSet: new ModelSetBuilder()
-          .addEvents(slicedEvents, eventJoinSelector)
-          .build(),
-        totalModelsCount: filteredEvents.length,
-      });
+    return getModels({
+      addModelsToModelSet: (events, modelSetBuilder) =>
+        modelSetBuilder.addEvents(events, eventJoinSelector),
+      allModels: this.modelSet.events,
+      filterModels: events =>
+        filterEvents({events, filters: query.filters ?? []}),
+      limit,
+      offset,
+      sortModels: events => sortEvents(events, sort),
     });
   }
 
   getPropertyGroups(
     kwds?: GetPropertyGroupsOptions | undefined
   ): Promise<GetModelsResult> {
-    throw new Error("Method not implemented.");
+    const {
+      propertyGroupJoinSelector,
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as PropertyGroupsQuery,
+    } = kwds ?? {};
+
+    return getModels({
+      addModelsToModelSet: (propertyGroups, modelSetBuilder) =>
+        modelSetBuilder.addPropertyGroups(
+          propertyGroups,
+          propertyGroupJoinSelector
+        ),
+      allModels: this.modelSet.propertyGroups,
+      filterModels: propertyGroups =>
+        filterPropertyGroups({propertyGroups, filters: query.filters ?? []}),
+      limit,
+      offset,
+      sortModels: sortPropertyGroups,
+    });
   }
 
   getWorkAgents(kwds?: GetWorkAgentsOptions): Promise<GetModelsResult> {
@@ -361,25 +346,18 @@ export class MemApi implements Api {
       query = {} as WorksQuery,
       sort = defaultWorksSort,
     } = kwds ?? {};
-    invariant(limit > 0, "limit must be > 0");
-    invariant(offset >= 0, "offset must be >= 0");
 
-    return new Promise(resolve => {
-      const filteredWorks = filterWorks({
-        filters: query.filters ?? [],
-        workCollectionKeys: this.workCollectionKeys,
-        works: this.searchWorks(query),
-      });
-
-      const sortedWorks = filteredWorks.concat();
-      sortWorks(sort, sortedWorks);
-
-      const slicedWorks = sortedWorks.slice(offset, offset + limit);
-
-      resolve({
-        modelKeys: slicedWorks.map(work => work.key),
-        totalModelsCount: filteredWorks.length,
-      });
+    return getModelKeys({
+      allModels: this.searchWorks(query),
+      filterModels: works =>
+        filterWorks({
+          workCollectionKeys: this.workCollectionKeys,
+          works,
+          filters: query.filters ?? [],
+        }),
+      limit,
+      offset,
+      sortModels: works => sortWorks(sort, works),
     });
   }
 

@@ -8,8 +8,7 @@ import {
 } from "@paradicms/models";
 import {
   EventsSortProperty,
-  GetWorkAgentsResult,
-  GetWorkEventsResult,
+  GetModelsResult,
   StringPropertyValueFacet,
   StringPropertyValueFilter,
   WorksSortProperty,
@@ -67,8 +66,8 @@ describe("MemApi", () => {
   it("getEventKeys returns a all event keys (timeline event pages)", async () => {
     expect(modelSet.events).not.to.be.empty;
     const actualResult = await sut.getEventKeys();
-    expect(actualResult.totalEventsCount).to.be.eq(modelSet.events.length);
-    expect(actualResult.eventKeys).to.deep.eq(
+    expect(actualResult.totalModelsCount).to.be.eq(modelSet.events.length);
+    expect(actualResult.modelKeys).to.deep.eq(
       modelSet.events.map(event => event.key)
     );
   });
@@ -76,7 +75,7 @@ describe("MemApi", () => {
   it("getEvents returns all available events (timeline index page)", async () => {
     const {
       modelSet: actualModelSet,
-      totalEventsCount: actualTotalEventsCount,
+      totalModelsCount: actualTotalEventsCount,
     } = await sut.getEvents({
       query: {
         filters: [
@@ -97,7 +96,7 @@ describe("MemApi", () => {
     const expectedEvent = modelSet.events[0];
     const {
       modelSet: actualModelSet,
-      totalEventsCount: actualTotalEventsCount,
+      totalModelsCount: actualTotalEventsCount,
     } = await sut.getEvents({
       query: {
         filters: [
@@ -113,7 +112,25 @@ describe("MemApi", () => {
     expect(actualModelSet.events[0].key).to.eq(expectedEvent.key);
   });
 
-  const getWorkAgents = (result: GetWorkAgentsResult): readonly WorkAgent[] => {
+  it("getPropertyGroups returns all property groups (worksheet edit)", async () => {
+    const {
+      modelSet: actualModelSet,
+      totalModelsCount: actualTotalPropertyGroupsCount,
+    } = await sut.getPropertyGroups();
+    expect(actualTotalPropertyGroupsCount).to.eq(
+      modelSet.propertyGroups.length
+    );
+    expect(actualModelSet.propertyGroups).to.have.length(
+      modelSet.propertyGroups.length
+    );
+    expect(
+      actualModelSet.propertyGroups.map(propertyGroup => propertyGroup.key)
+    ).to.deep.eq(
+      modelSet.propertyGroups.map(propertyGroup => propertyGroup.key)
+    );
+  });
+
+  const getWorkAgents = (result: GetModelsResult): readonly WorkAgent[] => {
     const workAgentsByKey: {[index: string]: WorkAgent} = {};
     for (const work of result.modelSet.works) {
       for (const workAgent of work.agents) {
@@ -122,7 +139,7 @@ describe("MemApi", () => {
       }
     }
 
-    return result.workAgentKeys.map(workAgentKey =>
+    return result.modelKeys.map(workAgentKey =>
       requireNonNull(workAgentsByKey[workAgentKey])
     );
   };
@@ -158,7 +175,7 @@ describe("MemApi", () => {
     ).to.be.true;
   });
 
-  const getWorkEvents = (result: GetWorkEventsResult) => {
+  const getWorkEvents = (result: GetModelsResult) => {
     const workEventsByKey: {[index: string]: WorkEventUnion} = {};
     for (const work of result.modelSet.works) {
       for (const workEvent of work.events) {
@@ -167,7 +184,7 @@ describe("MemApi", () => {
       }
     }
 
-    return result.workEventKeys.map(workEventKey =>
+    return result.modelKeys.map(workEventKey =>
       requireDefined(workEventsByKey[workEventKey], workEventKey)
     );
   };
@@ -175,10 +192,8 @@ describe("MemApi", () => {
   it("getWorkEvents returns at least one event from an empty query", async () => {
     const actualResult = await sut.getWorkEvents();
     const actualWorkEvents = getWorkEvents(actualResult);
-    expect(actualResult.totalWorkEventsCount).to.be.gt(0);
-    expect(actualWorkEvents).to.have.length.lte(
-      actualResult.totalWorkEventsCount
-    ); // modelSet.workEvents = only named
+    expect(actualResult.totalModelsCount).to.be.gt(0);
+    expect(actualWorkEvents).to.have.length.lte(actualResult.totalModelsCount); // modelSet.workEvents = only named
   });
 
   it("getWorkEvents returns the other models associated with an event", async () => {
@@ -286,9 +301,11 @@ describe("MemApi", () => {
         ],
       },
     });
-    expect(actualResult.totalWorksCount).to.be.lt(modelSet.works.length);
-    expect(actualResult.totalWorksCount).to.eq(expectedCollection.works.length);
-    expect(actualResult.workKeys).to.deep.eq(
+    expect(actualResult.totalModelsCount).to.be.lt(modelSet.works.length);
+    expect(actualResult.totalModelsCount).to.eq(
+      expectedCollection.works.length
+    );
+    expect(actualResult.modelKeys).to.deep.eq(
       expectedCollection.works.map(work => work.key)
     );
   });
