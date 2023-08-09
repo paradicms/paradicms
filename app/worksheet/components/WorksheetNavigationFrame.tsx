@@ -21,12 +21,12 @@ import {Headline} from "~/components/Headline";
 import {WorksheetReducerAction} from "~/hooks/useWorksheet";
 import {Worksheet} from "~/models/Worksheet";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import {AppConfiguration} from "@paradicms/models";
+import {JsonAppConfiguration} from "@paradicms/models";
 import {useRouter} from "next/router";
 import Link from "next/link";
 
 export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithChildren<{
-  configuration: AppConfiguration | null;
+  configuration: JsonAppConfiguration | null;
   dispatchWorksheet: Dispatch<WorksheetReducerAction>;
   finishButtonEnabled: boolean;
   headline: string;
