@@ -11,6 +11,8 @@ export * from "./EventsSortProperty";
 export * from "./ExistenceFilter";
 export * from "./GetCollectionsOptions";
 export * from "./GetCollectionsResult";
+export * from "./GetEventKeysOptions";
+export * from "./GetEventsResult";
 export * from "./GetEventsOptions";
 export * from "./GetEventsResult";
 export * from "./GetWorkAgentsOptions";

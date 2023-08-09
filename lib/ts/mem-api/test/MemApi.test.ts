@@ -64,6 +64,15 @@ describe("MemApi", () => {
     );
   });
 
+  it("getEventKeys returns a all event keys (timeline event pages)", async () => {
+    expect(modelSet.events).not.to.be.empty;
+    const actualResult = await sut.getEventKeys();
+    expect(actualResult.totalEventsCount).to.be.eq(modelSet.events.length);
+    expect(actualResult.eventKeys).to.deep.eq(
+      modelSet.events.map(event => event.key)
+    );
+  });
+
   it("getEvents returns all available events (timeline index page)", async () => {
     const {
       modelSet: actualModelSet,

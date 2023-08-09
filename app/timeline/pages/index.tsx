@@ -1,8 +1,4 @@
-import {
-  JsonAppConfiguration,
-  ModelSet,
-  ModelSetBuilder,
-} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
 import fs from "fs";
 import {GetStaticProps} from "next";

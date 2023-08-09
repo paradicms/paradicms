@@ -13,19 +13,26 @@ import {JsonAppConfiguration} from "@paradicms/models";
 import {GetEventsOptions} from "./GetEventsOptions";
 import {GetEventsResult} from "./GetEventsResult";
 import {GetWorkKeysOptions} from "./GetWorkKeysOptions";
+import {GetEventKeysOptions} from "./GetEventKeysOptions";
+import {GetEventKeysResult} from "./GetEventKeysResult";
 
 export interface Api {
   getAppConfiguration(): Promise<JsonAppConfiguration | null>;
 
   /**
-   * Get available collections.
+   * Get collections matched by the query.
    */
-  getCollections(kwds: GetCollectionsOptions): Promise<GetCollectionsResult>;
+  getCollections(kwds?: GetCollectionsOptions): Promise<GetCollectionsResult>;
+
+  /**
+   * Get event keys matched by the query.
+   */
+  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetEventKeysResult>;
 
   /**
    * Get events matched by the query.
    */
-  getEvents(kwds: GetEventsOptions): Promise<GetEventsResult>;
+  getEvents(kwds?: GetEventsOptions): Promise<GetEventsResult>;
 
   /**
    * Get agents associated with any of the works matched by the query.

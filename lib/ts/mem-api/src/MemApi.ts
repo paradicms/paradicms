@@ -19,6 +19,7 @@ import {
   EventsQuery,
   GetCollectionsOptions,
   GetCollectionsResult,
+  GetEventKeysOptions,
   GetEventsOptions,
   GetEventsResult,
   GetWorkAgentsOptions,
@@ -47,6 +48,7 @@ import {filterEvents} from "./filterEvents";
 import {sortEvents} from "./sortEvents";
 import {filterCollections} from "./filterCollections";
 import {filterLocations} from "./filterLocations";
+import {GetEventKeysResult} from "@paradicms/api/dist/GetEventKeysResult";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -155,6 +157,35 @@ export class MemApi implements Api {
       resolve({
         modelSet: slicedCollectionsModelSetBuilder.build(),
         totalCollectionsCount: filteredCollections.length,
+      });
+    });
+  }
+
+  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetEventKeysResult> {
+    const {
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as EventsQuery,
+      sort = defaultEventsSort,
+    } = kwds ?? {};
+
+    invariant(limit > 0, "limit must be > 0");
+    invariant(offset >= 0, "offset must be >= 0");
+
+    return new Promise(resolve => {
+      const filteredEvents = filterEvents({
+        events: this.modelSet.events,
+        filters: query.filters ?? [],
+      });
+
+      const sortedEvents = filteredEvents.concat();
+      sortEvents(sortedEvents, sort);
+
+      const slicedEvents = sortedEvents.slice(offset, offset + limit);
+
+      resolve({
+        eventKeys: slicedEvents.map(event => event.key),
+        totalEventsCount: filteredEvents.length,
       });
     });
   }
