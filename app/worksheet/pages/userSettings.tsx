@@ -33,21 +33,17 @@ import {GoogleSheetsWorksheetStateConfigurationContainer} from "~/components/Goo
 import {getStaticApi} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {JsonAppConfiguration} from "@paradicms/models";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
-import {JsonLd} from "jsonld/jsonld-spec";
-import {ModelSetJsonLdParser} from "@paradicms/react-dom-components";
 
 interface StaticProps {
-  readonly modelSetJsonLd: JsonLd;
+  readonly configuration: JsonAppConfiguration | null;
 }
 
-const UserSettingsPageImpl: React.FunctionComponent<Omit<
-  StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
-  const configuration = modelSet.appConfiguration;
+const UserSettingsPage: React.FunctionComponent<StaticProps> = ({
+  configuration,
+}) => {
   const currentUser = useCurrentUser();
   const [
     currentUserSettings,
@@ -166,24 +162,12 @@ const UserSettingsPageImpl: React.FunctionComponent<Omit<
   );
 };
 
-const UserSettingsPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
-  ...otherProps
-}) => (
-  <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => (
-      <UserSettingsPageImpl modelSet={modelSet} {...otherProps} />
-    )}
-  />
-);
-
 export default UserSettingsPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await getStaticApi({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
@@ -191,10 +175,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .build()
-        .toJsonLd(),
+      configuration: await api.getAppConfiguration(),
     },
   };
 };

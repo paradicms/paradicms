@@ -1,11 +1,11 @@
 import {Navbar} from "~/components/Navbar";
 import * as React from "react";
-import {AppConfiguration} from "@paradicms/models";
+import {JsonAppConfiguration} from "@paradicms/models";
 import {defaultBootstrapStylesheetHref} from "@paradicms/react-dom-components";
 import Head from "next/head";
 
 export const Frame: React.FunctionComponent<React.PropsWithChildren<{
-  configuration: AppConfiguration | null;
+  configuration: JsonAppConfiguration | null;
 }>> = ({configuration, children}) => (
   <>
     <Head>
