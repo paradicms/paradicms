@@ -1,4 +1,4 @@
-import {EventsSortProperty} from "./EventsSortProperty";
-import {Sort} from "./Sort";
+import {z} from "zod";
+import {eventsSortSchema} from "./eventsSortSchema";
 
-export type EventsSort = Sort<EventsSortProperty>;
+export type EventsSort = z.infer<typeof eventsSortSchema>;

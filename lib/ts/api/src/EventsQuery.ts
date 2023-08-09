@@ -1,11 +1,4 @@
-/**
- * Query over Events's.
- *
- * Queries are never passed over getStaticProps, but they are serialized to the browser query string,
- * so it's preferable to allow the optional fields to be undefined rather than null.
- */
-import {EventsFilter} from "./EventsFilter";
+import {z} from "zod";
+import {eventsQuerySchema} from "./eventsQuerySchema";
 
-export interface EventsQuery {
-  readonly filters?: readonly EventsFilter[];
-}
+export type EventsQuery = z.infer<typeof eventsQuerySchema>;

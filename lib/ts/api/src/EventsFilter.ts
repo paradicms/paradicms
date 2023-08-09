@@ -1,5 +1,5 @@
-import {KeyFilter} from "./KeyFilter";
-import {EventSortDateExistenceFilter} from "./EventSortDateExistenceFilter";
+import {eventsFilterSchema} from "./eventsFilterSchema";
+import {z} from "zod";
 
 // Discriminated union on "type"
-export type EventsFilter = EventSortDateExistenceFilter | KeyFilter;
+export type EventsFilter = z.infer<typeof eventsFilterSchema>;
