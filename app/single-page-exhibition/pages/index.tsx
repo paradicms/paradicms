@@ -189,7 +189,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     query: {
       filters: [
         {
-          excludeUnknown: true,
+          exists: true,
           type: "CollectionWorksExistence",
         },
       ],

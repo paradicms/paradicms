@@ -89,7 +89,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     fallback: false,
-    paths: (await api.getEventKeys()).eventKeys.map(eventKey => ({
+    paths: (await api.getEventKeys()).modelKeys.map(eventKey => ({
       params: {
         eventKey: encodeFileName(eventKey),
       },
