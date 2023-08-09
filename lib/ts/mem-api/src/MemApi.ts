@@ -18,16 +18,14 @@ import {
   defaultWorksSort,
   EventsQuery,
   GetCollectionsOptions,
-  GetCollectionsResult,
   GetEventKeysOptions,
   GetEventsOptions,
-  GetEventsResult,
+  GetModelKeysResult,
+  GetModelsResult,
+  GetPropertyGroupsOptions,
   GetWorkAgentsOptions,
-  GetWorkAgentsResult,
   GetWorkEventsOptions,
-  GetWorkEventsResult,
   GetWorkKeysOptions,
-  GetWorkKeysResult,
   GetWorkLocationsOptions,
   GetWorkLocationsResult,
   GetWorksOptions,
@@ -48,7 +46,6 @@ import {filterEvents} from "./filterEvents";
 import {sortEvents} from "./sortEvents";
 import {filterCollections} from "./filterCollections";
 import {filterLocations} from "./filterLocations";
-import {GetEventKeysResult} from "@paradicms/api/dist/GetEventKeysResult";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -124,7 +121,7 @@ export class MemApi implements Api {
     return Promise.resolve(this.modelSet.appConfiguration?.toJson() ?? null);
   }
 
-  getCollections(kwds?: GetCollectionsOptions): Promise<GetCollectionsResult> {
+  getCollections(kwds?: GetCollectionsOptions): Promise<GetModelsResult> {
     const {
       collectionJoinSelector,
       limit = LIMIT_DEFAULT,
@@ -155,13 +152,14 @@ export class MemApi implements Api {
       }
 
       resolve({
+        modelKeys: slicedCollections.map(collection => collection.key),
         modelSet: slicedCollectionsModelSetBuilder.build(),
-        totalCollectionsCount: filteredCollections.length,
+        totalModelsCount: filteredCollections.length,
       });
     });
   }
 
-  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetEventKeysResult> {
+  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetModelKeysResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
@@ -184,13 +182,13 @@ export class MemApi implements Api {
       const slicedEvents = sortedEvents.slice(offset, offset + limit);
 
       resolve({
-        eventKeys: slicedEvents.map(event => event.key),
-        totalEventsCount: filteredEvents.length,
+        modelKeys: slicedEvents.map(event => event.key),
+        totalModelsCount: filteredEvents.length,
       });
     });
   }
 
-  getEvents(kwds?: GetEventsOptions): Promise<GetEventsResult> {
+  getEvents(kwds?: GetEventsOptions): Promise<GetModelsResult> {
     const {
       eventJoinSelector,
       limit = LIMIT_DEFAULT,
@@ -214,15 +212,22 @@ export class MemApi implements Api {
       const slicedEvents = sortedEvents.slice(offset, offset + limit);
 
       resolve({
+        modelKeys: slicedEvents.map(event => event.key),
         modelSet: new ModelSetBuilder()
           .addEvents(slicedEvents, eventJoinSelector)
           .build(),
-        totalEventsCount: filteredEvents.length,
+        totalModelsCount: filteredEvents.length,
       });
     });
   }
 
-  getWorkAgents(kwds?: GetWorkAgentsOptions): Promise<GetWorkAgentsResult> {
+  getPropertyGroups(
+    kwds?: GetPropertyGroupsOptions | undefined
+  ): Promise<GetModelsResult> {
+    throw new Error("Method not implemented.");
+  }
+
+  getWorkAgents(kwds?: GetWorkAgentsOptions): Promise<GetModelsResult> {
     const {
       agentJoinSelector,
       limit = LIMIT_DEFAULT,
@@ -270,16 +275,16 @@ export class MemApi implements Api {
       }
 
       resolve({
-        modelSet: slicedWorkAgentsModelSetBuilder.build(),
-        totalWorkAgentsCount: workAgentsWithContext.length,
-        workAgentKeys: slicedWorkAgents.map(
+        modelKeys: slicedWorkAgents.map(
           workAgent => workAgent.workAgent.agent.key
         ),
+        modelSet: slicedWorkAgentsModelSetBuilder.build(),
+        totalModelsCount: workAgentsWithContext.length,
       });
     });
   }
 
-  getWorkEvents(kwds?: GetWorkEventsOptions): Promise<GetWorkEventsResult> {
+  getWorkEvents(kwds?: GetWorkEventsOptions): Promise<GetModelsResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
@@ -342,14 +347,14 @@ export class MemApi implements Api {
       }
 
       resolve({
+        modelKeys: slicedWorkEvents.map(workEvent => workEvent.key),
         modelSet: slicedWorkEventsModelSetBuilder.build(),
-        totalWorkEventsCount: workEvents.length,
-        workEventKeys: slicedWorkEvents.map(workEvent => workEvent.key),
+        totalModelsCount: workEvents.length,
       });
     });
   }
 
-  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetWorkKeysResult> {
+  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetModelKeysResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
@@ -372,8 +377,8 @@ export class MemApi implements Api {
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
       resolve({
-        totalWorksCount: filteredWorks.length,
-        workKeys: slicedWorks.map(work => work.key),
+        modelKeys: slicedWorks.map(work => work.key),
+        totalModelsCount: filteredWorks.length,
       });
     });
   }
@@ -484,9 +489,10 @@ export class MemApi implements Api {
       // );
 
       resolve({
+        modelKeys: slicedWorks.map(work => work.key),
         modelSet: slicedWorksModelSet,
         facets,
-        totalWorksCount: filteredWorks.length,
+        totalModelsCount: filteredWorks.length,
       });
     });
   }

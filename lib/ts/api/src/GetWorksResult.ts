@@ -1,8 +1,6 @@
-import {ModelSet} from "@paradicms/models";
 import {WorksFacet} from "./WorksFacet";
+import {GetModelsResult} from "./GetModelsResult";
 
-export interface GetWorksResult {
-  readonly modelSet: ModelSet;
+export interface GetWorksResult extends GetModelsResult {
   readonly facets: readonly WorksFacet[];
-  readonly totalWorksCount: number;
 }

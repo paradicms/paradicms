@@ -36,7 +36,7 @@ describe("MemApi", () => {
   it("getCollections returns all available collections", async () => {
     const {
       modelSet: actualModelSet,
-      totalCollectionsCount: actualTotalCollectionsCount,
+      totalModelsCount: actualTotalCollectionsCount,
     } = await sut.getCollections();
     expect(actualTotalCollectionsCount).to.eq(modelSet.collections.length);
     expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
@@ -47,7 +47,7 @@ describe("MemApi", () => {
   it("getCollections returns the first collection with works (exhibitions)", async () => {
     const {
       modelSet: actualModelSet,
-      totalCollectionsCount: actualTotalCollectionsCount,
+      totalModelsCount: actualTotalCollectionsCount,
     } = await sut.getCollections({
       query: {
         filters: [

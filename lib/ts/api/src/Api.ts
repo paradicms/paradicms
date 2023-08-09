@@ -1,20 +1,17 @@
 import {GetWorksResult} from "./GetWorksResult";
 import {GetWorksOptions} from "./GetWorksOptions";
 import {GetWorkAgentsOptions} from "./GetWorkAgentsOptions";
-import {GetWorkAgentsResult} from "./GetWorkAgentsResult";
 import {GetWorkEventsOptions} from "./GetWorkEventsOptions";
-import {GetWorkEventsResult} from "./GetWorkEventsResult";
 import {GetWorkLocationsOptions} from "./GetWorkLocationsOptions";
 import {GetWorkLocationsResult} from "./GetWorkLocationsResult";
 import {GetCollectionsOptions} from "./GetCollectionsOptions";
-import {GetCollectionsResult} from "./GetCollectionsResult";
-import {GetWorkKeysResult} from "./GetWorkKeysResult";
+import {GetModelsResult} from "./GetModelsResult";
 import {JsonAppConfiguration} from "@paradicms/models";
 import {GetEventsOptions} from "./GetEventsOptions";
-import {GetEventsResult} from "./GetEventsResult";
 import {GetWorkKeysOptions} from "./GetWorkKeysOptions";
 import {GetEventKeysOptions} from "./GetEventKeysOptions";
-import {GetEventKeysResult} from "./GetEventKeysResult";
+import {GetModelKeysResult} from "./GetModelKeysResult";
+import {GetPropertyGroupsOptions} from "./GetPropertyGroupsOptions";
 
 export interface Api {
   getAppConfiguration(): Promise<JsonAppConfiguration | null>;
@@ -22,32 +19,37 @@ export interface Api {
   /**
    * Get collections matched by the query.
    */
-  getCollections(kwds?: GetCollectionsOptions): Promise<GetCollectionsResult>;
+  getCollections(kwds?: GetCollectionsOptions): Promise<GetModelsResult>;
 
   /**
    * Get event keys matched by the query.
    */
-  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetEventKeysResult>;
+  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetModelKeysResult>;
 
   /**
    * Get events matched by the query.
    */
-  getEvents(kwds?: GetEventsOptions): Promise<GetEventsResult>;
+  getEvents(kwds?: GetEventsOptions): Promise<GetModelsResult>;
+
+  /**
+   * Get property groups matched by the query.
+   */
+  getPropertyGroups(kwds?: GetPropertyGroupsOptions): Promise<GetModelsResult>;
 
   /**
    * Get agents associated with any of the works matched by the query.
    */
-  getWorkAgents(kwds?: GetWorkAgentsOptions): Promise<GetWorkAgentsResult>;
+  getWorkAgents(kwds?: GetWorkAgentsOptions): Promise<GetModelsResult>;
 
   /**
    * Get events associated with any of the works matched by the query. Limit + offset is applied after the events are sorted by date ascending.
    */
-  getWorkEvents(kwds?: GetWorkEventsOptions): Promise<GetWorkEventsResult>;
+  getWorkEvents(kwds?: GetWorkEventsOptions): Promise<GetModelsResult>;
 
   /**
    * Get the keys of works matched by the query.
    */
-  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetWorkKeysResult>;
+  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetModelKeysResult>;
 
   /**
    * Get locations associated with any of the works matched by the query.
