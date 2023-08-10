@@ -17,13 +17,18 @@ import fs from "fs";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {
+  JsonAppConfiguration,
+  ModelSet,
+  ModelSetBuilder,
+} from "@paradicms/models";
 import {
   galleryThumbnailSelector,
   ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
 import {requireNonNull} from "@paradicms/utilities";
 import {JsonLd} from "jsonld/jsonld-spec";
+import invariant from "ts-invariant";
 
 const WorksheetFeatureSelectsTable: React.FunctionComponent<{
   dispatchFeatureSet: () => void;
@@ -74,6 +79,7 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
 };
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly featureSetIri: string;
   readonly modelSetJsonLd: JsonLd;
 }
@@ -81,8 +87,11 @@ interface StaticProps {
 const WorksheetFeatureSetEditPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({featureSetIri, modelSet}) => {
-  const configuration = modelSet.appConfiguration;
+> & {readonly modelSet: ModelSet}> = ({
+  configuration,
+  featureSetIri,
+  modelSet,
+}) => {
   const router = useRouter();
   const routeWorksheetMark = useRouteWorksheetMark({
     featureSetIri,
@@ -180,24 +189,18 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const modelSet = await getStaticApi({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
-  const worksheetDefinition = new WorksheetDefinition(modelSet);
-
-  const paths: {params: {featureSetIri: string}}[] = [];
-  for (const featureSet of worksheetDefinition.featureSets) {
-    paths.push({
-      params: {
-        featureSetIri: encodeFileName(featureSet.iri),
-      },
-    });
-  }
 
   return {
     fallback: false,
-    paths,
+    paths: (await api.getPropertyGroupKeys()).modelKeys.map(featureSetKey => ({
+      params: {
+        featureSetKey: encodeFileName(featureSetKey),
+      },
+    })),
   };
 };
 
@@ -206,42 +209,61 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{
   props: StaticProps;
 }> => {
-  const featureSetIri = decodeFileName(params!.featureSetIri as string);
+  const featureSetKey = decodeFileName(params!.featureSetKey as string);
 
-  const completeModelSet = await getStaticApi({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
+  const featureSetModelSet = (
+    await api.getPropertyGroups({
+      limit: 1,
+      propertyGroupJoinSelector: {
+        properties: {
+          rangeValues: {},
+          thumbnail: galleryThumbnailSelector,
+        },
+      },
+      query: {
+        filters: [
+          {
+            includeKeys: [featureSetKey],
+            type: "Key",
+          },
+        ],
+      },
+    })
+  ).modelSet;
+  invariant(featureSetModelSet.propertyGroups.length === 0);
+  invariant(featureSetModelSet.properties[0].iris.length === 1);
+  const featureSetIri = featureSetModelSet.propertyGroups[0].iris[0];
+
+  const otherFeatureSetsModelSet = (
+    await api.getPropertyGroups({
+      limit: 1,
+      propertyGroupJoinSelector: {
+        properties: {
+          rangeValues: {},
+        },
+      },
+      query: {
+        filters: [
+          {
+            excludeKeys: [featureSetKey],
+            type: "Key",
+          },
+        ],
+      },
+    })
+  ).modelSet;
+
   return {
     props: {
+      configuration: await api.getAppConfiguration(),
       featureSetIri,
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addPropertyGroup(
-          requireNonNull(completeModelSet.propertyGroupByIri(featureSetIri)),
-          {
-            properties: {
-              rangeValues: {},
-              thumbnail: galleryThumbnailSelector,
-            },
-          }
-        )
-        // Add other property groups in order to determine where this page is in the workflow and how many more pages there ares
-        .addPropertyGroups(
-          completeModelSet.propertyGroups.filter(
-            propertyGroup =>
-              !propertyGroup.iris.some(
-                propertyGroupIri => propertyGroupIri === featureSetIri
-              )
-          ),
-          {
-            properties: {
-              rangeValues: {},
-            },
-          }
-        )
-        .build()
+      modelSetJsonLd: featureSetModelSet
+        .union(otherFeatureSetsModelSet)
         .toJsonLd(),
     },
   };
