@@ -1,7 +1,6 @@
-export interface GetModelsOptions<JoinSelectorT, QueryT, SortT> {
+import {GetModelKeysOptions} from "./GetModelKeysOptions";
+
+export interface GetModelsOptions<JoinSelectorT, QueryT, SortT>
+  extends GetModelKeysOptions<QueryT, SortT> {
   readonly joinSelector?: JoinSelectorT;
-  readonly limit?: number;
-  readonly offset?: number;
-  readonly query?: QueryT;
-  readonly sort?: SortT;
 }
