@@ -3,7 +3,7 @@ import {AgentsSort} from "./AgentsSort";
 import {WorksQuery} from "./WorksQuery";
 
 export interface GetWorkAgentsOptions {
-  readonly agentJoinSelector?: AgentJoinSelector;
+  readonly joinSelector?: AgentJoinSelector;
   readonly limit?: number;
   readonly offset?: number;
   readonly sort?: AgentsSort;

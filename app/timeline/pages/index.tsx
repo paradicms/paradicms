@@ -75,7 +75,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       configuration: await api.getAppConfiguration(),
       modelSetJsonLd: await (
         await api.getEvents({
-          eventJoinSelector: {thumbnail: galleryThumbnailSelector},
+          joinSelector: {thumbnail: galleryThumbnailSelector},
         })
       ).modelSet.toJsonLd(),
     },

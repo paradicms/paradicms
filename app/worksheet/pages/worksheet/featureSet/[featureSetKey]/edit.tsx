@@ -219,7 +219,7 @@ export const getStaticProps: GetStaticProps = async ({
   const featureSetModelSet = (
     await api.getPropertyGroups({
       limit: 1,
-      propertyGroupJoinSelector: {
+      joinSelector: {
         properties: {
           rangeValues: {},
           thumbnail: galleryThumbnailSelector,
@@ -242,7 +242,7 @@ export const getStaticProps: GetStaticProps = async ({
   const otherFeatureSetsModelSet = (
     await api.getPropertyGroups({
       limit: 1,
-      propertyGroupJoinSelector: {
+      joinSelector: {
         properties: {
           rangeValues: {},
         },

@@ -166,7 +166,7 @@ describe("MemApi", () => {
   it("getWorkAgents returns the other models associated with an agent", async () => {
     const actualWorkAgents = getWorkAgents(
       await sut.getWorkAgents({
-        agentJoinSelector: {
+        joinSelector: {
           thumbnail: THUMBNAIL_SELECTOR,
           works: {},
         },
@@ -212,7 +212,7 @@ describe("MemApi", () => {
   it("getWorkEvents returns the other models associated with an event", async () => {
     const actualWorkEvents = getWorkEvents(
       await sut.getWorkEvents({
-        eventJoinSelector: {
+        joinSelector: {
           agents: {},
           location: true,
           thumbnail: THUMBNAIL_SELECTOR,

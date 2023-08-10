@@ -4,7 +4,7 @@ import {EventsQuery} from "./EventsQuery";
 import {EventsSort} from "./EventsSort";
 
 export interface GetWorkEventsOptions {
-  readonly eventJoinSelector?: EventJoinSelector;
+  readonly joinSelector?: EventJoinSelector;
   readonly eventsQuery?: EventsQuery;
   readonly limit?: number;
   readonly offset?: number;

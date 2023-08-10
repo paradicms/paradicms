@@ -182,7 +182,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
   });
 
   const {modelSet} = await api.getCollections({
-    collectionJoinSelector: {
+    joinSelector: {
       works: workPageWorkJoinSelector,
     },
     limit: 1,

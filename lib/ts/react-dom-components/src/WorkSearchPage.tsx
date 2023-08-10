@@ -171,7 +171,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       setLoadingWorkAgents(true);
       api
         .getWorkAgents({
-          agentJoinSelector: {
+          joinSelector: {
             thumbnail: galleryThumbnailSelector,
             works: {},
           },
@@ -202,7 +202,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       // "Paging" the timeline loads more events rather than typical pagination.
       api
         .getWorkEvents({
-          eventJoinSelector: workSearchWorkEventJoinSelector,
+          joinSelector: workSearchWorkEventJoinSelector,
           limit: (workEventsPage + 1) * objectsPerPage,
           offset: 0,
           workEventsQuery: {

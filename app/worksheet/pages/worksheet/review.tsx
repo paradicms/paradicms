@@ -308,7 +308,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       configuration: await api.getAppConfiguration(),
       modelSetJsonLd: await (
         await api.getPropertyGroups({
-          propertyGroupJoinSelector: {
+          joinSelector: {
             properties: {
               rangeValues: {},
             },

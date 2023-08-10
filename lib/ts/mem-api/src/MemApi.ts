@@ -129,7 +129,7 @@ export class MemApi implements Api {
 
   getCollections(kwds?: GetCollectionsOptions): Promise<GetModelsResult> {
     const {
-      collectionJoinSelector,
+      joinSelector,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as CollectionsQuery,
@@ -138,7 +138,7 @@ export class MemApi implements Api {
     return getModels({
       addModelsToModelSet: (collections, modelSetBuilder) =>
         collections.forEach(collection =>
-          modelSetBuilder.addCollection(collection, collectionJoinSelector)
+          modelSetBuilder.addCollection(collection, joinSelector)
         ),
       allModels: this.modelSet.collections,
       filterModels: collections =>
@@ -169,7 +169,7 @@ export class MemApi implements Api {
 
   getEvents(kwds?: GetEventsOptions): Promise<GetModelsResult> {
     const {
-      eventJoinSelector,
+      joinSelector,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as EventsQuery,
@@ -178,7 +178,7 @@ export class MemApi implements Api {
 
     return getModels({
       addModelsToModelSet: (events, modelSetBuilder) =>
-        modelSetBuilder.addEvents(events, eventJoinSelector),
+        modelSetBuilder.addEvents(events, joinSelector),
       allModels: this.modelSet.events,
       filterModels: events =>
         filterEvents({events, filters: query.filters ?? []}),
@@ -211,7 +211,7 @@ export class MemApi implements Api {
     kwds?: GetPropertyGroupsOptions | undefined
   ): Promise<GetModelsResult> {
     const {
-      propertyGroupJoinSelector,
+      joinSelector,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as PropertyGroupsQuery,
@@ -219,10 +219,7 @@ export class MemApi implements Api {
 
     return getModels({
       addModelsToModelSet: (propertyGroups, modelSetBuilder) =>
-        modelSetBuilder.addPropertyGroups(
-          propertyGroups,
-          propertyGroupJoinSelector
-        ),
+        modelSetBuilder.addPropertyGroups(propertyGroups, joinSelector),
       allModels: this.modelSet.propertyGroups,
       filterModels: propertyGroups =>
         filterPropertyGroups({propertyGroups, filters: query.filters ?? []}),
@@ -234,7 +231,7 @@ export class MemApi implements Api {
 
   getWorkAgents(kwds?: GetWorkAgentsOptions): Promise<GetModelsResult> {
     const {
-      agentJoinSelector,
+      joinSelector,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       sort = defaultAgentsSort,
@@ -275,7 +272,7 @@ export class MemApi implements Api {
         // Add all of a work's agents
         slicedWorkAgentsModelSetBuilder.addWork(
           requireNonNull(this.modelSet.workByKey(workKey)),
-          {agents: agentJoinSelector ?? {}}
+          {agents: joinSelector ?? {}}
         );
       }
 
@@ -293,7 +290,7 @@ export class MemApi implements Api {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
-      eventJoinSelector,
+      joinSelector,
       sort = defaultEventsSort,
       eventsQuery = {} as EventsQuery,
       worksQuery = {} as WorksQuery,
@@ -347,7 +344,7 @@ export class MemApi implements Api {
         // Add all of a work's events
         slicedWorkEventsModelSetBuilder.addWork(
           requireNonNull(this.modelSet.workByKey(workKey)),
-          {events: eventJoinSelector ?? {}}
+          {events: joinSelector ?? {}}
         );
       }
 

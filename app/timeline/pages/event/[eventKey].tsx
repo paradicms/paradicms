@@ -113,7 +113,7 @@ export const getStaticProps: GetStaticProps = async ({
       eventKey,
       modelSetJsonLd: await (
         await api.getEvents({
-          eventJoinSelector: eventPageEventJoinSelector,
+          joinSelector: eventPageEventJoinSelector,
           query: {
             filters: [
               {

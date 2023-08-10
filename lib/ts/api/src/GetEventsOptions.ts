@@ -3,7 +3,7 @@ import {EventsSort} from "./EventsSort";
 import {EventsQuery} from "./EventsQuery";
 
 export interface GetEventsOptions {
-  readonly eventJoinSelector?: EventJoinSelector;
+  readonly joinSelector?: EventJoinSelector;
   readonly limit?: number;
   readonly offset?: number;
   readonly query?: EventsQuery;
