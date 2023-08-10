@@ -7,6 +7,7 @@ import {
 } from "@paradicms/api";
 import React from "react";
 import {ValueFilterSelect} from "./ValueFilterSelect";
+import {requireDefined} from "@paradicms/utilities";
 
 /**
  * Create a control React element for a filter. Delegates to the factory for UI-framework specific elements.
@@ -41,7 +42,7 @@ export const createWorksFilterControl = (kwds: {
           <ValueFilterSelect
             facet={facet}
             filter={filter}
-            filterLabel={filter.label}
+            filterLabel={requireDefined(filter.label)}
             getAbsoluteImageSrc={getAbsoluteImageSrc}
             onChange={onChangeFilter}
           />

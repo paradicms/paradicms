@@ -1,9 +1,9 @@
 import {CollectionJoinSelector} from "@paradicms/models";
 import {CollectionsQuery} from "./CollectionsQuery";
+import {GetModelsOptions} from "./GetModelsOptions";
 
-export interface GetCollectionsOptions {
-  readonly joinSelector?: CollectionJoinSelector;
-  readonly limit?: number;
-  readonly offset?: number;
-  readonly query?: CollectionsQuery;
-}
+export type GetCollectionsOptions = GetModelsOptions<
+  CollectionJoinSelector,
+  CollectionsQuery,
+  {}
+>;

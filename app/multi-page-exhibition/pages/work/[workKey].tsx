@@ -204,7 +204,7 @@ export const getStaticProps: GetStaticProps = async ({
           },
         ],
       },
-      workJoinSelector: workPageWorkJoinSelector,
+      joinSelector: workPageWorkJoinSelector,
     })
   ).modelSet;
   invariant(

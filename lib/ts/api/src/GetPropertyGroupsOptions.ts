@@ -1,9 +1,9 @@
 import {PropertyGroupJoinSelector} from "@paradicms/models";
 import {PropertyGroupsQuery} from "./PropertyGroupsQuery";
+import {GetModelsOptions} from "./GetModelsOptions";
 
-export interface GetPropertyGroupsOptions {
-  readonly joinSelector?: PropertyGroupJoinSelector;
-  readonly limit?: number;
-  readonly offset?: number;
-  readonly query?: PropertyGroupsQuery;
-}
+export type GetPropertyGroupsOptions = GetModelsOptions<
+  PropertyGroupJoinSelector,
+  PropertyGroupsQuery,
+  {}
+>;

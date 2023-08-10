@@ -2,8 +2,7 @@ import {faFilter} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   WorksFilter,
-  GetWorkAgentsResult,
-  GetWorkEventsResult,
+  GetModelsResult,
   GetWorkLocationsResult,
   GetWorksResult,
   AgentsSort,
@@ -48,12 +47,12 @@ import log from "loglevel";
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
 
 const workAgentsPageMax = (kwds: {
-  getWorkAgentsResult: GetWorkAgentsResult;
+  getWorkAgentsResult: GetModelsResult;
   objectsPerPage: number;
 }) =>
   calculatePageMax({
     objectsPerPage: kwds.objectsPerPage,
-    totalObjects: kwds.getWorkAgentsResult.totalWorkAgentsCount,
+    totalObjects: kwds.getWorkAgentsResult.totalModelsCount,
   });
 
 const worksPageMax = (kwds: {
@@ -62,7 +61,7 @@ const worksPageMax = (kwds: {
 }) =>
   calculatePageMax({
     objectsPerPage: kwds.objectsPerPage,
-    totalObjects: kwds.getWorksResult.totalWorksCount,
+    totalObjects: kwds.getWorksResult.totalModelsCount,
   });
 
 export const WorkSearchPage: React.FunctionComponent<{
@@ -111,11 +110,11 @@ export const WorkSearchPage: React.FunctionComponent<{
   const activeTabKey: TabKey = activeTabKeyQueryParam ?? "works";
 
   const [getWorkAgentsResult, setGetWorkAgentsResult] = useState<
-    (GetWorkAgentsResult & {workAgentKeysSet: Set<string>}) | null
+    (GetModelsResult & {modelKeysSet: Set<string>}) | null
   >(null);
 
   const [getWorkEventsResult, setGetWorkEventsResult] = useState<
-    (GetWorkEventsResult & {workEventKeysSet: Set<string>}) | null
+    (GetModelsResult & {modelKeysSet: Set<string>}) | null
   >(null);
 
   const [
@@ -149,15 +148,15 @@ export const WorkSearchPage: React.FunctionComponent<{
       setLoadingWorks(true);
       api
         .getWorks({
+          joinSelector: workSearchWorkJoinSelector,
           limit: objectsPerPage,
           offset: worksPage * objectsPerPage,
           query: worksQuery,
           sort: worksSort,
           valueFacetValueThumbnailSelector: valueThumbnailSelector,
-          workJoinSelector: workSearchWorkJoinSelector,
         })
         .then(getWorksResult => {
-          log.debug("getWorks result:", getWorksResult.totalWorksCount);
+          log.debug("getWorks result:", getWorksResult.totalModelsCount);
           setGetWorksResult(getWorksResult);
           setLoadingWorks(false);
         });
@@ -183,11 +182,11 @@ export const WorkSearchPage: React.FunctionComponent<{
         .then(getWorkAgentsResult => {
           log.debug(
             "getWorkAgents result:",
-            getWorkAgentsResult.totalWorkAgentsCount
+            getWorkAgentsResult.totalModelsCount
           );
           setGetWorkAgentsResult({
             ...getWorkAgentsResult,
-            workAgentKeysSet: new Set(getWorkAgentsResult.workAgentKeys),
+            modelKeysSet: new Set(getWorkAgentsResult.modelKeys),
           });
           setLoadingWorkAgents(false);
         });
@@ -202,10 +201,7 @@ export const WorkSearchPage: React.FunctionComponent<{
       // "Paging" the timeline loads more events rather than typical pagination.
       api
         .getWorkEvents({
-          joinSelector: workSearchWorkEventJoinSelector,
-          limit: (workEventsPage + 1) * objectsPerPage,
-          offset: 0,
-          workEventsQuery: {
+          eventsQuery: {
             filters: [
               {
                 exists: true,
@@ -213,16 +209,19 @@ export const WorkSearchPage: React.FunctionComponent<{
               },
             ],
           },
+          joinSelector: workSearchWorkEventJoinSelector,
+          limit: (workEventsPage + 1) * objectsPerPage,
+          offset: 0,
           worksQuery,
         })
         .then(getWorkEventsResult => {
           log.debug(
             "getWorkEvents result:",
-            getWorkEventsResult.totalWorkEventsCount
+            getWorkEventsResult.totalModelsCount
           );
           setGetWorkEventsResult({
             ...getWorkEventsResult,
-            workEventKeysSet: new Set(getWorkEventsResult.workEventKeys),
+            modelKeysSet: new Set(getWorkEventsResult.modelKeys),
           });
           setLoadingWorkEvents(false);
         });
@@ -284,9 +283,9 @@ export const WorkSearchPage: React.FunctionComponent<{
           <Col className="d-flex justify-content-end px-0">
             <div className="d-flex flex-column justify-content-center pe-4">
               <div>
-                <span>{getWorksResult.totalWorksCount}</span>&nbsp;
+                <span>{getWorksResult.totalModelsCount}</span>&nbsp;
                 <span>
-                  {getWorksResult.totalWorksCount === 1 ? "work" : "works"}
+                  {getWorksResult.totalModelsCount === 1 ? "work" : "works"}
                 </span>
                 &nbsp;
                 {worksQuery.text ? (
@@ -379,7 +378,7 @@ export const WorkSearchPage: React.FunctionComponent<{
             agents={getWorkAgentsResult.modelSet.works
               .flatMap(work =>
                 work.agents.filter(agent =>
-                  getWorkAgentsResult.workAgentKeysSet.has(agent.agent.key)
+                  getWorkAgentsResult.modelKeysSet.has(agent.agent.key)
                 )
               )
               .map(agent => agent.agent)}
@@ -406,20 +405,20 @@ export const WorkSearchPage: React.FunctionComponent<{
     key: "workEvents",
     title: "Timeline",
     content:
-      getWorkEventsResult && getWorkEventsResult.workEventKeys.length > 0 ? (
+      getWorkEventsResult && getWorkEventsResult.modelKeys.length > 0 ? (
         <WorkEventsTimeline
           getAbsoluteImageSrc={getAbsoluteImageSrc}
           page={workEventsPage}
           pageMax={calculatePageMax({
             objectsPerPage,
-            totalObjects: getWorkEventsResult.totalWorkEventsCount,
+            totalObjects: getWorkEventsResult.totalModelsCount,
           })}
           renderWorkLink={renderWorkLink}
           setPage={setWorkEventsPage}
           workEvents={getWorkEventsResult.modelSet.works.flatMap(work =>
             work.events
               .filter(workEvent =>
-                getWorkEventsResult.workEventKeysSet.has(workEvent.key)
+                getWorkEventsResult.modelKeysSet.has(workEvent.key)
               )
               .map(workEvent => ({work, workEvent}))
           )}
@@ -431,7 +430,7 @@ export const WorkSearchPage: React.FunctionComponent<{
 
   return (
     <>
-      {getWorksResult.totalWorksCount > 0 ? (
+      {getWorksResult.totalModelsCount > 0 ? (
         tabs.length === 1 ? (
           tabs[0].content
         ) : (

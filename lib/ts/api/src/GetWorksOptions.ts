@@ -1,12 +1,9 @@
 import {ThumbnailSelector, WorkJoinSelector} from "@paradicms/models";
 import {WorksSort} from "./WorksSort";
 import {WorksQuery} from "./WorksQuery";
+import {GetModelsOptions} from "./GetModelsOptions";
 
-export interface GetWorksOptions {
-  readonly limit?: number;
-  readonly offset?: number;
-  readonly query?: WorksQuery;
-  readonly sort?: WorksSort;
+export interface GetWorksOptions
+  extends GetModelsOptions<WorkJoinSelector, WorksQuery, WorksSort> {
   readonly valueFacetValueThumbnailSelector?: ThumbnailSelector;
-  readonly workJoinSelector?: WorkJoinSelector;
 }

@@ -434,7 +434,7 @@ export class MemApi implements Api {
       query = {} as WorksQuery,
       sort = defaultWorksSort,
       valueFacetValueThumbnailSelector,
-      workJoinSelector,
+      joinSelector,
     } = kwds ?? {};
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
@@ -470,7 +470,7 @@ export class MemApi implements Api {
       log.debug("Search sliced works count:", slicedWorks.length);
 
       const slicedWorksModelSet = new ModelSetBuilder()
-        .addWorks(slicedWorks, workJoinSelector)
+        .addWorks(slicedWorks, joinSelector)
         .build();
 
       // log.debug(

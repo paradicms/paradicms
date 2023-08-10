@@ -1,9 +1,5 @@
 import {EventsQuery} from "./EventsQuery";
 import {EventsSort} from "./EventsSort";
+import {GetModelKeysOptions} from "./GetModelKeysOptions";
 
-export interface GetEventKeysOptions {
-  readonly limit?: number;
-  readonly offset?: number;
-  readonly query: EventsQuery;
-  readonly sort?: EventsSort;
-}
+export type GetEventKeysOptions = GetModelKeysOptions<EventsQuery, EventsSort>;

@@ -1,7 +1,7 @@
 import {PropertyGroupsQuery} from "./PropertyGroupsQuery";
+import {GetModelKeysOptions} from "./GetModelKeysOptions";
 
-export interface GetPropertyGroupKeysOptions {
-  readonly limit?: number;
-  readonly offset?: number;
-  readonly query: PropertyGroupsQuery;
-}
+export type GetPropertyGroupKeysOptions = GetModelKeysOptions<
+  PropertyGroupsQuery,
+  {}
+>;
