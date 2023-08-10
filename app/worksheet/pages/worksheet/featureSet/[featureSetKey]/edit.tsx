@@ -20,13 +20,13 @@ import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {
   JsonAppConfiguration,
   ModelSet,
-  ModelSetBuilder,
+  PropertyGroupJoinSelector,
 } from "@paradicms/models";
 import {
   galleryThumbnailSelector,
   ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
-import {requireNonNull} from "@paradicms/utilities";
+import {requireDefined} from "@paradicms/utilities";
 import {JsonLd} from "jsonld/jsonld-spec";
 import invariant from "ts-invariant";
 
@@ -216,55 +216,39 @@ export const getStaticProps: GetStaticProps = async ({
     readFile,
   });
 
-  const featureSetModelSet = (
-    await api.getPropertyGroups({
-      limit: 1,
-      joinSelector: {
-        properties: {
-          rangeValues: {},
-          thumbnail: galleryThumbnailSelector,
-        },
-      },
-      query: {
-        filters: [
-          {
-            includeKeys: [featureSetKey],
-            type: "Key",
-          },
-        ],
-      },
-    })
-  ).modelSet;
-  invariant(featureSetModelSet.propertyGroups.length === 0);
-  invariant(featureSetModelSet.properties[0].iris.length === 1);
-  const featureSetIri = featureSetModelSet.propertyGroups[0].iris[0];
+  const joinSelectorByKey: {[index: string]: PropertyGroupJoinSelector} = {};
+  joinSelectorByKey[featureSetKey] = {
+    properties: {
+      rangeValues: {},
+      thumbnail: galleryThumbnailSelector,
+    },
+  };
 
-  const otherFeatureSetsModelSet = (
+  const modelSet = (
     await api.getPropertyGroups({
-      limit: 1,
+      // Only get features in feature sets we're not editing/reviewing
+      // We need these to build out the progress bar
       joinSelector: {
-        properties: {
-          rangeValues: {},
-        },
+        properties: {},
       },
-      query: {
-        filters: [
-          {
-            excludeKeys: [featureSetKey],
-            type: "Key",
-          },
-        ],
-      },
+      // Get features and feature values for the feature set we're editing/reviewing
+      joinSelectorByKey,
     })
   ).modelSet;
+
+  const featureSet = requireDefined(
+    modelSet.propertyGroups.find(
+      propertyGroup => propertyGroup.key === featureSetKey
+    )
+  );
+  invariant(featureSet.iris.length === 1);
+  const featureSetIri = featureSet.iris[0];
 
   return {
     props: {
       configuration: await api.getAppConfiguration(),
       featureSetIri,
-      modelSetJsonLd: featureSetModelSet
-        .union(otherFeatureSetsModelSet)
-        .toJsonLd(),
+      modelSetJsonLd: await modelSet.toJsonLd(),
     },
   };
 };
