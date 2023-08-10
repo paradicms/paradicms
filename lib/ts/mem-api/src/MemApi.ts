@@ -2,6 +2,7 @@ import {
   defaultProperties,
   EventSortDate,
   JsonAppConfiguration,
+  Model,
   ModelSet,
   ModelSetBuilder,
   Point,
@@ -63,6 +64,21 @@ const encodeLunrFieldName = (value: string) => {
 
 const LIMIT_DEFAULT = Number.MAX_SAFE_INTEGER;
 const OFFSET_DEFAULT = 0;
+
+const getJoinSelector = <JoinSelectorT, ModelT extends Model>(
+  model: ModelT,
+  kwds: {
+    joinSelector: JoinSelectorT | null;
+    joinSelectorByKey: {[index: string]: JoinSelectorT} | null;
+  }
+): JoinSelectorT | undefined => {
+  const {joinSelector, joinSelectorByKey} = kwds;
+  if (joinSelectorByKey && joinSelectorByKey[model.key]) {
+    return joinSelectorByKey[model.key];
+  } else {
+    return joinSelector ?? undefined;
+  }
+};
 
 export class MemApi implements Api {
   private readonly index: Index;
@@ -129,7 +145,8 @@ export class MemApi implements Api {
 
   getCollections(kwds?: GetCollectionsOptions): Promise<GetModelsResult> {
     const {
-      joinSelector,
+      joinSelector = null,
+      joinSelectorByKey = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as CollectionsQuery,
@@ -138,7 +155,13 @@ export class MemApi implements Api {
     return getModels({
       addModelsToModelSet: (collections, modelSetBuilder) =>
         collections.forEach(collection =>
-          modelSetBuilder.addCollection(collection, joinSelector)
+          modelSetBuilder.addCollection(
+            collection,
+            getJoinSelector(collection, {
+              joinSelector,
+              joinSelectorByKey,
+            })
+          )
         ),
       allModels: this.modelSet.collections,
       filterModels: collections =>
@@ -169,7 +192,8 @@ export class MemApi implements Api {
 
   getEvents(kwds?: GetEventsOptions): Promise<GetModelsResult> {
     const {
-      joinSelector,
+      joinSelector = null,
+      joinSelectorByKey = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as EventsQuery,
@@ -178,7 +202,12 @@ export class MemApi implements Api {
 
     return getModels({
       addModelsToModelSet: (events, modelSetBuilder) =>
-        modelSetBuilder.addEvents(events, joinSelector),
+        events.forEach(event =>
+          modelSetBuilder.addEvent(
+            event,
+            getJoinSelector(event, {joinSelector, joinSelectorByKey})
+          )
+        ),
       allModels: this.modelSet.events,
       filterModels: events =>
         filterEvents({events, filters: query.filters ?? []}),
@@ -211,7 +240,8 @@ export class MemApi implements Api {
     kwds?: GetPropertyGroupsOptions | undefined
   ): Promise<GetModelsResult> {
     const {
-      joinSelector,
+      joinSelector = null,
+      joinSelectorByKey = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as PropertyGroupsQuery,
@@ -219,7 +249,12 @@ export class MemApi implements Api {
 
     return getModels({
       addModelsToModelSet: (propertyGroups, modelSetBuilder) =>
-        modelSetBuilder.addPropertyGroups(propertyGroups, joinSelector),
+        propertyGroups.forEach(propertyGroup =>
+          modelSetBuilder.addPropertyGroup(
+            propertyGroup,
+            getJoinSelector(propertyGroup, {joinSelector, joinSelectorByKey})
+          )
+        ),
       allModels: this.modelSet.propertyGroups,
       filterModels: propertyGroups =>
         filterPropertyGroups({propertyGroups, filters: query.filters ?? []}),
@@ -429,12 +464,13 @@ export class MemApi implements Api {
 
   getWorks(kwds?: GetWorksOptions): Promise<GetWorksResult> {
     const {
+      joinSelector = null,
+      joinSelectorByKey = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as WorksQuery,
       sort = defaultWorksSort,
       valueFacetValueThumbnailSelector,
-      joinSelector,
     } = kwds ?? {};
     invariant(limit > 0, "limit must be > 0");
     invariant(offset >= 0, "offset must be >= 0");
@@ -469,9 +505,14 @@ export class MemApi implements Api {
 
       log.debug("Search sliced works count:", slicedWorks.length);
 
-      const slicedWorksModelSet = new ModelSetBuilder()
-        .addWorks(slicedWorks, joinSelector)
-        .build();
+      const slicedWorksModelSetBuilder = new ModelSetBuilder();
+      for (const work of slicedWorks) {
+        slicedWorksModelSetBuilder.addWork(
+          work,
+          getJoinSelector(work, {joinSelector, joinSelectorByKey})
+        );
+      }
+      const slicedWorksModelSet = slicedWorksModelSetBuilder.build();
 
       // log.debug(
       //   "Search results modelSet:",
