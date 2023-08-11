@@ -17,16 +17,13 @@ import fs from "fs";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
-import {
-  JsonAppConfiguration,
-  ModelSet,
-  PropertyGroupJoinSelector,
-} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {
   galleryThumbnailSelector,
   ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
 import {JsonLd} from "jsonld/jsonld-spec";
+import {PropertyGroupJoinSelector} from "@paradicms/api";
 
 const WorksheetFeatureSelectsTable: React.FunctionComponent<{
   dispatchFeatureSet: () => void;

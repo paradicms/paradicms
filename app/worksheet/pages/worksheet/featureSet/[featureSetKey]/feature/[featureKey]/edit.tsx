@@ -12,11 +12,7 @@ import {decodeFileName, encodeFileName, getStaticApi} from "@paradicms/next";
 import path from "path";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {
-  ModelSet,
-  PropertyGroupJoinSelector,
-  PropertyJoinSelector,
-} from "@paradicms/models";
+import {ModelSet} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {useRouter} from "next/router";
 import {
@@ -24,6 +20,7 @@ import {
   ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
 import {JsonLd} from "jsonld/jsonld-spec";
+import {PropertyGroupJoinSelector, PropertyJoinSelector} from "@paradicms/api";
 
 interface StaticProps {
   readonly featureSetKey: string;
