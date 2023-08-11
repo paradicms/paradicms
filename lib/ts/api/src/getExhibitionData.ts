@@ -1,7 +1,7 @@
-import {Api} from "@paradicms/api";
+import {Api} from "index";
 import {Collection, ModelSet} from "@paradicms/models";
 
-export const getExhibitionWorkKeys = async (
+export const getExhibitionData = async (
   api: Api
 ): Promise<{
   readonly collection: Collection | null;
@@ -13,7 +13,7 @@ export const getExhibitionWorkKeys = async (
     query: {
       filters: [
         {
-          excludeUnknown: true,
+          exists: true,
           type: "CollectionWorksExistence",
         },
       ],
@@ -38,7 +38,7 @@ export const getExhibitionWorkKeys = async (
           : [],
       },
     })
-  ).workKeys;
+  ).modelKeys;
 
   return {collection, collectionModelSet, workKeys};
 };

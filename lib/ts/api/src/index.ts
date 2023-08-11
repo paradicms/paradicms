@@ -10,6 +10,7 @@ export * from "./EventsSort";
 export * from "./EventsSortProperty";
 export * from "./ExistenceFilter";
 export * from "./GetCollectionsOptions";
+export * from "./getExhibitionData";
 export * from "./GetModelKeysResult";
 export * from "./GetModelsResult";
 export * from "./GetEventKeysOptions";

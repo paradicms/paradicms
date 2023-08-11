@@ -7,7 +7,6 @@ import {
   ModelSetJsonLdParser,
   RightsParagraph,
   WorkPage,
-  workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import fs from "fs";
 import {GetStaticProps} from "next";
@@ -21,6 +20,7 @@ import {Col, Container, Row} from "reactstrap";
 import {requireNonNull} from "@paradicms/utilities";
 import {LocationsMapLocation} from "../components/LocationsMap";
 import {JsonLd} from "jsonld/jsonld-spec";
+import {getExhibitionData} from "@paradicms/api";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -33,25 +33,25 @@ const LocationsMap = dynamic<{
 interface StaticProps {
   readonly configuration: JsonAppConfiguration | null;
   readonly collectionKey: string | null;
-  readonly modelSetJsonLd: JsonLd;
+  readonly collectionModelSetJsonLd: JsonLd;
   readonly workKeys: readonly string[];
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({
+  "collectionModelSetJsonLd"
+> & {readonly collectionModelSet: ModelSet}> = ({
   configuration,
   collectionKey,
-  modelSet,
+  collectionModelSet,
   workKeys,
 }) => {
   const pages: React.ReactElement[] = useMemo(() => {
     const collection = collectionKey
-      ? modelSet.collectionByKey(collectionKey)
+      ? collectionModelSet.collectionByKey(collectionKey)
       : null;
     const works = workKeys.map(workKey =>
-      requireNonNull(modelSet.workByKey(workKey))
+      requireNonNull(collectionModelSet.workByKey(workKey))
     );
     const pages: React.ReactElement[] = [];
 
@@ -114,8 +114,8 @@ const IndexPageImpl: React.FunctionComponent<Omit<
                 getAbsoluteImageSrc={relativeImageSrc =>
                   getAbsoluteImageSrc(relativeImageSrc, router)
                 }
-                properties={modelSet.properties}
-                propertyGroups={modelSet.propertyGroups}
+                properties={collectionModelSet.properties}
+                propertyGroups={collectionModelSet.propertyGroups}
                 renderWorkLink={(work, children) => <span>{children}</span>}
                 renderWorkLocationsMap={workLocations => (
                   <LocationsMap
@@ -135,7 +135,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     });
 
     return pages;
-  }, [modelSet]);
+  }, [collectionModelSet]);
   const router = useRouter();
 
   if (pages.length === 0) {
@@ -145,7 +145,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
   return (
     <>
       <Head>
-        <title>{modelSet.collections[0].label}</title>
+        <title>{collectionModelSet.collections[0].label}</title>
         <link
           rel="stylesheet"
           href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
@@ -161,12 +161,14 @@ const IndexPageImpl: React.FunctionComponent<Omit<
 };
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
+  collectionModelSetJsonLd,
   ...otherProps
 }) => (
   <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+    modelSetJsonLd={collectionModelSetJsonLd}
+    render={modelSet => (
+      <IndexPageImpl collectionModelSet={modelSet} {...otherProps} />
+    )}
   />
 );
 
@@ -181,30 +183,16 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       fs.promises.readFile(filePath).then(contents => contents.toString()),
   });
 
-  const {modelSet} = await api.getCollections({
-    joinSelector: {
-      works: workPageWorkJoinSelector,
-    },
-    limit: 1,
-    query: {
-      filters: [
-        {
-          exists: true,
-          type: "CollectionWorksExistence",
-        },
-      ],
-    },
-  });
-
-  const collection =
-    modelSet.collections.length > 0 ? modelSet.collections[0] : null;
+  const {collection, collectionModelSet, workKeys} = await getExhibitionData(
+    api
+  );
 
   return {
     props: {
       configuration: await api.getAppConfiguration(),
       collectionKey: collection?.key ?? null,
-      modelSetJsonLd: await modelSet.toJsonLd(),
-      workKeys: collection?.works.map(work => work.key) ?? [],
+      collectionModelSetJsonLd: await collectionModelSet.toJsonLd(),
+      workKeys,
     },
   };
 };

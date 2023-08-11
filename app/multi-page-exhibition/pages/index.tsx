@@ -14,7 +14,7 @@ import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
 import {JsonLd} from "jsonld/jsonld-spec";
 import invariant from "ts-invariant";
-import {getExhibitionWorkKeys} from "../lib/getExhibitionWorkKeys";
+import {getExhibitionData} from "@paradicms/api";
 
 interface StaticProps {
   readonly configuration: JsonAppConfiguration | null;
@@ -103,11 +103,9 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       fs.promises.readFile(filePath).then(contents => contents.toString()),
   });
 
-  const {
-    collection,
-    collectionModelSet,
-    workKeys,
-  } = await getExhibitionWorkKeys(api);
+  const {collection, collectionModelSet, workKeys} = await getExhibitionData(
+    api
+  );
   invariant(workKeys.length > 0, "must have at least one work");
 
   return {

@@ -26,8 +26,8 @@ import {requireNonNull} from "@paradicms/utilities";
 import Link from "next/link";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
 import {JsonLd} from "jsonld/jsonld-spec";
-import {getExhibitionWorkKeys} from "../../lib/getExhibitionWorkKeys";
 import invariant from "ts-invariant";
+import {getExhibitionData} from "@paradicms/api";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -157,7 +157,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   const paths: {params: {workKey: string}}[] = [];
 
-  const {workKeys} = await getExhibitionWorkKeys(api);
+  const {workKeys} = await getExhibitionData(api);
 
   for (const workKey of workKeys) {
     paths.push({
@@ -181,7 +181,7 @@ export const getStaticProps: GetStaticProps = async ({
     readFile,
   });
 
-  const {collection, workKeys} = await getExhibitionWorkKeys(api);
+  const {collection, workKeys} = await getExhibitionData(api);
 
   const currentWorkKey = decodeFileName(params!.workKey as string);
 
