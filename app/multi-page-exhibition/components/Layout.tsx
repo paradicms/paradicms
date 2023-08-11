@@ -1,4 +1,4 @@
-import {Collection, JsonAppConfiguration, Work} from "@paradicms/models";
+import {JsonAppConfiguration, Work} from "@paradicms/models";
 import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
