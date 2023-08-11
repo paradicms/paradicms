@@ -406,20 +406,28 @@ export class ModelSetBuilder {
       return this;
     }
 
-    if (joinSelector.properties) {
+    if (joinSelector.properties || joinSelector.propertiesByKey) {
       log.debug(
         "ModelSetBuilder: adding property group",
         propertyGroup.key,
         "properties"
       );
       for (const property of propertyGroup.properties) {
+        const propertyJoinSelector =
+          (joinSelector.propertiesByKey
+            ? joinSelector.propertiesByKey[property.key]
+            : undefined) ?? joinSelector.properties;
+        if (!propertyJoinSelector) {
+          continue;
+        }
+
         log.debug(
           "ModelSetBuilder: adding property group",
           propertyGroup.key,
           "property",
           property.key
         );
-        this.addProperty(property, joinSelector.properties);
+        this.addProperty(property, propertyJoinSelector);
       }
     }
 
