@@ -1,4 +1,8 @@
-import {z} from "zod";
-import {collectionsQuerySchema} from "./collectionsQuerySchema";
+import {Array, Optional, Record, Static} from "runtypes";
+import {CollectionsFilter} from "./CollectionsFilter";
 
-export type CollectionsQuery = z.infer<typeof collectionsQuerySchema>;
+const CollectionsQuery = Record({
+  filters: Optional(Array(CollectionsFilter)),
+});
+
+export type CollectionsQuery = Static<typeof CollectionsQuery>;

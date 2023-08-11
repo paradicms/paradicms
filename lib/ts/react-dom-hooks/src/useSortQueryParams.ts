@@ -2,10 +2,10 @@ import {BooleanParam, StringParam, useQueryParam} from "use-query-params";
 import {Sort} from "@paradicms/api";
 import {useCallback} from "react";
 
-export const useSortQueryParams = <PropertyT>(
-  defaultSort: Sort<PropertyT>,
+export const useSortQueryParams = <SortT extends Sort>(
+  defaultSort: SortT,
   namePrefix: string
-): [Sort<PropertyT>, (sort: Sort<PropertyT> | undefined) => void] => {
+): [SortT, (sort: SortT | undefined) => void] => {
   const [ascending, setAscending] = useQueryParam<boolean | null | undefined>(
     namePrefix + "Ascending",
     BooleanParam
@@ -16,7 +16,7 @@ export const useSortQueryParams = <PropertyT>(
   );
 
   const setSort = useCallback(
-    (sort: Sort<PropertyT> | undefined) => {
+    (sort: SortT | undefined) => {
       if (sort) {
         setAscending(sort.ascending);
         setProperty(sort.property as string);
@@ -31,9 +31,8 @@ export const useSortQueryParams = <PropertyT>(
   return [
     {
       ascending: ascending != null ? ascending : defaultSort.ascending,
-      property:
-        property != null ? (property as PropertyT) : defaultSort.property,
-    },
+      property: property != null ? property : defaultSort.property,
+    } as SortT,
     setSort,
   ];
 };

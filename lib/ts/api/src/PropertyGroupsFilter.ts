@@ -1,4 +1,5 @@
-import {z} from "zod";
-import {propertyGroupsFilterSchema} from "./propertyGroupsFilterSchema";
+import {Static, Union} from "runtypes";
+import {KeyFilter} from "./KeyFilter";
 
-export type PropertyGroupsFilter = z.infer<typeof propertyGroupsFilterSchema>;
+export const PropertyGroupsFilter = Union(KeyFilter);
+export type PropertyGroupsFilter = Static<typeof PropertyGroupsFilter>;
