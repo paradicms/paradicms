@@ -195,14 +195,14 @@ export const getStaticProps: GetStaticProps = async ({
     [index: string]: PropertyGroupJoinSelector;
   } = {};
   thisFeatureSetJoinSelector[featureSetKey] = {
-    properties: {},
+    properties: {rangeValues: {}},
     propertiesByKey: thisFeatureJoinSelector,
   };
 
   // Only get features in feature sets we're not editing/reviewing
   // We need these to build out the progress bar
   const otherFeatureSetsJoinSelector: PropertyGroupJoinSelector = {
-    properties: {},
+    properties: {rangeValues: {}},
   };
 
   const modelSet = (
