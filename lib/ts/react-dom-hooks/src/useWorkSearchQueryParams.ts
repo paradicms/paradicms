@@ -15,10 +15,10 @@ import {
 import {usePageQueryParam} from "./usePageQueryParam";
 import {useSortQueryParams} from "./useSortQueryParams";
 
-export const useWorkSearchQueryParams = (defaultWorksQuery: {
-  filters: readonly WorksFilter[];
-}): {
-  onChangeFilters: (filters: readonly WorksFilter[]) => void;
+export const useWorkSearchQueryParams = (
+  defaultWorksQuery: WorksQuery
+): {
+  onChangeFilters: (filters?: WorksFilter[]) => void;
   onSearch: (text: string) => void;
   setWorksQuery: (worksQuery: WorksQuery) => void;
   setWorkAgentsPage: (page: number | undefined) => void;
@@ -75,7 +75,7 @@ export const useWorkSearchQueryParams = (defaultWorksQuery: {
       setWorkEventsPage(undefined);
       setWorkEventsSort(undefined);
       setWorksPage(undefined);
-      setWorksQuery({filters: [], text});
+      setWorksQuery({text});
       setWorksSort(undefined);
     },
     setWorkAgentsPage,

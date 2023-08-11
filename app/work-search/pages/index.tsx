@@ -59,6 +59,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       properties={properties}
     >
       <WorkSearchPage
+        api={api}
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
@@ -77,7 +78,6 @@ const IndexPageImpl: React.FunctionComponent<Omit<
             }))}
           />
         )}
-        api={api}
         {...workSearchQueryParams}
       />
     </Layout>

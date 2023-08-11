@@ -4,9 +4,9 @@ import {createWorksFilterControl} from "./createWorksFilterControl";
 
 export const createWorksFilterControls = (kwds: {
   facets: readonly WorksFacet[];
-  filters: readonly WorksFilter[];
+  filters: WorksFilter[];
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
-  onChangeFilters: (filters: readonly WorksFilter[]) => void;
+  onChangeFilters: (filters: WorksFilter[]) => void;
 }): readonly React.ReactElement[] => {
   const {facets, filters, getAbsoluteImageSrc, onChangeFilters} = kwds;
 

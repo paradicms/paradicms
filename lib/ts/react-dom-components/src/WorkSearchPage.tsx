@@ -67,7 +67,7 @@ const worksPageMax = (kwds: {
 export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
-  onChangeFilters: (filters: readonly WorksFilter[]) => void;
+  onChangeFilters: (filters?: WorksFilter[]) => void;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactElement;
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]

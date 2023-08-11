@@ -24,5 +24,5 @@ export const ApiProvider: React.FunctionComponent<React.PropsWithChildren<{
     return null;
   }
 
-  return <ApiContext.Provider value={api}>children</ApiContext.Provider>;
+  return <ApiContext.Provider value={api}>{children}</ApiContext.Provider>;
 };
