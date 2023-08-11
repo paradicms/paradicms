@@ -4,7 +4,6 @@ import {
   JsonAppConfiguration,
   Model,
   ModelSet,
-  ModelSetBuilder,
   Point,
   Work,
   WorkAgent,
@@ -57,6 +56,7 @@ import {getModels} from "./getModels";
 import {getModelKeys} from "./getModelKeys";
 import {sortProperties} from "./sortProperties";
 import {filterProperties} from "./filterProperties";
+import {ModelSetBuilder} from "./ModelSetBuilder";
 
 const basex = require("base-x");
 const base58 = basex(

@@ -1,6 +1,7 @@
-import {Model, ModelSetBuilder} from "@paradicms/models";
+import {Model} from "@paradicms/models";
 import {GetModelsResult} from "@paradicms/api";
 import invariant from "ts-invariant";
+import {ModelSetBuilder} from "./ModelSetBuilder";
 
 /**
  * Code reused by most get* implementations.

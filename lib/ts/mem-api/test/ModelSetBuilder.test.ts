@@ -2,9 +2,14 @@ import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cc, dcmitype, dcterms, foaf, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {ImageJoinSelector, Model, ModelSet, ModelSetBuilder} from "../src";
-import {ThumbnailSelector} from "../src/ThumbnailSelector";
-import {testModelSet} from "./testModelSet";
+import {
+  ImageJoinSelector,
+  Model,
+  ModelSet,
+  ModelSetBuilder,
+} from "@paradicms/models";
+import {ThumbnailSelector} from "@paradicms/models/dist/ThumbnailSelector";
+import {testModelSet} from "../../models/test/testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";
 
