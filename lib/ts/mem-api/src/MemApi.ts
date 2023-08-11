@@ -23,6 +23,8 @@ import {
   GetEventsOptions,
   GetModelKeysResult,
   GetModelsResult,
+  GetPropertiesOptions,
+  GetPropertyGroupKeysOptions,
   GetPropertyGroupsOptions,
   GetWorkAgentsOptions,
   GetWorkEventsOptions,
@@ -32,6 +34,8 @@ import {
   GetWorksOptions,
   GetWorksResult,
   LocationsQuery,
+  PropertiesQuery,
+  PropertyGroupsQuery,
   summarizeWorkLocation,
   WorksQuery,
 } from "@paradicms/api";
@@ -49,10 +53,10 @@ import {filterCollections} from "./filterCollections";
 import {filterLocations} from "./filterLocations";
 import {filterPropertyGroups} from "./filterPropertyGroups";
 import {sortPropertyGroups} from "./sortPropertyGroups";
-import {PropertyGroupsQuery} from "@paradicms/api/dist/PropertyGroupsQuery";
 import {getModels} from "./getModels";
 import {getModelKeys} from "./getModelKeys";
-import {GetPropertyGroupKeysOptions} from "@paradicms/api/dist/GetPropertyGroupKeysOptions";
+import {sortProperties} from "./sortProperties";
+import {filterProperties} from "./filterProperties";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -260,7 +264,35 @@ export class MemApi implements Api {
         filterPropertyGroups({propertyGroups, filters: query.filters ?? []}),
       limit,
       offset,
-      sortModels: sortPropertyGroups,
+      sortModels: sortProperties,
+    });
+  }
+
+  getProperties(
+    kwds?: GetPropertiesOptions | undefined
+  ): Promise<GetModelsResult> {
+    const {
+      joinSelector = null,
+      joinSelectorByKey = null,
+      limit = LIMIT_DEFAULT,
+      offset = OFFSET_DEFAULT,
+      query = {} as PropertiesQuery,
+    } = kwds ?? {};
+
+    return getModels({
+      addModelsToModelSet: (properties, modelSetBuilder) =>
+        properties.forEach(property =>
+          modelSetBuilder.addProperty(
+            property,
+            getJoinSelector(property, {joinSelector, joinSelectorByKey})
+          )
+        ),
+      allModels: this.modelSet.properties,
+      filterModels: properties =>
+        filterProperties({properties, filters: query.filters ?? []}),
+      limit,
+      offset,
+      sortModels: () => {},
     });
   }
 

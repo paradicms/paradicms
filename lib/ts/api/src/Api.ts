@@ -13,6 +13,7 @@ import {GetEventKeysOptions} from "./GetEventKeysOptions";
 import {GetModelKeysResult} from "./GetModelKeysResult";
 import {GetPropertyGroupsOptions} from "./GetPropertyGroupsOptions";
 import {GetPropertyGroupKeysOptions} from "./GetPropertyGroupKeysOptions";
+import {GetPropertiesOptions} from "./GetPropertiesOptions";
 
 export interface Api {
   getAppConfiguration(): Promise<JsonAppConfiguration | null>;
@@ -43,6 +44,11 @@ export interface Api {
    * Get property groups matched by the query.
    */
   getPropertyGroups(kwds?: GetPropertyGroupsOptions): Promise<GetModelsResult>;
+
+  /**
+   * Get properties matched by the query.
+   */
+  getProperties(kwds?: GetPropertiesOptions): Promise<GetModelsResult>;
 
   /**
    * Get agents associated with any of the works matched by the query.

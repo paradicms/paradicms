@@ -1,12 +1,9 @@
 import {StringPropertyValueFilter, WorksFilter} from "@paradicms/api";
 import {defaultProperties} from "@paradicms/models";
+import {JsonProperty} from "./JsonProperty";
 
 export const getDefaultWorksQueryFilters = (
-  properties: readonly {
-    readonly filterable: boolean;
-    readonly iris: readonly string[];
-    readonly label: string;
-  }[]
+  properties: readonly JsonProperty[]
 ): WorksFilter[] => {
   if (properties.length === 0) {
     properties = defaultProperties;

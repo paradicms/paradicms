@@ -10,14 +10,17 @@ export const filterPropertyGroups = <
   filters: readonly PropertyGroupsFilter[];
 }): readonly PropertyGroupT[] => {
   const {propertyGroups, filters} = kwds;
-  let filteredEvents = propertyGroups;
+  let filteredPropertyGroups = propertyGroups;
   for (const filter of filters) {
     switch (filter.type) {
       case "Key": {
-        filteredEvents = filterModelsByKey({filter, models: filteredEvents});
+        filteredPropertyGroups = filterModelsByKey({
+          filter,
+          models: filteredPropertyGroups,
+        });
         break;
       }
     }
   }
-  return filteredEvents;
+  return filteredPropertyGroups;
 };

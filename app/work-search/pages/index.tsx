@@ -1,15 +1,17 @@
-import {MemApi} from "@paradicms/mem-api";
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
-import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
+import {JsonAppConfiguration} from "@paradicms/models";
+import {
+  ApiConfiguration,
+  ApiProvider,
+  getAbsoluteImageSrc,
+  getStaticApi,
+  useApi,
+} from "@paradicms/next";
 import {
   getWorkLocationIcon,
   getWorkLocationLabel,
-  ModelSetJsonLdParser,
   WorkSearchPage,
-  workSearchWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import {useWorkSearchQueryParams} from "@paradicms/react-dom-hooks";
-import {Api} from "@paradicms/api";
 import {Layout} from "components/Layout";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
@@ -17,12 +19,11 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import * as React from "react";
-import {useMemo} from "react";
 import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 import path from "path";
 import fs from "fs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
-import {JsonLd} from "jsonld/jsonld-spec";
+import {JsonProperty} from "../lib/JsonProperty";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -33,26 +34,21 @@ const LocationsMap = dynamic<{
 );
 
 interface StaticProps {
+  readonly apiConfiguration: ApiConfiguration;
   readonly collectionLabel: string | null;
-  readonly modelSetJsonLd: JsonLd;
+  readonly configuration: JsonAppConfiguration | null;
+  readonly properties: readonly JsonProperty[];
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({collectionLabel, modelSet}) => {
-  const configuration = modelSet.appConfiguration;
+  "apiConfiguration"
+>> = ({collectionLabel, configuration, properties}) => {
+  const api = useApi();
   const router = useRouter();
-  const api = useMemo<Api>(
-    () =>
-      new MemApi({
-        modelSet,
-      }),
-    [configuration, modelSet]
-  );
 
   const {onSearch, ...workSearchQueryParams} = useWorkSearchQueryParams({
-    filters: getDefaultWorksQueryFilters(modelSet.properties),
+    filters: getDefaultWorksQueryFilters(properties),
   });
 
   return (
@@ -60,7 +56,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       collectionLabel={collectionLabel ?? undefined}
       configuration={configuration}
       onSearch={onSearch}
-      properties={modelSet.properties}
+      properties={properties}
     >
       <WorkSearchPage
         getAbsoluteImageSrc={relativeImageSrc =>
@@ -89,13 +85,12 @@ const IndexPageImpl: React.FunctionComponent<Omit<
 };
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
+  apiConfiguration,
   ...otherProps
 }) => (
-  <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
-  />
+  <ApiProvider apiConfiguration={apiConfiguration}>
+    <IndexPageImpl {...otherProps} />
+  </ApiProvider>
 );
 
 export default IndexPage;
@@ -103,23 +98,30 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await getStaticApi({
+  const {api, apiConfiguration} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
   });
 
+  const collections = (
+    await api.getCollections({
+      limit: 1,
+    })
+  ).modelSet.collections;
+
   return {
     props: {
-      collectionLabel:
-        completeModelSet.collections.length === 1
-          ? completeModelSet.collections[0].label
-          : null,
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addWorks(completeModelSet.works, workSearchWorkJoinSelector)
-        .build()
-        .toJsonLd(),
+      apiConfiguration,
+      collectionLabel: collections.length === 1 ? collections[0].label : null,
+      configuration: await api.getAppConfiguration(),
+      properties: (await api.getProperties()).modelSet.properties.map(
+        property => ({
+          filterable: property.filterable,
+          iris: property.iris,
+          label: property.label,
+        })
+      ),
     },
   };
 };

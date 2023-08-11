@@ -143,6 +143,20 @@ describe("MemApi", () => {
     );
   });
 
+  it("getProperties returns all properties (work search index)", async () => {
+    const {
+      modelSet: actualModelSet,
+      totalModelsCount: actualTotalPropertiesCount,
+    } = await sut.getProperties();
+    expect(actualTotalPropertiesCount).to.eq(modelSet.properties.length);
+    expect(actualModelSet.properties).to.have.length(
+      modelSet.properties.length
+    );
+    expect(
+      actualModelSet.properties.map(propertyGroup => propertyGroup.key)
+    ).to.deep.eq(modelSet.properties.map(propertyGroup => propertyGroup.key));
+  });
+
   const getWorkAgents = (result: GetModelsResult): readonly WorkAgent[] => {
     const workAgentsByKey: {[index: string]: WorkAgent} = {};
     for (const work of result.modelSet.works) {
