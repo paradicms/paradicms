@@ -11,6 +11,8 @@ export class LiteralPropertyValue extends PropertyValue {
     return this.literal.value;
   }
 
+  readonly type = "Literal";
+
   get value() {
     return this.literal.value;
   }

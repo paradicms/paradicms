@@ -24,6 +24,7 @@ export * from "./Point";
 export * from "./Property";
 export * from "./PropertyGroup";
 export * from "./PropertyValue";
+export * from "./PropertyValueUnion";
 export * from "./ResourceBackedModelParameters";
 export * from "./RightsMixin";
 export * from "./RightsStatement";

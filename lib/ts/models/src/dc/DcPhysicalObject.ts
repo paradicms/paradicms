@@ -12,7 +12,7 @@ import {isWikipediaUrl} from "../isWikipediaUrl";
 import {DcImagesMixin} from "./DcImagesMixin";
 import {requireNonNull} from "@paradicms/utilities";
 import {mapTermToString} from "@paradicms/rdf";
-import {DateTimeDescription} from "DateTimeDescription";
+import {DateTimeDescription} from "../DateTimeDescription";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";

@@ -11,6 +11,8 @@ export class TextPropertyValue extends PropertyValue {
     return this.value;
   }
 
+  readonly type = "Text";
+
   get value() {
     return this.text.value;
   }

@@ -7,13 +7,13 @@ import {wdt} from "@paradicms/vocabularies";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {Mixin} from "ts-mixer";
 import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
-import {PropertyValue} from "../PropertyValue";
 import {WikidataProperty} from "./WikidataProperty";
 import {createPropertyValueFromTerm} from "../createPropertyValueFromTerm";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {Model} from "../Model";
 import {ResourceBackedModel} from "../ResourceBackedModel";
 import invariant from "ts-invariant";
+import {PropertyValueUnion} from "../PropertyValueUnion";
 
 const ensureModelGraphIdentifier = (graph: Term) => {
   invariant(graph.termType === "NamedNode");
@@ -118,11 +118,11 @@ export abstract class WikidataModel
   }
 
   @Memoize()
-  override get propertyValues(): readonly PropertyValue[] {
+  override get propertyValues(): readonly PropertyValueUnion[] {
     return Object.values(this.wikidataPropertiesByIri).flatMap(wikidataProperty => this.propertyValuesByWikidataProperty(wikidataProperty));
   }
 
-  private propertyValuesByWikidataProperty(wikidataProperty: WikidataProperty): readonly PropertyValue[] {
+  private propertyValuesByWikidataProperty(wikidataProperty: WikidataProperty): readonly PropertyValueUnion[] {
     return this.statements.filter(statement => statement.property.node.equals(wikidataProperty.identifier)).flatMap(statement => statement.values.flatMap(statementValue => createPropertyValueFromTerm({
       dataset: this.dataset,
       modelSet: this.modelSet,
@@ -133,7 +133,7 @@ export abstract class WikidataModel
   }
 
   @Memoize()
-  override propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+  override propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValueUnion[] {
     const wikidataProperty = this.wikidataPropertiesByIri[propertyIri];
     if (!wikidataProperty) {
       return [];

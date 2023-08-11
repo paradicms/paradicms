@@ -7,9 +7,9 @@ import {ModelIdentifier} from "./ModelIdentifier";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 import {Memoize} from "typescript-memoize";
 import {modelIdentifiersToKey} from "./modelIdentifiersToKey";
-import {PropertyValue} from "./PropertyValue";
 import {Property} from "./Property";
 import {createPropertyValuesFromQuadObjects} from "./createPropertyValuesFromQuadObjects";
+import {PropertyValueUnion} from "./PropertyValueUnion";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: DatasetCore;
@@ -50,11 +50,11 @@ export abstract class ResourceBackedModel extends Resource implements Model {
   }
 
   @Memoize()
-  get propertyValues(): readonly PropertyValue[] {
+  get propertyValues(): readonly PropertyValueUnion[] {
     return this.modelSet.properties.flatMap(property => property.iris.flatMap(propertyIri => this.propertyValuesByProperty(property, propertyIri)));
   }
 
-  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValue[] {
+  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValueUnion[] {
     return createPropertyValuesFromQuadObjects({
       dataset: this.dataset,
       modelSet: this.modelSet,
@@ -70,7 +70,7 @@ export abstract class ResourceBackedModel extends Resource implements Model {
   }
 
   @Memoize()
-  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValueUnion[] {
     const property = this.modelSet.propertyByIri(propertyIri);
     if (!property) {
       return [];

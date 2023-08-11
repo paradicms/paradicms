@@ -11,6 +11,8 @@ export class AgentPropertyValue extends PropertyValue {
     return this.agent.label;
   }
 
+  readonly type = "Agent";
+
   get value() {
     return this.agent.iris.length === 1 ? this.agent.iris[0] : this.agent.label;
   }

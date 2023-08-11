@@ -5,13 +5,13 @@ import {ConceptPropertyValue} from "./ConceptPropertyValue";
 import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
 import {LiteralPropertyValue} from "./LiteralPropertyValue";
 import {ModelSet} from "./ModelSet";
-import {PropertyValue} from "./PropertyValue";
 import {TextPropertyValue} from "./TextPropertyValue";
 import {Property} from "./Property";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 import {mapTermToText} from "./mapTermToText";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {mapTermToAgent} from "./mapTermToAgent";
+import {PropertyValueUnion} from "./PropertyValueUnion";
 
 export const createPropertyValueFromTerm = (kwds: {
   dataset: DatasetCore;
@@ -19,7 +19,7 @@ export const createPropertyValueFromTerm = (kwds: {
   property: Property;
   term: Term;
   termGraph: Quad_Graph;
-}): PropertyValue | null => {
+}): PropertyValueUnion | null => {
   const {dataset, modelSet, property, term, termGraph} = kwds;
 
   const modelParameters: Omit<ResourceBackedModelParameters, "identifier"> = {

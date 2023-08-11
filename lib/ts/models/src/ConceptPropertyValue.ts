@@ -16,6 +16,8 @@ export class ConceptPropertyValue extends PropertyValue {
         return this.concept.thumbnail(selector);
     }
 
+    readonly type = "Concept";
+
     get value() {
         return this.concept.value.value;
     }

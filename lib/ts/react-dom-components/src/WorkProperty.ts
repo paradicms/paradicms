@@ -1,6 +1,6 @@
-import {Property, PropertyValue} from "@paradicms/models";
+import {Property, PropertyValueUnion} from "@paradicms/models";
 
 export interface WorkProperty {
   readonly property: Property;
-  readonly values: readonly PropertyValue[];
+  readonly values: readonly PropertyValueUnion[];
 }

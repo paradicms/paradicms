@@ -5,11 +5,11 @@ import {cms, schema} from "@paradicms/vocabularies";
 import {getRdfInstanceQuads, mapTermToBoolean, mapTermToNumber,} from "@paradicms/rdf";
 import {PropertyGroup} from "../PropertyGroup";
 import {NamedNode} from "@rdfjs/types";
-import {PropertyValue} from "../PropertyValue";
 import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
 import {Memoize} from "typescript-memoize";
 import {requireNonNull} from "@paradicms/utilities";
 import {SchemaModel} from "./SchemaModel";
+import {PropertyValueUnion} from "../PropertyValueUnion";
 
 export class SchemaProperty extends Mixin(SchemaModel)
   implements Property {
@@ -51,7 +51,7 @@ export class SchemaProperty extends Mixin(SchemaModel)
   }
 
   @Memoize()
-  get rangeValues(): readonly PropertyValue[] {
+  get rangeValues(): readonly PropertyValueUnion[] {
     const range = this.range;
     if (range === null) {
       return [];

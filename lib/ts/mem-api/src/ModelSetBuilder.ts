@@ -3,7 +3,6 @@ import {
   AgentUnion,
   Collection,
   Concept,
-  ConceptPropertyValue,
   Event,
   Image,
   ImagesMixin,
@@ -14,7 +13,7 @@ import {
   ModelSetFactory,
   Property,
   PropertyGroup,
-  PropertyValue,
+  PropertyValueUnion,
   RightsMixin,
   RightsStatement,
   ThumbnailMixin,
@@ -399,12 +398,12 @@ export class ModelSetBuilder {
   }
 
   addPropertyValue(
-    propertyValue: PropertyValue,
+    propertyValue: PropertyValueUnion,
     joinSelector?: PropertyValueJoinSelector
   ): ModelSetBuilder {
     log.debug("ModelSetBuilder: adding property value", propertyValue.value);
 
-    if (propertyValue instanceof ConceptPropertyValue) {
+    if (propertyValue.type === "Concept") {
       log.debug(
         "ModelSetBuilder: adding concept property value",
         propertyValue.concept.key
