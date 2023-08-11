@@ -1,5 +1,5 @@
 import {filterModelsByKey} from "./filterModelsByKey";
-import {PropertyGroupsFilter} from "@paradicms/api/dist/PropertyGroupsFilter";
+import {PropertyGroupsFilter} from "@paradicms/api";
 
 export const filterPropertyGroups = <
   PropertyGroupT extends {

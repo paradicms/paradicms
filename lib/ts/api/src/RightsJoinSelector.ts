@@ -1,4 +1,4 @@
-import {AgentJoinSelector} from "AgentJoinSelector";
+import {AgentJoinSelector} from "./AgentJoinSelector";
 
 export interface RightsJoinSelector {
   agents?: AgentJoinSelector;

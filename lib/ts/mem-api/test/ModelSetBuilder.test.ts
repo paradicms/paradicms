@@ -7,8 +7,8 @@ import {
   Model,
   ModelSet,
   ModelSetBuilder,
+  ThumbnailSelector,
 } from "@paradicms/models";
-import {ThumbnailSelector} from "@paradicms/models/dist/ThumbnailSelector";
 import {testModelSet} from "../../models/test/testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";

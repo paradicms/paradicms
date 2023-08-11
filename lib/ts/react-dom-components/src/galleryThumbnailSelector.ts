@@ -1,4 +1,5 @@
-import {ImageJoinSelector, ThumbnailSelector} from "@paradicms/models";
+import {ThumbnailSelector} from "@paradicms/models";
+import {ImageJoinSelector} from "@paradicms/api";
 
 export const galleryThumbnailSelector: ImageJoinSelector & ThumbnailSelector = {
   agents: {},

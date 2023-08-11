@@ -1,8 +1,8 @@
 import {WorksQuery} from "./WorksQuery";
-import {EventJoinSelector} from "@paradicms/models";
 import {EventsQuery} from "./EventsQuery";
 import {EventsSort} from "./EventsSort";
 import {GetModelsOptions} from "./GetModelsOptions";
+import {EventJoinSelector} from "./EventJoinSelector";
 
 export interface GetWorkEventsOptions
   extends Omit<GetModelsOptions<EventJoinSelector, {}, EventsSort>, "query"> {

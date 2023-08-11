@@ -1,4 +1,4 @@
-import {ThumbnailSelector} from "./ThumbnailSelector";
+import {ThumbnailSelector} from "@paradicms/models";
 import {PropertyValueJoinSelector} from "./PropertyValueJoinSelector";
 import {EventJoinSelector} from "./EventJoinSelector";
 import {ImageJoinSelector} from "./ImageJoinSelector";

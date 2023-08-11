@@ -1,4 +1,4 @@
-import {PropertyJoinSelector} from "@paradicms/models";
+import {PropertyJoinSelector} from "./PropertyJoinSelector";
 import {GetModelsOptions} from "./GetModelsOptions";
 import {PropertiesQuery} from "./PropertiesQuery";
 

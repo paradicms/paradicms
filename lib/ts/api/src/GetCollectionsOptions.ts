@@ -1,4 +1,4 @@
-import {CollectionJoinSelector} from "@paradicms/models";
+import {CollectionJoinSelector} from "./CollectionJoinSelector";
 import {CollectionsQuery} from "./CollectionsQuery";
 import {GetModelsOptions} from "./GetModelsOptions";
 

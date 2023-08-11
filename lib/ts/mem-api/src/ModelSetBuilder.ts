@@ -1,34 +1,38 @@
 import {Store} from "@paradicms/rdf";
-import {AgentUnion} from "@paradicms/models/dist/AgentUnion";
-import {Collection} from "@paradicms/models/dist/Collection";
-import {Concept} from "@paradicms/models/dist/Concept";
-import {Image} from "@paradicms/models/dist/Image";
-import {License} from "@paradicms/models/dist/License";
-import {Location} from "@paradicms/models/dist/Location";
-import {Model} from "@paradicms/models/dist/Model";
-import {Property} from "@paradicms/models/dist/Property";
-import {RightsStatement} from "@paradicms/models/dist/RightsStatement";
-import {Work} from "@paradicms/models/dist/Work";
-import {ModelSet} from "@paradicms/models/dist/ModelSet";
-import {ModelSetFactory} from "@paradicms/models/dist/ModelSetFactory";
-import {PropertyGroup} from "@paradicms/models/dist/PropertyGroup";
-import {AgentJoinSelector} from "@paradicms/models/dist/AgentJoinSelector";
-import {CollectionJoinSelector} from "@paradicms/models/dist/CollectionJoinSelector";
-import {PropertyValueJoinSelector} from "@paradicms/models/dist/PropertyValueJoinSelector";
-import {PropertyJoinSelector} from "@paradicms/models/dist/PropertyJoinSelector";
-import {PropertyGroupJoinSelector} from "@paradicms/models/dist/PropertyGroupJoinSelector";
-import {WorkJoinSelector} from "@paradicms/models/dist/WorkJoinSelector";
-import {RightsMixin} from "@paradicms/models/dist/RightsMixin";
-import {RightsJoinSelector} from "@paradicms/models/dist/RightsJoinSelector";
-import {PropertyValue} from "@paradicms/models/dist/PropertyValue";
-import {ConceptPropertyValue} from "@paradicms/models/dist/ConceptPropertyValue";
-import {EventJoinSelector} from "@paradicms/models/dist/EventJoinSelector";
-import {ImagesMixin} from "@paradicms/models/dist/ImagesMixin";
-import {ThumbnailSelector} from "@paradicms/models/dist/ThumbnailSelector";
+import {
+  AgentUnion,
+  Collection,
+  Concept,
+  ConceptPropertyValue,
+  Event,
+  Image,
+  ImagesMixin,
+  License,
+  Location,
+  Model,
+  ModelSet,
+  ModelSetFactory,
+  Property,
+  PropertyGroup,
+  PropertyValue,
+  RightsMixin,
+  RightsStatement,
+  ThumbnailMixin,
+  ThumbnailSelector,
+  Work,
+} from "@paradicms/models";
+import {
+  AgentJoinSelector,
+  CollectionJoinSelector,
+  EventJoinSelector,
+  ImageJoinSelector,
+  PropertyGroupJoinSelector,
+  PropertyJoinSelector,
+  PropertyValueJoinSelector,
+  RightsJoinSelector,
+  WorkJoinSelector,
+} from "@paradicms/api";
 import log from "loglevel";
-import {ImageJoinSelector} from "@paradicms/models/dist/ImageJoinSelector";
-import {ThumbnailMixin} from "@paradicms/models/dist/ThumbnailMixin";
-import {Event} from "@paradicms/models/dist/Event";
 
 /**
  * Build a ModelSet by adding models to it.

@@ -1,6 +1,6 @@
 import {AgentJoinSelector} from "./AgentJoinSelector";
 import {ImageJoinSelector} from "./ImageJoinSelector";
-import {ThumbnailSelector} from "./ThumbnailSelector";
+import {ThumbnailSelector} from "@paradicms/models";
 import {RightsJoinSelector} from "./RightsJoinSelector";
 
 /**
