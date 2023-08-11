@@ -2,16 +2,12 @@ import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {cc, dcmitype, dcterms, foaf, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {
-  ImageJoinSelector,
-  Model,
-  ModelSet,
-  ModelSetBuilder,
-  ThumbnailSelector,
-} from "@paradicms/models";
+import {Model, ModelSet, ThumbnailSelector} from "@paradicms/models";
 import {testModelSet} from "../../models/test/testModelSet";
 import {describe} from "mocha";
 import {requireNonNull} from "@paradicms/utilities";
+import {ImageJoinSelector} from "@paradicms/api";
+import {ModelSetBuilder} from "../src/ModelSetBuilder";
 
 const THUMBNAIL_SELECTOR: ImageJoinSelector & ThumbnailSelector = {
   licenses: true,
@@ -99,11 +95,10 @@ describe("ModelSetBuilder", () => {
     const agents = work.agents.map(agent => agent.agent);
     const namedAgents = agents.filter(agent => agent.iris.length > 0);
     expect(namedAgents.length).to.be.lte(agents.length);
-    const agentsModelSet = sut
-      .addAgents(agents, {
-        thumbnail: THUMBNAIL_SELECTOR,
-      })
-      .build();
+    for (const agent of agents) {
+      sut.addAgent(agent, {thumbnail: THUMBNAIL_SELECTOR});
+    }
+    const agentsModelSet = sut.build();
     expect(modelSetAgentIris(agentsModelSet)).to.have.length(2);
     // The WikidataPerson isn't counted because it doesn't have an unambiguous rdf:type
     expect(modelSetImageIris(agentsModelSet)).to.have.length(5); // One original image, one thumbnail per named agent + the sameAs agent image
@@ -135,11 +130,10 @@ describe("ModelSetBuilder", () => {
   it("should get a property groups subset (worksheet edit)", () => {
     const propertyGroups = completeModelSet.propertyGroups;
     expect(propertyGroups).to.not.be.empty;
-    const propertyGroupsModelSet = sut
-      .addPropertyGroups(propertyGroups, {
-        thumbnail: THUMBNAIL_SELECTOR,
-      })
-      .build();
+    for (const propertyGroup of propertyGroups) {
+      sut.addPropertyGroup(propertyGroup, {thumbnail: THUMBNAIL_SELECTOR});
+    }
+    const propertyGroupsModelSet = sut.build();
     expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
     expect(propertyGroupsModelSet.properties).to.be.empty;
     expect(modelSetImageIris(propertyGroupsModelSet)).to.have.length(
@@ -323,12 +317,13 @@ describe("ModelSetBuilder", () => {
   });
 
   it("should get all top-level events (timeline app)", () => {
-    const eventsModelSet = sut
-      .addEvents(completeModelSet.events, {
+    for (const event of completeModelSet.events) {
+      sut.addEvent(event, {
         agents: {},
         thumbnail: THUMBNAIL_SELECTOR,
-      })
-      .build();
+      });
+    }
+    const eventsModelSet = sut.build();
 
     expectModelsDeepEq(completeModelSet.events, eventsModelSet.events);
     expectModelsDeepEq(

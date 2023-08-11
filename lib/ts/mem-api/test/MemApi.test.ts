@@ -1,5 +1,4 @@
 import {
-  ImageJoinSelector,
   ModelSetFactory,
   ThumbnailSelector,
   WorkAgent,
@@ -9,6 +8,7 @@ import {
 import {
   EventsSortProperty,
   GetModelsResult,
+  ImageJoinSelector,
   StringPropertyValueFacet,
   StringPropertyValueFilter,
   WorksSortProperty,
