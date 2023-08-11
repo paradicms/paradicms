@@ -20,13 +20,13 @@ import {useRouter} from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
-import {AppConfiguration, Property} from "@paradicms/models";
+import {JsonAppConfiguration, Property} from "@paradicms/models";
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   cardHeaderLinks?: React.ReactElement[];
   collectionLabel?: string;
   className?: string;
-  configuration: AppConfiguration | null;
+  configuration: JsonAppConfiguration | null;
   onSearch?: (text: string) => void;
   properties: readonly Property[];
   title?: string;

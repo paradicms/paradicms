@@ -7,7 +7,7 @@ export const getDefaultWorksQueryFilters = (
     readonly iris: readonly string[];
     readonly label: string;
   }[]
-): readonly WorksFilter[] => {
+): WorksFilter[] => {
   if (properties.length === 0) {
     properties = defaultProperties;
   }
