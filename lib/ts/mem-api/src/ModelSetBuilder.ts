@@ -1,14 +1,11 @@
 import {Store} from "@paradicms/rdf";
 import {AgentUnion} from "@paradicms/models/dist/AgentUnion";
-import {AppConfiguration} from "@paradicms/models/dist/AppConfiguration";
 import {Collection} from "@paradicms/models/dist/Collection";
 import {Concept} from "@paradicms/models/dist/Concept";
 import {Image} from "@paradicms/models/dist/Image";
 import {License} from "@paradicms/models/dist/License";
 import {Location} from "@paradicms/models/dist/Location";
 import {Model} from "@paradicms/models/dist/Model";
-import {Organization} from "@paradicms/models/dist/Organization";
-import {Person} from "@paradicms/models/dist/Person";
 import {Property} from "@paradicms/models/dist/Property";
 import {RightsStatement} from "@paradicms/models/dist/RightsStatement";
 import {Work} from "@paradicms/models/dist/Work";
@@ -44,7 +41,6 @@ import {Event} from "@paradicms/models/dist/Event";
  * but no models connected to the Works (i.e., their Agents).
  */
 export class ModelSetBuilder {
-  private addedAppConfiguration: boolean = false;
   private readonly store: Store = new Store();
 
   addAgent(
@@ -77,30 +73,6 @@ export class ModelSetBuilder {
       }
     }
 
-    return this;
-  }
-
-  addAgents(
-    agents: readonly AgentUnion[],
-    joinSelector?: AgentJoinSelector
-  ): ModelSetBuilder {
-    for (const agent of agents) {
-      this.addAgent(agent, joinSelector);
-    }
-    return this;
-  }
-
-  addAppConfiguration(
-    appConfiguration: AppConfiguration | null
-  ): ModelSetBuilder {
-    if (!appConfiguration) {
-      return this;
-    }
-    if (this.addedAppConfiguration) {
-      throw new RangeError("tried to add AppConfiguration twice");
-    }
-    this.addModel(appConfiguration);
-    this.addedAppConfiguration = true;
     return this;
   }
 
@@ -250,16 +222,6 @@ export class ModelSetBuilder {
     return this;
   }
 
-  addEvents(
-    events: readonly Event[],
-    joinSelector?: EventJoinSelector
-  ): ModelSetBuilder {
-    for (const event of events) {
-      this.addEvent(event, joinSelector);
-    }
-    return this;
-  }
-
   addImage(
     image: Image,
     joinSelector?: {
@@ -323,17 +285,6 @@ export class ModelSetBuilder {
     }
 
     return this;
-  }
-
-  addOrganization(
-    organization: Organization,
-    joinSelector?: AgentJoinSelector
-  ): ModelSetBuilder {
-    return this.addAgent(organization, joinSelector);
-  }
-
-  addPerson(person: Person, joinSelector?: AgentJoinSelector): ModelSetBuilder {
-    return this.addAgent(person, joinSelector);
   }
 
   addProperty(
@@ -440,16 +391,6 @@ export class ModelSetBuilder {
       this.addThumbnail(propertyGroup, joinSelector.thumbnail);
     }
 
-    return this;
-  }
-
-  addPropertyGroups(
-    propertyGroups: readonly PropertyGroup[],
-    joinSelector?: PropertyGroupJoinSelector
-  ): ModelSetBuilder {
-    for (const propertyGroup of propertyGroups) {
-      this.addPropertyGroup(propertyGroup, joinSelector);
-    }
     return this;
   }
 
@@ -601,7 +542,9 @@ export class ModelSetBuilder {
     log.debug("ModelSetBuilder: adding work", work.key, "rights");
     if (joinSelector.agents) {
       for (const agents of [work.contributors, work.creators]) {
-        this.addAgents(agents, joinSelector.agents);
+        for (const agent of agents) {
+          this.addAgent(agent, joinSelector?.agents);
+        }
       }
     }
 
@@ -654,16 +597,6 @@ export class ModelSetBuilder {
       }
     }
 
-    return this;
-  }
-
-  addWorks(
-    works: readonly Work[],
-    joinSelector?: WorkJoinSelector
-  ): ModelSetBuilder {
-    for (const work of works) {
-      this.addWork(work, joinSelector);
-    }
     return this;
   }
 
