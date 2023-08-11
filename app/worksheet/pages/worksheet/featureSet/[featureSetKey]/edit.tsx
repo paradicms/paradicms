@@ -26,9 +26,7 @@ import {
   galleryThumbnailSelector,
   ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
-import {requireDefined} from "@paradicms/utilities";
 import {JsonLd} from "jsonld/jsonld-spec";
-import invariant from "ts-invariant";
 
 const WorksheetFeatureSelectsTable: React.FunctionComponent<{
   dispatchFeatureSet: () => void;
@@ -80,7 +78,7 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
 
 interface StaticProps {
   readonly configuration: JsonAppConfiguration | null;
-  readonly featureSetIri: string;
+  readonly featureSetKey: string;
   readonly modelSetJsonLd: JsonLd;
 }
 
@@ -89,12 +87,12 @@ const WorksheetFeatureSetEditPageImpl: React.FunctionComponent<Omit<
   "modelSetJsonLd"
 > & {readonly modelSet: ModelSet}> = ({
   configuration,
-  featureSetIri,
+  featureSetKey,
   modelSet,
 }) => {
   const router = useRouter();
   const routeWorksheetMark = useRouteWorksheetMark({
-    featureSetIri,
+    featureSetKey,
     review: false,
   });
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
@@ -153,8 +151,8 @@ const WorksheetFeatureSetEditPageImpl: React.FunctionComponent<Omit<
               onToggleSelected: () => {
                 router.push(
                   Hrefs.worksheetMark({
-                    featureSetIri: featureSet.iri,
-                    featureIri: feature.iri,
+                    featureSetKey: featureSet.key,
+                    featureKey: feature.key,
                     review: false,
                     mode: worksheet!.currentMark.mode,
                     worksheetStateId: worksheet!.stateId,
@@ -216,38 +214,34 @@ export const getStaticProps: GetStaticProps = async ({
     readFile,
   });
 
-  const joinSelectorByKey: {[index: string]: PropertyGroupJoinSelector} = {};
-  joinSelectorByKey[featureSetKey] = {
+  // Get features and feature values for the feature set we're editing/reviewing
+  const thisFeatureSetJoinSelector: {
+    [index: string]: PropertyGroupJoinSelector;
+  } = {};
+  thisFeatureSetJoinSelector[featureSetKey] = {
     properties: {
       rangeValues: {},
       thumbnail: galleryThumbnailSelector,
     },
   };
 
+  // Only get features in feature sets we're not editing/reviewing
+  // We need these to build out the progress bar
+  const otherFeatureSetsJoinSelector: PropertyGroupJoinSelector = {
+    properties: {},
+  };
+
   const modelSet = (
     await api.getPropertyGroups({
-      // Only get features in feature sets we're not editing/reviewing
-      // We need these to build out the progress bar
-      joinSelector: {
-        properties: {},
-      },
-      // Get features and feature values for the feature set we're editing/reviewing
-      joinSelectorByKey,
+      joinSelector: otherFeatureSetsJoinSelector,
+      joinSelectorByKey: thisFeatureSetJoinSelector,
     })
   ).modelSet;
-
-  const featureSet = requireDefined(
-    modelSet.propertyGroups.find(
-      propertyGroup => propertyGroup.key === featureSetKey
-    )
-  );
-  invariant(featureSet.iris.length === 1);
-  const featureSetIri = featureSet.iris[0];
 
   return {
     props: {
       configuration: await api.getAppConfiguration(),
-      featureSetIri,
+      featureSetKey,
       modelSetJsonLd: await modelSet.toJsonLd(),
     },
   };

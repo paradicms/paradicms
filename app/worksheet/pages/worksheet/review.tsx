@@ -234,8 +234,8 @@ const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
                               <Link
                                 className="btn btn-lg btn-secondary w-100"
                                 href={Hrefs.worksheetMark({
-                                  featureSetIri: featureSet.iri,
-                                  featureIri: feature.iri,
+                                  featureSetKey: featureSet.key,
+                                  featureKey: feature.key,
                                   review: false,
                                   mode: worksheet!.currentMark.mode,
                                   worksheetStateId: worksheet!.stateId,

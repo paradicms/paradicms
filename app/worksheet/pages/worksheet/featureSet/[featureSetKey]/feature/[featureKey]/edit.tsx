@@ -12,19 +12,22 @@ import {decodeFileName, encodeFileName, getStaticApi} from "@paradicms/next";
 import path from "path";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GetStaticPaths, GetStaticProps} from "next";
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {
+  ModelSet,
+  PropertyGroupJoinSelector,
+  PropertyJoinSelector,
+} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {useRouter} from "next/router";
 import {
   galleryThumbnailSelector,
   ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
-import {requireNonNull} from "@paradicms/utilities";
 import {JsonLd} from "jsonld/jsonld-spec";
 
 interface StaticProps {
-  readonly featureSetIri: string;
-  readonly featureIri: string;
+  readonly featureSetKey: string;
+  readonly featureKey: string;
   readonly modelSetJsonLd: JsonLd;
 }
 
@@ -32,14 +35,14 @@ const WorksheetFeatureEditPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "modelSetJsonLd"
 > & {readonly modelSet: ModelSet}> = ({
-  featureSetIri,
-  featureIri,
+  featureSetKey,
+  featureKey,
   modelSet,
 }) => {
   const configuration = modelSet.appConfiguration;
   const routeWorksheetMark = useRouteWorksheetMark({
-    featureSetIri,
-    featureIri,
+    featureSetKey,
+    featureKey,
     review: false,
   });
   const router = useRouter();
@@ -66,7 +69,7 @@ const WorksheetFeatureEditPageImpl: React.FunctionComponent<Omit<
     router.push(
       Hrefs.worksheetMark({
         ...worksheet.currentMark,
-        featureIri: null,
+        featureKey: null,
       })
     );
     return null;
@@ -130,19 +133,28 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const modelSet = await getStaticApi({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
-  const worksheetDefinition = new WorksheetDefinition(modelSet);
 
-  const paths: {params: {featureSetIri: string; featureIri: string}}[] = [];
+  const worksheetDefinition = new WorksheetDefinition(
+    (
+      await api.getPropertyGroups({
+        joinSelector: {
+          properties: {},
+        },
+      })
+    ).modelSet
+  );
+
+  const paths: {params: {featureSetKey: string; featureKey: string}}[] = [];
   for (const featureSet of worksheetDefinition.featureSets) {
     for (const feature of featureSet.features) {
       paths.push({
         params: {
-          featureSetIri: encodeFileName(featureSet.iri),
-          featureIri: encodeFileName(feature.iri),
+          featureSetKey: encodeFileName(featureSet.key),
+          featureKey: encodeFileName(feature.key),
         },
       });
     }
@@ -161,35 +173,50 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{
   props: StaticProps;
 }> => {
-  const featureSetIri = decodeFileName(params!.featureSetIri as string);
-  const featureIri = decodeFileName(params!.featureIri as string);
+  const featureSetKey = decodeFileName(params!.featureSetKey as string);
+  const featureKey = decodeFileName(params!.featureKey as string);
 
-  const completeModelSet = await getStaticApi({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
+  // Get feature values for the feature we're editing
+  const thisFeatureJoinSelector: {[index: string]: PropertyJoinSelector} = {};
+  thisFeatureJoinSelector[featureKey] = {
+    rangeValues: {
+      thumbnail: galleryThumbnailSelector,
+    },
+  };
+
+  // Get the other features in the feature set
+  // We need these to build out the progress bar.
+  const thisFeatureSetJoinSelector: {
+    [index: string]: PropertyGroupJoinSelector;
+  } = {};
+  thisFeatureSetJoinSelector[featureSetKey] = {
+    properties: {},
+    propertiesByKey: thisFeatureJoinSelector,
+  };
+
+  // Only get features in feature sets we're not editing/reviewing
+  // We need these to build out the progress bar
+  const otherFeatureSetsJoinSelector: PropertyGroupJoinSelector = {
+    properties: {},
+  };
+
+  const modelSet = (
+    await api.getPropertyGroups({
+      joinSelector: otherFeatureSetsJoinSelector,
+      joinSelectorByKey: thisFeatureSetJoinSelector,
+    })
+  ).modelSet;
+
   return {
     props: {
-      featureSetIri,
-      featureIri,
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addProperty(
-          requireNonNull(completeModelSet.propertyByIri(featureIri)),
-          {
-            rangeValues: {
-              thumbnail: galleryThumbnailSelector,
-            },
-          }
-        )
-        .addPropertyGroups(completeModelSet.propertyGroups, {
-          properties: {
-            rangeValues: {},
-          },
-        })
-        .build()
-        .toJsonLd(),
+      featureSetKey,
+      featureKey,
+      modelSetJsonLd: await modelSet.toJsonLd(),
     },
   };
 };

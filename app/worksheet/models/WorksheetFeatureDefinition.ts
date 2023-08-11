@@ -19,6 +19,10 @@ export class WorksheetFeatureDefinition {
     return this.property.iris[0];
   }
 
+  get key() {
+    return this.property.key;
+  }
+
   get label() {
     return this.property.label;
   }
