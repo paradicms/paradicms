@@ -1,13 +1,9 @@
-import {
-  ModelSet,
-  ModelSetBuilder,
-  selectExhibitionWorks,
-} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readModelSet,
+  getStaticApi,
 } from "@paradicms/next";
 import {
   getWorkLocationIcon,
@@ -30,6 +26,8 @@ import {requireNonNull} from "@paradicms/utilities";
 import Link from "next/link";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
 import {JsonLd} from "jsonld/jsonld-spec";
+import invariant from "ts-invariant";
+import {getExhibitionData} from "@paradicms/api";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -40,28 +38,28 @@ const LocationsMap = dynamic<{
 );
 
 interface StaticProps {
-  readonly collectionKey: string | null;
+  readonly collection: {readonly label: string} | null;
+  readonly configuration: JsonAppConfiguration | null;
   readonly currentWorkKey: string;
-  readonly modelSetJsonLd: JsonLd;
+  readonly currentWorkModelSetJsonLd: JsonLd;
   readonly nextWorkKey: string | null;
   readonly previousWorkKey: string | null;
 }
 
 const WorkPageImpl: React.FunctionComponent<Omit<
   StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({
-  collectionKey,
+  "currentWorkModelSetJsonLd"
+> & {readonly currentWorkModelSet: ModelSet}> = ({
+  collection,
+  configuration,
   currentWorkKey,
-  modelSet,
+  currentWorkModelSet,
   nextWorkKey,
   previousWorkKey,
 }) => {
-  const collection = collectionKey
-    ? modelSet.collectionByKey(collectionKey)
-    : null;
-  const configuration = modelSet.appConfiguration;
-  const currentWork = requireNonNull(modelSet.workByKey(currentWorkKey));
+  const currentWork = requireNonNull(
+    currentWorkModelSet.workByKey(currentWorkKey)
+  );
   const router = useRouter();
 
   const onGoToNextWork = useCallback(() => {
@@ -109,8 +107,8 @@ const WorkPageImpl: React.FunctionComponent<Omit<
               getAbsoluteImageSrc={relativeImageSrc =>
                 getAbsoluteImageSrc(relativeImageSrc, router)
               }
-              propertyGroups={modelSet.propertyGroups}
-              properties={modelSet.properties}
+              propertyGroups={currentWorkModelSet.propertyGroups}
+              properties={currentWorkModelSet.properties}
               renderWorkLink={(work, children) => (
                 <Link href={Hrefs.work({key: currentWorkKey})}>
                   <a>{children}</a>
@@ -135,12 +133,14 @@ const WorkPageImpl: React.FunctionComponent<Omit<
 };
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
+  currentWorkModelSetJsonLd,
   ...otherProps
 }) => (
   <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => <WorkPageImpl modelSet={modelSet} {...otherProps} />}
+    modelSetJsonLd={currentWorkModelSetJsonLd}
+    render={modelSet => (
+      <WorkPageImpl currentWorkModelSet={modelSet} {...otherProps} />
+    )}
   />
 );
 
@@ -150,20 +150,19 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const modelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
   const paths: {params: {workKey: string}}[] = [];
 
-  const {works} = selectExhibitionWorks(modelSet);
+  const {workKeys} = await getExhibitionData(api);
 
-  // Use first collection with works
-  for (const work of works) {
+  for (const workKey of workKeys) {
     paths.push({
       params: {
-        workKey: encodeFileName(work.key),
+        workKey: encodeFileName(workKey),
       },
     });
   }
@@ -177,51 +176,52 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const completeModelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
-  const {collection, works} = selectExhibitionWorks(completeModelSet);
-  const workKey = decodeFileName(params!.workKey as string);
 
-  const currentWork = requireNonNull(completeModelSet.workByKey(workKey));
+  const {collection, workKeys} = await getExhibitionData(api);
 
-  const currentWorkI = works.findIndex(work => work.key === currentWork.key);
+  const currentWorkKey = decodeFileName(params!.workKey as string);
+
+  const currentWorkI = workKeys.findIndex(workKey => workKey == currentWorkKey);
   if (currentWorkI === -1) {
-    throw new EvalError(
-      `current work ${currentWork.key} not found among works`
-    );
+    throw new EvalError(`current work ${currentWorkKey} not found among works`);
   }
   const nextWorkKey =
-    currentWorkI + 1 < works.length ? works[currentWorkI + 1].key : null;
-  const previousWorkKey = currentWorkI > 0 ? works[currentWorkI - 1].key : null;
+    currentWorkI + 1 < workKeys.length ? workKeys[currentWorkI + 1] : null;
+  const previousWorkKey = currentWorkI > 0 ? workKeys[currentWorkI - 1] : null;
 
-  const workKeys: string[] = [];
-  if (previousWorkKey) {
-    workKeys.push(previousWorkKey);
-  }
-  workKeys.push(workKey);
-  if (nextWorkKey) {
-    workKeys.push(nextWorkKey);
-  }
-
-  const modelSetBuilder = new ModelSetBuilder()
-    .addAppConfiguration(completeModelSet.appConfiguration)
-    .addWorks(
-      workKeys.map(workKey =>
-        requireNonNull(completeModelSet.workByKey(workKey))
-      ),
-      workPageWorkJoinSelector
-    );
-  if (collection) {
-    modelSetBuilder.addCollection(collection);
-  }
+  const currentWorkModelSet = (
+    await api.getWorks({
+      limit: 1,
+      query: {
+        filters: [
+          {
+            includeKeys: [currentWorkKey],
+            type: "Key",
+          },
+        ],
+      },
+      joinSelector: workPageWorkJoinSelector,
+    })
+  ).modelSet;
+  invariant(
+    currentWorkModelSet.works.length == 1,
+    currentWorkModelSet.works.length
+  );
+  invariant(
+    currentWorkModelSet.works[0].key === currentWorkKey,
+    currentWorkModelSet.works[0].key
+  );
 
   return {
     props: {
-      collectionKey: collection?.key ?? null,
-      currentWorkKey: workKey,
-      modelSetJsonLd: await modelSetBuilder.build().toJsonLd(),
+      collection: collection ? {label: collection.label} : null,
+      configuration: await api.getAppConfiguration(),
+      currentWorkKey: currentWorkKey,
+      currentWorkModelSetJsonLd: await currentWorkModelSet.toJsonLd(),
       nextWorkKey: nextWorkKey,
       previousWorkKey: previousWorkKey,
     },

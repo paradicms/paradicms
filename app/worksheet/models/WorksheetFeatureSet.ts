@@ -6,7 +6,7 @@ import {WorksheetFeatureState} from "~/models/WorksheetFeatureState";
 export class WorksheetFeatureSet {
   readonly definition: WorksheetFeatureSetDefinition;
   readonly features: readonly WorksheetFeature[];
-  private readonly featuresByIri: {[index: string]: WorksheetFeature};
+  private readonly featuresByKey: {[index: string]: WorksheetFeature};
   selected: boolean;
 
   constructor(kwds: {
@@ -26,19 +26,27 @@ export class WorksheetFeatureSet {
           })
       )
       .sort((left, right) => left.definition.order - right.definition.order);
-    this.featuresByIri = this.features.reduce((map, feature) => {
-      map[feature.iri] = feature;
+    this.featuresByKey = this.features.reduce((map, feature) => {
+      map[feature.key] = feature;
       return map;
     }, {} as {[index: string]: WorksheetFeature});
     this.selected = !!initialState;
   }
 
-  featureByIri(iri: string): WorksheetFeature {
-    const feature = this.featuresByIri[iri];
+  featureByKey(key: string): WorksheetFeature {
+    const feature = this.featuresByKey[key];
     if (!feature) {
-      throw new RangeError("no such feature " + iri);
+      throw new RangeError("no such feature " + key);
     }
     return feature;
+  }
+
+  get iri(): string {
+    return this.definition.iri;
+  }
+
+  get key(): string {
+    return this.definition.key;
   }
 
   select(): void {
@@ -65,9 +73,5 @@ export class WorksheetFeatureSet {
 
   unselect(): void {
     this.selected = false;
-  }
-
-  get iri(): string {
-    return this.definition.iri;
   }
 }

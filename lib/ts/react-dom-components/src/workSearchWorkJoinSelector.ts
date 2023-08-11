@@ -1,7 +1,7 @@
-import {WorkJoinSelector} from "@paradicms/models";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 import {workSearchWorkEventJoinSelector} from "./workSearchWorkEventJoinSelector";
+import {WorkJoinSelector} from "@paradicms/api";
 
 export const workSearchWorkJoinSelector: WorkJoinSelector = {
   agents: {

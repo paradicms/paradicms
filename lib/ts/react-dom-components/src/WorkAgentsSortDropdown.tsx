@@ -1,18 +1,18 @@
-import {WorkAgentsSort, WorkAgentsSortProperty} from "@paradicms/services";
+import {AgentsSort, AgentsSortProperty} from "@paradicms/api";
 import React from "react";
 import {SortDropdown} from "./SortDropdown";
 
-const options: readonly WorkAgentsSort[] = [
+const options: readonly AgentsSort[] = [
   {
     ascending: true,
-    property: WorkAgentsSortProperty.NAME,
+    property: AgentsSortProperty.NAME,
   },
-  {ascending: false, property: WorkAgentsSortProperty.NAME},
+  {ascending: false, property: AgentsSortProperty.NAME},
 ];
 
-const sortToString = (sort: WorkAgentsSort): string => {
+const sortToString = (sort: AgentsSort): string => {
   switch (sort.property) {
-    case WorkAgentsSortProperty.NAME:
+    case AgentsSortProperty.NAME:
       if (sort.ascending) {
         return "Name (A-Z)";
       } else {
@@ -22,8 +22,8 @@ const sortToString = (sort: WorkAgentsSort): string => {
 };
 
 export const WorkAgentsSortDropdown: React.FunctionComponent<{
-  onChange: (sort: WorkAgentsSort) => void;
-  value: WorkAgentsSort;
+  onChange: (sort: AgentsSort) => void;
+  value: AgentsSort;
 }> = ({onChange, value}) => {
   return (
     <SortDropdown

@@ -1,9 +1,9 @@
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readModelSet,
+  getStaticApi,
 } from "@paradicms/next";
 import {
   getNamedModelLinks,
@@ -36,31 +36,37 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly collectionLabel: string | null;
-  readonly modelSetJsonLd: JsonLd;
+  readonly configuration: JsonAppConfiguration | null;
   readonly workKey: string;
+  readonly workModelSetJsonLd: JsonLd;
 }
 
 const WorkPageImpl: React.FunctionComponent<Omit<
   StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({collectionLabel, modelSet, workKey}) => {
+  "workModelSetJsonLd"
+> & {readonly workModelSet: ModelSet}> = ({
+  collectionLabel,
+  configuration,
+  workModelSet,
+  workKey,
+}) => {
   const router = useRouter();
-  const work = requireNonNull(modelSet.workByKey(workKey));
+  const work = requireNonNull(workModelSet.workByKey(workKey));
 
   return (
     <Layout
       cardHeaderLinks={getNamedModelLinks(work)}
       collectionLabel={collectionLabel ?? undefined}
-      configuration={modelSet.appConfiguration}
-      properties={modelSet.properties}
+      configuration={configuration}
+      properties={workModelSet.properties}
       title={work.label}
     >
       <DelegateWorkPage
         getAbsoluteImageSrc={relativeImageSrc =>
           getAbsoluteImageSrc(relativeImageSrc, router)
         }
-        properties={modelSet.properties}
-        propertyGroups={modelSet.propertyGroups}
+        properties={workModelSet.properties}
+        propertyGroups={workModelSet.propertyGroups}
         renderWorkLink={(work, children) => (
           <Link href={Hrefs.work(work)}>
             <a>{children}</a>
@@ -82,12 +88,14 @@ const WorkPageImpl: React.FunctionComponent<Omit<
 };
 
 const WorkPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
+  workModelSetJsonLd,
   ...otherProps
 }) => (
   <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => <WorkPageImpl modelSet={modelSet} {...otherProps} />}
+    modelSetJsonLd={workModelSetJsonLd}
+    render={modelSet => (
+      <WorkPageImpl workModelSet={modelSet} {...otherProps} />
+    )}
   />
 );
 
@@ -97,16 +105,16 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const modelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
   const paths: {params: {workKey: string}}[] = [];
-  for (const work of modelSet.works) {
+  for (const workKey of (await api.getWorkKeys()).modelKeys) {
     paths.push({
       params: {
-        workKey: encodeFileName(work.key),
+        workKey: encodeFileName(workKey),
       },
     });
   }
@@ -122,26 +130,29 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workKey = decodeFileName(params!.workKey as string);
 
-  const completeModelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
+  const collections = (
+    await api.getCollections({
+      limit: 1,
+    })
+  ).modelSet.collections;
+
+  const workModelSet = (
+    await api.getWorks({
+      joinSelector: workPageWorkJoinSelector,
+    })
+  ).modelSet;
+
   return {
     props: {
-      collectionLabel:
-        completeModelSet.collections.length === 1
-          ? completeModelSet.collections[0].label
-          : null,
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addWork(
-          requireNonNull(completeModelSet.workByKey(workKey)),
-          workPageWorkJoinSelector
-        )
-        .build()
-        .toJsonLd(),
-      workKey: workKey,
+      collectionLabel: collections.length === 1 ? collections[0].label : null,
+      configuration: await api.getAppConfiguration(),
+      workKey,
+      workModelSetJsonLd: await workModelSet.toJsonLd(),
     },
   };
 };

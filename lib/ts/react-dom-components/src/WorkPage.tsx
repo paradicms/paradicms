@@ -5,7 +5,7 @@ import {
   Work,
   WorkAgent,
 } from "@paradicms/models";
-import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/services";
+import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/api";
 import * as React from "react";
 import {useState} from "react";
 import {

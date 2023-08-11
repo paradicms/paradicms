@@ -1,4 +1,4 @@
-import {WorkLocationSummary} from "@paradicms/services";
+import {WorkLocationSummary} from "@paradicms/api";
 
 export const getWorkLocationLabel = (
   workLocation: WorkLocationSummary

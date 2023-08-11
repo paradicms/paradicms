@@ -1,9 +1,9 @@
-import {Event, ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {Event, JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {
   decodeFileName,
   encodeFileName,
   getAbsoluteImageSrc,
-  readModelSet,
+  getStaticApi,
 } from "@paradicms/next";
 import {
   EventPage as DelegateEventPage,
@@ -30,6 +30,7 @@ const LocationsMap = dynamic<{
 );
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly eventKey: string;
   readonly modelSetJsonLd: JsonLd;
 }
@@ -81,16 +82,16 @@ const readFile = (filePath: string) =>
   fs.promises.readFile(filePath).then(contents => contents.toString());
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const modelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
 
   return {
     fallback: false,
-    paths: modelSet.events.map(event => ({
+    paths: (await api.getEventKeys()).modelKeys.map(eventKey => ({
       params: {
-        eventKey: encodeFileName(event.key),
+        eventKey: encodeFileName(eventKey),
       },
     })),
   };
@@ -99,23 +100,30 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const completeModelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile,
   });
+
   const eventKey = decodeFileName(params!.eventKey as string);
 
   return {
     props: {
+      configuration: await api.getAppConfiguration(),
       eventKey,
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addEvent(
-          requireNonNull(completeModelSet.eventByKey(eventKey)),
-          eventPageEventJoinSelector
-        )
-        .build()
-        .toJsonLd(),
+      modelSetJsonLd: await (
+        await api.getEvents({
+          joinSelector: eventPageEventJoinSelector,
+          query: {
+            filters: [
+              {
+                includeKeys: [eventKey],
+                type: "Key",
+              },
+            ],
+          },
+        })
+      ).modelSet.toJsonLd(),
     },
   };
 };

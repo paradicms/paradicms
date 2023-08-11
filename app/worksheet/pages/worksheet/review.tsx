@@ -11,17 +11,20 @@ import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetS
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
 import {useWorksheet} from "~/hooks/useWorksheet";
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {readModelSet} from "@paradicms/next";
+import {getStaticApi} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
 import Link from "next/link";
 import CopyToClipboard from "react-copy-to-clipboard";
 import {JsonLd} from "jsonld/jsonld-spec";
-import {ModelSetJsonLdParser} from "@paradicms/react-dom-components";
+import {
+  galleryThumbnailSelector,
+  ModelSetJsonLdParser,
+} from "@paradicms/react-dom-components";
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),
@@ -31,14 +34,14 @@ const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
 ];
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly modelSetJsonLd: JsonLd;
 }
 
 const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
-  const configuration = modelSet.appConfiguration;
+> & {readonly modelSet: ModelSet}> = ({configuration, modelSet}) => {
   const routeWorksheetMark = useRouteWorksheetMark({review: true});
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
     modelSet,
@@ -231,8 +234,8 @@ const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
                               <Link
                                 className="btn btn-lg btn-secondary w-100"
                                 href={Hrefs.worksheetMark({
-                                  featureSetIri: featureSet.iri,
-                                  featureIri: feature.iri,
+                                  featureSetKey: featureSet.key,
+                                  featureKey: feature.key,
                                   review: false,
                                   mode: worksheet!.currentMark.mode,
                                   worksheetStateId: worksheet!.stateId,
@@ -294,7 +297,7 @@ export default WorksheetReviewPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
@@ -302,15 +305,17 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addPropertyGroups(completeModelSet.propertyGroups, {
-          properties: {
-            rangeValues: {},
+      configuration: await api.getAppConfiguration(),
+      modelSetJsonLd: await (
+        await api.getPropertyGroups({
+          joinSelector: {
+            properties: {
+              rangeValues: {},
+            },
+            thumbnail: galleryThumbnailSelector,
           },
         })
-        .build()
-        .toJsonLd(),
+      ).modelSet.toJsonLd(),
     },
   };
 };

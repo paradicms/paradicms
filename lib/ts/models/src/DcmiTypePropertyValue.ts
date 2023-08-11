@@ -12,6 +12,8 @@ export class DcmiTypePropertyValue extends PropertyValue {
     return this.node.value.slice(dcmitype[""].value.length);
   }
 
+  readonly type = "DcmiType";
+
   get value() {
     return this.node.value;
   }

@@ -1,4 +1,4 @@
-import {AppConfiguration, Collection, Work} from "@paradicms/models";
+import {JsonAppConfiguration, Work} from "@paradicms/models";
 import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
@@ -13,8 +13,8 @@ import invariant from "ts-invariant";
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
 
 export const Layout: React.FunctionComponent<React.PropsWithChildren<{
-  collection: Collection | null;
-  configuration: AppConfiguration | null;
+  collection: {label: string} | null;
+  configuration: JsonAppConfiguration | null;
   currentWork?: Work;
   nextWork?: {readonly key: string};
   previousWork?: {readonly key: string};

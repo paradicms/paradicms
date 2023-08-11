@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useCallback, useEffect, useMemo, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Exception} from "~/Exception";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 import {Frame} from "~/components/Frame";
@@ -29,16 +29,15 @@ import {defaultUserSettings} from "~/models/defaultUserSettings";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import {readModelSet} from "@paradicms/next";
+import {getStaticApi} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSetFactory} from "@paradicms/models";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {JsonLd} from "jsonld/jsonld-spec";
-import {ModelSetJsonLdParser} from "@paradicms/react-dom-components";
+import {createDataset} from "@paradicms/rdf";
 
 const ExistingWorksheetStatesCard: React.FunctionComponent<{
   existingWorksheetStateIds: readonly string[];
@@ -189,8 +188,8 @@ const ExistingWorksheetStateTableRow: React.FunctionComponent<{
         <td className="align-middle text-left w-90">
           <Link
             href={Hrefs.worksheetMark({
-              featureSetIri: null,
-              featureIri: null,
+              featureSetKey: null,
+              featureKey: null,
               mode: WorksheetMode.BEGINNER,
               review: false,
               worksheetStateId,
@@ -348,23 +347,22 @@ const WorksheetStateConfigurationHeadline: React.FunctionComponent = () => {
 // (WorksheetStartPage as any).whyDidYouRender = true;
 
 interface StaticProps {
-  readonly modelSetJsonLd: JsonLd;
+  readonly configuration: JsonAppConfiguration | null;
 }
 
-const IndexPageImpl: React.FunctionComponent<Omit<
-  StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
-  const configuration = modelSet.appConfiguration;
+const emptyWorksheetDefinition = new WorksheetDefinition(
+  ModelSetFactory.fromDataset(createDataset())
+);
+
+const IndexPage: React.FunctionComponent<StaticProps> = ({configuration}) => {
   const [exception, setException] = useState<Exception | null>(null);
   const [existingWorksheetStateIds, setExistingWorksheetStateIds] = useState<
     string[] | null
   >(null);
   const router = useRouter();
-  const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
-    modelSet,
-  ]);
-  const worksheetStateService = useWorksheetStateService({worksheetDefinition});
+  const worksheetStateService = useWorksheetStateService({
+    worksheetDefinition: emptyWorksheetDefinition,
+  });
 
   useEffect(() => {
     if (!worksheetStateService) {
@@ -423,8 +421,8 @@ const IndexPageImpl: React.FunctionComponent<Omit<
         .then(() => {
           router.push(
             Hrefs.worksheetMark({
-              featureSetIri: null,
-              featureIri: null,
+              featureSetKey: null,
+              featureKey: null,
               mode: WorksheetMode.BEGINNER,
               review: false,
               worksheetStateId: newWorksheetStateId,
@@ -517,22 +515,12 @@ const IndexPageImpl: React.FunctionComponent<Omit<
   );
 };
 
-const IndexPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
-  ...otherProps
-}) => (
-  <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
-  />
-);
-
 export default IndexPage;
 
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
@@ -540,10 +528,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .build()
-        .toJsonLd(),
+      configuration: await api.getAppConfiguration(),
     },
   };
 };

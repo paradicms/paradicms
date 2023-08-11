@@ -1,4 +1,4 @@
-import {EventJoinSelector} from "@paradicms/models";
+import {EventJoinSelector} from "@paradicms/api";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 
 export const workSearchWorkEventJoinSelector: EventJoinSelector = {

@@ -1,17 +1,17 @@
 import {DatasetCore, Quad} from "@rdfjs/types";
-import {PropertyValue} from "./PropertyValue";
 import {createPropertyValueFromTerm} from "./createPropertyValueFromTerm";
 import {ModelSet} from "./ModelSet";
 import {Property} from "./Property";
+import {PropertyValueUnion} from "./PropertyValueUnion";
 
 export const createPropertyValuesFromQuadObjects = (kwds: {
   dataset: DatasetCore;
   modelSet: ModelSet;
   property: Property;
   quads: readonly Quad[];
-}): readonly PropertyValue[] => {
+}): readonly PropertyValueUnion[] => {
   const {dataset, modelSet, property, quads} = kwds;
-  const propertyValues: PropertyValue[] = [];
+  const propertyValues: PropertyValueUnion[] = [];
   for (const quad of quads) {
     const propertyValue = createPropertyValueFromTerm({
       dataset,

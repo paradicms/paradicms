@@ -5,6 +5,7 @@ import {ImagesMixin} from "./ImagesMixin";
 import {ThumbnailMixin} from "./ThumbnailMixin";
 import {AgentUnion} from "./AgentUnion";
 import {DescriptionMixin} from "./DescriptionMixin";
+import {EventSortDate} from "./EventSortDate";
 
 export interface Event
   extends DescriptionMixin,
@@ -18,17 +19,6 @@ export interface Event
   readonly label: string;
   readonly endDate: DateTimeDescription | null;
   readonly location: Location | null;
-
-  /**
-   * Synthesize a date that can be used for sorting this event.
-   *
-   * The returned properties have the same semantics as PartialDateTime.
-   */
-  readonly sortDate: {
-    day: number | null;
-    month: number | null;
-    year: number;
-  } | null;
-
+  readonly sortDate: EventSortDate | null;
   readonly startDate: DateTimeDescription | null;
 }

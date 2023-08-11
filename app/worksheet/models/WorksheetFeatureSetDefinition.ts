@@ -33,6 +33,10 @@ export class WorksheetFeatureSetDefinition {
     return this.propertyGroup.iris[0];
   }
 
+  get key() {
+    return this.propertyGroup.key;
+  }
+
   get label() {
     return this.propertyGroup.label;
   }

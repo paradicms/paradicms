@@ -6,11 +6,11 @@ import {useWorksheet} from "~/hooks/useWorksheet";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
 import {Spinner} from "~/components/Spinner";
-import {readModelSet} from "@paradicms/next";
+import {getStaticApi} from "@paradicms/next";
 import path from "path";
 import fs from "fs";
 import {GetStaticProps} from "next";
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {
@@ -20,14 +20,14 @@ import {
 import {JsonLd} from "jsonld/jsonld-spec";
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly modelSetJsonLd: JsonLd;
 }
 
 const WorksheetEditPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({modelSet}) => {
-  const configuration = modelSet.appConfiguration;
+> & {readonly modelSet: ModelSet}> = ({configuration, modelSet}) => {
   const routeWorksheetMark = useRouteWorksheetMark({review: false});
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
     modelSet,
@@ -119,7 +119,7 @@ export default WorksheetEditPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
@@ -127,16 +127,17 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(completeModelSet.appConfiguration)
-        .addPropertyGroups(completeModelSet.propertyGroups, {
-          properties: {
-            rangeValues: {},
+      configuration: await api.getAppConfiguration(),
+      modelSetJsonLd: await (
+        await api.getPropertyGroups({
+          joinSelector: {
+            properties: {
+              rangeValues: {},
+            },
+            thumbnail: galleryThumbnailSelector,
           },
-          thumbnail: galleryThumbnailSelector,
         })
-        .build()
-        .toJsonLd(),
+      ).modelSet.toJsonLd(),
     },
   };
 };

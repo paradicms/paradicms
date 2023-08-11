@@ -1,4 +1,4 @@
-import {WorkLocationSummary} from "@paradicms/services";
+import {WorkLocationSummary} from "@paradicms/api";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {
   faHammer,

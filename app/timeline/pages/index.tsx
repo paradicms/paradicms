@@ -1,5 +1,5 @@
-import {ModelSet, ModelSetBuilder} from "@paradicms/models";
-import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
+import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
 import fs from "fs";
 import {GetStaticProps} from "next";
 import * as path from "path";
@@ -17,6 +17,7 @@ import "react-vertical-timeline-component/style.min.css";
 import {JsonLd} from "jsonld/jsonld-spec";
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly modelSetJsonLd: JsonLd;
 }
 
@@ -63,7 +64,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
@@ -71,11 +72,12 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      modelSetJsonLd: await new ModelSetBuilder()
-        .addAppConfiguration(modelSet.appConfiguration)
-        .addEvents(modelSet.events, {thumbnail: galleryThumbnailSelector})
-        .build()
-        .toJsonLd(),
+      configuration: await api.getAppConfiguration(),
+      modelSetJsonLd: await (
+        await api.getEvents({
+          joinSelector: {thumbnail: galleryThumbnailSelector},
+        })
+      ).modelSet.toJsonLd(),
     },
   };
 };

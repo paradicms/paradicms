@@ -4,12 +4,12 @@ import {WorkAgent} from "../WorkAgent";
 import {Text} from "../Text";
 import {WorkEventUnion} from "../WorkEventUnion";
 import {WorkLocation} from "../WorkLocation";
-import {PropertyValue} from "../PropertyValue";
 import {Memoize} from "typescript-memoize";
 import {SameAsImagesMixin} from "./SameAsImagesMixin";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {SameAsModel} from "./SameAsModel";
 import {AgentUnion} from "../AgentUnion";
+import {PropertyValueUnion} from "../PropertyValueUnion";
 
 export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>, SomeImageThumbnailMixin) implements Work {
     get agents(): readonly WorkAgent[] {
@@ -44,13 +44,13 @@ export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>
         return this.getBestValue(model => model.location);
     }
 
-    get propertyValues(): readonly PropertyValue[] {
+    get propertyValues(): readonly PropertyValueUnion[] {
         return this.getAllValues(model => model.propertyValues);
     }
 
     @Memoize()
-    propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
-        const propertyValues: PropertyValue[] = [];
+    propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValueUnion[] {
+        const propertyValues: PropertyValueUnion[] = [];
         for (const propertyValue of this.propertyValues) {
             if (propertyValue.property.iris.some(propertyValuePropertyIri => propertyValuePropertyIri === propertyIri)) {
                 propertyValues.push(propertyValue);

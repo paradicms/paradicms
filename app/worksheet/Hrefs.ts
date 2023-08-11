@@ -34,10 +34,10 @@ export class Hrefs {
 
   static worksheetMark(mark: WorksheetMark) {
     let href = "/worksheet/";
-    if (mark.featureSetIri) {
-      href += "featureSet/" + encodeFileName(mark.featureSetIri) + "/";
-      if (mark.featureIri) {
-        href += "feature/" + encodeFileName(mark.featureIri) + "/";
+    if (mark.featureSetKey) {
+      href += "featureSet/" + encodeFileName(mark.featureSetKey) + "/";
+      if (mark.featureKey) {
+        href += "feature/" + encodeFileName(mark.featureKey) + "/";
       }
     }
     href += mark.review ? "review" : "edit";

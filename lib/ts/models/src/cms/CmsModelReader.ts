@@ -7,6 +7,7 @@ import {PropertyGroup} from "../PropertyGroup";
 import {CmsPropertyGroup} from "./CmsPropertyGroup";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {ModelGraphIdentifier} from "../ModelGraphIdentifier";
+import {CmsAppConfiguration} from "./CmsAppConfiguration";
 
 export class CmsModelReader extends DatasetModelReader {
   override readAppConfiguration(kwds: {modelSet: ModelSet}): AppConfiguration | null {
@@ -19,7 +20,7 @@ export class CmsModelReader extends DatasetModelReader {
         modelGraph: quad.graph as ModelGraphIdentifier,
         modelIdentifier: quad.subject as ModelIdentifier,
       });
-      return new AppConfiguration({
+      return new CmsAppConfiguration({
         dataset: this.dataset,
         modelSet: kwds.modelSet,
         graph: quad.graph as ModelGraphIdentifier,

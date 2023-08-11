@@ -1,4 +1,4 @@
-import {WorkJoinSelector} from "@paradicms/models";
+import {WorkJoinSelector} from "@paradicms/api";
 import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector";
 import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 

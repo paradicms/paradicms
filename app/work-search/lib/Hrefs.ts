@@ -1,5 +1,5 @@
 import {encodeFileName} from "@paradicms/next";
-import {WorksQuery} from "@paradicms/services";
+import {WorksQuery} from "@paradicms/api";
 import * as qs from "qs";
 
 export class Hrefs {

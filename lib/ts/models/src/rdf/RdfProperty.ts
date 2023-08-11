@@ -9,7 +9,6 @@ import {NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Property} from "../Property";
-import {PropertyValue} from "../PropertyValue";
 import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
 import {PropertyGroup} from "../PropertyGroup";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
@@ -18,6 +17,7 @@ import {Text} from "../Text";
 import {mapTermToText} from "../mapTermToText";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {ResourceBackedModel} from "../ResourceBackedModel";
+import {PropertyValueUnion} from "../PropertyValueUnion";
 
 export class RdfProperty
   extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
@@ -62,7 +62,7 @@ export class RdfProperty
   }
 
   @Memoize()
-  get rangeValues(): readonly PropertyValue[] {
+  get rangeValues(): readonly PropertyValueUnion[] {
     const range = this.range;
     if (range === null) {
       return [];

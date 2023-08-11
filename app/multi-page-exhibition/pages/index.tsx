@@ -1,5 +1,5 @@
-import {ModelSet, selectExhibitionWorks} from "@paradicms/models";
-import {readModelSet} from "@paradicms/next";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
+import {getStaticApi} from "@paradicms/next";
 import {
   ModelSetJsonLdParser,
   RightsParagraph,
@@ -13,26 +13,29 @@ import * as React from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
 import {JsonLd} from "jsonld/jsonld-spec";
+import invariant from "ts-invariant";
+import {getExhibitionData} from "@paradicms/api";
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly collectionKey: string | null;
+  readonly collectionModelSetJsonLd: JsonLd;
   readonly firstWorkKey: string;
-  readonly modelSetJsonLd: JsonLd;
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({
+  "collectionModelSetJsonLd"
+> & {readonly collectionModelSet: ModelSet}> = ({
   collectionKey,
+  configuration,
   firstWorkKey,
-  modelSet,
+  collectionModelSet,
 }) => {
   const router = useRouter();
   const collection = collectionKey
-    ? modelSet.collectionByKey(collectionKey)
+    ? collectionModelSet.collectionByKey(collectionKey)
     : null;
-  const configuration = modelSet.appConfiguration;
 
   React.useEffect(() => {
     if (!collection?.description) {
@@ -78,12 +81,14 @@ const IndexPageImpl: React.FunctionComponent<Omit<
 };
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
+  collectionModelSetJsonLd,
   ...otherProps
 }) => (
   <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+    modelSetJsonLd={collectionModelSetJsonLd}
+    render={collectionModelSet => (
+      <IndexPageImpl collectionModelSet={collectionModelSet} {...otherProps} />
+    )}
   />
 );
 
@@ -92,19 +97,23 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const modelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
   });
 
-  const {collection, works} = selectExhibitionWorks(modelSet);
+  const {collection, collectionModelSet, workKeys} = await getExhibitionData(
+    api
+  );
+  invariant(workKeys.length > 0, "must have at least one work");
 
   return {
     props: {
+      configuration: await api.getAppConfiguration(),
       collectionKey: collection?.key ?? null,
-      firstWorkKey: works[0].key,
-      modelSetJsonLd: await modelSet.toJsonLd(),
+      firstWorkKey: workKeys[0],
+      collectionModelSetJsonLd: await collectionModelSet.toJsonLd(),
     },
   };
 };

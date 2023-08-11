@@ -2,6 +2,7 @@ import {Memoize} from "typescript-memoize";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {Event} from "./Event";
 import log from "loglevel";
+import {EventSortDate} from "./EventSortDate";
 
 export abstract class EventDerivedDatesMixin {
   abstract readonly date: DateTimeDescription | null;
@@ -74,11 +75,7 @@ export abstract class EventDerivedDatesMixin {
    * The returned properties have the same semantics as PartialDateTime.
    */
   @Memoize()
-  get sortDate(): {
-    day: number | null;
-    month: number | null;
-    year: number;
-  } | null {
+  get sortDate(): EventSortDate | null {
     for (const date of [this.date, this.startDate, this.endDate]) {
       if (date !== null && date.year !== null) {
         return {

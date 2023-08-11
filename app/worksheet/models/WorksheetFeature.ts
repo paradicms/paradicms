@@ -29,6 +29,14 @@ export class WorksheetFeature {
       );
   }
 
+  get iri(): string {
+    return this.definition.iri;
+  }
+
+  get key(): string {
+    return this.definition.key;
+  }
+
   get state(): WorksheetFeatureState | undefined {
     const valueStates: WorksheetFeatureValueState[] = [];
     for (const value of this.values) {
@@ -44,9 +52,5 @@ export class WorksheetFeature {
           values: valueStates.length > 0 ? valueStates : undefined,
         }
       : undefined;
-  }
-
-  get iri(): string {
-    return this.definition.iri;
   }
 }

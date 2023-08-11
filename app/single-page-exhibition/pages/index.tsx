@@ -1,9 +1,5 @@
-import {
-  ModelSet,
-  ModelSetBuilder,
-  selectExhibitionWorks,
-} from "@paradicms/models";
-import {getAbsoluteImageSrc, readModelSet} from "@paradicms/next";
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
+import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
 import {
   defaultBootstrapStylesheetHref,
   getWorkLocationIcon,
@@ -11,7 +7,6 @@ import {
   ModelSetJsonLdParser,
   RightsParagraph,
   WorkPage,
-  workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import fs from "fs";
 import {GetStaticProps} from "next";
@@ -25,6 +20,7 @@ import {Col, Container, Row} from "reactstrap";
 import {requireNonNull} from "@paradicms/utilities";
 import {LocationsMapLocation} from "../components/LocationsMap";
 import {JsonLd} from "jsonld/jsonld-spec";
+import {getExhibitionData} from "@paradicms/api";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -35,23 +31,27 @@ const LocationsMap = dynamic<{
 );
 
 interface StaticProps {
+  readonly configuration: JsonAppConfiguration | null;
   readonly collectionKey: string | null;
-  readonly modelSetJsonLd: JsonLd;
+  readonly collectionModelSetJsonLd: JsonLd;
   readonly workKeys: readonly string[];
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
-  "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({collectionKey, modelSet, workKeys}) => {
-  const configuration = modelSet.appConfiguration;
-
+  "collectionModelSetJsonLd"
+> & {readonly collectionModelSet: ModelSet}> = ({
+  configuration,
+  collectionKey,
+  collectionModelSet,
+  workKeys,
+}) => {
   const pages: React.ReactElement[] = useMemo(() => {
     const collection = collectionKey
-      ? modelSet.collectionByKey(collectionKey)
+      ? collectionModelSet.collectionByKey(collectionKey)
       : null;
     const works = workKeys.map(workKey =>
-      requireNonNull(modelSet.workByKey(workKey))
+      requireNonNull(collectionModelSet.workByKey(workKey))
     );
     const pages: React.ReactElement[] = [];
 
@@ -114,8 +114,8 @@ const IndexPageImpl: React.FunctionComponent<Omit<
                 getAbsoluteImageSrc={relativeImageSrc =>
                   getAbsoluteImageSrc(relativeImageSrc, router)
                 }
-                properties={modelSet.properties}
-                propertyGroups={modelSet.propertyGroups}
+                properties={collectionModelSet.properties}
+                propertyGroups={collectionModelSet.propertyGroups}
                 renderWorkLink={(work, children) => <span>{children}</span>}
                 renderWorkLocationsMap={workLocations => (
                   <LocationsMap
@@ -135,7 +135,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     });
 
     return pages;
-  }, [modelSet]);
+  }, [collectionModelSet]);
   const router = useRouter();
 
   if (pages.length === 0) {
@@ -145,7 +145,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
   return (
     <>
       <Head>
-        <title>{modelSet.collections[0].label}</title>
+        <title>{collectionModelSet.collections[0].label}</title>
         <link
           rel="stylesheet"
           href={configuration?.stylesheet ?? defaultBootstrapStylesheetHref}
@@ -161,12 +161,14 @@ const IndexPageImpl: React.FunctionComponent<Omit<
 };
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
-  modelSetJsonLd,
+  collectionModelSetJsonLd,
   ...otherProps
 }) => (
   <ModelSetJsonLdParser
-    modelSetJsonLd={modelSetJsonLd}
-    render={modelSet => <IndexPageImpl modelSet={modelSet} {...otherProps} />}
+    modelSetJsonLd={collectionModelSetJsonLd}
+    render={modelSet => (
+      <IndexPageImpl collectionModelSet={modelSet} {...otherProps} />
+    )}
   />
 );
 
@@ -175,26 +177,22 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const completeModelSet = await readModelSet({
+  const {api} = await getStaticApi({
     pathDelimiter: path.delimiter,
     readFile: (filePath: string) =>
       fs.promises.readFile(filePath).then(contents => contents.toString()),
   });
 
-  const {collection, works} = selectExhibitionWorks(completeModelSet);
-
-  const modelSetBuilder = new ModelSetBuilder()
-    .addAppConfiguration(completeModelSet.appConfiguration)
-    .addWorks(works, workPageWorkJoinSelector);
-  if (collection) {
-    modelSetBuilder.addCollection(collection);
-  }
+  const {collection, collectionModelSet, workKeys} = await getExhibitionData(
+    api
+  );
 
   return {
     props: {
+      configuration: await api.getAppConfiguration(),
       collectionKey: collection?.key ?? null,
-      modelSetJsonLd: await completeModelSet.toJsonLd(),
-      workKeys: works.map(work => work.key),
+      collectionModelSetJsonLd: await collectionModelSet.toJsonLd(),
+      workKeys,
     },
   };
 };
