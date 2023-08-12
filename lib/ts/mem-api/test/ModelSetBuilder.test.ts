@@ -196,7 +196,7 @@ describe("ModelSetBuilder", () => {
             thumbnail: THUMBNAIL_SELECTOR,
           },
           description: {
-            agents: {},
+            agents: true,
             licenses: true,
             rightsStatements: true,
           },
@@ -208,15 +208,14 @@ describe("ModelSetBuilder", () => {
             location: true,
           },
           images: {
-            agents: {},
+            agents: true,
             licenses: true,
             rightsStatements: true,
           },
           location: true,
           propertyValues: {
-            property: {
-              groups: {},
-            },
+            property: true,
+            propertyGroup: true,
           },
         }
       )
