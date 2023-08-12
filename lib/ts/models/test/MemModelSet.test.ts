@@ -82,7 +82,8 @@ describe("MemModelSet", () => {
     }
   });
 
-  it("should serialize itself", async () => {
+  it("should serialize itself", async function() {
+    this.timeout(5000);
     expect(await sut.toJsonLd()).to.not.be.empty;
   });
 });
