@@ -3,7 +3,7 @@ import {ImageJoinSelector} from "@paradicms/api";
 
 export const imagesCarouselThumbnailSelector: ImageJoinSelector &
   ThumbnailSelector = {
-  agents: {},
+  agents: true,
   licenses: true,
   rightsStatements: true,
   targetDimensions: {

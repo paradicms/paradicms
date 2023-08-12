@@ -1,4 +1,8 @@
-export interface ImageDimensions {
-  readonly height: number;
-  readonly width: number;
-}
+import {Number, Record, Static} from "runtypes";
+
+export const ImageDimensions = Record({
+  height: Number,
+  width: Number,
+}).asReadonly();
+
+export type ImageDimensions = Static<typeof ImageDimensions>;

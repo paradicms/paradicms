@@ -1,16 +1,13 @@
 import {useWorksQueryParam} from "./useWorksQueryParam";
 import {
   AgentsSort,
-  AgentsSortProperty,
   defaultAgentsSort,
   defaultEventsSort,
   defaultWorksSort,
   EventsSort,
-  EventsSortProperty,
   WorksFilter,
   WorksQuery,
   WorksSort,
-  WorksSortProperty,
 } from "@paradicms/api";
 import {usePageQueryParam} from "./usePageQueryParam";
 import {useSortQueryParams} from "./useSortQueryParams";
@@ -18,7 +15,7 @@ import {useSortQueryParams} from "./useSortQueryParams";
 export const useWorkSearchQueryParams = (
   defaultWorksQuery: WorksQuery
 ): {
-  onChangeFilters: (filters?: WorksFilter[]) => void;
+  onChangeFilters: (filters: readonly WorksFilter[]) => void;
   onSearch: (text: string) => void;
   setWorksQuery: (worksQuery: WorksQuery) => void;
   setWorkAgentsPage: (page: number | undefined) => void;
@@ -38,23 +35,25 @@ export const useWorkSearchQueryParams = (
   const [workAgentsPage, setWorkAgentsPage] = usePageQueryParam(
     "workAgentsPage"
   );
-  const [workAgentsSort, setWorkAgentsSort] = useSortQueryParams<
-    AgentsSortProperty
-  >(defaultAgentsSort, "workAgentsSort");
+  const [workAgentsSort, setWorkAgentsSort] = useSortQueryParams<AgentsSort>(
+    defaultAgentsSort,
+    "workAgentsSort"
+  );
 
   const [workEventsPage, setWorkEventsPage] = usePageQueryParam(
     "workEventsPage"
   );
-  const [workEventsSort, setWorkEventsSort] = useSortQueryParams<
-    EventsSortProperty
-  >(defaultEventsSort, "workEventsSort");
+  const [workEventsSort, setWorkEventsSort] = useSortQueryParams<EventsSort>(
+    defaultEventsSort,
+    "workEventsSort"
+  );
 
   const [worksPage, setWorksPage] = usePageQueryParam("worksPage");
   const [worksQuery, setWorksQuery] = useWorksQueryParam(
     defaultWorksQuery,
     "query"
   );
-  const [worksSort, setWorksSort] = useSortQueryParams<WorksSortProperty>(
+  const [worksSort, setWorksSort] = useSortQueryParams<WorksSort>(
     defaultWorksSort,
     "worksSort"
   );

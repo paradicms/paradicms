@@ -1,11 +1,10 @@
 import {QueryParamConfig} from "use-query-params";
-import {SafeParseReturnType} from "zod";
 
 export class JsonQueryParamConfig<T>
   implements QueryParamConfig<T | undefined> {
   constructor(
     private readonly objectSchema: {
-      safeParse: (data: any) => SafeParseReturnType<any, T>;
+      check: (data: any) => T;
     }
   ) {}
 
@@ -17,12 +16,9 @@ export class JsonQueryParamConfig<T>
     if (!value) {
       return undefined;
     }
-    const parseResult = this.objectSchema.safeParse(
-      JSON.parse(value as string)
-    );
-    if (parseResult.success) {
-      return parseResult.data;
-    } else {
+    try {
+      return this.objectSchema.check(JSON.parse(value as string));
+    } catch {
       return undefined;
     }
   }

@@ -1,6 +1,11 @@
 import {ValueFacetValue} from "./ValueFacetValue";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
 import {Facet} from "./Facet";
+import {Number} from "runtypes";
+
+export const ValueFacet = Facet.extend({
+  unknownCount: Number,
+}).asReadonly();
 
 /**
  * Facet that creates a histogram of distinct values (model, property, value).

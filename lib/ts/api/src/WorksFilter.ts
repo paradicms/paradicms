@@ -1,4 +1,12 @@
-import {worksFilterSchema} from "./worksFilterSchema";
-import {z} from "zod";
+import {KeyFilter} from "./KeyFilter";
+import {Static, Union} from "runtypes";
+import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
+import {WorkCollectionValueFilter} from "./WorkCollectionValueFilter";
 
-export type WorksFilter = z.infer<typeof worksFilterSchema>;
+export const WorksFilter = Union(
+  KeyFilter,
+  StringPropertyValueFilter,
+  WorkCollectionValueFilter
+);
+
+export type WorksFilter = Static<typeof WorksFilter>;

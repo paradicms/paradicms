@@ -1,12 +1,10 @@
 import {ThumbnailSelector} from "@paradicms/models";
-import {WorkJoinSelector} from "./WorkJoinSelector";
 import {ImageJoinSelector} from "./ImageJoinSelector";
+import {Intersect, Optional, Record, Static} from "runtypes";
 
-/**
- * See note in ModelSetBuilder re: the use of this interface.
- */
-export interface AgentJoinSelector {
-  // Return a single thumbnail Image for this Agent.
-  thumbnail?: ImageJoinSelector & ThumbnailSelector;
-  works?: WorkJoinSelector;
-}
+export const AgentJoinSelector = Record({
+  thumbnail: Optional(Intersect(ImageJoinSelector, ThumbnailSelector)),
+  // works: Optional(WorkJoinSelector),
+}).asReadonly();
+
+export type AgentJoinSelector = Static<typeof AgentJoinSelector>;

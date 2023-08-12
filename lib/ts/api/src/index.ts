@@ -60,5 +60,3 @@ export * from "./defaultEventsSort";
 export * from "./defaultWorksSort";
 export * from "./getExhibitionData";
 export * from "./summarizeWorkLocation";
-export * from "./worksFilterSchema";
-export * from "./worksQuerySchema";

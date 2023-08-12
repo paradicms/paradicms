@@ -1,18 +1,18 @@
-import {AgentsSort, AgentsSortProperty} from "@paradicms/api";
+import {AgentsSort} from "@paradicms/api";
 import React from "react";
 import {SortDropdown} from "./SortDropdown";
 
 const options: readonly AgentsSort[] = [
   {
     ascending: true,
-    property: AgentsSortProperty.NAME,
+    property: "name",
   },
-  {ascending: false, property: AgentsSortProperty.NAME},
+  {ascending: false, property: "name"},
 ];
 
 const sortToString = (sort: AgentsSort): string => {
   switch (sort.property) {
-    case AgentsSortProperty.NAME:
+    case "name":
       if (sort.ascending) {
         return "Name (A-Z)";
       } else {

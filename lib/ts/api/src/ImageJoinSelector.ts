@@ -1,3 +1,5 @@
 import {RightsJoinSelector} from "./RightsJoinSelector";
 
-export interface ImageJoinSelector extends RightsJoinSelector {}
+export const ImageJoinSelector = RightsJoinSelector;
+
+export type ImageJoinSelector = RightsJoinSelector;
