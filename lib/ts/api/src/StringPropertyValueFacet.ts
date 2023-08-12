@@ -1,7 +1,7 @@
 import {PropertyValueFacet} from "./PropertyValueFacet";
-import {Literal, Static} from "runtypes";
+import {Literal, Static, String} from "runtypes";
 
-export const StringPropertyValueFacet = PropertyValueFacet.extend({
+export const StringPropertyValueFacet = PropertyValueFacet(String).extend({
   type: Literal("StringPropertyValue"),
 });
 

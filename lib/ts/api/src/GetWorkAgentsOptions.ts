@@ -2,8 +2,17 @@ import {AgentsSort} from "./AgentsSort";
 import {WorksQuery} from "./WorksQuery";
 import {GetModelsOptions} from "./GetModelsOptions";
 import {AgentJoinSelector} from "./AgentJoinSelector";
+import {Optional, Record, Static} from "runtypes";
 
-export interface GetWorkAgentsOptions
-  extends Omit<GetModelsOptions<AgentJoinSelector, {}, AgentsSort>, "query"> {
-  readonly worksQuery?: WorksQuery;
-}
+export const GetWorkAgentsOptions = GetModelsOptions(
+  AgentJoinSelector,
+  Record({}),
+  AgentsSort
+)
+  .omit("query")
+  .extend({
+    worksQuery: Optional(WorksQuery),
+  })
+  .asReadonly();
+
+export type GetWorkAgentsOptions = Static<typeof GetWorkAgentsOptions>;

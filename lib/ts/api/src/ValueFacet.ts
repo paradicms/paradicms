@@ -1,11 +1,14 @@
 import {ValueFacetValue} from "./ValueFacetValue";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
 import {Facet} from "./Facet";
-import {Number} from "runtypes";
+import {Array, Number} from "runtypes";
+import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
 
-export const ValueFacet = Facet.extend({
-  unknownCount: Number,
-}).asReadonly();
+export const ValueFacet = <T extends JsonPrimitiveRuntype>(t: T) =>
+  Facet.extend({
+    unknownCount: Number,
+    values: Array(ValueFacetValue(t)).asReadonly(),
+  }).asReadonly();
 
 /**
  * Facet that creates a histogram of distinct values (model, property, value).
