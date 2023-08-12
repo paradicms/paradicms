@@ -3,8 +3,7 @@
   "name": "@paradicms/api",
   "description": "Paradicms services library",
   "dependencies": {
-    "@paradicms/models": "1.0.5",
-    "zod": "^3.21.4"
+    "@paradicms/models": "1.0.5"
   },
   "devDependencies": {
     "@paradicms/test": "1.0.5",
