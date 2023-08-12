@@ -68,13 +68,13 @@ export class ModelSetBuilder {
       this.addThumbnail(agent, joinSelector.thumbnail);
     }
 
-    if (joinSelector.works) {
-      log.debug("ModelSetBuilder: adding agent", agent.key, "works");
-      for (const work of agent.works) {
-        log.debug("ModelSetBuilder: adding agent", agent.key, "work", work.key);
-        this.addWork(work, joinSelector.works);
-      }
-    }
+    // if (joinSelector.works) {
+    //   log.debug("ModelSetBuilder: adding agent", agent.key, "works");
+    //   for (const work of agent.works) {
+    //     log.debug("ModelSetBuilder: adding agent", agent.key, "work", work.key);
+    //     this.addWork(work, joinSelector.works);
+    //   }
+    // }
 
     return this;
   }
@@ -228,7 +228,7 @@ export class ModelSetBuilder {
   addImage(
     image: Image,
     joinSelector?: {
-      agents?: AgentJoinSelector;
+      agents?: boolean;
     }
   ): ModelSetBuilder {
     log.debug(
@@ -315,7 +315,7 @@ export class ModelSetBuilder {
           "group",
           propertyGroup.key
         );
-        this.addPropertyGroup(propertyGroup, joinSelector.groups);
+        this.addPropertyGroup(propertyGroup, {});
       }
     }
 
@@ -427,7 +427,19 @@ export class ModelSetBuilder {
         "property",
         propertyValue.property.key
       );
-      this.addProperty(propertyValue.property, joinSelector.property);
+      this.addProperty(propertyValue.property, {});
+    }
+
+    if (joinSelector.propertyGroup) {
+      for (const propertyGroup of propertyValue.property.groups) {
+        log.debug(
+          "ModelSetBuilder: adding property value",
+          propertyValue.value,
+          "property group",
+          propertyGroup.key
+        );
+        this.addPropertyGroup(propertyGroup, {});
+      }
     }
 
     return this;
@@ -447,7 +459,7 @@ export class ModelSetBuilder {
         rights.rightsHolders,
       ]) {
         for (const agent of agents) {
-          this.addAgent(agent, joinSelector.agents);
+          this.addAgent(agent, {});
         }
       }
     }

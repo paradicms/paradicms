@@ -1,4 +1,4 @@
-import {defaultWorksSort, WorksSort, WorksSortProperty} from "@paradicms/api";
+import {defaultWorksSort, WorksSort} from "@paradicms/api";
 import {Work} from "@paradicms/models";
 
 /**
@@ -7,13 +7,13 @@ import {Work} from "@paradicms/models";
 export const sortWorks = (sort: WorksSort, works: Work[]): void => {
   const compareMultiplier = sort.ascending ? 1 : -1;
   switch (sort.property) {
-    case WorksSortProperty.LABEL:
+    case "label":
       works.sort(
         (left, right) =>
           compareMultiplier * left.label.localeCompare(right.label)
       );
       return;
-    case WorksSortProperty.RELEVANCE:
+    case "relevance":
       // Works are already sorted by relevance
       return;
     default:
