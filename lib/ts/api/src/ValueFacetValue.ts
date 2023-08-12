@@ -18,6 +18,6 @@ export const ValueFacetValue = <T extends JsonPrimitiveRuntype>(t: T) =>
 export interface ValueFacetValue<T extends JsonPrimitiveType> {
   readonly count: number;
   readonly label?: string;
-  readonly thumbnail: ValueFacetValueThumbnail | null;
+  readonly thumbnail?: ValueFacetValueThumbnail;
   readonly value: T;
 }

@@ -1,5 +1,6 @@
 import {Work, WorkLocation} from "@paradicms/models";
 import {WorkLocationSummary} from "./WorkLocationSummary";
+import {deleteUndefined} from "@paradicms/utilities";
 
 export const summarizeWorkLocation = (
   work: Work,
@@ -17,5 +18,5 @@ export const summarizeWorkLocation = (
       label: work.label,
     },
   };
-  return JSON.parse(JSON.stringify(workLocationSummary)); // Remove the undefined's
+  return deleteUndefined(workLocationSummary);
 };
