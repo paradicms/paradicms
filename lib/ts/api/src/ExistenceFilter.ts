@@ -7,6 +7,6 @@ export const ExistenceFilter = Record({
    * If undefined, no effect / include all models.
    */
   exists: Optional(Boolean),
-});
+}).asReadonly();
 
 export type ExistenceFilter = Static<typeof ExistenceFilter>;

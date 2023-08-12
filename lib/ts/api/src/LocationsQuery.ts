@@ -1,11 +1,8 @@
-/**
- * Query over Location's.
- *
- * Queries are never passed over getStaticProps, but they are serialized to the browser query string,
- * so it's preferable to allow the optional fields to be undefined rather than null.
- */
+import {Array, Optional, Record, Static} from "runtypes";
 import {LocationsFilter} from "./LocationsFilter";
 
-export interface LocationsQuery {
-  readonly filters?: readonly LocationsFilter[];
-}
+export const LocationsQuery = Record({
+  filters: Optional(Array(LocationsFilter).asReadonly()),
+}).asReadonly();
+
+export type LocationsQuery = Static<typeof LocationsQuery>;

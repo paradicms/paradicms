@@ -1,6 +1,12 @@
-import {z} from "zod";
-import {stringPropertyValueFilterSchema} from "./stringPropertyValueFilterSchema";
+import {PropertyValueFilter} from "./PropertyValueFilter";
+import {Array, Literal, Optional, Static, String} from "runtypes";
 
-export type StringPropertyValueFilter = z.infer<
-  typeof stringPropertyValueFilterSchema
+export const StringPropertyValueFilter = PropertyValueFilter.extend({
+  excludeValues: Optional(Array(String).asReadonly()),
+  includeValues: Optional(Array(String).asReadonly()),
+  type: Literal("StringPropertyValue"),
+}).asReadonly();
+
+export type StringPropertyValueFilter = Static<
+  typeof StringPropertyValueFilter
 >;
