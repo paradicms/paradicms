@@ -24,8 +24,13 @@ class RdfConjunctiveGraphTransformer:
         if root_model_classes_by_name is None:
             root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
         self.__root_model_classes_by_rdf_type_uri: Dict[URIRef, Type[Model]] = {}
-        for root_model_class in root_model_classes_by_name.values():
-            if not issubclass(root_model_class, ResourceBackedModel):
+        for (
+            root_model_class_name,
+            root_model_class,
+        ) in root_model_classes_by_name.items():
+            if root_model_class_name != root_model_class.__name__:
+                continue  # An alias
+            elif not issubclass(root_model_class, ResourceBackedModel):
                 continue
             if (
                 root_model_class.rdf_type_uri()
