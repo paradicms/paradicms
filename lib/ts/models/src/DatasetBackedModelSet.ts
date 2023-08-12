@@ -1,8 +1,8 @@
-import {CachingModelSet} from "./CachingModelSet";
+import {MemModelSet} from "./MemModelSet";
 import {DatasetCore} from "@rdfjs/types";
 import {ModelReader} from "./ModelReader";
 
-export class DatasetBackedModelSet extends CachingModelSet {
+export class DatasetBackedModelSet extends MemModelSet {
     constructor(private readonly dataset: DatasetCore, modelReader: ModelReader) {
         super(modelReader);
     }

@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 
-describe("CachingModelSet", () => {
+describe("MemModelSet", () => {
   const sut = testModelSet;
 
   it("should exercise all indices", () => {
