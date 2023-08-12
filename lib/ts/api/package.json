@@ -3,7 +3,8 @@
   "name": "@paradicms/api",
   "description": "Paradicms services library",
   "dependencies": {
-    "@paradicms/models": "1.0.5"
+    "@paradicms/models": "1.0.5",
+    "runtypes": "6.7.0"
   },
   "devDependencies": {
     "@paradicms/test": "1.0.5",

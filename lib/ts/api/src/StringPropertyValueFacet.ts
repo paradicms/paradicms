@@ -1,5 +1,8 @@
 import {PropertyValueFacet} from "./PropertyValueFacet";
+import {Literal, Static} from "runtypes";
 
-export interface StringPropertyValueFacet extends PropertyValueFacet<string> {
-  readonly type: "StringPropertyValue";
-}
+export const StringPropertyValueFacet = PropertyValueFacet.extend({
+  type: Literal("StringPropertyValue"),
+});
+
+export type StringPropertyValueFacet = Static<typeof StringPropertyValueFacet>;

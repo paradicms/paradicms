@@ -1,7 +1,7 @@
 import {Array, Optional, Record, Static} from "runtypes";
 import {CollectionsFilter} from "./CollectionsFilter";
 
-const CollectionsQuery = Record({
+export const CollectionsQuery = Record({
   filters: Optional(Array(CollectionsFilter).asReadonly()),
 }).asReadonly();
 

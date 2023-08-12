@@ -1,15 +1,14 @@
-interface ImageDimensions {
-  readonly height: number;
-  readonly width: number;
-}
+import {ImageDimensions} from "@paradicms/models";
+import {Array, Optional, Record, Static, String} from "runtypes";
 
-export interface ValueFacetValueThumbnail {
-  readonly creators: readonly string[];
-  // Can't use class Models since facets are not assumed to be part of the ModelSet.
-  readonly exactDimensions: ImageDimensions | null;
-  readonly licenses: readonly string[];
-  readonly maxDimensions: ImageDimensions | null;
-  readonly rightsHolders: readonly string[];
-  readonly rightsStatements: readonly string[];
-  src: string;
-}
+export const ValueFacetValueThumbnail = Record({
+  creators: Array(String).asReadonly(),
+  exactDimensions: Optional(ImageDimensions),
+  licenses: Array(String).asReadonly(),
+  maxDimensions: Optional(ImageDimensions),
+  rightsHolders: Array(String).asReadonly(),
+  rightsStatements: Array(String).asReadonly(),
+  src: String, // Should not be readonly
+});
+
+export type ValueFacetValueThumbnail = Static<typeof ValueFacetValueThumbnail>;

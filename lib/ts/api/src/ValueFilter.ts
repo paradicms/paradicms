@@ -1,6 +1,11 @@
 import {Boolean, Optional, Record} from "runtypes";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
 
+export const ValueFilter = Record({
+  excludeKnown: Optional(Boolean),
+  excludeUnknown: Optional(Boolean),
+}).asReadonly();
+
 /**
  * Filter that excludes/includes models based on existence and values of (model, filtered property, value).
  *
@@ -44,8 +49,3 @@ export interface ValueFilter<T extends JsonPrimitiveType> {
    */
   readonly includeValues?: readonly T[];
 }
-
-export const ValueFilter = Record({
-  excludeKnown: Optional(Boolean),
-  excludeUnknown: Optional(Boolean),
-}).asReadonly();
