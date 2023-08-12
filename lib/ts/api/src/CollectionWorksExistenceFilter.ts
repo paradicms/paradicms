@@ -1,6 +1,10 @@
-import {z} from "zod";
-import {collectionWorksExistenceFilterSchema} from "./collectionWorksExistenceFilterSchema";
+import {Literal, Static} from "runtypes";
+import {ExistenceFilter} from "./ExistenceFilter";
 
-export type CollectionWorksExistenceFilter = z.infer<
-  typeof collectionWorksExistenceFilterSchema
+export const CollectionWorksExistenceFilter = ExistenceFilter.extend({
+  type: Literal("CollectionWorksExistence"),
+}).asReadonly();
+
+export type CollectionWorksExistenceFilter = Static<
+  typeof CollectionWorksExistenceFilter
 >;

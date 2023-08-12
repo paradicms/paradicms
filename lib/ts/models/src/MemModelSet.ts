@@ -23,7 +23,7 @@ import {indexModelsByKey} from "./indexModelsByKey";
 import {indexModelsByValues} from "./indexModelsByValues";
 import {sortModelsMultimap} from "./sortModelsMultimap";
 
-export class CachingModelSet implements ModelSet {
+export class MemModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
 
   agentByIri(agentIri: string): AgentUnion | null {

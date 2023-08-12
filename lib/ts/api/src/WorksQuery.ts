@@ -1,4 +1,9 @@
-import {z} from "zod";
-import {worksQuerySchema} from "./worksQuerySchema";
+import {WorksFilter} from "./WorksFilter";
+import {Array, Optional, Record, Static, String} from "runtypes";
 
-export type WorksQuery = z.infer<typeof worksQuerySchema>;
+export const WorksQuery = Record({
+  filters: Optional(Array(WorksFilter).asReadonly()),
+  text: Optional(String),
+}).asReadonly();
+
+export type WorksQuery = Static<typeof WorksQuery>;

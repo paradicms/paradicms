@@ -1,4 +1,8 @@
-import {z} from "zod";
-import {propertiesQuerySchema} from "./propertiesQuerySchema";
+import {Array, Optional, Record, Static} from "runtypes";
+import {PropertiesFilter} from "./PropertiesFilter";
 
-export type PropertiesQuery = z.infer<typeof propertiesQuerySchema>;
+export const PropertiesQuery = Record({
+  filters: Optional(Array(PropertiesFilter).asReadonly()),
+}).asReadonly();
+
+export type PropertiesQuery = Static<typeof PropertiesQuery>;

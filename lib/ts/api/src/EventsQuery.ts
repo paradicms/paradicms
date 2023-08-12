@@ -1,4 +1,8 @@
-import {z} from "zod";
-import {eventsQuerySchema} from "./eventsQuerySchema";
+import {EventsFilter} from "./EventsFilter";
+import {Array, Optional, Record, Static} from "runtypes";
 
-export type EventsQuery = z.infer<typeof eventsQuerySchema>;
+export const EventsQuery = Record({
+  filters: Optional(Array(EventsFilter).asReadonly()),
+}).asReadonly();
+
+export type EventsQuery = Static<typeof EventsQuery>;

@@ -14,7 +14,7 @@ export const workSearchWorkJoinSelector: WorkJoinSelector = {
   events: workSearchWorkEventJoinSelector,
   location: true,
   propertyValues: {
-    property: {},
+    property: true,
     thumbnail: valueThumbnailSelector,
   },
   thumbnail: galleryThumbnailSelector,

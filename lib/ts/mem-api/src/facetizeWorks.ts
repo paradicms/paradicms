@@ -7,6 +7,7 @@ import {
 import {ThumbnailSelector, Work} from "@paradicms/models";
 import {imageToValueFacetValueThumbnail} from "./imageToValueFacetThumbnail";
 import {MutableValueFacetValue} from "./MutableValueFacetValue";
+import {deleteUndefined} from "@paradicms/utilities";
 
 export const facetizeWorks = (kwds: {
   filters: readonly WorksFilter[];
@@ -29,11 +30,11 @@ export const facetizeWorks = (kwds: {
             concreteFilter.propertyIri
           )) {
             const propertyValueString: string = propertyValue.value;
-            const facetValue = facetValues[propertyValueString];
+            let facetValue = facetValues[propertyValueString];
             if (facetValue) {
               facetValue.count++;
             } else {
-              facetValues[propertyValueString] = {
+              facetValue = {
                 count: 1,
                 label: propertyValue.label,
                 value: propertyValueString,
@@ -41,8 +42,9 @@ export const facetizeWorks = (kwds: {
                   ? imageToValueFacetValueThumbnail(
                       propertyValue.thumbnail(valueFacetValueThumbnailSelector)
                     )
-                  : null,
+                  : undefined,
               };
+              facetValues[propertyValueString] = deleteUndefined(facetValue);
             }
             workHasProperty = true;
           }

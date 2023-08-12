@@ -1,11 +1,13 @@
 import {ThumbnailSelector} from "@paradicms/models";
-import {PropertyJoinSelector} from "./PropertyJoinSelector";
 import {ImageJoinSelector} from "./ImageJoinSelector";
+import {Boolean, Intersect, Optional, Record, Static} from "runtypes";
 
-/**
- * See note in ModelSetBuilder re: the use of this interface.
- */
-export interface PropertyValueJoinSelector {
-  property?: PropertyJoinSelector;
-  thumbnail?: ImageJoinSelector & ThumbnailSelector;
-}
+export const PropertyValueJoinSelector = Record({
+  property: Optional(Boolean),
+  propertyGroup: Optional(Boolean),
+  thumbnail: Optional(Intersect(ImageJoinSelector, ThumbnailSelector)),
+}).asReadonly();
+
+export type PropertyValueJoinSelector = Static<
+  typeof PropertyValueJoinSelector
+>;

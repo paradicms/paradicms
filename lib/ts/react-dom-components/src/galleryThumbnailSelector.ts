@@ -2,7 +2,7 @@ import {ThumbnailSelector} from "@paradicms/models";
 import {ImageJoinSelector} from "@paradicms/api";
 
 export const galleryThumbnailSelector: ImageJoinSelector & ThumbnailSelector = {
-  agents: {},
+  agents: true,
   licenses: true,
   maxDimensions: {
     height: 400,

@@ -1,4 +1,5 @@
-import {z} from "zod";
-import {facetSchema} from "./facetSchema";
+import {Record, Static} from "runtypes";
 
-export type Facet = z.infer<typeof facetSchema>;
+export const Facet = Record({}).asReadonly();
+
+export type Facet = Static<typeof Facet>;

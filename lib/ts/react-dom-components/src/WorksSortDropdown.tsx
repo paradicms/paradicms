@@ -1,28 +1,28 @@
-import {WorksSort, WorksSortProperty} from "@paradicms/api";
+import {WorksSort} from "@paradicms/api";
 import React from "react";
 import {SortDropdown} from "./SortDropdown";
 
 const options: readonly WorksSort[] = [
   {
     ascending: true,
-    property: WorksSortProperty.LABEL,
+    property: "label",
   },
-  {ascending: false, property: WorksSortProperty.LABEL},
+  {ascending: false, property: "label"},
   {
     ascending: false,
-    property: WorksSortProperty.RELEVANCE,
+    property: "relevance",
   },
 ];
 
 const sortToString = (sort: WorksSort): string => {
   switch (sort.property) {
-    case WorksSortProperty.LABEL:
+    case "label":
       if (sort.ascending) {
         return "Title (A-Z)";
       } else {
         return "Title (Z-A)";
       }
-    case WorksSortProperty.RELEVANCE:
+    case "relevance":
       return "Relevance";
   }
 };

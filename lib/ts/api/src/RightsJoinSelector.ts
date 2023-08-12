@@ -1,7 +1,9 @@
-import {AgentJoinSelector} from "./AgentJoinSelector";
+import {Boolean, Optional, Record, Static} from "runtypes";
 
-export interface RightsJoinSelector {
-  agents?: AgentJoinSelector;
-  licenses?: boolean;
-  rightsStatements?: boolean;
-}
+export const RightsJoinSelector = Record({
+  agents: Optional(Boolean),
+  licenses: Optional(Boolean),
+  rightsStatements: Optional(Boolean),
+}).asReadonly();
+
+export type RightsJoinSelector = Static<typeof RightsJoinSelector>;

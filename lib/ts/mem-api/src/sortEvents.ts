@@ -1,8 +1,4 @@
-import {
-  defaultEventsSort,
-  EventsSort,
-  EventsSortProperty,
-} from "@paradicms/api";
+import {defaultEventsSort, EventsSort} from "@paradicms/api";
 
 /**
  * Sort events in place.
@@ -18,12 +14,12 @@ export const sortEvents = <
 ): void => {
   const compareMultiplier = sort.ascending ? 1 : -1;
   switch (sort.property) {
-    case EventsSortProperty.DATE:
+    case "date":
       events.sort(
         (left, right) => compareMultiplier * left.compareByDate(right)
       );
       return;
-    case EventsSortProperty.LABEL:
+    case "label":
       events.sort(
         (left, right) =>
           compareMultiplier * left.label.localeCompare(right.label)

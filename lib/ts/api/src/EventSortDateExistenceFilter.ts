@@ -1,6 +1,10 @@
-import {z} from "zod";
-import {eventSortDateExistenceFilterSchema} from "./eventSortDateExistenceFilterSchema";
+import {Literal, Static} from "runtypes";
+import {ExistenceFilter} from "./ExistenceFilter";
 
-export type EventSortDateExistenceFilter = z.infer<
-  typeof eventSortDateExistenceFilterSchema
+export const EventSortDateExistenceFilter = ExistenceFilter.extend({
+  type: Literal("EventSortDateExistence"),
+}).asReadonly();
+
+export type EventSortDateExistenceFilter = Static<
+  typeof EventSortDateExistenceFilter
 >;

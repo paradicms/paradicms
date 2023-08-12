@@ -1,4 +1,8 @@
-import {z} from "zod";
-import {eventsSortSchema} from "./eventsSortSchema";
+import {Literal, Static, Union} from "runtypes";
+import {Sort} from "./Sort";
 
-export type EventsSort = z.infer<typeof eventsSortSchema>;
+export const EventsSort = Sort.extend({
+  property: Union(Literal("date"), Literal("label")),
+}).asReadonly();
+
+export type EventsSort = Static<typeof EventsSort>;

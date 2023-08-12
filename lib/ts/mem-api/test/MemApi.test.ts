@@ -6,12 +6,10 @@ import {
   WorkLocation,
 } from "@paradicms/models";
 import {
-  EventsSortProperty,
   GetModelsResult,
   ImageJoinSelector,
   StringPropertyValueFacet,
   StringPropertyValueFilter,
-  WorksSortProperty,
 } from "@paradicms/api";
 import {syntheticData} from "@paradicms/test";
 import {dcterms} from "@paradicms/vocabularies";
@@ -182,7 +180,7 @@ describe("MemApi", () => {
       await sut.getWorkAgents({
         joinSelector: {
           thumbnail: THUMBNAIL_SELECTOR,
-          works: {},
+          // works: {},
         },
       })
     );
@@ -261,7 +259,7 @@ describe("MemApi", () => {
       offset: 0,
       sort: {
         ascending: false,
-        property: EventsSortProperty.DATE,
+        property: "date",
       },
     });
 
@@ -276,7 +274,7 @@ describe("MemApi", () => {
       offset: 0,
       sort: {
         ascending: false,
-        property: EventsSortProperty.LABEL,
+        property: "label",
       },
     });
 
@@ -421,7 +419,7 @@ describe("MemApi", () => {
         limit: 4,
         sort: {
           ascending: false,
-          property: WorksSortProperty.LABEL,
+          property: "label",
         },
       })
     ).modelSet.works.map(work => work.key);

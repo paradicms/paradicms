@@ -1,5 +1,7 @@
-import {eventsFilterSchema} from "./eventsFilterSchema";
-import {z} from "zod";
+import {Static, Union} from "runtypes";
+import {EventSortDateExistenceFilter} from "./EventSortDateExistenceFilter";
+import {KeyFilter} from "./KeyFilter";
 
-// Discriminated union on "type"
-export type EventsFilter = z.infer<typeof eventsFilterSchema>;
+export const EventsFilter = Union(EventSortDateExistenceFilter, KeyFilter);
+
+export type EventsFilter = Static<typeof EventsFilter>;

@@ -1,14 +1,14 @@
 import {AgentJoinSelector} from "./AgentJoinSelector";
 import {ImageJoinSelector} from "./ImageJoinSelector";
 import {ThumbnailSelector} from "@paradicms/models";
-import {RightsJoinSelector} from "./RightsJoinSelector";
+import {Boolean, Intersect, Optional, Record, Static} from "runtypes";
+import {TextJoinSelector} from "./TextJoinSelector";
 
-/**
- * See note in ModelSetBuilder re: the use of this interface.
- */
-export interface EventJoinSelector {
-  agents?: AgentJoinSelector;
-  description?: RightsJoinSelector;
-  location?: boolean;
-  thumbnail?: ImageJoinSelector & ThumbnailSelector;
-}
+export const EventJoinSelector = Record({
+  agents: Optional(AgentJoinSelector),
+  description: Optional(TextJoinSelector),
+  location: Optional(Boolean),
+  thumbnail: Optional(Intersect(ImageJoinSelector, ThumbnailSelector)),
+}).asReadonly();
+
+export type EventJoinSelector = Static<typeof EventJoinSelector>;

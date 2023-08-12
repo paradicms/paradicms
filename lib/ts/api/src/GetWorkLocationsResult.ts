@@ -1,6 +1,8 @@
+import {Array, Record, Static} from "runtypes";
 import {WorkLocationSummary} from "./WorkLocationSummary";
 
-export interface GetWorkLocationsResult {
-  // The GUI displays all locations on the map together, so we send an abbreviated version of a work.
-  readonly workLocations: readonly WorkLocationSummary[];
-}
+export const GetWorkLocationsResult = Record({
+  workLocations: Array(WorkLocationSummary).asReadonly(),
+}).asReadonly();
+
+export type GetWorkLocationsResult = Static<typeof GetWorkLocationsResult>;

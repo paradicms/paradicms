@@ -2,10 +2,7 @@ import {Sort} from "@paradicms/api";
 import React, {useState} from "react";
 import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "reactstrap";
 
-export const SortDropdown = <
-  SortPropertyT,
-  SortT extends Sort<SortPropertyT>
->(props: {
+export const SortDropdown = <SortT extends Sort>(props: {
   onChange: (sort: SortT) => void;
   options: readonly SortT[];
   sortToString: (sort: SortT) => string;

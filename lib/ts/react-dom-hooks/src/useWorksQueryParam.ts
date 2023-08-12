@@ -1,6 +1,6 @@
 import {useQueryParam} from "use-query-params";
 import {JsonQueryParamConfig} from "@paradicms/react-dom";
-import {WorksQuery, worksQuerySchema} from "@paradicms/api";
+import {WorksQuery} from "@paradicms/api";
 
 export const useWorksQueryParam = (
   defaultWorksQuery: WorksQuery,
@@ -8,7 +8,7 @@ export const useWorksQueryParam = (
 ): [WorksQuery, (worksQuery: WorksQuery) => void] => {
   const [worksQueryQueryParam, setWorksQuery] = useQueryParam<
     WorksQuery | undefined
-  >(name, new JsonQueryParamConfig<WorksQuery>(worksQuerySchema));
+  >(name, new JsonQueryParamConfig<WorksQuery>(WorksQuery));
 
   if (!worksQueryQueryParam) {
     return [{filters: defaultWorksQuery.filters}, setWorksQuery];

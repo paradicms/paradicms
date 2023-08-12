@@ -67,7 +67,7 @@ const worksPageMax = (kwds: {
 export const WorkSearchPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   objectsPerPage: number;
-  onChangeFilters: (filters?: WorksFilter[]) => void;
+  onChangeFilters: (filters: readonly WorksFilter[]) => void;
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactElement;
   renderWorkLocationsMap?: (
     workLocations: readonly WorkLocationSummary[]
@@ -172,7 +172,6 @@ export const WorkSearchPage: React.FunctionComponent<{
         .getWorkAgents({
           joinSelector: {
             thumbnail: galleryThumbnailSelector,
-            works: {},
           },
           limit: objectsPerPage,
           offset: workAgentsPage * objectsPerPage,

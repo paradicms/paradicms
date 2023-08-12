@@ -1,4 +1,8 @@
-import {z} from "zod";
-import {filterSchema} from "./filterSchema";
+import {Optional, Record, Static, String} from "runtypes";
 
-export type Filter = z.infer<typeof filterSchema>;
+export const Filter = Record({
+  label: Optional(String),
+  type: String,
+}).asReadonly();
+
+export type Filter = Static<typeof Filter>;

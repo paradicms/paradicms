@@ -19,14 +19,13 @@ export const workPageWorkJoinSelector: WorkJoinSelector = {
     thumbnail: galleryThumbnailSelector,
   },
   images: {
-    agents: {},
+    agents: true,
     licenses: true,
     rightsStatements: true,
   },
   location: true,
   propertyValues: {
-    property: {
-      groups: {},
-    },
+    property: true,
+    propertyGroup: true,
   },
 };

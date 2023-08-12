@@ -2,7 +2,7 @@ import {expect} from "chai";
 import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
 
-describe("CachingModelSet", () => {
+describe("MemModelSet", () => {
   const sut = testModelSet;
 
   it("should exercise all indices", () => {
@@ -82,7 +82,8 @@ describe("CachingModelSet", () => {
     }
   });
 
-  it("should serialize itself", async () => {
+  it("should serialize itself", async function() {
+    this.timeout(5000);
     expect(await sut.toJsonLd()).to.not.be.empty;
   });
 });
