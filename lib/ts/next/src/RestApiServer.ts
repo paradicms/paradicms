@@ -1,5 +1,12 @@
 import {getStaticApi} from "./getStaticApi";
-import {Api, GetModelsResult, GetWorksOptions} from "@paradicms/api";
+import {
+  Api,
+  GetModelsResult,
+  GetWorkAgentsOptions,
+  GetWorkEventsOptions,
+  GetWorkLocationsOptions,
+  GetWorksOptions,
+} from "@paradicms/api";
 import {NextApiRequest, NextApiResponse} from "next";
 import {ValidationError} from "runtypes";
 
@@ -20,22 +27,61 @@ export class RestApiServer {
     return new RestApiServer(await getStaticApi());
   }
 
-  async handleGetWorks(
+  async getWorkAgents(
     req: NextApiRequest,
     res: NextApiResponse
   ): Promise<void> {
-    let getWorksOptions: GetWorksOptions | undefined;
+    let options: GetWorkAgentsOptions | undefined;
     try {
-      getWorksOptions = req.body ? GetWorksOptions.check(req.body) : undefined;
+      options = req.body ? GetWorkAgentsOptions.check(req.body) : undefined;
     } catch (e) {
       this.sendValidationError(res, e as ValidationError);
       return;
     }
 
-    await this.sendGetModelsResult(
-      res,
-      await this.api.getWorks(getWorksOptions)
-    );
+    await this.sendGetModelsResult(res, await this.api.getWorkAgents(options));
+  }
+
+  async getWorkEvents(
+    req: NextApiRequest,
+    res: NextApiResponse
+  ): Promise<void> {
+    let options: GetWorkEventsOptions | undefined;
+    try {
+      options = req.body ? GetWorkEventsOptions.check(req.body) : undefined;
+    } catch (e) {
+      this.sendValidationError(res, e as ValidationError);
+      return;
+    }
+
+    await this.sendGetModelsResult(res, await this.api.getWorkEvents(options));
+  }
+
+  async getWorkLocations(
+    req: NextApiRequest,
+    res: NextApiResponse
+  ): Promise<void> {
+    let options: GetWorkLocationsOptions | undefined;
+    try {
+      options = req.body ? GetWorkLocationsOptions.check(req.body) : undefined;
+    } catch (e) {
+      this.sendValidationError(res, e as ValidationError);
+      return;
+    }
+
+    await res.status(200).json(await this.api.getWorkLocations(options));
+  }
+
+  async getWorks(req: NextApiRequest, res: NextApiResponse): Promise<void> {
+    let options: GetWorksOptions | undefined;
+    try {
+      options = req.body ? GetWorksOptions.check(req.body) : undefined;
+    } catch (e) {
+      this.sendValidationError(res, e as ValidationError);
+      return;
+    }
+
+    await this.sendGetModelsResult(res, await this.api.getWorks(options));
   }
 
   // private sendGetModelKeysResult(

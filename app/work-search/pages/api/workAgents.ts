@@ -5,5 +5,5 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  await (await getRestApiServer()).getWorks(req, res);
+  await (await getRestApiServer()).getWorkAgents(req, res);
 }

@@ -47,14 +47,14 @@ export class RestApiClient implements Api {
   }
 
   private async getJson(url: string, options?: any): Promise<any> {
-    const response = await fetch(url, {
+    const response = await fetch("/api" + url, {
       body: options ? JSON.stringify(options) : undefined,
       headers: options
         ? {
             "Content-Type": "application/json",
           }
         : undefined,
-      method: "GET",
+      method: "POST",
     });
     return await response.json();
   }
