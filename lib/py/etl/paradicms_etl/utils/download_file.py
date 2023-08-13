@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from typing import Optional
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 
 from pathvalidate import sanitize_filename
 
@@ -45,7 +45,15 @@ def download_file(
     #     Path(temp_file_path).rename(to_file_path)
     #     logger.debug("renamed %s to %s", temp_file_path, to_file_path)
     # else:
-    with urlopen(from_url) as open_from_url:
+
+    with urlopen(
+        Request(
+            str(from_url),
+            headers={
+                "User-Agent": "paradicms/1.0.0 (https://paradicms.org; info@paradicms.org)"
+            },
+        )
+    ) as open_from_url:
         to_file_path.unlink(missing_ok=True)
         to_file_path.parent.mkdir(exist_ok=True, parents=True)
         with open(to_file_path, "w+b") as to_file:

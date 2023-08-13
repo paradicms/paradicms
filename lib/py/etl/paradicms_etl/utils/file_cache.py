@@ -7,7 +7,7 @@ from shutil import copyfileobj
 from ssl import SSLContext
 from time import sleep
 from typing import Optional, Dict, Any
-from urllib.request import urlopen
+from urllib.request import urlopen, Request
 
 from pathvalidate import sanitize_filename
 from rdflib import URIRef
@@ -137,7 +137,15 @@ class FileCache:
         #         "moved %s (from %s) to %s", temp_file_path, file_url, cached_file_path
         #     )
         # else:
-        with urlopen(str(file_url), context=self.__ssl_context) as open_file_url:
+        with urlopen(
+            Request(
+                str(file_url),
+                headers={
+                    "User-Agent": "paradicms/1.0.0 (https://paradicms.org; info@paradicms.org)"
+                },
+            ),
+            context=self.__ssl_context,
+        ) as open_file_url:
             open_file_headers_dict = {
                 key: value for key, value in open_file_url.headers.items()
             }
