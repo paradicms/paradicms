@@ -14,12 +14,10 @@ import {
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
 import {Layout} from "components/Layout";
-import * as fs from "fs";
 import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
 import * as React from "react";
-import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
 import Link from "next/link";
 import {Hrefs} from "../../lib/Hrefs";
@@ -101,14 +99,8 @@ const WorkPage: React.FunctionComponent<StaticProps> = ({
 
 export default WorkPage;
 
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   const paths: {params: {workKey: string}}[] = [];
   for (const workKey of (await api.getWorkKeys()).modelKeys) {
@@ -130,10 +122,7 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const workKey = decodeFileName(params!.workKey as string);
 
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   const collections = (
     await api.getCollections({

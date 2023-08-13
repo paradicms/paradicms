@@ -12,8 +12,6 @@ import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
 import {WorksheetMode} from "~/models/WorksheetMode";
 import {useRouter} from "next/router";
 import {decodeFileName, encodeFileName, getStaticApi} from "@paradicms/next";
-import path from "path";
-import fs from "fs";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
@@ -180,14 +178,8 @@ const WorksheetFeatureSetEditPage: React.FunctionComponent<StaticProps> = ({
 
 export default WorksheetFeatureSetEditPage;
 
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   return {
     fallback: false,
@@ -206,10 +198,7 @@ export const getStaticProps: GetStaticProps = async ({
 }> => {
   const featureSetKey = decodeFileName(params!.featureSetKey as string);
 
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   // Get features and feature values for the feature set we're editing/reviewing
   const thisFeatureSetJoinSelector: {

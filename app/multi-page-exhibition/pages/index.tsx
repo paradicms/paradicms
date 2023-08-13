@@ -4,11 +4,9 @@ import {
   ModelSetJsonLdParser,
   RightsParagraph,
 } from "@paradicms/react-dom-components";
-import fs from "fs";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
-import * as path from "path";
 import * as React from "react";
 import {Col, Container, Row} from "reactstrap";
 import {Layout} from "../components/Layout";
@@ -97,11 +95,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   const {collection, collectionModelSet, workKeys} = await getExhibitionData(
     api

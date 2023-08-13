@@ -30,8 +30,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {WorksheetMode} from "~/models/WorksheetMode";
 import {getStaticApi} from "@paradicms/next";
-import path from "path";
-import fs from "fs";
 import {GetStaticProps} from "next";
 import {JsonAppConfiguration, ModelSetFactory} from "@paradicms/models";
 import Link from "next/link";
@@ -520,11 +518,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   return {
     props: {

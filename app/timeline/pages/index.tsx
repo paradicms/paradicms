@@ -1,8 +1,6 @@
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
-import fs from "fs";
 import {GetStaticProps} from "next";
-import * as path from "path";
 import * as React from "react";
 import {Layout} from "../components/Layout";
 import {
@@ -64,11 +62,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   return {
     props: {

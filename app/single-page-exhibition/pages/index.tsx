@@ -8,12 +8,10 @@ import {
   RightsParagraph,
   WorkPage,
 } from "@paradicms/react-dom-components";
-import fs from "fs";
 import {GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import {useRouter} from "next/router";
-import path from "path";
 import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
@@ -177,11 +175,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   const {collection, collectionModelSet, workKeys} = await getExhibitionData(
     api
