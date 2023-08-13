@@ -20,16 +20,13 @@ export const getStaticApiConfiguration = async (): Promise<ApiConfiguration> => 
   }
 
   let dataFilePaths: string[] = [];
-
-  {
-    const dataFilePath = process.env.DATA_FILE_PATH;
-    if (dataFilePath) {
-      dataFilePaths.push(dataFilePath);
-    }
-  }
-
-  {
-    const dataFilePathsString = process.env.DATA_FILE_PATHS;
+  for (const environmentVariableName of [
+    "DATA_FILE_PATH",
+    "DATA_FILE_PATHS",
+    "PARADICMS_DATA_FILE_PATH",
+    "PARADICMS_DATA_FILE_PATHS",
+  ]) {
+    const dataFilePathsString = process.env[environmentVariableName];
     if (dataFilePathsString) {
       dataFilePaths = dataFilePaths.concat(
         dataFilePathsString.split(path.delimiter)
