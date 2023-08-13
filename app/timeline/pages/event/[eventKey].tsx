@@ -11,12 +11,10 @@ import {
   ModelSetJsonLdParser,
 } from "@paradicms/react-dom-components";
 import {Layout} from "components/Layout";
-import fs from "fs";
 import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
 import * as React from "react";
-import path from "path";
 import {requireNonNull} from "@paradicms/utilities";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
 import {JsonLd} from "jsonld/jsonld-spec";
@@ -78,14 +76,8 @@ const EventPage: React.FunctionComponent<StaticProps> = ({
 
 export default EventPage;
 
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   return {
     fallback: false,
@@ -100,10 +92,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   const eventKey = decodeFileName(params!.eventKey as string);
 

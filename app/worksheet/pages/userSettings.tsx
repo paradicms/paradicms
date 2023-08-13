@@ -31,8 +31,6 @@ import {CurrentUser} from "~/models/CurrentUser";
 import {UserIdentityProvider} from "~/models/UserIdentityProvider";
 import {GoogleSheetsWorksheetStateConfigurationContainer} from "~/components/GoogleSheetsWorksheetStateConfigurationContainer";
 import {getStaticApi} from "@paradicms/next";
-import path from "path";
-import fs from "fs";
 import {JsonAppConfiguration} from "@paradicms/models";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
@@ -167,11 +165,7 @@ export default UserSettingsPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   return {
     props: {

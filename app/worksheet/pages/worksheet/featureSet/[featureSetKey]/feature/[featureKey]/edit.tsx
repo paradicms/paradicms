@@ -7,9 +7,7 @@ import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
 import {useWorksheet} from "~/hooks/useWorksheet";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import fs from "fs";
 import {decodeFileName, encodeFileName, getStaticApi} from "@paradicms/next";
-import path from "path";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {GetStaticPaths, GetStaticProps} from "next";
 import {ModelSet} from "@paradicms/models";
@@ -126,14 +124,8 @@ const WorksheetFeatureEditPage: React.FunctionComponent<StaticProps> = ({
 
 export default WorksheetFeatureEditPage;
 
-const readFile = (filePath: string) =>
-  fs.promises.readFile(filePath).then(contents => contents.toString());
-
 export const getStaticPaths: GetStaticPaths = async () => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   const worksheetDefinition = new WorksheetDefinition(
     (
@@ -173,10 +165,7 @@ export const getStaticProps: GetStaticProps = async ({
   const featureSetKey = decodeFileName(params!.featureSetKey as string);
   const featureKey = decodeFileName(params!.featureKey as string);
 
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile,
-  });
+  const api = await getStaticApi();
 
   // Get feature values for the feature we're editing
   const thisFeatureJoinSelector: {[index: string]: PropertyJoinSelector} = {};

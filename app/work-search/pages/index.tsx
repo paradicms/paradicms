@@ -3,6 +3,7 @@ import {
   ApiConfiguration,
   ApiProvider,
   getAbsoluteImageSrc,
+  getClientApiConfiguration,
   getStaticApi,
   useApi,
 } from "@paradicms/next";
@@ -20,8 +21,6 @@ import Link from "next/link";
 import {useRouter} from "next/router";
 import * as React from "react";
 import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
-import path from "path";
-import fs from "fs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
 import {JsonProperty} from "../lib/JsonProperty";
 
@@ -98,11 +97,7 @@ export default IndexPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api, apiConfiguration} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   const collections = (
     await api.getCollections({
@@ -112,7 +107,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 
   return {
     props: {
-      apiConfiguration,
+      apiConfiguration: await getClientApiConfiguration(),
       collectionLabel: collections.length === 1 ? collections[0].label : null,
       configuration: await api.getAppConfiguration(),
       properties: (await api.getProperties()).modelSet.properties.map(

@@ -7,8 +7,6 @@ import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
 import {Spinner} from "~/components/Spinner";
 import {getStaticApi} from "@paradicms/next";
-import path from "path";
-import fs from "fs";
 import {GetStaticProps} from "next";
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
@@ -119,11 +117,7 @@ export default WorksheetEditPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   return {
     props: {

@@ -15,8 +15,6 @@ import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {getStaticApi} from "@paradicms/next";
-import path from "path";
-import fs from "fs";
 import {GetStaticProps} from "next";
 import Link from "next/link";
 import CopyToClipboard from "react-copy-to-clipboard";
@@ -297,11 +295,7 @@ export default WorksheetReviewPage;
 export const getStaticProps: GetStaticProps = async (): Promise<{
   props: StaticProps;
 }> => {
-  const {api} = await getStaticApi({
-    pathDelimiter: path.delimiter,
-    readFile: (filePath: string) =>
-      fs.promises.readFile(filePath).then(contents => contents.toString()),
-  });
+  const api = await getStaticApi();
 
   return {
     props: {
