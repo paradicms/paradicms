@@ -34,15 +34,17 @@ class AppLoader:
     """
 
     _APP_DEFAULT = "work-search"
+    NEXT_COMMANDS_DEFAULT = ("clean", "build", "export")
 
     def __init__(
         self,
         *,
         cache_dir_path: Path,
         pipeline_id: str,
+        client_api: Optional[str] = None,
         deployer: Optional[Deployer] = None,
-        dev: bool = False,
         image_archiver: Optional[ImageArchiver] = None,
+        next_commands: Tuple[str, ...] = NEXT_COMMANDS_DEFAULT,
         sleep_s_after_image_download: Optional[float] = None,
         thumbnail_max_dimensions: Tuple[
             ImageDimensions, ...
@@ -50,9 +52,10 @@ class AppLoader:
     ):
         """
         :param cache_dir_path: directory in which to store cached data such as image thumbnails
+        :param client_api: API to use on the client side, defaults to using static data
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
-        :param dev: transform the input data to RDF and archive and thumbnail but run the Next.js dev server instead of generating and deploying static files
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
+        :param next_commands: Next.js commands to execute
         :param pipeline_id: pipeline identifier
         :param sleep_s_after_image_download: sleep this number of seconds after downloading each image, to avoid triggering denial of service mechanisms
         :param thumbnail_max_dimensions: maximum dimensions of image thumbnails to use
@@ -62,10 +65,11 @@ class AppLoader:
         self.__buffered_images: List[Image] = []
         self.__buffered_other_models: List[Model] = []
         self.__cache_dir_path = cache_dir_path
+        self.__client_api = client_api
         self.__deployer = deployer
-        self.__dev = dev
         self.__image_archiver = image_archiver
         self.__logger = logging.getLogger(__name__)
+        self.__next_commands = next_commands
         self.__pipeline_id = pipeline_id
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
@@ -171,18 +175,23 @@ class AppLoader:
         app_package_build_kwds = {
             "data_file_paths": tuple(data_file_paths),
         }
+        if self.__client_api:
+            app_package_build_kwds["client_api"] = self.__client_api
 
-        if self.__dev:
-            app_package.dev(**app_package_build_kwds)
-        else:
-            app_package.clean()
-
-            app_out_dir_path = app_package.build(**app_package_build_kwds)
-
-            deployer = self.__deployer
-            if deployer is None:
-                deployer = FsDeployer(
-                    deploy_dir_path=self.__cache_dir_path / "deployment"
-                )
-
-            deployer(app_out_dir_path=app_out_dir_path)
+        for next_command in self.__next_commands:
+            if next_command == "clean":
+                app_package.clean()
+            elif next_command == "build":
+                app_package.build(**app_package_build_kwds)
+            elif next_command == "dev":
+                app_package.dev(**app_package_build_kwds)
+            elif next_command == "export":
+                app_out_dir_path = app_package.export()
+                deployer = self.__deployer
+                if deployer is None:
+                    deployer = FsDeployer(
+                        deploy_dir_path=self.__cache_dir_path / "deployment"
+                    )
+                deployer(app_out_dir_path=app_out_dir_path)
+            else:
+                raise ValueError(f"unknown Next.js command: {next_command}")

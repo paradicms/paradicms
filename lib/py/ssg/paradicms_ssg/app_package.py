@@ -3,7 +3,7 @@ import os
 import shutil
 import subprocess
 from pathlib import Path
-from typing import List, Union, Tuple
+from typing import List, Union, Tuple, Optional
 
 import sys
 
@@ -38,17 +38,34 @@ class AppPackage:
 
         self.__app_dir_path = app_dir_path
 
-    def build(self, *, data_file_paths: Tuple[Path, ...]) -> Path:
-        """
-        Build the app
-        :return: directory path to the built site
-        """
+    @property
+    def app_dir_path(self) -> Path:
+        return self.__app_dir_path
 
+    def build(
+        self, *, data_file_paths: Tuple[Path, ...], client_api: Optional[str] = None
+    ):
         if not data_file_paths:
             raise ValueError("must specify at least one data file path")
 
-        self.__logger.info("building app")
+        self.__run_script(
+            "build",
+            client_api=client_api,
+            data_file_paths=data_file_paths,
+        )
 
+    def clean(self):
+        self.__run_script("clean")
+
+    def dev(
+        self, *, data_file_paths: Tuple[Path, ...], client_api: Optional[str] = None
+    ):
+        if not data_file_paths:
+            raise ValueError("must specify at least one data file path")
+
+        self.__run_script("dev", client_api=client_api, data_file_paths=data_file_paths)
+
+    def export(self) -> Path:
         app_out_dir_path = self.__app_dir_path / "out"
         app_public_dir_path = self.__app_dir_path / "public"
 
@@ -64,12 +81,6 @@ class AppPackage:
             )
         else:
             app_public_dir_path_exists = False
-
-        self.__run_script(
-            "build",
-            data_file_paths=data_file_paths,
-        )
-        self.__logger.info("built GUI")
 
         # Hack: next export hangs if there is a public directory, but only in the GitHub Action
         # Manually move the contents of the public directory over to the out directory
@@ -107,30 +118,36 @@ class AppPackage:
 
         return app_out_dir_path
 
-    def clean(self):
-        self.__run_script("clean")
-
-    def dev(self, *, data_file_paths: Tuple[Path, ...] = ()):
-        if not data_file_paths:
-            raise ValueError("must specify at least one data file path")
-
-        self.__run_script("dev", data_file_paths=data_file_paths)
-
-    @property
-    def app_dir_path(self) -> Path:
-        return self.__app_dir_path
+    @staticmethod
+    def __get_dir_size(dir_path: Path):
+        dir_size = file_count = 0
+        for entry in os.scandir(dir_path):
+            assert not entry.is_symlink()
+            if entry.is_file():
+                file_count += 1
+                dir_size += entry.stat().st_size
+            elif entry.is_dir():
+                subdir_size, subdir_file_count = AppPackage.__get_dir_size(
+                    Path(entry.path)
+                )
+                dir_size += subdir_size
+                file_count += subdir_file_count
+        return dir_size, file_count
 
     def __run_script(
         self,
         script,
         check=True,
+        client_api: Optional[str] = None,
         data_file_paths: Tuple[Path, ...] = (),
         shell=None,
         **kwds,
     ):
         subprocess_env = os.environ.copy()
+        if client_api:
+            subprocess_env["PARADICMS_CLIENT_API"] = client_api
         if data_file_paths:
-            subprocess_env["DATA_FILE_PATHS"] = os.path.pathsep.join(
+            subprocess_env["PARADICMS_DATA_FILE_PATHS"] = os.path.pathsep.join(
                 str(data_file_path) for data_file_path in data_file_paths
             )
         subprocess_env["EDITOR"] = ""
@@ -156,19 +173,3 @@ class AppPackage:
             self.__logger.info("completed %s", args)
         except subprocess.TimeoutExpired:
             self.__logger.warning("timed out on %s", args)
-
-    @staticmethod
-    def __get_dir_size(dir_path: Path):
-        dir_size = file_count = 0
-        for entry in os.scandir(dir_path):
-            assert not entry.is_symlink()
-            if entry.is_file():
-                file_count += 1
-                dir_size += entry.stat().st_size
-            elif entry.is_dir():
-                subdir_size, subdir_file_count = AppPackage.__get_dir_size(
-                    Path(entry.path)
-                )
-                dir_size += subdir_size
-                file_count += subdir_file_count
-        return dir_size, file_count
