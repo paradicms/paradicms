@@ -29,8 +29,8 @@ class GitHubAction(ABC):
             },
         )
 
-        debug: str = dataclasses.field(
-            default="", metadata={"description": "Debug the action"}
+        log_level: str = dataclasses.field(
+            default="INFO", metadata={"description": "Python log level"}
         )
 
         pipeline_id: str = dataclasses.field(
@@ -71,9 +71,8 @@ class GitHubAction(ABC):
                 if not value.strip():
                     raise ValueError("empty/blank " + field.name)
 
-    def __init__(self, *, cache_directory_path: str, debug: bool, pipeline_id: str):
+    def __init__(self, *, cache_directory_path: str, pipeline_id: str):
         self._cache_dir_path = Path(cache_directory_path) / pipeline_id
-        self._debug = debug
         self.__logger = logging.getLogger(__name__)
         self._pipeline_id = pipeline_id
 
@@ -136,10 +135,8 @@ class GitHubAction(ABC):
         args = cls.__parse_args(inputs_class=inputs_class)
         inputs = cls.__parse_inputs(args, inputs_class=inputs_class)
 
-        if inputs.get("debug"):
-            logging.basicConfig(level=logging.DEBUG)
-        else:
-            logging.basicConfig(level=logging.INFO)
+        log_level = inputs.pop("log_level")
+        logging.basicConfig(level=getattr(logging, log_level.upper()))
 
         # Instantiate this class with args and inputs
         cls_kwds = {
