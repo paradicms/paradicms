@@ -9,8 +9,6 @@ jobs:
     name: Build and push Docker image
     runs-on: ubuntu-latest
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
       - uses: actions/checkout@v3
       # Install Node.js and Python dependencies in order to cache them
       - uses: actions/setup-node@v3
