@@ -19,6 +19,10 @@ jobs:
         with:
           python-version: "3.11.x"
           cache: 'pip'
+          cache-dependency-path: |
+            lib/py/etl/pyproject.toml
+            lib/py/nlp/pyproject.toml
+            lib/py/ssg/pyproject.toml
       - run: |
           cd $GITHUB_WORKSPACE/lib/py/etl && pip install -qqq .
           cd $GITHUB_WORKSPACE/lib/py/nlp && pip install -qqq .
