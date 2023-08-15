@@ -8,6 +8,7 @@ license = "GPLv3"
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
 bertopic = "^0.15.0"
+pdfminer = "^20191125"
 
 [tool.poetry.dev-dependencies]
 black = "^22.1.0"
