@@ -23,17 +23,12 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-v2-${{ hashFiles('**/pyproject.toml') }}
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: |
-          echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-          echo "Yarn cache directory: $(yarn cache dir)"
       - uses: actions/cache@v3
         name: Cache yarn dependencies
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-v2-${{ hashFiles('yarn.lock') }}
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-v3-${{ hashFiles('yarn.lock') }}
       - run: df -h
         name: Check space
       - run: |
@@ -50,8 +45,8 @@ jobs:
         name: Move Node.js and Python dependencies to a directory where they can be used by Docker
       - run: df -h
         name: Check space
-      - run: find . -name node_modules | xargs rm -fr
-        name: Delete node_modules to free up space
+#      - run: find . -name node_modules | xargs rm -fr
+#        name: Delete node_modules to free up space
       - run: df -h
         name: Check space
       - name: Log in to GitHub Container Registry
