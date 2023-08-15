@@ -43,6 +43,7 @@ jobs:
           cd $GITHUB_WORKSPACE/lib/py/nlp && pip install -qqq .
           cd $GITHUB_WORKSPACE/lib/py/ssg && pip install -qqq .
           cd $GITHUB_WORKSPACE
+          yarn install
           mv ~/.cache pip-yarn-cache
         name: Install Node.js and Python dependencies locally in order to cache them
       - name: Log in to GitHub Container Registry
