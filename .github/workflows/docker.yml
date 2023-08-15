@@ -23,8 +23,6 @@ jobs:
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-v2-${{ hashFiles('**/pyproject.toml') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: |
@@ -36,17 +34,20 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-v2-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      - run: df -h
+        name: Check space
       - run: |
-          cd $GITHUB_WORKSPACE/lib/py/etl && pip download -d $RUNNER_TEMP -qqq .
-          cd $GITHUB_WORKSPACE/lib/py/nlp && pip download -d $RUNNER_TEMP -qqq .
-          cd $GITHUB_WORKSPACE/lib/py/ssg && pip download -d $RUNNER_TEMP -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/etl && pip download -d $RUNNER_TEMP/pip-downloads -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/nlp && pip download -d $RUNNER_TEMP/pip-downloads -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/ssg && pip download -d $RUNNER_TEMP/pip-downloads -qqq .
+          rm -fr $RUNNER_TEMP/pip-downloads
         name: Install Python dependencies locally in order to cache them
+      - run: df -h
+        name: Check space
       - run: yarn install
         name: Install Node.js dependencies locally in order to cache them
       - run: mv ~/.cache pip-yarn-cache
-        name: Move Node.js and Python dependencies to a directory where they can be used b yDocker
+        name: Move Node.js and Python dependencies to a directory where they can be used by Docker
       - run: df -h
         name: Check space
       - run: find . -name node_modules | xargs rm -fr
