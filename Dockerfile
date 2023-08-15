@@ -4,9 +4,8 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY . /paradicms
 
-RUN cd /paradicms/lib/py/etl && pip3 install -qqq .
-RUN cd /paradicms/lib/py/nlp && pip3 install .
-RUN cd /paradicms/lib/py/ssg && pip3 install -qqq .
-RUN cd /paradicms && yarn install && yarn build-lib
-
-RUN cd /paradicms && rm -fr lib/py /root/.cache && yarn cache clean
+RUN cd /paradicms/lib/py/etl && pip3 install -qqq . && \
+    cd /paradicms/lib/py/nlp && pip3 install -qqq . && \
+    cd /paradicms/lib/py/ssg && pip3 install -qqq . && \
+    cd /paradicms && yarn install && yarn build-lib && \
+    cd /paradicms && rm -fr lib/py /root/.cache && yarn cache clean
