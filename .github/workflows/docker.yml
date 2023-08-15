@@ -19,22 +19,24 @@ jobs:
         with:
           python-version: "3.11.x"
           cache: 'pip'
-      - run: cd lib/py/etl && pip install -qqq .
-      - run: cd lib/py/nlp && pip install -qqq .
-      - run: cd lib/py/ssg && pip install -qqq .
-      - run: yarn install
-      - run: find ~/.cache
-      - run: cp -p -R ~/.cache pip-yarn-cache
-#      - name: Log in to GitHub Container Registry
-#        uses: docker/login-action@v1
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Build container image
-#        uses: docker/build-push-action@v2
-#        with:
-#          context: .
-#          push: true
-#          tags: |
-#            ghcr.io/${{ github.repository }}:latest
+      - run: |
+          cd $GITHUB_WORKSPACE/paradicms/paradicms/lib/py/etl && pip install -qqq .
+          cd $GITHUB_WORKSPACE/paradicms/paradicms/lib/py/nlp && pip install -qqq .
+          cd $GITHUB_WORKSPACE/paradicms/paradicms/lib/py/ssg && pip install -qqq .
+          cd $GITHUB_WORKSPACE/paradicms/paradicms
+          yarn install
+          cp -p -R ~/.cache pip-yarn-cache
+        name: Install Node.js and Python dependencies locally in order to cache them
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build container image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
