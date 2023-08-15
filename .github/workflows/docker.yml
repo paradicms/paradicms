@@ -20,10 +20,10 @@ jobs:
           python-version: "3.11.x"
           cache: 'pip'
       - run: |
-          cd $GITHUB_WORKSPACE/paradicms/paradicms/lib/py/etl && pip install -qqq .
-          cd $GITHUB_WORKSPACE/paradicms/paradicms/lib/py/nlp && pip install -qqq .
-          cd $GITHUB_WORKSPACE/paradicms/paradicms/lib/py/ssg && pip install -qqq .
-          cd $GITHUB_WORKSPACE/paradicms/paradicms
+          cd $GITHUB_WORKSPACE/lib/py/etl && pip install -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/nlp && pip install -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/ssg && pip install -qqq .
+          cd $GITHUB_WORKSPACE
           yarn install
           cp -p -R ~/.cache pip-yarn-cache
         name: Install Node.js and Python dependencies locally in order to cache them
