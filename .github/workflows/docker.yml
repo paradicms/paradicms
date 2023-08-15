@@ -45,7 +45,7 @@ jobs:
           cd $GITHUB_WORKSPACE/lib/py/nlp && pip install -qqq .
           cd $GITHUB_WORKSPACE/lib/py/ssg && pip install -qqq .
           cd $GITHUB_WORKSPACE && yarn install
-          find . -name node_modules | xargs rm -fr
+          cd $GITHUB_WORKSPACE && find . -name node_modules | xargs rm -fr
           mv ~/.cache pip-yarn-cache
         name: Install Node.js and Python dependencies locally in order to cache them
       - name: Log in to GitHub Container Registry
@@ -54,12 +54,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Build container image
-#        uses: docker/build-push-action@v2
-#        with:
-#          context: .
-#          push: true
-#          tags: |
-#            ghcr.io/${{ github.repository }}:latest
+      - name: Build container image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
       - name: Move the Node.js and Python dependencies cache back in place so it can be saved
         run: mv pip-yarn-cache ~/.cache
