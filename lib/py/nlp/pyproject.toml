@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "paradicms-nlp"
+version = "0.0.1"
+description = ""
+authors = ["Minor G. <minorg@server.fake>"]
+license = "GPLv3"
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.12"
+bertopic = "^0.15.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+flake8 = "^4.0.1"
+mypy = "^0.931"
+paradicms-etl = { path = "../etl", develop = true }
+pytest = "^7.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
