@@ -1,6 +1,6 @@
-from typing import Union, Tuple
+from typing import Text, Tuple, Union
 
-from rdflib import SDO, URIRef, XSD
+from rdflib import SDO, XSD, URIRef
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.location import Location
@@ -81,8 +81,18 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
             self.set(SDO.dateModified, date_modified)
             return self
 
+        def set_encoding_format(
+            self, encoding_format: str
+        ) -> "SchemaCreativeWorkMixin.Builder":
+            self.set(SDO.encodingFormat, encoding_format)
+            return self
+
         def set_size(self, size: str) -> "SchemaCreativeWorkMixin.Builder":
             self.set(SDO.size, size)
+            return self
+
+        def set_text(self, text: Union[str, Text]) -> "SchemaCreativeWorkMixin.Builder":
+            self.set(SDO.text, text)
             return self
 
     @property
