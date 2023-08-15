@@ -49,49 +49,36 @@ class PdfEnricher:
         self.__logger = logging.getLogger(__name__)
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
-        concept_uris_by_label: Dict[str, URIRef] = {}
-        pdf_works: List[SchemaCreativeWork] = []
         for model in models:
-            if isinstance(model, Concept):
-                concept_uris_by_label[model.label] = model.uri
-            else:
-                pdf_work = self.__check_pdf_work(model)
+            yield self.__enrich(model)
 
-                if pdf_work is not None:
-                    pdf_works.append(pdf_work)
-                    continue  # Yield later
-
-            yield model
-
-        for pdf_work in pdf_works:
-            pdf_file_path = self.__file_cache.get_file(
-                pdf_work.uri, file_extension=".pdf"
-            )
-            pdf_work_replacer = pdf_work.replacer()
-
-            self.__extract_text(
-                pdf_file_path=pdf_file_path, pdf_work_builder=pdf_work_replacer
-            )
-            self.__parse_info(
-                pdf_file_path=pdf_file_path, pdf_work_builder=pdf_work_replacer
-            )
-
-            yield pdf_work_replacer.build()
-
-    def __check_pdf_work(self, model: Model) -> Optional[SchemaCreativeWork]:
+    def __enrich(self, model: Model) -> Model:
         if not isinstance(model, SchemaCreativeWork):
-            return None
+            return model
 
         work: SchemaCreativeWork = model
         if work.text:
             self.__logger.debug("work %s already has a text, skipping", work.uri)
-            return None
+            return model
 
         if work.encoding_format != "application/pdf":
             self.__logger.debug("work %s is not a PDF, skipping", work.uri)
-            return None
+            return model
 
-        return work
+        pdf_work = work
+
+        pdf_file_path = self.__file_cache.get_file(pdf_work.uri, file_extension=".pdf")
+
+        pdf_work_replacer = pdf_work.replacer()
+
+        self.__extract_text(
+            pdf_file_path=pdf_file_path, pdf_work_builder=pdf_work_replacer
+        )
+        self.__parse_info(
+            pdf_file_path=pdf_file_path, pdf_work_builder=pdf_work_replacer
+        )
+
+        return pdf_work_replacer.build()
 
     def __extract_text(
         self, pdf_file_path: Path, pdf_work_builder: SchemaCreativeWork.Builder
