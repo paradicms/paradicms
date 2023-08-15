@@ -142,7 +142,7 @@ class GitHubAction(ABC):
         cls_kwds = {
             key: value
             for key, value in vars(args).items()
-            if key not in {"c"} and value is not None
+            if key not in {"c", "log_level"} and value is not None
         }
         cls_kwds.update(inputs)
 
