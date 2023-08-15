@@ -4,9 +4,21 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 COPY . /paradicms
 
-RUN ls -d /paradicms/pip-yarn-cache >/dev/null 2>&1 && rm -fr /root/.cache && mv /paradicms/pip-yarn-cache /root/.cache && \
-    cd /paradicms/lib/py/etl && pip3 install . && \
+WORKDIR /paradicms
+
+# Move the yarn and pip caches to the right directory
+RUN ls -d pip-yarn-cache >/dev/null 2>&1 && rm -fr /root/.cache && mv pip-yarn-cache /root/.cache
+
+# Install Python packages
+RUN cd /paradicms/lib/py/etl && pip3 install . && \
     cd /paradicms/lib/py/nlp && pip3 install . && \
-    cd /paradicms/lib/py/ssg && pip3 install . && \
-    cd /paradicms && yarn install && yarn build-lib && \
-    cd /paradicms && rm -fr lib/py /root/.cache && yarn cache clean
+    cd /paradicms/lib/py/ssg && pip3 install . &&
+
+# Download NLTK data
+RUN python -m nltk.downloader wordnet && python -m nltk.downloader omw
+
+# Install Node.js packages
+RUN yarn install && yarn build-lib
+
+# Delete files we don't need 
+RUN rm -fr lib/py /root/.cache && yarn cache clean
