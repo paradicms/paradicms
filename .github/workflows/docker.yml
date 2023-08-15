@@ -22,7 +22,7 @@ jobs:
         name: Cache pip dependencies
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/pyproject.toml') }}
+          key: ${{ runner.os }}-pip-v2-${{ hashFiles('**/pyproject.toml') }}
           restore-keys: |
             ${{ runner.os }}-pip-
       - name: Get yarn cache directory path
@@ -35,7 +35,7 @@ jobs:
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-yarn-v2-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: |
@@ -47,10 +47,12 @@ jobs:
         name: Install Node.js dependencies locally in order to cache them
       - run: mv ~/.cache pip-yarn-cache
         name: Move Node.js and Python dependencies to a directory where they can be used b yDocker
-      - run: df
+      - run: df -h
         name: Check space
       - run: find . -name node_modules | xargs rm -fr
         name: Delete node_modules to free up space
+      - run: df -h
+        name: Check space
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
         with:
