@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:python3.11-nodejs18-slim
+FROM nikolaik/python-nodejs:python3.11-nodejs18
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
