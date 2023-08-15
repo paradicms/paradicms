@@ -1,15 +1,14 @@
 import dataclasses
 from abc import ABC
 from pathlib import Path
-from typing import Type, Optional, Tuple
+from typing import Type, Optional
 
 from configargparse import ArgParser
 from more_itertools import consume
 
-from paradicms_etl.enricher import Enricher
+from paradicms_etl.enrichers.enricher_factory import EnricherFactory
 from paradicms_etl.extractor import Extractor
 from paradicms_etl.github_action import GitHubAction
-from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.transformer import Transformer
@@ -22,6 +21,11 @@ class EtlGitHubAction(GitHubAction, ABC):
 
     @dataclasses.dataclass(frozen=True)
     class Inputs(GitHubAction.Inputs):
+        enrichers: str = dataclasses.field(
+            default="",
+            metadata={"description": "comma-separated list of enrichers to use"},
+        )
+
         loaded_data_directory_path: str = dataclasses.field(
             default=".paradicms/data",
             metadata={
@@ -40,14 +44,32 @@ class EtlGitHubAction(GitHubAction, ABC):
         self,
         *,
         force_extract: bool,
+        enrichers: str,
         loaded_data_directory_path: str,
         loaded_data_file_path: Optional[str] = None,
-        **kwds
+        **kwds,
     ):
         GitHubAction.__init__(self, **kwds)
+
+        if enrichers:
+            self.__enrichers = tuple(
+                EnricherFactory.enricher_by_name(
+                    enricher_name.strip(), cache_dir_path=self._cache_dir_path
+                )
+                for enricher_name in enrichers.split(",")
+            )
+        else:
+            self.__enrichers = EnricherFactory.default_enrichers(
+                cache_dir_path=self._cache_dir_path
+            )
+
         self.__force_extract = force_extract
-        self.__loaded_data_directory_path = loaded_data_directory_path
-        self.__loaded_data_file_path = loaded_data_file_path
+
+        self.__loader = RdfFileLoader(
+            rdf_file_path=Path(loaded_data_file_path)
+            if loaded_data_file_path
+            else Path(loaded_data_directory_path) / (self._pipeline_id + ".trig")
+        )
 
     @classmethod
     def _add_arguments(
@@ -66,26 +88,13 @@ class EtlGitHubAction(GitHubAction, ABC):
         *,
         extractor: Extractor,
         transformer: Transformer,
-        enrichers: Optional[Tuple[Enricher, ...]] = None,
-        loader: Optional[Loader] = None
     ):
-        if enrichers is None:
-            enrichers = Pipeline.default_enrichers(cache_dir_path=self._cache_dir_path)
-
-        if loader is None:
-            loader = RdfFileLoader(
-                rdf_file_path=Path(self.__loaded_data_file_path)
-                if self.__loaded_data_file_path
-                else Path(self.__loaded_data_directory_path)
-                / (self._pipeline_id + ".trig")
-            )
-
         consume(
             Pipeline(
-                enrichers=enrichers,
+                enrichers=self.__enrichers,
                 extractor=extractor,
                 id=self._pipeline_id,
-                loader=loader,
+                loader=self.__loader,
                 transformer=transformer,
             )(force_extract=self.__force_extract)
         )

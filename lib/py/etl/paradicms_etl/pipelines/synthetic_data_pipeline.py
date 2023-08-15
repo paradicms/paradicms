@@ -6,6 +6,7 @@ from urllib.parse import quote
 
 from rdflib import DCTERMS, Literal, URIRef, SDO
 
+from paradicms_etl.enrichers.enricher_factory import EnricherFactory
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
@@ -738,7 +739,7 @@ class SyntheticDataPipeline(Pipeline):
 
         Pipeline.__init__(
             self,
-            enrichers=Pipeline.default_enrichers(
+            enrichers=EnricherFactory.default_enrichers(
                 cache_dir_path=data_dir_path / ".cache"
             ),
             extractor=nop_extractor,
