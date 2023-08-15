@@ -32,6 +32,7 @@ jobs:
       - run: df -h
         name: Check space
       - run: |
+          pip install poetry
           cd $GITHUB_WORKSPACE/lib/py/etl && poetry export -f requirements.txt -o requirements.txt && pip download -d $RUNNER_TEMP/pip-downloads --no-deps -r requirements.txt
           cd $GITHUB_WORKSPACE/lib/py/nlp && poetry export -f requirements.txt -o requirements.txt && pip download -d $RUNNER_TEMP/pip-downloads --no-deps -r requirements.txt
           cd $GITHUB_WORKSPACE/lib/py/ssg && poetry export -f requirements.txt -o requirements.txt && pip download -d $RUNNER_TEMP/pip-downloads --no-deps -r requirements.txt
