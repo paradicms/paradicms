@@ -22,7 +22,7 @@ jobs:
         name: Cache pip dependencies
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-v2-${{ hashFiles('**/pyproject.toml') }}
+          key: ${{ runner.os }}-pip-v3-${{ hashFiles('**/pyproject.toml') }}
       - uses: actions/cache@v3
         name: Cache yarn dependencies
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
@@ -32,9 +32,9 @@ jobs:
       - run: df -h
         name: Check space
       - run: |
-          cd $GITHUB_WORKSPACE/lib/py/etl && pip download -d $RUNNER_TEMP/pip-downloads -qqq .
-          cd $GITHUB_WORKSPACE/lib/py/nlp && pip download -d $RUNNER_TEMP/pip-downloads -qqq .
-          cd $GITHUB_WORKSPACE/lib/py/ssg && pip download -d $RUNNER_TEMP/pip-downloads -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/etl && poetry export -f requirements.txt -o requirements.txt && pip download -d $RUNNER_TEMP/pip-downloads --no-deps -r requirements.txt
+          cd $GITHUB_WORKSPACE/lib/py/nlp && poetry export -f requirements.txt -o requirements.txt && pip download -d $RUNNER_TEMP/pip-downloads --no-deps -r requirements.txt
+          cd $GITHUB_WORKSPACE/lib/py/ssg && poetry export -f requirements.txt -o requirements.txt && pip download -d $RUNNER_TEMP/pip-downloads --no-deps -r requirements.txt
           rm -fr $RUNNER_TEMP/pip-downloads
         name: Install Python dependencies locally in order to cache them
       - run: df -h
