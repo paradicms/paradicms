@@ -44,10 +44,13 @@ jobs:
           cd $GITHUB_WORKSPACE/lib/py/etl && pip install -qqq .
           cd $GITHUB_WORKSPACE/lib/py/nlp && pip install -qqq .
           cd $GITHUB_WORKSPACE/lib/py/ssg && pip install -qqq .
-          cd $GITHUB_WORKSPACE && yarn install
-          cd $GITHUB_WORKSPACE && find . -name node_modules | xargs rm -fr
-          mv ~/.cache pip-yarn-cache
-        name: Install Node.js and Python dependencies locally in order to cache them
+        name: Install Python dependencies locally in order to cache them
+      - run: yarn install
+        name: Install Node.js dependencies locally in order to cache them
+      - run: mv ~/.cache pip-yarn-cache
+        name: Move Node.js and Python dependencies to a directory where they can be used b Docker
+      - run: find . -name node_modules | xargs rm -fr
+        name: Delete node_modules to free up space
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
         with:
