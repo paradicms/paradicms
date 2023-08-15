@@ -39,24 +39,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: |
-          cd $GITHUB_WORKSPACE/lib/py/etl && pip install -qqq .
-          cd $GITHUB_WORKSPACE/lib/py/nlp && pip install -qqq .
-          cd $GITHUB_WORKSPACE/lib/py/ssg && pip install -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/etl && pip download -d $RUNNER_TEMP -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/nlp && pip download -d $RUNNER_TEMP -qqq .
+          cd $GITHUB_WORKSPACE/lib/py/ssg && pip download -d $RUNNER_TEMP -qqq .
         name: Install Python dependencies locally in order to cache them
       - run: yarn install
         name: Install Node.js dependencies locally in order to cache them
       - run: mv ~/.cache pip-yarn-cache
-        name: Move Node.js and Python dependencies to a directory where they can be used b Docker
+        name: Move Node.js and Python dependencies to a directory where they can be used b yDocker
       - run: df
         name: Check space
       - run: find . -name node_modules | xargs rm -fr
         name: Delete node_modules to free up space
-      - run: |
-          find /usr/local/lib/python3*
-          rm -fr /usr/local/lib/python3*
-        name: Delete Python -packages to free up space
-      - run: df
-        name: Check space
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
         with:
