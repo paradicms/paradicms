@@ -1,7 +1,6 @@
 import logging
 from pathlib import Path
-from typing import Dict, Iterable, List, Set, Tuple
-from urllib.parse import quote, unquote
+from typing import Iterable, List, Set, Tuple
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.concept import Concept
@@ -12,17 +11,17 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.text import Text
 from rdflib import URIRef
 
+from paradicms_nlp.models.named_entity import NamedEntity
+from paradicms_nlp.models.named_entity_type import NamedEntityType
 from paradicms_nlp.models.word_net_synset import WordNetSynset
+from paradicms_nlp.utils.named_entity_recognizer import NamedEntityRecognizer
 from paradicms_nlp.utils.word_net_annotator import WordNetAnnotator
-
-__import__("spacy_wordnet.wordnet_annotator")
 
 
 class TextEnricher:
-    __IGNORE_ENT_LABELs = {"CARDINAL", "MONEY", "WORK_OF_ART"}
-
     def __init__(self, *, cache_dir_path: Path):
         self.__logger = logging.getLogger(__name__)
+        self.__named_entity_recognizer = NamedEntityRecognizer()
         self.__word_net_annotator = WordNetAnnotator()
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
@@ -43,7 +42,6 @@ class TextEnricher:
                 continue
             yield model
 
-        ignored_ent_labels: Set[str] = set()
         ignored_word_net_synset_names: Set[str] = set()
 
         for work, text in text_works:
@@ -66,50 +64,32 @@ class TextEnricher:
                         ignored_word_net_synset_names.add(word_net_synset.name)
 
             # # Reference named entities
-            # ent_uris: Dict[str, Dict[str, URIRef]] = {}
-            # for ent in doc.ents:
-            #     if ent.label_ in self.__IGNORE_ENT_LABELs:
-            #         self.__logger.debug(
-            #             "%s: ignoring named entity label %s: %s",
-            #             work.uri,
-            #             ent.label_,
-            #             ent.text,
-            #         )
-            #         continue
+            yielded_named_entity_uris: Set[URIRef] = set()
+            for named_entity in self.__named_entity_recognizer.recognize(text):
+                if named_entity.uri in yielded_named_entity_uris:
+                    work_replacer.add_about(named_entity.uri)
+                    modified_work = True
+                    continue
 
-            #     ent_uri = ent_uris.get(ent.label_, {}).get(ent.text.lower())
-            #     if ent_uri is not None:
-            #         work_replacer.add_about(ent_uri)
-            #         modified_work = True
-            #         continue
+                if named_entity.type_ == NamedEntityType.LOCATION:
+                    model_builder = SchemaPlace.builder(uri=named_entity.uri)
+                    model_builder.set_name(named_entity.text)
+                    model = model_builder.build()
+                elif named_entity.type_ == NamedEntityType.ORGANIZATION:
+                    model = SchemaOrganization.builder(
+                        name=named_entity.text, uri=named_entity.uri
+                    ).build()
+                elif named_entity.type_ == NamedEntityType.PERSON:
+                    model = SchemaPerson.builder(
+                        name=named_entity.text, uri=named_entity.uri
+                    ).build()
+                else:
+                    continue
 
-            #     ent_uri = URIRef(f"urn:ner:{quote(ent.text.lower())}")
-            #     if ent.label_ == "GPE":
-            #         model_builder = SchemaPlace.builder(uri=ent_uri)
-            #         model_builder.set_name(ent.text)
-            #         model = model_builder.build()
-            #     elif ent.label_ == "ORG":
-            #         model = SchemaOrganization.builder(
-            #             name=ent.text, uri=ent_uri
-            #         ).build()
-            #     elif ent.label_ == "PERSON":
-            #         model = SchemaPerson.builder(name=ent.text, uri=ent_uri).build()
-            #     else:
-            #         if ent.label_ not in ignored_ent_labels:
-            #             self.__logger.info(
-            #                 "%s: unrecognized named entity label %s: %s",
-            #                 work.uri,
-            #                 ent.label_,
-            #                 ent.text,
-            #             )
-            #             ignored_ent_labels.add(ent.label_.lower())
-            #         continue
+                yield model
+                yielded_named_entity_uris.add(model.uri)
 
-            #     yield model
-
-            #     work_replacer.add_about(model.uri)
-            #     modified_work = True
-
-            #     ent_uris.setdefault(ent.label_, {})[ent.text.lower()] = ent_uri
+                work_replacer.add_about(model.uri)
+                modified_work = True
 
             yield work_replacer.build() if modified_work else work
