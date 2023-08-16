@@ -12,12 +12,10 @@ from paradicms_nlp.enrichers.text_enricher import TextEnricher
 
 def test_enrich(
     cache_dir_path: Path,
-    towndex_test_document_pdf_works: Tuple[SchemaCreativeWork, ...],
+    pdf_works: Tuple[SchemaCreativeWork, ...],
 ) -> None:
     pdf_works = tuple(
-        PdfEnricher(cache_dir_path=cache_dir_path / "pdfenricher")(
-            towndex_test_document_pdf_works
-        )
+        PdfEnricher(cache_dir_path=cache_dir_path / "pdfenricher")(pdf_works)
     )
 
     enriched_models = tuple(TextEnricher(cache_dir_path=cache_dir_path)(pdf_works))
