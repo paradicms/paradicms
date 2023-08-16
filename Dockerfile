@@ -2,6 +2,8 @@ FROM nikolaik/python-nodejs:python3.11-nodejs18
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
+RUN apt-get update && apt-get install -y libpoppler-cpp-dev
+
 COPY . /paradicms
 
 WORKDIR /paradicms
