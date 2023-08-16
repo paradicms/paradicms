@@ -1066,6 +1066,16 @@ docs = ["sphinx", "sphinx-argparse"]
 image = ["Pillow"]
 
 [[package]]
+name = "pdftotext"
+version = "2.2.2"
+description = "Simple PDF text extraction"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pdftotext-2.2.2.tar.gz", hash = "sha256:2a9aa89bc62022408781b39d188fabf5a3ad1103b6630f32c4e27e395f7966ee"},
+]
+
+[[package]]
 name = "pillow"
 version = "9.5.0"
 description = "Python Imaging Library (Fork)"
@@ -2078,4 +2088,4 @@ colorama = {version = ">=0.4.6", markers = "sys_platform == \"win32\" and python
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "b44feea74d6c460728698ac16910cf06c364dd06a1e64951ba5f536bdb4adb95"
+content-hash = "c6d32bb4531d93c85e88d564d1ab4b7d1baacad88ceb2520b8e2884edc76ccd5"

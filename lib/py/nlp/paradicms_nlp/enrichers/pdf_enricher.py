@@ -1,19 +1,16 @@
 import logging
 import re
-import unicodedata
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional
+from typing import Iterable, Optional
 
+import pdftotext
 from dateutil.tz import tzoffset, tzutc
 from paradicms_etl.model import Model
-from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.utils.file_cache import FileCache
-from pdfminer.high_level import extract_text
 from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfparser import PDFParser
-from rdflib import URIRef
 
 logging.getLogger("pdfminer.cmapdb").setLevel(logging.WARNING)
 logging.getLogger("pdfminer.encodingdb").setLevel(logging.WARNING)
@@ -83,11 +80,15 @@ class PdfEnricher:
     def __extract_text(
         self, pdf_file_path: Path, pdf_work_builder: SchemaCreativeWork.Builder
     ) -> None:
-        text = extract_text(pdf_file_path)
+        with open(pdf_file_path, "rb") as pdf_file:
+            pdf = pdftotext.PDF(pdf_file)  # type: ignore
+            text: str = "\n\n".join(pdf)  # type: ignore
+
         if not text:
             return None
 
-        normalized_text = unicodedata.normalize("NFC", text).replace("\u00A0", " ")
+        # normalized_text = unicodedata.normalize("NFC", text).replace("\u00A0", " ")
+        normalized_text = text.replace("\u000A0", " ").replace("\u000C", "\n")
         pdf_work_builder.set_text(normalized_text)
         return None
 
