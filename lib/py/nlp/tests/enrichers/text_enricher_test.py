@@ -20,7 +20,7 @@ def test_enrich(
         )
     )
 
-    enriched_models = tuple(TextEnricher()(pdf_works))
+    enriched_models = tuple(TextEnricher(cache_dir_path=cache_dir_path)(pdf_works))
     enriched_works = tuple(
         enriched_model
         for enriched_model in enriched_models

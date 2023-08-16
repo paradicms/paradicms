@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from typing import Dict, Iterable, List, Set, Tuple
 from urllib.parse import quote, unquote
 
@@ -8,6 +9,7 @@ from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.text import Text
 from rdflib import URIRef
 
@@ -15,7 +17,9 @@ __import__("spacy_wordnet.wordnet_annotator")
 
 
 class TextEnricher:
-    def __init__(self):
+    __IGNORE_ENT_LABELs = {"CARDINAL", "MONEY", "WORK_OF_ART"}
+
+    def __init__(self, *, cache_dir_path: Path):
         self.__logger = logging.getLogger(__name__)
         self.__nlp = spacy.load("en_core_web_md")
         self.__nlp.add_pipe("spacy_wordnet", after="tagger")
@@ -72,14 +76,27 @@ class TextEnricher:
             # Reference named entities
             ent_uris: Dict[str, Dict[str, URIRef]] = {}
             for ent in doc.ents:
+                if ent.label_ in self.__IGNORE_ENT_LABELs:
+                    self.__logger.debug(
+                        "%s: ignoring named entity label %s: %s",
+                        work.uri,
+                        ent.label_,
+                        ent.text,
+                    )
+                    continue
+
                 ent_uri = ent_uris.get(ent.label_, {}).get(ent.text.lower())
                 if ent_uri is not None:
                     work_replacer.add_about(ent_uri)
                     modified_work = True
                     continue
 
-                ent_uri = URIRef(f"urn:ner:{quote(ent.text)}")
-                if ent.label_ == "ORG":
+                ent_uri = URIRef(f"urn:ner:{quote(ent.text.lower())}")
+                if ent.label_ == "GPE":
+                    model_builder = SchemaPlace.builder(uri=ent_uri)
+                    model_builder.set_name(ent.text)
+                    model = model_builder.build()
+                elif ent.label_ == "ORG":
                     model = SchemaOrganization.builder(
                         name=ent.text, uri=ent_uri
                     ).build()
