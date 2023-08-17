@@ -6,7 +6,7 @@ authors = ["Minor Gordon <info@paradicms.org>"]
 license = "GPLv3"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.10,<3.11"
 ConfigArgParse = "^1.5.3"
 markdown-it-py = {extras = ["plugins"], version = "^2.0.1"}
 pathvalidate = "^2.5.0"
