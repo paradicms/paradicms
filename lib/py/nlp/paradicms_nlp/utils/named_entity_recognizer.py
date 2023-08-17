@@ -1,5 +1,5 @@
 import logging
-from typing import Iterable, Set
+from typing import Iterable, Optional, Set
 
 import spacy
 
@@ -10,9 +10,24 @@ from paradicms_nlp.models.named_entity_type import NamedEntityType
 class NamedEntityRecognizer:
     __IGNORE_ENT_LABELs = {"CARDINAL", "MONEY", "WORK_OF_ART"}
 
-    def __init__(self):
+    def __init__(self, llm_model: Optional[str] = None):
         self.__logger = logging.getLogger(__name__)
-        self.__nlp = spacy.load("en_core_web_md")
+        if llm_model is not None:
+            self.__nlp = spacy.blank("en")
+            self.__nlp.add_pipe(
+                "llm",
+                config={
+                    "task": {
+                        "@llm_tasks": "spacy.NER.v2",
+                        "labels": ["PERSON", "ORGANISATION", "LOCATION"],
+                    },
+                    "model": {
+                        "@llm_models": llm_model,
+                    },
+                },
+            )
+        else:
+            self.__nlp = spacy.load("en_core_web_md")
 
     def recognize(self, text: str) -> Iterable[NamedEntity]:
         ignored_ent_labels: Set[str] = set()
