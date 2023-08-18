@@ -12,7 +12,7 @@
         "type_": "LOCATION"
     },
     {
-        "text": "the City of Tulsa",
+        "text": "City of Tulsa",
         "type_": "LOCATION"
     },
     {
@@ -24,7 +24,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the City Council",
+        "text": "City Council",
         "type_": "ORGANIZATION"
     },
     {
@@ -32,7 +32,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Greater Tulsa Area Hispanic/Latinx Affairs Commission",
+        "text": "Greater Tulsa Area Hispanic/Latinx Affairs Commission",
         "type_": "ORGANIZATION"
     },
     {
@@ -44,7 +44,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Margaret C. Murphy Trust",
+        "text": "Margaret C. Murphy Trust",
         "type_": "ORGANIZATION"
     },
     {
@@ -52,11 +52,11 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Convention and Visitor Fund",
+        "text": "Convention and Visitor Fund",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Department of Justice",
+        "text": "Department of Justice",
         "type_": "ORGANIZATION"
     },
     {
@@ -65,10 +65,6 @@
     },
     {
         "text": "TPA",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "the Tulsa City Council",
         "type_": "ORGANIZATION"
     },
     {

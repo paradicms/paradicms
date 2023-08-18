@@ -2,12 +2,16 @@ import json
 import logging
 import re
 import unicodedata
+from copy import copy
 from hashlib import sha256
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
 
 import spacy
 import tiktoken
+from nltk import word_tokenize  # type: ignore
+from nltk.corpus import stopwords  # type: ignore
+from nltk.tokenize.treebank import TreebankWordDetokenizer  # type: ignore
 
 from paradicms_nlp.models.llm_metadata import LlmMetadata
 from paradicms_nlp.models.named_entity import NamedEntity
@@ -16,12 +20,14 @@ from paradicms_nlp.models.named_entity_type import NamedEntityType
 
 class NamedEntityRecognizer:
     __SPACY_MODEL_NAME = "en_core_web_trf"
+    __STOPWORDS: Set[str] = set(stopwords.words("english"))
     __WHITESPACE_RE = re.compile(r"\s+")
 
     def __init__(self, *, cache_dir_path: Path, llm: Optional[LlmMetadata] = None):
         self.__cache_dir_path = cache_dir_path / (
             llm.spacy_name if llm is not None else self.__SPACY_MODEL_NAME
         )
+        self.__detokenizer = TreebankWordDetokenizer()
         self.__llm = llm
         self.__logger = logging.getLogger(__name__)
         if llm is not None:
@@ -168,6 +174,22 @@ class NamedEntityRecognizer:
                 clean_ent_text = self.__WHITESPACE_RE.sub(" ", ent.text).strip()
                 clean_ent_text = unicodedata.normalize("NFC", clean_ent_text)
                 clean_ent_text = clean_ent_text.replace("\u2010", "-")
+                clean_ent_text_tokens: List[str] = word_tokenize(clean_ent_text)
+                clean_ent_text_tokens_without_stopwords: List[str] = copy(
+                    clean_ent_text_tokens
+                )
+                while (
+                    clean_ent_text_tokens_without_stopwords
+                    and clean_ent_text_tokens_without_stopwords[0].lower()
+                    in self.__STOPWORDS
+                ):
+                    clean_ent_text_tokens_without_stopwords.pop(0)
+                if clean_ent_text_tokens_without_stopwords and len(
+                    clean_ent_text_tokens_without_stopwords
+                ) < len(clean_ent_text_tokens):
+                    clean_ent_text = self.__detokenizer.detokenize(  # type: ignore
+                        clean_ent_text_tokens_without_stopwords
+                    )
 
                 named_entity_type = self.__ent_labels_to_types.get(ent.label_)
                 if named_entity_type is None:

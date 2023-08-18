@@ -16,7 +16,7 @@
         "type_": "LOCATION"
     },
     {
-        "text": "the City of Tulsa",
+        "text": "City of Tulsa",
         "type_": "LOCATION"
     },
     {
@@ -44,7 +44,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the City Council",
+        "text": "City Council",
         "type_": "ORGANIZATION"
     },
     {
@@ -52,11 +52,11 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Tulsa Metropolitan Area Planning Commission",
+        "text": "Tulsa Metropolitan Area Planning Commission",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Sinking Fund",
+        "text": "Sinking Fund",
         "type_": "ORGANIZATION"
     },
     {
@@ -80,7 +80,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Meals on Wheels Project",
+        "text": "Meals on Wheels Project",
         "type_": "ORGANIZATION"
     },
     {
@@ -88,7 +88,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Buena Vida Addition Project",
+        "text": "Buena Vida Addition Project",
         "type_": "ORGANIZATION"
     },
     {
@@ -100,7 +100,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Sales Tax Overview Committee",
+        "text": "Sales Tax Overview Committee",
         "type_": "ORGANIZATION"
     },
     {
@@ -108,7 +108,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Department of Justice",
+        "text": "Department of Justice",
         "type_": "ORGANIZATION"
     },
     {
@@ -124,11 +124,11 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Las Vegas Metropolitan Police Department Real-Time Crime Center",
+        "text": "Las Vegas Metropolitan Police Department Real-Time Crime Center",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Institute for Intergovernmental Research",
+        "text": "Institute for Intergovernmental Research",
         "type_": "ORGANIZATION"
     },
     {
@@ -140,11 +140,7 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "the Las Vegas Metropolitan Police Department",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "the Tulsa City Council",
+        "text": "Las Vegas Metropolitan Police Department",
         "type_": "ORGANIZATION"
     },
     {

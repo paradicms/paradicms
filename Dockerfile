@@ -17,7 +17,7 @@ RUN cd /paradicms/lib/py/etl && pip3 install . && \
     cd /paradicms/lib/py/ssg && pip3 install . &&
 
 # Download NLTK data
-RUN python -m nltk.downloader wordnet && python -m nltk.downloader omw
+RUN python -m nltk.downloader wordnet && python -m nltk.downloader omw && python -m nltk.downloader stopwords
 
 # Install Node.js packages
 RUN yarn install && yarn build-lib
