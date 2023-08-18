@@ -1,0 +1,34 @@
+[
+    {
+        "text": "Tulsa",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "OK",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "Oklahoma",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "DECTER WRIGHT",
+        "type_": "PERSON"
+    },
+    {
+        "text": "Lori Doring",
+        "type_": "PERSON"
+    },
+    {
+        "text": "Tulsa City Council",
+        "type_": "ORGANIZATION"
+    },
+    {
+        "text": "the Finance Department",
+        "type_": "ORGANIZATION"
+    },
+    {
+        "text": "City of Tulsa Department",
+        "type_": "ORGANIZATION"
+    }
+]

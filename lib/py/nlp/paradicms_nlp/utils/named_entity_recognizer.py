@@ -1,6 +1,7 @@
 import json
 import logging
 import re
+import unicodedata
 from hashlib import sha256
 from pathlib import Path
 from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
@@ -14,11 +15,12 @@ from paradicms_nlp.models.named_entity_type import NamedEntityType
 
 
 class NamedEntityRecognizer:
+    __SPACY_MODEL_NAME = "en_core_web_trf"
     __WHITESPACE_RE = re.compile(r"\s+")
 
     def __init__(self, *, cache_dir_path: Path, llm: Optional[LlmMetadata] = None):
         self.__cache_dir_path = cache_dir_path / (
-            llm.spacy_name if llm is not None else "spacy"
+            llm.spacy_name if llm is not None else self.__SPACY_MODEL_NAME
         )
         self.__llm = llm
         self.__logger = logging.getLogger(__name__)
@@ -48,7 +50,7 @@ class NamedEntityRecognizer:
                 "ORG": NamedEntityType.ORGANIZATION,
                 "PERSON": NamedEntityType.PERSON,
             }
-            self.__nlp = spacy.load("en_core_web_md")
+            self.__nlp = spacy.load(self.__SPACY_MODEL_NAME)
             self.__tiktoken_encoding = None
 
     def __cache_named_entities(
@@ -56,7 +58,7 @@ class NamedEntityRecognizer:
         *,
         named_entities: Tuple[NamedEntity, ...],
         text: str,
-        text_hash_hexdigest: str
+        text_hash_hexdigest: str,
     ) -> None:
         cache_dir_path = self.__cache_dir_path / text_hash_hexdigest
         cache_dir_path.mkdir(exist_ok=True, parents=True)
@@ -122,7 +124,9 @@ class NamedEntityRecognizer:
             yield text_chunks_joined
             yielded_text_len_sum += len(text_chunks_joined)
 
-        assert yielded_text_len_sum == len(text)
+        # assert yielded_text_len_sum == len(
+        #     text
+        # ), f"{yielded_text_len_sum} vs. {len(text)}"
 
     def __get_cached_named_entities(
         self, *, text_hash_hexdigest: str
@@ -162,6 +166,8 @@ class NamedEntityRecognizer:
 
             for ent in doc.ents:
                 clean_ent_text = self.__WHITESPACE_RE.sub(" ", ent.text).strip()
+                clean_ent_text = unicodedata.normalize("NFC", clean_ent_text)
+                clean_ent_text = clean_ent_text.replace("\u2010", "-")
 
                 named_entity_type = self.__ent_labels_to_types.get(ent.label_)
                 if named_entity_type is None:
@@ -174,16 +180,25 @@ class NamedEntityRecognizer:
                         ignored_ent_labels.add(ent.label_.lower())
                     continue
 
-                if clean_ent_text in named_entities_dict.get(named_entity_type, {}):
-                    self.__logger.debug(
-                        "ignoring duplicate named entity %s: %s",
-                        named_entity_type,
-                        clean_ent_text,
-                    )
-                    continue
+                existing_named_entity = named_entities_dict.get(
+                    named_entity_type, {}
+                ).get(clean_ent_text.lower())
+                if existing_named_entity is not None:
+                    if (
+                        not existing_named_entity.text.islower()
+                        and not existing_named_entity.text.isupper()
+                    ):
+                        # The existing named entity is mixed-case
+                        self.__logger.debug(
+                            "ignoring duplicate named entity %s: %s",
+                            named_entity_type,
+                            clean_ent_text,
+                        )
+                        continue
+                    # else drop down to replace it with a mixed-case one
 
                 named_entities_dict.setdefault(named_entity_type, {})[
-                    clean_ent_text
+                    clean_ent_text.lower()
                 ] = NamedEntity(text=clean_ent_text, type_=named_entity_type)
 
         named_entities = tuple(

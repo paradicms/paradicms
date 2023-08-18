@@ -1,78 +1,70 @@
 [
     {
-        "text": "TULSA CITY COUNCIL",
+        "text": "Tulsa",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "OK",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "Oklahoma",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "the City of Tulsa",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "Tulsa City Council",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "City Charter",
+        "text": "OKLAHOMA RELAY",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Tulsa Performing Arts Center Trust",
+        "text": "the City Council",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "HUD Community Development Committee",
+        "text": "Council",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Board of Appeals",
+        "text": "the Tulsa Performing Arts Center Trust",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "MAYOR",
+        "text": "the Tulsa City-County Board of Health",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "City of Tulsa",
+        "text": "the HUD Community Development Committee",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Daris Contractors",
+        "text": "the Board of Appeals",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "LLC",
+        "text": "Daris Contractors, LLC",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "COVID Pandemic",
+        "text": "Tulsa Bike Share, Inc.",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Inc.",
+        "text": "the Tupelo Creek Drainage Project",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Tupelo Creek Drainage Project",
+        "text": "O'Reilly Automotive Stores, Inc.",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Sweetheart Run",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "Chris Brown Duathlon",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "General Fund",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "Auditor and Council",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "Park Addition to Red Fork",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "Riverview Park Addition",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "PatriotFest and Car Show Celebration",
+        "text": "Wallace Engineering",
         "type_": "ORGANIZATION"
     },
     {
@@ -80,20 +72,8 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "175 E. 2nd St.",
-        "type_": "LOCATION"
-    },
-    {
-        "text": "175 East Second Street",
-        "type_": "LOCATION"
-    },
-    {
-        "text": "Fourth Floor",
-        "type_": "LOCATION"
-    },
-    {
-        "text": "Oklahoma",
-        "type_": "LOCATION"
+        "text": "AERO bus",
+        "type_": "ORGANIZATION"
     },
     {
         "text": "Lori Doring",
@@ -104,7 +84,15 @@
         "type_": "PERSON"
     },
     {
+        "text": "Wendy Drummond",
+        "type_": "PERSON"
+    },
+    {
         "text": "Mousumi Som",
+        "type_": "PERSON"
+    },
+    {
+        "text": "Heath Evans",
         "type_": "PERSON"
     },
     {

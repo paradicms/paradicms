@@ -1,6 +1,38 @@
 [
     {
-        "text": "TULSA CITY COUNCIL",
+        "text": "Tulsa",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "OK",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "Oklahoma",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "the City of Tulsa",
+        "type_": "LOCATION"
+    },
+    {
+        "text": "Tulsa City Council",
+        "type_": "ORGANIZATION"
+    },
+    {
+        "text": "OKLAHOMA RELAY",
+        "type_": "ORGANIZATION"
+    },
+    {
+        "text": "the City Council",
+        "type_": "ORGANIZATION"
+    },
+    {
+        "text": "Council",
+        "type_": "ORGANIZATION"
+    },
+    {
+        "text": "the Greater Tulsa Area Hispanic/Latinx Affairs Commission",
         "type_": "ORGANIZATION"
     },
     {
@@ -8,23 +40,11 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Walnut Creek Associates",
+        "text": "Walnut Creek Associates, LLC",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "LLC",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "Project Kum and Go 2361",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "Dani Fields",
-        "type_": "ORGANIZATION"
-    },
-    {
-        "text": "Margaret C. Murphy Trust",
+        "text": "the Margaret C. Murphy Trust",
         "type_": "ORGANIZATION"
     },
     {
@@ -32,32 +52,28 @@
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Tulsa Stadium Improvement District Fund",
+        "text": "the Convention and Visitor Fund",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Convention and Visitor Fund",
+        "text": "the Department of Justice",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Department of Justice",
+        "text": "Tulsa Parking Authority",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Sexual Assault Kit Initiative SubFund",
+        "text": "TPA",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "Tulsa Parking Authority (TPA)",
+        "text": "the Tulsa City Council",
         "type_": "ORGANIZATION"
     },
     {
-        "text": "McMichael Acres Resubdivision",
+        "text": "Tanner Consulting",
         "type_": "ORGANIZATION"
-    },
-    {
-        "text": "OK",
-        "type_": "LOCATION"
     },
     {
         "text": "Lori Doring",
@@ -81,6 +97,10 @@
     },
     {
         "text": "Vanessa Portillo",
+        "type_": "PERSON"
+    },
+    {
+        "text": "Dani Fields",
         "type_": "PERSON"
     },
     {
