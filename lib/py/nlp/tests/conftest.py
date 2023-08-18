@@ -24,9 +24,12 @@ def data_dir_path() -> Path:
 def pdf_file_paths(data_dir_path: Path) -> Tuple[Path, ...]:
     pdf_test_data_dir_path = data_dir_path / "test" / "pdf"
     return tuple(
-        pdf_test_data_dir_path / file_name
-        for file_name in os.listdir(pdf_test_data_dir_path)
-        if file_name.startswith("towndex-test-document-") and file_name.endswith(".pdf")
+        sorted(
+            pdf_test_data_dir_path / file_name
+            for file_name in os.listdir(pdf_test_data_dir_path)
+            if file_name.startswith("towndex-test-document-")
+            and file_name.endswith(".pdf")
+        )
     )
 
 
