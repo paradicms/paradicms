@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - ".github/workflows/lib-py-nlp.yml"
+      - "lib/py/etl/**"
       - "lib/py/nlp/**"
   workflow_dispatch:
 jobs:
@@ -22,14 +23,14 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v3
         with:
-          path: lib/py/etl/.venv
+          path: lib/py/nlp/.venv
           key: venv-v2-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/nlp/poetry.lock') }}-v2
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: lib/py/etl/script/bootstrap
-      - run: lib/py/etl/script/cibuild
+        run: lib/py/nlp/script/bootstrap
+      - run: lib/py/nlp/script/cibuild
       - name: Publish unit test results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: lib/py/etl/test-results/*.xml
+          files: lib/py/nlp/test-results/*.xml
