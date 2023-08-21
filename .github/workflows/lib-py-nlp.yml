@@ -1,4 +1,4 @@
-name: Build and test ETL
+name: Build and test NLP
 on:
   push:
     paths:
@@ -19,6 +19,8 @@ jobs:
         uses: snok/install-poetry@v1
         with:
           virtualenvs-in-project: true
+      - name: Install libpoppler
+        run: sudo apt-get install -y libpoppler-cpp-dev
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
