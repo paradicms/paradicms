@@ -11,7 +11,6 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.text import Text
 from rdflib import URIRef
 
-from paradicms_nlp.models.named_entity import NamedEntity
 from paradicms_nlp.models.named_entity_type import NamedEntityType
 from paradicms_nlp.models.word_net_synset import WordNetSynset
 from paradicms_nlp.utils.named_entity_recognizer import NamedEntityRecognizer
