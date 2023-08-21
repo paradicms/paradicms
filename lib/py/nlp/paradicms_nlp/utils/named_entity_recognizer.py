@@ -28,7 +28,7 @@ class NamedEntityRecognizer:
         self.__llm = llm
         self.__logger = logging.getLogger(__name__)
         if llm is not None:
-            self.__cache_dir_path = cache_dir_path / llm.spacy_name
+            self.__cache_dir_path: Optional[Path] = cache_dir_path / llm.spacy_name
             self.__ent_labels_to_types = {
                 str(named_entity_type): named_entity_type
                 for named_entity_type in NamedEntityType
@@ -48,7 +48,9 @@ class NamedEntityRecognizer:
                     },
                 },
             )
-            self.__tiktoken_encoding = tiktoken.encoding_for_model(llm.tiktoken_name)
+            self.__tiktoken_encoding: Optional[
+                tiktoken.Encoding
+            ] = tiktoken.encoding_for_model(llm.tiktoken_name)
         else:
             self.__cache_dir_path = None
             self.__ent_labels_to_types = {
