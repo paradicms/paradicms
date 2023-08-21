@@ -21,7 +21,9 @@ from paradicms_nlp.utils.word_net_annotator import WordNetAnnotator
 class TextEnricher:
     def __init__(self, *, cache_dir_path: Path):
         self.__logger = logging.getLogger(__name__)
-        self.__named_entity_recognizer = NamedEntityRecognizer()
+        self.__named_entity_recognizer = NamedEntityRecognizer(
+            cache_dir_path=cache_dir_path / "ner"
+        )
         self.__word_net_annotator = WordNetAnnotator()
 
     def __call__(self, models: Iterable[Model]) -> Iterable[Model]:
