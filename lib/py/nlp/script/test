@@ -6,7 +6,6 @@ cd "$(dirname "$0")/.."
 
 poetry run black --check paradicms_nlp
 poetry run flake8 paradicms_nlp
-export PYTHONPATH=$PWD
 poetry run mypy paradicms_nlp
 
 mkdir -p test-results

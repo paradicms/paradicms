@@ -15,6 +15,7 @@ out/
 **/public/data.trig
 **/public/img/archive/
 *.pyc
+__pycache__/
 .pytest_cache/
 _site/
 __snapshots__/
