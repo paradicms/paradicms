@@ -17,6 +17,7 @@ out/
 *.pyc
 __pycache__/
 .pytest_cache/
+.ruff_cache/
 _site/
 __snapshots__/
 yarn-error.log

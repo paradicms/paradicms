@@ -27,6 +27,42 @@ paradicms-etl = { path = "../etl", develop = true }
 paradicms-ssg = { path = "../ssg", develop = true }
 pytest = "^7.0.1"
 
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.285"
+
+[tool.mypy]
+python_version = "3.10"
+warn_unused_configs = true
+
+[tool.ruff]
+ignore = [
+    "ANN101", # missing-type-self
+    "ANN102", # missing-type-cls,
+    "ANN204", # Missing return type annotation for __init__
+    "COM812", # Trailing comma missing
+    "D",      # Missing docstrings
+    "E501",   # Line too long
+    "EM102",  # Exception must not use an f-string literal
+    "ERA001", # Commented-out code
+    "FA",     # Missing from __future__ import annotations
+    "I001",   # Import block is un-sorted or un-formatted
+    "ICN001", # Pandas should be imported as pd
+    "N815",   # Mixed-case variables
+    "TRY003", # Avoid specifying long messages outside the exception class
+]
+select = ["ALL"]
+src = ["paradicms_etl"]
+target-version = "py310"
+
+[tool.ruff.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.isort]
+known-first-party = ["target_rdf"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.8"]
 build-backend = "poetry.core.masonry.api"
