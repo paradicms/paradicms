@@ -4,13 +4,14 @@ import spacy
 
 from paradicms_nlp.models.word_net_annotation import WordNetAnnotation
 from paradicms_nlp.models.word_net_synset import WordNetSynset
+from paradicms_nlp.utils.spacy_model_name import SPACY_MODEL_NAME
 
 __import__("spacy_wordnet.wordnet_annotator")
 
 
 class WordNetAnnotator:
     def __init__(self):
-        self.__nlp = spacy.load("en_core_web_md")
+        self.__nlp = spacy.load(SPACY_MODEL_NAME)
         self.__nlp.add_pipe("spacy_wordnet", after="tagger")
 
     def annotate(self, text: str) -> Iterable[WordNetAnnotation]:

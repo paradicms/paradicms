@@ -5,7 +5,7 @@ import unicodedata
 from copy import copy
 from hashlib import sha256
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Sequence, Set, Tuple
+from typing import Dict, FrozenSet, Iterable, List, Optional, Sequence, Set, Tuple
 
 import spacy
 import tiktoken
@@ -16,10 +16,10 @@ from nltk.tokenize.treebank import TreebankWordDetokenizer  # type: ignore
 from paradicms_nlp.models.llm_metadata import LlmMetadata
 from paradicms_nlp.models.named_entity import NamedEntity
 from paradicms_nlp.models.named_entity_type import NamedEntityType
+from paradicms_nlp.utils.spacy_model_name import SPACY_MODEL_NAME
 
 
 class NamedEntityRecognizer:
-    __SPACY_MODEL_NAME = "en_core_web_trf"
     __STOPWORDS: Set[str] = set(stopwords.words("english"))
     __WHITESPACE_RE = re.compile(r"\s+")
 
@@ -33,6 +33,7 @@ class NamedEntityRecognizer:
                 str(named_entity_type): named_entity_type
                 for named_entity_type in NamedEntityType
             }
+            self.__ignore_ent_labels: FrozenSet[str] = frozenset()
             self.__nlp = spacy.blank("en")
             self.__nlp.add_pipe(
                 "llm",
@@ -51,12 +52,27 @@ class NamedEntityRecognizer:
         else:
             self.__cache_dir_path = None
             self.__ent_labels_to_types = {
+                "FAC": NamedEntityType.LOCATION,
                 "GPE": NamedEntityType.LOCATION,
+                "LOC": NamedEntityType.LOCATION,
                 "ORG": NamedEntityType.ORGANIZATION,
                 "PERSON": NamedEntityType.PERSON,
             }
-            self.__nlp = spacy.load(self.__SPACY_MODEL_NAME)
+            self.__ignore_ent_labels = frozenset(
+                (
+                    "CARDINAL",
+                    "DATE",
+                    "LAW",
+                    "MONEY",
+                    "ORDINAL",
+                    "PERCENT",
+                    "QUANTITY",
+                    "TIME",
+                )
+            )
+            self.__nlp = spacy.load(SPACY_MODEL_NAME)
             self.__tiktoken_encoding = None
+        self.__unrecognized_ent_labels: Set[str] = set()
 
     def __cache_named_entities(
         self,
@@ -169,7 +185,6 @@ class NamedEntityRecognizer:
             )
             return named_entities
 
-        ignored_ent_labels: Set[str] = set()
         named_entities_dict: Dict[NamedEntityType, Dict[str, NamedEntity]] = {}
 
         for text_chunk in self.__chunk_text(text):
@@ -198,13 +213,16 @@ class NamedEntityRecognizer:
 
                 named_entity_type = self.__ent_labels_to_types.get(ent.label_)
                 if named_entity_type is None:
-                    if ent.label_ not in ignored_ent_labels:
+                    if (
+                        ent.label_ not in self.__ignore_ent_labels
+                        and ent.label_ not in self.__unrecognized_ent_labels
+                    ):
                         self.__logger.info(
                             "unrecognized named entity label %s: %s",
                             ent.label_,
                             clean_ent_text,
                         )
-                        ignored_ent_labels.add(ent.label_.lower())
+                        self.__unrecognized_ent_labels.add(ent.label_.lower())
                     continue
 
                 existing_named_entity = named_entities_dict.get(

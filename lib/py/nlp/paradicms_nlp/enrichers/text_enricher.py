@@ -21,6 +21,7 @@ from paradicms_nlp.utils.word_net_annotator import WordNetAnnotator
 class TextEnricher:
     def __init__(self, *, cache_dir_path: Path):
         self.__logger = logging.getLogger(__name__)
+        self.__unrecognized_word_net_synset_names: Set[str] = set()
         self.__named_entity_recognizer = NamedEntityRecognizer(
             cache_dir_path=cache_dir_path / "ner"
         )
@@ -44,8 +45,6 @@ class TextEnricher:
                 continue
             yield model
 
-        ignored_word_net_synset_names: Set[str] = set()
-
         for work, text in text_works:
             work_replacer = work.replacer()
             modified_work = False
@@ -56,14 +55,19 @@ class TextEnricher:
                     if word_net_synset.uri in word_net_concept_uris:
                         work_replacer.add_about(word_net_synset.uri)
                         modified_work = True
-                    elif word_net_synset.name not in ignored_word_net_synset_names:
-                        self.__logger.info(
+                    elif (
+                        word_net_synset.name
+                        not in self.__unrecognized_word_net_synset_names
+                    ):
+                        self.__logger.debug(
                             "%s: no concept for %s synset %s",
                             work.uri,
                             word_net_annotation.text,
                             word_net_synset.name,
                         )
-                        ignored_word_net_synset_names.add(word_net_synset.name)
+                        self.__unrecognized_word_net_synset_names.add(
+                            word_net_synset.name
+                        )
 
             # # Reference named entities
             yielded_named_entity_uris: Set[URIRef] = set()
