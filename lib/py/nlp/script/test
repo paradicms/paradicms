@@ -8,5 +8,6 @@ poetry run black --check paradicms_nlp
 poetry run flake8 paradicms_nlp
 poetry run mypy paradicms_nlp
 
+export PYTHONPATH=$PWD
 mkdir -p test-results
 poetry run pytest --junitxml=test-results/junit.xml
