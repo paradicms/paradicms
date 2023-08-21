@@ -24,13 +24,11 @@ class NamedEntityRecognizer:
     __WHITESPACE_RE = re.compile(r"\s+")
 
     def __init__(self, *, cache_dir_path: Path, llm: Optional[LlmMetadata] = None):
-        self.__cache_dir_path = cache_dir_path / (
-            llm.spacy_name if llm is not None else self.__SPACY_MODEL_NAME
-        )
         self.__detokenizer = TreebankWordDetokenizer()
         self.__llm = llm
         self.__logger = logging.getLogger(__name__)
         if llm is not None:
+            self.__cache_dir_path = cache_dir_path / llm.spacy_name
             self.__ent_labels_to_types = {
                 str(named_entity_type): named_entity_type
                 for named_entity_type in NamedEntityType
@@ -51,6 +49,7 @@ class NamedEntityRecognizer:
             )
             self.__tiktoken_encoding = tiktoken.encoding_for_model(llm.tiktoken_name)
         else:
+            self.__cache_dir_path = None
             self.__ent_labels_to_types = {
                 "GPE": NamedEntityType.LOCATION,
                 "ORG": NamedEntityType.ORGANIZATION,
@@ -66,6 +65,9 @@ class NamedEntityRecognizer:
         text: str,
         text_hash_hexdigest: str,
     ) -> None:
+        if self.__cache_dir_path is None:
+            return
+
         cache_dir_path = self.__cache_dir_path / text_hash_hexdigest
         cache_dir_path.mkdir(exist_ok=True, parents=True)
 
@@ -137,6 +139,9 @@ class NamedEntityRecognizer:
     def __get_cached_named_entities(
         self, *, text_hash_hexdigest: str
     ) -> Optional[Tuple[NamedEntity, ...]]:
+        if self.__cache_dir_path is None:
+            return None
+
         cache_dir_path = self.__cache_dir_path / text_hash_hexdigest
         if not cache_dir_path.is_dir():
             self.__logger.debug(
