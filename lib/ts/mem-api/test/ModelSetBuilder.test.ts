@@ -1,35 +1,14 @@
+import {ModelSet} from "@paradicms/models";
 import {getRdfInstanceQuads} from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
 import {cc, dcmitype, dcterms, foaf, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {Model, ModelSet, ThumbnailSelector} from "@paradicms/models";
-import {testModelSet} from "../../models/test/testModelSet";
 import {describe} from "mocha";
-import {requireNonNull} from "@paradicms/utilities";
-import {ImageJoinSelector} from "@paradicms/api";
+import {testModelSet} from "../../models/test/testModelSet";
 import {ModelSetBuilder} from "../src/ModelSetBuilder";
-
-const THUMBNAIL_SELECTOR: ImageJoinSelector & ThumbnailSelector = {
-  licenses: true,
-  rightsStatements: true,
-  targetDimensions: {height: 200, width: 200},
-};
-
-const expectModelsDeepEq = <ModelT extends Model>(
-  leftModels: readonly ModelT[],
-  rightModels: readonly ModelT[]
-) =>
-  expect(
-    leftModels
-      .map(model => model.key)
-      .concat()
-      .sort()
-  ).to.deep.eq(
-    rightModels
-      .map(model => model.key)
-      .concat()
-      .sort()
-  );
+import {expectModelsDeepEq} from "./expectModelsDeepEq";
+import {testThumbnailSelector} from "./testThumbnailSelector";
 
 const modelSetAgentIris = (modelSet: ModelSet): readonly string[] =>
   modelSetModelIris(foaf.Agent, modelSet)
@@ -96,7 +75,7 @@ describe("ModelSetBuilder", () => {
     const namedAgents = agents.filter(agent => agent.iris.length > 0);
     expect(namedAgents.length).to.be.lte(agents.length);
     for (const agent of agents) {
-      sut.addAgent(agent, {thumbnail: THUMBNAIL_SELECTOR});
+      sut.addAgent(agent, {thumbnail: testThumbnailSelector});
     }
     const agentsModelSet = sut.build();
     expect(modelSetAgentIris(agentsModelSet)).to.have.length(2);
@@ -110,12 +89,13 @@ describe("ModelSetBuilder", () => {
   });
 
   it("should get a property group subset (worksheet feature set edit)", () => {
+    expect(completeModelSet.propertyGroups).not.to.be.empty;
     const propertyGroup = completeModelSet.propertyGroups[0];
     expect(propertyGroup.properties).to.not.be.empty;
     const propertyGroupModelSet = sut
       .addPropertyGroup(propertyGroup, {
         properties: {
-          thumbnail: THUMBNAIL_SELECTOR,
+          thumbnail: testThumbnailSelector,
         },
       })
       .build();
@@ -131,7 +111,7 @@ describe("ModelSetBuilder", () => {
     const propertyGroups = completeModelSet.propertyGroups;
     expect(propertyGroups).to.not.be.empty;
     for (const propertyGroup of propertyGroups) {
-      sut.addPropertyGroup(propertyGroup, {thumbnail: THUMBNAIL_SELECTOR});
+      sut.addPropertyGroup(propertyGroup, {thumbnail: testThumbnailSelector});
     }
     const propertyGroupsModelSet = sut.build();
     expectModelsDeepEq(propertyGroups, propertyGroupsModelSet.propertyGroups);
@@ -174,7 +154,7 @@ describe("ModelSetBuilder", () => {
       const propertyModelSet = sut
         .addProperty(property, {
           rangeValues: {
-            thumbnail: THUMBNAIL_SELECTOR,
+            thumbnail: testThumbnailSelector,
           },
         })
         .build();
@@ -193,7 +173,7 @@ describe("ModelSetBuilder", () => {
         ),
         {
           agents: {
-            thumbnail: THUMBNAIL_SELECTOR,
+            thumbnail: testThumbnailSelector,
           },
           description: {
             agents: true,
@@ -293,7 +273,7 @@ describe("ModelSetBuilder", () => {
 
     const workEventsModelSet = sut
       .addWork(work, {
-        events: {agents: {}, location: true, thumbnail: THUMBNAIL_SELECTOR},
+        events: {agents: {}, location: true, thumbnail: testThumbnailSelector},
       })
       .build();
     expectModelsDeepEq(workEventsModelSet.works, [work]);
@@ -319,7 +299,7 @@ describe("ModelSetBuilder", () => {
     for (const event of completeModelSet.events) {
       sut.addEvent(event, {
         agents: {},
-        thumbnail: THUMBNAIL_SELECTOR,
+        thumbnail: testThumbnailSelector,
       });
     }
     const eventsModelSet = sut.build();
