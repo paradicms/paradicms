@@ -1,7 +1,7 @@
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Dict, Iterable, List, Optional, Tuple, Union
 from urllib.parse import quote
 
 from rdflib import DCTERMS, SDO, Literal, URIRef
@@ -189,12 +189,12 @@ class SyntheticDataPipeline(Pipeline):
                 yield model
                 if isinstance(model, Concept):
                     concept = model
-                    concept_str = concept.value.toPython()
+                    concept_str = concept.value.toPython()  # type: ignore
                     assert isinstance(concept_str, str), concept_str
                     assert concept_str not in concepts_by_value
                     concepts_by_value[concept_str] = concept
 
-            agents_list: List[Agent] = []
+            agents_list: list[Agent] = []
             for model in self.__generate_agents():
                 yield model
                 if isinstance(model, Agent):
@@ -603,13 +603,15 @@ class SyntheticDataPipeline(Pipeline):
 
             # Faceted literal properties, which are the same across works
             for property_ in properties:
-                if not property_.values:
+                if not property_.values:  # noqa: PD011
                     continue
                 for i in range(2):
                     work_builder.add(
                         property_.uri,
                         concepts_by_value[
-                            property_.values[(work_i + i) % len(property_.values)]
+                            property_.values[  # noqa: PD011
+                                (work_i + i) % len(property_.values)
+                            ]
                         ].uri,
                     )
 
@@ -741,5 +743,7 @@ class SyntheticDataPipeline(Pipeline):
         )
 
 
+if __name__ == "__main__":
+    SyntheticDataPipeline.main()
 if __name__ == "__main__":
     SyntheticDataPipeline.main()

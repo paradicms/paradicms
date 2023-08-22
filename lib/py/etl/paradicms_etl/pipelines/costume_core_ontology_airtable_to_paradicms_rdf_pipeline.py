@@ -18,8 +18,8 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
         self,
         *,
         airtable_access_token: str,
-        cache_dir_path: Optional[Path] = None,
-        paradicms_rdf_file_path: Optional[Path] = None,
+        cache_dir_path: Path | None = None,
+        paradicms_rdf_file_path: Path | None = None,
     ):
         if paradicms_rdf_file_path is None:
             paradicms_rdf_file_path = (
@@ -41,11 +41,9 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
                     for model in models
                     if not isinstance(
                         model,
-                        (
-                            CostumeCoreOntology,
-                            CostumeCoreOntology.Predicate,
-                            CostumeCoreOntology.Term,
-                        ),
+                        CostumeCoreOntology
+                        | CostumeCoreOntology.Predicate
+                        | CostumeCoreOntology.Term,
                     )
                 ),
                 **kwds,
@@ -53,7 +51,7 @@ class CostumeCoreOntologyAirtableToParadicmsRdfPipeline(
         )
 
     @classmethod
-    def add_arguments(cls, arg_parser: ArgParser):
+    def add_arguments(cls, arg_parser: ArgParser) -> None:
         Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--airtable-access-token", required=True)
         arg_parser.add_argument("--cache-dir-path", type=Path)

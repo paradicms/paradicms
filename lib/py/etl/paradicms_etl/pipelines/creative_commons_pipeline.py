@@ -1,8 +1,9 @@
 import logging
+from collections.abc import Iterable
 from io import BytesIO
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Dict, Iterable
+from typing import Dict
 from zipfile import ZipFile
 
 from rdflib import Graph, Literal, Namespace
@@ -31,7 +32,7 @@ class CreativeCommonsPipeline(Pipeline):
         self.__logger = logging.getLogger(__name__)
 
     @staticmethod
-    def __extract(*, force: bool, **kwds):
+    def __extract(*, force: bool, **kwds):  # noqa: ANN003
         with TemporaryDirectory() as temp_dir:
             zip_file_path = download_file(
                 force=force,
