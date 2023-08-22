@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional
 
 from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
