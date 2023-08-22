@@ -3,7 +3,6 @@ from typing import Optional, Union
 from rdflib import SDO, Graph, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
