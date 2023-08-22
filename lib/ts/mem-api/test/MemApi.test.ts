@@ -1,28 +1,23 @@
 import {
+  GetModelsResult,
+  StringPropertyValueFacet,
+  StringPropertyValueFilter,
+} from "@paradicms/api";
+import {
   ModelSetFactory,
-  ThumbnailSelector,
   WorkAgent,
   WorkEventUnion,
   WorkLocation,
 } from "@paradicms/models";
-import {
-  GetModelsResult,
-  ImageJoinSelector,
-  StringPropertyValueFacet,
-  StringPropertyValueFilter,
-} from "@paradicms/api";
 import {syntheticData} from "@paradicms/test";
+import {requireDefined, requireNonNull} from "@paradicms/utilities";
 import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
-import {MemApi} from "../src/MemApi";
-import {requireDefined, requireNonNull} from "@paradicms/utilities";
 import {describe} from "mocha";
-
-const THUMBNAIL_SELECTOR: ImageJoinSelector & ThumbnailSelector = {
-  licenses: true,
-  rightsStatements: true,
-  targetDimensions: {height: 200, width: 200},
-};
+import {MemApi} from "../src/MemApi";
+import {expectModelKeysDeepEq} from "./expectModelKeysDeepEq";
+import {expectModelsDeepEq} from "./expectModelsDeepEq";
+import {testThumbnailSelector} from "./testThumbnailSelector";
 
 describe("MemApi", () => {
   const modelSet = ModelSetFactory.fromDataset(syntheticData);
@@ -36,9 +31,7 @@ describe("MemApi", () => {
       totalModelsCount: actualTotalCollectionsCount,
     } = await sut.getCollections();
     expect(actualTotalCollectionsCount).to.eq(modelSet.collections.length);
-    expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
-      actualModelSet.collections.map(collection => collection.key)
-    );
+    expectModelsDeepEq(modelSet.collections, actualModelSet.collections);
   });
 
   it("getCollections returns the first collection with works (exhibitions)", async () => {
@@ -56,16 +49,15 @@ describe("MemApi", () => {
       },
     });
     expect(actualTotalCollectionsCount).to.eq(modelSet.collections.length);
-    expect(modelSet.collections.map(collection => collection.key)).to.deep.eq(
-      actualModelSet.collections.map(collection => collection.key)
-    );
+    expectModelsDeepEq(modelSet.collections, actualModelSet.collections);
   });
 
   it("getEventKeys returns a all event keys (timeline event pages)", async () => {
     expect(modelSet.events).not.to.be.empty;
     const actualResult = await sut.getEventKeys();
     expect(actualResult.totalModelsCount).to.be.eq(modelSet.events.length);
-    expect(actualResult.modelKeys).to.deep.eq(
+    expectModelKeysDeepEq(
+      actualResult.modelKeys,
       modelSet.events.map(event => event.key)
     );
   });
@@ -85,9 +77,7 @@ describe("MemApi", () => {
       },
     });
     expect(actualTotalEventsCount).to.eq(modelSet.events.length);
-    expect(modelSet.events.map(event => event.key)).to.deep.eq(
-      actualModelSet.events.map(event => event.key)
-    );
+    expectModelsDeepEq(modelSet.events, actualModelSet.events);
   });
 
   it("getEvents returns a single event by its key (timeline event page)", async () => {
@@ -118,7 +108,8 @@ describe("MemApi", () => {
     expect(actualTotalPropertyGroupsCount).to.eq(
       modelSet.propertyGroups.length
     );
-    expect(actualPropertyGroupKeys).to.deep.eq(
+    expectModelKeysDeepEq(
+      actualPropertyGroupKeys,
       modelSet.propertyGroups.map(propertyGroup => propertyGroup.key)
     );
   });
@@ -131,14 +122,7 @@ describe("MemApi", () => {
     expect(actualTotalPropertyGroupsCount).to.eq(
       modelSet.propertyGroups.length
     );
-    expect(actualModelSet.propertyGroups).to.have.length(
-      modelSet.propertyGroups.length
-    );
-    expect(
-      actualModelSet.propertyGroups.map(propertyGroup => propertyGroup.key)
-    ).to.deep.eq(
-      modelSet.propertyGroups.map(propertyGroup => propertyGroup.key)
-    );
+    expectModelsDeepEq(actualModelSet.propertyGroups, modelSet.propertyGroups);
   });
 
   it("getProperties returns all properties (work search index)", async () => {
@@ -147,12 +131,7 @@ describe("MemApi", () => {
       totalModelsCount: actualTotalPropertiesCount,
     } = await sut.getProperties();
     expect(actualTotalPropertiesCount).to.eq(modelSet.properties.length);
-    expect(actualModelSet.properties).to.have.length(
-      modelSet.properties.length
-    );
-    expect(
-      actualModelSet.properties.map(propertyGroup => propertyGroup.key)
-    ).to.deep.eq(modelSet.properties.map(propertyGroup => propertyGroup.key));
+    expectModelsDeepEq(actualModelSet.properties, modelSet.properties);
   });
 
   const getWorkAgents = (result: GetModelsResult): readonly WorkAgent[] => {
@@ -179,7 +158,7 @@ describe("MemApi", () => {
     const actualWorkAgents = getWorkAgents(
       await sut.getWorkAgents({
         joinSelector: {
-          thumbnail: THUMBNAIL_SELECTOR,
+          thumbnail: testThumbnailSelector,
           // works: {},
         },
       })
@@ -195,7 +174,7 @@ describe("MemApi", () => {
     ).to.be.true;
     expect(
       actualWorkAgents.some(
-        workAgent => workAgent.agent.thumbnail(THUMBNAIL_SELECTOR) !== null
+        workAgent => workAgent.agent.thumbnail(testThumbnailSelector) !== null
       )
     ).to.be.true;
   });
@@ -227,7 +206,7 @@ describe("MemApi", () => {
         joinSelector: {
           agents: {},
           location: true,
-          thumbnail: THUMBNAIL_SELECTOR,
+          thumbnail: testThumbnailSelector,
         },
       })
     );
@@ -248,7 +227,7 @@ describe("MemApi", () => {
       .be.true;
     expect(
       actualWorkEvents.some(
-        workEvent => workEvent.thumbnail(THUMBNAIL_SELECTOR) !== null
+        workEvent => workEvent.thumbnail(testThumbnailSelector) !== null
       )
     ).to.be.true;
   });
@@ -330,7 +309,8 @@ describe("MemApi", () => {
     expect(actualResult.totalModelsCount).to.eq(
       expectedCollection.works.length
     );
-    expect(actualResult.modelKeys).to.deep.eq(
+    expectModelKeysDeepEq(
+      actualResult.modelKeys,
       expectedCollection.works.map(work => work.key)
     );
   });
