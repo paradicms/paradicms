@@ -176,123 +176,122 @@ const IndexPageImpl: React.FunctionComponent<Omit<
   log.trace("Works page:", worksPage);
   log.trace("Work agents page:", workAgentsPage);
 
-  // Effect that responds to switching to the works tab
   useEffect(() => {
-    if (
-      (activeTabKey === "works" || getWorksResult === null) &&
-      !loadingWorks
-    ) {
-      log.trace("invoking getWorks");
-      setLoadingWorks(true);
-      api
-        .getWorks({
-          joinSelector: workSearchWorkJoinSelector,
-          limit: objectsPerPage,
-          offset: worksPage * objectsPerPage,
-          query: worksQuery,
-          sort: worksSort,
-          valueFacetValueThumbnailSelector: valueThumbnailSelector,
-        })
-        .then(getWorksResult => {
-          log.debug("getWorks result:", getWorksResult.totalModelsCount);
-          setGetWorksResult(getWorksResult);
-          setLoadingWorks(false);
-        });
+    if (loadingWorks) {
+      return;
     }
-  }, [activeTabKeyQueryParam, worksQuery, api, worksPage, worksSort]);
+    log.trace("invoking getWorks");
+    setLoadingWorks(true);
+    api
+      .getWorks({
+        joinSelector: workSearchWorkJoinSelector,
+        limit: objectsPerPage,
+        offset: worksPage * objectsPerPage,
+        query: worksQuery,
+        sort: worksSort,
+        valueFacetValueThumbnailSelector: valueThumbnailSelector,
+      })
+      .then(getWorksResult => {
+        log.debug("getWorks result:", getWorksResult.totalModelsCount);
+        setGetWorksResult(getWorksResult);
+        setLoadingWorks(false);
+      });
+  }, [api, worksPage, worksQuery, worksSort]);
 
   // Effect that responds to switching to the work agents tab
   useEffect(() => {
-    if (activeTabKey === "workAgents" && !loadingWorkAgents) {
-      log.trace("invoking getWorkAgents");
-      setLoadingWorkAgents(true);
-      api
-        .getWorkAgents({
-          joinSelector: {
-            thumbnail: galleryThumbnailSelector,
-          },
-          limit: objectsPerPage,
-          offset: workAgentsPage * objectsPerPage,
-          sort: workAgentsSort,
-          worksQuery,
-        })
-        .then(getWorkAgentsResult => {
-          log.debug(
-            "getWorkAgents result:",
-            getWorkAgentsResult.totalModelsCount
-          );
-          setGetWorkAgentsResult({
-            ...getWorkAgentsResult,
-            modelKeysSet: new Set(getWorkAgentsResult.modelKeys),
-          });
-          setLoadingWorkAgents(false);
-        });
+    if (loadingWorkAgents) {
+      return;
     }
-  }, [activeTabKeyQueryParam, worksQuery, api, workAgentsPage, workAgentsSort]);
+    log.trace("invoking getWorkAgents");
+    setLoadingWorkAgents(true);
+    api
+      .getWorkAgents({
+        joinSelector: {
+          thumbnail: galleryThumbnailSelector,
+        },
+        limit: objectsPerPage,
+        offset: workAgentsPage * objectsPerPage,
+        sort: workAgentsSort,
+        worksQuery,
+      })
+      .then(getWorkAgentsResult => {
+        log.debug(
+          "getWorkAgents result:",
+          getWorkAgentsResult.totalModelsCount
+        );
+        setGetWorkAgentsResult({
+          ...getWorkAgentsResult,
+          modelKeysSet: new Set(getWorkAgentsResult.modelKeys),
+        });
+        setLoadingWorkAgents(false);
+      });
+  }, [api, workAgentsPage, workAgentsSort, worksQuery]);
 
   // Effect that responds to switching to the work events tab
   useEffect(() => {
-    if (activeTabKey === "workEvents" && !loadingWorkEvents) {
-      log.trace("invoking getWorkEvents");
-      setLoadingWorkEvents(true);
-      // "Paging" the timeline loads more events rather than typical pagination.
-      api
-        .getWorkEvents({
-          eventsQuery: {
-            filters: [
-              {
-                exists: true,
-                type: "EventSortDateExistence",
-              },
-            ],
-          },
-          joinSelector: workSearchWorkEventJoinSelector,
-          limit: (workEventsPage + 1) * objectsPerPage,
-          offset: 0,
-          sort: workEventsSort,
-          worksQuery,
-        })
-        .then(getWorkEventsResult => {
-          log.debug(
-            "getWorkEvents result:",
-            getWorkEventsResult.totalModelsCount
-          );
-          setGetWorkEventsResult({
-            ...getWorkEventsResult,
-            modelKeysSet: new Set(getWorkEventsResult.modelKeys),
-          });
-          setLoadingWorkEvents(false);
-        });
+    if (loadingWorkEvents) {
+      return;
     }
-  }, [activeTabKeyQueryParam, worksQuery, api, workEventsPage]);
+    log.trace("invoking getWorkEvents");
+    setLoadingWorkEvents(true);
+    // "Paging" the timeline loads more events rather than typical pagination.
+    api
+      .getWorkEvents({
+        eventsQuery: {
+          filters: [
+            {
+              exists: true,
+              type: "EventSortDateExistence",
+            },
+          ],
+        },
+        joinSelector: workSearchWorkEventJoinSelector,
+        limit: (workEventsPage + 1) * objectsPerPage,
+        offset: 0,
+        sort: workEventsSort,
+        worksQuery,
+      })
+      .then(getWorkEventsResult => {
+        log.debug(
+          "getWorkEvents result:",
+          getWorkEventsResult.totalModelsCount
+        );
+        setGetWorkEventsResult({
+          ...getWorkEventsResult,
+          modelKeysSet: new Set(getWorkEventsResult.modelKeys),
+        });
+        setLoadingWorkEvents(false);
+      });
+  }, [api, workEventsPage, workEventsSort, worksQuery]);
 
-  // Effect that responds to switching to the work locations tab
   useEffect(() => {
-    if (activeTabKey === "workLocations" && !loadingWorkLocations) {
-      log.trace("invoking getWorkLocations");
-      setLoadingWorkLocations(true);
-      api
-        .getWorkLocations({
-          locationsQuery: {
-            filters: [
-              {
-                exists: true,
-                type: "LocationCentroidExistence",
-              },
-            ],
-          },
-          worksQuery,
-        })
-        .then(getWorkLocationsResult => {
-          log.debug(
-            "getWorkLocations result:",
-            getWorkLocationsResult.workLocations.length
-          );
-          setGetWorkLocationsResult(getWorkLocationsResult);
-          setLoadingWorkLocations(false);
-        });
+    if (loadingWorkLocations) {
+      return;
     }
-  }, [activeTabKeyQueryParam, worksQuery, api, workAgentsPage]);
+    log.trace("invoking getWorkLocations");
+    setLoadingWorkLocations(true);
+    api
+      .getWorkLocations({
+        locationsQuery: {
+          filters: [
+            {
+              exists: true,
+              type: "LocationCentroidExistence",
+            },
+          ],
+        },
+        worksQuery,
+      })
+      .then(getWorkLocationsResult => {
+        log.debug(
+          "getWorkLocations result:",
+          getWorkLocationsResult.workLocations.length
+        );
+        setGetWorkLocationsResult(getWorkLocationsResult);
+        setLoadingWorkLocations(false);
+      });
+  }, [api, worksQuery]);
 
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
@@ -400,12 +399,14 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       </Container>
     ),
   });
-  tabs.push({
-    key: "workLocations",
-    title: "Map",
-    content:
-      getWorkLocationsResult &&
-      getWorkLocationsResult.workLocations.length > 0 ? (
+  if (
+    getWorkLocationsResult &&
+    getWorkLocationsResult.workLocations.length > 0
+  ) {
+    tabs.push({
+      key: "workLocations",
+      title: "Map",
+      content: (
         <LocationsMap
           locations={getWorkLocationsResult.workLocations.map(workLocation => ({
             centroid: workLocation.location.centroid!,
@@ -413,13 +414,14 @@ const IndexPageImpl: React.FunctionComponent<Omit<
             label: getWorkLocationLabel(workLocation),
           }))}
         />
-      ) : null,
-  });
-  tabs.push({
-    key: "workAgents",
-    title: "People",
-    content:
-      getWorkAgentsResult && getWorkAgentsResult.modelKeys.length > 0 ? (
+      ),
+    });
+  }
+  if (getWorkAgentsResult && getWorkAgentsResult.modelKeys.length > 0) {
+    tabs.push({
+      key: "workAgents",
+      title: "People",
+      content: (
         <Container fluid>
           <Row className="mb-4">
             <Col className="d-flex justify-content-end">
@@ -457,13 +459,14 @@ const IndexPageImpl: React.FunctionComponent<Omit<
             </Row>
           ) : null}
         </Container>
-      ) : null,
-  });
-  tabs.push({
-    key: "workEvents",
-    title: "Timeline",
-    content:
-      getWorkEventsResult && getWorkEventsResult.modelKeys.length > 0 ? (
+      ),
+    });
+  }
+  if (getWorkEventsResult && getWorkEventsResult.modelKeys.length > 0) {
+    tabs.push({
+      key: "workEvents",
+      title: "Timeline",
+      content: (
         <WorkEventsTimeline
           getAbsoluteImageSrc={relativeImageSrc =>
             getAbsoluteImageSrc(relativeImageSrc, router)
@@ -483,10 +486,9 @@ const IndexPageImpl: React.FunctionComponent<Omit<
               .map(workEvent => ({work, workEvent}))
           )}
         />
-      ) : (
-        <h4 className="text-center text-secondary">No work events.</h4>
       ),
-  });
+    });
+  }
 
   return (
     <Layout
@@ -576,3 +578,5 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     },
   };
 };
+
+(IndexPage as any).whyDidYouRender = true;
