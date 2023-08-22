@@ -1,29 +1,26 @@
+from __future__ import annotations
+
 import logging
 from abc import abstractmethod
-from typing import (
-    Generator,
-    Tuple,
-    Union,
-    TypeVar,
-    Any,
-    Callable,
-    Type,
-)
-from typing import Optional
+from typing import TYPE_CHECKING, Any, TypeVar
 
 import rdflib.collection
-from rdflib import ConjunctiveGraph, Literal, RDF, URIRef, OWL
-from rdflib import Graph
+from rdflib import OWL, RDF, ConjunctiveGraph, Graph, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
 
 from paradicms_etl.model import Model
-from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.utils.clone_graph import clone_graph
 
+if TYPE_CHECKING:
+    from collections.abc import Callable, Generator
+
+    from paradicms_etl.models.image_data import ImageData
+    from paradicms_etl.models.text import Text
+
 _ModelT = TypeVar("_ModelT", bound=Model)
-_Predicates = Union[URIRef, Tuple[URIRef, ...]]
-_StatementObject = Union[Literal, Resource]
+_Predicates = URIRef | tuple[URIRef, ...]
+_StatementObject = Literal | Resource
 _ValueT = TypeVar("_ValueT")
 
 
@@ -34,7 +31,7 @@ class ResourceBackedModel(Model):
                 raise TypeError("expected URI-identified resource")
             self.__resource = resource
 
-        def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
+        def add(self, p: URIRef, o: Any) -> ResourceBackedModel.Builder:
             if o is None:
                 pass
             elif isinstance(o, Model):
@@ -50,11 +47,9 @@ class ResourceBackedModel(Model):
                     #     f"adding non-urn:uuid model {o.uri} to {self.__resource.identifier}'s graph"
                     # )
                 self._resource.add(p, o.to_rdf(graph=self._resource.graph))
-            elif isinstance(o, Node):
+            elif isinstance(o, Node | Resource):
                 self._resource.add(p, o)
-            elif isinstance(o, Resource):
-                self._resource.add(p, o)
-            elif isinstance(o, (list, tuple)):
+            elif isinstance(o, list | tuple):
                 for sub_o in o:
                     self.add(p, sub_o)
             else:
@@ -65,7 +60,7 @@ class ResourceBackedModel(Model):
         def _resource(self) -> Resource:
             return self.__resource
 
-        def set(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
+        def set(self, p: URIRef, o: Any) -> ResourceBackedModel.Builder:  # noqa: A003
             if o is None:
                 return self
             # May orphan BNode/Model objects
@@ -84,7 +79,7 @@ class ResourceBackedModel(Model):
         self.__resource = resource
 
     @property
-    def label(self) -> Optional[str]:
+    def label(self) -> str | None:
         label_property_uri = self.label_property_uri()
         if label_property_uri is None:
             return None
@@ -92,15 +87,15 @@ class ResourceBackedModel(Model):
 
     @classmethod
     @abstractmethod
-    def label_property_uri(cls) -> Optional[URIRef]:
+    def label_property_uri(cls) -> URIRef | None:
         return None
 
     @classmethod
-    def from_rdf(cls, resource: Resource):
+    def from_rdf(cls, resource: Resource) -> ResourceBackedModel:
         return cls(clone_graph(resource.graph).resource(resource.identifier))
 
     @staticmethod
-    def _map_term_to_bool(term: _StatementObject) -> Optional[bool]:
+    def _map_term_to_bool(term: _StatementObject) -> bool | None:
         if isinstance(term, Literal):
             py_value = term.toPython()
             if isinstance(py_value, bool):
@@ -108,7 +103,7 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_term_to_bytes(term: _StatementObject) -> Optional[bytes]:
+    def _map_term_to_bytes(term: _StatementObject) -> bytes | None:
         if isinstance(term, Literal):
             py_value = term.toPython()
             if isinstance(py_value, bytes):
@@ -118,7 +113,7 @@ class ResourceBackedModel(Model):
     @staticmethod
     def _map_term_to_image_data_or_str_or_uri(
         term: _StatementObject,
-    ) -> Union[ImageData, str, URIRef, None]:
+    ) -> ImageData | str | URIRef | None:
         if isinstance(term, Literal):
             py_value = term.toPython()
             if isinstance(py_value, str):
@@ -129,13 +124,12 @@ class ResourceBackedModel(Model):
             model = ResourceBackedModel._map_term_to_model(CmsImageData, term)
             if model is not None:
                 return model
-            else:
-                assert isinstance(term.identifier, URIRef)
-                return term.identifier
+            assert isinstance(term.identifier, URIRef)
+            return term.identifier
         return None
 
     @staticmethod
-    def _map_term_to_int(term: _StatementObject) -> Optional[int]:
+    def _map_term_to_int(term: _StatementObject) -> int | None:
         if isinstance(term, Literal):
             py_value = term.toPython()
             if isinstance(py_value, int):
@@ -151,7 +145,7 @@ class ResourceBackedModel(Model):
     @staticmethod
     def _map_term_to_collection(
         term: _StatementObject,
-    ) -> Optional[Tuple[Node, ...]]:
+    ) -> tuple[Node, ...] | None:
         if not isinstance(term, Resource):
             return None
         resource: Resource = term
@@ -183,8 +177,8 @@ class ResourceBackedModel(Model):
 
     @staticmethod
     def _map_term_to_model(
-        model_class: Type[_ModelT], term: _StatementObject
-    ) -> Optional[_ModelT]:
+        model_class: type[_ModelT], term: _StatementObject
+    ) -> _ModelT | None:
         if not isinstance(term, Resource):
             return None
         resource: Resource = term
@@ -192,12 +186,11 @@ class ResourceBackedModel(Model):
         if not isinstance(value_type, Resource):
             return None
         if value_type.identifier == model_class.rdf_type_uri():
-            return model_class.from_rdf(resource)
-        else:
-            return None
+            return model_class.from_rdf(resource)  # type: ignore
+        return None
 
     @staticmethod
-    def _map_term_to_str(term: _StatementObject) -> Optional[str]:
+    def _map_term_to_str(term: _StatementObject) -> str | None:
         if isinstance(term, Literal):
             py_value = term.toPython()
             if isinstance(py_value, str):
@@ -207,7 +200,7 @@ class ResourceBackedModel(Model):
     @staticmethod
     def _map_term_to_str_or_text(
         term: _StatementObject,
-    ) -> Union[str, "Text", None]:  # type: ignore # noqa
+    ) -> str | Text | None:  # type: ignore
         if isinstance(term, Literal):
             literal: Literal = term
             py_value = literal.toPython()
@@ -220,9 +213,7 @@ class ResourceBackedModel(Model):
             if dc_text is not None:
                 return dc_text
 
-            from paradicms_etl.models.schema.schema_text_object import (
-                SchemaTextObject,
-            )
+            from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 
             schema_text_object = ResourceBackedModel._map_term_to_model(
                 SchemaTextObject, term
@@ -233,30 +224,28 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_term_to_str_or_uri(term: _StatementObject) -> Union[str, URIRef, None]:
+    def _map_term_to_str_or_uri(term: _StatementObject) -> str | URIRef | None:
         if isinstance(term, Literal):
             py_value = term.toPython()
             if isinstance(py_value, str):
                 return py_value
-        elif isinstance(term, Resource):
-            if isinstance(term.identifier, URIRef):
-                return term.identifier
+        elif isinstance(term, Resource) and isinstance(term.identifier, URIRef):
+            return term.identifier
         return None
 
     @staticmethod
-    def _map_term_to_uri(term: _StatementObject) -> Optional[URIRef]:
-        if isinstance(term, Resource):
-            if isinstance(term.identifier, URIRef):
-                return term.identifier
+    def _map_term_to_uri(term: _StatementObject) -> URIRef | None:
+        if isinstance(term, Resource) and isinstance(term.identifier, URIRef):
+            return term.identifier
         return None
 
     def _optional_value(
         self,
         p: _Predicates,
         mapper: Callable[
-            [_StatementObject], Union[_ValueT, None]
+            [_StatementObject], _ValueT | None
         ] = lambda value: value,  # type: ignore
-    ) -> Optional[_ValueT]:
+    ) -> _ValueT | None:
         for value in self._values(p, mapper):
             return value
         return None
@@ -273,9 +262,7 @@ class ResourceBackedModel(Model):
     def _required_value(
         self,
         p: _Predicates,
-        mapper: Callable[
-            [_StatementObject], Union[_ValueT, None]
-        ] = lambda value: value,  # type: ignore
+        mapper: Callable[[_StatementObject], _ValueT | None] = lambda value: value,  # type: ignore
     ) -> _ValueT:
         for value in self._values(p, mapper):
             return value
@@ -286,7 +273,7 @@ class ResourceBackedModel(Model):
         return self.__resource
 
     @property
-    def same_as_uris(self) -> Tuple[URIRef, ...]:
+    def same_as_uris(self) -> tuple[URIRef, ...]:
         return tuple(self._values(OWL.sameAs, self._map_term_to_uri))
 
     def to_rdf(self, graph: Graph) -> Resource:
@@ -294,9 +281,8 @@ class ResourceBackedModel(Model):
             context = graph.get_context(self._resource.identifier())
             context += self._resource.graph
             return context.resource(self._resource.identifier)
-        else:
-            graph += self._resource.graph
-            return graph.resource(self._resource.identifier)
+        graph += self._resource.graph
+        return graph.resource(self._resource.identifier)
 
     @property
     def uri(self) -> URIRef:
@@ -306,10 +292,10 @@ class ResourceBackedModel(Model):
         self,
         predicates: _Predicates,
         mapper: Callable[
-            [_StatementObject], Union[_ValueT, None]
+            [_StatementObject], _ValueT | None
         ] = lambda value: value,  # type: ignore
     ) -> Generator[_ValueT, None, None]:
-        predicates_tuple: Tuple[URIRef, ...]
+        predicates_tuple: tuple[URIRef, ...]
         if isinstance(predicates, URIRef):
             predicates_tuple = (predicates,)
         else:

@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Optional
 
 from paradicms_etl.extractors.costume_core_ontology_airtable_extractor import (
     CostumeCoreOntologyAirtableExtractor,
@@ -14,10 +13,10 @@ from paradicms_etl.transformers.costume_core_ontology_airtable_transformer impor
 )
 
 
-def is_costume_core_ontology_model(model: Model):
+def is_costume_core_ontology_model(model: Model) -> bool:
     return isinstance(
         model,
-        (CostumeCoreOntology, CostumeCoreOntology.Predicate, CostumeCoreOntology.Term),
+        CostumeCoreOntology | CostumeCoreOntology.Predicate | CostumeCoreOntology.Term,
     ) and str(model.uri).startswith(str(COCO)[:-1])
 
 
@@ -29,8 +28,8 @@ class CostumeCoreOntologyAirtablePipeline(Pipeline):
         *,
         airtable_access_token: str,
         loader: Loader,
-        cache_dir_path: Optional[Path] = None,
-        ontology_version: Optional[str] = None,
+        cache_dir_path: Path | None = None,
+        ontology_version: str | None = None,
     ):
         if cache_dir_path is None:
             data_dir_path = self._find_data_dir_path()

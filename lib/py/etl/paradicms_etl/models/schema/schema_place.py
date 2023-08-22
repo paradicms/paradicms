@@ -1,6 +1,6 @@
-from typing import Optional, Union
+from typing import Any
 
-from rdflib import URIRef, Graph, SDO, XSD
+from rdflib import SDO, XSD, Graph, URIRef
 
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.schema.schema_model import SchemaModel
@@ -19,7 +19,7 @@ class SchemaPlace(SchemaModel, Location):
             return SchemaPlace(self._resource)
 
         def set_address(
-            self, address: Union[SchemaPostalAddress, str]
+            self, address: SchemaPostalAddress | str
         ) -> "SchemaPlace.Builder":
             self.set(SDO.address, address)
             return self
@@ -33,11 +33,11 @@ class SchemaPlace(SchemaModel, Location):
             return self
 
     @classmethod
-    def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
+    def builder(cls, *, uri: URIRef | None = None) -> Builder:
         return cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
 
     @classmethod
-    def json_ld_context(cls):
+    def json_ld_context(cls) -> dict[str, Any]:
         return safe_dict_update(
             SchemaModel.json_ld_context(),
             {

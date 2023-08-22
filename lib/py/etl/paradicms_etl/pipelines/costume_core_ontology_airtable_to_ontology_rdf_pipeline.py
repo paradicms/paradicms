@@ -11,10 +11,10 @@ from paradicms_etl.pipelines.costume_core_ontology_airtable_pipeline import (
 )
 
 
-def is_costume_core_ontology_model(model: Model):
+def is_costume_core_ontology_model(model: Model) -> bool:
     return isinstance(
         model,
-        (CostumeCoreOntology, CostumeCoreOntology.Predicate, CostumeCoreOntology.Term),
+        CostumeCoreOntology | CostumeCoreOntology.Predicate | CostumeCoreOntology.Term,
     ) and str(model.uri).startswith(str(COCO)[:-1])
 
 
@@ -67,7 +67,7 @@ class CostumeCoreOntologyAirtableToOntologyRdfPipeline(
         )
 
     @classmethod
-    def add_arguments(cls, arg_parser: ArgParser):
+    def add_arguments(cls, arg_parser: ArgParser) -> None:
         Pipeline.add_arguments(arg_parser)
         arg_parser.add_argument("--airtable-access-token", required=True)
         arg_parser.add_argument("--ontology-version", required=True)

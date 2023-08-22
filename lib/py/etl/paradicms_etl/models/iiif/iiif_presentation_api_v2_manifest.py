@@ -1,6 +1,9 @@
-from typing import Tuple, List
+from __future__ import annotations
 
-from rdflib import URIRef, DCTERMS, RDFS
+from typing import TYPE_CHECKING, List, Tuple
+
+from rdflib import DCTERMS, RDFS, URIRef
+from rdflib.resource import Resource
 from rdflib.term import Identifier
 
 from paradicms_etl.models.dc.dc_image import DcImage
@@ -10,8 +13,10 @@ from paradicms_etl.models.iiif.iiif_presentation_api_v2_namespace import (
 from paradicms_etl.models.iiif.iiif_presentation_api_v2_sequence import (
     IiifPresentationApiV2Sequence,
 )
-from paradicms_etl.models.image import Image
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+
+if TYPE_CHECKING:
+    from paradicms_etl.models.image import Image
 
 SC = IiifPresentationApiV2Namespace
 
@@ -20,6 +25,10 @@ class IiifPresentationApiV2Manifest(ResourceBackedModel):
     @property
     def attribution_label(self) -> str:
         return self._required_value(SC.attributionLabel, self._map_term_to_str)
+
+    @classmethod
+    def from_rdf(cls, resource: Resource) -> IiifPresentationApiV2Manifest:
+        return super().from_rdf(resource)  # type: ignore
 
     @property
     def has_sequences(self) -> Tuple[IiifPresentationApiV2Sequence, ...]:

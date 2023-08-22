@@ -1,7 +1,12 @@
-import datetime
+from __future__ import annotations
+
 from abc import abstractmethod
+from typing import TYPE_CHECKING
 
 from paradicms_etl.model import Model
+
+if TYPE_CHECKING:
+    import datetime
 
 
 class DateTimeDescription(Model):
@@ -16,5 +21,5 @@ class DateTimeDescription(Model):
 
     @classmethod
     @abstractmethod
-    def from_date(cls, date: datetime.date) -> "DateTimeDescription":
+    def from_date(cls, date: datetime.date) -> DateTimeDescription:
         raise NotImplementedError

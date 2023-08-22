@@ -6,9 +6,9 @@ authors = ["Minor Gordon <info@paradicms.org>"]
 license = "GPLv3"
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.12"
+python = ">=3.10,<3.11"
 ConfigArgParse = "^1.5.3"
-markdown-it-py = {extras = ["plugins"], version = "^2.0.1"}
+markdown-it-py = { extras = ["plugins"], version = "^2.0.1" }
 pathvalidate = "^2.5.0"
 Pillow = "^9.0.1"
 PyYAML = "^6.0"
@@ -28,10 +28,64 @@ flake8 = "^4.0.1"
 mypy = "^0.931"
 pytest = "^7.0.1"
 types-PyYAML = "^6.0.5"
+ruff = "^0.0.285"
 
 [tool.poetry.group.dev.dependencies]
 setuptools = "^68.0.0"
 
+[tool.mypy]
+python_version = "3.10"
+warn_unused_configs = true
+
+[[tool.mypy.overrides]]
+module = [
+    "bs4",
+    "configargparse",
+    "inflector",
+    "openpyxl",
+    "PIL",
+    "PIL.Image",
+    "pyformance",
+    "stringcase",
+    "tqdm",
+]
+ignore_missing_imports = true
+
+
+[tool.ruff]
+ignore = [
+    "ANN101",  # missing-type-self
+    "ANN102",  # missing-type-cls,
+    "ANN204",  # Missing return type annotation for __init__
+    "ANN401",  # Dynamically typed expressions not allowed
+    "COM812",  # Trailing comma missing
+    "D",       # Missing docstrings
+    "E501",    # Line too long
+    "EM",      # Exception must not use string literals
+    "ERA001",  # Commented-out code
+    "FA",      # Missing from __future__ import annotations
+    "I001",    # Import block is un-sorted or un-formatted
+    "ICN001",  # Pandas should be imported as pd
+    "N815",    # Mixed-case variables
+    "PGH003",  # Allow type: ignore
+    "PLR2004", # Magic number
+    "PTH123",  # open -> Path.open
+    "S101",    # assert
+    "TRY003",  # Avoid specifying long messages outside the exception class
+]
+select = ["ALL"]
+src = ["paradicms_etl"]
+target-version = "py310"
+
+[tool.ruff.flake8-annotations]
+allow-star-arg-any = true
+
+[tool.ruff.isort]
+known-first-party = ["target_rdf"]
+
+[tool.ruff.pydocstyle]
+convention = "google"
+
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=1.0.8"]
 build-backend = "poetry.core.masonry.api"

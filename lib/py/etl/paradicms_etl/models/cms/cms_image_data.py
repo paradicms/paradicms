@@ -1,9 +1,9 @@
 from base64 import b64encode
 from io import BytesIO
-from typing import Dict, Any, Optional
+from typing import Any, Optional
 
 from PIL import Image
-from rdflib import DCTERMS, RDF, Literal, XSD, Graph, URIRef
+from rdflib import DCTERMS, RDF, XSD, Graph, Literal, URIRef
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.image_data import ImageData
@@ -47,7 +47,7 @@ class CmsImageData(CmsModel, ImageData):
     def label_property_uri(cls) -> Optional[URIRef]:
         return None
 
-    def to_json_ld(self) -> Dict[str, Any]:
+    def to_json_ld(self) -> dict[str, Any]:
         return {
             "@id": str(self.uri),
             "@type": str(self.rdf_type_uri()),

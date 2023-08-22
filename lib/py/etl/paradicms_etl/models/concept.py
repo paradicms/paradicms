@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from typing import Tuple
 
 from rdflib.term import Node, URIRef
 
@@ -15,7 +14,7 @@ class Concept(Model, ImagesMixin):
 
     @property
     @abstractmethod
-    def type_uris(self) -> Tuple[URIRef, ...]:
+    def type_uris(self) -> tuple[URIRef, ...]:
         raise NotImplementedError
 
     @property

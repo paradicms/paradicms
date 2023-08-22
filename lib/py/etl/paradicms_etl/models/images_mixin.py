@@ -1,5 +1,6 @@
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from typing import Tuple
 
 from rdflib import URIRef
 
@@ -11,10 +12,10 @@ class ImagesMixin(ABC):
 
     class Builder(ABC):
         @abstractmethod
-        def add_image(self, image: URIRef) -> "ImagesMixin.Builder":
+        def add_image(self, image: URIRef) -> ImagesMixin.Builder:
             raise NotImplementedError
 
     @property
     @abstractmethod
-    def image_uris(self) -> Tuple[URIRef, ...]:
+    def image_uris(self) -> tuple[URIRef, ...]:
         raise NotImplementedError

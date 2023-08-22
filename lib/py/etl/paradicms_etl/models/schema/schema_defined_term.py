@@ -1,6 +1,6 @@
-from typing import Tuple
+from __future__ import annotations
 
-from rdflib import URIRef, Graph, SDO, RDF
+from rdflib import RDF, SDO, Graph, URIRef
 from rdflib.resource import Resource
 from rdflib.term import Node
 
@@ -14,20 +14,20 @@ class SchemaDefinedTerm(SchemaModel, Concept):
     """
 
     class Builder(SchemaModel.Builder):
-        def add_type_uri(self, type_uri: URIRef):
+        def add_type_uri(self, type_uri: URIRef) -> SchemaDefinedTerm.Builder:
             self.add(RDF.type, type_uri)
             return self
 
-        def build(self) -> "SchemaDefinedTerm":
+        def build(self) -> SchemaDefinedTerm:
             return SchemaDefinedTerm(self._resource)
 
-        def set_value(self, value: Node) -> "SchemaDefinedTerm.Builder":
+        def set_value(self, value: Node) -> SchemaDefinedTerm.Builder:
             self.set(RDF.value, value)
             return self
 
     def __init__(self, resource: Resource):
         SchemaModel.__init__(self, resource)
-        self.label
+        self.label  # noqa: B018
 
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:
@@ -40,7 +40,7 @@ class SchemaDefinedTerm(SchemaModel, Concept):
         return self._required_label
 
     @property
-    def type_uris(self) -> Tuple[URIRef, ...]:
+    def type_uris(self) -> tuple[URIRef, ...]:
         return tuple(self._values(RDF.type, self._map_term_to_uri))
 
     @property
@@ -48,8 +48,7 @@ class SchemaDefinedTerm(SchemaModel, Concept):
         value = self._resource.value(RDF.value)
         if value is None:
             return self.uri
-        elif isinstance(value, Resource):
+        if isinstance(value, Resource):
             return value.identifier
-        else:
-            assert isinstance(value, Node)
-            return value
+        assert isinstance(value, Node)
+        return value

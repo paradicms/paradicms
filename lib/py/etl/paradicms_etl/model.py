@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Any, Dict, Tuple
+from typing import Any
 
 from rdflib import Graph, URIRef
 from rdflib.resource import Resource
@@ -11,18 +11,19 @@ from paradicms_etl.utils.module_namespaces import module_namespaces
 class Model(ABC):
     @classmethod
     @abstractmethod
-    def from_rdf(cls, resource: Resource):
+    def from_rdf(cls, resource: Resource) -> "Model":
         raise NotImplementedError
 
     @classmethod
-    def json_ld_context(cls) -> Dict[str, Any]:
+    def json_ld_context(cls) -> dict[str, Any]:
         """
         Return a JSON-LD context that can be used to parse/serialize a JSON version of this model.
         """
 
-        context: Dict[str, Any] = {"@version": 1.1}
+        context: dict[str, Any] = {"@version": 1.1}
 
         import rdflib.namespace
+
         import paradicms_etl.namespaces
 
         for namespace_prefix, namespace in module_namespaces(
@@ -34,7 +35,7 @@ class Model(ABC):
         return context
 
     @property
-    def label(self) -> Optional[str]:
+    def label(self) -> str | None:
         return None
 
     @classmethod
@@ -43,7 +44,7 @@ class Model(ABC):
         raise NotImplementedError
 
     @property
-    def same_as_uris(self) -> Tuple[URIRef, ...]:
+    def same_as_uris(self) -> tuple[URIRef, ...]:
         return ()
 
     @abstractmethod
