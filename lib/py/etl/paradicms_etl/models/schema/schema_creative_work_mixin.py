@@ -144,4 +144,3 @@ class SchemaCreativeWorkMixin(SchemaThingMixin, RightsMixin):
     @property
     def rights_statements(self) -> tuple[str | URIRef, ...]:
         return tuple(self._values(SDO.usageInfo, self._map_term_to_str_or_uri))
-        return tuple(self._values(SDO.usageInfo, self._map_term_to_str_or_uri))

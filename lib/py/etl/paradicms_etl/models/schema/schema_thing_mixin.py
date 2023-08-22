@@ -1,6 +1,8 @@
-from typing import Union, Tuple, Optional
+from __future__ import annotations
 
-from rdflib import URIRef, SDO
+from typing import Optional, Tuple, Union
+
+from rdflib import SDO, URIRef
 
 from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
@@ -18,7 +20,7 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
 
     class Builder(ResourceBackedModelMixin.Builder, ImagesMixin.Builder):
         def add_alternate_name(
-            self, alternate_name: Union[str, Text]
+            self, alternate_name: str | Text
         ) -> "SchemaThingMixin.Builder":
             self.add(SDO.alternateName, alternate_name)
             return self
