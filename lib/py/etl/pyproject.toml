@@ -54,23 +54,24 @@ ignore_missing_imports = true
 
 [tool.ruff]
 ignore = [
-    "ANN101", # missing-type-self
-    "ANN102", # missing-type-cls,
-    "ANN204", # Missing return type annotation for __init__
-    "ANN401", # Dynamically typed expressions not allowed
-    "COM812", # Trailing comma missing
-    "D",      # Missing docstrings
-    "E501",   # Line too long
-    "EM",     # Exception must not use string literals
-    "ERA001", # Commented-out code
-    "FA",     # Missing from __future__ import annotations
-    "I001",   # Import block is un-sorted or un-formatted
-    "ICN001", # Pandas should be imported as pd
-    "N815",   # Mixed-case variables
-    "PGH003", # Allow type: ignore
-    "PTH123", # open -> Path.open
-    "S101",   # assert
-    "TRY003", # Avoid specifying long messages outside the exception class
+    "ANN101",  # missing-type-self
+    "ANN102",  # missing-type-cls,
+    "ANN204",  # Missing return type annotation for __init__
+    "ANN401",  # Dynamically typed expressions not allowed
+    "COM812",  # Trailing comma missing
+    "D",       # Missing docstrings
+    "E501",    # Line too long
+    "EM",      # Exception must not use string literals
+    "ERA001",  # Commented-out code
+    "FA",      # Missing from __future__ import annotations
+    "I001",    # Import block is un-sorted or un-formatted
+    "ICN001",  # Pandas should be imported as pd
+    "N815",    # Mixed-case variables
+    "PGH003",  # Allow type: ignore
+    "PLR2004", # Magic number
+    "PTH123",  # open -> Path.open
+    "S101",    # assert
+    "TRY003",  # Avoid specifying long messages outside the exception class
 ]
 select = ["ALL"]
 src = ["paradicms_etl"]

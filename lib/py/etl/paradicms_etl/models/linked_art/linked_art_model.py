@@ -23,7 +23,7 @@ class LinkedArtModel(ResourceBackedModel):
     @staticmethod
     def _map_term_to_linked_art_model(
         term: _StatementObject,
-    ) -> LinkedArtModel | None:  # type: ignore  # noqa: PGH003
+    ) -> LinkedArtModel | None:  # type: ignore
         if not isinstance(term, Resource):
             return None
         resource: Resource = term

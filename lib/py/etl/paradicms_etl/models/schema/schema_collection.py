@@ -1,6 +1,6 @@
-from typing import Tuple
+from typing import Any, Tuple
 
-from rdflib import URIRef, Graph, SDO
+from rdflib import SDO, Graph, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.collection import Collection
@@ -28,7 +28,7 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
 
     def __init__(self, resource: Resource):
         SchemaModel.__init__(self, resource)
-        self.label
+        self.label  # noqa: B018
 
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:
@@ -37,7 +37,7 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
         return builder
 
     @classmethod
-    def json_ld_context(cls):
+    def json_ld_context(cls) -> dict[str, Any]:
         return safe_dict_update(
             SchemaModel.json_ld_context(),
             {"hasPart": {"@id": str(SDO.hasPart), "@type": "@id"}},

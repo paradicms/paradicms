@@ -31,7 +31,7 @@ class ResourceBackedModel(Model):
                 raise TypeError("expected URI-identified resource")
             self.__resource = resource
 
-        def add(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":
+        def add(self, p: URIRef, o: Any) -> ResourceBackedModel.Builder:
             if o is None:
                 pass
             elif isinstance(o, Model):
@@ -60,7 +60,7 @@ class ResourceBackedModel(Model):
         def _resource(self) -> Resource:
             return self.__resource
 
-        def set(self, p: URIRef, o: Any) -> "ResourceBackedModel.Builder":  # noqa: A003
+        def set(self, p: URIRef, o: Any) -> ResourceBackedModel.Builder:  # noqa: A003
             if o is None:
                 return self
             # May orphan BNode/Model objects
@@ -91,7 +91,7 @@ class ResourceBackedModel(Model):
         return None
 
     @classmethod
-    def from_rdf(cls, resource: Resource) -> "ResourceBackedModel":
+    def from_rdf(cls, resource: Resource) -> ResourceBackedModel:
         return cls(clone_graph(resource.graph).resource(resource.identifier))
 
     @staticmethod
@@ -186,7 +186,7 @@ class ResourceBackedModel(Model):
         if not isinstance(value_type, Resource):
             return None
         if value_type.identifier == model_class.rdf_type_uri():
-            return model_class.from_rdf(resource)  # type: ignore  # noqa: PGH003
+            return model_class.from_rdf(resource)  # type: ignore
         return None
 
     @staticmethod
@@ -244,7 +244,7 @@ class ResourceBackedModel(Model):
         p: _Predicates,
         mapper: Callable[
             [_StatementObject], _ValueT | None
-        ] = lambda value: value,  # type: ignore  # noqa: PGH003
+        ] = lambda value: value,  # type: ignore
     ) -> _ValueT | None:
         for value in self._values(p, mapper):
             return value
@@ -262,7 +262,7 @@ class ResourceBackedModel(Model):
     def _required_value(
         self,
         p: _Predicates,
-        mapper: Callable[[_StatementObject], _ValueT | None] = lambda value: value,  # type: ignore  # noqa: PGH003
+        mapper: Callable[[_StatementObject], _ValueT | None] = lambda value: value,  # type: ignore
     ) -> _ValueT:
         for value in self._values(p, mapper):
             return value
@@ -293,7 +293,7 @@ class ResourceBackedModel(Model):
         predicates: _Predicates,
         mapper: Callable[
             [_StatementObject], _ValueT | None
-        ] = lambda value: value,  # type: ignore  # noqa: PGH003
+        ] = lambda value: value,  # type: ignore
     ) -> Generator[_ValueT, None, None]:
         predicates_tuple: tuple[URIRef, ...]
         if isinstance(predicates, URIRef):

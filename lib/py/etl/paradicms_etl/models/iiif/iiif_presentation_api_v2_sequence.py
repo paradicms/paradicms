@@ -30,7 +30,7 @@ class IiifPresentationApiV2Sequence(ResourceBackedModel):
             IiifPresentationApiV2Canvas.from_rdf(self._resource.graph.resource(canvas))
             for canvases in self._values(SC.hasCanvases, self._map_term_to_collection)
             for canvas in canvases
-            if isinstance(canvas, Identifier)  # type: ignore  # noqa: PGH003
+            if isinstance(canvas, Identifier)  # type: ignore
         )
 
     @classmethod

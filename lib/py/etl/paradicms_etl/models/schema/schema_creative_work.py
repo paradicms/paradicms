@@ -25,7 +25,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
 
     def __init__(self, resource: Resource):
         SchemaModel.__init__(self, resource)
-        self.label
+        self.label  # noqa: B018
 
     @classmethod
     def builder(cls, *, name: str, uri: URIRef) -> Builder:

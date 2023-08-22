@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 from datetime import date, timedelta
 from pathlib import Path
-from typing import Optional, Tuple, Dict, List, Iterable, Union
+from typing import Dict, Iterable, List, Optional, Tuple, Union
 from urllib.parse import quote
 
-from rdflib import DCTERMS, Literal, URIRef, SDO
+from rdflib import DCTERMS, SDO, Literal, URIRef
 
 from paradicms_etl.enrichers.enricher_factory import EnricherFactory
 from paradicms_etl.extractors.nop_extractor import nop_extractor
@@ -31,6 +31,8 @@ from paradicms_etl.models.location import Location
 from paradicms_etl.models.owl_time.owl_time_date_time_description import (
     OwlTimeDateTimeDescription,
 )
+from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rdf.rdf_property import RdfProperty
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
     RightsStatementsDotOrgRightsStatements,
@@ -53,7 +55,7 @@ from paradicms_etl.pipeline import Pipeline
 class SyntheticDataPipeline(Pipeline):
     ID = "synthetic_data"
 
-    class __SyntheticDataTransformer:
+    class __SyntheticDataTransformer:  # noqa: N801
         __DESCRIPTION_LICENSE = CreativeCommonsLicenses.BY_4_0
         __DESCRIPTION_RIGHTS_STATEMENT = RightsStatementsDotOrgRightsStatements.NoC_US
         __IMAGE_LICENSE = CreativeCommonsLicenses.NC_1_0
@@ -62,15 +64,15 @@ class SyntheticDataPipeline(Pipeline):
         __LOREM_IPSUM = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec semper interdum sem nec porta. Cras id bibendum nisl. Proin ipsum erat, pellentesque sed urna quis, maximus suscipit neque. Curabitur magna felis, scelerisque eu libero ac, pretium sagittis nunc. Praesent pharetra faucibus leo, et hendrerit turpis mollis eu. Nam aliquet commodo feugiat. Aliquam a porta ligula. Vivamus dolor magna, fermentum quis magna a, interdum efficitur eros. Sed porta sapien eros, ac porttitor quam porttitor vitae."
 
         @dataclass(frozen=True)
-        class __Property:
+        class __Property:  # noqa: N801
             label: str
             uri: URIRef
             searchable: bool = False
             filterable: bool = False
-            values: Tuple[str, ...] = ()
+            values: tuple[str, ...] = ()
 
             @property
-            def range(self) -> URIRef:
+            def range(self) -> URIRef:  # noqa: A003
                 return URIRef(
                     f"urn:paradicms:etl:pipeline:{SyntheticDataPipeline.ID}:property_range:{quote(self.label)}"
                 )
@@ -163,14 +165,14 @@ class SyntheticDataPipeline(Pipeline):
             ),
         )
 
-        def __init__(
+        def __init__(  # noqa: PLR0913
             self,
             *,
-            collections=2,
-            exhibition_events=4,
-            freestanding_works=4,
-            images_per_work=2,
-            works_per_collection=4,  # Works per page is 20
+            collections: int = 2,
+            exhibition_events: int = 4,
+            freestanding_works: int = 4,
+            images_per_work: int = 2,
+            works_per_collection: int = 4,  # Works per page is 20
         ):
             self.__collections = collections
             self.__exhibition_events = exhibition_events
@@ -182,7 +184,7 @@ class SyntheticDataPipeline(Pipeline):
         def __call__(self):
             yield from self.__generate_properties()
 
-            concepts_by_value: Dict[str, Concept] = {}
+            concepts_by_value: dict[str, Concept] = {}
             for model in self.__generate_concepts():
                 yield model
                 if isinstance(model, Concept):
@@ -206,7 +208,7 @@ class SyntheticDataPipeline(Pipeline):
             yield from self.__generate_exhibition_events()
 
             assert self.__freestanding_works >= 2
-            for work_i in range(self.__freestanding_works):
+            for _work_i in range(self.__freestanding_works):
                 yield from self.__generate_work(
                     agents=agents,
                     concepts_by_value=concepts_by_value,
@@ -214,7 +216,7 @@ class SyntheticDataPipeline(Pipeline):
                     uri_prefix="http://example.com/freestandingwork",
                 )
 
-        def __generate_agents(self) -> Iterable[Union[Agent, Image]]:
+        def __generate_agents(self) -> Iterable[Agent | Image]:
             for organization_i in range(6):
                 organization_name = f"Organization {organization_i}"
                 organization_homepage = URIRef(
@@ -224,9 +226,7 @@ class SyntheticDataPipeline(Pipeline):
                     f"http://example.com/organization{organization_i}"
                 )
 
-                organization_builder: Union[
-                    FoafOrganization.Builder, SchemaOrganization.Builder
-                ]
+                organization_builder: FoafOrganization.Builder | SchemaOrganization.Builder
                 if organization_i % 2 == 0:
                     organization_builder = FoafOrganization.builder(
                         name=organization_name, uri=organization_uri
@@ -254,7 +254,7 @@ class SyntheticDataPipeline(Pipeline):
                 person_homepage = URIRef(f"http://example.com/person{person_i}homepage")
                 person_uri = URIRef(f"http://example.com/person{person_i}")
 
-                person_builder: Union[FoafPerson.Builder, SchemaPerson.Builder]
+                person_builder: FoafPerson.Builder | SchemaPerson.Builder
                 if person_i % 2 == 0:
                     person_builder = (
                         FoafPerson.builder(
@@ -302,9 +302,7 @@ class SyntheticDataPipeline(Pipeline):
                 original_image_src = "https://paradicms.org/img/synthetic/1000x1000.png"
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
-                original_image_builder: Union[
-                    DcImage.Builder, SchemaImageObject.Builder
-                ]
+                original_image_builder: DcImage.Builder | SchemaImageObject.Builder
                 if image_i % 2 == 0:
                     original_image_builder = (
                         DcImage.builder(
@@ -365,16 +363,14 @@ class SyntheticDataPipeline(Pipeline):
         def __generate_collections(
             self,
             *,
-            agents: Tuple[Agent, ...],
-            concepts_by_value: Dict[str, Concept],
-        ) -> Iterable[Union[Collection, Image, Location, Work]]:
+            agents: tuple[Agent, ...],
+            concepts_by_value: dict[str, Concept],
+        ) -> Iterable[Collection | Image | Location | Work]:
             assert self.__collections >= 2
             for collection_i in range(self.__collections):
                 collection_name = f"Collection{collection_i}"
                 collection_uri = URIRef(f"http://example.com/collection{collection_i}")
-                collection_builder: Union[
-                    DcCollection.Builder, SchemaCollection.Builder
-                ]
+                collection_builder: DcCollection.Builder | SchemaCollection.Builder
                 if collection_i % 2 == 0:
                     collection_builder = DcCollection.builder(
                         title=collection_name, uri=collection_uri
@@ -406,7 +402,7 @@ class SyntheticDataPipeline(Pipeline):
                 # For collection 0, force the GUI to use a work image
 
                 assert self.__works_per_collection >= 2
-                for work_i in range(self.__works_per_collection):
+                for _work_i in range(self.__works_per_collection):
                     for model in self.__generate_work(
                         agents=agents,
                         concepts_by_value=concepts_by_value,
@@ -419,20 +415,18 @@ class SyntheticDataPipeline(Pipeline):
 
                 yield collection_builder.build()
 
-        def __generate_concepts(self) -> Iterable[Union[Concept, Image]]:
+        def __generate_concepts(self) -> Iterable[Concept | Image]:
             concept_urn_i = 0
             for property_ in self.__PROPERTIES:
                 if property_.uri == DCTERMS.creator:
                     continue
-                for property_value in property_.values:
+                for property_value in property_.values:  # noqa: PD011
                     concept_pref_label = f"Concept {concept_urn_i}"
                     concept_uri = URIRef(
                         f"urn:paradicms:etl:pipeline:{SyntheticDataPipeline.ID}:concept:{concept_urn_i}"
                     )
 
-                    concept_builder: Union[
-                        SkosConcept.Builder, SchemaDefinedTerm.Builder
-                    ]
+                    concept_builder: SkosConcept.Builder | SchemaDefinedTerm.Builder
                     if str(property_.uri).startswith(str(DCTERMS)):
                         concept_builder = (
                             SkosConcept.builder(
@@ -467,7 +461,9 @@ class SyntheticDataPipeline(Pipeline):
 
                     concept_urn_i += 1
 
-        def __generate_exhibition_events(self):
+        def __generate_exhibition_events(
+            self,
+        ) -> Iterable[SchemaExhibitionEvent | Image]:
             for exhibition_event_i in range(self.__exhibition_events):
                 exhibition_event_name = f"Exhibition event {exhibition_event_i}"
                 exhibition_event_uri = URIRef(
@@ -496,7 +492,7 @@ class SyntheticDataPipeline(Pipeline):
 
                 yield exhibition_event_builder.build()
 
-        def __generate_properties(self):
+        def __generate_properties(self) -> Iterable[Image | Property | PropertyGroup]:
             property_group_builder = CmsPropertyGroup.builder(
                 label="Synthetic data properties",
                 uri=URIRef(
@@ -513,9 +509,7 @@ class SyntheticDataPipeline(Pipeline):
                     property_group_builder.add_image(image.uri)
 
             for property_ in self.__PROPERTIES:
-                property_model_builder: Union[
-                    RdfProperty.Builder, SchemaProperty.Builder
-                ]
+                property_model_builder: RdfProperty.Builder | SchemaProperty.Builder
                 if str(property_.uri).startswith(str(DCTERMS)):
                     property_model_builder = RdfProperty.builder(
                         label=property_.label, uri=property_.uri
@@ -543,16 +537,14 @@ class SyntheticDataPipeline(Pipeline):
                 yield property_model
                 property_group_builder.add_property(property_model.uri)
 
-            yield property_group_builder.build()
-
-        def __generate_work(
+        def __generate_work(  # noqa: PLR0912, C901, PLR0915
             self,
             *,
-            agents: Tuple[Agent, ...],
-            concepts_by_value: Dict[str, Concept],
+            agents: tuple[Agent, ...],
+            concepts_by_value: dict[str, Concept],
             title_prefix: str,
             uri_prefix: str,
-        ) -> Iterable[Union[Image, Location, Work]]:
+        ) -> Iterable[Image | Location | Work]:
             work_i = self.__next_work_i
             self.__next_work_i += 1
             work_uri = URIRef(uri_prefix + str(work_i))
@@ -570,7 +562,7 @@ class SyntheticDataPipeline(Pipeline):
             work_page = URIRef("http://example.com/work/" + str(work_i))
             work_provenance = f"{work_title} provenance"
 
-            work_builder: Union[DcPhysicalObject.Builder, SchemaCreativeWork.Builder]
+            work_builder: DcPhysicalObject.Builder | SchemaCreativeWork.Builder
             if work_i % 2 == 0:
                 work_builder = DcPhysicalObject.builder(title=work_title, uri=work_uri)
                 for work_alternative_title in work_alternative_titles:
@@ -687,7 +679,7 @@ class SyntheticDataPipeline(Pipeline):
                     URIRef("https://www.metmuseum.org/art/collection/search/436535")
                 )
 
-            description_builder: Union[DcText.Builder, SchemaTextObject.Builder]
+            description_builder: DcText.Builder | SchemaTextObject.Builder
             if isinstance(work_builder, DcPhysicalObject.Builder):
                 description_builder = DcText.builder(
                     self.__LOREM_IPSUM,
@@ -717,7 +709,7 @@ class SyntheticDataPipeline(Pipeline):
 
             yield work_builder.build()
 
-    def __init__(self, loader: Optional[Loader] = None):
+    def __init__(self, loader: Loader | None = None):
         root_dir_path = (
             Path(__file__).absolute().parent.parent.parent.parent.parent.parent
         )
