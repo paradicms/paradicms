@@ -43,6 +43,7 @@ module = [
     "configargparse",
     "inflector",
     "openpyxl",
+    "PIL",
     "pyformance",
     "stringcase",
     "tqdm",
