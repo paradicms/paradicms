@@ -1,7 +1,8 @@
-from typing import Any, Tuple
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
 
 from rdflib import SDO, Graph, URIRef
-from rdflib.resource import Resource
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.schema.schema_creative_work_mixin import (
@@ -9,6 +10,9 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
 )
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
 
 
 class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
@@ -19,11 +23,11 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
     class Builder(
         SchemaModel.Builder, SchemaCreativeWorkMixin.Builder, Collection.Builder
     ):
-        def add_work(self, work: URIRef) -> "SchemaCollection.Builder":
+        def add_work(self, work: URIRef) -> SchemaCollection.Builder:
             self.add(SDO.hasPart, work)
             return self
 
-        def build(self) -> "SchemaCollection":
+        def build(self) -> SchemaCollection:
             return SchemaCollection(self._resource)
 
     def __init__(self, resource: Resource):
@@ -51,5 +55,5 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
         return self.Builder(self._resource)
 
     @property
-    def work_uris(self) -> Tuple[URIRef, ...]:
+    def work_uris(self) -> tuple[URIRef, ...]:
         return tuple(self._values(SDO.hasPart, self._map_term_to_uri))
