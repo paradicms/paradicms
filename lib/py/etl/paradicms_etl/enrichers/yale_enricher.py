@@ -1,9 +1,9 @@
 import logging
+from collections.abc import Iterable
 from enum import Enum
 from pathlib import Path
-from typing import Iterable, Tuple
 
-from rdflib import URIRef, RDF
+from rdflib import RDF, URIRef
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.iiif.iiif_presentation_api_v2_manifest import (
@@ -120,12 +120,12 @@ class YaleEnricher:
     @staticmethod
     def __get_model_yale_entity_references(
         *, yale_entity_type: _YaleEntityType, model: Model
-    ) -> Tuple[URIRef, ...]:
+    ) -> tuple[URIRef, ...]:
         """
         Get a list of Wikidata entity URIs referenced by the given model.
         """
 
-        def is_yale_entity_uri(uri: URIRef):
+        def is_yale_entity_uri(uri: URIRef) -> bool:
             return match_url(
                 uri,
                 match_netloc="lux.collections.yale.edu",
@@ -135,11 +135,10 @@ class YaleEnricher:
         if isinstance(model, StubModel):
             if is_yale_entity_uri(model.uri):
                 return (model.uri,)
-            else:
-                return ()
-        else:
-            return tuple(
-                same_as_uri
-                for same_as_uri in model.same_as_uris
-                if is_yale_entity_uri(same_as_uri)
-            )
+            return ()
+
+        return tuple(
+            same_as_uri
+            for same_as_uri in model.same_as_uris
+            if is_yale_entity_uri(same_as_uri)
+        )

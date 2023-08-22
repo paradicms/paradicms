@@ -1,4 +1,4 @@
-from typing import Optional, Union
+from typing import Any
 
 from rdflib import SDO, Graph, URIRef
 from rdflib.resource import Resource
@@ -34,15 +34,15 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         return builder
 
     @property
-    def description(self) -> Union[str, Text, None]:
-        return self._optional_value(SDO.description, self._map_term_to_str_or_text)
+    def description(self) -> str | Text | None:
+        return self._optional_value(SDO.description, self._map_term_to_str_or_text)  # type: ignore
 
     @property
-    def encoding_format(self) -> Optional[str]:
+    def encoding_format(self) -> str | None:
         return self._optional_value(SDO.encodingFormat, self._map_term_to_str)
 
     @classmethod
-    def json_ld_context(cls):
+    def json_ld_context(cls) -> dict[str, Any]:
         return safe_dict_update(
             SchemaModel.json_ld_context(),
             SchemaCreativeWorkMixin.json_ld_context(),
@@ -56,5 +56,5 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         return self.Builder(self._resource)
 
     @property
-    def text(self) -> Union[str, Text, None]:
-        return self._optional_value(SDO.text, self._map_term_to_str_or_text)
+    def text(self) -> str | Text | None:
+        return self._optional_value(SDO.text, self._map_term_to_str_or_text)  # type: ignore

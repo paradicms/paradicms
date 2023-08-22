@@ -1,6 +1,9 @@
-from typing import Tuple, Optional
+from __future__ import annotations
 
-from rdflib import URIRef, RDFS, DCTERMS
+from typing import Optional
+
+from rdflib import DCTERMS, RDFS, URIRef
+from rdflib.resource import Resource
 from rdflib.term import Identifier
 
 from paradicms_etl.models.iiif.iiif_presentation_api_v2_namespace import (
@@ -13,8 +16,12 @@ SC = IiifPresentationApiV2Namespace
 
 
 class IiifPresentationApiV2Canvas(ResourceBackedModel):
+    @classmethod
+    def from_rdf(cls, resource: Resource) -> IiifPresentationApiV2Canvas:
+        return super().from_rdf(resource)  # type: ignore
+
     @property
-    def has_image_annotations(self) -> Tuple[OaAnnotation, ...]:
+    def has_image_annotations(self) -> tuple[OaAnnotation, ...]:
         return tuple(
             OaAnnotation.from_rdf(self._resource.graph.resource(annotation))
             for annotations in self._values(
@@ -34,4 +41,5 @@ class IiifPresentationApiV2Canvas(ResourceBackedModel):
 
     @property
     def rights(self) -> Optional[URIRef]:
+        return self._optional_value(DCTERMS.rights, self._map_term_to_uri)
         return self._optional_value(DCTERMS.rights, self._map_term_to_uri)
