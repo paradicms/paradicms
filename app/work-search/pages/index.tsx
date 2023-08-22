@@ -172,6 +172,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     "worksSort"
   );
 
+  console.info("Work query:", JSON.stringify(worksQuery));
   log.trace("Work query:", JSON.stringify(worksQuery));
   log.trace("Works page:", worksPage);
   log.trace("Work agents page:", workAgentsPage);
@@ -180,6 +181,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     if (loadingWorks) {
       return;
     }
+    console.info("loading works");
     log.trace("invoking getWorks");
     setLoadingWorks(true);
     api
@@ -578,5 +580,3 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     },
   };
 };
-
-(IndexPage as any).whyDidYouRender = true;
