@@ -50,7 +50,7 @@ class Image(Model, RightsMixin):
             raise NotImplementedError
 
         @abstractmethod
-        def set_src(self, src: str | ImageData | Literal | URIRef) -> "Image.Builder":
+        def set_src(self, src: str | ImageData | Literal | URIRef) -> Image.Builder:
             """
             src that can be used in an <img> tag; if not specified, defaults to URI
             """
