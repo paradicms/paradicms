@@ -537,6 +537,8 @@ class SyntheticDataPipeline(Pipeline):
                 yield property_model
                 property_group_builder.add_property(property_model.uri)
 
+            yield property_group_builder.build()
+
         def __generate_work(  # noqa: PLR0912, C901, PLR0915
             self,
             *,
@@ -743,7 +745,5 @@ class SyntheticDataPipeline(Pipeline):
         )
 
 
-if __name__ == "__main__":
-    SyntheticDataPipeline.main()
 if __name__ == "__main__":
     SyntheticDataPipeline.main()
