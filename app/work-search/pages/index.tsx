@@ -6,6 +6,7 @@ import {
   GetModelsResult,
   GetWorkLocationsResult,
   GetWorksResult,
+  WorksQuery,
   WorksSort,
   defaultAgentsSort,
   defaultEventsSort,
@@ -41,6 +42,7 @@ import {
 } from "@paradicms/react-dom-hooks";
 import {calculatePageMax} from "@paradicms/utilities";
 import {Layout} from "components/Layout";
+import equal from "fast-deep-equal";
 import log from "loglevel";
 import {GetStaticProps} from "next";
 import dynamic from "next/dynamic";
@@ -77,6 +79,32 @@ const LocationsMap = dynamic<{
     import("../components/LocationsMap").then(module => module.LocationsMap),
   {ssr: false}
 );
+
+interface GetWorkAgentsState {
+  readonly result: GetModelsResult & {modelKeysSet: Set<string>};
+  readonly worksQuery: WorksQuery;
+  readonly workAgentsPage: number;
+  readonly workAgentsSort: AgentsSort;
+}
+
+interface GetWorkEventsState {
+  readonly result: GetModelsResult & {modelKeysSet: Set<string>};
+  readonly worksQuery: WorksQuery;
+  readonly workEventsPage: number;
+  readonly workEventsSort: EventsSort;
+}
+
+interface GetWorkLocationsState {
+  readonly result: GetWorkLocationsResult;
+  readonly worksQuery: WorksQuery;
+}
+
+interface GetWorksState {
+  readonly result: GetWorksResult;
+  readonly worksQuery: WorksQuery;
+  readonly worksPage: number;
+  readonly worksSort: WorksSort;
+}
 
 interface StaticProps {
   readonly apiConfiguration: ApiConfiguration;
@@ -117,30 +145,25 @@ const IndexPageImpl: React.FunctionComponent<Omit<
   );
   const activeTabKey: TabKey = activeTabKeyQueryParam ?? "works";
 
-  const [getWorkAgentsResult, setGetWorkAgentsResult] = useState<
-    (GetModelsResult & {modelKeysSet: Set<string>}) | null
-  >(null);
+  const [
+    getWorkAgentsState,
+    setGetWorkAgentsState,
+  ] = useState<GetWorkAgentsState | null>(null);
 
-  const [getWorkEventsResult, setGetWorkEventsResult] = useState<
-    (GetModelsResult & {modelKeysSet: Set<string>}) | null
-  >(null);
+  const [
+    getWorkEventsState,
+    setGetWorkEventsState,
+  ] = useState<GetWorkEventsState | null>(null);
 
   const [
     // @ts-ignore
-    getWorkLocationsResult,
-    setGetWorkLocationsResult,
-  ] = useState<GetWorkLocationsResult | null>(null);
+    getWorkLocationsState,
+    setGetWorkLocationsState,
+  ] = useState<GetWorkLocationsState | null>(null);
 
-  const [getWorksResult, setGetWorksResult] = useState<GetWorksResult | null>(
+  const [getWorksState, setGetWorksState] = useState<GetWorksState | null>(
     null
   );
-
-  const [loadingWorkAgents, setLoadingWorkAgents] = useState<boolean>(false);
-  const [loadingWorkEvents, setLoadingWorkEvents] = useState<boolean>(false);
-  const [loadingWorkLocations, setLoadingWorkLocations] = useState<boolean>(
-    false
-  );
-  const [loadingWorks, setLoadingWorks] = useState<boolean>(false);
 
   const objectsPerPage = configuration?.objectsPerPage ?? 10;
 
@@ -172,18 +195,22 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     "worksSort"
   );
 
-  console.info("Work query:", JSON.stringify(worksQuery));
   log.trace("Work query:", JSON.stringify(worksQuery));
   log.trace("Works page:", worksPage);
   log.trace("Work agents page:", workAgentsPage);
 
   useEffect(() => {
-    if (loadingWorks) {
-      return;
+    if (getWorksState !== null) {
+      if (
+        getWorksState.worksPage === worksPage &&
+        equal(getWorksState.worksQuery, worksQuery) &&
+        equal(getWorksState.worksSort, worksSort)
+      ) {
+        log.trace("duplicate getWorks");
+        return;
+      }
     }
-    console.info("loading works");
     log.trace("invoking getWorks");
-    setLoadingWorks(true);
     api
       .getWorks({
         joinSelector: workSearchWorkJoinSelector,
@@ -193,20 +220,29 @@ const IndexPageImpl: React.FunctionComponent<Omit<
         sort: worksSort,
         valueFacetValueThumbnailSelector: valueThumbnailSelector,
       })
-      .then(getWorksResult => {
-        log.debug("getWorks result:", getWorksResult.totalModelsCount);
-        setGetWorksResult(getWorksResult);
-        setLoadingWorks(false);
+      .then(result => {
+        log.debug("getWorks result:", result.totalModelsCount);
+        setGetWorksState({
+          result,
+          worksPage,
+          worksQuery,
+          worksSort,
+        });
       });
   }, [api, worksPage, worksQuery, worksSort]);
 
-  // Effect that responds to switching to the work agents tab
   useEffect(() => {
-    if (loadingWorkAgents) {
-      return;
+    if (getWorkAgentsState !== null) {
+      if (
+        getWorkAgentsState.workAgentsPage === workAgentsPage &&
+        equal(getWorkAgentsState.workAgentsSort, workAgentsSort) &&
+        equal(getWorkAgentsState.worksQuery, worksQuery)
+      ) {
+        log.trace("duplicate getWorkAgents");
+        return;
+      }
     }
     log.trace("invoking getWorkAgents");
-    setLoadingWorkAgents(true);
     api
       .getWorkAgents({
         joinSelector: {
@@ -217,27 +253,33 @@ const IndexPageImpl: React.FunctionComponent<Omit<
         sort: workAgentsSort,
         worksQuery,
       })
-      .then(getWorkAgentsResult => {
-        log.debug(
-          "getWorkAgents result:",
-          getWorkAgentsResult.totalModelsCount
-        );
-        setGetWorkAgentsResult({
-          ...getWorkAgentsResult,
-          modelKeysSet: new Set(getWorkAgentsResult.modelKeys),
+      .then(result => {
+        log.debug("getWorkAgents result:", result.totalModelsCount);
+        setGetWorkAgentsState({
+          result: {
+            ...result,
+            modelKeysSet: new Set(result.modelKeys),
+          },
+          workAgentsPage,
+          workAgentsSort,
+          worksQuery,
         });
-        setLoadingWorkAgents(false);
       });
   }, [api, workAgentsPage, workAgentsSort, worksQuery]);
 
-  // Effect that responds to switching to the work events tab
   useEffect(() => {
-    if (loadingWorkEvents) {
-      return;
+    if (getWorkEventsState !== null) {
+      if (
+        getWorkEventsState.workEventsPage === workEventsPage &&
+        equal(getWorkEventsState.workEventsSort, workEventsSort) &&
+        equal(getWorkEventsState.worksQuery, worksQuery)
+      ) {
+        log.trace("duplicate getWorkEvents");
+        return;
+      }
     }
+
     log.trace("invoking getWorkEvents");
-    setLoadingWorkEvents(true);
-    // "Paging" the timeline loads more events rather than typical pagination.
     api
       .getWorkEvents({
         eventsQuery: {
@@ -254,25 +296,27 @@ const IndexPageImpl: React.FunctionComponent<Omit<
         sort: workEventsSort,
         worksQuery,
       })
-      .then(getWorkEventsResult => {
-        log.debug(
-          "getWorkEvents result:",
-          getWorkEventsResult.totalModelsCount
-        );
-        setGetWorkEventsResult({
-          ...getWorkEventsResult,
-          modelKeysSet: new Set(getWorkEventsResult.modelKeys),
+      .then(result => {
+        log.debug("getWorkEvents result:", result.totalModelsCount);
+        setGetWorkEventsState({
+          result: {...result, modelKeysSet: new Set(result.modelKeys)},
+          workEventsPage,
+          workEventsSort,
+          worksQuery,
         });
-        setLoadingWorkEvents(false);
       });
   }, [api, workEventsPage, workEventsSort, worksQuery]);
 
   useEffect(() => {
-    if (loadingWorkLocations) {
+    if (
+      getWorkLocationsState !== null &&
+      equal(getWorkLocationsState.worksQuery, worksQuery)
+    ) {
+      log.trace("duplicate getWorkLocations");
       return;
     }
+
     log.trace("invoking getWorkLocations");
-    setLoadingWorkLocations(true);
     api
       .getWorkLocations({
         locationsQuery: {
@@ -285,19 +329,18 @@ const IndexPageImpl: React.FunctionComponent<Omit<
         },
         worksQuery,
       })
-      .then(getWorkLocationsResult => {
-        log.debug(
-          "getWorkLocations result:",
-          getWorkLocationsResult.workLocations.length
-        );
-        setGetWorkLocationsResult(getWorkLocationsResult);
-        setLoadingWorkLocations(false);
+      .then(result => {
+        log.debug("getWorkLocations result:", result.workLocations.length);
+        setGetWorkLocationsState({
+          result,
+          worksQuery,
+        });
       });
   }, [api, worksQuery]);
 
   const [showFilters, setShowFilters] = useState<boolean>(false);
 
-  if (getWorksResult === null) {
+  if (getWorksState === null) {
     return null;
   }
 
@@ -306,7 +349,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
   // }
 
   const filterControls = createWorksFilterControls({
-    facets: getWorksResult.facets,
+    facets: getWorksState.result.facets,
     filters: worksQuery.filters ?? [],
     getAbsoluteImageSrc: relativeImageSrc =>
       getAbsoluteImageSrc(relativeImageSrc, router),
@@ -337,9 +380,11 @@ const IndexPageImpl: React.FunctionComponent<Omit<
           <Col className="d-flex justify-content-end px-0">
             <div className="d-flex flex-column justify-content-center pe-4">
               <div>
-                <span>{getWorksResult.totalModelsCount}</span>&nbsp;
+                <span>{getWorksState.result.totalModelsCount}</span>&nbsp;
                 <span>
-                  {getWorksResult.totalModelsCount === 1 ? "work" : "works"}
+                  {getWorksState.result.totalModelsCount === 1
+                    ? "work"
+                    : "works"}
                 </span>
                 &nbsp;
                 {worksQuery.text ? (
@@ -384,14 +429,20 @@ const IndexPageImpl: React.FunctionComponent<Omit<
               getAbsoluteImageSrc(relativeImageSrc, router)
             }
             renderWorkLink={renderWorkLink}
-            works={getWorksResult.modelSet.works}
+            works={getWorksState.result.modelSet.works}
           />
         </Row>
-        {worksPageMax({getWorksResult, objectsPerPage}) > 0 ? (
+        {worksPageMax({getWorksResult: getWorksState.result, objectsPerPage}) >
+        0 ? (
           <Row style={{marginTop: "-25px"}}>
             <Col className="d-flex justify-content-center" xs={12}>
               <Pagination
-                count={worksPageMax({getWorksResult, objectsPerPage}) + 1}
+                count={
+                  worksPageMax({
+                    getWorksResult: getWorksState.result,
+                    objectsPerPage,
+                  }) + 1
+                }
                 page={worksPage + 1}
                 onChange={(_, newPage) => setWorksPage(newPage - 1)}
               />
@@ -402,24 +453,26 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     ),
   });
   if (
-    getWorkLocationsResult &&
-    getWorkLocationsResult.workLocations.length > 0
+    getWorkLocationsState &&
+    getWorkLocationsState.result.workLocations.length > 0
   ) {
     tabs.push({
       key: "workLocations",
       title: "Map",
       content: (
         <LocationsMap
-          locations={getWorkLocationsResult.workLocations.map(workLocation => ({
-            centroid: workLocation.location.centroid!,
-            icon: getWorkLocationIcon(workLocation),
-            label: getWorkLocationLabel(workLocation),
-          }))}
+          locations={getWorkLocationsState.result.workLocations.map(
+            workLocation => ({
+              centroid: workLocation.location.centroid!,
+              icon: getWorkLocationIcon(workLocation),
+              label: getWorkLocationLabel(workLocation),
+            })
+          )}
         />
       ),
     });
   }
-  if (getWorkAgentsResult && getWorkAgentsResult.modelKeys.length > 0) {
+  if (getWorkAgentsState && getWorkAgentsState.result.modelKeys.length > 0) {
     tabs.push({
       key: "workAgents",
       title: "People",
@@ -435,10 +488,10 @@ const IndexPageImpl: React.FunctionComponent<Omit<
           </Row>
           <Row>
             <AgentsGallery
-              agents={getWorkAgentsResult.modelSet.works
+              agents={getWorkAgentsState.result.modelSet.works
                 .flatMap(work =>
                   work.agents.filter(agent =>
-                    getWorkAgentsResult.modelKeysSet.has(agent.agent.key)
+                    getWorkAgentsState.result.modelKeysSet.has(agent.agent.key)
                   )
                 )
                 .map(agent => agent.agent)}
@@ -447,12 +500,18 @@ const IndexPageImpl: React.FunctionComponent<Omit<
               }
             />
           </Row>
-          {workAgentsPageMax({getWorkAgentsResult, objectsPerPage}) > 0 ? (
+          {workAgentsPageMax({
+            getWorkAgentsResult: getWorkAgentsState.result,
+            objectsPerPage,
+          }) > 0 ? (
             <Row className="mt-4">
               <Col className="d-flex justify-content-center" xs={12}>
                 <Pagination
                   count={
-                    workAgentsPageMax({getWorkAgentsResult, objectsPerPage}) + 1
+                    workAgentsPageMax({
+                      getWorkAgentsResult: getWorkAgentsState.result,
+                      objectsPerPage,
+                    }) + 1
                   }
                   page={workAgentsPage + 1}
                   onChange={(_, newPage) => setWorkAgentsPage(newPage - 1)}
@@ -464,7 +523,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       ),
     });
   }
-  if (getWorkEventsResult && getWorkEventsResult.modelKeys.length > 0) {
+  if (getWorkEventsState && getWorkEventsState.result.modelKeys.length > 0) {
     tabs.push({
       key: "workEvents",
       title: "Timeline",
@@ -476,14 +535,14 @@ const IndexPageImpl: React.FunctionComponent<Omit<
           page={workEventsPage}
           pageMax={calculatePageMax({
             objectsPerPage,
-            totalObjects: getWorkEventsResult.totalModelsCount,
+            totalObjects: getWorkEventsState.result.totalModelsCount,
           })}
           renderWorkLink={renderWorkLink}
           setPage={setWorkEventsPage}
-          workEvents={getWorkEventsResult.modelSet.works.flatMap(work =>
+          workEvents={getWorkEventsState.result.modelSet.works.flatMap(work =>
             work.events
               .filter(workEvent =>
-                getWorkEventsResult.modelKeysSet.has(workEvent.key)
+                getWorkEventsState.result.modelKeysSet.has(workEvent.key)
               )
               .map(workEvent => ({work, workEvent}))
           )}
@@ -508,7 +567,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       properties={properties}
     >
       <>
-        {getWorksResult.totalModelsCount > 0 ? (
+        {getWorksState.result.totalModelsCount > 0 ? (
           tabs.length === 1 ? (
             tabs[0].content
           ) : (
@@ -542,6 +601,8 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     </Layout>
   );
 };
+
+// (IndexPageImpl as any).whyDidYouRender = true;
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   apiConfiguration,

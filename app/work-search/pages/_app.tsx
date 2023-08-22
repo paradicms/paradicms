@@ -1,11 +1,20 @@
+import {configureLogging} from "@paradicms/next";
+import "leaflet/dist/leaflet.css";
+import {NextAdapter} from "next-query-params";
 import {AppProps} from "next/app";
 import Head from "next/head";
 import React from "react";
 import "react-vertical-timeline-component/style.min.css";
-import "leaflet/dist/leaflet.css";
-import {NextAdapter} from "next-query-params";
 import {QueryParamProvider} from "use-query-params";
-import {configureLogging} from "@paradicms/next";
+
+// if (process.env.NODE_ENV === "development") {
+//   if (typeof window !== "undefined") {
+//     const whyDidYouRender = require("@welldone-software/why-did-you-render");
+//     whyDidYouRender(React, {
+//       trackAllPureComponents: true,
+//     });
+//   }
+// }
 
 configureLogging();
 
