@@ -52,4 +52,3 @@ class SchemaDefinedTerm(SchemaModel, Concept):
             return value.identifier
         assert isinstance(value, Node)
         return value
-        return value

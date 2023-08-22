@@ -1,5 +1,5 @@
 import pytest
-from rdflib import URIRef, Literal
+from rdflib import Literal, URIRef
 
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,

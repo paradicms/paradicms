@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from typing import Optional
+from typing import TYPE_CHECKING
 
 from rdflib import DCTERMS, RDFS, URIRef
-from rdflib.resource import Resource
 from rdflib.term import Identifier
 
 from paradicms_etl.models.iiif.iiif_presentation_api_v2_namespace import (
@@ -11,6 +10,9 @@ from paradicms_etl.models.iiif.iiif_presentation_api_v2_namespace import (
 )
 from paradicms_etl.models.oa.oa_annotation import OaAnnotation
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
 
 SC = IiifPresentationApiV2Namespace
 
@@ -40,6 +42,5 @@ class IiifPresentationApiV2Canvas(ResourceBackedModel):
         return SC.Canvas
 
     @property
-    def rights(self) -> Optional[URIRef]:
-        return self._optional_value(DCTERMS.rights, self._map_term_to_uri)
+    def rights(self) -> URIRef | None:
         return self._optional_value(DCTERMS.rights, self._map_term_to_uri)

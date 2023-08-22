@@ -40,4 +40,3 @@ class IiifPresentationApiV2Sequence(ResourceBackedModel):
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return SC.Sequence
-        return SC.Sequence

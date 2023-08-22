@@ -306,5 +306,3 @@ class ResourceBackedModel(Model):
                 mapped_value = mapper(value)
                 if mapped_value is not None:
                     yield mapped_value
-                    yield mapped_value
-                    yield mapped_value
