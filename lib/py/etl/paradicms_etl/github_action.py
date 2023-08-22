@@ -4,7 +4,7 @@ import os
 import sys
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Dict, Any, Type, Optional
+from typing import Any
 
 import yaml
 from configargparse import ArgParser
@@ -17,7 +17,7 @@ class GitHubAction(ABC):
 
     @dataclasses.dataclass(frozen=True)
     class Inputs:
-        class _RequiredType(str):
+        class _RequiredType(str):  # noqa: SLOT000
             pass
 
         REQUIRED = _RequiredType()
@@ -42,12 +42,12 @@ class GitHubAction(ABC):
 
         @classmethod
         @property
-        def fields_yaml(cls) -> Dict[str, Dict[str, Any]]:
-            fields_yaml: Dict[str, Dict[str, Any]] = {}
+        def fields_yaml(cls) -> dict[str, dict[str, Any]]:
+            fields_yaml: dict[str, dict[str, Any]] = {}
             for field in dataclasses.fields(cls):
                 if not issubclass(field.type, str):
                     continue
-                field_yaml: Dict[str, Any] = {}
+                field_yaml: dict[str, Any] = {}
                 if field.default:
                     field_yaml["default"] = str(field.default)
                 if field.metadata:
@@ -77,7 +77,9 @@ class GitHubAction(ABC):
         self._pipeline_id = pipeline_id
 
     @classmethod
-    def _add_arguments(cls, arg_parser: ArgParser, *, inputs_class: Type[Inputs]):
+    def _add_arguments(
+        cls, arg_parser: ArgParser, *, inputs_class: type[Inputs]
+    ) -> None:
         arg_parser.add_argument(
             "-c", is_config_file=True, help="path to a file to read arguments from"
         )
@@ -96,7 +98,7 @@ class GitHubAction(ABC):
             )
 
     @classmethod
-    def __generate_action_yml(cls, inputs_class: Type[Inputs]):
+    def __generate_action_yml(cls, inputs_class: type[Inputs]) -> None:
         assert cls.__doc__ is not None
         action_yaml = {
             "author": "Minor Gordon",
@@ -110,7 +112,7 @@ class GitHubAction(ABC):
         }
 
         action_yml_file_path = (
-            Path(sys.modules[cls.__module__].__file__).parent / "action.yml"  # type: ignore
+            Path(sys.modules[cls.__module__].__file__).parent / "action.yml"  # type: ignore  # noqa: PGH003
         ).absolute()
         with open(action_yml_file_path, "w+") as action_yml_file:
             yaml.dump(
@@ -119,7 +121,7 @@ class GitHubAction(ABC):
             )
 
     @classmethod
-    def main(cls, *, inputs_class: Optional[Type[Inputs]] = None):
+    def main(cls, *, inputs_class: type[Inputs] | None = None) -> None:
         if inputs_class is None:
             inputs_class = cls.Inputs
 
@@ -147,17 +149,19 @@ class GitHubAction(ABC):
         cls_kwds.update(inputs)
 
         # Call its run method
-        cls(**cls_kwds)._run()
+        cls(**cls_kwds)._run()  # noqa: SLF001
 
     @classmethod
-    def __parse_args(cls, *, inputs_class: Type[Inputs]):
+    def __parse_args(cls, *, inputs_class: type[Inputs]):  # noqa: ANN206
         arg_parser = ArgParser()
         cls._add_arguments(arg_parser, inputs_class=inputs_class)
         return arg_parser.parse_args()
 
     @classmethod
-    def __parse_inputs(cls, args, *, inputs_class: Type[Inputs]) -> Dict[str, str]:
-        inputs: Dict[str, str] = {}
+    def __parse_inputs(
+        cls, args, *, inputs_class: type[Inputs]  # noqa: ANN001
+    ) -> dict[str, str]:
+        inputs: dict[str, str] = {}
         for field in dataclasses.fields(inputs_class):
             value = getattr(args, field.name)
             if value is None:
@@ -170,5 +174,5 @@ class GitHubAction(ABC):
         return inputs
 
     @abstractmethod
-    def _run(self):
+    def _run(self) -> None:
         raise NotImplementedError
