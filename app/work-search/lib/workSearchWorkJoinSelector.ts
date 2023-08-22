@@ -1,7 +1,9 @@
-import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
-import {valueThumbnailSelector} from "./valueThumbnailSelector";
-import {workSearchWorkEventJoinSelector} from "./workSearchWorkEventJoinSelector";
 import {WorkJoinSelector} from "@paradicms/api";
+import {
+  galleryThumbnailSelector,
+  valueThumbnailSelector,
+} from "@paradicms/react-dom-components";
+import {workSearchWorkEventJoinSelector} from "./workSearchWorkEventJoinSelector";
 
 export const workSearchWorkJoinSelector: WorkJoinSelector = {
   agents: {

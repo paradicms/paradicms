@@ -1,5 +1,5 @@
-import * as process from "process";
 import log from "loglevel";
+import * as process from "process";
 
 export const configureLogging = () => {
   if (process && process.env.NODE_ENV === "development") {

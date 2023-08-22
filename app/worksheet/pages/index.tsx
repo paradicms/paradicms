@@ -1,8 +1,15 @@
+import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {JsonAppConfiguration, ModelSetFactory} from "@paradicms/models";
+import {getStaticApi} from "@paradicms/next";
+import {createDataset} from "@paradicms/rdf";
+import classnames from "classnames";
+import {GetStaticProps} from "next";
+import Link from "next/link";
+import {useRouter} from "next/router";
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
-import {Exception} from "~/Exception";
-import {GenericErrorHandler} from "~/components/GenericErrorHandler";
-import {Frame} from "~/components/Frame";
+import Hammer from "react-hammerjs";
 import {
   Button,
   Card,
@@ -15,27 +22,20 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import classnames from "classnames";
-import {useWorksheetStateService} from "~/hooks/useWorksheetStateService";
-import Hammer from "react-hammerjs";
+import {Exception} from "~/Exception";
+import {Hrefs} from "~/Hrefs";
+import {Frame} from "~/components/Frame";
+import {GenericErrorHandler} from "~/components/GenericErrorHandler";
+import {Headline} from "~/components/Headline";
+import {Spinner} from "~/components/Spinner";
 import {useCurrentUser} from "~/hooks/useCurrentUser";
 import {useUserSettingsService} from "~/hooks/useUserSettingsService";
+import {useWorksheetStateService} from "~/hooks/useWorksheetStateService";
 import {UserSettings} from "~/models/UserSettings";
-import {defaultWorksheetConfiguration} from "~/models/defaultWorksheetConfiguration";
-import {Hrefs} from "~/Hrefs";
-import {Spinner} from "~/components/Spinner";
-import {Headline} from "~/components/Headline";
-import {defaultUserSettings} from "~/models/defaultUserSettings";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPencilAlt, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import {WorksheetMode} from "~/models/WorksheetMode";
-import {getStaticApi} from "@paradicms/next";
-import {GetStaticProps} from "next";
-import {JsonAppConfiguration, ModelSetFactory} from "@paradicms/models";
-import Link from "next/link";
-import {useRouter} from "next/router";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {createDataset} from "@paradicms/rdf";
+import {WorksheetMode} from "~/models/WorksheetMode";
+import {defaultUserSettings} from "~/models/defaultUserSettings";
+import {defaultWorksheetConfiguration} from "~/models/defaultWorksheetConfiguration";
 
 const ExistingWorksheetStatesCard: React.FunctionComponent<{
   existingWorksheetStateIds: readonly string[];
@@ -341,8 +341,6 @@ const WorksheetStateConfigurationHeadline: React.FunctionComponent = () => {
     </>
   );
 };
-
-// (WorksheetStartPage as any).whyDidYouRender = true;
 
 interface StaticProps {
   readonly configuration: JsonAppConfiguration | null;

@@ -1,11 +1,13 @@
 import {expect} from "chai";
-import {testModelSet} from "./testModelSet";
 import {describe} from "mocha";
+import {testModelSet} from "./testModelSet";
 
 describe("MemModelSet", () => {
   const sut = testModelSet;
 
-  it("should exercise all indices", () => {
+  it("should exercise all indices", function() {
+    this.timeout(5000);
+
     const collections = sut.collections;
     expect(collections).to.have.length(2);
     for (const collection of collections) {

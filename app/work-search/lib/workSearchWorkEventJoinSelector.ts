@@ -1,5 +1,5 @@
 import {EventJoinSelector} from "@paradicms/api";
-import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
+import {galleryThumbnailSelector} from "@paradicms/react-dom-components";
 
 export const workSearchWorkEventJoinSelector: EventJoinSelector = {
   agents: {},
