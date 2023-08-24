@@ -1,15 +1,15 @@
-import {Mixin} from "ts-mixer";
-import {Property} from "../Property";
-import {Text} from "../Text";
-import {cms, schema} from "@paradicms/vocabularies";
-import {getRdfInstanceQuads, mapTermToBoolean, mapTermToNumber,} from "@paradicms/rdf";
-import {PropertyGroup} from "../PropertyGroup";
-import {NamedNode} from "@rdfjs/types";
-import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
-import {Memoize} from "typescript-memoize";
-import {requireNonNull} from "@paradicms/utilities";
-import {SchemaModel} from "./SchemaModel";
-import {PropertyValueUnion} from "../PropertyValueUnion";
+import { getRdfInstanceQuads, mapTermToBoolean, mapTermToNumber, } from "@paradicms/rdf";
+import { requireNonNull } from "@paradicms/utilities";
+import { cms, schema } from "@paradicms/vocabularies";
+import { NamedNode } from "@rdfjs/types";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Property } from "../Property";
+import { PropertyGroup } from "../PropertyGroup";
+import { PropertyValue } from "../PropertyValue";
+import { Text } from "../Text";
+import { createPropertyValuesFromQuadSubjects } from "../createPropertyValuesFromQuadSubjects";
+import { SchemaModel } from "./SchemaModel";
 
 export class SchemaProperty extends Mixin(SchemaModel)
   implements Property {
@@ -51,7 +51,7 @@ export class SchemaProperty extends Mixin(SchemaModel)
   }
 
   @Memoize()
-  get rangeValues(): readonly PropertyValueUnion[] {
+  get rangeValues(): readonly PropertyValue[] {
     const range = this.range;
     if (range === null) {
       return [];

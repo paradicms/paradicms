@@ -1,15 +1,15 @@
-import {Work} from "../Work";
-import {Mixin} from "ts-mixer";
-import {WorkAgent} from "../WorkAgent";
-import {Text} from "../Text";
-import {WorkEventUnion} from "../WorkEventUnion";
-import {WorkLocation} from "../WorkLocation";
-import {Memoize} from "typescript-memoize";
-import {SameAsImagesMixin} from "./SameAsImagesMixin";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {SameAsModel} from "./SameAsModel";
-import {AgentUnion} from "../AgentUnion";
-import {PropertyValueUnion} from "../PropertyValueUnion";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { AgentUnion } from "../AgentUnion";
+import { PropertyValue } from "../PropertyValue";
+import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
+import { Text } from "../Text";
+import { Work } from "../Work";
+import { WorkAgent } from "../WorkAgent";
+import { WorkEventUnion } from "../WorkEventUnion";
+import { WorkLocation } from "../WorkLocation";
+import { SameAsImagesMixin } from "./SameAsImagesMixin";
+import { SameAsModel } from "./SameAsModel";
 
 export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>, SomeImageThumbnailMixin) implements Work {
     get agents(): readonly WorkAgent[] {
@@ -44,13 +44,13 @@ export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>
         return this.getBestValue(model => model.location);
     }
 
-    get propertyValues(): readonly PropertyValueUnion[] {
+    get propertyValues(): readonly PropertyValue[] {
         return this.getAllValues(model => model.propertyValues);
     }
 
     @Memoize()
-    propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValueUnion[] {
-        const propertyValues: PropertyValueUnion[] = [];
+    propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+        const propertyValues: PropertyValue[] = [];
         for (const propertyValue of this.propertyValues) {
             if (propertyValue.property.iris.some(propertyValuePropertyIri => propertyValuePropertyIri === propertyIri)) {
                 propertyValues.push(propertyValue);

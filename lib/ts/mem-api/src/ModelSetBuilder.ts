@@ -1,4 +1,14 @@
-import {Store} from "@paradicms/rdf";
+import {
+  AgentJoinSelector,
+  CollectionJoinSelector,
+  EventJoinSelector,
+  ImageJoinSelector,
+  PropertyGroupJoinSelector,
+  PropertyJoinSelector,
+  PropertyValueJoinSelector,
+  RightsJoinSelector,
+  WorkJoinSelector,
+} from "@paradicms/api";
 import {
   AgentUnion,
   Collection,
@@ -13,24 +23,14 @@ import {
   ModelSetFactory,
   Property,
   PropertyGroup,
-  PropertyValueUnion,
+  PropertyValue,
   RightsMixin,
   RightsStatement,
   ThumbnailMixin,
   ThumbnailSelector,
   Work,
 } from "@paradicms/models";
-import {
-  AgentJoinSelector,
-  CollectionJoinSelector,
-  EventJoinSelector,
-  ImageJoinSelector,
-  PropertyGroupJoinSelector,
-  PropertyJoinSelector,
-  PropertyValueJoinSelector,
-  RightsJoinSelector,
-  WorkJoinSelector,
-} from "@paradicms/api";
+import {Store} from "@paradicms/rdf";
 import log from "loglevel";
 
 /**
@@ -398,7 +398,7 @@ export class ModelSetBuilder {
   }
 
   addPropertyValue(
-    propertyValue: PropertyValueUnion,
+    propertyValue: PropertyValue,
     joinSelector?: PropertyValueJoinSelector
   ): ModelSetBuilder {
     log.debug("ModelSetBuilder: adding property value", propertyValue.value);

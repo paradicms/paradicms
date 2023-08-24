@@ -1,17 +1,12 @@
 import {dcmitype} from "@paradicms/vocabularies";
-import {DatasetCore, Quad_Graph, Term} from "@rdfjs/types";
-import {AgentPropertyValue} from "./AgentPropertyValue";
-import {ConceptPropertyValue} from "./ConceptPropertyValue";
-import {DcmiTypePropertyValue} from "./DcmiTypePropertyValue";
-import {LiteralPropertyValue} from "./LiteralPropertyValue";
-import {ModelSet} from "./ModelSet";
-import {TextPropertyValue} from "./TextPropertyValue";
-import {Property} from "./Property";
+import {DatasetCore, Literal, Quad_Graph, Term} from "@rdfjs/types";
 import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
-import {mapTermToText} from "./mapTermToText";
+import {ModelSet} from "./ModelSet";
+import {Property} from "./Property";
+import {PropertyValue} from "./PropertyValue";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {mapTermToAgent} from "./mapTermToAgent";
-import {PropertyValueUnion} from "./PropertyValueUnion";
+import {mapTermToText} from "./mapTermToText";
 
 export const createPropertyValueFromTerm = (kwds: {
   dataset: DatasetCore;
@@ -19,7 +14,7 @@ export const createPropertyValueFromTerm = (kwds: {
   property: Property;
   term: Term;
   termGraph: Quad_Graph;
-}): PropertyValueUnion | null => {
+}): PropertyValue | null => {
   const {dataset, modelSet, property, term, termGraph} = kwds;
 
   const modelParameters: Omit<ResourceBackedModelParameters, "identifier"> = {
@@ -31,26 +26,62 @@ export const createPropertyValueFromTerm = (kwds: {
   if (term.termType === "BlankNode" || term.termType === "NamedNode") {
     const agent = mapTermToAgent(modelParameters, term);
     if (agent) {
-      return new AgentPropertyValue(agent, property);
+      return {
+        agent,
+        property,
+        label: agent.label,
+        thumbnail: selector => agent.thumbnail(selector),
+        type: "Agent",
+        value: agent.iris.length === 1 ? agent.iris[0] : agent.label,
+      };
     }
 
     const text = mapTermToText(modelParameters, term);
     if (text) {
-      return new TextPropertyValue(property, text);
+      return {
+        property,
+        label: text.value,
+        text,
+        thumbnail: _ => null,
+        type: "Text",
+        value: text.value,
+      };
     }
 
     if (term.termType === "NamedNode") {
       const concept = modelSet.conceptByIri(term.value);
       if (concept) {
-        return new ConceptPropertyValue(concept, property);
+        return {
+          concept,
+          label: concept.label,
+          property,
+          thumbnail: selector => concept.thumbnail(selector),
+          type: "Concept",
+          value: concept.value.value,
+        };
       }
 
       if (term.value.startsWith(dcmitype[""].value)) {
-        return new DcmiTypePropertyValue(term, property);
+        return {
+          node: term,
+          label: term.value.slice(dcmitype[""].value.length),
+          property,
+          thumbnail: _ => null,
+          type: "DcmiType",
+          value: term.value,
+        };
       }
     }
   } else if (term.termType === "Literal") {
-    return new LiteralPropertyValue(term, property);
+    const literal: Literal = term;
+    return {
+      literal,
+      label: literal.value,
+      thumbnail: selector => null,
+      property,
+      type: "Literal",
+      value: literal.value,
+    };
   }
 
   return null;
