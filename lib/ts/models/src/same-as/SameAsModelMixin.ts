@@ -1,6 +1,6 @@
 import {Model} from "../Model";
 
-export abstract class SameAsModelMixin<ModelT extends Model> {
+export abstract class SameAsModelMixin<ModelT> {
   protected abstract getBestLinkedModel<LinkedModelT extends Model>(
     getLinkedModel: (model: ModelT) => LinkedModelT | null
   ): LinkedModelT | null;

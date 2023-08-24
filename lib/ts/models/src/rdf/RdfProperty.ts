@@ -4,20 +4,20 @@ import {
   mapTermToNumber,
   mapTermToString,
 } from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
 import {cms, rdfs} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Property} from "../Property";
-import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
 import {PropertyGroup} from "../PropertyGroup";
-import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
-import {requireNonNull} from "@paradicms/utilities";
-import {Text} from "../Text";
-import {mapTermToText} from "../mapTermToText";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {PropertyValue} from "../PropertyValue";
 import {ResourceBackedModel} from "../ResourceBackedModel";
-import {PropertyValueUnion} from "../PropertyValueUnion";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {Text} from "../Text";
+import {createPropertyValuesFromQuadSubjects} from "../createPropertyValuesFromQuadSubjects";
+import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
+import {mapTermToText} from "../mapTermToText";
 
 export class RdfProperty
   extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
@@ -62,7 +62,7 @@ export class RdfProperty
   }
 
   @Memoize()
-  get rangeValues(): readonly PropertyValueUnion[] {
+  get rangeValues(): readonly PropertyValue[] {
     const range = this.range;
     if (range === null) {
       return [];

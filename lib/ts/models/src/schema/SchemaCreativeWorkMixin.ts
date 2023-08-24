@@ -1,30 +1,30 @@
-import {Mixin} from "ts-mixer";
-import {SchemaThingMixin} from "./SchemaThingMixin";
-import {RightsMixin} from "../RightsMixin";
-import {AgentUnion} from "../AgentUnion";
-import {Memoize} from "typescript-memoize";
 import {schema} from "@paradicms/vocabularies";
-import {mapTermToAgent} from "../mapTermToAgent";
-import {License} from "../License";
-import {mapTermToLicense} from "../mapTermToLicense";
-import {RightsStatement} from "../RightsStatement";
-import {mapTermToRightsStatement} from "../mapTermToRightsStatement";
-import {Location} from "../Location";
-import {mapTermToLocation} from "../mapTermToLocation";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {Agent} from "../Agent";
 import {DateTimeDescription} from "../DateTimeDescription";
+import {License} from "../License";
+import {Location} from "../Location";
+import {RightsMixin} from "../RightsMixin";
+import {RightsStatement} from "../RightsStatement";
+import {mapTermToAgent} from "../mapTermToAgent";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {mapTermToLicense} from "../mapTermToLicense";
+import {mapTermToLocation} from "../mapTermToLocation";
+import {mapTermToRightsStatement} from "../mapTermToRightsStatement";
+import {SchemaThingMixin} from "./SchemaThingMixin";
 
 export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   implements RightsMixin {
   @Memoize()
-  get contributors(): readonly AgentUnion[] {
+  get contributors(): readonly Agent[] {
     return this.filterAndMapObjects(schema.contributor, term =>
       mapTermToAgent(this, term)
     );
   }
 
   @Memoize()
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return this.filterAndMapObjects(schema.creator, term =>
       mapTermToAgent(this, term)
     );
@@ -63,7 +63,7 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   }
 
   @Memoize()
-  get rightsHolders(): readonly AgentUnion[] {
+  get rightsHolders(): readonly Agent[] {
     return this.filterAndMapObjects(schema.copyrightHolder, term =>
       mapTermToAgent(this, term)
     );

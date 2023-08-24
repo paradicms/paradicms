@@ -1,24 +1,20 @@
-import {Mixin} from "ts-mixer";
-import {Agent} from "../Agent";
+import {mapTermToString} from "@paradicms/rdf";
 import {requireNonNull} from "@paradicms/utilities";
 import {foaf} from "@paradicms/vocabularies";
-import {mapTermToString} from "@paradicms/rdf";
-import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
-import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
-import {AgentType} from "../AgentType";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {isWikipediaUrl} from "../isWikipediaUrl";
+import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {ResourceBackedModel} from "../ResourceBackedModel";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
+import {isWikipediaUrl} from "../isWikipediaUrl";
+import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 
-export abstract class FoafAgent
-  extends Mixin(
-    ResourceBackedModel,
-    FoafImagesMixin,
-    OwlSameAsMixin,
-    SomeImageThumbnailMixin
-  )
-  implements Agent {
+export abstract class FoafAgent extends Mixin(
+  ResourceBackedModel,
+  FoafImagesMixin,
+  OwlSameAsMixin,
+  SomeImageThumbnailMixin
+) {
   get label(): string {
     return this.name;
   }
@@ -48,8 +44,6 @@ export abstract class FoafAgent
         : null
     );
   }
-
-  abstract readonly type: AgentType;
 
   get works() {
     return this.iri ? this.modelSet.worksByAgentIri(this.iri) : [];

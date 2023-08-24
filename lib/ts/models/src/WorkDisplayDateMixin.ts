@@ -1,4 +1,4 @@
-import {WorkEventUnion} from "./WorkEventUnion";
+import {WorkEvent} from "./WorkEvent";
 
 export abstract class WorkDisplayDateMixin {
   get displayDate(): string | null {
@@ -23,5 +23,5 @@ export abstract class WorkDisplayDateMixin {
     }
   }
 
-  abstract readonly events: readonly WorkEventUnion[];
+  abstract readonly events: readonly WorkEvent[];
 }

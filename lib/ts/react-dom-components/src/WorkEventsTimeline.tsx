@@ -1,7 +1,7 @@
-import {Work, WorkEventUnion} from "@paradicms/models";
-import {getWorkEventIcon} from "./getWorkEventIcon";
+import {Work, WorkEvent} from "@paradicms/models";
 import React from "react";
 import {EventsTimeline, EventsTimelineEvent} from "./EventsTimeline";
+import {getWorkEventIcon} from "./getWorkEventIcon";
 
 interface WorkEventsTimelineEvent extends EventsTimelineEvent {
   readonly work: Work;
@@ -13,7 +13,7 @@ export const WorkEventsTimeline: React.FunctionComponent<{
   pageMax: number; // 0-based
   renderWorkLink: (work: Work, children: React.ReactNode) => React.ReactElement;
   setPage: (newPage: number) => void;
-  workEvents: readonly {work: Work; workEvent: WorkEventUnion}[];
+  workEvents: readonly {work: Work; workEvent: WorkEvent}[];
 }> = ({
   getAbsoluteImageSrc,
   page,

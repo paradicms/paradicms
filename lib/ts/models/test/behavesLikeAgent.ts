@@ -1,8 +1,8 @@
 import {expect} from "chai";
-import {Agent} from "../src";
 import {it} from "mocha";
-import {behavesLikeModel} from "./behavesLikeModel";
+import {Agent} from "../src";
 import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
+import {behavesLikeModel} from "./behavesLikeModel";
 import {behavesLikeThumbnailMixin} from "./behavesLikeThumbnailMixin";
 
 export const behavesLikeAgent = (agent: Agent) => {

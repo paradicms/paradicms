@@ -1,15 +1,15 @@
-import {DataFactory, Resource} from "@paradicms/rdf";
-import {DatasetCore} from "@rdfjs/types";
-import {Model} from "./Model";
-import {ModelSet} from "./ModelSet";
-import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {ModelIdentifier} from "./ModelIdentifier";
-import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
-import {Memoize} from "typescript-memoize";
-import {modelIdentifiersToKey} from "./modelIdentifiersToKey";
-import {Property} from "./Property";
-import {createPropertyValuesFromQuadObjects} from "./createPropertyValuesFromQuadObjects";
-import {PropertyValueUnion} from "./PropertyValueUnion";
+import { DataFactory, Resource } from "@paradicms/rdf";
+import { DatasetCore } from "@rdfjs/types";
+import { Memoize } from "typescript-memoize";
+import { Model } from "./Model";
+import { ModelGraphIdentifier } from "./ModelGraphIdentifier";
+import { ModelIdentifier } from "./ModelIdentifier";
+import { ModelSet } from "./ModelSet";
+import { Property } from "./Property";
+import { PropertyValue } from "./PropertyValue";
+import { ResourceBackedModelParameters } from "./ResourceBackedModelParameters";
+import { createPropertyValuesFromQuadObjects } from "./createPropertyValuesFromQuadObjects";
+import { modelIdentifiersToKey } from "./modelIdentifiersToKey";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: DatasetCore;
@@ -50,11 +50,11 @@ export abstract class ResourceBackedModel extends Resource implements Model {
   }
 
   @Memoize()
-  get propertyValues(): readonly PropertyValueUnion[] {
+  get propertyValues(): readonly PropertyValue[] {
     return this.modelSet.properties.flatMap(property => property.iris.flatMap(propertyIri => this.propertyValuesByProperty(property, propertyIri)));
   }
 
-  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValueUnion[] {
+  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValue[] {
     return createPropertyValuesFromQuadObjects({
       dataset: this.dataset,
       modelSet: this.modelSet,
@@ -70,7 +70,7 @@ export abstract class ResourceBackedModel extends Resource implements Model {
   }
 
   @Memoize()
-  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValueUnion[] {
+  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
     const property = this.modelSet.propertyByIri(propertyIri);
     if (!property) {
       return [];

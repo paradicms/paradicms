@@ -1,19 +1,19 @@
-import {WikibaseArticle, WikibaseItem, WikibaseStatement, WikibaseStatementValue,} from "@paradicms/wikibase";
-import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
-import {ModelSet} from "../ModelSet";
-import {Image} from "../Image";
-import {Memoize} from "typescript-memoize";
-import {wdt} from "@paradicms/vocabularies";
-import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
-import {Mixin} from "ts-mixer";
-import {WikibaseItemSet} from "../wikibase/WikibaseItemSet";
-import {WikidataProperty} from "./WikidataProperty";
-import {createPropertyValueFromTerm} from "../createPropertyValueFromTerm";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {Model} from "../Model";
-import {ResourceBackedModel} from "../ResourceBackedModel";
+import { wdt } from "@paradicms/vocabularies";
+import { WikibaseArticle, WikibaseItem, WikibaseStatement, WikibaseStatementValue, } from "@paradicms/wikibase";
+import { DatasetCore, NamedNode, Term } from "@rdfjs/types";
 import invariant from "ts-invariant";
-import {PropertyValueUnion} from "../PropertyValueUnion";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Image } from "../Image";
+import { Model } from "../Model";
+import { ModelSet } from "../ModelSet";
+import { PropertyValue } from "../PropertyValue";
+import { ResourceBackedModel } from "../ResourceBackedModel";
+import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
+import { createPropertyValueFromTerm } from "../createPropertyValueFromTerm";
+import { OwlSameAsMixin } from "../owl/OwlSameAsMixin";
+import { WikibaseItemSet } from "../wikibase/WikibaseItemSet";
+import { WikidataProperty } from "./WikidataProperty";
 
 const ensureModelGraphIdentifier = (graph: Term) => {
   invariant(graph.termType === "NamedNode");
@@ -118,11 +118,11 @@ export abstract class WikidataModel
   }
 
   @Memoize()
-  override get propertyValues(): readonly PropertyValueUnion[] {
+  override get propertyValues(): readonly PropertyValue[] {
     return Object.values(this.wikidataPropertiesByIri).flatMap(wikidataProperty => this.propertyValuesByWikidataProperty(wikidataProperty));
   }
 
-  private propertyValuesByWikidataProperty(wikidataProperty: WikidataProperty): readonly PropertyValueUnion[] {
+  private propertyValuesByWikidataProperty(wikidataProperty: WikidataProperty): readonly PropertyValue[] {
     return this.statements.filter(statement => statement.property.node.equals(wikidataProperty.identifier)).flatMap(statement => statement.values.flatMap(statementValue => createPropertyValueFromTerm({
       dataset: this.dataset,
       modelSet: this.modelSet,
@@ -133,7 +133,7 @@ export abstract class WikidataModel
   }
 
   @Memoize()
-  override propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValueUnion[] {
+  override propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
     const wikidataProperty = this.wikidataPropertiesByIri[propertyIri];
     if (!wikidataProperty) {
       return [];

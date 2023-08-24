@@ -1,6 +1,6 @@
-import {WorkAgent} from "./WorkAgent";
-import {AgentUnion} from "./AgentUnion";
 import {Memoize} from "typescript-memoize";
+import {Agent} from "./Agent";
+import {WorkAgent} from "./WorkAgent";
 
 export abstract class WorkAgentsMixin {
   @Memoize()
@@ -24,6 +24,6 @@ export abstract class WorkAgentsMixin {
     return result;
   }
 
-  abstract readonly contributors: readonly AgentUnion[];
-  abstract readonly creators: readonly AgentUnion[];
+  abstract readonly contributors: readonly Agent[];
+  abstract readonly creators: readonly Agent[];
 }

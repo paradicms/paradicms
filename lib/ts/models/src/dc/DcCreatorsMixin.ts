@@ -1,6 +1,6 @@
 import {dcterms} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
-import {AgentUnion} from "../AgentUnion";
+import {Agent} from "../Agent";
 import {CreatorsMixin} from "../CreatorsMixin";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {mapTermToAgent} from "../mapTermToAgent";
@@ -8,7 +8,7 @@ import {mapTermToAgent} from "../mapTermToAgent";
 export abstract class DcCreatorsMixin extends ResourceBackedModelMixin
   implements CreatorsMixin {
   @Memoize()
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return this.filterAndMapObjects(dcterms.creator, term =>
       mapTermToAgent(this, term)
     );

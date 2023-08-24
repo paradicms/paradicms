@@ -1,10 +1,10 @@
 import {NamedNode} from "@rdfjs/types";
 import {ImagesMixin} from "./ImagesMixin";
 import {Model} from "./Model";
-import {Text} from "./Text";
 import {PropertyGroup} from "./PropertyGroup";
+import {PropertyValue} from "./PropertyValue";
+import {Text} from "./Text";
 import {ThumbnailMixin} from "./ThumbnailMixin";
-import {PropertyValueUnion} from "./PropertyValueUnion";
 
 export interface Property extends Model, ImagesMixin, ThumbnailMixin {
   readonly comment: Text | null;
@@ -14,6 +14,6 @@ export interface Property extends Model, ImagesMixin, ThumbnailMixin {
   readonly groups: readonly PropertyGroup[];
   readonly order: number;
   readonly range: NamedNode | null;
-  readonly rangeValues: readonly PropertyValueUnion[];
+  readonly rangeValues: readonly PropertyValue[];
   readonly searchable: boolean;
 }

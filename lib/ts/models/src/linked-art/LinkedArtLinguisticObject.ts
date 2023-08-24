@@ -1,25 +1,25 @@
-import {Mixin} from "ts-mixer";
-import {LinkedArtModel} from "./LinkedArtModel";
-import {AgentUnion} from "../AgentUnion";
-import {License} from "../License";
-import {LinkedArtRight} from "./LinkedArtRight";
 import {crm} from "@paradicms/vocabularies";
-import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
+import invariant from "ts-invariant";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {Agent} from "../Agent";
+import {License} from "../License";
 import {RightsStatement} from "../RightsStatement";
 import {Text} from "../Text";
-import {Memoize} from "typescript-memoize";
 import {LiteralAgent} from "../literal/LiteralAgent";
 import {LinkedArtHasSymbolicContentMixin} from "./LinkedArtHasSymbolicContentMixin";
-import invariant from "ts-invariant";
+import {LinkedArtModel} from "./LinkedArtModel";
+import {LinkedArtRight} from "./LinkedArtRight";
+import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
 
 export class LinkedArtLinguisticObject
   extends Mixin(LinkedArtModel, LinkedArtHasSymbolicContentMixin)
   implements Text {
-  get contributors(): readonly AgentUnion[] {
+  get contributors(): readonly Agent[] {
     return [];
   }
 
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return [];
   }
 
@@ -51,8 +51,8 @@ export class LinkedArtLinguisticObject
   }
 
   @Memoize()
-  get rightsHolders(): readonly AgentUnion[] {
-    const rightsHolders: AgentUnion[] = [];
+  get rightsHolders(): readonly Agent[] {
+    const rightsHolders: Agent[] = [];
     for (const right of this.isSubjectTo) {
       for (const acknowledgment of right.isSubjectOf) {
         if (!(acknowledgment instanceof LinkedArtLinguisticObject)) {

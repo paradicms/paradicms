@@ -1,27 +1,27 @@
+import {mapTermToString} from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
 import {dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
+import {DateTimeDescription} from "../DateTimeDescription";
+import {ResourceBackedModel} from "../ResourceBackedModel";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {Text} from "../Text";
 import {Work} from "../Work";
-import {WorkEventUnion} from "../WorkEventUnion";
+import {WorkAgentsMixin} from "../WorkAgentsMixin";
+import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
+import {WorkEvent} from "../WorkEvent";
 import {WorkLocation} from "../WorkLocation";
-import {mapTermToText} from "../mapTermToText";
-import {mapTermToLocation} from "../mapTermToLocation";
-import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {isWikipediaUrl} from "../isWikipediaUrl";
-import {DcImagesMixin} from "./DcImagesMixin";
-import {requireNonNull} from "@paradicms/utilities";
-import {mapTermToString} from "@paradicms/rdf";
-import {DateTimeDescription} from "../DateTimeDescription";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {mapTermToLocation} from "../mapTermToLocation";
+import {mapTermToText} from "../mapTermToText";
+import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
-import {WorkAgentsMixin} from "../WorkAgentsMixin";
-import {ResourceBackedModel} from "../ResourceBackedModel";
-import {DcCreatorsMixin} from "./DcCreatorsMixin";
 import {DcContributorsMixin} from "./DcContributorsMixin";
+import {DcCreatorsMixin} from "./DcCreatorsMixin";
+import {DcImagesMixin} from "./DcImagesMixin";
 
 export class DcPhysicalObject
   extends Mixin(
@@ -50,8 +50,8 @@ export class DcPhysicalObject
   }
 
   @Memoize()
-  get events(): readonly WorkEventUnion[] {
-    const events: WorkEventUnion[] = [];
+  get events(): readonly WorkEvent[] {
+    const events: WorkEvent[] = [];
 
     if (this.created) {
       events.push(

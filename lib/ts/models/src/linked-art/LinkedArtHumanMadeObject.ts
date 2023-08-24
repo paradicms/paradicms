@@ -1,27 +1,27 @@
-import {Mixin} from "ts-mixer";
-import {LinkedArtModel} from "./LinkedArtModel";
-import {Work} from "../Work";
-import {requireNonNull} from "@paradicms/utilities";
-import {Memoize} from "typescript-memoize";
-import {LinkedArtProduction} from "./LinkedArtProduction";
-import {crm} from "@paradicms/vocabularies";
-import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
-import {WorkAgentsMixin} from "../WorkAgentsMixin";
-import {AgentUnion} from "../AgentUnion";
-import {WorkEventUnion} from "../WorkEventUnion";
-import {LinkedArtDescriptionMixin} from "./LinkedArtDescriptionMixin";
-import {LinkedArtImagesMixin} from "./LinkedArtImagesMixin";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {ModelIdentifier} from "../ModelIdentifier";
+import { requireNonNull } from "@paradicms/utilities";
+import { crm } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Agent } from "../Agent";
+import { ModelIdentifier } from "../ModelIdentifier";
+import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
+import { Work } from "../Work";
+import { WorkAgentsMixin } from "../WorkAgentsMixin";
+import { WorkEvent } from "../WorkEvent";
+import { LinkedArtDescriptionMixin } from "./LinkedArtDescriptionMixin";
+import { LinkedArtImagesMixin } from "./LinkedArtImagesMixin";
+import { LinkedArtModel } from "./LinkedArtModel";
+import { LinkedArtProduction } from "./LinkedArtProduction";
+import { mapTermToLinkedArtModel } from "./mapTermToLinkedArtModel";
 
 export class LinkedArtHumanMadeObject
   extends Mixin(LinkedArtModel, LinkedArtDescriptionMixin, LinkedArtImagesMixin, SomeImageThumbnailMixin, WorkAgentsMixin)
   implements Work {
-  get contributors(): readonly AgentUnion[] {
+  get contributors(): readonly Agent[] {
     return [];
   }
 
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return this.wasProducedBy?.carriedOutBy ?? [];
   }
 
@@ -29,8 +29,8 @@ export class LinkedArtHumanMadeObject
     return this.wasProducedBy?.hasTimeSpan?.displayDate ?? null;
   }
 
-  get events(): readonly WorkEventUnion[] {
-    const events: WorkEventUnion[] = [];
+  get events(): readonly WorkEvent[] {
+    const events: WorkEvent[] = [];
     if (this.wasProducedBy) {
       events.push(this.wasProducedBy);
     }

@@ -1,4 +1,4 @@
+import {Agent} from "./Agent";
 import {ResourceBackedModelFactories} from "./ResourceBackedModelFactories";
-import {AgentUnion} from "./AgentUnion";
 
-export const agentFactories = new ResourceBackedModelFactories<AgentUnion>();
+export const agentFactories = new ResourceBackedModelFactories<Agent>();

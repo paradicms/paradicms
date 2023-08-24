@@ -1,8 +1,8 @@
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {faHammer, faLightbulb} from "@fortawesome/free-solid-svg-icons";
-import {WorkEventUnion} from "@paradicms/models";
+import {WorkEvent} from "@paradicms/models";
 
-export const getWorkEventIcon = (workEvent: WorkEventUnion): IconDefinition => {
+export const getWorkEventIcon = (workEvent: WorkEvent): IconDefinition => {
   switch (workEvent.type) {
     // case "WorkClosing":
     //   return faDoorClosed;

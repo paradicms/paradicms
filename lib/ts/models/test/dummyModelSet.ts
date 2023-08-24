@@ -1,5 +1,7 @@
+import {DatasetCore} from "@rdfjs/types";
+import {JsonLd} from "jsonld/jsonld-spec";
 import {
-  AgentUnion,
+  Agent,
   AppConfiguration,
   Collection,
   Concept,
@@ -15,11 +17,9 @@ import {
   RightsStatement,
   Work,
 } from "../src";
-import {DatasetCore} from "@rdfjs/types";
-import {JsonLd} from "jsonld/jsonld-spec";
 
 export const dummyModelSet: ModelSet = {
-  agentByIri(agentIri: string): AgentUnion | null {
+  agentByIri(agentIri: string): Agent | null {
     throw new EvalError("not implemented");
   },
   get appConfiguration(): AppConfiguration | null {

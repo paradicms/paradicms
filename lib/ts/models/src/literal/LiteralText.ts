@@ -1,15 +1,15 @@
-import {AgentUnion} from "../AgentUnion";
-import {License} from "../License";
-import {RightsStatement} from "../RightsStatement";
-import {Text} from "../Text";
-import {LiteralModel} from "./LiteralModel";
+import { Agent } from "../Agent";
+import { License } from "../License";
+import { RightsStatement } from "../RightsStatement";
+import { Text } from "../Text";
+import { LiteralModel } from "./LiteralModel";
 
 export class LiteralText extends LiteralModel implements Text {
-  get contributors(): readonly AgentUnion[] {
+  get contributors(): readonly Agent[] {
     return [];
   }
 
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return [];
   }
 
@@ -21,7 +21,7 @@ export class LiteralText extends LiteralModel implements Text {
     return false;
   }
 
-  get rightsHolders(): readonly AgentUnion[] {
+  get rightsHolders(): readonly Agent[] {
     return [];
   }
 
