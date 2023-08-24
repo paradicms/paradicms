@@ -1,6 +1,6 @@
-import {ConceptPropertyValue, Property} from "@paradicms/models";
-import {Memoize} from "typescript-memoize";
+import {Property} from "@paradicms/models";
 import invariant from "ts-invariant";
+import {Memoize} from "typescript-memoize";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 
 export class WorksheetFeatureDefinition {
@@ -33,13 +33,12 @@ export class WorksheetFeatureDefinition {
 
   @Memoize()
   get values(): readonly WorksheetFeatureValueDefinition[] {
-    return this.property.rangeValues
-      .filter(propertyValue => propertyValue instanceof ConceptPropertyValue)
-      .map(
-        propertyValue =>
-          new WorksheetFeatureValueDefinition(
-            (propertyValue as ConceptPropertyValue).concept
-          )
-      );
+    const values: WorksheetFeatureValueDefinition[] = [];
+    for (const propertyValue of this.property.rangeValues) {
+      if (propertyValue.type === "Concept") {
+        values.push(new WorksheetFeatureValueDefinition(propertyValue.concept));
+      }
+    }
+    return values;
   }
 }
