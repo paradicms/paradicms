@@ -1,4 +1,4 @@
-import {AgentUnion} from "./AgentUnion";
+import {Agent} from "./Agent";
 
 /**
  * Data structure summarizing an agent associated with a work.
@@ -8,6 +8,6 @@ import {AgentUnion} from "./AgentUnion";
  * on a single screen.
  */
 export interface WorkAgent {
-  readonly agent: AgentUnion;
+  readonly agent: Agent;
   readonly role: string;
 }

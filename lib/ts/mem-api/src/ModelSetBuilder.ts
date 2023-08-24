@@ -10,7 +10,7 @@ import {
   WorkJoinSelector,
 } from "@paradicms/api";
 import {
-  AgentUnion,
+  Agent,
   Collection,
   Concept,
   Event,
@@ -46,10 +46,7 @@ import log from "loglevel";
 export class ModelSetBuilder {
   private readonly store: Store = new Store();
 
-  addAgent(
-    agent: AgentUnion,
-    joinSelector?: AgentJoinSelector
-  ): ModelSetBuilder {
+  addAgent(agent: Agent, joinSelector?: AgentJoinSelector): ModelSetBuilder {
     if (agent.type === "OtherAgent") {
       log.debug("ModelSetBuilder: ignoring 'OtherAgent'", agent.key);
       return this;

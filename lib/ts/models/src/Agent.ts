@@ -1,12 +1,5 @@
-import {ImagesMixin} from "./ImagesMixin";
-import {Model} from "./Model";
-import {ThumbnailMixin} from "./ThumbnailMixin";
-import {Work} from "./Work";
+import {Organization} from "./Organization";
+import {OtherAgent} from "./OtherAgent";
+import {Person} from "./Person";
 
-export interface Agent extends Model, ImagesMixin, ThumbnailMixin {
-  readonly homepage: string | null;
-  readonly label: string;
-  readonly wikipediaUrl: string | null;
-  readonly wikidataConceptIri: string | null;
-  readonly works: readonly Work[];
-}
+export type Agent = Organization | OtherAgent | Person;

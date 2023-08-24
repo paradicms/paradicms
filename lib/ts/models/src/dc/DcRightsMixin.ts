@@ -1,14 +1,14 @@
 import {dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {AgentUnion} from "../AgentUnion";
+import {Agent} from "../Agent";
 import {License} from "../License";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {RightsMixin} from "../RightsMixin";
 import {RightsStatement} from "../RightsStatement";
 import {mapTermToAgent} from "../mapTermToAgent";
-import {mapTermToRightsStatement} from "../mapTermToRightsStatement";
 import {mapTermToLicense} from "../mapTermToLicense";
+import {mapTermToRightsStatement} from "../mapTermToRightsStatement";
 import {DcContributorsMixin} from "./DcContributorsMixin";
 import {DcCreatorsMixin} from "./DcCreatorsMixin";
 
@@ -34,7 +34,7 @@ export abstract class DcRightsMixin
   }
 
   @Memoize()
-  get rightsHolders(): readonly AgentUnion[] {
+  get rightsHolders(): readonly Agent[] {
     return this.filterAndMapObjects(dcterms.rightsHolder, term =>
       mapTermToAgent(this, term)
     );

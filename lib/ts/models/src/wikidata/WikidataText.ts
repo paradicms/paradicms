@@ -1,10 +1,10 @@
-import {License} from "../License";
-import {requireNonNull} from "@paradicms/utilities";
-import {AgentUnion} from "../AgentUnion";
-import {RightsStatement} from "../RightsStatement";
-import {LiteralText} from "../literal/LiteralText";
-import {ModelSet} from "../ModelSet";
-import {Literal} from "@rdfjs/types";
+import { requireNonNull } from "@paradicms/utilities";
+import { Literal } from "@rdfjs/types";
+import { Agent } from "../Agent";
+import { License } from "../License";
+import { ModelSet } from "../ModelSet";
+import { RightsStatement } from "../RightsStatement";
+import { LiteralText } from "../literal/LiteralText";
 
 export class WikidataText extends LiteralText {
     private readonly modelSet: ModelSet;
@@ -29,7 +29,7 @@ export class WikidataText extends LiteralText {
         return true;
     }
 
-    override get rightsHolders(): readonly AgentUnion[] {
+    override get rightsHolders(): readonly Agent[] {
         return [];
     }
 

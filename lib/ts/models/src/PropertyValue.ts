@@ -1,5 +1,5 @@
 import {Literal, NamedNode} from "@rdfjs/types";
-import {AgentUnion} from "./AgentUnion";
+import {Agent} from "./Agent";
 import {Concept} from "./Concept";
 import {Image} from "./Image";
 import {Property} from "./Property";
@@ -14,7 +14,7 @@ interface PropertyValueBase {
 }
 
 interface AgentPropertyValue extends PropertyValueBase {
-  readonly agent: AgentUnion;
+  readonly agent: Agent;
   readonly type: "Agent";
 }
 

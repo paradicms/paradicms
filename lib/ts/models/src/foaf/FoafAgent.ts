@@ -3,21 +3,18 @@ import {requireNonNull} from "@paradicms/utilities";
 import {foaf} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {Agent} from "../Agent";
 import {ResourceBackedModel} from "../ResourceBackedModel";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 import {isWikipediaUrl} from "../isWikipediaUrl";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 
-export abstract class FoafAgent
-  extends Mixin(
-    ResourceBackedModel,
-    FoafImagesMixin,
-    OwlSameAsMixin,
-    SomeImageThumbnailMixin
-  )
-  implements Agent {
+export abstract class FoafAgent extends Mixin(
+  ResourceBackedModel,
+  FoafImagesMixin,
+  OwlSameAsMixin,
+  SomeImageThumbnailMixin
+) {
   get label(): string {
     return this.name;
   }

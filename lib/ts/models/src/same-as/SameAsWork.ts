@@ -1,6 +1,6 @@
 import { Mixin } from "ts-mixer";
 import { Memoize } from "typescript-memoize";
-import { AgentUnion } from "../AgentUnion";
+import { Agent } from "../Agent";
 import { PropertyValue } from "../PropertyValue";
 import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
 import { Text } from "../Text";
@@ -16,11 +16,11 @@ export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>
         return this.getAllValues(model => model.agents);
     }
 
-    get contributors(): readonly AgentUnion[] {
+    get contributors(): readonly Agent[] {
         return this.getUniqueLinkedModels(model => model.contributors);
     }
 
-    get creators(): readonly AgentUnion[] {
+    get creators(): readonly Agent[] {
         return this.getUniqueLinkedModels(model => model.creators);
     }
 

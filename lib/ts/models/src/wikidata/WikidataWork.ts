@@ -1,34 +1,34 @@
-import {WikidataModel} from "./WikidataModel";
-import {Work} from "../Work";
-import {WorkLocation} from "../WorkLocation";
-import {Collection} from "../Collection";
-import {WorkEventUnion} from "../WorkEventUnion";
-import {Text} from "../Text";
-import {Memoize} from "typescript-memoize";
 import {DataFactory} from "@paradicms/rdf";
-import {DateTimeDescription} from "../DateTimeDescription";
 import {wdt} from "@paradicms/vocabularies";
+import log from "loglevel";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {Agent} from "../Agent";
+import {Collection} from "../Collection";
+import {DateTimeDescription} from "../DateTimeDescription";
+import {Text} from "../Text";
+import {Work} from "../Work";
+import {WorkAgentsMixin} from "../WorkAgentsMixin";
+import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
+import {WorkEventUnion} from "../WorkEventUnion";
+import {WorkLocation} from "../WorkLocation";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {WikidataLocation} from "./WikidataLocation";
-import log from "loglevel";
-import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
-import {Mixin} from "ts-mixer";
-import {AgentUnion} from "../AgentUnion";
+import {WikidataModel} from "./WikidataModel";
 import {WikidataText} from "./WikidataText";
-import {WorkAgentsMixin} from "../WorkAgentsMixin";
 
 export class WikidataWork
   extends Mixin(WikidataModel, WorkAgentsMixin, WorkDisplayDateMixin)
   implements Work {
   readonly collections: readonly Collection[] = [];
 
-  get contributors(): readonly AgentUnion[] {
+  get contributors(): readonly Agent[] {
     return [];
   }
 
   @Memoize()
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return this.filterAndMapStatementValues(wdt["P170"], statementValue => {
       if (statementValue.termType !== "NamedNode") {
         return null;

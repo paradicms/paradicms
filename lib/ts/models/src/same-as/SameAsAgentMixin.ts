@@ -1,9 +1,11 @@
-import {Agent} from "../Agent";
-import {SameAsModelMixin} from "./SameAsModelMixin";
 import {Work} from "../Work";
+import {SameAsModelMixin} from "./SameAsModelMixin";
 
 export abstract class SameAsAgentMixin<
-  AgentT extends Agent
+  AgentT extends {
+    readonly label: string;
+    readonly works: readonly Work[];
+  }
 > extends SameAsModelMixin<AgentT> {
   get label(): string {
     return this.getBestValue(model => model.label)!;

@@ -1,16 +1,16 @@
-import {Event} from "../Event";
-import {DateTimeDescription} from "../DateTimeDescription";
-import {ModelIdentifier} from "../ModelIdentifier";
-import {Text} from "../Text";
-import {Location} from "../Location";
 import {DatasetCore} from "@rdfjs/types";
-import {EventDerivedDatesMixin} from "../EventDerivedDatesMixin";
 import {Mixin} from "ts-mixer";
-import {SyntheticEventParameters} from "./SyntheticEventParameters";
+import {Agent} from "../Agent";
+import {DateTimeDescription} from "../DateTimeDescription";
+import {Event} from "../Event";
+import {EventDerivedDatesMixin} from "../EventDerivedDatesMixin";
 import {Image} from "../Image";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {AgentUnion} from "../AgentUnion";
+import {Location} from "../Location";
 import {Model} from "../Model";
+import {ModelIdentifier} from "../ModelIdentifier";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {Text} from "../Text";
+import {SyntheticEventParameters} from "./SyntheticEventParameters";
 
 export abstract class SyntheticEvent
   extends Mixin(EventDerivedDatesMixin, SomeImageThumbnailMixin)
@@ -36,7 +36,7 @@ export abstract class SyntheticEvent
     this.startDate = kwds.startDate;
   }
 
-  abstract readonly agents: readonly AgentUnion[];
+  abstract readonly agents: readonly Agent[];
 
   get dependencies(): readonly Model[] {
     return [];

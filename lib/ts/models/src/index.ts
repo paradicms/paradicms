@@ -1,5 +1,4 @@
 export * from "./Agent";
-export * from "./AgentUnion";
 export * from "./AppConfiguration";
 export * from "./Collection";
 export * from "./Concept";

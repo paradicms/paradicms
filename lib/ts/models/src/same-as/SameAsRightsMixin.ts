@@ -1,18 +1,18 @@
-import {Model} from "../Model";
-import {SameAsModelMixin} from "./SameAsModelMixin";
-import {RightsMixin} from "../RightsMixin";
+import {Agent} from "../Agent";
 import {License} from "../License";
-import {AgentUnion} from "../AgentUnion";
+import {Model} from "../Model";
+import {RightsMixin} from "../RightsMixin";
 import {RightsStatement} from "../RightsStatement";
+import {SameAsModelMixin} from "./SameAsModelMixin";
 
 export abstract class SameAsRightsMixin<ModelT extends Model & RightsMixin>
   extends SameAsModelMixin<ModelT>
   implements RightsMixin {
-  get contributors(): readonly AgentUnion[] {
+  get contributors(): readonly Agent[] {
     return this.getUniqueLinkedModels(model => model.contributors);
   }
 
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return this.getUniqueLinkedModels(model => model.creators);
   }
 
@@ -29,7 +29,7 @@ export abstract class SameAsRightsMixin<ModelT extends Model & RightsMixin>
     return false;
   }
 
-  get rightsHolders(): readonly AgentUnion[] {
+  get rightsHolders(): readonly Agent[] {
     return this.getUniqueLinkedModels(model => model.rightsHolders);
   }
 

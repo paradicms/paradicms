@@ -1,21 +1,21 @@
-import {SyntheticWorkEvent} from "./SyntheticWorkEvent";
-import {WorkCreationEvent} from "../WorkCreationEvent";
 import {Mixin} from "ts-mixer";
-import {AgentUnion} from "../AgentUnion";
-import {SyntheticEventParameters} from "./SyntheticEventParameters";
-import {WorkLocationRole} from "../WorkLocationRole";
+import {Agent} from "../Agent";
 import {DateTimeDescription} from "../DateTimeDescription";
 import {Work} from "../Work";
+import {WorkCreationEvent} from "../WorkCreationEvent";
+import {WorkLocationRole} from "../WorkLocationRole";
+import {SyntheticEventParameters} from "./SyntheticEventParameters";
+import {SyntheticWorkEvent} from "./SyntheticWorkEvent";
 
 export class SyntheticWorkCreationEvent extends Mixin(SyntheticWorkEvent)
   implements WorkCreationEvent {
-  readonly contributors: readonly AgentUnion[];
-  readonly creators: readonly AgentUnion[];
+  readonly contributors: readonly Agent[];
+  readonly creators: readonly Agent[];
 
   constructor(
     kwds: {
-      contributors: readonly AgentUnion[];
-      creators: readonly AgentUnion[];
+      contributors: readonly Agent[];
+      creators: readonly Agent[];
     } & SyntheticEventParameters
   ) {
     super(kwds);
@@ -23,7 +23,7 @@ export class SyntheticWorkCreationEvent extends Mixin(SyntheticWorkEvent)
     this.creators = kwds.creators;
   }
 
-  get agents(): readonly AgentUnion[] {
+  get agents(): readonly Agent[] {
     return this.contributors.concat(this.creators);
   }
 

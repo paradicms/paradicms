@@ -1,8 +1,8 @@
+import {Agent} from "./Agent";
 import {Event} from "./Event";
 import {WorkLocation} from "./WorkLocation";
-import {AgentUnion} from "./AgentUnion";
 
 export interface WorkEvent extends Event {
-  readonly agents: readonly AgentUnion[];
+  readonly agents: readonly Agent[];
   readonly workLocation: WorkLocation | null;
 }

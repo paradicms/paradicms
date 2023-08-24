@@ -1,30 +1,30 @@
-import {Mixin} from "ts-mixer";
-import {LinkedArtModel} from "./LinkedArtModel";
-import {LinkedArtPerson} from "./LinkedArtPerson";
-import {crm} from "@paradicms/vocabularies";
-import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
-import {Memoize} from "typescript-memoize";
-import {LinkedArtTimeSpan} from "./LinkedArtTimeSpan";
-import {WorkCreationEvent} from "../WorkCreationEvent";
-import {AgentUnion} from "../AgentUnion";
-import {EventDerivedDatesMixin} from "../EventDerivedDatesMixin";
-import {DateTimeDescription} from "../DateTimeDescription";
-import {Text} from "../Text";
-import {Image} from "../Image";
-import {ThumbnailSelector} from "../ThumbnailSelector";
+import { crm } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Agent } from "../Agent";
+import { DateTimeDescription } from "../DateTimeDescription";
+import { EventDerivedDatesMixin } from "../EventDerivedDatesMixin";
+import { Image } from "../Image";
+import { Text } from "../Text";
+import { ThumbnailSelector } from "../ThumbnailSelector";
+import { WorkCreationEvent } from "../WorkCreationEvent";
+import { LinkedArtModel } from "./LinkedArtModel";
+import { LinkedArtPerson } from "./LinkedArtPerson";
+import { LinkedArtTimeSpan } from "./LinkedArtTimeSpan";
+import { mapTermToLinkedArtModel } from "./mapTermToLinkedArtModel";
 
 export class LinkedArtProduction
   extends Mixin(LinkedArtModel, EventDerivedDatesMixin)
   implements WorkCreationEvent {
-  get agents(): readonly AgentUnion[] {
+  get agents(): readonly Agent[] {
     return this.creators;
   }
 
-  get contributors(): readonly AgentUnion[] {
+  get contributors(): readonly Agent[] {
     return [];
   }
 
-  get creators(): readonly AgentUnion[] {
+  get creators(): readonly Agent[] {
     return this.carriedOutBy;
   }
 

@@ -1,5 +1,6 @@
 import {DatasetCore} from "@rdfjs/types";
-import {AgentUnion} from "./AgentUnion";
+import {JsonLd} from "jsonld/jsonld-spec";
+import {Agent} from "./Agent";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -13,10 +14,9 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {JsonLd} from "jsonld/jsonld-spec";
 
 export interface ModelSet {
-  agentByIri(agentIri: string): AgentUnion | null;
+  agentByIri(agentIri: string): Agent | null;
   readonly appConfiguration: AppConfiguration | null;
   readonly collections: readonly Collection[];
   collectionByKey(collectionKey: string): Collection | null;

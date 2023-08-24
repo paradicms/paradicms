@@ -1,7 +1,7 @@
 import {datasetToJsonLd} from "@paradicms/rdf";
 import {DatasetCore} from "rdf-js";
 import {Memoize} from "typescript-memoize";
-import {AgentUnion} from "./AgentUnion";
+import {Agent} from "./Agent";
 import {AppConfiguration} from "./AppConfiguration";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
@@ -17,16 +17,16 @@ import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
 import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
-import {sortModelsArray} from "./sortModelsArray";
 import {indexModelsByIri} from "./indexModelsByIri";
 import {indexModelsByKey} from "./indexModelsByKey";
 import {indexModelsByValues} from "./indexModelsByValues";
+import {sortModelsArray} from "./sortModelsArray";
 import {sortModelsMultimap} from "./sortModelsMultimap";
 
 export class MemModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
 
-  agentByIri(agentIri: string): AgentUnion | null {
+  agentByIri(agentIri: string): Agent | null {
     for (const index of [this.organizationsByIriIndex, this.peopleByIriIndex]) {
       const agent = index[agentIri];
       if (agent) {

@@ -1,15 +1,14 @@
+import {requireNonNull} from "@paradicms/utilities";
 import {expect} from "chai";
 import {describe, it} from "mocha";
-import {behavesLikeAgent} from "../behavesLikeAgent";
-import {Agent} from "../../src";
-import {testModelSet} from "../testModelSet";
-import {requireNonNull} from "@paradicms/utilities";
 import {FoafAgent} from "../../src/foaf/FoafAgent";
+import {behavesLikeAgent} from "../behavesLikeAgent";
+import {testModelSet} from "../testModelSet";
 
 describe("FoafAgent", () => {
   const agent: FoafAgent = (requireNonNull(
     testModelSet.personByIri("http://example.com/person4")
-  ) as Agent) as FoafAgent;
+  ) as any) as FoafAgent;
 
   before(() => {
     expect(agent).to.be.instanceof(FoafAgent);
