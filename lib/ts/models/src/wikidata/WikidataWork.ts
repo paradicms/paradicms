@@ -10,7 +10,7 @@ import {Text} from "../Text";
 import {Work} from "../Work";
 import {WorkAgentsMixin} from "../WorkAgentsMixin";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
-import {WorkEventUnion} from "../WorkEventUnion";
+import {WorkEvent} from "../WorkEvent";
 import {WorkLocation} from "../WorkLocation";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
@@ -56,8 +56,8 @@ export class WikidataWork
   }
 
   @Memoize()
-  get events(): readonly WorkEventUnion[] {
-    const events: WorkEventUnion[] = [];
+  get events(): readonly WorkEvent[] {
+    const events: WorkEvent[] = [];
 
     if (this.inception) {
       events.push(

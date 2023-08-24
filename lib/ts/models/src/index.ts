@@ -29,7 +29,6 @@ export * from "./Work";
 export * from "./WorkAgent";
 export * from "./WorkCreationEvent";
 export * from "./WorkEvent";
-export * from "./WorkEventUnion";
 export * from "./WorkLocation";
 export * from "./WorkLocationRole";
 export * from "./createPropertyValuesFromQuadObjects";

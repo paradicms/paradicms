@@ -1,4 +1,4 @@
-import {AgentUnion, Event, Image, Location} from "@paradicms/models";
+import {Agent, Event, Image, Location} from "@paradicms/models";
 import * as React from "react";
 import {useState} from "react";
 import {
@@ -14,9 +14,9 @@ import {
   TabContent,
   TabPane,
 } from "reactstrap";
+import {AgentsCarousel} from "./AgentsCarousel";
 import {ImagesCarousel} from "./ImagesCarousel";
 import {RightsParagraph} from "./RightsParagraph";
-import {AgentsCarousel} from "./AgentsCarousel";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -28,7 +28,7 @@ export const EventPage: React.FunctionComponent<{
   getAbsoluteImageSrc: (relativeImageSrc: string) => string;
   renderEventLocationMap?: (eventLocation: Location) => React.ReactElement;
 }> = ({event, getAbsoluteImageSrc, renderEventLocationMap}) => {
-  const eventAgents: AgentUnion[] = [];
+  const eventAgents: Agent[] = [];
   for (const eventAgent of event.agents) {
     if (
       !eventAgents.some(

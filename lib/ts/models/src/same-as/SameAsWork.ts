@@ -6,7 +6,7 @@ import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
 import { Text } from "../Text";
 import { Work } from "../Work";
 import { WorkAgent } from "../WorkAgent";
-import { WorkEventUnion } from "../WorkEventUnion";
+import { WorkEvent } from "../WorkEvent";
 import { WorkLocation } from "../WorkLocation";
 import { SameAsImagesMixin } from "./SameAsImagesMixin";
 import { SameAsModel } from "./SameAsModel";
@@ -32,7 +32,7 @@ export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>
         return this.getBestValue(model => model.displayDate);
     }
 
-    get events(): readonly WorkEventUnion[] {
+    get events(): readonly WorkEvent[] {
         return this.getAllValues(model => model.events);
     }
 

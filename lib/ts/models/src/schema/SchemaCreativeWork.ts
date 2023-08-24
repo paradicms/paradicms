@@ -1,24 +1,24 @@
-import {Mixin} from "ts-mixer";
-import {SchemaCreativeWorkMixin} from "./SchemaCreativeWorkMixin";
-import {Work} from "../Work";
-import {Memoize} from "typescript-memoize";
-import {WorkEventUnion} from "../WorkEventUnion";
-import {WorkLocation} from "../WorkLocation";
-import {schema} from "@paradicms/vocabularies";
-import {mapTermToLocation} from "../mapTermToLocation";
-import {requireNonNull} from "@paradicms/utilities";
-import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
-import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
-import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
-import {SchemaModel} from "./SchemaModel";
-import {WorkAgentsMixin} from "../WorkAgentsMixin";
+import { requireNonNull } from "@paradicms/utilities";
+import { schema } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Work } from "../Work";
+import { WorkAgentsMixin } from "../WorkAgentsMixin";
+import { WorkDisplayDateMixin } from "../WorkDisplayDateMixin";
+import { WorkEvent } from "../WorkEvent";
+import { WorkLocation } from "../WorkLocation";
+import { mapTermToLocation } from "../mapTermToLocation";
+import { SyntheticWorkCreationEvent } from "../synthetic/SyntheticWorkCreationEvent";
+import { SyntheticWorkModificationEvent } from "../synthetic/SyntheticWorkModificationEvent";
+import { SchemaCreativeWorkMixin } from "./SchemaCreativeWorkMixin";
+import { SchemaModel } from "./SchemaModel";
 
 export class SchemaCreativeWork
   extends Mixin(SchemaModel, SchemaCreativeWorkMixin, WorkAgentsMixin, WorkDisplayDateMixin)
   implements Work {
   @Memoize()
-  get events(): readonly WorkEventUnion[] {
-    const events: WorkEventUnion[] = [];
+  get events(): readonly WorkEvent[] {
+    const events: WorkEvent[] = [];
 
     if (this.dateCreated) {
       events.push(SyntheticWorkCreationEvent.fromWork({date: this.dateCreated, work: this}));

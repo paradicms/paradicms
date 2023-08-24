@@ -6,7 +6,7 @@ import {
 import {
   ModelSetFactory,
   WorkAgent,
-  WorkEventUnion,
+  WorkEvent,
   WorkLocation,
 } from "@paradicms/models";
 import {syntheticData} from "@paradicms/test";
@@ -180,7 +180,7 @@ describe("MemApi", () => {
   });
 
   const getWorkEvents = (result: GetModelsResult) => {
-    const workEventsByKey: {[index: string]: WorkEventUnion} = {};
+    const workEventsByKey: {[index: string]: WorkEvent} = {};
     for (const work of result.modelSet.works) {
       for (const workEvent of work.events) {
         expect(workEventsByKey[workEvent.key]).to.be.undefined;

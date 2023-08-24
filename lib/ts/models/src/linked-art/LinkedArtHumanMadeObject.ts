@@ -7,7 +7,7 @@ import { ModelIdentifier } from "../ModelIdentifier";
 import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
 import { Work } from "../Work";
 import { WorkAgentsMixin } from "../WorkAgentsMixin";
-import { WorkEventUnion } from "../WorkEventUnion";
+import { WorkEvent } from "../WorkEvent";
 import { LinkedArtDescriptionMixin } from "./LinkedArtDescriptionMixin";
 import { LinkedArtImagesMixin } from "./LinkedArtImagesMixin";
 import { LinkedArtModel } from "./LinkedArtModel";
@@ -29,8 +29,8 @@ export class LinkedArtHumanMadeObject
     return this.wasProducedBy?.hasTimeSpan?.displayDate ?? null;
   }
 
-  get events(): readonly WorkEventUnion[] {
-    const events: WorkEventUnion[] = [];
+  get events(): readonly WorkEvent[] {
+    const events: WorkEvent[] = [];
     if (this.wasProducedBy) {
       events.push(this.wasProducedBy);
     }

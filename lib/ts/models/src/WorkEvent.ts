@@ -1,8 +1,4 @@
-import {Agent} from "./Agent";
-import {Event} from "./Event";
-import {WorkLocation} from "./WorkLocation";
+import {WorkCreationEvent} from "./WorkCreationEvent";
+import {WorkModificationEvent} from "./WorkModificationEvent";
 
-export interface WorkEvent extends Event {
-  readonly agents: readonly Agent[];
-  readonly workLocation: WorkLocation | null;
-}
+export type WorkEvent = WorkCreationEvent | WorkModificationEvent;

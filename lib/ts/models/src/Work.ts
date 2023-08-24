@@ -7,7 +7,7 @@ import { PropertyValue } from "./PropertyValue";
 import { SameAsMixin } from "./SameAsMixin";
 import { ThumbnailMixin } from "./ThumbnailMixin";
 import { WorkAgent } from "./WorkAgent";
-import { WorkEventUnion } from "./WorkEventUnion";
+import { WorkEvent } from "./WorkEvent";
 import { WorkLocation } from "./WorkLocation";
 
 export interface Work
@@ -20,7 +20,7 @@ export interface Work
     ThumbnailMixin {
   readonly agents: readonly WorkAgent[];
   readonly displayDate: string | null;
-  readonly events: readonly WorkEventUnion[];
+  readonly events: readonly WorkEvent[];
   readonly label: string;
   readonly location: WorkLocation | null;
   get propertyValues(): readonly PropertyValue[];
