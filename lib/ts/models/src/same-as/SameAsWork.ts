@@ -8,6 +8,7 @@ import { Work } from "../Work";
 import { WorkAgent } from "../WorkAgent";
 import { WorkEvent } from "../WorkEvent";
 import { WorkLocation } from "../WorkLocation";
+import { WorkSubject } from "../WorkSubject";
 import { SameAsImagesMixin } from "./SameAsImagesMixin";
 import { SameAsModel } from "./SameAsModel";
 
@@ -57,6 +58,10 @@ export class SameAsWork extends Mixin(SameAsModel<Work>, SameAsImagesMixin<Work>
             }
         }
         return propertyValues;
+    }
+
+    get subjects(): readonly WorkSubject[] {
+        return this.getAllValues(model => model.subjects);
     }
 
     get wikidataConceptIri(): string | null {

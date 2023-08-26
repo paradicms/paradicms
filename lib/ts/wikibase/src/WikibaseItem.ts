@@ -1,12 +1,12 @@
+import {BlankNode, DefaultGraph, Literal, NamedNode} from "@rdfjs/types";
 import {WikibaseArticle} from "./WikibaseArticle";
 import {WikibaseStatement} from "./WikibaseStatement";
-import {BlankNode, DefaultGraph, NamedNode} from "@rdfjs/types";
 
 export interface WikibaseItem {
-  readonly altLabels: readonly string[];
+  readonly altLabels: readonly Literal[];
   readonly articles: readonly WikibaseArticle[];
   readonly graph: BlankNode | DefaultGraph | NamedNode;
   readonly identifier: NamedNode;
-  readonly prefLabel: string | null;
+  readonly prefLabel: Literal | null;
   readonly statements: readonly WikibaseStatement[];
 }

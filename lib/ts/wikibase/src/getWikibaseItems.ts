@@ -1,14 +1,14 @@
 import {DatasetCore, Literal, NamedNode, Quad_Graph} from "@rdfjs/types";
-import {WikibaseItem} from "./WikibaseItem";
-import {WikibaseProperty} from "./WikibaseProperty";
 import {prov, rdf, rdfs, schema, skos} from "@tpluscode/rdf-ns-builders";
-import {wikibase} from "./vocabularies";
-import {WikibaseStatement} from "./WikibaseStatement";
-import {WikibaseStatementQualifier} from "./WikibaseStatementQualifier";
+import {BlankNode, DefaultGraph} from "n3";
 import invariant from "ts-invariant";
 import {WikibaseArticle} from "./WikibaseArticle";
-import {BlankNode, DefaultGraph} from "n3";
+import {WikibaseItem} from "./WikibaseItem";
+import {WikibaseProperty} from "./WikibaseProperty";
+import {WikibaseStatement} from "./WikibaseStatement";
+import {WikibaseStatementQualifier} from "./WikibaseStatementQualifier";
 import {WikibaseStatementValue} from "./WikibaseStatementValue";
+import {wikibase} from "./vocabularies";
 
 const ignoreItemPredicateIris: Set<string> = new Set([
   schema.description.value,
@@ -213,8 +213,8 @@ const getWikibaseItem = (kwds: {
     }
   }
 
-  const altLabels: string[] = [];
-  let prefLabel: string | null = null;
+  const altLabels: Literal[] = [];
+  let prefLabel: Literal | null = null;
   const statementsByPropertyIri: {
     [index: string]: {[index: string]: WikibaseStatement[]};
   } = {};
@@ -227,10 +227,10 @@ const getWikibaseItem = (kwds: {
         }
 
         if (propertyQuad.predicate.equals(skos.altLabel)) {
-          altLabels.push(propertyQuad.object.value);
+          altLabels.push(propertyQuad.object);
           continue;
         } else if (propertyQuad.predicate.equals(skos.prefLabel)) {
-          prefLabel = propertyQuad.object.value;
+          prefLabel = propertyQuad.object;
           continue;
         }
         // } else if (propertyQuad.predicate.equals(schema.description)) {

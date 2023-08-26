@@ -1,14 +1,14 @@
+import {mapTermToString} from "@paradicms/rdf";
 import {rdf, skos} from "@paradicms/vocabularies";
-import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
+import {Literal, NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Concept} from "../Concept";
-import {mapTermToString} from "@paradicms/rdf";
+import {ResourceBackedModel} from "../ResourceBackedModel";
+import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
+import {Text} from "../Text";
 import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
 import {mapTermToText} from "../mapTermToText";
-import {Text} from "../Text";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class SkosConcept
   extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
@@ -47,14 +47,13 @@ export class SkosConcept
   }
 
   @Memoize()
-  get value(): BlankNode | Literal | NamedNode {
+  get value(): Literal | NamedNode {
     return (
       this.findAndMapObject(rdf.value, term => {
         switch (term.termType) {
-          case "BlankNode":
           case "Literal":
           case "NamedNode":
-            return term as BlankNode | Literal | NamedNode;
+            return term as Literal | NamedNode;
           default:
             return null;
         }

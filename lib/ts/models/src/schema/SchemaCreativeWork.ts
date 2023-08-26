@@ -7,7 +7,9 @@ import { WorkAgentsMixin } from "../WorkAgentsMixin";
 import { WorkDisplayDateMixin } from "../WorkDisplayDateMixin";
 import { WorkEvent } from "../WorkEvent";
 import { WorkLocation } from "../WorkLocation";
+import { WorkSubject } from "../WorkSubject";
 import { mapTermToLocation } from "../mapTermToLocation";
+import { mapTermToWorkSubject } from "../mapTermToWorkSubject";
 import { SyntheticWorkCreationEvent } from "../synthetic/SyntheticWorkCreationEvent";
 import { SyntheticWorkModificationEvent } from "../synthetic/SyntheticWorkModificationEvent";
 import { SchemaCreativeWorkMixin } from "./SchemaCreativeWorkMixin";
@@ -48,5 +50,11 @@ export class SchemaCreativeWork
     } else {
       return null;
     }
+  }
+
+  get subjects(): readonly WorkSubject[] {
+    return this.filterAndMapObjects(schema.about, term =>
+      mapTermToWorkSubject(this, term)
+    );
   }
 }

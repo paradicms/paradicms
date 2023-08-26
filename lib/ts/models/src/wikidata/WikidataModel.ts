@@ -1,6 +1,7 @@
+import { DataFactory } from "@paradicms/rdf";
 import { wdt } from "@paradicms/vocabularies";
 import { WikibaseArticle, WikibaseItem, WikibaseStatement, WikibaseStatementValue, } from "@paradicms/wikibase";
-import { DatasetCore, NamedNode, Term } from "@rdfjs/types";
+import { DatasetCore, Literal, NamedNode, Term } from "@rdfjs/types";
 import invariant from "ts-invariant";
 import { Mixin } from "ts-mixer";
 import { Memoize } from "typescript-memoize";
@@ -10,15 +11,19 @@ import { ModelSet } from "../ModelSet";
 import { PropertyValue } from "../PropertyValue";
 import { ResourceBackedModel } from "../ResourceBackedModel";
 import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
+import { Text } from "../Text";
 import { createPropertyValueFromTerm } from "../createPropertyValueFromTerm";
 import { OwlSameAsMixin } from "../owl/OwlSameAsMixin";
 import { WikibaseItemSet } from "../wikibase/WikibaseItemSet";
 import { WikidataProperty } from "./WikidataProperty";
+import { WikidataText } from "./WikidataText";
 
 const ensureModelGraphIdentifier = (graph: Term) => {
   invariant(graph.termType === "NamedNode");
   return graph as NamedNode;
 }
+
+const DESCRIPTION_URI = DataFactory.namedNode("http://schema.org/description");
 
 export abstract class WikidataModel
   extends Mixin(ResourceBackedModel, OwlSameAsMixin, SomeImageThumbnailMixin)
@@ -45,7 +50,7 @@ export abstract class WikidataModel
     this.wikidataPropertiesByIri = kwds.wikidataPropertiesByIri;
   }
 
-  get altLabels(): readonly string[] {
+  get altLabels(): readonly Literal[] {
     return this.wikibaseItem.altLabels;
   }
 
@@ -55,6 +60,17 @@ export abstract class WikidataModel
 
   override get dependencies(): readonly Model[] {
     return Object.values(this.wikidataPropertiesByIri);
+  }
+
+  @Memoize()
+  get description(): Text | null {
+    return this.findAndMapObject(
+      DESCRIPTION_URI,
+      term =>
+        term.termType === "Literal"
+          ? new WikidataText({literal: term, modelSet: this.modelSet})
+          : null
+    );
   }
 
   protected findAndMapStatementValue<T>(
@@ -106,14 +122,14 @@ export abstract class WikidataModel
   }
 
   get label(): string {
-    return this.prefLabel ?? this.identifier.value;
+    return this.prefLabel?.value ?? this.identifier.value;
   }
 
   get homepage(): string | null {
     return null;
   }
 
-  get prefLabel(): string | null {
+  get prefLabel(): Literal | null {
     return this.wikibaseItem.prefLabel;
   }
 

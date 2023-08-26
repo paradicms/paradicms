@@ -12,10 +12,12 @@ import {WorkAgentsMixin} from "../WorkAgentsMixin";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
 import {WorkEvent} from "../WorkEvent";
 import {WorkLocation} from "../WorkLocation";
+import {WorkSubject} from "../WorkSubject";
 import {isWikipediaUrl} from "../isWikipediaUrl";
 import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {mapTermToLocation} from "../mapTermToLocation";
 import {mapTermToText} from "../mapTermToText";
+import {mapTermToWorkSubject} from "../mapTermToWorkSubject";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {SyntheticWorkModificationEvent} from "../synthetic/SyntheticWorkModificationEvent";
@@ -98,6 +100,13 @@ export class DcPhysicalObject
   get modified(): DateTimeDescription | null {
     return this.findAndMapObject(dcterms.modified, term =>
       mapTermToDateTimeDescription(this, term)
+    );
+  }
+
+  @Memoize()
+  get subjects(): readonly WorkSubject[] {
+    return this.filterAndMapObjects(dcterms.subject, term =>
+      mapTermToWorkSubject(this, term)
     );
   }
 

@@ -1,8 +1,8 @@
-import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
+import {Literal, NamedNode} from "@rdfjs/types";
+import {DescriptionMixin} from "./DescriptionMixin";
 import {ImagesMixin} from "./ImagesMixin";
 import {Model} from "./Model";
 import {ThumbnailMixin} from "./ThumbnailMixin";
-import {DescriptionMixin} from "./DescriptionMixin";
 
 export interface Concept
   extends Model,
@@ -11,5 +11,5 @@ export interface Concept
     ThumbnailMixin {
   readonly altLabels: readonly Literal[];
   readonly label: string;
-  readonly value: BlankNode | Literal | NamedNode;
+  readonly value: Literal | NamedNode;
 }

@@ -1,9 +1,9 @@
-import {Mixin} from "ts-mixer";
-import {Concept} from "../Concept";
-import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
-import {rdf, schema} from "@paradicms/vocabularies";
-import {Memoize} from "typescript-memoize";
-import {SchemaModel} from "./SchemaModel";
+import { rdf, schema } from "@paradicms/vocabularies";
+import { Literal, NamedNode } from "@rdfjs/types";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Concept } from "../Concept";
+import { SchemaModel } from "./SchemaModel";
 
 export class SchemaDefinedTerm extends Mixin(SchemaModel)
   implements Concept {
@@ -23,14 +23,13 @@ export class SchemaDefinedTerm extends Mixin(SchemaModel)
   }
 
   @Memoize()
-  get value(): BlankNode | Literal | NamedNode {
+  get value(): Literal | NamedNode {
     return (
       this.findAndMapObject(rdf.value, term => {
         switch (term.termType) {
-          case "BlankNode":
           case "Literal":
           case "NamedNode":
-            return term as BlankNode | Literal | NamedNode;
+            return term as Literal | NamedNode;
           default:
             return null;
         }

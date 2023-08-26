@@ -8,6 +8,7 @@ import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
 import { Work } from "../Work";
 import { WorkAgentsMixin } from "../WorkAgentsMixin";
 import { WorkEvent } from "../WorkEvent";
+import { WorkSubject } from "../WorkSubject";
 import { LinkedArtDescriptionMixin } from "./LinkedArtDescriptionMixin";
 import { LinkedArtImagesMixin } from "./LinkedArtImagesMixin";
 import { LinkedArtModel } from "./LinkedArtModel";
@@ -46,6 +47,9 @@ export class LinkedArtHumanMadeObject
   get sameAsIdentifiers(): readonly ModelIdentifier[] {
     return [];
   }
+
+  // Don't have a good example of this currently (20230823): https://linked.art/model/object/aboutness/#subject
+  readonly subjects: readonly WorkSubject[] = [];
 
   @Memoize()
   get wasProducedBy(): LinkedArtProduction | null {
