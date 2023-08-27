@@ -2,7 +2,8 @@ import {
   Api,
   GetModelsResult,
   StringPropertyValueFacet,
-  StringPropertyValueFilter,
+  ValueFacet,
+  WorkSubjectValueFacet,
 } from "@paradicms/api";
 import {
   ModelSetFactory,
@@ -339,7 +340,10 @@ export const behavesLikeApi = (api: Api) => {
             label: "Publisher",
             propertyIri: dcterms.publisher.value,
             type: "StringPropertyValue",
-          } as StringPropertyValueFilter,
+          },
+          {
+            type: "WorkSubjectValue",
+          },
         ],
       },
       valueFacetValueThumbnailSelector: {
@@ -354,22 +358,32 @@ export const behavesLikeApi = (api: Api) => {
       },
     });
 
-    expect(
-      actualResult.facets.some(facet => {
-        if (facet.type !== "StringPropertyValue") {
-          return false;
-        }
-        const value = (facet as StringPropertyValueFacet).values.find(
-          value => !!value.thumbnail
-        )!;
-        expect(value).not.to.be.undefined;
-        const thumbnail = value.thumbnail!;
-        expect(thumbnail).not.to.be.undefined;
-        expect(thumbnail.licenses).not.to.be.empty;
-        expect(thumbnail.rightsStatements).not.to.be.empty;
-        return true;
-      })
-    ).to.be.true;
+    // @ts-ignare
+    const stringPropertyValueFacet = requireDefined(
+      actualResult.facets.find(facet => facet.type === "StringPropertyValue")
+    ) as StringPropertyValueFacet;
+    expect(stringPropertyValueFacet.propertyIri === dcterms.publisher.value);
+
+    // @ts-ignore
+    const workSubjectValueFacet = requireDefined(
+      actualResult.facets.find(facet => facet.type === "WorkSubjectValue")
+    ) as WorkSubjectValueFacet;
+
+    const stringValueFacets: ValueFacet<string>[] = [
+      stringPropertyValueFacet,
+      workSubjectValueFacet,
+    ];
+    for (const stringValueFacet of stringValueFacets) {
+      expect(stringValueFacet.values).not.to.be.empty;
+      const value = requireDefined(
+        stringValueFacet.values.find(value => !!value.thumbnail)
+      );
+      expect(value).not.to.be.undefined;
+      const thumbnail = value.thumbnail!;
+      expect(thumbnail).not.to.be.undefined;
+      expect(thumbnail.licenses).not.to.be.empty;
+      expect(thumbnail.rightsStatements).not.to.be.empty;
+    }
   });
 
   it("getWorks returns at least one work from an empty query", async () => {
