@@ -50,6 +50,7 @@ export * from "./ValueFilterState";
 export * from "./WorkCollectionValueFilter";
 export * from "./WorkJoinSelector";
 export * from "./WorkLocationSummary";
+export * from "./WorkSubjectValueFilter";
 export * from "./WorksFacet";
 export * from "./WorksFilter";
 export * from "./WorksFilterVisitor";

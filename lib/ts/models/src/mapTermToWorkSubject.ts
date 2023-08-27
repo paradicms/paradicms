@@ -19,21 +19,39 @@ export const mapTermToWorkSubject = (
   {
     const agent = mapTermToAgent(modelParameters, term);
     if (agent) {
-      return {agent, type: "Agent"};
+      return {
+        agent,
+        label: agent.label,
+        thumbnail: selector => agent.thumbnail(selector),
+        type: "Agent",
+        value: "Agent-" + agent.key,
+      };
     }
   }
 
   {
     const concept = mapTermToConcept(modelParameters, term);
     if (concept) {
-      return {concept, type: "Concept"};
+      return {
+        concept,
+        label: concept.label,
+        thumbnail: selector => concept.thumbnail(selector),
+        type: "Concept",
+        value: "Concept-" + concept.key,
+      };
     }
   }
 
   {
     const location = mapTermToLocation(modelParameters, term);
     if (location) {
-      return {location, type: "Location"};
+      return {
+        location,
+        label: location.label ?? location.key,
+        thumbnail: selector => null,
+        type: "Location",
+        value: "Location-" + location.key,
+      };
     }
   }
 

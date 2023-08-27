@@ -127,15 +127,20 @@ export class WikidataWork
         return null;
       }
 
+      const concept = new WikidataConcept({
+        dataset: this.dataset,
+        modelSet: this.modelSet,
+        wikibaseItem,
+        wikibaseItemSet: this.wikibaseItemSet,
+        wikidataPropertiesByIri: this.wikidataPropertiesByIri,
+      });
+
       return {
-        concept: new WikidataConcept({
-          dataset: this.dataset,
-          modelSet: this.modelSet,
-          wikibaseItem,
-          wikibaseItemSet: this.wikibaseItemSet,
-          wikidataPropertiesByIri: this.wikidataPropertiesByIri,
-        }),
+        concept,
+        label: concept.label,
+        thumbnail: selector => concept.thumbnail(selector),
         type: "Concept",
+        value: "Concept-" + concept.key,
       };
     });
   }

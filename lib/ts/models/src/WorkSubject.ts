@@ -1,18 +1,26 @@
 import {Agent} from "./Agent";
 import {Concept} from "./Concept";
+import {Image} from "./Image";
 import {Location} from "./Location";
+import {ThumbnailSelector} from "./ThumbnailSelector";
 
-interface AgentWorkSubject {
+interface WorkSubjectBase {
+  readonly label: string;
+  thumbnail(selector: ThumbnailSelector): Image | null;
+  readonly value: string;
+}
+
+interface AgentWorkSubject extends WorkSubjectBase {
   readonly agent: Agent;
   readonly type: "Agent";
 }
 
-interface ConceptWorkSubject {
+interface ConceptWorkSubject extends WorkSubjectBase {
   readonly concept: Concept;
   readonly type: "Concept";
 }
 
-interface LocationWorkSubject {
+interface LocationWorkSubject extends WorkSubjectBase {
   readonly location: Location;
   readonly type: "Location";
 }

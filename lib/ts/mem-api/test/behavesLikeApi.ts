@@ -487,4 +487,57 @@ export const behavesLikeApi = (api: Api) => {
 
     expectModelsDeepEq(expectedWorks, actualWorks);
   });
+
+  it("getWorks filters by collection", async () => {
+    const collection = completeModelSet.collections[0];
+    expect(collection.iris).to.have.length(1);
+    const expectedWorks = collection.works;
+    expect(expectedWorks).not.to.be.empty;
+
+    const actualWorks = (
+      await api.getWorks({
+        query: {
+          filters: [
+            {
+              includeValues: [collection.key],
+              type: "WorkCollectionValue",
+            },
+          ],
+        },
+      })
+    ).modelSet.works;
+
+    expectModelsDeepEq(expectedWorks, actualWorks);
+  });
+
+  it("getWorks filters by subject", async () => {
+    const workSubjects = completeModelSet.works.flatMap(work =>
+      work.subjects.filter(subject => subject.type === "Concept")
+    );
+    expect(workSubjects).not.to.be.empty;
+    const workSubject = workSubjects[0];
+    const expectedWorks = completeModelSet.works.filter(work =>
+      work.subjects.some(
+        subject =>
+          subject.type === workSubject.type &&
+          subject.value === workSubject.value
+      )
+    );
+    expect(expectedWorks).not.to.be.empty;
+
+    const actualWorks = (
+      await api.getWorks({
+        query: {
+          filters: [
+            {
+              includeValues: [workSubject.value],
+              type: "WorkSubjectValue",
+            },
+          ],
+        },
+      })
+    ).modelSet.works;
+
+    expectModelsDeepEq(expectedWorks, actualWorks);
+  });
 };
