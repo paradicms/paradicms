@@ -444,4 +444,47 @@ export const behavesLikeApi = (api: Api) => {
     expect(actualWorks).to.have.length(1);
     expect(actualWorks[0].key).to.eq(expectedWork.key);
   });
+
+  it("getWorks filters by a string property", async () => {
+    const filterableStringProperty = requireDefined(
+      completeModelSet.properties.find(property => property.filterable)
+    );
+    expect(filterableStringProperty.iris).to.have.length(1);
+    const stringPropertyIri = filterableStringProperty.iris[0];
+
+    const stringPropertyValues = completeModelSet.works.flatMap(work =>
+      work.propertyValuesByPropertyIri(stringPropertyIri)
+    );
+    expect(stringPropertyValues).not.to.to.be.empty;
+
+    const includeStringPropertyValue = stringPropertyValues[0];
+
+    const expectedWorks = completeModelSet.works.filter(work =>
+      work
+        .propertyValuesByPropertyIri(stringPropertyIri)
+        .some(
+          propertyValue =>
+            propertyValue.value === includeStringPropertyValue.value
+        )
+    );
+    expect(expectedWorks).not.to.be.empty;
+    expect(expectedWorks).to.have.length.lt(completeModelSet.works.length);
+
+    const actualWorks = (
+      await api.getWorks({
+        query: {
+          filters: [
+            {
+              includeValues: [includeStringPropertyValue.value],
+              label: "Include string property value",
+              propertyIri: filterableStringProperty.iris[0],
+              type: "StringPropertyValue",
+            },
+          ],
+        },
+      })
+    ).modelSet.works;
+
+    expectModelsDeepEq(expectedWorks, actualWorks);
+  });
 };
