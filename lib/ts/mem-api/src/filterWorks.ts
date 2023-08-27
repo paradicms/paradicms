@@ -1,11 +1,12 @@
 import {
   StringPropertyValueFilter,
   WorkCollectionValueFilter,
+  WorkSubjectValueFilter,
   WorksFilter,
 } from "@paradicms/api";
 import {Work} from "@paradicms/models";
-import {testValueFilter} from "./testValueFilter";
 import {filterModelsByKey} from "./filterModelsByKey";
+import {testValueFilter} from "./testValueFilter";
 
 export const filterWorks = (kwds: {
   filters: readonly WorksFilter[];
@@ -38,6 +39,15 @@ export const filterWorks = (kwds: {
           testValueFilter(
             filter as WorkCollectionValueFilter,
             workCollectionKeys[work.key] ?? []
+          )
+        );
+        break;
+      }
+      case "WorkSubjectValue": {
+        filteredWorks = filteredWorks.filter(work =>
+          testValueFilter(
+            filter as WorkSubjectValueFilter,
+            work.subjects.map(subject => subject.value)
           )
         );
         break;

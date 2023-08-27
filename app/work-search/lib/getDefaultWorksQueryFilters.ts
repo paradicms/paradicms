@@ -44,5 +44,9 @@ export const getDefaultWorksQueryFilters = (
     } as StringPropertyValueFilter);
   }
 
+  filters.push({
+    type: "WorkSubjectValue",
+  });
+
   return filters;
 };

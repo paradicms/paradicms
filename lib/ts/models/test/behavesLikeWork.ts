@@ -1,10 +1,10 @@
+import {NamedNode} from "@rdfjs/types";
 import {expect} from "chai";
-import {Text, Work, WorkCreationEvent} from "../src";
 import {it} from "mocha";
+import {Text, Work, WorkCreationEvent} from "../src";
+import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
 import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
 import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
-import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
-import {NamedNode} from "@rdfjs/types";
 import {behavesLikeThumbnailMixin} from "./behavesLikeThumbnailMixin";
 
 export const behavesLikeWork = (
@@ -76,6 +76,13 @@ export const behavesLikeWork = (
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
     expect(propertyValue.value).to.eq((work.description as Text).value);
+  });
+
+  it("should get the work's subjects", () => {
+    expect(work.subjects).not.to.be.empty;
+    for (const subject of work.subjects) {
+      expect(subject.type === "Concept");
+    }
   });
 
   behavesLikeNamedModel(work);

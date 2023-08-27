@@ -9,6 +9,7 @@ import { ThumbnailMixin } from "./ThumbnailMixin";
 import { WorkAgent } from "./WorkAgent";
 import { WorkEvent } from "./WorkEvent";
 import { WorkLocation } from "./WorkLocation";
+import { WorkSubject } from "./WorkSubject";
 
 export interface Work
   extends Model,
@@ -25,6 +26,7 @@ export interface Work
   readonly location: WorkLocation | null;
   get propertyValues(): readonly PropertyValue[];
   propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[];
+  readonly subjects: readonly WorkSubject[];
   readonly wikipediaUrl: string | null;
   readonly wikidataConceptIri: string | null;
 }

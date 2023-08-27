@@ -1,4 +1,3 @@
-import {textFactories} from "./textFactories";
 import {
   cc,
   crm,
@@ -6,39 +5,47 @@ import {
   dcterms,
   foaf,
   schema,
+  skos,
   time,
   wikibase,
 } from "@paradicms/vocabularies";
-import {imageFactories} from "./imageFactories";
-import {licenseFactories} from "./licenseFactories";
-import {locationFactories} from "./locationFactories";
 import {agentFactories} from "./agentFactories";
-import {rightsStatementFactories} from "./rightsStatementFactories";
+import {conceptFactories} from "./conceptFactories";
 import {CreativeCommonsLicense} from "./creative-commons/CreativeCommonsLicense";
 import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
-import {OwlTimeDateTimeDescription} from "./owl-time/OwlTimeDateTimeDescription";
-import {SchemaImageObject} from "./schema/SchemaImageObject";
-import {SchemaTextObject} from "./schema/SchemaTextObject";
+import {DcImage} from "./dc/DcImage";
+import {DcLicenseDocument} from "./dc/DcLicenseDocument";
+import {DcRightsStatement} from "./dc/DcRightsStatement";
+import {DcText} from "./dc/DcText";
 import {FoafOrganization} from "./foaf/FoafOrganization";
 import {FoafPerson} from "./foaf/FoafPerson";
-import {DcRightsStatement} from "./dc/DcRightsStatement";
-import {DcLicenseDocument} from "./dc/DcLicenseDocument";
-import {SchemaPlace} from "./schema/SchemaPlace";
-import {DcText} from "./dc/DcText";
-import {DcImage} from "./dc/DcImage";
-import {WikibaseTimeValue} from "./wikibase/WikibaseTimeValue";
-import {LinkedArtProduction} from "./linked-art/LinkedArtProduction";
-import {LinkedArtPerson} from "./linked-art/LinkedArtPerson";
-import {LinkedArtRight} from "./linked-art/LinkedArtRight";
+import {imageFactories} from "./imageFactories";
+import {licenseFactories} from "./licenseFactories";
 import {LinkedArtLinguisticAppellation} from "./linked-art/LinkedArtLinguisticAppellation";
 import {LinkedArtLinguisticObject} from "./linked-art/LinkedArtLinguisticObject";
-import {LinkedArtVisualItem} from "./linked-art/LinkedArtVisualItem";
+import {LinkedArtPerson} from "./linked-art/LinkedArtPerson";
+import {LinkedArtProduction} from "./linked-art/LinkedArtProduction";
+import {LinkedArtRight} from "./linked-art/LinkedArtRight";
 import {LinkedArtTimeSpan} from "./linked-art/LinkedArtTimeSpan";
+import {LinkedArtVisualItem} from "./linked-art/LinkedArtVisualItem";
 import {linkedArtModelFactories} from "./linked-art/linkedArtModelFactories";
+import {locationFactories} from "./locationFactories";
+import {OwlTimeDateTimeDescription} from "./owl-time/OwlTimeDateTimeDescription";
+import {rightsStatementFactories} from "./rightsStatementFactories";
+import {SchemaDefinedTerm} from "./schema/SchemaDefinedTerm";
+import {SchemaImageObject} from "./schema/SchemaImageObject";
+import {SchemaPlace} from "./schema/SchemaPlace";
+import {SchemaTextObject} from "./schema/SchemaTextObject";
+import {SkosConcept} from "./skos/SkosConcept";
+import {textFactories} from "./textFactories";
+import {WikibaseTimeValue} from "./wikibase/WikibaseTimeValue";
 
 export const registerResourceBackedModelFactories = () => {
   agentFactories.register(foaf.Organization, FoafOrganization);
   agentFactories.register(foaf.Person, FoafPerson);
+
+  conceptFactories.register(skos.Concept, SkosConcept);
+  conceptFactories.register(schema.DefinedTerm, SchemaDefinedTerm);
 
   dateTimeDescriptionFactories.register(
     time.DateTimeDescription,

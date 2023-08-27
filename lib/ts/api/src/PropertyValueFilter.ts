@@ -1,7 +1,7 @@
 import {String} from "runtypes";
-import {ValueFilter} from "./ValueFilter";
-import {JsonPrimitiveType} from "./JsonPrimitiveType";
 import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
+import {JsonPrimitiveType} from "./JsonPrimitiveType";
+import {ValueFilter} from "./ValueFilter";
 
 export const PropertyValueFilter = <T extends JsonPrimitiveRuntype>(t: T) =>
   ValueFilter(t)
