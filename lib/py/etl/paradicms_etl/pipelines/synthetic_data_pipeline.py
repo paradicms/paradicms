@@ -69,12 +69,19 @@ class SyntheticDataPipeline(Pipeline):
             uri: URIRef
             searchable: bool = False
             filterable: bool = False
-            values: tuple[str, ...] = ()
 
             @property
             def range(self) -> URIRef:  # noqa: A003
                 return URIRef(
                     f"urn:paradicms:etl:pipeline:{SyntheticDataPipeline.ID}:property_range:{quote(self.label)}"
+                )
+
+            @property
+            def values(self) -> tuple[str, ...]:
+                return (
+                    tuple(f"{self.label} {i}" for i in range(10))
+                    if self.filterable
+                    else ()
                 )
 
         __PROPERTIES = (
@@ -92,13 +99,11 @@ class SyntheticDataPipeline(Pipeline):
                 filterable=True,
                 label="DC Extent",
                 uri=DCTERMS.extent,
-                values=tuple(f"Extent {i}" for i in range(10)),
             ),
             __Property(
                 filterable=True,
                 label="DC Language",
                 uri=DCTERMS.language,
-                values=tuple(f"Language {i}" for i in range(10)),
             ),
             # __Property(
             #     label="Material",
@@ -109,31 +114,26 @@ class SyntheticDataPipeline(Pipeline):
                 filterable=True,
                 label="DC Medium",
                 uri=DCTERMS.medium,
-                values=tuple(f"Medium {i}" for i in range(10)),
             ),
             __Property(
                 filterable=True,
                 label="DC Publisher",
                 uri=DCTERMS.publisher,
-                values=tuple(f"Publisher {i}" for i in range(10)),
             ),
             __Property(
                 filterable=True,
                 label="Source",
                 uri=DCTERMS.source,
-                values=tuple(f"Source {i}" for i in range(10)),
             ),
             __Property(
                 filterable=True,
                 label="DC Spatial",
                 uri=DCTERMS.spatial,
-                values=tuple(f"DC Spatial {i}" for i in range(10)),
             ),
             __Property(
                 filterable=True,
                 label="DC Subject",
                 uri=DCTERMS.subject,
-                values=tuple(f"Subject {i}" for i in range(10)),
             ),
             # __Property(
             #     label="Technique",
@@ -149,7 +149,11 @@ class SyntheticDataPipeline(Pipeline):
                 filterable=True,
                 label="DC Type",
                 uri=DCTERMS.type,
-                values=tuple(f"Type {i}" for i in range(10)),
+            ),
+            __Property(
+                filterable=True,
+                label="Schema Subject",
+                uri=SDO.about,
             ),
             __Property(
                 label="Schema Description",
@@ -161,7 +165,6 @@ class SyntheticDataPipeline(Pipeline):
                 filterable=True,
                 label="Schema Spatial",
                 uri=SDO.spatial,
-                values=tuple(f"Schema Spatial {i}" for i in range(10)),
             ),
         )
 
