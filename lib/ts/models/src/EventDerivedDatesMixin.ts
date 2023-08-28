@@ -2,6 +2,7 @@ import log from "loglevel";
 import {Memoize} from "typescript-memoize";
 import {Event} from "./Event";
 import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
+import {imputePartialDateTimeDescription} from "./imputePartialDateTimeDescription";
 
 export abstract class EventDerivedDatesMixin {
   abstract readonly date: PartialDateTimeDescription | null;
@@ -47,7 +48,7 @@ export abstract class EventDerivedDatesMixin {
   get displayDate(): string | null {
     const date = this.date;
     if (date !== null) {
-      return date.displayString;
+      return date.label;
     }
 
     const startDate = this.startDate;
@@ -59,10 +60,10 @@ export abstract class EventDerivedDatesMixin {
 
     const result: string[] = [];
     if (startDate !== null) {
-      result.push(startDate.displayString + " (start)");
+      result.push(startDate.label + " (start)");
     }
     if (endDate !== null) {
-      result.push(endDate.displayString + " (end)");
+      result.push(endDate.label + " (end)");
     }
 
     return result.join(" - ");
@@ -74,14 +75,21 @@ export abstract class EventDerivedDatesMixin {
    * The returned properties have the same semantics as PartialDateTime.
    */
   @Memoize()
-  get sortDate(): EventSortDate | null {
-    for (const date of [this.date, this.startDate, this.endDate]) {
-      if (date !== null && date.year !== null) {
-        return {
-          day: date.day,
-          month: date.month,
-          year: date.year!,
-        };
+  get sortDate(): Date | null {
+    for (const {partialDateTimeDescription, latest} of [
+      {partialDateTimeDescription: this.date},
+      {partialDateTimeDescription: this.startDate},
+      {partialDateTimeDescription: this.endDate, latest: true},
+    ]) {
+      if (!partialDateTimeDescription) {
+        continue;
+      }
+      const date = imputePartialDateTimeDescription({
+        partialDateTimeDescription,
+        latest,
+      });
+      if (date !== null) {
+        return null;
       }
     }
     log.debug("event has no sort date");
