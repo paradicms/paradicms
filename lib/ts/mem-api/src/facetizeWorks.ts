@@ -1,43 +1,119 @@
-import { DateRangeEndpoint, WorksFacet, WorksFilter } from "@paradicms/api";
+import {DateRangeFacet, WorksFacet, WorksFilter} from "@paradicms/api";
 import {
-  DateTimeDescription,
   Image,
+  PartialDateTimeDescription,
   ThumbnailSelector,
   Work,
   WorkEvent,
+  imputePartialDateTimeDescription,
 } from "@paradicms/models";
-import { deleteUndefined } from "@paradicms/utilities";
-import { MutableValueFacetValue } from "./MutableValueFacetValue";
-import { imageToValueFacetValueThumbnail } from "./imageToValueFacetThumbnail";
+import {deleteUndefined} from "@paradicms/utilities";
+import {MutableValueFacetValue} from "./MutableValueFacetValue";
+import {imageToValueFacetValueThumbnail} from "./imageToValueFacetThumbnail";
 
-const compareDateRangeEndpoints = (left: DateRangeEndpoint, right: DateRangeEndpoint): number {
-  const yearDiff = thisSortDate.year - otherSortDate.year;
-  if (yearDiff !== 0) {
-    return yearDiff;
-  }
-
-  // Years are the same.
-  // Fill in the month and/or day with 1 for the purposes of comparison.
-
-  const monthDiff =
-    (thisSortDate.month !== null ? thisSortDate.month : 1) -
-    (otherSortDate.month !== null ? otherSortDate.month : 1);
-  if (monthDiff !== 0) {
-    return monthDiff;
-  }
-  return (
-    (thisSortDate.day !== null ? thisSortDate.day : 1) -
-    (otherSortDate.day !== null ? otherSortDate.day : 1)
-  );
-}
-
-const facetizeWorksByDateRange = (kwds: {
-  workDate: (work: Work) => DateTimeDescription | null;
+const facetizeWorksByEventDateRange = (kwds: {
+  getWorkEvent: (work: Work) => WorkEvent | null;
   works: readonly Work[];
 }): DateRangeFacet | null => {
+  const {getWorkEvent, works} = kwds;
+
+  type TempDateRangeEndpoint = {
+    date: Date;
+    partialDateTimeDescription: PartialDateTimeDescription;
+  };
+  let end: TempDateRangeEndpoint | null = null,
+    start: TempDateRangeEndpoint | null = null;
+
   for (const work of works) {
-    
+    const workEvent = getWorkEvent(work);
+    if (workEvent === null) {
+      return null;
+    }
+
+    // Check the event's date to expand the range
+    const checkDates: {
+      earliestImputedDate: Date | null;
+      latestImputedDate: Date | null;
+      partialDateTimeDescription: PartialDateTimeDescription;
+    }[] = [];
+
+    if (workEvent.date) {
+      // Consider a .date for the start or end of the range
+      checkDates.push({
+        earliestImputedDate: imputePartialDateTimeDescription({
+          partialDateTimeDescription: workEvent.date,
+        }),
+        latestImputedDate: imputePartialDateTimeDescription({
+          partialDateTimeDescription: workEvent.date,
+          latest: true,
+        }),
+        partialDateTimeDescription: workEvent.date,
+      });
+    }
+
+    if (workEvent.startDate) {
+      // Don't consider a start date for the end of the range
+      checkDates.push({
+        earliestImputedDate: imputePartialDateTimeDescription({
+          partialDateTimeDescription: workEvent.startDate,
+        }),
+        latestImputedDate: null,
+        partialDateTimeDescription: workEvent.startDate,
+      });
+    }
+
+    if (workEvent.endDate) {
+      // Don't consider an end date for the start of the range
+      checkDates.push({
+        earliestImputedDate: null,
+        latestImputedDate: imputePartialDateTimeDescription({
+          partialDateTimeDescription: workEvent.endDate,
+        }),
+        partialDateTimeDescription: workEvent.endDate,
+      });
+    }
+
+    for (const checkDate of checkDates) {
+      if (
+        checkDate.earliestImputedDate !== null &&
+        (start === null ||
+          checkDate.earliestImputedDate.getTime() < start.date.getTime())
+      ) {
+        start = {
+          date: checkDate.earliestImputedDate,
+          partialDateTimeDescription: checkDate.partialDateTimeDescription,
+        };
+      }
+
+      if (
+        checkDate.latestImputedDate !== null &&
+        (end === null ||
+          checkDate.latestImputedDate.getTime() > end.date.getTime())
+      ) {
+        end = {
+          date: checkDate.latestImputedDate,
+          partialDateTimeDescription: checkDate.partialDateTimeDescription,
+        };
+      }
+    }
   }
+
+  if (start == null || end == null) {
+    return null;
+  }
+
+  return {
+    end: {
+      year: end.partialDateTimeDescription.year!,
+      month: end.partialDateTimeDescription.month ?? undefined,
+      day: end.partialDateTimeDescription.day ?? undefined,
+    },
+    start: {
+      year: start.partialDateTimeDescription.year!,
+      month: start.partialDateTimeDescription.month ?? undefined,
+      day: start.partialDateTimeDescription.day ?? undefined,
+    },
+  };
 };
 
 const facetizeWorksByValue = <
@@ -48,25 +124,25 @@ const facetizeWorksByValue = <
     value: ValueT;
   }
 >(kwds: {
+  getWorkValues: (work: Work) => readonly WorkValueT[];
   valueFacetValueThumbnailSelector?: ThumbnailSelector;
   works: readonly Work[];
-  workValues: (work: Work) => readonly WorkValueT[];
 }): {
   unknownCount: number;
   values: MutableValueFacetValue<ValueT>[];
 } => {
-  const {valueFacetValueThumbnailSelector, works, workValues} = kwds;
+  const {getWorkValues, valueFacetValueThumbnailSelector, works} = kwds;
 
   let unknownCount: number = 0;
   const facetValues: MutableValueFacetValue<ValueT>[] = [];
   for (const work of works) {
-    const values = workValues(work);
-    if (values.length === 0) {
+    const workValues = getWorkValues(work);
+    if (workValues.length === 0) {
       unknownCount++;
       continue;
     }
 
-    for (const value of values) {
+    for (const value of workValues) {
       let facetValue = facetValues.find(
         facetValue => facetValue.value === value.value
       );
@@ -93,18 +169,6 @@ const facetizeWorksByValue = <
   };
 };
 
-const getWorkEventDate = (workEvent: WorkEvent): DateTimeDescription | null {
-  if (workEvent.date) {
-    return workEvent.date;
-  } else if (workEvent.startDate) {
-    return workEvent.startDate;
-  } else if (workEvent.endDate) {
-    return workEvent.endDate;
-  } else {
-    return null;
-  }
-}
-
 export const facetizeWorks = (kwds: {
   filters: readonly WorksFilter[];
   valueFacetValueThumbnailSelector?: ThumbnailSelector;
@@ -119,7 +183,7 @@ export const facetizeWorks = (kwds: {
           ...facetizeWorksByValue({
             valueFacetValueThumbnailSelector,
             works,
-            workValues: work =>
+            getWorkValues: work =>
               work.propertyValuesByPropertyIri(filter.propertyIri),
           }),
           propertyIri: filter.propertyIri,
@@ -127,21 +191,15 @@ export const facetizeWorks = (kwds: {
         });
         break;
       case "WorkCreationDateRange": {
-        const facet = facetizeWorksByDateRange({
-          workDate: (work) => {
-            for (const workEvent of work.events) {
-              if (workEvent.type === "WorkCreation") {
-                return getWorkEventDate(workEvent);
-              }
-            }
-            return null;
-          },
-          works
+        const facet = facetizeWorksByEventDateRange({
+          getWorkEvent: work =>
+            work.events.find(event => event.type === "WorkCreation") ?? null,
+          works,
         });
         if (facet) {
           facets.push({
             ...facet,
-            type: "WorkCreationDateRange"
+            type: "WorkCreationDateRange",
           });
         }
         break;
@@ -150,7 +208,7 @@ export const facetizeWorks = (kwds: {
         facets.push({
           ...facetizeWorksByValue({
             ...kwds,
-            workValues: work => work.subjects,
+            getWorkValues: work => work.subjects,
           }),
           type: "WorkSubjectValue",
         });

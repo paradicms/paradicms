@@ -34,5 +34,6 @@ export * from "./createPropertyValuesFromQuadObjects";
 export * from "./createPropertyValuesFromQuadSubjects";
 export * from "./defaultProperties";
 export * from "./imagePlaceholderSrc";
+export * from "./imputePartialDateTimeDescription";
 export * from "./json/JsonAppConfiguration";
 export * from "./selectThumbnail";
