@@ -1,8 +1,9 @@
 import {String} from "runtypes";
+import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
 import {ValueFacet} from "./ValueFacet";
 
-export const PropertyValueFacet = <ValueT extends JsonPrimitiveType>(
+export const PropertyValueFacet = <ValueT extends JsonPrimitiveRuntype>(
   valueT: ValueT
 ) =>
   ValueFacet<ValueT>(valueT)

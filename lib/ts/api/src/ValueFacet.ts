@@ -1,9 +1,12 @@
 import {Array, Number} from "runtypes";
 import {Facet} from "./Facet";
+import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
 import {ValueFacetValue} from "./ValueFacetValue";
 
-export const ValueFacet = <ValueT extends JsonPrimitiveType>(valueT: ValueT) =>
+export const ValueFacet = <ValueT extends JsonPrimitiveRuntype>(
+  valueT: ValueT
+) =>
   Facet.extend({
     unknownCount: Number,
     values: Array(ValueFacetValue(valueT)).asReadonly(),
