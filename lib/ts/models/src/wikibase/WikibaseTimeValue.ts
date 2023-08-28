@@ -10,16 +10,13 @@ import {ResourceBackedModel} from "../ResourceBackedModel";
 
 import dayjsPluginTimezone from "dayjs/plugin/timezone";
 import dayjsPluginUtc from "dayjs/plugin/utc";
-import {PartialDateTimeDescriptionDisplayStringMixin} from "../PartialDateTimeDescriptionDisplayStringMixin";
+import {PartialDateTimeDescriptionLabelMixin} from "../PartialDateTimeDescriptionLabelMixin";
 
 dayjs.extend(dayjsPluginUtc);
 dayjs.extend(dayjsPluginTimezone);
 
 export class WikibaseTimeValue
-  extends Mixin(
-    ResourceBackedModel,
-    PartialDateTimeDescriptionDisplayStringMixin
-  )
+  extends Mixin(ResourceBackedModel, PartialDateTimeDescriptionLabelMixin)
   implements PartialDateTimeDescription {
   get day(): number | null {
     return this.timePrecision >= 11 ? this.timeValue.day() : null;

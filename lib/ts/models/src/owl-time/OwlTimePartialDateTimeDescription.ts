@@ -3,14 +3,11 @@ import {time, xsd} from "@paradicms/vocabularies";
 import {Literal} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
-import {PartialDateTimeDescriptionDisplayStringMixin} from "../PartialDateTimeDescriptionDisplayStringMixin";
+import {PartialDateTimeDescriptionLabelMixin} from "../PartialDateTimeDescriptionLabelMixin";
 import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class OwlTimePartialDateTimeDescription
-  extends Mixin(
-    ResourceBackedModel,
-    PartialDateTimeDescriptionDisplayStringMixin
-  )
+  extends Mixin(ResourceBackedModel, PartialDateTimeDescriptionLabelMixin)
   implements PartialDateTimeDescription {
   /**
    * Day of the month, 1..31 inclusive.

@@ -1,9 +1,9 @@
 import dayjs from "dayjs";
 import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
 
-export abstract class PartialDateTimeDescriptionDisplayStringMixin
+export abstract class PartialDateTimeDescriptionLabelMixin
   implements PartialDateTimeDescription {
-  get displayString(): string {
+  get label(): string {
     const year = this.year;
 
     if (year === null) {

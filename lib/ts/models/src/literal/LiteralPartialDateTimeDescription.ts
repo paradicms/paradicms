@@ -5,17 +5,17 @@ import dayjs from "dayjs";
 import log from "loglevel";
 import { Mixin } from "ts-mixer";
 import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
-import { PartialDateTimeDescriptionDisplayStringMixin } from "../PartialDateTimeDescriptionDisplayStringMixin";
+import { PartialDateTimeDescriptionLabelMixin } from "../PartialDateTimeDescriptionLabelMixin";
 import { LiteralModel } from "./LiteralModel";
 
 const yearMonthDayFormat = require("any-date-parser/src/formats/yearMonthDay/yearMonthDay");
 anyDateParser.removeFormat(yearMonthDayFormat);
 
 export class LiteralPartialDateTimeDescription
-  extends Mixin(LiteralModel, PartialDateTimeDescriptionDisplayStringMixin)
+  extends Mixin(LiteralModel, PartialDateTimeDescriptionLabelMixin)
   implements PartialDateTimeDescription {
   readonly day: number | null;
-  readonly _displayString: string | null;
+  override readonly label: string;
   readonly hour: number | null;
   readonly minute: number | null;
   readonly month: number | null;
@@ -23,27 +23,19 @@ export class LiteralPartialDateTimeDescription
   readonly year: number | null;
 
   private constructor(
-    kwds: Omit<PartialDateTimeDescription, "displayString"> & {
-      displayString: string | null;
+    kwds: Omit<PartialDateTimeDescription, "label"> & {
+      label: string | null;
       literal: Literal;
     }
   ) {
     super(kwds.literal);
     this.day = kwds.day;
-    this._displayString = kwds.displayString;
+    this.label = kwds.label ?? kwds.literal.value;
     this.hour = kwds.hour;
     this.minute = kwds.minute;
     this.month = kwds.month;
     this.second = kwds.second;
     this.year = kwds.year;
-  }
-
-  override get displayString(): string {
-      if (this._displayString) {
-          return this._displayString;
-      } else {
-          return super.displayString;
-      }
   }
 
   private static fromArbitraryLiteral(
@@ -69,7 +61,7 @@ export class LiteralPartialDateTimeDescription
         partialDateTime.second !== null || partialDateTime.year !== null)
       ) {
         return new LiteralPartialDateTimeDescription({
-          displayString: literal.value,
+          label: literal.value,
           literal,
           ...partialDateTime,
         });
@@ -91,8 +83,8 @@ export class LiteralPartialDateTimeDescription
 
     return new LiteralPartialDateTimeDescription({
       day: null,
-      displayString: literal.value,
       hour: null,
+      label: literal.value,
       literal,
       minute: null,
       month: null,
@@ -101,7 +93,9 @@ export class LiteralPartialDateTimeDescription
     });
   }
 
-  static fromLiteral(literal: Literal): LiteralPartialDateTimeDescription | null {
+  static fromLiteral(
+    literal: Literal
+  ): LiteralPartialDateTimeDescription | null {
     if (literal.datatype.equals(xsd.date)) {
       return LiteralPartialDateTimeDescription.fromXsdDateLiteral(literal);
     } else if (literal.datatype.equals(xsd.dateTime)) {
@@ -117,7 +111,7 @@ export class LiteralPartialDateTimeDescription
     const parsed = dayjs(literal.value);
     return new LiteralPartialDateTimeDescription({
       day: parsed.day(),
-      displayString: null,
+      label: null,
       hour: null,
       literal,
       minute: null,
@@ -133,7 +127,7 @@ export class LiteralPartialDateTimeDescription
     const parsed = dayjs(literal.value);
     return new LiteralPartialDateTimeDescription({
       day: parsed.day(),
-      displayString: null, // Construct with the mixin displayString
+      label: null, // Construct with the mixin label
       hour: parsed.hour(),
       literal,
       minute: parsed.minute(),
