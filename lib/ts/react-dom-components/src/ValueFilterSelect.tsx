@@ -1,5 +1,3 @@
-import * as React from "react";
-import {useMemo} from "react";
 import {
   JsonPrimitiveType,
   ValueFacet,
@@ -7,6 +5,8 @@ import {
   ValueFilter,
   ValueFilterState,
 } from "@paradicms/api";
+import * as React from "react";
+import {useMemo} from "react";
 import Select from "react-select";
 import {valueThumbnailSelector} from "./valueThumbnailSelector";
 
@@ -20,21 +20,21 @@ interface UnknownValueFilterSelectOption {
   type: "Unknown";
 }
 
-interface ValueValueFilterSelectOption<T extends JsonPrimitiveType> {
+interface ValueValueFilterSelectOption<ValueT extends JsonPrimitiveType> {
   count: number;
   label: string;
   thumbnail: ValueFacetValueThumbnail | null;
   type: "Value";
-  value: T;
+  value: ValueT;
 }
 
-type ValueFilterSelectOption<T extends JsonPrimitiveType> =
+type ValueFilterSelectOption<ValueT extends JsonPrimitiveType> =
   | KnownValueFilterSelectOption
   | UnknownValueFilterSelectOption
-  | ValueValueFilterSelectOption<T>;
+  | ValueValueFilterSelectOption<ValueT>;
 
-const getOptionValue = <T extends JsonPrimitiveType>(
-  option: ValueFilterSelectOption<T>
+const getOptionValue = <ValueT extends JsonPrimitiveType>(
+  option: ValueFilterSelectOption<ValueT>
 ): string => {
   switch (option.type) {
     case "Known":

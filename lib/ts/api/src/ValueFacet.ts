@@ -1,13 +1,12 @@
-import {ValueFacetValue} from "./ValueFacetValue";
-import {JsonPrimitiveType} from "./JsonPrimitiveType";
-import {Facet} from "./Facet";
 import {Array, Number} from "runtypes";
-import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
+import {Facet} from "./Facet";
+import {JsonPrimitiveType} from "./JsonPrimitiveType";
+import {ValueFacetValue} from "./ValueFacetValue";
 
-export const ValueFacet = <T extends JsonPrimitiveRuntype>(t: T) =>
+export const ValueFacet = <ValueT extends JsonPrimitiveType>(valueT: ValueT) =>
   Facet.extend({
     unknownCount: Number,
-    values: Array(ValueFacetValue(t)).asReadonly(),
+    values: Array(ValueFacetValue(valueT)).asReadonly(),
   }).asReadonly();
 
 /**
@@ -17,7 +16,7 @@ export const ValueFacet = <T extends JsonPrimitiveRuntype>(t: T) =>
  *
  * The naming follows that of Lucene/ElasticSearch (value and range facets).
  */
-export interface ValueFacet<T extends JsonPrimitiveType> extends Facet {
+export interface ValueFacet<ValueT extends JsonPrimitiveType> extends Facet {
   /**
    * Count of models that do not have a value for the property.
    */
@@ -26,5 +25,5 @@ export interface ValueFacet<T extends JsonPrimitiveType> extends Facet {
   /**
    * Histogram of distinct values.
    */
-  readonly values: readonly ValueFacetValue<T>[];
+  readonly values: readonly ValueFacetValue<ValueT>[];
 }

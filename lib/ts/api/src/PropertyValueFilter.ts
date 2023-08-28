@@ -3,16 +3,18 @@ import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
 import {JsonPrimitiveType} from "./JsonPrimitiveType";
 import {ValueFilter} from "./ValueFilter";
 
-export const PropertyValueFilter = <T extends JsonPrimitiveRuntype>(t: T) =>
-  ValueFilter(t)
+export const PropertyValueFilter = <ValueT extends JsonPrimitiveRuntype>(
+  valueT: ValueT
+) =>
+  ValueFilter(valueT)
     .extend({
       label: String,
       propertyIri: String,
     })
     .asReadonly();
 
-export interface PropertyValueFilter<T extends JsonPrimitiveType>
-  extends ValueFilter<T> {
+export interface PropertyValueFilter<ValueT extends JsonPrimitiveType>
+  extends ValueFilter<ValueT> {
   /**
    * Label for this filter in the user interface.
    */
