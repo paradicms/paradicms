@@ -1,8 +1,7 @@
+import log from "loglevel";
 import {Memoize} from "typescript-memoize";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {Event} from "./Event";
-import log from "loglevel";
-import {EventSortDate} from "./EventSortDate";
 
 export abstract class EventDerivedDatesMixin {
   abstract readonly date: DateTimeDescription | null;

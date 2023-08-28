@@ -1,7 +1,6 @@
 import {Agent} from "./Agent";
 import {DateTimeDescription} from "./DateTimeDescription";
 import {DescriptionMixin} from "./DescriptionMixin";
-import {EventSortDate} from "./EventSortDate";
 import {ImagesMixin} from "./ImagesMixin";
 import {Location} from "./Location";
 import {Model} from "./Model";
@@ -19,6 +18,6 @@ export interface Event
   readonly label: string;
   readonly endDate: DateTimeDescription | null;
   readonly location: Location | null;
-  readonly sortDate: EventSortDate | null;
+  readonly sortDate: DateTimeDescription | null;
   readonly startDate: DateTimeDescription | null;
 }

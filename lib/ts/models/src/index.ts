@@ -4,7 +4,6 @@ export * from "./Collection";
 export * from "./Concept";
 export * from "./DateTimeDescription";
 export * from "./Event";
-export * from "./EventSortDate";
 export * from "./Image";
 export * from "./ImageDimensions";
 export * from "./ImagesMixin";
