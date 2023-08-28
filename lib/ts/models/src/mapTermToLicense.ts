@@ -1,8 +1,8 @@
 import {Term} from "@rdfjs/types";
-import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {License} from "./License";
-import {LiteralLicense} from "./literal/LiteralLicense";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {licenseFactories} from "./licenseFactories";
+import {LiteralLicense} from "./literal/LiteralLicense";
 import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
@@ -14,7 +14,7 @@ export const mapTermToLicense = (
 ): License | null => {
   switch (term.termType) {
     case "Literal":
-      return new LiteralLicense(term);
+      return new LiteralLicense({literal: term});
     case "NamedNode": {
       const license = modelParameters.modelSet.licenseByIri(term.value);
       if (license) {

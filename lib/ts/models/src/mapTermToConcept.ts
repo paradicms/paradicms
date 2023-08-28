@@ -14,7 +14,7 @@ export const mapTermToConcept = (
 ): Concept | null => {
   switch (term.termType) {
     case "Literal":
-      return new LiteralConcept(term);
+      return new LiteralConcept({literal: term});
     case "NamedNode": {
       const concept = modelParameters.modelSet.conceptByIri(term.value);
       if (concept) {

@@ -1,12 +1,12 @@
-import { xsd } from "@paradicms/vocabularies";
-import { Literal } from "@rdfjs/types";
+import {xsd} from "@paradicms/vocabularies";
+import {Literal} from "@rdfjs/types";
 import anyDateParser from "any-date-parser";
 import dayjs from "dayjs";
 import log from "loglevel";
-import { Mixin } from "ts-mixer";
-import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
-import { PartialDateTimeDescriptionLabelMixin } from "../PartialDateTimeDescriptionLabelMixin";
-import { LiteralModel } from "./LiteralModel";
+import {Mixin} from "ts-mixer";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
+import {PartialDateTimeDescriptionLabelMixin} from "../PartialDateTimeDescriptionLabelMixin";
+import {LiteralModel} from "./LiteralModel";
 
 const yearMonthDayFormat = require("any-date-parser/src/formats/yearMonthDay/yearMonthDay");
 anyDateParser.removeFormat(yearMonthDayFormat);
@@ -15,7 +15,6 @@ export class LiteralPartialDateTimeDescription
   extends Mixin(LiteralModel, PartialDateTimeDescriptionLabelMixin)
   implements PartialDateTimeDescription {
   readonly day: number | null;
-  override readonly label: string;
   readonly hour: number | null;
   readonly minute: number | null;
   readonly month: number | null;
@@ -28,9 +27,8 @@ export class LiteralPartialDateTimeDescription
       literal: Literal;
     }
   ) {
-    super(kwds.literal);
+    super(kwds);
     this.day = kwds.day;
-    this.label = kwds.label ?? kwds.literal.value;
     this.hour = kwds.hour;
     this.minute = kwds.minute;
     this.month = kwds.month;

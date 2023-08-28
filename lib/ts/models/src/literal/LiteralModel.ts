@@ -1,9 +1,15 @@
-import {Model} from "../Model";
 import {DatasetCore, Literal} from "@rdfjs/types";
+import {Model} from "../Model";
 import {ModelIdentifier} from "../ModelIdentifier";
 
 export class LiteralModel implements Model {
-  constructor(protected readonly literal: Literal) {}
+  protected readonly literal: Literal;
+  readonly label: string;
+
+  constructor(kwds: {literal: Literal; label?: string | null}) {
+    this.label = kwds.label ?? kwds.literal.value;
+    this.literal = kwds.literal;
+  }
 
   get dependencies(): readonly Model[] {
     return [];
@@ -19,10 +25,6 @@ export class LiteralModel implements Model {
 
   get iris(): readonly string[] {
     return [];
-  }
-
-  get label(): string {
-    return this.literal.value;
   }
 
   toRdf(addToDataset: DatasetCore) {}

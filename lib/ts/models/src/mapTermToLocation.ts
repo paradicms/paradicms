@@ -14,7 +14,7 @@ export const mapTermToLocation = (
 ): Location | null => {
   switch (term.termType) {
     case "Literal":
-      return new LiteralLocation(term);
+      return new LiteralLocation({literal: term});
     case "NamedNode": {
       const location = modelParameters.modelSet.locationByIri(term.value);
       if (location) {
