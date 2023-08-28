@@ -18,6 +18,6 @@ export interface Event
   readonly label: string;
   readonly endDate: PartialDateTimeDescription | null;
   readonly location: Location | null;
-  readonly sortDate: PartialDateTimeDescription | null;
+  readonly sortDate: Date | null;
   readonly startDate: PartialDateTimeDescription | null;
 }

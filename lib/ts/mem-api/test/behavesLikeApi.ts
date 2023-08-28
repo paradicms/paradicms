@@ -3,6 +3,7 @@ import {
   GetModelsResult,
   StringPropertyValueFacet,
   ValueFacet,
+  WorkCreationDateRangeFacet,
   WorkSubjectValueFacet,
 } from "@paradicms/api";
 import {
@@ -342,6 +343,9 @@ export const behavesLikeApi = (api: Api) => {
             type: "StringPropertyValue",
           },
           {
+            type: "WorkCreationDateRange",
+          },
+          {
             type: "WorkSubjectValue",
           },
         ],
@@ -363,6 +367,18 @@ export const behavesLikeApi = (api: Api) => {
       actualResult.facets.find(facet => facet.type === "StringPropertyValue")
     ) as StringPropertyValueFacet;
     expect(stringPropertyValueFacet.propertyIri === dcterms.publisher.value);
+
+    const workCreationDateRangeFacet = requireDefined(
+      actualResult.facets.find(facet => facet.type == "WorkCreationDateRange")
+    ) as WorkCreationDateRangeFacet;
+    expect(
+      workCreationDateRangeFacet.start.year ===
+        workCreationDateRangeFacet.end.year
+    );
+    expect(
+      workCreationDateRangeFacet.start.month! <
+        workCreationDateRangeFacet.end.month!
+    );
 
     // @ts-ignore
     const workSubjectValueFacet = requireDefined(

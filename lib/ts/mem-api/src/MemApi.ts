@@ -1,16 +1,4 @@
 import {
-  defaultProperties,
-  EventSortDate,
-  JsonAppConfiguration,
-  Model,
-  ModelSet,
-  Point,
-  Work,
-  WorkAgent,
-  WorkEvent,
-  WorkLocation,
-} from "@paradicms/models";
-import {
   Api,
   CollectionsQuery,
   defaultAgentsSort,
@@ -38,25 +26,36 @@ import {
   summarizeWorkLocation,
   WorksQuery,
 } from "@paradicms/api";
-import lunr, {Index} from "lunr";
-import invariant from "ts-invariant";
+import {
+  defaultProperties,
+  JsonAppConfiguration,
+  Model,
+  ModelSet,
+  Point,
+  Work,
+  WorkAgent,
+  WorkEvent,
+  WorkLocation,
+} from "@paradicms/models";
 import {requireNonNull} from "@paradicms/utilities";
 import log from "loglevel";
+import lunr, {Index} from "lunr";
+import invariant from "ts-invariant";
 import {facetizeWorks} from "./facetizeWorks";
-import {sortWorks} from "./sortWorks";
-import {sortAgents} from "./sortAgents";
-import {filterWorks} from "./filterWorks";
-import {filterEvents} from "./filterEvents";
-import {sortEvents} from "./sortEvents";
 import {filterCollections} from "./filterCollections";
+import {filterEvents} from "./filterEvents";
 import {filterLocations} from "./filterLocations";
-import {filterPropertyGroups} from "./filterPropertyGroups";
-import {sortPropertyGroups} from "./sortPropertyGroups";
-import {getModels} from "./getModels";
-import {getModelKeys} from "./getModelKeys";
-import {sortProperties} from "./sortProperties";
 import {filterProperties} from "./filterProperties";
+import {filterPropertyGroups} from "./filterPropertyGroups";
+import {filterWorks} from "./filterWorks";
+import {getModelKeys} from "./getModelKeys";
+import {getModels} from "./getModels";
 import {ModelSetBuilder} from "./ModelSetBuilder";
+import {sortAgents} from "./sortAgents";
+import {sortEvents} from "./sortEvents";
+import {sortProperties} from "./sortProperties";
+import {sortPropertyGroups} from "./sortPropertyGroups";
+import {sortWorks} from "./sortWorks";
 
 const basex = require("base-x");
 const base58 = basex(
@@ -377,7 +376,7 @@ export class MemApi implements Api {
         readonly key: string;
         compareByDate(other: WorkEventWithContext): number;
         readonly label: string;
-        readonly sortDate: EventSortDate | null;
+        readonly sortDate: Date | null;
         readonly workEvent: WorkEvent;
         readonly workKey: string;
       };

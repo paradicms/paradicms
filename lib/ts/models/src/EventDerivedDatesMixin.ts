@@ -24,24 +24,7 @@ export abstract class EventDerivedDatesMixin {
       return 1; // Events with dates are > events without dates;
     }
 
-    const yearDiff = thisSortDate.year - otherSortDate.year;
-    if (yearDiff !== 0) {
-      return yearDiff;
-    }
-
-    // Years are the same.
-    // Fill in the month and/or day with 1 for the purposes of comparison.
-
-    const monthDiff =
-      (thisSortDate.month !== null ? thisSortDate.month : 1) -
-      (otherSortDate.month !== null ? otherSortDate.month : 1);
-    if (monthDiff !== 0) {
-      return monthDiff;
-    }
-    return (
-      (thisSortDate.day !== null ? thisSortDate.day : 1) -
-      (otherSortDate.day !== null ? otherSortDate.day : 1)
-    );
+    return thisSortDate.getTime() - otherSortDate.getTime();
   }
 
   @Memoize()
@@ -89,7 +72,7 @@ export abstract class EventDerivedDatesMixin {
         latest,
       });
       if (date !== null) {
-        return null;
+        return date;
       }
     }
     log.debug("event has no sort date");
