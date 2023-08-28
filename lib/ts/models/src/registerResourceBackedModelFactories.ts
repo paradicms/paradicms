@@ -12,7 +12,6 @@ import {
 import {agentFactories} from "./agentFactories";
 import {conceptFactories} from "./conceptFactories";
 import {CreativeCommonsLicense} from "./creative-commons/CreativeCommonsLicense";
-import {dateTimeDescriptionFactories} from "./dateTimeDescriptionFactories";
 import {DcImage} from "./dc/DcImage";
 import {DcLicenseDocument} from "./dc/DcLicenseDocument";
 import {DcRightsStatement} from "./dc/DcRightsStatement";
@@ -30,7 +29,8 @@ import {LinkedArtTimeSpan} from "./linked-art/LinkedArtTimeSpan";
 import {LinkedArtVisualItem} from "./linked-art/LinkedArtVisualItem";
 import {linkedArtModelFactories} from "./linked-art/linkedArtModelFactories";
 import {locationFactories} from "./locationFactories";
-import {OwlTimeDateTimeDescription} from "./owl-time/OwlTimeDateTimeDescription";
+import {OwlTimePartialDateTimeDescription} from "./owl-time/OwlTimePartialDateTimeDescription";
+import {partialDateTimeDescriptionFactories} from "./partialDateTimeDescriptionFactories";
 import {rightsStatementFactories} from "./rightsStatementFactories";
 import {SchemaDefinedTerm} from "./schema/SchemaDefinedTerm";
 import {SchemaImageObject} from "./schema/SchemaImageObject";
@@ -47,11 +47,14 @@ export const registerResourceBackedModelFactories = () => {
   conceptFactories.register(skos.Concept, SkosConcept);
   conceptFactories.register(schema.DefinedTerm, SchemaDefinedTerm);
 
-  dateTimeDescriptionFactories.register(
+  partialDateTimeDescriptionFactories.register(
     time.DateTimeDescription,
-    OwlTimeDateTimeDescription
+    OwlTimePartialDateTimeDescription
   );
-  dateTimeDescriptionFactories.register(wikibase.TimeValue, WikibaseTimeValue);
+  partialDateTimeDescriptionFactories.register(
+    wikibase.TimeValue,
+    WikibaseTimeValue
+  );
 
   imageFactories.register(dcmitype.Image, DcImage);
   imageFactories.register(schema.ImageObject, SchemaImageObject);

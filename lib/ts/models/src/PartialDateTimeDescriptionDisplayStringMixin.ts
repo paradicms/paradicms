@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
-import {DateTimeDescription} from "./DateTimeDescription";
+import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
 
-export abstract class DateTimeDescriptionDisplayStringMixin
-  implements DateTimeDescription {
+export abstract class PartialDateTimeDescriptionDisplayStringMixin
+  implements PartialDateTimeDescription {
   get displayString(): string {
     const year = this.year;
 

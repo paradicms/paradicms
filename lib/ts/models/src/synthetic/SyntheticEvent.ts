@@ -1,13 +1,13 @@
 import {DatasetCore} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
-import {DateTimeDescription} from "../DateTimeDescription";
 import {Event} from "../Event";
 import {EventDerivedDatesMixin} from "../EventDerivedDatesMixin";
 import {Image} from "../Image";
 import {Location} from "../Location";
 import {Model} from "../Model";
 import {ModelIdentifier} from "../ModelIdentifier";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {Text} from "../Text";
 import {SyntheticEventParameters} from "./SyntheticEventParameters";
@@ -15,14 +15,14 @@ import {SyntheticEventParameters} from "./SyntheticEventParameters";
 export abstract class SyntheticEvent
   extends Mixin(EventDerivedDatesMixin, SomeImageThumbnailMixin)
   implements Event {
-  readonly date: DateTimeDescription | null;
+  readonly date: PartialDateTimeDescription | null;
   readonly description: Text | null;
-  readonly endDate: DateTimeDescription | null;
+  readonly endDate: PartialDateTimeDescription | null;
   readonly key: string;
   readonly images: readonly Image[];
   readonly label: string;
   readonly location: Location | null;
-  readonly startDate: DateTimeDescription | null;
+  readonly startDate: PartialDateTimeDescription | null;
 
   constructor(kwds: SyntheticEventParameters) {
     super();

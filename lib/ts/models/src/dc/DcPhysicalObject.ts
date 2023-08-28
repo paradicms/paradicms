@@ -3,7 +3,7 @@ import {requireNonNull} from "@paradicms/utilities";
 import {dcterms} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
-import {DateTimeDescription} from "../DateTimeDescription";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {ResourceBackedModel} from "../ResourceBackedModel";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {Text} from "../Text";
@@ -14,8 +14,8 @@ import {WorkEvent} from "../WorkEvent";
 import {WorkLocation} from "../WorkLocation";
 import {WorkSubject} from "../WorkSubject";
 import {isWikipediaUrl} from "../isWikipediaUrl";
-import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {mapTermToLocation} from "../mapTermToLocation";
+import {mapTermToPartialDateTimeDescription} from "../mapTermToPartialDateTimeDescription";
 import {mapTermToText} from "../mapTermToText";
 import {mapTermToWorkSubject} from "../mapTermToWorkSubject";
 import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
@@ -38,9 +38,9 @@ export class DcPhysicalObject
   )
   implements Work {
   @Memoize()
-  get created(): DateTimeDescription | null {
+  get created(): PartialDateTimeDescription | null {
     return this.findAndMapObject(dcterms.created, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 
@@ -97,9 +97,9 @@ export class DcPhysicalObject
   }
 
   @Memoize()
-  get modified(): DateTimeDescription | null {
+  get modified(): PartialDateTimeDescription | null {
     return this.findAndMapObject(dcterms.modified, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 

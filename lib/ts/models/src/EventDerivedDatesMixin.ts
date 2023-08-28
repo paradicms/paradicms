@@ -1,13 +1,13 @@
 import log from "loglevel";
 import {Memoize} from "typescript-memoize";
-import {DateTimeDescription} from "./DateTimeDescription";
 import {Event} from "./Event";
+import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
 
 export abstract class EventDerivedDatesMixin {
-  abstract readonly date: DateTimeDescription | null;
+  abstract readonly date: PartialDateTimeDescription | null;
   abstract readonly key: string;
-  abstract readonly endDate: DateTimeDescription | null;
-  abstract readonly startDate: DateTimeDescription | null;
+  abstract readonly endDate: PartialDateTimeDescription | null;
+  abstract readonly startDate: PartialDateTimeDescription | null;
 
   compareByDate(other: Event): number {
     const thisSortDate = this.sortDate;

@@ -1,19 +1,19 @@
-import {LinkedArtModel} from "./LinkedArtModel";
-import {DateTimeDescription} from "../DateTimeDescription";
 import {crm} from "@paradicms/vocabularies";
-import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
-import {Memoize} from "typescript-memoize";
-import {LinkedArtIsIdentifiedByMixin} from "./LinkedArtIsIdentifiedByMixin";
 import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
+import {mapTermToPartialDateTimeDescription} from "../mapTermToPartialDateTimeDescription";
+import {LinkedArtIsIdentifiedByMixin} from "./LinkedArtIsIdentifiedByMixin";
+import {LinkedArtModel} from "./LinkedArtModel";
 
 export class LinkedArtTimeSpan extends Mixin(
   LinkedArtModel,
   LinkedArtIsIdentifiedByMixin
 ) {
   @Memoize()
-  get beginOfTheBegin(): DateTimeDescription | null {
+  get beginOfTheBegin(): PartialDateTimeDescription | null {
     return this.findAndMapObject(crm.P82a_begin_of_the_begin, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 
@@ -27,9 +27,9 @@ export class LinkedArtTimeSpan extends Mixin(
   }
 
   @Memoize()
-  get endOfTheEnd(): DateTimeDescription | null {
+  get endOfTheEnd(): PartialDateTimeDescription | null {
     return this.findAndMapObject(crm.P82b_end_of_the_end, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 }

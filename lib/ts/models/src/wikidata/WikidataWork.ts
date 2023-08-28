@@ -4,14 +4,14 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Agent} from "../Agent";
 import {Collection} from "../Collection";
-import {DateTimeDescription} from "../DateTimeDescription";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {Work} from "../Work";
 import {WorkAgentsMixin} from "../WorkAgentsMixin";
 import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
 import {WorkEvent} from "../WorkEvent";
 import {WorkLocation} from "../WorkLocation";
 import {WorkSubject} from "../WorkSubject";
-import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
+import {mapTermToPartialDateTimeDescription} from "../mapTermToPartialDateTimeDescription";
 import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
 import {WikidataConcept} from "./WikidataConcept";
 import {WikidataLocation} from "./WikidataLocation";
@@ -37,9 +37,9 @@ export class WikidataWork
   }
 
   @Memoize()
-  get inception(): DateTimeDescription | null {
+  get inception(): PartialDateTimeDescription | null {
     return this.findAndMapStatementValue(wdt["P571"], term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 

@@ -1,19 +1,19 @@
-import {DateTimeDescription} from "../DateTimeDescription";
-import {LiteralModel} from "./LiteralModel";
-import {Literal} from "@rdfjs/types";
-import {xsd} from "@paradicms/vocabularies";
-import dayjs from "dayjs";
-import {DateTimeDescriptionDisplayStringMixin} from "../DateTimeDescriptionDisplayStringMixin";
-import {Mixin} from "ts-mixer";
-import log from "loglevel";
+import { xsd } from "@paradicms/vocabularies";
+import { Literal } from "@rdfjs/types";
 import anyDateParser from "any-date-parser";
+import dayjs from "dayjs";
+import log from "loglevel";
+import { Mixin } from "ts-mixer";
+import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
+import { PartialDateTimeDescriptionDisplayStringMixin } from "../PartialDateTimeDescriptionDisplayStringMixin";
+import { LiteralModel } from "./LiteralModel";
 
 const yearMonthDayFormat = require("any-date-parser/src/formats/yearMonthDay/yearMonthDay");
 anyDateParser.removeFormat(yearMonthDayFormat);
 
-export class LiteralDateTimeDescription
-  extends Mixin(LiteralModel, DateTimeDescriptionDisplayStringMixin)
-  implements DateTimeDescription {
+export class LiteralPartialDateTimeDescription
+  extends Mixin(LiteralModel, PartialDateTimeDescriptionDisplayStringMixin)
+  implements PartialDateTimeDescription {
   readonly day: number | null;
   readonly _displayString: string | null;
   readonly hour: number | null;
@@ -23,7 +23,7 @@ export class LiteralDateTimeDescription
   readonly year: number | null;
 
   private constructor(
-    kwds: Omit<DateTimeDescription, "displayString"> & {
+    kwds: Omit<PartialDateTimeDescription, "displayString"> & {
       displayString: string | null;
       literal: Literal;
     }
@@ -48,7 +48,7 @@ export class LiteralDateTimeDescription
 
   private static fromArbitraryLiteral(
     literal: Literal
-  ): LiteralDateTimeDescription | null {
+  ): LiteralPartialDateTimeDescription | null {
     const parsed = anyDateParser.attempt(literal.value);
     log.debug("parsed", JSON.stringify(parsed), "from", "term.value");
     anyDateParser.removeFormat(yearMonthDayFormat); // Parses "1925" as "2019-2-5";
@@ -68,7 +68,7 @@ export class LiteralDateTimeDescription
           partialDateTime.month !== null,
         partialDateTime.second !== null || partialDateTime.year !== null)
       ) {
-        return new LiteralDateTimeDescription({
+        return new LiteralPartialDateTimeDescription({
           displayString: literal.value,
           literal,
           ...partialDateTime,
@@ -89,7 +89,7 @@ export class LiteralDateTimeDescription
       );
     }
 
-    return new LiteralDateTimeDescription({
+    return new LiteralPartialDateTimeDescription({
       day: null,
       displayString: literal.value,
       hour: null,
@@ -101,21 +101,21 @@ export class LiteralDateTimeDescription
     });
   }
 
-  static fromLiteral(literal: Literal): LiteralDateTimeDescription | null {
+  static fromLiteral(literal: Literal): LiteralPartialDateTimeDescription | null {
     if (literal.datatype.equals(xsd.date)) {
-      return LiteralDateTimeDescription.fromXsdDateLiteral(literal);
+      return LiteralPartialDateTimeDescription.fromXsdDateLiteral(literal);
     } else if (literal.datatype.equals(xsd.dateTime)) {
-      return LiteralDateTimeDescription.fromXsdDateTimeLiteral(literal);
+      return LiteralPartialDateTimeDescription.fromXsdDateTimeLiteral(literal);
     } else {
-      return LiteralDateTimeDescription.fromArbitraryLiteral(literal);
+      return LiteralPartialDateTimeDescription.fromArbitraryLiteral(literal);
     }
   }
 
   private static fromXsdDateLiteral(
     literal: Literal
-  ): LiteralDateTimeDescription | null {
+  ): LiteralPartialDateTimeDescription | null {
     const parsed = dayjs(literal.value);
-    return new LiteralDateTimeDescription({
+    return new LiteralPartialDateTimeDescription({
       day: parsed.day(),
       displayString: null,
       hour: null,
@@ -129,9 +129,9 @@ export class LiteralDateTimeDescription
 
   private static fromXsdDateTimeLiteral(
     literal: Literal
-  ): LiteralDateTimeDescription | null {
+  ): LiteralPartialDateTimeDescription | null {
     const parsed = dayjs(literal.value);
-    return new LiteralDateTimeDescription({
+    return new LiteralPartialDateTimeDescription({
       day: parsed.day(),
       displayString: null, // Construct with the mixin displayString
       hour: parsed.hour(),

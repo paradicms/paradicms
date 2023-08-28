@@ -1,14 +1,17 @@
+import {mapTermToNumber} from "@paradicms/rdf";
 import {time, xsd} from "@paradicms/vocabularies";
 import {Literal} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
-import {DateTimeDescription} from "../DateTimeDescription";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
+import {PartialDateTimeDescriptionDisplayStringMixin} from "../PartialDateTimeDescriptionDisplayStringMixin";
 import {ResourceBackedModel} from "../ResourceBackedModel";
-import {mapTermToNumber} from "@paradicms/rdf";
-import {DateTimeDescriptionDisplayStringMixin} from "../DateTimeDescriptionDisplayStringMixin";
 
-export class OwlTimeDateTimeDescription
-  extends Mixin(ResourceBackedModel, DateTimeDescriptionDisplayStringMixin)
-  implements DateTimeDescription {
+export class OwlTimePartialDateTimeDescription
+  extends Mixin(
+    ResourceBackedModel,
+    PartialDateTimeDescriptionDisplayStringMixin
+  )
+  implements PartialDateTimeDescription {
   /**
    * Day of the month, 1..31 inclusive.
    */

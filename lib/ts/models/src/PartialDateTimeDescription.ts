@@ -1,7 +1,4 @@
-/**
- * Common interface over DateTimeDescription and partial date-times parsed from literals.
- */
-export type DateTimeDescription = {
+export type PartialDateTimeDescription = {
   /**
    * Day of the month, 1..31 inclusive.
    */

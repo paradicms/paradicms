@@ -1,23 +1,26 @@
-import dayjs from "dayjs";
-import {Mixin} from "ts-mixer";
-import {DateTimeDescription} from "../DateTimeDescription";
-import {ResourceBackedModel} from "../ResourceBackedModel";
-import {wikibase, xsd} from "@paradicms/vocabularies";
-import {requireNonNull} from "@paradicms/utilities";
-import invariant from "ts-invariant";
-import {Memoize} from "typescript-memoize";
 import {mapTermToNumber} from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
+import {wikibase, xsd} from "@paradicms/vocabularies";
+import dayjs from "dayjs";
+import invariant from "ts-invariant";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 import dayjsPluginTimezone from "dayjs/plugin/timezone";
 import dayjsPluginUtc from "dayjs/plugin/utc";
-import {DateTimeDescriptionDisplayStringMixin} from "../DateTimeDescriptionDisplayStringMixin";
+import {PartialDateTimeDescriptionDisplayStringMixin} from "../PartialDateTimeDescriptionDisplayStringMixin";
 
 dayjs.extend(dayjsPluginUtc);
 dayjs.extend(dayjsPluginTimezone);
 
 export class WikibaseTimeValue
-  extends Mixin(ResourceBackedModel, DateTimeDescriptionDisplayStringMixin)
-  implements DateTimeDescription {
+  extends Mixin(
+    ResourceBackedModel,
+    PartialDateTimeDescriptionDisplayStringMixin
+  )
+  implements PartialDateTimeDescription {
   get day(): number | null {
     return this.timePrecision >= 11 ? this.timeValue.day() : null;
   }
