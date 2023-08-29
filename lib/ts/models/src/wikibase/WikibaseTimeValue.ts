@@ -19,7 +19,7 @@ export class WikibaseTimeValue
   extends Mixin(ResourceBackedModel, PartialDateTimeDescriptionLabelMixin)
   implements PartialDateTimeDescription {
   get day(): number | null {
-    return this.timePrecision >= 11 ? this.timeValue.day() : null;
+    return this.timePrecision >= 11 ? this.timeValue.date() : null;
   }
 
   get hour(): number | null {

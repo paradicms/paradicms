@@ -108,7 +108,7 @@ export class LiteralPartialDateTimeDescription
   ): LiteralPartialDateTimeDescription | null {
     const parsed = dayjs(literal.value);
     return new LiteralPartialDateTimeDescription({
-      day: parsed.day(),
+      day: parsed.date(),
       label: null,
       hour: null,
       literal,
@@ -124,7 +124,7 @@ export class LiteralPartialDateTimeDescription
   ): LiteralPartialDateTimeDescription | null {
     const parsed = dayjs(literal.value);
     return new LiteralPartialDateTimeDescription({
-      day: parsed.day(),
+      day: parsed.date(),
       label: null, // Construct with the mixin label
       hour: parsed.hour(),
       literal,
