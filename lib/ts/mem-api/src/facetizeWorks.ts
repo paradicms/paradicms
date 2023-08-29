@@ -1,16 +1,16 @@
-import {DateRangeFacet, WorksFacet, WorksFilter} from "@paradicms/api";
 import {
-  Image,
-  PartialDateTimeDescription,
-  ThumbnailSelector,
-  Work,
-  WorkEvent,
-  imputePartialDateTimeDescription,
-} from "@paradicms/models";
+  DateRangeEndpoint,
+  DateRangeFacet,
+  WorksFacet,
+  WorksFilter,
+} from "@paradicms/api";
+import {Image, ThumbnailSelector, Work, WorkEvent} from "@paradicms/models";
 import {deleteUndefined} from "@paradicms/utilities";
 import invariant from "ts-invariant";
 import {MutableValueFacetValue} from "./MutableValueFacetValue";
+import {getEventDateRange} from "./getEventDateRange";
 import {imageToValueFacetValueThumbnail} from "./imageToValueFacetThumbnail";
+import {imputeDateRangeEndpoint} from "./imputeDateRangeEndpoint";
 
 const facetizeWorksByEventDateRange = (kwds: {
   getWorkEvent: (work: Work) => WorkEvent | null;
@@ -18,85 +18,64 @@ const facetizeWorksByEventDateRange = (kwds: {
 }): DateRangeFacet | null => {
   const {getWorkEvent, works} = kwds;
 
-  type TempDateRangeEndpoint = {
-    imputedDate: Date;
-    partialDateTimeDescription: PartialDateTimeDescription;
-  };
-  let end: TempDateRangeEndpoint | null = null,
-    start: TempDateRangeEndpoint | null = null;
+  let end: {
+      dateRangeEndpoint: DateRangeEndpoint;
+      imputedDate: Date;
+    } | null = null,
+    start: {
+      dateRangeEndpoint: DateRangeEndpoint;
+      imputedDate: Date;
+    } | null = null;
 
   for (const work of works) {
     const workEvent = getWorkEvent(work);
     if (workEvent === null) {
-      return null;
+      continue;
     }
 
-    // Check the event's dates to expand the range
-    const workEventDates: {
-      earliestImputedDate: Date | null;
-      latestImputedDate: Date | null;
-      partialDateTimeDescription: PartialDateTimeDescription;
-    }[] = [];
-
-    if (workEvent.date) {
-      // Consider a .date for the start or end of the range
-      workEventDates.push({
-        earliestImputedDate: imputePartialDateTimeDescription({
-          partialDateTimeDescription: workEvent.date,
-        }),
-        latestImputedDate: imputePartialDateTimeDescription({
-          partialDateTimeDescription: workEvent.date,
-          latest: true,
-        }),
-        partialDateTimeDescription: workEvent.date,
-      });
+    const workEventDateRange = getEventDateRange(workEvent);
+    if (workEventDateRange === null) {
+      continue;
     }
 
-    if (workEvent.startDate) {
-      // Don't consider a start date for the end of the range
-      workEventDates.push({
-        earliestImputedDate: imputePartialDateTimeDescription({
-          partialDateTimeDescription: workEvent.startDate,
-        }),
-        latestImputedDate: null,
-        partialDateTimeDescription: workEvent.startDate,
-      });
+    const imputedWorkEventDateRangeEnd = imputeDateRangeEndpoint(
+      workEventDateRange.end,
+      {ceil: true}
+    );
+    const imputedWorkEventDateRangeStart = imputeDateRangeEndpoint(
+      workEventDateRange.start
+    );
+    if (
+      imputedWorkEventDateRangeEnd === null ||
+      imputedWorkEventDateRangeStart === null
+    ) {
+      continue;
+    }
+    invariant(
+      imputedWorkEventDateRangeStart.getTime() <=
+        imputedWorkEventDateRangeEnd.getTime()
+    );
+
+    // If the event's date range end is later than the current end, set the latter
+    if (
+      end === null ||
+      imputedWorkEventDateRangeEnd.getTime() > end.imputedDate.getTime()
+    ) {
+      end = {
+        dateRangeEndpoint: workEventDateRange.end,
+        imputedDate: imputedWorkEventDateRangeEnd,
+      };
     }
 
-    if (workEvent.endDate) {
-      // Don't consider an end date for the start of the range
-      workEventDates.push({
-        earliestImputedDate: null,
-        latestImputedDate: imputePartialDateTimeDescription({
-          partialDateTimeDescription: workEvent.endDate,
-        }),
-        partialDateTimeDescription: workEvent.endDate,
-      });
-    }
-
-    for (const workEventDate of workEventDates) {
-      if (
-        workEventDate.earliestImputedDate !== null &&
-        (start === null ||
-          workEventDate.earliestImputedDate.getTime() <
-            start.imputedDate.getTime())
-      ) {
-        start = {
-          imputedDate: workEventDate.earliestImputedDate,
-          partialDateTimeDescription: workEventDate.partialDateTimeDescription,
-        };
-      }
-
-      if (
-        workEventDate.latestImputedDate !== null &&
-        (end === null ||
-          workEventDate.latestImputedDate.getTime() > end.imputedDate.getTime())
-      ) {
-        end = {
-          imputedDate: workEventDate.latestImputedDate,
-          partialDateTimeDescription: workEventDate.partialDateTimeDescription,
-        };
-      }
+    // If the event's date range start is earlier than the current start, set the latter
+    if (
+      start === null ||
+      imputedWorkEventDateRangeStart.getTime() < start.imputedDate.getTime()
+    ) {
+      start = {
+        dateRangeEndpoint: workEventDateRange.start,
+        imputedDate: imputedWorkEventDateRangeStart,
+      };
     }
   }
 
@@ -104,21 +83,7 @@ const facetizeWorksByEventDateRange = (kwds: {
     return null;
   }
 
-  invariant(end.partialDateTimeDescription.year !== null);
-  invariant(start.partialDateTimeDescription.year !== null);
-
-  return {
-    end: {
-      year: end.partialDateTimeDescription.year!,
-      month: end.partialDateTimeDescription.month ?? undefined,
-      day: end.partialDateTimeDescription.day ?? undefined,
-    },
-    start: {
-      year: start.partialDateTimeDescription.year!,
-      month: start.partialDateTimeDescription.month ?? undefined,
-      day: start.partialDateTimeDescription.day ?? undefined,
-    },
-  };
+  return {start: start.dateRangeEndpoint, end: end.dateRangeEndpoint};
 };
 
 const facetizeWorksByValue = <

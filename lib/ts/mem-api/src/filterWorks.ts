@@ -43,6 +43,16 @@ export const filterWorks = (kwds: {
         );
         break;
       }
+      case "WorkCreationDateRange": {
+        filteredWorks = filteredWorks.filter(work => {
+          const workCreationEvent = work.events.find(
+            event => event.type === "WorkCreation"
+          );
+          if (!workCreationEvent) {
+            return;
+          }
+        });
+      }
       case "WorkSubjectValue": {
         filteredWorks = filteredWorks.filter(work =>
           testValueFilter(

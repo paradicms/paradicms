@@ -2,7 +2,7 @@ import log from "loglevel";
 import {Memoize} from "typescript-memoize";
 import {Event} from "./Event";
 import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
-import {imputePartialDateTimeDescription} from "./imputePartialDateTimeDescription";
+import {imputePartialDateTime} from "./imputePartialDateTime";
 
 export abstract class EventDerivedDatesMixin {
   abstract readonly date: PartialDateTimeDescription | null;
@@ -59,17 +59,16 @@ export abstract class EventDerivedDatesMixin {
    */
   @Memoize()
   get sortDate(): Date | null {
-    for (const {partialDateTimeDescription, latest} of [
+    for (const {partialDateTimeDescription, ceil} of [
       {partialDateTimeDescription: this.date},
       {partialDateTimeDescription: this.startDate},
-      {partialDateTimeDescription: this.endDate, latest: true},
+      {partialDateTimeDescription: this.endDate, ceil: true},
     ]) {
       if (!partialDateTimeDescription) {
         continue;
       }
-      const date = imputePartialDateTimeDescription({
-        partialDateTimeDescription,
-        latest,
+      const date = imputePartialDateTime(partialDateTimeDescription, {
+        ceil,
       });
       if (date !== null) {
         return date;
