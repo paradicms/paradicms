@@ -8,7 +8,7 @@ describe("imputeDateRangeEndpoint", () => {
       year: 2023,
     });
     expect(result).not.to.be.null;
-    expect(result?.getFullYear()).to.eq(2023);
+    expect(result?.getUTCFullYear()).to.eq(2023);
     expect(result?.getUTCMonth()).to.eq(0);
     expect(result?.getUTCDate()).to.eq(1);
   });
@@ -19,7 +19,7 @@ describe("imputeDateRangeEndpoint", () => {
       month: 2,
     });
     expect(result).not.to.be.null;
-    expect(result?.getFullYear()).to.eq(2023);
+    expect(result?.getUTCFullYear()).to.eq(2023);
     expect(result?.getUTCMonth()).to.eq(1);
     expect(result?.getUTCDate()).to.eq(1);
   });

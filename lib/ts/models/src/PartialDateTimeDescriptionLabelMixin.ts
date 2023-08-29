@@ -10,7 +10,7 @@ export abstract class PartialDateTimeDescriptionLabelMixin
       return "(unknown)";
     }
 
-    let dayjs_ = dayjs();
+    let dayjs_ = dayjs().utc();
 
     // https://day.js.org/docs/en/display/format
     const dateFormat: string[] = [];

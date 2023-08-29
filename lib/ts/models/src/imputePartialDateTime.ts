@@ -56,16 +56,18 @@ export const imputePartialDateTime = (
   }
 
   const dayjs_ = dayjs()
+    .utc()
     .year(year)
     .month(month - 1)
     .date(day)
     .hour(hour)
     .minute(minute)
-    .second(second);
+    .second(second)
+    .millisecond(0);
   if (!dayjs_.isValid()) {
     log.warn("invalid date-time: ", dayjs_.toISOString());
     return null;
   }
 
-  return new Date(year, month - 1, day, hour, minute, second);
+  return dayjs_.toDate();
 };

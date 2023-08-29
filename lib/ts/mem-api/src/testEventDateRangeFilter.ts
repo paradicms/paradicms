@@ -45,6 +45,13 @@ export const testEventDateRangeFilter = (kwds: {
     (filter.start ? imputeDateRangeEndpoint(filter.start) : null) ?? minDate;
   invariant(imputedFilterStart.getTime() <= imputedFilterEnd.getTime());
 
+  console.info("Imputed filter:", imputedFilterStart, imputedFilterEnd);
+  console.info(
+    "Imputed event date range:",
+    imputedEventDateRangeStart,
+    imputedEventDateRangeEnd
+  );
+
   const inRange = (date: Date) =>
     date.getTime() >= imputedFilterStart.getTime() &&
     date.getTime() <= imputedFilterEnd.getTime();
