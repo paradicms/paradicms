@@ -1,14 +1,15 @@
 import {DateRangeEndpoint} from "@paradicms/api";
 import {
-  Event,
   PartialDateTimeDescription,
   imputePartialDateTime,
 } from "@paradicms/models";
 import invariant from "ts-invariant";
 
-export const getEventDateRange = (
-  event: Event
-): {end: DateRangeEndpoint; start: DateRangeEndpoint} | null => {
+export const getEventDateRange = (event: {
+  readonly date: PartialDateTimeDescription | null;
+  readonly endDate: PartialDateTimeDescription | null;
+  readonly startDate: PartialDateTimeDescription | null;
+}): {end: DateRangeEndpoint; start: DateRangeEndpoint} | null => {
   type TempDateRangeEndpoint = {
     imputedDate: Date;
     partialDateTimeDescription: PartialDateTimeDescription;

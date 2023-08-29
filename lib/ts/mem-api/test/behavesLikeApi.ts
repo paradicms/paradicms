@@ -540,6 +540,47 @@ export const behavesLikeApi = (api: Api) => {
     expectModelsDeepEq(expectedWorks, actualWorks);
   });
 
+  it("getWorks filters by creation date", async () => {
+    const expectedWorkIri = "http://example.com/collection0/work2";
+    const expectedWork = requireNonNull(
+      completeModelSet.workByIri(expectedWorkIri)
+    );
+    const expectedWorkCreationEvent = requireDefined(
+      expectedWork.events.find(event => event.type === "WorkCreation")
+    );
+    expect(expectedWorkCreationEvent.date).not.to.be.null;
+    expect(expectedWorkCreationEvent.date!.year).to.eq(2021);
+    expect(expectedWorkCreationEvent.date!.month).to.eq(12);
+    expect(expectedWorkCreationEvent.date!.day).to.eq(30);
+
+    const actualWorks = (
+      await api.getWorks({
+        query: {
+          filters: [
+            {
+              end: {
+                year: 2021,
+                month: 12,
+                day: 30,
+              },
+              start: {
+                year: 2021,
+                month: 12,
+                day: 30,
+              },
+              type: "WorkCreationDateRange",
+            },
+          ],
+        },
+      })
+    ).modelSet.works;
+
+    expect(actualWorks).to.have.length(1);
+    const actualWork = actualWorks[0];
+    expect(actualWork.iris).to.have.length(1);
+    expect(actualWork.iris[0]).to.eq(expectedWorkIri);
+  });
+
   it("getWorks filters by subject", async () => {
     const workSubjects = completeModelSet.works.flatMap(work =>
       work.subjects.filter(subject => subject.type === "Concept")

@@ -1,5 +1,5 @@
 import {DateRangeFilter} from "@paradicms/api";
-import {Event} from "@paradicms/models";
+import {PartialDateTimeDescription} from "@paradicms/models";
 import {requireNonNull} from "@paradicms/utilities";
 import invariant from "ts-invariant";
 import {getEventDateRange} from "./getEventDateRange";
@@ -11,7 +11,11 @@ import {minDate} from "./minDate";
  * Test whether the given event's date(s) are within the given filter's date range.
  */
 export const testEventDateRangeFilter = (kwds: {
-  event: Event;
+  event: {
+    readonly date: PartialDateTimeDescription | null;
+    readonly endDate: PartialDateTimeDescription | null;
+    readonly startDate: PartialDateTimeDescription | null;
+  };
   filter: DateRangeFilter;
 }): boolean => {
   const {event, filter} = kwds;
