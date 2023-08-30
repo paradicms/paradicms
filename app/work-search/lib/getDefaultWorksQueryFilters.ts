@@ -5,12 +5,19 @@ import {JsonProperty} from "./JsonProperty";
 export const getDefaultWorksQueryFilters = (
   properties: readonly JsonProperty[]
 ): WorksFilter[] => {
-  if (properties.length === 0) {
-    properties = defaultProperties;
-  }
-
   const filters: WorksFilter[] = [];
-  for (const property of properties) {
+
+  filters.push({
+    type: "WorkCreationDateRange",
+  });
+
+  filters.push({
+    type: "WorkSubjectValue",
+  });
+
+  for (const property of properties.length > 0
+    ? properties
+    : defaultProperties) {
     if (!property.filterable) {
       continue;
     }
@@ -43,10 +50,6 @@ export const getDefaultWorksQueryFilters = (
       type: "StringPropertyValue",
     } as StringPropertyValueFilter);
   }
-
-  filters.push({
-    type: "WorkSubjectValue",
-  });
 
   return filters;
 };
