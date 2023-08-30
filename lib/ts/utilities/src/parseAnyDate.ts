@@ -12,6 +12,8 @@ parser.removeFormat(yearMonthDayFormat);
 
 /**
  * Parse any date string into a partial date.
+ *
+ * The parsing is progressive: a year is required to return a month, a month is required to return a day, etc.
  */
 export const parseAnyDate = (
   dateString: string

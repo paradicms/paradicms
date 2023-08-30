@@ -7,7 +7,9 @@ const parser = new Parser();
 parser.removeFormat(yearMonthDayFormat);
 
 /**
- * Parse any date-time string into a PartialDateTimeDescription.
+ * Parse any date-time string into a partial date-time.
+ *
+ * The parsing is progressive: a year is required to return a month, a month is required to return a day, etc.
  */
 export const parseAnyDateTime = (
   dateTimeString: string
