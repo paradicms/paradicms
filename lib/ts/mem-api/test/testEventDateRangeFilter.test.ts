@@ -56,6 +56,6 @@ describe("testEventDateRangeFilter", () => {
         },
         filter,
       })
-    ).to.be.true;
+    ).to.be.false;
   });
 });

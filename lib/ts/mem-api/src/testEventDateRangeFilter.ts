@@ -45,16 +45,22 @@ export const testEventDateRangeFilter = (kwds: {
     (filter.start ? imputeDateRangeEndpoint(filter.start) : null) ?? minDate;
   invariant(imputedFilterStart.getTime() <= imputedFilterEnd.getTime());
 
-  console.info("Imputed filter:", imputedFilterStart, imputedFilterEnd);
-  console.info(
-    "Imputed event date range:",
-    imputedEventDateRangeStart,
-    imputedEventDateRangeEnd
-  );
+  // console.info("Imputed filter:", imputedFilterStart, imputedFilterEnd);
+  // console.info(
+  //   "Imputed event date range:",
+  //   imputedEventDateRangeStart,
+  //   imputedEventDateRangeEnd
+  // );
 
   const inRange = (date: Date) =>
     date.getTime() >= imputedFilterStart.getTime() &&
     date.getTime() <= imputedFilterEnd.getTime();
+
+  // console.info(
+  //   "inRange",
+  //   inRange(imputedEventDateRangeEnd),
+  //   inRange(imputedEventDateRangeStart)
+  // );
 
   // If either endpoint of the event date range is within the filter date range,
   // then consider the event date range within the filter date range
