@@ -36,5 +36,4 @@ export * from "./defaultProperties";
 export * from "./imagePlaceholderSrc";
 export * from "./imputePartialDateTime";
 export * from "./json/JsonAppConfiguration";
-export * from "./parseAnyDateTime";
 export * from "./selectThumbnail";

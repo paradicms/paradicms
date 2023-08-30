@@ -1,10 +1,10 @@
+import {parseAnyDateTime} from "@paradicms/utilities";
 import {xsd} from "@paradicms/vocabularies";
 import {Literal} from "@rdfjs/types";
 import dayjs from "dayjs";
 import {Mixin} from "ts-mixer";
 import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {PartialDateTimeDescriptionLabelMixin} from "../PartialDateTimeDescriptionLabelMixin";
-import {parseAnyDateTime} from "../parseAnyDateTime";
 import {LiteralModel} from "./LiteralModel";
 
 export class LiteralPartialDateTimeDescription
