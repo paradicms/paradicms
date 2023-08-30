@@ -69,7 +69,7 @@ export const createWorksFilterControl = (kwds: {
         <DateRangeFilterControl
           facet={facet}
           filter={filter}
-          filterLabel="Subject"
+          filterLabel="Creation date"
           onChange={onChangeFilter}
         />
       );

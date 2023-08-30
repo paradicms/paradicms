@@ -1,9 +1,8 @@
-import {DateRangeFilter} from "@paradicms/api";
+import {DateRangeFilter, imputeDateRangeEndpoint} from "@paradicms/api";
 import {PartialDateTimeDescription} from "@paradicms/models";
 import {requireNonNull} from "@paradicms/utilities";
 import invariant from "ts-invariant";
 import {getEventDateRange} from "./getEventDateRange";
-import {imputeDateRangeEndpoint} from "./imputeDateRangeEndpoint";
 import {maxDate} from "./maxDate";
 import {minDate} from "./minDate";
 

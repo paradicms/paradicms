@@ -1,4 +1,5 @@
 const {Parser} = require("any-date-parser");
+import * as defaultParser from "any-date-parser";
 import log from "loglevel";
 
 const yearMonthDayFormat = require("any-date-parser/src/formats/yearMonthDay/yearMonthDay");
@@ -6,6 +7,7 @@ const time12HoursFormat = require("any-date-parser/src/formats/time12Hours/time1
 const time24HoursFormat = require("any-date-parser/src/formats/time24Hours/time24Hours");
 
 const parser = new Parser();
+parser.addFormats(defaultParser.formats);
 parser.removeFormat(time12HoursFormat);
 parser.removeFormat(time24HoursFormat);
 parser.removeFormat(yearMonthDayFormat);
@@ -31,12 +33,23 @@ export const parseAnyDate = (
   /**
    * Gregorian year e.g., 1960
    */
-  readonly year: number | null;
+  readonly year: number;
 } | null => {
+  if (dateString.length === 4) {
+    const year = parseInt(dateString);
+    if (!isNaN(year)) {
+      return {
+        day: null,
+        month: null,
+        year,
+      };
+    }
+  }
+
   const parsed = parser.attempt(dateString);
   log.debug("parsed", JSON.stringify(parsed), "from", dateString);
   if (parsed.invalid) {
-    log.debug("unable to parse literal date", dateString, ":", parsed.invalid);
+    log.debug("unable to parse date", dateString, ":", parsed.invalid);
     return null;
   } else if (parsed.year === null) {
     log.debug("date-time", dateString, "missing year");

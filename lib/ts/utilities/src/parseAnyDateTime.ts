@@ -1,9 +1,11 @@
 const {Parser} = require("any-date-parser");
+import * as defaultParser from "any-date-parser";
 import log from "loglevel";
 
 const yearMonthDayFormat = require("any-date-parser/src/formats/yearMonthDay/yearMonthDay");
 
 const parser = new Parser();
+parser.addFormats(defaultParser.formats);
 parser.removeFormat(yearMonthDayFormat);
 
 /**
@@ -44,6 +46,20 @@ export const parseAnyDateTime = (
    */
   readonly year: number;
 } | null => {
+  if (dateTimeString.length === 4) {
+    const year = parseInt(dateTimeString);
+    if (!isNaN(year)) {
+      return {
+        day: null,
+        hour: null,
+        minute: null,
+        month: null,
+        second: null,
+        year,
+      };
+    }
+  }
+
   const parsed = parser.attempt(dateTimeString);
   log.debug("parsed", JSON.stringify(parsed), "from", dateTimeString);
   if (parsed.invalid) {
