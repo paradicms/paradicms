@@ -10,7 +10,7 @@ export class WikidataText extends LiteralText {
     private readonly modelSet: ModelSet;
 
     constructor(kwds: { literal: Literal, modelSet: ModelSet }) {
-        super(kwds.literal);
+        super({literal: kwds.literal});
         this.modelSet = kwds.modelSet;
     }
 

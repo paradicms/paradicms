@@ -1,16 +1,16 @@
 import dayjs from "dayjs";
-import {DateTimeDescription} from "./DateTimeDescription";
+import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
 
-export abstract class DateTimeDescriptionDisplayStringMixin
-  implements DateTimeDescription {
-  get displayString(): string {
+export abstract class PartialDateTimeDescriptionLabelMixin
+  implements PartialDateTimeDescription {
+  get label(): string {
     const year = this.year;
 
     if (year === null) {
       return "(unknown)";
     }
 
-    let dayjs_ = dayjs();
+    let dayjs_ = dayjs().utc();
 
     // https://day.js.org/docs/en/display/format
     const dateFormat: string[] = [];

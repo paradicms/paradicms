@@ -1,9 +1,11 @@
-import {JsonPrimitiveType} from "./JsonPrimitiveType";
-import {ValueFacetValueThumbnail} from "./ValueFacetValueThumbnail";
 import {Number, Optional, Record, String} from "runtypes";
 import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
+import {JsonPrimitiveType} from "./JsonPrimitiveType";
+import {ValueFacetValueThumbnail} from "./ValueFacetValueThumbnail";
 
-export const ValueFacetValue = <T extends JsonPrimitiveRuntype>(t: T) =>
+export const ValueFacetValue = <ValueT extends JsonPrimitiveRuntype>(
+  valueT: ValueT
+) =>
   Record({
     // label and thumbnail are drawn from linked models, such as the name of a collection,
     // but they have to be duplicated here. A facet can't be a "joined" model because
@@ -12,12 +14,12 @@ export const ValueFacetValue = <T extends JsonPrimitiveRuntype>(t: T) =>
     count: Number,
     label: Optional(String), // If undefined, use the value
     thumbnail: Optional(ValueFacetValueThumbnail),
-    value: t,
+    value: valueT,
   }).asReadonly();
 
-export interface ValueFacetValue<T extends JsonPrimitiveType> {
+export interface ValueFacetValue<ValueT extends JsonPrimitiveType> {
   readonly count: number;
   readonly label?: string;
   readonly thumbnail?: ValueFacetValueThumbnail;
-  readonly value: T;
+  readonly value: ValueT;
 }

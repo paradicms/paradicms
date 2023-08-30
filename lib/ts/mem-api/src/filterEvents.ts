@@ -1,11 +1,10 @@
-import {EventSortDate} from "@paradicms/models";
 import {EventsFilter} from "@paradicms/api";
 import {filterModelsByKey} from "./filterModelsByKey";
 
 export const filterEvents = <
   EventT extends {
     readonly key: string;
-    readonly sortDate: EventSortDate | null;
+    readonly sortDate: Date | null;
   }
 >(kwds: {
   events: readonly EventT[];

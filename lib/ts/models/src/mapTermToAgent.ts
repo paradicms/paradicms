@@ -14,7 +14,7 @@ export const mapTermToAgent = (
 ): Agent | null => {
   switch (term.termType) {
     case "Literal":
-      return new LiteralAgent(term);
+      return new LiteralAgent({literal: term});
     case "NamedNode": {
       const agent = modelParameters.modelSet.agentByIri(term.value);
       if (agent) {

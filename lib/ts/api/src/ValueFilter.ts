@@ -1,13 +1,15 @@
 import {Array, Boolean, Optional, Record} from "runtypes";
-import {JsonPrimitiveType} from "./JsonPrimitiveType";
 import {JsonPrimitiveRuntype} from "./JsonPrimitiveRuntype";
+import {JsonPrimitiveType} from "./JsonPrimitiveType";
 
-export const ValueFilter = <T extends JsonPrimitiveRuntype>(t: T) =>
+export const ValueFilter = <ValueT extends JsonPrimitiveRuntype>(
+  valueT: ValueT
+) =>
   Record({
     excludeKnown: Optional(Boolean),
     excludeUnknown: Optional(Boolean),
-    excludeValues: Optional(Array(t).asReadonly()),
-    includeValues: Optional(Array(t).asReadonly()),
+    excludeValues: Optional(Array(valueT).asReadonly()),
+    includeValues: Optional(Array(valueT).asReadonly()),
   }).asReadonly();
 
 /**
@@ -21,7 +23,7 @@ export const ValueFilter = <T extends JsonPrimitiveRuntype>(t: T) =>
  *
  * If the filter is empty (i.e., none of exclude* or include* is set), then all models are implicitly included.
  */
-export interface ValueFilter<T extends JsonPrimitiveType> {
+export interface ValueFilter<ValueT extends JsonPrimitiveType> {
   /**
    * If true, exclude all models that have the filtered property .
    *
@@ -44,12 +46,12 @@ export interface ValueFilter<T extends JsonPrimitiveType> {
    *
    * excludeValues has precedence over includeValues.
    */
-  readonly excludeValues?: readonly T[];
+  readonly excludeValues?: readonly ValueT[];
 
   /**
    * Include models that have the filtered property with the given value.
    *
    * Any model that does not have the filtered property with the given value is implicitly excluded.
    */
-  readonly includeValues?: readonly T[];
+  readonly includeValues?: readonly ValueT[];
 }

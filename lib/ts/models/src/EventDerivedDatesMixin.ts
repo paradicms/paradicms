@@ -1,14 +1,14 @@
-import {Memoize} from "typescript-memoize";
-import {DateTimeDescription} from "./DateTimeDescription";
-import {Event} from "./Event";
 import log from "loglevel";
-import {EventSortDate} from "./EventSortDate";
+import {Memoize} from "typescript-memoize";
+import {Event} from "./Event";
+import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
+import {imputePartialDateTime} from "./imputePartialDateTime";
 
 export abstract class EventDerivedDatesMixin {
-  abstract readonly date: DateTimeDescription | null;
+  abstract readonly date: PartialDateTimeDescription | null;
   abstract readonly key: string;
-  abstract readonly endDate: DateTimeDescription | null;
-  abstract readonly startDate: DateTimeDescription | null;
+  abstract readonly endDate: PartialDateTimeDescription | null;
+  abstract readonly startDate: PartialDateTimeDescription | null;
 
   compareByDate(other: Event): number {
     const thisSortDate = this.sortDate;
@@ -24,31 +24,14 @@ export abstract class EventDerivedDatesMixin {
       return 1; // Events with dates are > events without dates;
     }
 
-    const yearDiff = thisSortDate.year - otherSortDate.year;
-    if (yearDiff !== 0) {
-      return yearDiff;
-    }
-
-    // Years are the same.
-    // Fill in the month and/or day with 1 for the purposes of comparison.
-
-    const monthDiff =
-      (thisSortDate.month !== null ? thisSortDate.month : 1) -
-      (otherSortDate.month !== null ? otherSortDate.month : 1);
-    if (monthDiff !== 0) {
-      return monthDiff;
-    }
-    return (
-      (thisSortDate.day !== null ? thisSortDate.day : 1) -
-      (otherSortDate.day !== null ? otherSortDate.day : 1)
-    );
+    return thisSortDate.getTime() - otherSortDate.getTime();
   }
 
   @Memoize()
   get displayDate(): string | null {
     const date = this.date;
     if (date !== null) {
-      return date.displayString;
+      return date.label;
     }
 
     const startDate = this.startDate;
@@ -60,10 +43,10 @@ export abstract class EventDerivedDatesMixin {
 
     const result: string[] = [];
     if (startDate !== null) {
-      result.push(startDate.displayString + " (start)");
+      result.push(startDate.label + " (start)");
     }
     if (endDate !== null) {
-      result.push(endDate.displayString + " (end)");
+      result.push(endDate.label + " (end)");
     }
 
     return result.join(" - ");
@@ -75,14 +58,20 @@ export abstract class EventDerivedDatesMixin {
    * The returned properties have the same semantics as PartialDateTime.
    */
   @Memoize()
-  get sortDate(): EventSortDate | null {
-    for (const date of [this.date, this.startDate, this.endDate]) {
-      if (date !== null && date.year !== null) {
-        return {
-          day: date.day,
-          month: date.month,
-          year: date.year!,
-        };
+  get sortDate(): Date | null {
+    for (const {partialDateTimeDescription, ceil} of [
+      {partialDateTimeDescription: this.date},
+      {partialDateTimeDescription: this.startDate},
+      {partialDateTimeDescription: this.endDate, ceil: true},
+    ]) {
+      if (!partialDateTimeDescription) {
+        continue;
+      }
+      const date = imputePartialDateTime(partialDateTimeDescription, {
+        ceil,
+      });
+      if (date !== null) {
+        return date;
       }
     }
     log.debug("event has no sort date");

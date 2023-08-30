@@ -3,13 +3,13 @@ import { schema } from "@paradicms/vocabularies";
 import { Mixin } from "ts-mixer";
 import { Memoize } from "typescript-memoize";
 import { Agent } from "../Agent";
-import { DateTimeDescription } from "../DateTimeDescription";
 import { Event } from "../Event";
 import { EventDerivedDatesMixin } from "../EventDerivedDatesMixin";
 import { Location } from "../Location";
+import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
 import { mapTermToAgent } from "../mapTermToAgent";
-import { mapTermToDateTimeDescription } from "../mapTermToDateTimeDescription";
 import { mapTermToLocation } from "../mapTermToLocation";
+import { mapTermToPartialDateTimeDescription } from "../mapTermToPartialDateTimeDescription";
 import { SchemaModel } from "./SchemaModel";
 
 export class SchemaEvent extends Mixin(SchemaModel, EventDerivedDatesMixin)
@@ -25,12 +25,12 @@ export class SchemaEvent extends Mixin(SchemaModel, EventDerivedDatesMixin)
     );
   }
 
-  readonly date: DateTimeDescription | null = null;
+  readonly date: PartialDateTimeDescription | null = null;
 
   @Memoize()
-  get endDate(): DateTimeDescription | null {
+  get endDate(): PartialDateTimeDescription | null {
     return this.findAndMapObject(schema.endDate, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 
@@ -53,9 +53,9 @@ export class SchemaEvent extends Mixin(SchemaModel, EventDerivedDatesMixin)
   }
 
   @Memoize()
-  get startDate(): DateTimeDescription | null {
+  get startDate(): PartialDateTimeDescription | null {
     return this.findAndMapObject(schema.startDate, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 }

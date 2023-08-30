@@ -1,6 +1,6 @@
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
-import {DateTimeDescription} from "../DateTimeDescription";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {Work} from "../Work";
 import {WorkLocationRole} from "../WorkLocationRole";
 import {WorkModificationEvent} from "../WorkModificationEvent";
@@ -24,7 +24,7 @@ export class SyntheticWorkModificationEvent extends Mixin(SyntheticWorkEvent)
     return this.contributors;
   }
 
-  static fromWork(kwds: {date: DateTimeDescription; work: Work}) {
+  static fromWork(kwds: {date: PartialDateTimeDescription; work: Work}) {
     const {date, work} = kwds;
     return new SyntheticWorkModificationEvent({
       contributors: work.contributors,

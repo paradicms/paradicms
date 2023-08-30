@@ -3,6 +3,7 @@ import {
   GetModelsResult,
   StringPropertyValueFacet,
   ValueFacet,
+  WorkCreationDateRangeFacet,
   WorkSubjectValueFacet,
 } from "@paradicms/api";
 import {
@@ -342,6 +343,9 @@ export const behavesLikeApi = (api: Api) => {
             type: "StringPropertyValue",
           },
           {
+            type: "WorkCreationDateRange",
+          },
+          {
             type: "WorkSubjectValue",
           },
         ],
@@ -363,6 +367,14 @@ export const behavesLikeApi = (api: Api) => {
       actualResult.facets.find(facet => facet.type === "StringPropertyValue")
     ) as StringPropertyValueFacet;
     expect(stringPropertyValueFacet.propertyIri === dcterms.publisher.value);
+
+    const workCreationDateRangeFacet = requireDefined(
+      actualResult.facets.find(facet => facet.type == "WorkCreationDateRange")
+    ) as WorkCreationDateRangeFacet;
+    expect(workCreationDateRangeFacet.start.year).to.eq(1528); // Judgment of Paris
+    expect(workCreationDateRangeFacet.end.year).to.eq(2021);
+    expect(workCreationDateRangeFacet.end.month!).to.eq(12);
+    expect(workCreationDateRangeFacet.end.day!).to.eq(30);
 
     // @ts-ignore
     const workSubjectValueFacet = requireDefined(
@@ -522,6 +534,47 @@ export const behavesLikeApi = (api: Api) => {
     ).modelSet.works;
 
     expectModelsDeepEq(expectedWorks, actualWorks);
+  });
+
+  it("getWorks filters by creation date", async () => {
+    const expectedWorkIri = "http://example.com/collection0/work2";
+    const expectedWork = requireNonNull(
+      completeModelSet.workByIri(expectedWorkIri)
+    );
+    const expectedWorkCreationEvent = requireDefined(
+      expectedWork.events.find(event => event.type === "WorkCreation")
+    );
+    expect(expectedWorkCreationEvent.date).not.to.be.null;
+    expect(expectedWorkCreationEvent.date!.year).to.eq(2021);
+    expect(expectedWorkCreationEvent.date!.month).to.eq(12);
+    expect(expectedWorkCreationEvent.date!.day).to.eq(30);
+
+    const actualWorks = (
+      await api.getWorks({
+        query: {
+          filters: [
+            {
+              end: {
+                year: 2021,
+                month: 12,
+                day: 30,
+              },
+              start: {
+                year: 2021,
+                month: 12,
+                day: 30,
+              },
+              type: "WorkCreationDateRange",
+            },
+          ],
+        },
+      })
+    ).modelSet.works;
+
+    expect(actualWorks).to.have.length(1);
+    const actualWork = actualWorks[0];
+    expect(actualWork.iris).to.have.length(1);
+    expect(actualWork.iris[0]).to.eq(expectedWorkIri);
   });
 
   it("getWorks filters by subject", async () => {

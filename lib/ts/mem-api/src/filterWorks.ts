@@ -6,6 +6,7 @@ import {
 } from "@paradicms/api";
 import {Work} from "@paradicms/models";
 import {filterModelsByKey} from "./filterModelsByKey";
+import {testEventDateRangeFilter} from "./testEventDateRangeFilter";
 import {testValueFilter} from "./testValueFilter";
 
 export const filterWorks = (kwds: {
@@ -41,6 +42,21 @@ export const filterWorks = (kwds: {
             workCollectionKeys[work.key] ?? []
           )
         );
+        break;
+      }
+      case "WorkCreationDateRange": {
+        filteredWorks = filteredWorks.filter(work => {
+          const workCreationEvent = work.events.find(
+            event => event.type === "WorkCreation"
+          );
+          if (!workCreationEvent) {
+            return;
+          }
+          return testEventDateRangeFilter({
+            event: workCreationEvent,
+            filter,
+          });
+        });
         break;
       }
       case "WorkSubjectValue": {

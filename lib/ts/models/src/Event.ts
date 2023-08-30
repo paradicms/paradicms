@@ -1,10 +1,9 @@
 import {Agent} from "./Agent";
-import {DateTimeDescription} from "./DateTimeDescription";
 import {DescriptionMixin} from "./DescriptionMixin";
-import {EventSortDate} from "./EventSortDate";
 import {ImagesMixin} from "./ImagesMixin";
 import {Location} from "./Location";
 import {Model} from "./Model";
+import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
 import {ThumbnailMixin} from "./ThumbnailMixin";
 
 export interface Event
@@ -14,11 +13,11 @@ export interface Event
     ThumbnailMixin {
   readonly agents: readonly Agent[];
   compareByDate(other: Event): number;
-  readonly date: DateTimeDescription | null;
+  readonly date: PartialDateTimeDescription | null;
   readonly displayDate: string | null;
   readonly label: string;
-  readonly endDate: DateTimeDescription | null;
+  readonly endDate: PartialDateTimeDescription | null;
   readonly location: Location | null;
-  readonly sortDate: EventSortDate | null;
-  readonly startDate: DateTimeDescription | null;
+  readonly sortDate: Date | null;
+  readonly startDate: PartialDateTimeDescription | null;
 }

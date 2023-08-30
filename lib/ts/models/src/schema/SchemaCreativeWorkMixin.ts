@@ -2,15 +2,15 @@ import {schema} from "@paradicms/vocabularies";
 import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Agent} from "../Agent";
-import {DateTimeDescription} from "../DateTimeDescription";
 import {License} from "../License";
 import {Location} from "../Location";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {RightsMixin} from "../RightsMixin";
 import {RightsStatement} from "../RightsStatement";
 import {mapTermToAgent} from "../mapTermToAgent";
-import {mapTermToDateTimeDescription} from "../mapTermToDateTimeDescription";
 import {mapTermToLicense} from "../mapTermToLicense";
 import {mapTermToLocation} from "../mapTermToLocation";
+import {mapTermToPartialDateTimeDescription} from "../mapTermToPartialDateTimeDescription";
 import {mapTermToRightsStatement} from "../mapTermToRightsStatement";
 import {SchemaThingMixin} from "./SchemaThingMixin";
 
@@ -31,16 +31,16 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   }
 
   @Memoize()
-  get dateCreated(): DateTimeDescription | null {
+  get dateCreated(): PartialDateTimeDescription | null {
     return this.findAndMapObject(schema.dateCreated, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 
   @Memoize()
-  get dateModified(): DateTimeDescription | null {
+  get dateModified(): PartialDateTimeDescription | null {
     return this.findAndMapObject(schema.dateModified, term =>
-      mapTermToDateTimeDescription(this, term)
+      mapTermToPartialDateTimeDescription(this, term)
     );
   }
 

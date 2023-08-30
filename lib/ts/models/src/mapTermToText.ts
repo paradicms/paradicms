@@ -2,8 +2,8 @@ import {Term} from "@rdfjs/types";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {Text} from "./Text";
 import {LiteralText} from "./literal/LiteralText";
-import {textFactories} from "./textFactories";
 import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
+import {textFactories} from "./textFactories";
 
 /**
  * Map a term in a modelSet to a Text.
@@ -20,7 +20,7 @@ export const mapTermToText = (
         term,
       });
     case "Literal":
-      return new LiteralText(term);
+      return new LiteralText({literal: term});
     default:
       return null;
   }

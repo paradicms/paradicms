@@ -1,18 +1,23 @@
 /**
- * Common interface over DateTimeDescription and partial date-times parsed from literals.
+ * A partial date-time description based on time:DateTimeDescription.
+ *
+ * All fields except the label are optional. This class complements RequiredDateTimeDescription.
  */
-export type DateTimeDescription = {
+export type PartialDateTimeDescription = {
   /**
    * Day of the month, 1..31 inclusive.
    */
   readonly day: number | null;
 
-  readonly displayString: string;
-
   /**
    * Hour of the day, 0..23 inclusive
    */
   readonly hour: number | null;
+
+  /**
+   * Human-readable label to use in the user interface.
+   */
+  readonly label: string;
 
   /**
    * Minute of the day, 0..59 inclusive

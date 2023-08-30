@@ -2,9 +2,9 @@ import { crm } from "@paradicms/vocabularies";
 import { Mixin } from "ts-mixer";
 import { Memoize } from "typescript-memoize";
 import { Agent } from "../Agent";
-import { DateTimeDescription } from "../DateTimeDescription";
 import { EventDerivedDatesMixin } from "../EventDerivedDatesMixin";
 import { Image } from "../Image";
+import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
 import { Text } from "../Text";
 import { ThumbnailSelector } from "../ThumbnailSelector";
 import { WorkCreationEvent } from "../WorkCreationEvent";
@@ -35,7 +35,7 @@ export class LinkedArtProduction
     ).filter(model => model instanceof LinkedArtPerson) as LinkedArtPerson[];
   }
 
-  get date(): DateTimeDescription | null {
+  get date(): PartialDateTimeDescription | null {
     return null;
   }
 
@@ -47,7 +47,7 @@ export class LinkedArtProduction
     return this.hasTimeSpan?.displayDate ?? super.displayDate;
   }
 
-  get endDate(): DateTimeDescription | null {
+  get endDate(): PartialDateTimeDescription | null {
     return this.hasTimeSpan?.endOfTheEnd ?? null;
   }
 
@@ -75,7 +75,7 @@ export class LinkedArtProduction
 
   readonly location = null;
 
-  get startDate(): DateTimeDescription | null {
+  get startDate(): PartialDateTimeDescription | null {
     return this.hasTimeSpan?.beginOfTheBegin ?? null;
   }
 

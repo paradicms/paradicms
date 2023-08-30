@@ -1,8 +1,8 @@
 import {JsonPrimitiveType, ValueFilter} from "@paradicms/api";
 
-export const testValueFilter = <T extends JsonPrimitiveType>(
-  filter: ValueFilter<T>,
-  values: readonly T[]
+export const testValueFilter = <ValueT extends JsonPrimitiveType>(
+  filter: ValueFilter<ValueT>,
+  values: readonly ValueT[]
 ): boolean => {
   if (values.length === 0) {
     if (filter.excludeUnknown) {
@@ -14,8 +14,8 @@ export const testValueFilter = <T extends JsonPrimitiveType>(
     }
   }
 
-  const excludeValues: readonly T[] = filter.excludeValues ?? [];
-  const includeValues: readonly T[] = filter.includeValues ?? [];
+  const excludeValues: readonly ValueT[] = filter.excludeValues ?? [];
+  const includeValues: readonly ValueT[] = filter.includeValues ?? [];
   if (excludeValues.length === 0 && includeValues.length === 0) {
     return true;
   }

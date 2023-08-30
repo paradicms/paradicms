@@ -60,7 +60,7 @@ export class LinkedArtLinguisticObject
         }
         invariant(acknowledgment.hasSymbolicContent.length > 0);
         rightsHolders.push(
-          new LiteralAgent(acknowledgment.hasSymbolicContent[0])
+          new LiteralAgent({literal: acknowledgment.hasSymbolicContent[0]})
         );
       }
     }

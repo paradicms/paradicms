@@ -1,96 +1,156 @@
 import {
-  StringPropertyValueFacet,
-  WorkSubjectValueFacet,
+  DateRangeEndpoint,
+  DateRangeFacet,
   WorksFacet,
   WorksFilter,
 } from "@paradicms/api";
-import {ThumbnailSelector, Work} from "@paradicms/models";
+import {Image, ThumbnailSelector, Work, WorkEvent} from "@paradicms/models";
 import {deleteUndefined} from "@paradicms/utilities";
+import invariant from "ts-invariant";
 import {MutableValueFacetValue} from "./MutableValueFacetValue";
+import {getEventDateRange} from "./getEventDateRange";
 import {imageToValueFacetValueThumbnail} from "./imageToValueFacetThumbnail";
+import {imputeDateRangeEndpoint} from "./imputeDateRangeEndpoint";
 
-const facetizeWorksByStringPropertyValue = (kwds: {
-  propertyIri: string;
-  valueFacetValueThumbnailSelector?: ThumbnailSelector;
+const facetizeWorksByEventDateRange = (kwds: {
+  getWorkEvent: (work: Work) => WorkEvent | null;
   works: readonly Work[];
-}): StringPropertyValueFacet => {
-  const {propertyIri, valueFacetValueThumbnailSelector, works} = kwds;
-  let unknownCount: number = 0;
-  const facetValues: {
-    [index: string]: MutableValueFacetValue<string>;
-  } = {};
+}): DateRangeFacet | null => {
+  const {getWorkEvent, works} = kwds;
+
+  let end: {
+      dateRangeEndpoint: DateRangeEndpoint;
+      imputedDate: Date;
+    } | null = null,
+    start: {
+      dateRangeEndpoint: DateRangeEndpoint;
+      imputedDate: Date;
+    } | null = null;
+
   for (const work of works) {
-    let workHasProperty = false;
-    for (const propertyValue of work.propertyValuesByPropertyIri(propertyIri)) {
-      const propertyValueString: string = propertyValue.value;
-      let facetValue = facetValues[propertyValueString];
-      if (facetValue) {
-        facetValue.count++;
-      } else {
-        facetValue = {
-          count: 1,
-          label: propertyValue.label,
-          value: propertyValueString,
-          thumbnail: valueFacetValueThumbnailSelector
-            ? imageToValueFacetValueThumbnail(
-                propertyValue.thumbnail(valueFacetValueThumbnailSelector)
-              )
-            : undefined,
-        };
-        facetValues[propertyValueString] = deleteUndefined(facetValue);
-      }
-      workHasProperty = true;
+    const workEvent = getWorkEvent(work);
+    if (workEvent === null) {
+      continue;
     }
-    if (!workHasProperty) {
-      unknownCount++;
+
+    const workEventDateRange = getEventDateRange(workEvent);
+    if (workEventDateRange === null) {
+      continue;
+    }
+
+    const imputedWorkEventDateRangeEnd = imputeDateRangeEndpoint(
+      workEventDateRange.end,
+      {ceil: true}
+    );
+    const imputedWorkEventDateRangeStart = imputeDateRangeEndpoint(
+      workEventDateRange.start
+    );
+    if (
+      imputedWorkEventDateRangeEnd === null ||
+      imputedWorkEventDateRangeStart === null
+    ) {
+      continue;
+    }
+    invariant(
+      imputedWorkEventDateRangeStart.getTime() <=
+        imputedWorkEventDateRangeEnd.getTime()
+    );
+    // console.info(
+    //   "Work event date range",
+    //   imputedWorkEventDateRangeStart,
+    //   imputedWorkEventDateRangeEnd
+    // );
+
+    // If the event's date range end is later than the current end, set the latter
+    if (
+      end === null ||
+      imputedWorkEventDateRangeEnd.getTime() > end.imputedDate.getTime()
+    ) {
+      end = {
+        dateRangeEndpoint: workEventDateRange.end,
+        imputedDate: imputedWorkEventDateRangeEnd,
+      };
+      // console.info(
+      //   "Reset end to",
+      //   imputedWorkEventDateRangeEnd,
+      //   JSON.stringify(workEventDateRange.end)
+      // );
+    }
+
+    // If the event's date range start is earlier than the current start, set the latter
+    if (
+      start === null ||
+      imputedWorkEventDateRangeStart.getTime() < start.imputedDate.getTime()
+    ) {
+      start = {
+        dateRangeEndpoint: workEventDateRange.start,
+        imputedDate: imputedWorkEventDateRangeStart,
+      };
+      // console.info(
+      //   "Reset start to",
+      //   imputedWorkEventDateRangeStart,
+      //   JSON.stringify(workEventDateRange.start)
+      // );
     }
   }
-  return {
-    propertyIri,
-    type: "StringPropertyValue",
-    unknownCount,
-    values: Object.values(facetValues),
-  };
+
+  if (start == null || end == null) {
+    return null;
+  }
+
+  return {start: start.dateRangeEndpoint, end: end.dateRangeEndpoint};
 };
 
-const facetizeWorksByWorkSubjectValue = (kwds: {
+const facetizeWorksByValue = <
+  ValueT extends number | string,
+  WorkValueT extends {
+    label: string;
+    thumbnail: (selector: ThumbnailSelector) => Image | null;
+    value: ValueT;
+  }
+>(kwds: {
+  getWorkValues: (work: Work) => readonly WorkValueT[];
   valueFacetValueThumbnailSelector?: ThumbnailSelector;
   works: readonly Work[];
-}): WorkSubjectValueFacet => {
-  const {valueFacetValueThumbnailSelector, works} = kwds;
+}): {
+  unknownCount: number;
+  values: MutableValueFacetValue<ValueT>[];
+} => {
+  const {getWorkValues, valueFacetValueThumbnailSelector, works} = kwds;
+
   let unknownCount: number = 0;
-  const facetValues: {
-    [index: string]: MutableValueFacetValue<string>;
-  } = {};
+  const facetValues: MutableValueFacetValue<ValueT>[] = [];
   for (const work of works) {
-    if (work.subjects.length === 0) {
+    const workValues = getWorkValues(work);
+    if (workValues.length === 0) {
       unknownCount++;
       continue;
     }
 
-    for (const workSubject of work.subjects) {
-      let facetValue = facetValues[workSubject.value];
+    for (const value of workValues) {
+      let facetValue = facetValues.find(
+        facetValue => facetValue.value === value.value
+      );
       if (facetValue) {
         facetValue.count++;
       } else {
         facetValue = {
           count: 1,
-          label: workSubject.label,
-          value: workSubject.value,
+          label: value.label,
+          value: value.value,
           thumbnail: valueFacetValueThumbnailSelector
             ? imageToValueFacetValueThumbnail(
-                workSubject.thumbnail(valueFacetValueThumbnailSelector)
+                value.thumbnail(valueFacetValueThumbnailSelector)
               )
             : undefined,
         };
-        facetValues[workSubject.value] = deleteUndefined(facetValue);
+        facetValues.push(deleteUndefined(facetValue));
       }
     }
   }
   return {
-    type: "WorkSubjectValue",
     unknownCount,
-    values: Object.values(facetValues),
+    values: facetValues,
   };
 };
 
@@ -104,21 +164,39 @@ export const facetizeWorks = (kwds: {
   for (const filter of filters) {
     switch (filter.type) {
       case "StringPropertyValue":
-        facets.push(
-          facetizeWorksByStringPropertyValue({
-            propertyIri: filter.propertyIri,
+        facets.push({
+          ...facetizeWorksByValue({
             valueFacetValueThumbnailSelector,
             works,
-          })
-        );
+            getWorkValues: work =>
+              work.propertyValuesByPropertyIri(filter.propertyIri),
+          }),
+          propertyIri: filter.propertyIri,
+          type: "StringPropertyValue",
+        });
         break;
+      case "WorkCreationDateRange": {
+        const facet = facetizeWorksByEventDateRange({
+          getWorkEvent: work =>
+            work.events.find(event => event.type === "WorkCreation") ?? null,
+          works,
+        });
+        if (facet) {
+          facets.push({
+            ...facet,
+            type: "WorkCreationDateRange",
+          });
+        }
+        break;
+      }
       case "WorkSubjectValue":
-        facets.push(
-          facetizeWorksByWorkSubjectValue({
-            valueFacetValueThumbnailSelector,
-            works,
-          })
-        );
+        facets.push({
+          ...facetizeWorksByValue({
+            ...kwds,
+            getWorkValues: work => work.subjects,
+          }),
+          type: "WorkSubjectValue",
+        });
         break;
     }
   }
