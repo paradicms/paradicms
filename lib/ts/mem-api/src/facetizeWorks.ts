@@ -55,6 +55,11 @@ const facetizeWorksByEventDateRange = (kwds: {
       imputedWorkEventDateRangeStart.getTime() <=
         imputedWorkEventDateRangeEnd.getTime()
     );
+    // console.info(
+    //   "Work event date range",
+    //   imputedWorkEventDateRangeStart,
+    //   imputedWorkEventDateRangeEnd
+    // );
 
     // If the event's date range end is later than the current end, set the latter
     if (
@@ -65,6 +70,11 @@ const facetizeWorksByEventDateRange = (kwds: {
         dateRangeEndpoint: workEventDateRange.end,
         imputedDate: imputedWorkEventDateRangeEnd,
       };
+      // console.info(
+      //   "Reset end to",
+      //   imputedWorkEventDateRangeEnd,
+      //   JSON.stringify(workEventDateRange.end)
+      // );
     }
 
     // If the event's date range start is earlier than the current start, set the latter
@@ -76,6 +86,11 @@ const facetizeWorksByEventDateRange = (kwds: {
         dateRangeEndpoint: workEventDateRange.start,
         imputedDate: imputedWorkEventDateRangeStart,
       };
+      // console.info(
+      //   "Reset start to",
+      //   imputedWorkEventDateRangeStart,
+      //   JSON.stringify(workEventDateRange.start)
+      // );
     }
   }
 
