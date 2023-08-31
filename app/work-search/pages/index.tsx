@@ -567,36 +567,32 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       properties={properties}
     >
       <>
-        {getWorksState.result.totalModelsCount > 0 ? (
-          tabs.length === 1 ? (
-            tabs[0].content
-          ) : (
-            <>
-              <Nav tabs>
-                {tabs.map(tab => (
-                  <NavItem key={tab.key}>
-                    <NavLink
-                      className={
-                        activeTabKey === tab.key ? "active" : undefined
-                      }
-                      onClick={() => setActiveTabKey(tab.key)}
-                      style={{cursor: "pointer", fontSize: "small"}}
-                    >
-                      {tab.title}
-                    </NavLink>
-                  </NavItem>
-                ))}
-              </Nav>
-              <TabContent activeTab={activeTabKey}>
-                {tabs.map(tab => (
-                  <TabPane key={tab.key} tabId={tab.key}>
-                    <div className="mt-2">{tab.content}</div>
-                  </TabPane>
-                ))}
-              </TabContent>
-            </>
-          )
-        ) : null}
+        {tabs.length === 1 ? (
+          tabs[0].content
+        ) : (
+          <>
+            <Nav tabs>
+              {tabs.map(tab => (
+                <NavItem key={tab.key}>
+                  <NavLink
+                    className={activeTabKey === tab.key ? "active" : undefined}
+                    onClick={() => setActiveTabKey(tab.key)}
+                    style={{cursor: "pointer", fontSize: "small"}}
+                  >
+                    {tab.title}
+                  </NavLink>
+                </NavItem>
+              ))}
+            </Nav>
+            <TabContent activeTab={activeTabKey}>
+              {tabs.map(tab => (
+                <TabPane key={tab.key} tabId={tab.key}>
+                  <div className="mt-2">{tab.content}</div>
+                </TabPane>
+              ))}
+            </TabContent>
+          </>
+        )}
       </>
     </Layout>
   );

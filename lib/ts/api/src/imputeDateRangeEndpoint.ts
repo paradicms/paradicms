@@ -1,5 +1,5 @@
-import {DateRangeEndpoint} from "@paradicms/api";
 import {imputePartialDateTime} from "@paradicms/models";
+import {DateRangeEndpoint} from "./DateRangeEndpoint";
 
 export const imputeDateRangeEndpoint = (
   dateRangeEndpoint: DateRangeEndpoint,

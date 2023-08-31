@@ -3,6 +3,7 @@ import {
   DateRangeFacet,
   WorksFacet,
   WorksFilter,
+  imputeDateRangeEndpoint,
 } from "@paradicms/api";
 import {Image, ThumbnailSelector, Work, WorkEvent} from "@paradicms/models";
 import {deleteUndefined} from "@paradicms/utilities";
@@ -10,7 +11,6 @@ import invariant from "ts-invariant";
 import {MutableValueFacetValue} from "./MutableValueFacetValue";
 import {getEventDateRange} from "./getEventDateRange";
 import {imageToValueFacetValueThumbnail} from "./imageToValueFacetThumbnail";
-import {imputeDateRangeEndpoint} from "./imputeDateRangeEndpoint";
 
 const facetizeWorksByEventDateRange = (kwds: {
   getWorkEvent: (work: Work) => WorkEvent | null;

@@ -1,5 +1,6 @@
 import {
   StringPropertyValueFacet,
+  WorkCreationDateRangeFacet,
   WorkSubjectValueFacet,
   WorksFacet,
   WorksFilter,
@@ -7,6 +8,7 @@ import {
 import {requireDefined} from "@paradicms/utilities";
 import * as log from "loglevel";
 import React from "react";
+import {DateRangeFilterControl} from "./DateRangeFilterControl";
 import {ValueFilterSelect} from "./ValueFilterSelect";
 
 /**
@@ -49,6 +51,25 @@ export const createWorksFilterControl = (kwds: {
           filter={filter}
           filterLabel={requireDefined(filter.label)}
           getAbsoluteImageSrc={getAbsoluteImageSrc}
+          onChange={onChangeFilter}
+        />
+      );
+    }
+
+    case "WorkCreationDateRange": {
+      const facet: WorkCreationDateRangeFacet | undefined = facets?.find(
+        facet => facet.type === "WorkCreationDateRange"
+      ) as WorkCreationDateRangeFacet | undefined;
+      if (!facet) {
+        log.warn("no matching facet for filter on work creation date");
+        return null;
+      }
+
+      return (
+        <DateRangeFilterControl
+          facet={facet}
+          filter={filter}
+          filterLabel="Creation date"
           onChange={onChangeFilter}
         />
       );
