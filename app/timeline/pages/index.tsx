@@ -1,18 +1,18 @@
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
-import {GetStaticProps} from "next";
-import * as React from "react";
-import {Layout} from "../components/Layout";
 import {
   EventsTimeline,
-  galleryThumbnailSelector,
   ModelSetJsonLdParser,
+  galleryThumbnailSelector,
 } from "@paradicms/react-dom-components";
-import {useRouter} from "next/router";
-import {Hrefs} from "../lib/Hrefs";
-import Link from "next/link";
-import "react-vertical-timeline-component/style.min.css";
 import {JsonLd} from "jsonld/jsonld-spec";
+import {GetStaticProps} from "next";
+import Link from "next/link";
+import {useRouter} from "next/router";
+import * as React from "react";
+import "react-vertical-timeline-component/style.min.css";
+import {Layout} from "../components/Layout";
+import {Hrefs} from "../lib/Hrefs";
 
 interface StaticProps {
   readonly configuration: JsonAppConfiguration | null;
@@ -37,9 +37,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
         page={0}
         pageMax={0}
         renderEventLink={(event, children) => (
-          <Link href={Hrefs.event(event)}>
-            <a>{children}</a>
-          </Link>
+          <Link href={Hrefs.event(event)}>{children}</Link>
         )}
         setPage={() => {}}
       />

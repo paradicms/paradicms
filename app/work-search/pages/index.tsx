@@ -365,9 +365,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
   });
 
   const renderWorkLink = (work: {key: string}, children: React.ReactNode) => (
-    <Link href={Hrefs.work(work)}>
-      <a>{children}</a>
-    </Link>
+    <Link href={Hrefs.work(work)}>{children}</Link>
   );
 
   const tabs: {content: React.ReactNode; key: TabKey; title: string}[] = [];

@@ -7,7 +7,7 @@ import {Hrefs} from "lib/Hrefs";
 import Head from "next/head";
 import Link from "next/link";
 import * as React from "react";
-import {Nav, NavItem, NavLink, Navbar} from "reactstrap";
+import {Nav, NavItem, Navbar} from "reactstrap";
 import invariant from "ts-invariant";
 
 const textStyle: React.CSSProperties = {fontSize: "xx-large"};
@@ -60,8 +60,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         >
           <NavItem className="align-top">
             {previousWork ? (
-              <Link href={Hrefs.work(previousWork)} passHref>
-                <NavLink style={textStyle}>‹</NavLink>
+              <Link
+                className="nav-link"
+                href={Hrefs.work(previousWork)}
+                passHref
+                style={textStyle}
+              >
+                ‹
               </Link>
             ) : (
               <span style={textStyle}>&nbsp;</span>
@@ -93,8 +98,13 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
         >
           <NavItem>
             {nextWork ? (
-              <Link href={Hrefs.work(nextWork)} passHref>
-                <NavLink style={textStyle}>›</NavLink>
+              <Link
+                className="nav-link"
+                href={Hrefs.work(nextWork)}
+                passHref
+                style={textStyle}
+              >
+                ›
               </Link>
             ) : (
               <span style={textStyle} />
