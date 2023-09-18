@@ -2,10 +2,9 @@ import logging
 import os
 import shutil
 import subprocess
-from pathlib import Path
-from typing import List, Union, Tuple, Optional
-
 import sys
+from pathlib import Path
+from typing import List, Optional, Tuple, Union
 
 
 class AppPackage:
@@ -173,3 +172,13 @@ class AppPackage:
             self.__logger.info("completed %s", args)
         except subprocess.TimeoutExpired:
             self.__logger.warning("timed out on %s", args)
+
+    def start(
+        self, *, data_file_paths: Tuple[Path, ...], client_api: str | None = None
+    ):
+        if not data_file_paths:
+            raise ValueError("must specify at least one data file path")
+
+        self.__run_script(
+            "start", client_api=client_api, data_file_paths=data_file_paths
+        )

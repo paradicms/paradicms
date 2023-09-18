@@ -131,6 +131,15 @@ export const getStaticProps: GetStaticProps = async ({
   const workModelSet = (
     await api.getWorks({
       joinSelector: workPageWorkJoinSelector,
+      limit: 1,
+      query: {
+        filters: [
+          {
+            includeKeys: [workKey],
+            type: "Key",
+          },
+        ],
+      },
     })
   ).modelSet;
 
