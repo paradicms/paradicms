@@ -5,12 +5,12 @@
   "dependencies": {
     "@types/qs": "6.9.7",
     "@types/query-string": "5.1.0",
-    "@types/react": "18.0.21",
-    "@types/react-dom": "18.0.6",
+    "@types/react": "18.2.22",
+    "@types/react-dom": "18.2.7",
     "qs": "6.9.6",
     "query-string": "5.1.1",
-    "react": "18.0.0",
-    "react-dom": "18.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "use-query-params": "^2.2.1"
   },
   "devDependencies": {

@@ -1,15 +1,15 @@
 import logging
 from pathlib import Path
-from typing import Optional, Tuple, Iterable, List, Set
+from typing import Iterable, List, Optional, Set, Tuple
 
 from more_itertools import consume
-from rdflib import URIRef
-
-import paradicms_ssg.namespaces
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from rdflib import URIRef
+
+import paradicms_ssg.namespaces
 from paradicms_ssg.app_package import AppPackage
 from paradicms_ssg.deployer import Deployer
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
@@ -193,5 +193,7 @@ class AppLoader:
                         deploy_dir_path=self.__cache_dir_path / "deployment"
                     )
                 deployer(app_out_dir_path=app_out_dir_path)
+            elif next_command == "start":
+                app_package.start(**app_package_build_kwds)
             else:
                 raise ValueError(f"unknown Next.js command: {next_command}")

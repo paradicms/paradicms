@@ -1,3 +1,4 @@
+import {getExhibitionData} from "@paradicms/api";
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {
   decodeFileName,
@@ -6,26 +7,25 @@ import {
   getStaticApi,
 } from "@paradicms/next";
 import {
+  WorkPage as DelegateWorkPage,
+  ModelSetJsonLdParser,
   getWorkLocationIcon,
   getWorkLocationLabel,
-  ModelSetJsonLdParser,
-  WorkPage as DelegateWorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
+import {requireNonNull} from "@paradicms/utilities";
 import {Layout} from "components/Layout";
+import {JsonLd} from "jsonld/jsonld-spec";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import {useRouter} from "next/router";
 import * as React from "react";
 import {useCallback} from "react";
 import Hammer from "react-hammerjs";
-import {requireNonNull} from "@paradicms/utilities";
-import Link from "next/link";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
-import {JsonLd} from "jsonld/jsonld-spec";
 import invariant from "ts-invariant";
-import {getExhibitionData} from "@paradicms/api";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -108,9 +108,7 @@ const WorkPageImpl: React.FunctionComponent<Omit<
               propertyGroups={currentWorkModelSet.propertyGroups}
               properties={currentWorkModelSet.properties}
               renderWorkLink={(work, children) => (
-                <Link href={Hrefs.work({key: currentWorkKey})}>
-                  <a>{children}</a>
-                </Link>
+                <Link href={Hrefs.work({key: currentWorkKey})}>{children}</Link>
               )}
               renderWorkLocationsMap={workLocations => (
                 <LocationsMap
@@ -184,6 +182,7 @@ export const getStaticProps: GetStaticProps = async ({
 
   const currentWorkModelSet = (
     await api.getWorks({
+      joinSelector: workPageWorkJoinSelector,
       limit: 1,
       query: {
         filters: [
@@ -193,7 +192,6 @@ export const getStaticProps: GetStaticProps = async ({
           },
         ],
       },
-      joinSelector: workPageWorkJoinSelector,
     })
   ).modelSet;
   invariant(

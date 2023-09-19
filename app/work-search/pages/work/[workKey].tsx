@@ -6,23 +6,23 @@ import {
   getStaticApi,
 } from "@paradicms/next";
 import {
+  WorkPage as DelegateWorkPage,
+  ModelSetJsonLdParser,
   getNamedModelLinks,
   getWorkLocationIcon,
   getWorkLocationLabel,
-  ModelSetJsonLdParser,
-  WorkPage as DelegateWorkPage,
   workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
+import {requireNonNull} from "@paradicms/utilities";
 import {Layout} from "components/Layout";
+import {JsonLd} from "jsonld/jsonld-spec";
 import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import {useRouter} from "next/router";
 import * as React from "react";
-import {requireNonNull} from "@paradicms/utilities";
-import Link from "next/link";
-import {Hrefs} from "../../lib/Hrefs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
-import {JsonLd} from "jsonld/jsonld-spec";
+import {Hrefs} from "../../lib/Hrefs";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -66,9 +66,7 @@ const WorkPageImpl: React.FunctionComponent<Omit<
         properties={workModelSet.properties}
         propertyGroups={workModelSet.propertyGroups}
         renderWorkLink={(work, children) => (
-          <Link href={Hrefs.work(work)}>
-            <a>{children}</a>
-          </Link>
+          <Link href={Hrefs.work(work)}>{children}</Link>
         )}
         renderWorkLocationsMap={workLocations => (
           <LocationsMap
@@ -133,6 +131,15 @@ export const getStaticProps: GetStaticProps = async ({
   const workModelSet = (
     await api.getWorks({
       joinSelector: workPageWorkJoinSelector,
+      limit: 1,
+      query: {
+        filters: [
+          {
+            includeKeys: [workKey],
+            type: "Key",
+          },
+        ],
+      },
     })
   ).modelSet;
 
