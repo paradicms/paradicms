@@ -27,7 +27,7 @@
   },
   "scripts": {
     "clean": "rimraf .next && rimraf out",
-    "dev": "NODE_OPTIONS=\"--max-old-space-size=8192\" next dev",
+    "dev": "NODE_OPTIONS=\"--max-old-space-size=16384\" next dev",
     "build": "next build",
     "export": "next export",
     "serve": "serve out",
