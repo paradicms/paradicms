@@ -17,6 +17,7 @@ export class SchemaProperty extends Mixin(SchemaModel)
     return this.description;
   }
 
+  @Memoize()
   get filterable(): boolean {
     return (
       this.findAndMapObject(cms.propertyFilterable, mapTermToBoolean) ?? false
@@ -27,6 +28,7 @@ export class SchemaProperty extends Mixin(SchemaModel)
     return this.modelSet.propertyGroupsByPropertyKey(this.key);
   }
 
+  @Memoize()
   get hidden(): boolean {
     const hidden = this.findAndMapObject(cms.propertyHidden, mapTermToBoolean);
     if (hidden !== null) {
@@ -39,8 +41,19 @@ export class SchemaProperty extends Mixin(SchemaModel)
     return requireNonNull(this.name);
   }
 
+  @Memoize()
   get order(): number {
     return this.findAndMapObject(cms.propertyOrder, mapTermToNumber) ?? 0;
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.filterable;
+    this.hidden;
+    this.order;
+    this.range;
+    this.rangeValues;
+    this.searchable;
   }
 
   @Memoize()
@@ -71,6 +84,7 @@ export class SchemaProperty extends Mixin(SchemaModel)
     });
   }
 
+  @Memoize()
   get searchable(): boolean {
     return (
       this.findAndMapObject(cms.propertySearchable, mapTermToBoolean) ?? false

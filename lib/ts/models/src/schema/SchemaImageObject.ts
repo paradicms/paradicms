@@ -1,16 +1,16 @@
-import {SchemaMediaObjectMixin} from "./SchemaMediaObjectMixin";
-import {Mixin} from "ts-mixer";
-import {Image} from "../Image";
-import {schema} from "@paradicms/vocabularies";
-import {Memoize} from "typescript-memoize";
-import {ImageDimensions} from "../ImageDimensions";
-import {mapSchemaQuantitativeValue} from "./mapSchemaQuantitativeValue";
-import {mapTermToString} from "@paradicms/rdf";
-import {ThumbnailSelector} from "../ThumbnailSelector";
-import {selectThumbnail} from "../selectThumbnail";
+import { mapTermToString } from "@paradicms/rdf";
+import { schema } from "@paradicms/vocabularies";
 import log from "loglevel";
-import {mapTermToImage} from "../mapTermToImage";
-import {SchemaModel} from "./SchemaModel";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Image } from "../Image";
+import { ImageDimensions } from "../ImageDimensions";
+import { ThumbnailSelector } from "../ThumbnailSelector";
+import { mapTermToImage } from "../mapTermToImage";
+import { selectThumbnail } from "../selectThumbnail";
+import { SchemaMediaObjectMixin } from "./SchemaMediaObjectMixin";
+import { SchemaModel } from "./SchemaModel";
+import { mapSchemaQuantitativeValue } from "./mapSchemaQuantitativeValue";
 
 export class SchemaImageObject
   extends Mixin(SchemaModel, SchemaMediaObjectMixin)
@@ -60,6 +60,16 @@ export class SchemaImageObject
     } else {
       return null;
     }
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeMediaObject();
+    this.caption;
+    this.exactDimensions;
+    this.maxDimensions;
+    this.src;
+    this.thumbnails;
   }
 
   @Memoize()

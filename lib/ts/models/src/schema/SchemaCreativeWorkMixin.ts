@@ -52,6 +52,7 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
   }
 
   protected preMemoizeCreativeWork(): void {
+    this.preMemoizeThing();
     this.contributors;
     this.creators;
     this.dateCreated;

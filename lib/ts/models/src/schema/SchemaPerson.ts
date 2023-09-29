@@ -1,10 +1,10 @@
-import {Mixin} from "ts-mixer";
-import {SchemaModel} from "./SchemaModel";
-import {Person} from "../Person";
-import {requireNonNull} from "@paradicms/utilities";
-import {schema} from "@paradicms/vocabularies";
-import {mapTermToString} from "@paradicms/rdf";
-import {Memoize} from "typescript-memoize";
+import { mapTermToString } from "@paradicms/rdf";
+import { requireNonNull } from "@paradicms/utilities";
+import { schema } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Person } from "../Person";
+import { SchemaModel } from "./SchemaModel";
 
 export class SchemaPerson extends Mixin(
   SchemaModel
@@ -29,6 +29,12 @@ export class SchemaPerson extends Mixin(
 
   override get name(): string {
     return requireNonNull(super.name);
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.familyName;
+    this.givenName;
   }
 
   readonly type: "Person" = "Person";
