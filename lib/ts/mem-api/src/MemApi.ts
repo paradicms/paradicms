@@ -574,6 +574,13 @@ export class MemApi implements Api {
     });
   }
 
+  primeCaches(): Promise<void> {
+    return new Promise(resolve => {
+      this.modelSet.preMemoize();
+      resolve();
+    });
+  }
+
   private searchWorks(query: WorksQuery): readonly Work[] {
     if (query?.text) {
       // Anything matching the fulltext search

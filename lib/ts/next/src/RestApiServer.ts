@@ -24,7 +24,9 @@ export class RestApiServer {
   private constructor(private readonly api: Api) {}
 
   static async create(): Promise<RestApiServer> {
-    return new RestApiServer(await getStaticApi());
+    const api = await getStaticApi();
+    await api.primeCaches();
+    return new RestApiServer(api);
   }
 
   async getWorkAgents(
