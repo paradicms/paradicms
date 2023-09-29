@@ -1,12 +1,14 @@
-import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
-import {ImagesMixin} from "../ImagesMixin";
-import {Image} from "../Image";
 import {dcterms} from "@paradicms/vocabularies";
-import {mapTermToImage} from "../mapTermToImage";
+import {Memoize} from "typescript-memoize";
+import {Image} from "../Image";
+import {ImagesMixin} from "../ImagesMixin";
 import {ModelIdentifier} from "../ModelIdentifier";
+import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
+import {mapTermToImage} from "../mapTermToImage";
 
 export abstract class DcImagesMixin extends ResourceBackedModelMixin
   implements ImagesMixin {
+  @Memoize()
   get images(): readonly Image[] {
     // (image, dcterms:source, this).
     // Dublin Core doesn't have an inverse of dcterms:source like FOAF has foaf:depiction and foaf:depicts.
@@ -22,5 +24,9 @@ export abstract class DcImagesMixin extends ResourceBackedModelMixin
       }
     }
     return images;
+  }
+
+  protected preMemoizeImages() {
+    this.images;
   }
 }

@@ -1,10 +1,11 @@
-import {mapTermToNumber} from "@paradicms/rdf";
-import {time, xsd} from "@paradicms/vocabularies";
-import {Literal} from "@rdfjs/types";
-import {Mixin} from "ts-mixer";
-import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
-import {PartialDateTimeDescriptionLabelMixin} from "../PartialDateTimeDescriptionLabelMixin";
-import {ResourceBackedModel} from "../ResourceBackedModel";
+import { mapTermToNumber } from "@paradicms/rdf";
+import { time, xsd } from "@paradicms/vocabularies";
+import { Literal } from "@rdfjs/types";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
+import { PartialDateTimeDescriptionLabelMixin } from "../PartialDateTimeDescriptionLabelMixin";
+import { ResourceBackedModel } from "../ResourceBackedModel";
 
 export class OwlTimePartialDateTimeDescription
   extends Mixin(ResourceBackedModel, PartialDateTimeDescriptionLabelMixin)
@@ -12,6 +13,7 @@ export class OwlTimePartialDateTimeDescription
   /**
    * Day of the month, 1..31 inclusive.
    */
+  @Memoize()
   get day(): number | null {
     return this.findAndMapObject(time.day, term => {
       if (term.termType !== "Literal") {
@@ -39,6 +41,7 @@ export class OwlTimePartialDateTimeDescription
   /**
    * Hour of the day, 0..23 inclusive
    */
+  @Memoize()
   get hour(): number | null {
     return this.findAndMapObject(time.hour, mapTermToNumber);
   }
@@ -46,6 +49,7 @@ export class OwlTimePartialDateTimeDescription
   /**
    * Minute of the day, 0..59 inclusive
    */
+  @Memoize()
   get minute(): number | null {
     return this.findAndMapObject(time.minute, mapTermToNumber);
   }
@@ -53,6 +57,7 @@ export class OwlTimePartialDateTimeDescription
   /**
    * Month of the year, 1..12 inclusive
    */
+  @Memoize()
   get month(): number | null {
     return this.findAndMapObject(time.month, term => {
       if (term.termType !== "Literal") {
@@ -77,9 +82,20 @@ export class OwlTimePartialDateTimeDescription
     });
   }
 
+  override preMemoize() {
+    super.preMemoize();
+    this.day;
+    this.hour;
+    this.minute;
+    this.month;
+    this.second;
+    this.year;
+  }
+
   /**
    * Second of the minute, 0..59 inclusive
    */
+  @Memoize()
   get second(): number | null {
     return this.findAndMapObject(time.second, term => {
       if (term.termType !== "Literal") {
@@ -99,6 +115,7 @@ export class OwlTimePartialDateTimeDescription
   /**
    * Gregorian year e.g., 1960
    */
+  @Memoize()
   get year(): number | null {
     return this.findAndMapObject(time.year, term => {
       if (term.termType !== "Literal") {

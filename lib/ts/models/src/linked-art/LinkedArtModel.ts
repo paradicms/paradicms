@@ -1,16 +1,11 @@
-import {crm, rdfs} from "@paradicms/vocabularies";
-import {Memoize} from "typescript-memoize";
-import {ResourceBackedModel} from "../ResourceBackedModel";
-import {mapTermToString} from "@paradicms/rdf";
-import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
-import {NamedNode} from "@rdfjs/types";
+import { mapTermToString } from "@paradicms/rdf";
+import { crm, rdfs } from "@paradicms/vocabularies";
+import { NamedNode } from "@rdfjs/types";
+import { Memoize } from "typescript-memoize";
+import { ResourceBackedModel } from "../ResourceBackedModel";
+import { mapTermToLinkedArtModel } from "./mapTermToLinkedArtModel";
 
 export class LinkedArtModel extends ResourceBackedModel {
-  @Memoize()
-  get label(): string | null {
-    return this.findAndMapObject(rdfs.label, mapTermToString);
-  }
-
   @Memoize()
   get hasType(): readonly NamedNode[] {
     return this.filterAndMapObjects(crm.P2_has_type, term =>
@@ -24,6 +19,19 @@ export class LinkedArtModel extends ResourceBackedModel {
       mapTermToLinkedArtModel(this, term)
     );
   }
+
+  @Memoize()
+  get label(): string | null {
+    return this.findAndMapObject(rdfs.label, mapTermToString);
+  }
+
+   override preMemoize(): void {
+     super.preMemoize();
+     this.hasType;
+     this.isReferredToBy;
+     this.label;
+     this.isSubjectOf;
+   }
 
   @Memoize()
   get isSubjectOf(): readonly LinkedArtModel[] {

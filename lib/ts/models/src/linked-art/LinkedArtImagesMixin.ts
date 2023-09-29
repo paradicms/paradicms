@@ -1,12 +1,14 @@
-import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
-import {ImagesMixin} from "../ImagesMixin";
-import {Image} from "../Image";
 import {crm} from "@paradicms/vocabularies";
-import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
+import {Memoize} from "typescript-memoize";
+import {Image} from "../Image";
+import {ImagesMixin} from "../ImagesMixin";
+import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
 import {LinkedArtVisualItem} from "./LinkedArtVisualItem";
+import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
 
 export abstract class LinkedArtImagesMixin extends LinkedArtModelMixin
   implements ImagesMixin {
+  @Memoize()
   get images(): readonly Image[] {
     return this.filterAndMapObjects(crm.P138i_has_representation, term => {
       const model = mapTermToLinkedArtModel(this, term);
@@ -15,5 +17,9 @@ export abstract class LinkedArtImagesMixin extends LinkedArtModelMixin
       }
       return model.digitallyShownBy;
     });
+  }
+
+  protected preMemoizeImages(): void {
+    this.images;
   }
 }

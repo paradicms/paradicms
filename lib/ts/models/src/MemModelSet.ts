@@ -9,6 +9,7 @@ import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
+import {Model} from "./Model";
 import {ModelReader} from "./ModelReader";
 import {ModelSet} from "./ModelSet";
 import {Organization} from "./Organization";
@@ -180,6 +181,43 @@ export class MemModelSet implements ModelSet {
 
   personByIri(personIri: string): Person | null {
     return this.modelByIri(this.peopleByIriIndex, personIri);
+  }
+
+  preMemoize(): void {
+    const preMemoizeModels = (models: readonly Model[]): void => {
+      for (const model of models) {
+        model.preMemoize();
+      }
+    };
+
+    this.appConfiguration;
+    preMemoizeModels(this.collections);
+    this.collectionsByKeyIndex;
+    preMemoizeModels(this.concepts);
+    this.conceptsByIriIndex;
+    preMemoizeModels(this.events);
+    this.eventsByKeyIndex;
+    preMemoizeModels(this.images);
+    this.imagesByIriIndex;
+    this.licensesByIriIndex;
+    this.locationsByIriIndex;
+    preMemoizeModels(this.namedLicenses);
+    preMemoizeModels(this.namedLocations);
+    preMemoizeModels(this.namedOrganizations);
+    preMemoizeModels(this.namedPeople);
+    preMemoizeModels(this.namedRightsStatements);
+    this.organizationsByIriIndex;
+    this.peopleByIriIndex;
+    preMemoizeModels(this.properties);
+    this.propertiesByIriIndex;
+    preMemoizeModels(this.propertyGroups);
+    this.propertyGroupsByIriIndex;
+    this.propertyGroupsByPropertyKeyIndex;
+    this.rightsStatementsByIriIndex;
+    preMemoizeModels(this.works);
+    this.worksByAgentIriIndex;
+    this.worksByIriIndex;
+    this.worksByKeyIndex;
   }
 
   @Memoize()

@@ -1,6 +1,8 @@
+import {Memoize} from "typescript-memoize";
 import {WorkEvent} from "./WorkEvent";
 
 export abstract class WorkDisplayDateMixin {
+  @Memoize()
   get displayDate(): string | null {
     let startDisplayDate: string | undefined;
     let endDisplayDate: string | undefined;
@@ -24,4 +26,8 @@ export abstract class WorkDisplayDateMixin {
   }
 
   abstract readonly events: readonly WorkEvent[];
+
+  protected preMemoizeWorkDisplayDate(): void {
+    this.displayDate;
+  }
 }

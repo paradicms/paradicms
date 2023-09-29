@@ -33,6 +33,14 @@ export abstract class DcRightsMixin
     }
   }
 
+  protected preMemoizeRights() {
+    this.preMemoizeContributors();
+    this.preMemoizeCreators();
+    this.licenses;
+    this.rightsHolders;
+    this.rightsStatements;
+  }
+
   @Memoize()
   get rightsHolders(): readonly Agent[] {
     return this.filterAndMapObjects(dcterms.rightsHolder, term =>

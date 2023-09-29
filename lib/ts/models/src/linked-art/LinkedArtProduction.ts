@@ -5,7 +5,6 @@ import { Agent } from "../Agent";
 import { EventDerivedDatesMixin } from "../EventDerivedDatesMixin";
 import { Image } from "../Image";
 import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
-import { Text } from "../Text";
 import { ThumbnailSelector } from "../ThumbnailSelector";
 import { WorkCreationEvent } from "../WorkCreationEvent";
 import { LinkedArtModel } from "./LinkedArtModel";
@@ -20,9 +19,7 @@ export class LinkedArtProduction
     return this.creators;
   }
 
-  get contributors(): readonly Agent[] {
-    return [];
-  }
+  readonly contributors = [];
 
   get creators(): readonly Agent[] {
     return this.carriedOutBy;
@@ -35,13 +32,8 @@ export class LinkedArtProduction
     ).filter(model => model instanceof LinkedArtPerson) as LinkedArtPerson[];
   }
 
-  get date(): PartialDateTimeDescription | null {
-    return null;
-  }
-
-  get description(): Text | null {
-    return null;
-  }
+  readonly date = null;
+  readonly description = null;
 
   override get displayDate(): string | null {
     return this.hasTimeSpan?.displayDate ?? super.displayDate;
@@ -61,9 +53,7 @@ export class LinkedArtProduction
     });
   }
 
-  get images(): readonly Image[] {
-    return [];
-  }
+  readonly images = [];
 
   override get label(): string {
     if (super.label) {
@@ -74,6 +64,12 @@ export class LinkedArtProduction
   }
 
   readonly location = null;
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeEventDerivedDates();
+    this.carriedOutBy;
+  }
 
   get startDate(): PartialDateTimeDescription | null {
     return this.hasTimeSpan?.beginOfTheBegin ?? null;

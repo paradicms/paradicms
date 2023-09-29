@@ -544,14 +544,17 @@ export class ModelSetBuilder {
 
   addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
     log.debug("ModelSetBuilder: adding work", work.key);
+    console.time("addWork " + work.key);
     this.addModel(work);
 
     if (!joinSelector) {
       log.debug("ModelSetBuilder: work", work.key, "has no join selector");
+      console.timeEnd("addWork " + work.key);
       return this;
     }
 
     log.debug("ModelSetBuilder: adding work", work.key, "rights");
+    console.time("addWork agents " + work.key);
     if (joinSelector.agents) {
       for (const agents of [work.contributors, work.creators]) {
         for (const agent of agents) {
@@ -559,6 +562,7 @@ export class ModelSetBuilder {
         }
       }
     }
+    console.timeEnd("addWork agents " + work.key);
 
     if (joinSelector.description) {
       if (work.description) {
@@ -579,6 +583,7 @@ export class ModelSetBuilder {
       }
     }
 
+    console.time("addWork images " + work.key);
     if (joinSelector.images) {
       log.debug("ModelSetBuilder: adding work", work.key, "images");
       for (const image of work.images) {
@@ -589,6 +594,7 @@ export class ModelSetBuilder {
       log.debug("ModelSetBuilder: adding work", work.key, "thumbnail");
       this.addThumbnail(work, joinSelector.thumbnail);
     }
+    console.timeEnd("addWork images " + work.key);
 
     if (joinSelector.location) {
       if (work.location) {
@@ -602,12 +608,16 @@ export class ModelSetBuilder {
       }
     }
 
+    console.time("addWork property values " + work.key);
     if (joinSelector.propertyValues) {
       log.debug("ModelSetBuilder: adding work", work.key, "property values");
       for (const propertyValue of work.propertyValues) {
         this.addPropertyValue(propertyValue, joinSelector.propertyValues);
       }
     }
+    console.timeEnd("addWork property values " + work.key);
+
+    console.timeEnd("addWork " + work.key);
 
     return this;
   }

@@ -50,5 +50,9 @@ export abstract class SyntheticEvent
     return [];
   }
 
+  preMemoize(): void {
+    this.preMemoizeEventDerivedDates();
+  }
+
   toRdf(addToDataset: DatasetCore): void {}
 }

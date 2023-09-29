@@ -1,16 +1,16 @@
-import {cms, dcterms, exif} from "@paradicms/vocabularies";
-import {NamedNode} from "@rdfjs/types";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {Image} from "../Image";
-import {ImageDimensions} from "../ImageDimensions";
-import {ThumbnailSelector} from "../ThumbnailSelector";
-import {selectThumbnail} from "../selectThumbnail";
-import {mapTermToImage} from "../mapTermToImage";
-import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
-import {DcRightsMixin} from "./DcRightsMixin";
+import { mapTermToNumber, mapTermToString } from "@paradicms/rdf";
+import { cms, dcterms, exif } from "@paradicms/vocabularies";
+import { NamedNode } from "@rdfjs/types";
 import log from "loglevel";
-import {ResourceBackedModel} from "../ResourceBackedModel";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Image } from "../Image";
+import { ImageDimensions } from "../ImageDimensions";
+import { ResourceBackedModel } from "../ResourceBackedModel";
+import { ThumbnailSelector } from "../ThumbnailSelector";
+import { mapTermToImage } from "../mapTermToImage";
+import { selectThumbnail } from "../selectThumbnail";
+import { DcRightsMixin } from "./DcRightsMixin";
 
 export class DcImage extends Mixin(ResourceBackedModel, DcRightsMixin)
   implements Image {
@@ -39,6 +39,16 @@ export class DcImage extends Mixin(ResourceBackedModel, DcRightsMixin)
 
   get label(): string | null {
     return this.title;
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeRights();
+    this.exactDimensions;
+    this.maxDimensions;
+    this.src;
+    this.thumbnails;
+    this.title;
   }
 
   @Memoize()

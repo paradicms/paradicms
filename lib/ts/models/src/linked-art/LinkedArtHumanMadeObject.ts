@@ -44,6 +44,14 @@ export class LinkedArtHumanMadeObject
 
   readonly location = null;
 
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeDescription();
+    this.preMemoizeImages();
+    this.preMemoizeWorkAgents();
+    this.wasProducedBy;
+  }
+
   get sameAsIdentifiers(): readonly ModelIdentifier[] {
     return [];
   }

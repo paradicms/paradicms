@@ -508,34 +508,43 @@ export class MemApi implements Api {
 
     return new Promise(resolve => {
       // Calculate the universe of works
+      console.time("searchWorks");
       const searchedWorks: readonly Work[] = this.searchWorks(query);
+      console.timeEnd("searchWorks");
 
       // Calculate facets on the universe before filtering it
+      console.time("facetizeWorks");
       const facets = facetizeWorks({
         filters: query.filters ?? [],
         valueFacetValueThumbnailSelector,
         works: searchedWorks,
       });
+      console.timeEnd("facetizeWorks");
 
       log.debug("Search facets:", JSON.stringify(facets));
 
+      console.time("filterWorks");
       const filteredWorks = filterWorks({
         filters: query.filters ?? [],
         workCollectionKeys: this.workCollectionKeys,
         works: searchedWorks,
       });
+      console.timeEnd("filterWorks");
 
       log.debug("Search filtered works count:", filteredWorks.length);
 
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
+      console.time("sortWorks");
       const sortedWorks = filteredWorks.concat();
       sortWorks(sort ?? defaultWorksSort, sortedWorks);
+      console.timeEnd("sortWorks");
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
       log.debug("Search sliced works count:", slicedWorks.length);
 
+      console.time("Build slicedWorks ModelSet");
       const slicedWorksModelSetBuilder = new ModelSetBuilder();
       for (const work of slicedWorks) {
         slicedWorksModelSetBuilder.addWork(
@@ -544,6 +553,7 @@ export class MemApi implements Api {
         );
       }
       const slicedWorksModelSet = slicedWorksModelSetBuilder.build();
+      console.timeEnd("Build slicedWorks ModelSet");
 
       // log.debug(
       //   "Search results modelSet:",

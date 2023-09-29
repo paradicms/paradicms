@@ -1,4 +1,3 @@
-import {getStaticApi} from "./getStaticApi";
 import {
   Api,
   GetModelsResult,
@@ -9,6 +8,7 @@ import {
 } from "@paradicms/api";
 import {NextApiRequest, NextApiResponse} from "next";
 import {ValidationError} from "runtypes";
+import {getStaticApi} from "./getStaticApi";
 
 interface JsonApiError {
   readonly code: string;
@@ -96,8 +96,11 @@ export class RestApiServer {
     getModelsResult: GetModelsResult
   ): Promise<void> {
     const {modelSet, ...otherProps} = getModelsResult;
+    console.time("Serialize ModelSet");
+    const modelSetJsonLd = await modelSet.toJsonLd();
+    console.timeEnd("Serialize ModelSet");
     res.status(200).json({
-      modelSet: await modelSet.toJsonLd(),
+      modelSet: modelSetJsonLd,
       ...otherProps,
     });
   }

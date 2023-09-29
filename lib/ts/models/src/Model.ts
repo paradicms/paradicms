@@ -27,6 +27,11 @@ export interface Model {
   readonly key: string;
 
   /**
+   * Eagerly invoke all memoized accessors.
+   */
+  preMemoize(): void;
+
+  /**
    * Convert the model to RDF by adding quads to the given dataset.
    */
   toRdf(addToDataset: DatasetCore): void;
