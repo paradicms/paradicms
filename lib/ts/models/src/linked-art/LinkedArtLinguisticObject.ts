@@ -1,16 +1,16 @@
-import {crm} from "@paradicms/vocabularies";
+import { crm } from "@paradicms/vocabularies";
 import invariant from "ts-invariant";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {Agent} from "../Agent";
-import {License} from "../License";
-import {RightsStatement} from "../RightsStatement";
-import {Text} from "../Text";
-import {LiteralAgent} from "../literal/LiteralAgent";
-import {LinkedArtHasSymbolicContentMixin} from "./LinkedArtHasSymbolicContentMixin";
-import {LinkedArtModel} from "./LinkedArtModel";
-import {LinkedArtRight} from "./LinkedArtRight";
-import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Agent } from "../Agent";
+import { License } from "../License";
+import { RightsStatement } from "../RightsStatement";
+import { Text } from "../Text";
+import { LiteralAgent } from "../literal/LiteralAgent";
+import { LinkedArtHasSymbolicContentMixin } from "./LinkedArtHasSymbolicContentMixin";
+import { LinkedArtModel } from "./LinkedArtModel";
+import { LinkedArtRight } from "./LinkedArtRight";
+import { mapTermToLinkedArtModel } from "./mapTermToLinkedArtModel";
 
 export class LinkedArtLinguisticObject
   extends Mixin(LinkedArtModel, LinkedArtHasSymbolicContentMixin)
@@ -23,10 +23,19 @@ export class LinkedArtLinguisticObject
     return [];
   }
 
+  @Memoize()
   get isSubjectTo(): readonly LinkedArtRight[] {
     return this.filterAndMapObjects(crm.P104_is_subject_to, term =>
       mapTermToLinkedArtModel(this, term)
     ).filter(model => model instanceof LinkedArtRight);
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeHasSymbolicContent();
+    this.isSubjectTo;
+    this.licenses;
+    this.rightsHolders;
   }
 
   get requiresAttribution() {

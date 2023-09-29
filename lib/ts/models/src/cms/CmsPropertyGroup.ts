@@ -1,15 +1,15 @@
-import {dcterms, rdfs} from "@paradicms/vocabularies";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {Property} from "../Property";
-import {PropertyGroup} from "../PropertyGroup";
-import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
-import {Text} from "../Text";
-import {mapTermToText} from "../mapTermToText";
-import {requireNonNull} from "@paradicms/utilities";
-import {mapTermToString} from "@paradicms/rdf";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {ResourceBackedModel} from "../ResourceBackedModel";
+import { mapTermToString } from "@paradicms/rdf";
+import { requireNonNull } from "@paradicms/utilities";
+import { dcterms, rdfs } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Property } from "../Property";
+import { PropertyGroup } from "../PropertyGroup";
+import { ResourceBackedModel } from "../ResourceBackedModel";
+import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
+import { Text } from "../Text";
+import { FoafImagesMixin } from "../foaf/FoafImagesMixin";
+import { mapTermToText } from "../mapTermToText";
 
 export class CmsPropertyGroup
   extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
@@ -24,6 +24,14 @@ export class CmsPropertyGroup
   @Memoize()
   get label(): string {
     return requireNonNull(this.findAndMapObject(rdfs.label, mapTermToString));
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeImages();
+    this.comment;
+    this.label;
+    this.properties;
   }
 
   @Memoize()

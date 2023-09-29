@@ -51,6 +51,18 @@ export abstract class SchemaCreativeWorkMixin extends Mixin(SchemaThingMixin)
     );
   }
 
+  protected preMemoizeCreativeWork(): void {
+    this.preMemoizeThing();
+    this.contributors;
+    this.creators;
+    this.dateCreated;
+    this.dateModified;
+    this.licenses;
+    this.rightsHolders;
+    this.rightsStatements;
+    this.spatial;
+  }
+
   get requiresAttribution(): boolean {
     if (this.licenses.length === 0) {
       return true;

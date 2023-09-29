@@ -37,6 +37,7 @@ export class SchemaCreativeWork
     return requireNonNull(this.name);
   }
 
+  @Memoize()
   get location(): WorkLocation | null {
     const location = this.findAndMapObject(schema.spatial, term =>
       mapTermToLocation(this, term)
@@ -52,6 +53,17 @@ export class SchemaCreativeWork
     }
   }
 
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeCreativeWork();
+    this.preMemoizeWorkAgents();
+    this.preMemoizeWorkDisplayDate();
+    this.events;
+    this.location;
+    this.subjects;
+  }
+
+  @Memoize()
   get subjects(): readonly WorkSubject[] {
     return this.filterAndMapObjects(schema.about, term =>
       mapTermToWorkSubject(this, term)

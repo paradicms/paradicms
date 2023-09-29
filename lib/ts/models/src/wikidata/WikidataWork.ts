@@ -1,30 +1,27 @@
-import {wdt} from "@paradicms/vocabularies";
+import { wdt } from "@paradicms/vocabularies";
 import log from "loglevel";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {Agent} from "../Agent";
-import {Collection} from "../Collection";
-import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
-import {Work} from "../Work";
-import {WorkAgentsMixin} from "../WorkAgentsMixin";
-import {WorkDisplayDateMixin} from "../WorkDisplayDateMixin";
-import {WorkEvent} from "../WorkEvent";
-import {WorkLocation} from "../WorkLocation";
-import {WorkSubject} from "../WorkSubject";
-import {mapTermToPartialDateTimeDescription} from "../mapTermToPartialDateTimeDescription";
-import {SyntheticWorkCreationEvent} from "../synthetic/SyntheticWorkCreationEvent";
-import {WikidataConcept} from "./WikidataConcept";
-import {WikidataLocation} from "./WikidataLocation";
-import {WikidataModel} from "./WikidataModel";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Agent } from "../Agent";
+import { Collection } from "../Collection";
+import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
+import { Work } from "../Work";
+import { WorkAgentsMixin } from "../WorkAgentsMixin";
+import { WorkDisplayDateMixin } from "../WorkDisplayDateMixin";
+import { WorkEvent } from "../WorkEvent";
+import { WorkLocation } from "../WorkLocation";
+import { WorkSubject } from "../WorkSubject";
+import { mapTermToPartialDateTimeDescription } from "../mapTermToPartialDateTimeDescription";
+import { SyntheticWorkCreationEvent } from "../synthetic/SyntheticWorkCreationEvent";
+import { WikidataConcept } from "./WikidataConcept";
+import { WikidataLocation } from "./WikidataLocation";
+import { WikidataModel } from "./WikidataModel";
 
 export class WikidataWork
   extends Mixin(WikidataModel, WorkAgentsMixin, WorkDisplayDateMixin)
   implements Work {
   readonly collections: readonly Collection[] = [];
-
-  get contributors(): readonly Agent[] {
-    return [];
-  }
+  readonly contributors = [];
 
   @Memoize()
   get creators(): readonly Agent[] {
@@ -59,6 +56,7 @@ export class WikidataWork
     return events;
   }
 
+  @Memoize()
   get location(): WorkLocation | null {
     // Locations have an odd type hierarchy in Wikidata
     // Rather than trying to read them ahead of time in WikidataModelReader,
@@ -110,6 +108,19 @@ export class WikidataWork
     }
   }
 
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeSameAs();
+    this.preMemoizeWorkAgents();
+    this.preMemoizeWorkDisplayDate();
+    this.creators;
+    this.inception;
+    this.events;
+    this.location;
+    this.subjects;
+  }
+
+  @Memoize()
   get subjects(): readonly WorkSubject[] {
     // Subjects don't have a consistent type hierarchy in Wikipedia.
     // Rather than trying to read them ahead of time in WikidataModelReader,

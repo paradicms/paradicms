@@ -1,19 +1,19 @@
-import {GetWorksResult} from "./GetWorksResult";
-import {GetWorksOptions} from "./GetWorksOptions";
+import {JsonAppConfiguration} from "@paradicms/models";
+import {GetCollectionsOptions} from "./GetCollectionsOptions";
+import {GetEventKeysOptions} from "./GetEventKeysOptions";
+import {GetEventsOptions} from "./GetEventsOptions";
+import {GetModelKeysResult} from "./GetModelKeysResult";
+import {GetModelsResult} from "./GetModelsResult";
+import {GetPropertiesOptions} from "./GetPropertiesOptions";
+import {GetPropertyGroupKeysOptions} from "./GetPropertyGroupKeysOptions";
+import {GetPropertyGroupsOptions} from "./GetPropertyGroupsOptions";
 import {GetWorkAgentsOptions} from "./GetWorkAgentsOptions";
 import {GetWorkEventsOptions} from "./GetWorkEventsOptions";
+import {GetWorkKeysOptions} from "./GetWorkKeysOptions";
 import {GetWorkLocationsOptions} from "./GetWorkLocationsOptions";
 import {GetWorkLocationsResult} from "./GetWorkLocationsResult";
-import {GetCollectionsOptions} from "./GetCollectionsOptions";
-import {GetModelsResult} from "./GetModelsResult";
-import {JsonAppConfiguration} from "@paradicms/models";
-import {GetEventsOptions} from "./GetEventsOptions";
-import {GetWorkKeysOptions} from "./GetWorkKeysOptions";
-import {GetEventKeysOptions} from "./GetEventKeysOptions";
-import {GetModelKeysResult} from "./GetModelKeysResult";
-import {GetPropertyGroupsOptions} from "./GetPropertyGroupsOptions";
-import {GetPropertyGroupKeysOptions} from "./GetPropertyGroupKeysOptions";
-import {GetPropertiesOptions} from "./GetPropertiesOptions";
+import {GetWorksOptions} from "./GetWorksOptions";
+import {GetWorksResult} from "./GetWorksResult";
 
 export interface Api {
   getAppConfiguration(): Promise<JsonAppConfiguration | null>;
@@ -76,4 +76,9 @@ export interface Api {
    * Get works matched by the query.
    */
   getWorks(kwds?: GetWorksOptions): Promise<GetWorksResult>;
+
+  /**
+   * Prime the API's caches.
+   */
+  primeCaches(): Promise<void>;
 }

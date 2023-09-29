@@ -1,7 +1,7 @@
-import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
-import {Literal} from "@rdfjs/types";
 import {crm} from "@paradicms/vocabularies";
+import {Literal} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
+import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
 
 export abstract class LinkedArtHasSymbolicContentMixin extends LinkedArtModelMixin {
   @Memoize()
@@ -9,5 +9,9 @@ export abstract class LinkedArtHasSymbolicContentMixin extends LinkedArtModelMix
     return this.filterAndMapObjects(crm.P190_has_symbolic_content, term =>
       term.termType === "Literal" ? (term as Literal) : null
     );
+  }
+
+  protected preMemoizeHasSymbolicContent(): void {
+    this.hasSymbolicContent;
   }
 }

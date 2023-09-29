@@ -308,11 +308,7 @@ export class MemApi implements Api {
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
-      const works = filterWorks({
-        filters: worksQuery.filters ?? [],
-        workCollectionKeys: this.workCollectionKeys,
-        works: this.searchWorks(worksQuery),
-      });
+      const works = this.queryWorks(worksQuery);
 
       const workAgentsWithContext: {
         readonly label: string;
@@ -366,11 +362,7 @@ export class MemApi implements Api {
     invariant(offset >= 0, "offset must be >= 0");
 
     return new Promise(resolve => {
-      const works = filterWorks({
-        filters: worksQuery.filters ?? [],
-        workCollectionKeys: this.workCollectionKeys,
-        works: this.searchWorks(worksQuery),
-      });
+      const works = this.queryWorks(worksQuery);
 
       type WorkEventWithContext = {
         readonly key: string;
@@ -432,12 +424,7 @@ export class MemApi implements Api {
 
     return getModelKeys({
       allModels: this.searchWorks(query),
-      filterModels: works =>
-        filterWorks({
-          workCollectionKeys: this.workCollectionKeys,
-          works,
-          filters: query.filters ?? [],
-        }),
+      filterModels: works => this.filterWorks(query, works),
       limit,
       offset,
       sortModels: works => sortWorks(sort, works),
@@ -453,11 +440,7 @@ export class MemApi implements Api {
     } = kwds ?? {};
 
     return new Promise(resolve => {
-      const works = filterWorks({
-        filters: worksQuery.filters ?? [],
-        workCollectionKeys: this.workCollectionKeys,
-        works: this.searchWorks(worksQuery),
-      });
+      const works = this.queryWorks(worksQuery);
 
       const workLocationSummaries = works.flatMap(work => {
         const workLocationsWithContext: {
@@ -508,34 +491,39 @@ export class MemApi implements Api {
 
     return new Promise(resolve => {
       // Calculate the universe of works
+      console.time("searchWorks");
       const searchedWorks: readonly Work[] = this.searchWorks(query);
+      console.timeEnd("searchWorks");
 
       // Calculate facets on the universe before filtering it
+      console.time("facetizeWorks");
       const facets = facetizeWorks({
         filters: query.filters ?? [],
         valueFacetValueThumbnailSelector,
         works: searchedWorks,
       });
+      console.timeEnd("facetizeWorks");
 
       log.debug("Search facets:", JSON.stringify(facets));
 
-      const filteredWorks = filterWorks({
-        filters: query.filters ?? [],
-        workCollectionKeys: this.workCollectionKeys,
-        works: searchedWorks,
-      });
+      console.time("filterWorks");
+      const filteredWorks = this.filterWorks(query, searchedWorks);
+      console.timeEnd("filterWorks");
 
       log.debug("Search filtered works count:", filteredWorks.length);
 
       // # 95: if search text specified, leave the works in the order they came out of Lunr (sorted by score/relevance).
       // If not, sort the works by title
+      console.time("sortWorks");
       const sortedWorks = filteredWorks.concat();
       sortWorks(sort ?? defaultWorksSort, sortedWorks);
+      console.timeEnd("sortWorks");
 
       const slicedWorks = sortedWorks.slice(offset, offset + limit);
 
       log.debug("Search sliced works count:", slicedWorks.length);
 
+      console.time("Build slicedWorks ModelSet");
       const slicedWorksModelSetBuilder = new ModelSetBuilder();
       for (const work of slicedWorks) {
         slicedWorksModelSetBuilder.addWork(
@@ -544,6 +532,7 @@ export class MemApi implements Api {
         );
       }
       const slicedWorksModelSet = slicedWorksModelSetBuilder.build();
+      console.timeEnd("Build slicedWorks ModelSet");
 
       // log.debug(
       //   "Search results modelSet:",
@@ -562,6 +551,45 @@ export class MemApi implements Api {
         totalModelsCount: filteredWorks.length,
       });
     });
+  }
+
+  primeCaches(): Promise<void> {
+    return new Promise(resolve => {
+      this.modelSet.preMemoize();
+      resolve();
+    });
+  }
+
+  private filterWorks(
+    query: WorksQuery,
+    works: readonly Work[]
+  ): readonly Work[] {
+    const filters = query.filters ?? [];
+
+    // Optimization: handle the special case of getting a single key from all works
+    if (works.length === this.modelSet.works.length) {
+      if (filters.length === 1 && filters[0].type === "Key") {
+        const keyFilter = filters[0];
+        if (
+          !keyFilter.excludeKeys &&
+          keyFilter.includeKeys &&
+          keyFilter.includeKeys.length === 1
+        ) {
+          const work = this.modelSet.workByKey(keyFilter.includeKeys[0]);
+          return work !== null ? [work] : [];
+        }
+      }
+    }
+
+    return filterWorks({
+      filters,
+      workCollectionKeys: this.workCollectionKeys,
+      works,
+    });
+  }
+
+  private queryWorks(query: WorksQuery): readonly Work[] {
+    return this.filterWorks(query, this.searchWorks(query));
   }
 
   private searchWorks(query: WorksQuery): readonly Work[] {

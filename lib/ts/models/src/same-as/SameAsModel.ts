@@ -1,10 +1,10 @@
-import {Model} from "../Model";
-import invariant from "ts-invariant";
 import {DatasetCore} from "@rdfjs/types";
-import {ModelIdentifier} from "../ModelIdentifier";
-import {Memoize} from "typescript-memoize";
-import {modelIdentifiersToKey} from "../modelIdentifiersToKey";
+import invariant from "ts-invariant";
 import {hasMixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {Model} from "../Model";
+import {ModelIdentifier} from "../ModelIdentifier";
+import {modelIdentifiersToKey} from "../modelIdentifiersToKey";
 import {SchemaModel} from "../schema/SchemaModel";
 
 const isBestModel = (model: Model) => hasMixin(model, SchemaModel);
@@ -128,6 +128,10 @@ export class SameAsModel<ModelT extends Model> implements Model {
   @Memoize()
   get key(): string {
     return modelIdentifiersToKey(this.identifiers);
+  }
+
+  preMemoize(): void {
+    this.key;
   }
 
   toRdf(addToDataset: DatasetCore) {

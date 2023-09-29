@@ -1,13 +1,13 @@
-import {mapTermToString} from "@paradicms/rdf";
-import {requireNonNull} from "@paradicms/utilities";
-import {foaf} from "@paradicms/vocabularies";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {ResourceBackedModel} from "../ResourceBackedModel";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
-import {isWikipediaUrl} from "../isWikipediaUrl";
-import {OwlSameAsMixin} from "../owl/OwlSameAsMixin";
+import { mapTermToString } from "@paradicms/rdf";
+import { requireNonNull } from "@paradicms/utilities";
+import { foaf } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { ResourceBackedModel } from "../ResourceBackedModel";
+import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
+import { FoafImagesMixin } from "../foaf/FoafImagesMixin";
+import { isWikipediaUrl } from "../isWikipediaUrl";
+import { OwlSameAsMixin } from "../owl/OwlSameAsMixin";
 
 export abstract class FoafAgent extends Mixin(
   ResourceBackedModel,
@@ -37,6 +37,16 @@ export abstract class FoafAgent extends Mixin(
     return requireNonNull(this.findAndMapObject(foaf.name, mapTermToString));
   }
 
+  override preMemoize() {
+    super.preMemoize();
+    this.preMemoizeImages();
+    this.preMemoizeSameAs();
+    this.homepage;
+    this.name;
+    this.wikipediaUrl;
+  }
+
+  @Memoize()
   get wikipediaUrl(): string | null {
     return this.findAndMapObject(foaf.page, term =>
       term.termType === "NamedNode" && isWikipediaUrl(term.value)

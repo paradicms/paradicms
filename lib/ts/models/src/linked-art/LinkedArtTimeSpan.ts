@@ -1,10 +1,10 @@
-import {crm} from "@paradicms/vocabularies";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
-import {mapTermToPartialDateTimeDescription} from "../mapTermToPartialDateTimeDescription";
-import {LinkedArtIsIdentifiedByMixin} from "./LinkedArtIsIdentifiedByMixin";
-import {LinkedArtModel} from "./LinkedArtModel";
+import { crm } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
+import { mapTermToPartialDateTimeDescription } from "../mapTermToPartialDateTimeDescription";
+import { LinkedArtIsIdentifiedByMixin } from "./LinkedArtIsIdentifiedByMixin";
+import { LinkedArtModel } from "./LinkedArtModel";
 
 export class LinkedArtTimeSpan extends Mixin(
   LinkedArtModel,
@@ -17,6 +17,7 @@ export class LinkedArtTimeSpan extends Mixin(
     );
   }
 
+  @Memoize()
   get displayDate(): string | null {
     for (const isIdentifiedBy of this.isIdentifiedBy) {
       for (const symbolicContent of isIdentifiedBy.hasSymbolicContent) {
@@ -31,5 +32,13 @@ export class LinkedArtTimeSpan extends Mixin(
     return this.findAndMapObject(crm.P82b_end_of_the_end, term =>
       mapTermToPartialDateTimeDescription(this, term)
     );
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeIsIdentifiedBy();
+    this.beginOfTheBegin;
+    this.displayDate;
+    this.endOfTheEnd;
   }
 }

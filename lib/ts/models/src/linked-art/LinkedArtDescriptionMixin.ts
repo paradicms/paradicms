@@ -1,12 +1,14 @@
-import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
-import {LinkedArtLinguisticObject} from "./LinkedArtLinguisticObject";
 import {DataFactory} from "@paradicms/rdf";
+import {Memoize} from "typescript-memoize";
+import {LinkedArtLinguisticObject} from "./LinkedArtLinguisticObject";
+import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
 
 const descriptionType = DataFactory.namedNode(
   "http://vocab.getty.edu/aat/300080091"
 );
 
 export abstract class LinkedArtDescriptionMixin extends LinkedArtModelMixin {
+  @Memoize()
   get description(): LinkedArtLinguisticObject | null {
     for (const model of this.isReferredToBy) {
       if (
@@ -17,5 +19,9 @@ export abstract class LinkedArtDescriptionMixin extends LinkedArtModelMixin {
       }
     }
     return null;
+  }
+
+  protected preMemoizeDescription(): void {
+    this.description;
   }
 }

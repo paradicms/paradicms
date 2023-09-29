@@ -1,12 +1,14 @@
-import {WikidataModel} from "./WikidataModel";
-import {Location} from "../Location";
-import {Point} from "../Point";
-import {geo, rdf, wdt, wikibase} from "@paradicms/vocabularies";
-import {wktToGeoJSON} from "@terraformer/wkt";
+import { mapTermToNumber } from "@paradicms/rdf";
+import { geo, rdf, wdt, wikibase } from "@paradicms/vocabularies";
+import { wktToGeoJSON } from "@terraformer/wkt";
 import log from "loglevel";
-import {mapTermToNumber} from "@paradicms/rdf";
+import { Memoize } from "typescript-memoize";
+import { Location } from "../Location";
+import { Point } from "../Point";
+import { WikidataModel } from "./WikidataModel";
 
 export class WikidataLocation extends WikidataModel implements Location {
+  @Memoize()
   get centroid(): Point | null {
     return this.findAndMapStatementValue(wdt["P625"], term => {
       if (term.termType === "Literal") {
@@ -63,5 +65,10 @@ export class WikidataLocation extends WikidataModel implements Location {
         return null;
       }
     });
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.centroid;
   }
 }

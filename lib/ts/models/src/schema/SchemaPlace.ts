@@ -1,9 +1,9 @@
-import {Mixin} from "ts-mixer";
-import {schema} from "@paradicms/vocabularies";
-import {SchemaModel} from "./SchemaModel";
-import {Location} from "../Location";
-import {mapTermToNumber} from "@paradicms/rdf";
-import {Memoize} from "typescript-memoize";
+import { mapTermToNumber } from "@paradicms/rdf";
+import { schema } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Location } from "../Location";
+import { SchemaModel } from "./SchemaModel";
 
 export class SchemaPlace extends Mixin(SchemaModel) implements Location {
   get centroid() {
@@ -25,5 +25,11 @@ export class SchemaPlace extends Mixin(SchemaModel) implements Location {
   @Memoize()
   get longitude(): number | null {
     return this.findAndMapObject(schema.longitude, mapTermToNumber);
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.latitude;
+    this.longitude;
   }
 }

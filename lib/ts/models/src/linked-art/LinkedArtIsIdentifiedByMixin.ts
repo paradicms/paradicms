@@ -1,7 +1,7 @@
-import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
 import {crm} from "@paradicms/vocabularies";
 import {Memoize} from "typescript-memoize";
 import {LinkedArtLinguisticAppellation} from "./LinkedArtLinguisticAppellation";
+import {LinkedArtModelMixin} from "./LinkedArtModelMixin";
 import {mapTermToLinkedArtModel} from "./mapTermToLinkedArtModel";
 
 export abstract class LinkedArtIsIdentifiedByMixin extends LinkedArtModelMixin {
@@ -12,5 +12,9 @@ export abstract class LinkedArtIsIdentifiedByMixin extends LinkedArtModelMixin {
     ).filter(
       model => model instanceof LinkedArtLinguisticAppellation
     ) as LinkedArtLinguisticAppellation[];
+  }
+
+  protected preMemoizeIsIdentifiedBy(): void {
+    this.isIdentifiedBy;
   }
 }

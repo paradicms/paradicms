@@ -1,19 +1,16 @@
-import {LinkedArtModel} from "./LinkedArtModel";
-import {Person} from "../Person";
-import {requireNonNull} from "@paradicms/utilities";
-import {Work} from "../Work";
-import {Image} from "../Image";
-import {ThumbnailSelector} from "../ThumbnailSelector";
-import {ModelIdentifier} from "../ModelIdentifier";
+import { requireNonNull } from "@paradicms/utilities";
+import { Image } from "../Image";
+import { Person } from "../Person";
+import { ThumbnailSelector } from "../ThumbnailSelector";
+import { Work } from "../Work";
+import { LinkedArtModel } from "./LinkedArtModel";
 
 export class LinkedArtPerson extends LinkedArtModel implements Person {
   readonly familyName = null;
   readonly givenName = null;
   readonly homepage = null;
-
-  get images(): readonly Image[] {
-    return [];
-  }
+  readonly images = [];
+  readonly sameAsIdentifiers = [];
 
   override get label(): string {
     return requireNonNull(super.label);
@@ -21,10 +18,6 @@ export class LinkedArtPerson extends LinkedArtModel implements Person {
 
   get name(): string {
     return this.label;
-  }
-
-  get sameAsIdentifiers(): readonly ModelIdentifier[] {
-    return [];
   }
 
   thumbnail(selector: ThumbnailSelector): Image | null {

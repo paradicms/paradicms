@@ -13,4 +13,8 @@ export abstract class DcCreatorsMixin extends ResourceBackedModelMixin
       mapTermToAgent(this, term)
     );
   }
+
+  protected preMemoizeCreators(): void {
+    this.creators;
+  }
 }

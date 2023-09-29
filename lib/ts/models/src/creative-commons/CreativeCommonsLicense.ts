@@ -1,9 +1,10 @@
-import {requireNonNull} from "@paradicms/utilities";
-import {dc11} from "@paradicms/vocabularies";
-import {Mixin} from "ts-mixer";
-import {License} from "../License";
-import {mapTermToString} from "@paradicms/rdf";
-import {ResourceBackedModel} from "../ResourceBackedModel";
+import { mapTermToString } from "@paradicms/rdf";
+import { requireNonNull } from "@paradicms/utilities";
+import { dc11 } from "@paradicms/vocabularies";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { License } from "../License";
+import { ResourceBackedModel } from "../ResourceBackedModel";
 
 export class CreativeCommonsLicense extends Mixin(ResourceBackedModel)
   implements License {
@@ -17,6 +18,11 @@ export class CreativeCommonsLicense extends Mixin(ResourceBackedModel)
     return this.title;
   }
 
+  override preMemoize(): void {
+    super.preMemoize();
+    this.title;
+  }
+
   get requiresAttribution(): boolean {
     switch (this.iri) {
       case "http://creativecommons.org/publicdomain/mark/1.0/":
@@ -27,6 +33,7 @@ export class CreativeCommonsLicense extends Mixin(ResourceBackedModel)
     }
   }
 
+  @Memoize()
   get title(): string {
     return requireNonNull(this.findAndMapObject(dc11.title, mapTermToString));
   }

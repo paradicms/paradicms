@@ -29,6 +29,7 @@ export interface ModelSet {
   locationByIri(locationIri: string): Location | null;
   organizationByIri(organizationIri: string): Organization | null;
   personByIri(personIri: string): Person | null;
+  preMemoize(): void;
   readonly properties: readonly Property[];
   propertyByIri(propertyIri: string): Property | null;
   propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null;

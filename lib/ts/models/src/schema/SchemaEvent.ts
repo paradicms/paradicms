@@ -52,6 +52,15 @@ export class SchemaEvent extends Mixin(SchemaModel, EventDerivedDatesMixin)
     );
   }
 
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeEventDerivedDates();
+    this.contributors;
+    this.location;
+    this.organizers;
+    this.startDate;
+  }
+
   @Memoize()
   get startDate(): PartialDateTimeDescription | null {
     return this.findAndMapObject(schema.startDate, term =>
