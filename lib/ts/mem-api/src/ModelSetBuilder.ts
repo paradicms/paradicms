@@ -544,17 +544,20 @@ export class ModelSetBuilder {
 
   addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
     log.debug("ModelSetBuilder: adding work", work.key);
-    // console.time("addWork " + work.key);
+    console.time("addWork " + work.key);
+
+    console.time("addWork addModel " + work.key);
     this.addModel(work);
+    console.timeEnd("addWork addModel " + work.key);
 
     if (!joinSelector) {
       log.debug("ModelSetBuilder: work", work.key, "has no join selector");
-      // console.timeEnd("addWork " + work.key);
+      console.timeEnd("addWork " + work.key);
       return this;
     }
 
     log.debug("ModelSetBuilder: adding work", work.key, "rights");
-    // console.time("addWork agents " + work.key);
+    console.time("addWork agents " + work.key);
     if (joinSelector.agents) {
       for (const agents of [work.contributors, work.creators]) {
         for (const agent of agents) {
@@ -562,8 +565,9 @@ export class ModelSetBuilder {
         }
       }
     }
-    // console.timeEnd("addWork agents " + work.key);
+    console.timeEnd("addWork agents " + work.key);
 
+    console.time("addWork description " + work.key);
     if (joinSelector.description) {
       if (work.description) {
         log.debug(
@@ -574,7 +578,9 @@ export class ModelSetBuilder {
         this.addRights(joinSelector.description, work.description);
       }
     }
+    console.timeEnd("addWork description " + work.key);
 
+    console.time("addWork events " + work.key);
     if (joinSelector.events) {
       log.debug("ModelSetBuilder: adding work", work.key, "events");
       for (const event of work.events) {
@@ -582,8 +588,9 @@ export class ModelSetBuilder {
         this.addEvent(event, joinSelector.events);
       }
     }
+    console.timeEnd("addWork events " + work.key);
 
-    // console.time("addWork images " + work.key);
+    console.time("addWork images " + work.key);
     if (joinSelector.images) {
       log.debug("ModelSetBuilder: adding work", work.key, "images");
       for (const image of work.images) {
@@ -594,8 +601,9 @@ export class ModelSetBuilder {
       log.debug("ModelSetBuilder: adding work", work.key, "thumbnail");
       this.addThumbnail(work, joinSelector.thumbnail);
     }
-    // console.timeEnd("addWork images " + work.key);
+    console.timeEnd("addWork images " + work.key);
 
+    console.time("addWork location " + work.key);
     if (joinSelector.location) {
       if (work.location) {
         log.debug(
@@ -607,17 +615,18 @@ export class ModelSetBuilder {
         this.addLocation(work.location.location);
       }
     }
+    console.timeEnd("addWork location " + work.key);
 
-    // console.time("addWork property values " + work.key);
+    console.time("addWork property values " + work.key);
     if (joinSelector.propertyValues) {
       log.debug("ModelSetBuilder: adding work", work.key, "property values");
       for (const propertyValue of work.propertyValues) {
         this.addPropertyValue(propertyValue, joinSelector.propertyValues);
       }
     }
-    // console.timeEnd("addWork property values " + work.key);
+    console.timeEnd("addWork property values " + work.key);
 
-    // console.timeEnd("addWork " + work.key);
+    console.timeEnd("addWork " + work.key);
 
     return this;
   }
