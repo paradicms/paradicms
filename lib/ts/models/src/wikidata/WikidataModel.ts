@@ -129,6 +129,13 @@ export abstract class WikidataModel
     return null;
   }
 
+  override preMemoize(): void {
+    super.preMemoize();
+    this.description;
+    this.images;
+    this.propertyValues;
+  }
+
   get prefLabel(): Literal | null {
     return this.wikibaseItem.prefLabel;
   }

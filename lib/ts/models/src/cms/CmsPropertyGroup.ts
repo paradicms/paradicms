@@ -28,7 +28,7 @@ export class CmsPropertyGroup
 
   override preMemoize(): void {
     super.preMemoize();
-    this.preMemoizeFoafImagesMixin();
+    this.preMemoizeImages();
     this.comment;
     this.label;
     this.properties;

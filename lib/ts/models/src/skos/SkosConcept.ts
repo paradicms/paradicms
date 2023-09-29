@@ -1,14 +1,14 @@
-import {mapTermToString} from "@paradicms/rdf";
-import {rdf, skos} from "@paradicms/vocabularies";
-import {Literal, NamedNode} from "@rdfjs/types";
-import {Mixin} from "ts-mixer";
-import {Memoize} from "typescript-memoize";
-import {Concept} from "../Concept";
-import {ResourceBackedModel} from "../ResourceBackedModel";
-import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
-import {Text} from "../Text";
-import {FoafImagesMixin} from "../foaf/FoafImagesMixin";
-import {mapTermToText} from "../mapTermToText";
+import { mapTermToString } from "@paradicms/rdf";
+import { rdf, skos } from "@paradicms/vocabularies";
+import { Literal, NamedNode } from "@rdfjs/types";
+import { Mixin } from "ts-mixer";
+import { Memoize } from "typescript-memoize";
+import { Concept } from "../Concept";
+import { ResourceBackedModel } from "../ResourceBackedModel";
+import { SomeImageThumbnailMixin } from "../SomeImageThumbnailMixin";
+import { Text } from "../Text";
+import { FoafImagesMixin } from "../foaf/FoafImagesMixin";
+import { mapTermToText } from "../mapTermToText";
 
 export class SkosConcept
   extends Mixin(ResourceBackedModel, FoafImagesMixin, SomeImageThumbnailMixin)
@@ -44,6 +44,15 @@ export class SkosConcept
   @Memoize()
   get prefLabel(): string | null {
     return this.findAndMapObject(skos.prefLabel, mapTermToString);
+  }
+
+  override preMemoize(): void {
+    super.preMemoize();
+    this.preMemoizeImages();
+    this.altLabels;
+    this.definition;
+    this.prefLabel;
+    this.value;
   }
 
   @Memoize()

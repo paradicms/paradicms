@@ -1,12 +1,12 @@
+import {requireDefined} from "@paradicms/utilities";
 import {WikibaseProperty} from "@paradicms/wikibase";
 import {DatasetCore, NamedNode, Term} from "@rdfjs/types";
 import invariant from "ts-invariant";
-import {requireDefined} from "@paradicms/utilities";
+import {Image} from "../Image";
 import {ModelSet} from "../ModelSet";
 import {Property} from "../Property";
-import {ThumbnailSelector} from "../ThumbnailSelector";
-import {Image} from "../Image";
 import {ResourceBackedModel} from "../ResourceBackedModel";
+import {ThumbnailSelector} from "../ThumbnailSelector";
 
 const ensureModelGraphIdentifier = (graph: Term) => {
   invariant(graph.termType === "NamedNode");
@@ -31,17 +31,10 @@ export class WikidataProperty extends ResourceBackedModel implements Property {
   }
 
   readonly comment = null;
-
-  get groups() {
-    return [];
-  }
-
+  readonly groups = [];
   readonly filterable = false;
   readonly hidden = false;
-
-  get images() {
-    return [];
-  }
+  readonly images = [];
 
   get label(): string {
     invariant(this.wikibaseProperty.labels.length > 0);
@@ -54,10 +47,7 @@ export class WikidataProperty extends ResourceBackedModel implements Property {
 
   readonly order = 0;
   readonly range = null;
-
-  get rangeValues() {
-    return [];
-  }
+  readonly rangeValues = [];
 
   readonly searchable = false;
 
