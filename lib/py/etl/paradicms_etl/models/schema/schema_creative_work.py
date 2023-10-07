@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from typing import Any
 
 from rdflib import SDO, Graph, URIRef
@@ -20,7 +22,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
     """
 
     class Builder(SchemaModel.Builder, SchemaCreativeWorkMixin.Builder, Work.Builder):
-        def build(self) -> "SchemaCreativeWork":
+        def build(self) -> SchemaCreativeWork:
             return SchemaCreativeWork(self._resource)
 
     def __init__(self, resource: Resource):
@@ -40,6 +42,13 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
     @property
     def encoding_format(self) -> str | None:
         return self._optional_value(SDO.encodingFormat, self._map_term_to_str)
+
+    @classmethod
+    def from_work(cls, work: Work) -> SchemaCreativeWork:
+        if isinstance(work, SchemaCreativeWork):
+            return work
+        builder = cls.builder(name=work.label, uri=work.uri)
+        return builder.build()
 
     @classmethod
     def json_ld_context(cls) -> dict[str, Any]:

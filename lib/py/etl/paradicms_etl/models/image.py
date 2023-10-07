@@ -65,6 +65,16 @@ class Image(Model, RightsMixin):
     def copyable(self) -> bool:
         raise NotImplementedError
 
+    @property
+    @abstractmethod
+    def exact_dimensions(self) -> ImageDimensions | None:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def max_dimensions(self) -> ImageDimensions | None:
+        raise NotImplementedError
+
     @abstractmethod
     def replacer(self) -> Builder:
         raise NotImplementedError

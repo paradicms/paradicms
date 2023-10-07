@@ -1,17 +1,20 @@
-from abc import ABC, abstractmethod
-from typing import Any
+from __future__ import annotations
 
-from rdflib import Graph, URIRef
-from rdflib.resource import Resource
+from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING, Any
 
 from paradicms_etl.namespaces.bind_namespaces import EXCLUDE_RDFLIB_NAMESPACE_PREFIXES
 from paradicms_etl.utils.module_namespaces import module_namespaces
+
+if TYPE_CHECKING:
+    from rdflib import Graph, URIRef
+    from rdflib.resource import Resource
 
 
 class Model(ABC):
     @classmethod
     @abstractmethod
-    def from_rdf(cls, resource: Resource) -> "Model":
+    def from_rdf(cls, resource: Resource) -> Model:
         raise NotImplementedError
 
     @classmethod

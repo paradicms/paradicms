@@ -1,5 +1,4 @@
 from pathlib import Path
-from typing import Tuple
 
 import pytest
 
@@ -26,7 +25,7 @@ def google_sheets_spreadsheet_id() -> str:
 
 
 @pytest.fixture(scope="session")
-def synthetic_data_models() -> Tuple[Model, ...]:
+def synthetic_data_models() -> tuple[Model, ...]:
     return tuple(SyntheticDataPipeline(loader=nop_loader)())
 
 
