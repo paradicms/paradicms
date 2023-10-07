@@ -1,16 +1,11 @@
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Image, Text, imagePlaceholderSrc} from "@paradicms/models";
 import {
-  Image,
-  imagePlaceholderSrc,
-  selectThumbnail,
-  Text,
-} from "@paradicms/models";
-import {
-  galleryThumbnailSelector,
   ImagesCarousel,
-  imagesCarouselThumbnailSelector,
   RightsParagraph,
+  galleryThumbnailSelector,
+  imagesCarouselThumbnailSelector,
 } from "@paradicms/react-dom-components";
 import {Literal} from "@rdfjs/types";
 import classnames from "classnames";
@@ -201,17 +196,15 @@ const ItemsGallery: React.FunctionComponent<{
       {items.map((item, itemI) => {
         const {onToggleSelected, images, selected, label} = item;
 
-        let thumbnail: Image | null = selectThumbnail(
-          images,
-          galleryThumbnailSelector
+        let thumbnailSrc: string = imagePlaceholderSrc(
+          galleryThumbnailSelector.targetDimensions
         );
-        let thumbnailSrc: string;
-        if (thumbnail) {
-          thumbnailSrc = thumbnail.src ?? thumbnail.iris[0];
-        } else {
-          thumbnailSrc = imagePlaceholderSrc(
-            galleryThumbnailSelector.targetDimensions
-          );
+        for (const image of images) {
+          const thumbnail = image.thumbnail(galleryThumbnailSelector);
+          if (thumbnail) {
+            thumbnailSrc = thumbnail.src ?? thumbnail.iris[0];
+            break;
+          }
         }
 
         return (
