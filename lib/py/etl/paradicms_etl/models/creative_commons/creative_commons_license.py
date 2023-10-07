@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any
+from typing import Any
 
 from rdflib import DC, DCTERMS, URIRef
 
@@ -14,7 +14,7 @@ class CreativeCommonsLicense(ResourceBackedModel, License):
         return self._required_value(DC.identifier, self._map_term_to_str)
 
     @classmethod
-    def json_ld_context(cls) -> Dict[str, Any]:
+    def json_ld_context(cls) -> dict[str, Any]:
         return safe_dict_update(
             ResourceBackedModel.json_ld_context(),
             {"identifier": str(DC.identifier), "title": str(DC.title)},
@@ -33,5 +33,5 @@ class CreativeCommonsLicense(ResourceBackedModel, License):
         return CC.License
 
     @property
-    def version(self) -> Optional[str]:
+    def version(self) -> str | None:
         return self._optional_value(DCTERMS.hasVersion, self._map_term_to_str)
