@@ -150,8 +150,12 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
             return image
         builder = cls.builder(uri=image.uri)
         builder.copy_rights(image)
+        if image.exact_dimensions is not None:
+            builder.set_exact_dimensions(image.exact_dimensions)
         if image.label is not None:
             builder.set_caption(image.label)
+        if image.max_dimensions is not None:
+            builder.set_exact_dimensions(image.max_dimensions)
         if image.src is not None:
             builder.set_src(image.src)
         return builder.build()

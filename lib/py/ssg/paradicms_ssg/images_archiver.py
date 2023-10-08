@@ -2,7 +2,6 @@ import logging
 import os.path
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Optional, Tuple
 from urllib.parse import quote
 
 from paradicms_etl.model import Model

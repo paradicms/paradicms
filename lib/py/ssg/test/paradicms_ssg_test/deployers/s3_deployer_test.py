@@ -1,12 +1,12 @@
 import urllib
 
 import pytest
-from paradicms_ssg_test.check_aws_credentials import check_aws_credentials
-
 from paradicms_ssg.deployers.s3_deployer import S3Deployer
 
+from paradicms_ssg_test.check_aws_credentials import check_aws_credentials
 
-@pytest.mark.skipif(not check_aws_credentials())
+
+@pytest.mark.skipif(not check_aws_credentials(), reason="no AWS credentials")
 def test_deploy(tmp_path):
     (tmp_path / "subdir").mkdir()
     (tmp_path / "subdir" / "test.txt").touch()

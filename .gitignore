@@ -20,4 +20,5 @@ __pycache__/
 .ruff_cache/
 _site/
 __snapshots__/
+test-results/
 yarn-error.log

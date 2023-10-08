@@ -6,12 +6,16 @@ from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.work import Work
-from paradicms_etl.transformers.ssg_transformer import ssg_transformer
+from paradicms_ssg.validators.ssg_compatibility_validator import (
+    ssg_compatibility_validator,
+)
 
 
-def test_transform(synthetic_data_models: tuple[Model, ...]) -> None:
+def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
     for original_model, transformed_model in zip(
-        synthetic_data_models, ssg_transformer(synthetic_data_models), strict=True
+        synthetic_data_models,
+        ssg_compatibility_validator(synthetic_data_models),
+        strict=True,
     ):
         if isinstance(original_model, Image):
             assert isinstance(transformed_model, SchemaImageObject)

@@ -9,9 +9,9 @@ from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.work import Work
 
 
-def ssg_transformer(models: Iterable[Model]) -> Iterable[Model]:
+def ssg_compatibility_validator(models: Iterable[Model]) -> Iterable[Model]:
     """
-    Transform all all models to canonical representations expected by the static site generator.
+    Transform all models to canonical representations expected by the static site generator.
 
     For example, all non-SchemaCreativeWork Work's are transformed to SchemaCreativeWork.
     """
