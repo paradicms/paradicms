@@ -10,18 +10,19 @@ from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
 from paradicms_etl.utils.uuid_urn import uuid_urn
+from rdflib import RDF, Graph, Literal
+
 from paradicms_ssg.models.app_configuration import AppConfiguration
 from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
 from paradicms_ssg.namespaces import CONFIGURATION
 from paradicms_ssg.static_site_generator import StaticSiteGenerator
-from rdflib import RDF, Graph, Literal
 
 from .image_archivers.nop_image_archiver import NopImageArchiver
 
 
-def _app_configuration(app: str) -> AppConfiguration:
+def _app_configuration(app: str) -> AppConfiguration | None:
     app_dir_path = (
-        Path(__file__).parent.parent.parent.parent.parent.parent.parent / "app" / app
+        Path(__file__).parent.parent.parent.parent.parent.parent / "app" / app
     )
     assert app_dir_path.is_dir(), app_dir_path
     if not (app_dir_path / "node_modules").is_dir():
@@ -31,13 +32,13 @@ def _app_configuration(app: str) -> AppConfiguration:
     resource = graph.resource(uuid_urn())
     resource.add(RDF.type, CONFIGURATION.AppConfiguration)
     resource.add(CONFIGURATION.app, Literal(app))
-    return CmsAppConfiguration.from_rdf(resource)
+    return CmsAppConfiguration.from_rdf(resource)  # type: ignore
 
 
 @pytest.mark.parametrize(
     "app", ["multi-page-exhibition", "single-page-exhibition", "work-search"]
 )
-def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_path):
+def test_load_minimal(app: str, synthetic_data_models: tuple[Model, ...], tmp_path):
     app_configuration = _app_configuration(app)
     if app_configuration is None:
         return

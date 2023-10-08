@@ -1,16 +1,14 @@
-from typing import Tuple
-
 from paradicms_etl.models.image import Image
 from paradicms_ssg.images_archiver import ImagesArchiver
 
 from .image_archivers.nop_image_archiver import NopImageArchiver
 
 
-def test_load(synthetic_data_original_images: Tuple[Image, ...], tmp_path):
+def test_load(synthetic_data_original_images: tuple[Image, ...], tmp_path):
     loader = ImagesArchiver(
         image_archiver=NopImageArchiver(), loaded_data_dir_path=tmp_path
     )
-    loaded_images: Tuple[Image, ...] = tuple(
+    loaded_images: tuple[Image, ...] = tuple(
         loader(
             flush=True,
             loaded_data_dir_path=tmp_path,
