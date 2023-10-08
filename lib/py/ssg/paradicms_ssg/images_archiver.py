@@ -18,13 +18,11 @@ from paradicms_ssg.image_file_cache import ImageFileCache
 from paradicms_ssg.utils.thumbnail_image import thumbnail_image
 
 
-class ImagesLoader:
+class ImagesArchiver:
     """
-    Loader that:
-    - Thumbnails images
-    - Archives original images and thumbnails
+    Archives original images and thumbnails
 
-    Separated from AppLoader for modularity and testability.
+    Separated from StaticSiteGenerator for modularity and testability.
     """
 
     class __ArchiveImageException(Exception):

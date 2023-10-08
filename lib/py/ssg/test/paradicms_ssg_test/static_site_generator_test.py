@@ -3,8 +3,6 @@ from typing import Tuple
 
 import pytest
 from more_itertools import consume
-from rdflib import Graph, RDF, Literal
-
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
 from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
@@ -12,11 +10,13 @@ from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
 from paradicms_etl.utils.uuid_urn import uuid_urn
-from paradicms_ssg.loaders.app_loader import AppLoader
 from paradicms_ssg.models.app_configuration import AppConfiguration
 from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
 from paradicms_ssg.namespaces import CONFIGURATION
-from .nop_image_archiver import NopImageArchiver
+from paradicms_ssg.static_site_generator import StaticSiteGenerator
+from rdflib import RDF, Graph, Literal
+
+from .image_archivers.nop_image_archiver import NopImageArchiver
 
 
 def _app_configuration(app: str) -> AppConfiguration:
@@ -44,7 +44,7 @@ def test_load_minimal(app: str, synthetic_data_models: Tuple[Model, ...], tmp_pa
 
     cache_dir_path = tmp_path
 
-    app_loader = AppLoader(
+    app_loader = StaticSiteGenerator(
         image_archiver=NopImageArchiver(),
         cache_dir_path=cache_dir_path,
         pipeline_id=SyntheticDataPipeline.ID,
@@ -106,7 +106,7 @@ def test_load_excel_2010_test_data(
                 xlsx_file_path=excel_2010_test_data_file_path,
             ),
             id=pipeline_id,
-            loader=AppLoader(
+            loader=StaticSiteGenerator(
                 image_archiver=NopImageArchiver(),
                 cache_dir_path=cache_dir_path,
                 pipeline_id=SyntheticDataPipeline.ID,

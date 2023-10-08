@@ -15,21 +15,21 @@ from paradicms_ssg.deployer import Deployer
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
 from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
-from paradicms_ssg.loaders.images_loader import ImagesLoader
+from paradicms_ssg.images_archiver import ImagesArchiver
 from paradicms_ssg.models.app_configuration import AppConfiguration
 
 if TYPE_CHECKING:
     from rdflib import URIRef
 
 
-class AppLoader:
+class StaticSiteGenerator:
     """
     Loader that statically generates a website using one of the app implementations in app/.
 
     The loader:
     - Writes the input data to an rdf/turtle file
-    - Archives original images (via an ImagesLoader)
-    - Thumbnails images and archives them (via ImagesLoader)
+    - Archives original images (via an ImagesArchiver)
+    - Thumbnails images and archives them (via ImagesArchiver)
     - Calls npm/yarn to generate the site (via AppPackage)
     - Optionally deploys the generated site (via a Deployer)
 
@@ -51,7 +51,7 @@ class AppLoader:
         sleep_s_after_image_download: float | None = None,
         thumbnail_max_dimensions: tuple[
             ImageDimensions, ...
-        ] = ImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
+        ] = ImagesArchiver.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
     ):
         """
         :param cache_dir_path: directory in which to store cached data such as image thumbnails
@@ -146,7 +146,7 @@ class AppLoader:
                 len(copyable_original_images),
             )
             models.extend(
-                ImagesLoader(
+                ImagesArchiver(
                     image_archiver=image_archiver,
                     loaded_data_dir_path=self.__cache_dir_path / "images",
                     sleep_s_after_image_download=self.__sleep_s_after_image_download,
