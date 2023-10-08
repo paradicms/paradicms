@@ -1,16 +1,13 @@
-import os
 import urllib
-from pathlib import Path
+
+import pytest
+from paradicms_ssg_test.check_aws_credentials import check_aws_credentials
 
 from paradicms_ssg.deployers.s3_deployer import S3Deployer
 
 
+@pytest.mark.skipif(not check_aws_credentials())
 def test_deploy(tmp_path):
-    if not (Path.home() / ".aws" / "credentials").is_file() and not (
-        "AWS_ACCESS_KEY_ID" in os.environ and "AWS_SECRET_ACCESS_KEY" in os.environ
-    ):
-        return
-
     (tmp_path / "subdir").mkdir()
     (tmp_path / "subdir" / "test.txt").touch()
 

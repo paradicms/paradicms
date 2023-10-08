@@ -1,19 +1,15 @@
-import os
 import urllib
-from pathlib import Path
 
-from rdflib import URIRef
-
+import pytest
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_ssg.image_archivers.s3_image_archiver import S3ImageArchiver
+from rdflib import URIRef
+
+from paradicms_ssg_test.check_aws_credentials import check_aws_credentials
 
 
+@pytest.mark.skipif(not check_aws_credentials())
 def test_archive_image(tmp_path):
-    if not (Path.home() / ".aws" / "credentials").is_file() and not (
-        "AWS_ACCESS_KEY_ID" in os.environ and "AWS_SECRET_ACCESS_KEY" in os.environ
-    ):
-        return
-
     image_cache = FileCache(cache_dir_path=tmp_path)
     sut = S3ImageArchiver(s3_bucket_name="paradicms-test-images")
     archived_url = sut(
