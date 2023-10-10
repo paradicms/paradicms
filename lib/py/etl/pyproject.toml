@@ -58,6 +58,7 @@ ignore = [
     "ANN102",  # missing-type-cls,
     "ANN204",  # Missing return type annotation for __init__
     "ANN401",  # Dynamically typed expressions not allowed
+    "C901",    # Too complex
     "COM812",  # Trailing comma missing
     "D",       # Missing docstrings
     "E501",    # Line too long

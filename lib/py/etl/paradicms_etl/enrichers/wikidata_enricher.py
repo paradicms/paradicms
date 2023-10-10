@@ -1,10 +1,10 @@
 import logging
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Set, Tuple, Dict, Sequence, Union, Optional
 from urllib.parse import urlparse
 
-from rdflib import Graph, URIRef, OWL
+from rdflib import OWL, Graph, URIRef
 
 from paradicms_etl.deduplicator import Deduplicator
 from paradicms_etl.extractors.rdf_url_extractor import RdfUrlExtractor
@@ -29,14 +29,14 @@ from paradicms_etl.utils.match_url import match_url
 
 class WikidataEnricher:
     @dataclass(frozen=True)
-    class __WikidataEntityGraph:
+    class __WikidataEntityGraph:  # noqa: N801
         graph: Graph
-        wikidata_properties: Tuple[WikibaseProperty, ...]
+        wikidata_properties: tuple[WikibaseProperty, ...]
         wikidata_entity: WikibaseItem
 
     def __init__(self, *, cache_dir_path: Path):
         self.__cache_dir_path = cache_dir_path
-        self.__cached_wikidata_entity_graphs_by_uri: Dict[
+        self.__cached_wikidata_entity_graphs_by_uri: dict[
             URIRef, WikidataEnricher.__WikidataEntityGraph
         ] = {}
         self.__logger = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ class WikidataEnricher:
             for (
                 referenced_wikidata_entity_uri
             ) in self.__get_model_wikidata_entity_references(model).values():
-                referenced_wikidata_entity: Optional[WikibaseItem] = None
+                referenced_wikidata_entity: WikibaseItem | None = None
                 for wikidata_entity in self.__get_wikidata_entity_with_superclass_tree(
                     referenced_wikidata_entity_uri
                 ):
@@ -85,7 +85,7 @@ class WikidataEnricher:
 
     def __get_connected_wikidata_entities(
         self, *, direct_claim_uri: URIRef, wikidata_entity: WikibaseItem
-    ) -> Iterable[Union[WikibaseItem, WikibaseProperty]]:
+    ) -> Iterable[WikibaseItem | WikibaseProperty]:
         for value in wikidata_entity.direct_claim_values(direct_claim_uri):
             if isinstance(value, URIRef):
                 yield from self.__get_wikidata_entity_with_superclass_tree(
@@ -94,12 +94,12 @@ class WikidataEnricher:
 
     def __get_model_wikidata_entity_references(
         self, model: Model
-    ) -> Dict[URIRef, URIRef]:
+    ) -> dict[URIRef, URIRef]:
         """
         Get a list of Wikidata entity URIs referenced by the given model.
         """
 
-        result: Dict[URIRef, URIRef] = {}
+        result: dict[URIRef, URIRef] = {}
         for same_as_uri in (
             (model.uri,) if isinstance(model, StubModel) else model.same_as_uris
         ):
@@ -180,12 +180,13 @@ class WikidataEnricher:
             direct_claim_uri=WDT.P276, wikidata_entity=wikidata_entity
         ):
             yield location_wikidata_entity
-            if isinstance(location_wikidata_entity, WikibaseItem):
-                if not location_wikidata_entity.direct_claim_values(WDT.P625):
-                    # Keep chasing "location" until we get one with coordinates
-                    yield from self.__get_wikidata_entity_locations(
-                        location_wikidata_entity
-                    )
+            if isinstance(
+                location_wikidata_entity, WikibaseItem
+            ) and not location_wikidata_entity.direct_claim_values(WDT.P625):
+                # Keep chasing "location" until we get one with coordinates
+                yield from self.__get_wikidata_entity_locations(
+                    location_wikidata_entity
+                )
 
     def __get_wikidata_entity_subjects(
         self, wikidata_entity: WikibaseItem
@@ -197,7 +198,7 @@ class WikidataEnricher:
 
     def __get_wikidata_entity_with_superclass_tree(
         self, root_wikidata_entity_uri: URIRef
-    ) -> Iterable[Union[WikibaseItem, WikibaseProperty]]:
+    ) -> Iterable[WikibaseItem | WikibaseProperty]:
         """
         Get a Wikidata entity as well as all of its superclass tree (in the form of P279 "subclass of" statements) in
         one WikibaseItem Graph.
@@ -206,11 +207,11 @@ class WikidataEnricher:
         :return: WikibaseItem corresponding to the given entity id, backed by a Graph with its superclass tree statements
         """
 
-        wikidata_entities_by_uri: Dict[URIRef, WikibaseItem] = {}
+        wikidata_entities_by_uri: dict[URIRef, WikibaseItem] = {}
 
         def get_type_wikidata_entities(
-            resolving_wikidata_entity_uris: Set[URIRef],
-            type_property_uris: Tuple[URIRef, ...],
+            resolving_wikidata_entity_uris: set[URIRef],
+            type_property_uris: tuple[URIRef, ...],
             wikidata_entity: WikibaseItem,
         ) -> None:
             """
