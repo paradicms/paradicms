@@ -13,6 +13,7 @@ class WikibaseItems:
         *,
         graph: Graph,
         uris: tuple[URIRef, ...] | None = None,
+        wikibase_item_class: type[WikibaseItem] = WikibaseItem,
     ) -> tuple[WikibaseItem, ...]:
         """
         Read items from the graph and return a tuple of them.
@@ -28,5 +29,5 @@ class WikibaseItems:
             )
 
         return tuple(
-            WikibaseItem.from_rdf(resource=graph.resource(uri)) for uri in uris
+            wikibase_item_class.from_rdf(resource=graph.resource(uri)) for uri in uris
         )

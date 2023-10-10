@@ -1,7 +1,10 @@
-from abc import abstractmethod, ABC
-from typing import Union, Tuple
+from __future__ import annotations
 
-from rdflib import URIRef
+from abc import ABC, abstractmethod
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from rdflib import URIRef
 
 
 class RightsMixin(ABC):
@@ -12,52 +15,46 @@ class RightsMixin(ABC):
 
     class Builder(ABC):
         @abstractmethod
-        def add_contributor(
-            self, contributor: Union[str, URIRef]
-        ) -> "RightsMixin.Builder":
+        def add_contributor(self, contributor: str | URIRef) -> RightsMixin.Builder:
             raise NotImplementedError
 
         @abstractmethod
-        def add_creator(self, creator: Union[str, URIRef]) -> "RightsMixin.Builder":
+        def add_creator(self, creator: str | URIRef) -> RightsMixin.Builder:
             raise NotImplementedError
 
         @abstractmethod
-        def add_license(self, license: Union[str, URIRef]) -> "RightsMixin.Builder":
+        def add_license(self, license: str | URIRef) -> RightsMixin.Builder:
             raise NotImplementedError
 
         @abstractmethod
-        def add_rights_holder(
-            self, holder: Union[str, URIRef]
-        ) -> "RightsMixin.Builder":
+        def add_rights_holder(self, holder: str | URIRef) -> RightsMixin.Builder:
             raise NotImplementedError
 
         @abstractmethod
-        def add_rights_statement(
-            self, statement: Union[str, URIRef]
-        ) -> "RightsMixin.Builder":
+        def add_rights_statement(self, statement: str | URIRef) -> RightsMixin.Builder:
             raise NotImplementedError
 
     @property
     @abstractmethod
-    def contributors(self) -> Tuple[Union[str, URIRef], ...]:
+    def contributors(self) -> tuple[str | URIRef, ...]:
         raise NotImplementedError
 
     @property
     @abstractmethod
-    def creators(self) -> Tuple[Union[str, URIRef], ...]:
+    def creators(self) -> tuple[str | URIRef, ...]:
         raise NotImplementedError
 
     @property
     @abstractmethod
-    def licenses(self) -> Tuple[Union[str, URIRef], ...]:
+    def licenses(self) -> tuple[str | URIRef, ...]:
         raise NotImplementedError
 
     @property
     @abstractmethod
-    def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
+    def rights_holders(self) -> tuple[str | URIRef, ...]:
         raise NotImplementedError
 
     @property
     @abstractmethod
-    def rights_statements(self) -> Tuple[Union[str, URIRef], ...]:
+    def rights_statements(self) -> tuple[str | URIRef, ...]:
         raise NotImplementedError
