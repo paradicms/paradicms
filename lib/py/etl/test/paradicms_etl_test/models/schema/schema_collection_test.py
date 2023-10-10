@@ -13,6 +13,10 @@ def test_replacer(schema_collection: SchemaCollection):
     )
 
 
+def test_rdf_type_uri(schema_collection: SchemaCollection):
+    assert schema_collection.rdf_type_uri() == SDO.Collection
+
+
 def test_work_uris(
     schema_collection: SchemaCollection, schema_creative_work: SchemaCreativeWork
 ):
