@@ -2,15 +2,18 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.organization import Organization
+from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
+from paradicms_etl.models.schema.schema_organization import SchemaOrganization
+from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.work import Work
-
 from paradicms_ssg.validators.ssg_compatibility_validator import (
     ssg_compatibility_validator,
 )
@@ -42,6 +45,12 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
             assert original_model.exact_dimensions == transformed_model.exact_dimensions
             assert original_model.max_dimensions == transformed_model.max_dimensions
             assert original_model.src == transformed_model.src
+        elif isinstance(original_model, Organization):
+            assert isinstance(transformed_model, SchemaOrganization)
+        elif isinstance(original_model, Person):
+            assert isinstance(transformed_model, SchemaPerson)
+            assert original_model.family_name == transformed_model.family_name
+            assert original_model.given_name == transformed_model.given_name
         elif isinstance(original_model, Property):
             assert isinstance(transformed_model, SchemaProperty)
             assert original_model.filterable == transformed_model.filterable
