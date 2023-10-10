@@ -90,7 +90,7 @@ class SchemaProperty(SchemaModel, Property):
 
     @property
     def order(self) -> int | None:
-        return self._map_term_to_int(CMS.propertyOrder, self._map_term_to_int)  # type: ignore
+        return self._optional_value(CMS.propertyOrder, self._map_term_to_int)  # type: ignore
 
     @property
     def range(self) -> URIRef | None:  # noqa: A003

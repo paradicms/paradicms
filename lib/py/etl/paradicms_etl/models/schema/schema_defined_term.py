@@ -35,6 +35,16 @@ class SchemaDefinedTerm(SchemaModel, Concept):
         builder.set(SDO.name, name)
         return builder
 
+    @classmethod
+    def from_concept(cls, concept: Concept) -> SchemaDefinedTerm:
+        builder = cls.builder(name=concept.label, uri=concept.uri)
+        for type_uri in concept.type_uris:
+            if type_uri != concept.rdf_type_uri():
+                builder.add_type_uri(type_uri)
+        if concept.value != concept.uri:
+            builder.set_value(concept.value)
+        return builder.build()
+
     @property
     def label(self) -> str:
         return self._required_label

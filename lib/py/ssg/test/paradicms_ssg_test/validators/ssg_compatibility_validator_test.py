@@ -1,11 +1,16 @@
 from paradicms_etl.model import Model
+from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
+from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.property import Property
+from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
+from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.work import Work
+
 from paradicms_ssg.validators.ssg_compatibility_validator import (
     ssg_compatibility_validator,
 )
@@ -17,7 +22,21 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
         ssg_compatibility_validator(synthetic_data_models),
         strict=True,
     ):
-        if isinstance(original_model, Image):
+        if isinstance(original_model, Concept):
+            assert isinstance(transformed_model, SchemaDefinedTerm)
+            original_model_type_uris = {
+                type_uri
+                for type_uri in original_model.type_uris
+                if type_uri != original_model.rdf_type_uri()
+            }
+            transformed_model_type_uris = {
+                type_uri
+                for type_uri in transformed_model.type_uris
+                if type_uri != transformed_model.rdf_type_uri()
+            }
+            assert original_model_type_uris == transformed_model_type_uris
+            assert original_model.value == transformed_model.value
+        elif isinstance(original_model, Image):
             assert isinstance(transformed_model, SchemaImageObject)
             assert original_model.copyable == transformed_model.copyable
             assert original_model.exact_dimensions == transformed_model.exact_dimensions
@@ -29,6 +48,10 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
             assert original_model.order == transformed_model.order
             assert original_model.range == transformed_model.range
             assert original_model.searchable == transformed_model.searchable
+        elif isinstance(original_model, PropertyGroup):
+            assert isinstance(original_model, CmsPropertyGroup)
+            assert isinstance(transformed_model, CmsPropertyGroup)
+            assert id(original_model) == id(transformed_model)
         elif isinstance(original_model, Work):
             assert isinstance(transformed_model, SchemaCreativeWork)
         else:
