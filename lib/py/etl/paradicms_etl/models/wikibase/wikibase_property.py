@@ -1,6 +1,4 @@
-from typing import Optional
-
-from rdflib import RDFS, URIRef, Graph
+from rdflib import RDFS, Graph, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -26,15 +24,15 @@ class WikibaseProperty(ResourceBackedModel):
     # wikibase:referenceValueNormalized prn:P244 .
 
     @property
-    def claim_uri(self) -> Optional[URIRef]:
+    def claim_uri(self) -> URIRef | None:
         return self._optional_value(WIKIBASE.claim, self._map_term_to_uri)
 
     @property
-    def direct_claim_uri(self) -> Optional[URIRef]:
+    def direct_claim_uri(self) -> URIRef | None:
         return self._optional_value(WIKIBASE.directClaim, self._map_term_to_uri)
 
     @property
-    def direct_claim_normalized_uri(self) -> Optional[URIRef]:
+    def direct_claim_normalized_uri(self) -> URIRef | None:
         return self._optional_value(
             WIKIBASE.directClaimNormalized, self._map_term_to_uri
         )
@@ -59,15 +57,15 @@ class WikibaseProperty(ResourceBackedModel):
         return RDFS.label
 
     @property
-    def qualifier_uri(self) -> Optional[URIRef]:
+    def qualifier_uri(self) -> URIRef | None:
         return self._optional_value(WIKIBASE.qualifier, self._map_term_to_uri)
 
     @property
-    def qualifier_value_uri(self) -> Optional[URIRef]:
+    def qualifier_value_uri(self) -> URIRef | None:
         return self._optional_value(WIKIBASE.qualifierValue, self._map_term_to_uri)
 
     @property
-    def qualifier_value_normalized_uri(self) -> Optional[URIRef]:
+    def qualifier_value_normalized_uri(self) -> URIRef | None:
         return self._optional_value(
             WIKIBASE.qualifierValueNormalized, self._map_term_to_uri
         )
@@ -77,15 +75,15 @@ class WikibaseProperty(ResourceBackedModel):
         return WIKIBASE.Property
 
     @property
-    def statement_property_uri(self) -> Optional[URIRef]:
+    def statement_property_uri(self) -> URIRef | None:
         return self._optional_value(WIKIBASE.statementProperty, self._map_term_to_uri)
 
     @property
-    def statement_value_uri(self) -> Optional[URIRef]:
+    def statement_value_uri(self) -> URIRef | None:
         return self._optional_value(WIKIBASE.statementValue, self._map_term_to_uri)
 
     @property
-    def statement_value_normalized_uri(self) -> Optional[URIRef]:
+    def statement_value_normalized_uri(self) -> URIRef | None:
         return self._optional_value(
             WIKIBASE.statementValueNormalized, self._map_term_to_uri
         )
