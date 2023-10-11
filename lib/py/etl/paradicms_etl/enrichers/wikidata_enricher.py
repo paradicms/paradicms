@@ -21,7 +21,6 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
-from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
 from paradicms_etl.models.wikibase.wikibase_properties import WikibaseProperties
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.wikidata.wikidata_concept import WikidataConcept
@@ -168,16 +167,11 @@ class WikidataEnricher:
             cache_dir_path=self.__cache_dir_path,
             rdf_url=URIRef(str(wikidata_entity_uri) + ".ttl"),
         )(force=False)["graph"]
-        extracted_wikidata_items = WikibaseItems.from_rdf(
-            graph=graph,
-            uris=(wikidata_entity_uri,),
-        )
-        assert len(extracted_wikidata_items) == 1
         wikidata_entity_graph = self.__cached_wikidata_entity_graphs_by_uri[
             wikidata_entity_uri
         ] = self.__WikidataEntityGraph(
             graph=graph,
-            wikidata_entity=extracted_wikidata_items[0],
+            wikidata_entity=WikibaseItem.from_rdf(graph.resource(wikidata_entity_uri)),
             wikidata_properties=WikibaseProperties.from_rdf(graph),
         )
         return wikidata_entity_graph

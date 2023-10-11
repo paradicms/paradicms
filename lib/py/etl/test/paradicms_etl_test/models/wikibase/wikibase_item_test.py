@@ -2,10 +2,10 @@ from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
-from rdflib import Graph, URIRef
-
-from paradicms_etl.models.wikibase.wikibase_items import WikibaseItems
+from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.namespaces import WD
+from paradicms_etl.namespaces.wikibase import WIKIBASE
+from rdflib import RDF, Graph, URIRef
 
 
 @dataclass(frozen=True)
@@ -46,12 +46,15 @@ class TestWikidataItemFile:
     ],
 )
 def test_from_rdf(data_dir_path: Path, test_wikidata_item_file: TestWikidataItemFile):
-    items = WikibaseItems.from_rdf(
-        graph=test_wikidata_item_file.graph(data_dir_path=data_dir_path),
-        uris=(test_wikidata_item_file.uri,)
-        if test_wikidata_item_file.limit_uris
-        else None,
-    )
+    graph = test_wikidata_item_file.graph(data_dir_path=data_dir_path)
+    if test_wikidata_item_file.limit_uris:
+        items = (WikibaseItem.from_rdf(graph.resource(test_wikidata_item_file.uri)),)
+    else:
+        items = tuple(
+            WikibaseItem.from_rdf(graph.resource(item_uri))
+            for item_uri in graph.subjects(predicate=RDF.type, object=WIKIBASE.Item)
+            if isinstance(item_uri, URIRef)
+        )
     assert len(items) == test_wikidata_item_file.items_count
     file_item = next(item for item in items if item.uri == test_wikidata_item_file.uri)
     assert file_item
