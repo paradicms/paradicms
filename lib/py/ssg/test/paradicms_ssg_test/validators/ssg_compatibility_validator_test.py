@@ -1,5 +1,6 @@
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
+from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
@@ -12,6 +13,7 @@ from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
@@ -33,7 +35,10 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
         ssg_compatibility_validator(synthetic_data_models),
         strict=True,
     ):
-        if isinstance(original_model, Concept):
+        if isinstance(original_model, Collection):
+            assert isinstance(transformed_model, Collection)
+            assert original_model.work_uris == transformed_model.work_uris
+        elif isinstance(original_model, Concept):
             assert isinstance(transformed_model, SchemaDefinedTerm)
             original_model_type_uris = {
                 type_uri

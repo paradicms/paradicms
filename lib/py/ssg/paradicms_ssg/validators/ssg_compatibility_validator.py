@@ -2,6 +2,7 @@ from collections.abc import Iterable
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
+from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
@@ -13,6 +14,7 @@ from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_statement import RightsStatement
+from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
@@ -32,7 +34,9 @@ def ssg_compatibility_validator(models: Iterable[Model]) -> Iterable[Model]:
     """
 
     for model in models:
-        if isinstance(model, Concept):
+        if isinstance(model, Collection):
+            yield SchemaCollection.from_collection(model)
+        elif isinstance(model, Concept):
             yield SchemaDefinedTerm.from_concept(model)
         elif isinstance(model, Image):
             yield SchemaImageObject.from_image(model)

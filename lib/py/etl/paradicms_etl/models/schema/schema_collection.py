@@ -41,6 +41,13 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
         return builder
 
     @classmethod
+    def from_collection(cls, collection: Collection) -> SchemaCollection:
+        builder = cls.builder(name=collection.label, uri=collection.uri)
+        for work_uri in collection.work_uris:
+            builder.add_work(work_uri)
+        return builder.build()
+
+    @classmethod
     def json_ld_context(cls) -> dict[str, Any]:
         return safe_dict_update(
             SchemaModel.json_ld_context(),
