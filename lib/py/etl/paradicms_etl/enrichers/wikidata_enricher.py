@@ -13,6 +13,7 @@ from paradicms_etl.model import Model
 from paradicms_etl.models.creative_commons.creative_commons_licenses import (
     CreativeCommonsLicenses,
 )
+from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_rights_statements import (
@@ -57,10 +58,17 @@ class WikidataEnricher:
         for model in models:
             enriched_model = False
             for (
-                referenced_wikidata_entity_uri
-            ) in self.__get_model_wikidata_entity_references(model).values():
+                model_same_as_wikidata_entity_uri
+            ) in self.__get_model_same_as_wikidata_entity_uris(model).values():
                 wikidata_model_class: type[WikidataPerson | WikidataWork]
-                if isinstance(model, Person):
+                if isinstance(model, Event):
+                    self.__logger.warning(
+                        "%s sameAs %s, ignoring",
+                        model.uri,
+                        model_same_as_wikidata_entity_uri,
+                    )
+                    continue
+                elif isinstance(model, Person):
                     wikidata_model_class = WikidataPerson
                 elif isinstance(model, Work):
                     wikidata_model_class = WikidataWork
@@ -69,10 +77,11 @@ class WikidataEnricher:
 
                 referenced_wikidata_entity: WikibaseItem | None = None
                 for wikidata_entity in self.__get_wikidata_entity_with_superclass_tree(
-                    leaf_wikidata_entity_uri=referenced_wikidata_entity_uri,
+                    leaf_wikidata_entity_uri=model_same_as_wikidata_entity_uri,
                     wikidata_model_class=wikidata_model_class,
                 ):
                     if isinstance(wikidata_entity, WikibaseItem):
+                        assert type(wikidata_entity) != WikibaseItem
                         assert referenced_wikidata_entity is None
                         referenced_wikidata_entity = wikidata_entity
                     else:
@@ -97,6 +106,8 @@ class WikidataEnricher:
                         self.__get_wikidata_entity_creators(referenced_wikidata_entity),
                         self.__get_wikidata_entity_subjects(referenced_wikidata_entity),
                     ):
+                        for connected_model in connected_models:
+                            assert type(connected_model) != WikibaseItem
                         yield from connected_models
 
             if not enriched_model or not isinstance(model, StubModel):
@@ -117,7 +128,7 @@ class WikidataEnricher:
                     wikidata_model_class=wikidata_model_class,
                 )
 
-    def __get_model_wikidata_entity_references(
+    def __get_model_same_as_wikidata_entity_uris(
         self, model: Model
     ) -> dict[URIRef, URIRef]:
         """

@@ -27,6 +27,9 @@ from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
 
+from paradicms_ssg.models.app_configuration import AppConfiguration
+from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
+
 
 def ssg_compatibility_validator(models: Iterable[Model]) -> Iterable[Model]:
     """
@@ -36,7 +39,11 @@ def ssg_compatibility_validator(models: Iterable[Model]) -> Iterable[Model]:
     """
 
     for model in models:
-        if isinstance(model, Collection):
+        if isinstance(model, AppConfiguration):
+            if not isinstance(model, CmsAppConfiguration):
+                raise TypeError(type(model))
+            yield model
+        elif isinstance(model, Collection):
             yield SchemaCollection.from_collection(model)
         elif isinstance(model, Concept):
             yield SchemaDefinedTerm.from_concept(model)

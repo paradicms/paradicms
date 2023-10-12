@@ -4,20 +4,17 @@ from io import BytesIO
 from pathlib import Path, PurePath, PureWindowsPath
 from typing import Optional
 from urllib.error import HTTPError
-from urllib.parse import unquote, urlparse, ParseResult
-
-from rdflib import URIRef
+from urllib.parse import ParseResult, unquote, urlparse
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.utils.file_cache import FileCache
+from rdflib import URIRef
 
 
 class ImageFileCache:
     """
     File-backed cache for original Images (i.e., Images with image_uri=None), retrieved from an external URI.
-
-    Separated from AppLoader for modularity and testability.
     """
 
     class ImageFileCacheException(Exception):
