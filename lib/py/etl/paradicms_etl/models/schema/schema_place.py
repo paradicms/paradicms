@@ -53,6 +53,8 @@ class SchemaPlace(SchemaModel, Location):
         builder = cls.builder(uri=location.uri)
         if location.centroid is not None:
             builder.set_centroid(location.centroid)
+        if location.label is not None:
+            builder.set_name(location.label)
         return builder.build()
 
     @classmethod
