@@ -9,6 +9,7 @@ from paradicms_etl.models.wikibase.wikibase_globecoordinate_value import (
     WikibaseGlobecoordinateValue,
 )
 from paradicms_etl.models.wikidata.wikidata_model import WikidataModel
+from paradicms_etl.namespaces.cms import CMS
 from paradicms_etl.namespaces.wdt import WDT
 
 logger = logging.getLogger(__name__)
@@ -99,3 +100,7 @@ class WikidataLocation(WikidataModel, Location):
             )
 
         raise TypeError(type(coordinate_location_value))
+
+    @classmethod
+    def rdf_type_uri(cls) -> URIRef:
+        return CMS.WikidataLocation
