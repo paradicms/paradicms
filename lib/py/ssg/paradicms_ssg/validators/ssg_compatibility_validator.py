@@ -6,6 +6,7 @@ from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
+from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
@@ -17,6 +18,7 @@ from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
+from paradicms_etl.models.schema.schema_event import SchemaEvent
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
@@ -38,6 +40,10 @@ def ssg_compatibility_validator(models: Iterable[Model]) -> Iterable[Model]:
             yield SchemaCollection.from_collection(model)
         elif isinstance(model, Concept):
             yield SchemaDefinedTerm.from_concept(model)
+        elif isinstance(model, Event):
+            if not isinstance(model, SchemaEvent):
+                raise TypeError(type(model))
+            yield model
         elif isinstance(model, Image):
             yield SchemaImageObject.from_image(model)
         elif isinstance(model, License):

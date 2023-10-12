@@ -42,6 +42,9 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
 
     @classmethod
     def from_collection(cls, collection: Collection) -> SchemaCollection:
+        if isinstance(collection, SchemaCollection):
+            return collection
+
         builder = cls.builder(name=collection.label, uri=collection.uri)
         for work_uri in collection.work_uris:
             builder.add_work(work_uri)

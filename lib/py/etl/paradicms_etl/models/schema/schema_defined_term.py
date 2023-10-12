@@ -37,6 +37,9 @@ class SchemaDefinedTerm(SchemaModel, Concept):
 
     @classmethod
     def from_concept(cls, concept: Concept) -> SchemaDefinedTerm:
+        if isinstance(concept, SchemaDefinedTerm):
+            return concept
+
         builder = cls.builder(name=concept.label, uri=concept.uri)
         for type_uri in concept.type_uris:
             if type_uri != concept.rdf_type_uri():

@@ -47,6 +47,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
     def from_work(cls, work: Work) -> SchemaCreativeWork:
         if isinstance(work, SchemaCreativeWork):
             return work
+
         builder = cls.builder(name=work.label, uri=work.uri)
         return builder.build()
 

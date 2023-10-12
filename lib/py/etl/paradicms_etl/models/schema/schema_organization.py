@@ -33,6 +33,9 @@ class SchemaOrganization(SchemaModel, Organization):
 
     @classmethod
     def from_organization(cls, organization: Organization) -> SchemaOrganization:
+        if isinstance(organization, SchemaOrganization):
+            return organization
+
         return cls.builder(name=organization.label, uri=organization.uri).build()
 
     @property

@@ -55,6 +55,7 @@ class SchemaProperty(SchemaModel, Property):
     def from_property(cls, property_: Property) -> SchemaProperty:
         if isinstance(property_, SchemaProperty):
             return property_
+
         builder = cls.builder(name=property_.label, uri=property_.uri)
         if property_.filterable is not None:
             builder.set_filterable(property_.filterable)

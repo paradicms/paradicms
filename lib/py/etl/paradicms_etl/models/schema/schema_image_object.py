@@ -148,6 +148,7 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
     def from_image(cls, image: Image) -> SchemaImageObject:
         if isinstance(image, SchemaImageObject):
             return image
+
         builder = cls.builder(uri=image.uri)
         builder.copy_rights(image)
         if image.exact_dimensions is not None:

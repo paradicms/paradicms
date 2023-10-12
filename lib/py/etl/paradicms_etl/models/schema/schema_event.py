@@ -1,6 +1,4 @@
-from typing import Optional
-
-from rdflib import URIRef, Graph, SDO, XSD
+from rdflib import SDO, XSD, Graph, URIRef
 
 from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.event import Event
@@ -23,7 +21,7 @@ class SchemaEvent(SchemaModel, Event):
             return self
 
     @classmethod
-    def builder(cls, *, uri: Optional[URIRef] = None) -> Builder:
+    def builder(cls, *, uri: URIRef | None = None) -> Builder:
         return cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
 
     @classmethod

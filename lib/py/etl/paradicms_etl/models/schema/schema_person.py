@@ -55,6 +55,9 @@ class SchemaPerson(SchemaModel, Person):
 
     @classmethod
     def from_person(cls, person: Person) -> SchemaPerson:
+        if isinstance(person, SchemaPerson):
+            return person
+
         builder = cls.builder(name=person.label, uri=person.uri)
         if person.family_name is not None:
             builder.set_family_name(person.family_name)
