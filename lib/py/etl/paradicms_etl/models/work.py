@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from typing import Union
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.images_mixin import ImagesMixin
@@ -20,7 +19,7 @@ class Work(Model, ImagesMixin):
 
     @property
     @abstractmethod
-    def description(self) -> Union[str, Text, None]:
+    def description(self) -> str | Text | None:
         raise NotImplementedError
 
     @property

@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from rdflib import DCTERMS, Graph, URIRef
-from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.license import License
 from paradicms_etl.utils.uuid_urn import uuid_urn
+
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
 
 
 class DcLicenseDocument(DcModel, License):

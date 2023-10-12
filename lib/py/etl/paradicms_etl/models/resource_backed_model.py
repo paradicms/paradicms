@@ -111,6 +111,16 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
+    def _map_term_to_float(term: _StatementObject) -> float | None:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
+            if isinstance(py_value, float):
+                return py_value
+            if isinstance(py_value, int):
+                return float(py_value)
+        return None
+
+    @staticmethod
     def _map_term_to_image_data_or_str_or_uri(
         term: _StatementObject,
     ) -> ImageData | str | URIRef | None:

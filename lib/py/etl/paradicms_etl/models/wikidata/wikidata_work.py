@@ -9,3 +9,6 @@ class WikidataWork(WikidataModel, Work):
     @property
     def label(self) -> str:
         return self._required_label
+
+    def replacer(self) -> Builder:
+        raise NotImplementedError

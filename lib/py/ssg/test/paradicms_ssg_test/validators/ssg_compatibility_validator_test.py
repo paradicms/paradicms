@@ -1,19 +1,27 @@
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.concept import Concept
+from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
+from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.license import License
+from paradicms_etl.models.location import Location
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
+from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.schema.schema_creative_work import SchemaCreativeWork
 from paradicms_etl.models.schema.schema_defined_term import SchemaDefinedTerm
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
+from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
+from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
+
 from paradicms_ssg.validators.ssg_compatibility_validator import (
     ssg_compatibility_validator,
 )
@@ -45,6 +53,11 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
             assert original_model.exact_dimensions == transformed_model.exact_dimensions
             assert original_model.max_dimensions == transformed_model.max_dimensions
             assert original_model.src == transformed_model.src
+        elif isinstance(original_model, License):
+            assert isinstance(transformed_model, DcLicenseDocument)
+        elif isinstance(original_model, Location):
+            assert isinstance(transformed_model, SchemaPlace)
+            assert original_model.centroid == transformed_model.centroid
         elif isinstance(original_model, Organization):
             assert isinstance(transformed_model, SchemaOrganization)
         elif isinstance(original_model, Person):
@@ -61,6 +74,10 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
             assert isinstance(original_model, CmsPropertyGroup)
             assert isinstance(transformed_model, CmsPropertyGroup)
             assert id(original_model) == id(transformed_model)
+        elif isinstance(original_model, RightsStatement):
+            assert isinstance(transformed_model, DcRightsStatement)
+        elif isinstance(original_model, WikibaseProperty):
+            continue
         elif isinstance(original_model, Work):
             assert isinstance(transformed_model, SchemaCreativeWork)
         else:
