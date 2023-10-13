@@ -25,7 +25,7 @@ class IiifPresentationApiV2Canvas(ResourceBackedModel):
     @property
     def has_image_annotations(self) -> tuple[OaAnnotation, ...]:
         return tuple(
-            OaAnnotation.from_rdf(self._resource.graph.resource(annotation))
+            OaAnnotation.from_rdf(self.resource.graph.resource(annotation))
             for annotations in self._values(
                 SC.hasImageAnnotations, self._map_term_to_collection
             )

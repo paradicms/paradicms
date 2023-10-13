@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import URIRef, Graph, FOAF
+from rdflib import FOAF, Graph, URIRef
 
 from paradicms_etl.models.foaf.foaf_agent import FoafAgent
 from paradicms_etl.models.organization import Organization
@@ -23,4 +23,4 @@ class FoafOrganization(FoafAgent, Organization):
         return super().label
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)

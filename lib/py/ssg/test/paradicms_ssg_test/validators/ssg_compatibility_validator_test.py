@@ -26,11 +26,12 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
+from rdflib import URIRef
+from rdflib.resource import Resource
+
 from paradicms_ssg.validators.ssg_compatibility_validator import (
     ssg_compatibility_validator,
 )
-from rdflib import URIRef
-from rdflib.resource import Resource
 
 
 def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
@@ -139,12 +140,12 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
         assert isinstance(original_model, ResourceBackedModel)
         assert isinstance(transformed_model, ResourceBackedModel)
         for property_uri in property_uris:
-            original_value = original_model._resource.value(property_uri)
+            original_value = original_model.resource.value(property_uri)
             if original_value is None:
                 continue
             if isinstance(original_value, Resource):
                 raise NotImplementedError
-            transformed_value = transformed_model._resource.value(property_uri)
+            transformed_value = transformed_model.resource.value(property_uri)
             assert original_value == transformed_value
             preserved_property = True
     assert preserved_property

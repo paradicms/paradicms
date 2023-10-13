@@ -1,9 +1,9 @@
-from typing import Union, Tuple
+from typing import Tuple, Union
 
 from rdflib import SKOS, Graph
 from rdflib.namespace import RDF
 from rdflib.resource import Resource
-from rdflib.term import Node, URIRef, Literal
+from rdflib.term import Literal, Node, URIRef
 
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
@@ -77,7 +77,7 @@ class SkosConcept(ResourceBackedModel, FoafImagesMixin, Concept):
 
     @property
     def value(self) -> Node:
-        value = self._resource.value(RDF.value)
+        value = self.resource.value(RDF.value)
         if value is None:
             return self.uri
         elif isinstance(value, Resource):

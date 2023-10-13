@@ -27,7 +27,7 @@ class IiifPresentationApiV2Sequence(ResourceBackedModel):
     @property
     def has_canvases(self) -> tuple[IiifPresentationApiV2Canvas, ...]:
         return tuple(
-            IiifPresentationApiV2Canvas.from_rdf(self._resource.graph.resource(canvas))
+            IiifPresentationApiV2Canvas.from_rdf(self.resource.graph.resource(canvas))
             for canvases in self._values(SC.hasCanvases, self._map_term_to_collection)
             for canvas in canvases
             if isinstance(canvas, Identifier)  # type: ignore

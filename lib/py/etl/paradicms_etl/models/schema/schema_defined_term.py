@@ -58,7 +58,7 @@ class SchemaDefinedTerm(SchemaModel, Concept):
 
     @property
     def value(self) -> Node:
-        value = self._resource.value(RDF.value)
+        value = self.resource.value(RDF.value)
         if value is None:
             return self.uri
         if isinstance(value, Resource):

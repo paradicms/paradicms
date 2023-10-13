@@ -34,7 +34,7 @@ class IiifPresentationApiV2Manifest(ResourceBackedModel):
     def has_sequences(self) -> Tuple[IiifPresentationApiV2Sequence, ...]:
         return tuple(
             IiifPresentationApiV2Sequence.from_rdf(
-                self._resource.graph.resource(sequence)
+                self.resource.graph.resource(sequence)
             )
             for sequences in self._values(SC.hasSequences, self._map_term_to_collection)
             for sequence in sequences

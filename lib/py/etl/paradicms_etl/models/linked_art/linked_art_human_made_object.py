@@ -26,7 +26,7 @@ class LinkedArtHumanMadeObject(
         return self._required_label
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

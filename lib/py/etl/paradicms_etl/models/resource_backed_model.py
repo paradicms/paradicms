@@ -279,7 +279,7 @@ class ResourceBackedModel(Model):
         raise KeyError
 
     @property
-    def _resource(self) -> Resource:
+    def resource(self) -> Resource:
         return self.__resource
 
     @property
@@ -288,15 +288,15 @@ class ResourceBackedModel(Model):
 
     def to_rdf(self, graph: Graph) -> Resource:
         if isinstance(graph, ConjunctiveGraph):
-            context = graph.get_context(self._resource.identifier())
-            context += self._resource.graph
-            return context.resource(self._resource.identifier)
-        graph += self._resource.graph
-        return graph.resource(self._resource.identifier)
+            context = graph.get_context(self.resource.identifier())
+            context += self.resource.graph
+            return context.resource(self.resource.identifier)
+        graph += self.resource.graph
+        return graph.resource(self.resource.identifier)
 
     @property
     def uri(self) -> URIRef:
-        return self._resource.identifier
+        return self.resource.identifier
 
     def _values(
         self,

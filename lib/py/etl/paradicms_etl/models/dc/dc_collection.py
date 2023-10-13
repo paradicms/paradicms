@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from rdflib import URIRef, Graph, DCMITYPE
+from rdflib import DCMITYPE, Graph, URIRef
 from rdflib.namespace import DCTERMS
 
 from paradicms_etl.models.collection import Collection
@@ -37,7 +37,7 @@ class DcCollection(DcModel, DcImagesMixin, Collection):
         return DCMITYPE.Collection
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)
 
     @property
     def work_uris(self) -> Tuple[URIRef, ...]:

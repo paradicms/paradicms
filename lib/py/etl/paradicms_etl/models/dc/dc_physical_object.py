@@ -75,4 +75,4 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
         return DCMITYPE.PhysicalObject
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)

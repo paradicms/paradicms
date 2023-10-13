@@ -40,4 +40,4 @@ class FoafPerson(FoafAgent, Person):
         return super().label
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)

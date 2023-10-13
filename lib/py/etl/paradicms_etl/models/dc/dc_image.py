@@ -139,7 +139,7 @@ class DcImage(DcModel, DcRightsMixin, Image):
 
     def replacer(self) -> Builder:
         return self.Builder(
-            clone_graph(self._resource.graph).resource(self._resource.identifier)
+            clone_graph(self.resource.graph).resource(self.resource.identifier)
         )
 
     @property
@@ -152,8 +152,8 @@ class DcImage(DcModel, DcRightsMixin, Image):
     def thumbnail_uris(self) -> tuple[URIRef, ...]:
         return tuple(
             subject
-            for subject in self._resource.graph.subjects(
-                object=self._resource.identifier, predicate=DCTERMS.source
+            for subject in self.resource.graph.subjects(
+                object=self.resource.identifier, predicate=DCTERMS.source
             )
             if isinstance(subject, URIRef)
         )

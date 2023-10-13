@@ -166,8 +166,8 @@ class WikibaseItem(ResourceBackedModel):
             OWL.sameAs,
             subclass_of_property_uri,
         ):
-            for triple in self._resource.graph.triples(
-                (self._resource.identifier, property_, None)
+            for triple in self.resource.graph.triples(
+                (self.resource.identifier, property_, None)
             ):
                 graph.add(triple)
-        return graph.resource(self._resource.identifier)
+        return graph.resource(self.resource.identifier)

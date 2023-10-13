@@ -218,7 +218,7 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         return None
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)
 
     @property
     def src(self) -> ImageData | str | URIRef | None:

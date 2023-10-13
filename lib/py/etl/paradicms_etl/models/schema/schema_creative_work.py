@@ -63,7 +63,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         return self._required_label
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)
 
     @property
     def text(self) -> str | Text | None:
