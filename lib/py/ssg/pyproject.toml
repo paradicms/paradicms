@@ -46,6 +46,7 @@ ignore = [
     "I001",   # Import block is un-sorted or un-formatted
     "ICN001", # Pandas should be imported as pd
     "N815",   # Mixed-case variables
+    "S101",   # assert
     "TRY003", # Avoid specifying long messages outside the exception class
 ]
 select = ["ALL"]

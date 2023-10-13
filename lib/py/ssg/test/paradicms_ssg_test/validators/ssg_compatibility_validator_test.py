@@ -12,6 +12,7 @@ from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.schema.schema_collection import SchemaCollection
@@ -25,10 +26,11 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
-
 from paradicms_ssg.validators.ssg_compatibility_validator import (
     ssg_compatibility_validator,
 )
+from rdflib import URIRef
+from rdflib.resource import Resource
 
 
 def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
@@ -37,6 +39,16 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
         for original_model in synthetic_data_models
         if not isinstance(original_model, WikibaseProperty)
     )
+
+    # Assume we have a sameAs to deal with
+    assert any(
+        original_model
+        for original_model in original_models
+        if original_model.same_as_uris
+    )
+
+    property_uris: set[URIRef] = set()
+    transformed_models: list[Model] = []
 
     for original_model, transformed_model in zip(
         original_models,
@@ -86,6 +98,7 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
             assert original_model.order == transformed_model.order
             assert original_model.range == transformed_model.range
             assert original_model.searchable == transformed_model.searchable
+            property_uris.add(original_model.uri)
         elif isinstance(original_model, PropertyGroup):
             assert isinstance(original_model, CmsPropertyGroup)
             assert isinstance(transformed_model, CmsPropertyGroup)
@@ -107,5 +120,31 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
             )
 
         assert original_model.label == transformed_model.label
-        # assert original_model.same_as_uris == transformed_model.same_as_uris
         assert original_model.uri == transformed_model.uri
+
+        # sameAs should be merged by the transformer
+        assert not transformed_model.same_as_uris
+
+        transformed_models.append(transformed_model)
+
+    # Check that at least one declared Property was preserved from an original model to a transformed model that
+    # would not have otherwise been in the transformed model.
+    # For example, a SchemaCreativeWork would not normally have a dcterms:title, but if we have
+    # a dcterms:title Property declared, it will have that.
+    assert property_uris
+    preserved_property = False
+    for original_model, transformed_model in zip(
+        original_models, transformed_models, strict=True
+    ):
+        assert isinstance(original_model, ResourceBackedModel)
+        assert isinstance(transformed_model, ResourceBackedModel)
+        for property_uri in property_uris:
+            original_value = original_model._resource.value(property_uri)
+            if original_value is None:
+                continue
+            if isinstance(original_value, Resource):
+                raise NotImplementedError
+            transformed_value = transformed_model._resource.value(property_uri)
+            assert original_value == transformed_value
+            preserved_property = True
+    assert preserved_property
