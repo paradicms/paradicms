@@ -10,7 +10,7 @@ class WikidataModel(WikibaseItem):
 
     @property
     def description(self) -> str | Text | None:
-        return self._optional_value(
+        return self._optional_value(  # type: ignore
             self.__DESCRIPTION_URI, self._map_term_to_str_or_text
         )
 

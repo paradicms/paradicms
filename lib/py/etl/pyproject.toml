@@ -47,6 +47,8 @@ module = [
     "PIL",
     "PIL.Image",
     "pyformance",
+    "pygeoconv",
+    "pygeoconv.errors",
     "stringcase",
     "tqdm",
 ]

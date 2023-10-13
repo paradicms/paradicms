@@ -5,9 +5,8 @@ from rdflib import RDF, Literal, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.location import Location
-from paradicms_etl.models.wikibase.wikibase_globecoordinate_value import (
-    WikibaseGlobecoordinateValue,
-)
+from paradicms_etl.models.wikibase.wikibase_globecoordinate_value import \
+    WikibaseGlobecoordinateValue
 from paradicms_etl.models.wikidata.wikidata_model import WikidataModel
 from paradicms_etl.namespaces.cms import CMS
 from paradicms_etl.namespaces.wdt import WDT
@@ -29,6 +28,7 @@ class WikidataLocation(WikidataModel, Location):
 
         if coordinate_location_value is None:
             # Chase P276 (location) from this resource to another resource to see if the latter has a centroid
+            location_value: Literal | Resource
             for location_value in self._values(WDT["P276"]):
                 if isinstance(location_value, Resource):
                     centroid = WikidataLocation(location_value).centroid
@@ -92,7 +92,7 @@ class WikidataLocation(WikidataModel, Location):
                 return None
 
             globe_coordinate_value: WikibaseGlobecoordinateValue = (
-                WikibaseGlobecoordinateValue.from_rdf(coordinate_location_value_type)
+                WikibaseGlobecoordinateValue.from_rdf(coordinate_location_value_type)  # type: ignore
             )  # type: ignore
             return Location.Centroid(
                 latitude=globe_coordinate_value.geo_latitude,
