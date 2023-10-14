@@ -249,19 +249,6 @@ class ResourceBackedModel(Model):
             return term.identifier
         return None
 
-    def merge(self, other: ResourceBackedModel) -> ResourceBackedModel:
-        """
-        Merge another model into this model, returning a new model.
-        """
-
-        merged_graph = clone_graph(self.resource.graph)
-        for triple in other.resource.graph:
-            if triple[0] == other.uri:
-                merged_graph.add((self.uri, triple[1], triple[2]))
-            else:
-                merged_graph.add(triple)
-        return self.__class__(merged_graph.resource(self.uri))
-
     def _optional_value(
         self,
         p: _Predicates,
