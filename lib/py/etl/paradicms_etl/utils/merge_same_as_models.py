@@ -106,6 +106,9 @@ def merge_same_as_models(  # noqa: PLR0912
             rewritten_graph = rewrite_graph_uris(
                 graph=merged_model.resource.graph, uri_map=rewrite_uris
             )
-            yield merged_model.__class__(rewritten_graph.resource(merged_model.uri))
+            if id(rewritten_graph) != id(merged_model.resource.graph):
+                yield merged_model.__class__(rewritten_graph.resource(merged_model.uri))
+            else:
+                yield merged_model
     else:
         yield from merged_models

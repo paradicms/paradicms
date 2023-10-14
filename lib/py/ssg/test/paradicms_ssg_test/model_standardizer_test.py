@@ -52,6 +52,7 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
     property_uris: set[URIRef] = set()
     transformed_models: list[Model] = []
 
+    # The model_standardizer output should be 1:1 original:transformed, since it does no sameAs merging
     for original_model, transformed_model in zip(
         original_models,
         model_standardizer(synthetic_data_models),
@@ -123,9 +124,6 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
 
         assert original_model.label == transformed_model.label
         assert original_model.uri == transformed_model.uri
-
-        # sameAs should be merged by the transformer
-        assert not transformed_model.same_as_uris
 
         transformed_models.append(transformed_model)
 

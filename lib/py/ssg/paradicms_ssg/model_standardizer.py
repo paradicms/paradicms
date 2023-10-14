@@ -96,4 +96,6 @@ def model_standardizer(  # noqa: C901, PLR0912
         original_models_by_uri[original_model.uri] = original_model
         transformed_models_by_uri[transformed_model.uri] = transformed_model
 
-    yield from merge_same_as_models(transformed_models_by_uri)
+    # TODO: handle property copying from original to transformed
+
+    yield from transformed_models_by_uri.values()
