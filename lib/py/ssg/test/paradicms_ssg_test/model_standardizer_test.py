@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING
+
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.collection import Collection
@@ -26,10 +28,11 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
-from rdflib import URIRef
+from paradicms_ssg.model_standardizer import model_standardizer
 from rdflib.resource import Resource
 
-from paradicms_ssg.model_standardizer import model_standardizer
+if TYPE_CHECKING:
+    from rdflib import URIRef
 
 
 def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
