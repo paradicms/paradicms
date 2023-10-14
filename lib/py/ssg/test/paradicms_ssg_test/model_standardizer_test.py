@@ -29,9 +29,7 @@ from paradicms_etl.models.work import Work
 from rdflib import URIRef
 from rdflib.resource import Resource
 
-from paradicms_ssg.validators.ssg_compatibility_validator import (
-    ssg_compatibility_validator,
-)
+from paradicms_ssg.model_standardizer import model_standardizer
 
 
 def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
@@ -53,7 +51,7 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
 
     for original_model, transformed_model in zip(
         original_models,
-        ssg_compatibility_validator(synthetic_data_models),
+        model_standardizer(synthetic_data_models),
         strict=True,
     ):
         if isinstance(original_model, Collection):

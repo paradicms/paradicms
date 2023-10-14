@@ -31,7 +31,7 @@ from paradicms_ssg.models.app_configuration import AppConfiguration
 from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
 
 
-def ssg_compatibility_validator(models: Iterable[Model]) -> Iterable[Model]:
+def model_standardizer(models: Iterable[Model]) -> Iterable[Model]:
     """
     Transform all models to canonical representations expected by the static site generator.
 
