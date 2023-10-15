@@ -50,7 +50,7 @@ class WikidataLocation(WikidataModel, Location):
                 geojson = pygeoconv.wkt_to_geojson(
                     str(coordinate_location_value).upper()
                 )
-            except pygeoconv.errors.WktParserError as e:
+            except pygeoconv.errors.WktParserError:
                 logger.warning(
                     "error parsing WKT literal: %s",
                     coordinate_location_value,

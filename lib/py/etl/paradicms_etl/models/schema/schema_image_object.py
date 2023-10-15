@@ -17,7 +17,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 if TYPE_CHECKING:
     from paradicms_etl.models.image_data import ImageData
-    from paradicms_etl.models.image_dimensions import ImageDimensions
 
 
 class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):

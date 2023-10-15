@@ -1,5 +1,5 @@
 from rdflib import URIRef
-from rdflib.term import Node, URIRef
+from rdflib.term import Node
 
 from paradicms_etl.models.concept import Concept
 from paradicms_etl.models.wikidata.wikidata_model import WikidataModel

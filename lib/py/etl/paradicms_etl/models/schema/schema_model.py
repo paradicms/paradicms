@@ -1,5 +1,3 @@
-from typing import Tuple
-
 from rdflib import SDO, URIRef
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
