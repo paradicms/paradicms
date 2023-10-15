@@ -75,40 +75,46 @@ class WikidataEnricher:
                 else:
                     raise TypeError(type(model))
 
-                referenced_wikidata_entity: WikibaseItem | None = None
+                model_same_as_wikidata_entity: WikibaseItem | None = None
                 for wikidata_entity in self.__get_wikidata_entity_with_superclass_tree(
                     leaf_wikidata_entity_uri=model_same_as_wikidata_entity_uri,
                     wikidata_model_class=wikidata_model_class,
                 ):
                     if isinstance(wikidata_entity, WikibaseItem):
                         assert type(wikidata_entity) != WikibaseItem
-                        assert referenced_wikidata_entity is None
-                        referenced_wikidata_entity = wikidata_entity
+                        assert model_same_as_wikidata_entity is None
+                        model_same_as_wikidata_entity = wikidata_entity
                     else:
                         assert isinstance(wikidata_entity, WikibaseProperty)
                     yield wikidata_entity
 
                 enriched_model = True
-                assert referenced_wikidata_entity is not None
+                assert model_same_as_wikidata_entity is not None
 
                 if not yielded_wikidata_rights_models:
                     yield CreativeCommonsLicenses.BY_SA_3_0
                     yield RightsStatementsDotOrgRightsStatements.InC
                     yielded_wikidata_rights_models = True
 
-                yield from self.__get_wikidata_entity_images(referenced_wikidata_entity)
+                yield from self.__get_wikidata_entity_images(
+                    model_same_as_wikidata_entity
+                )
 
                 if isinstance(model, Work):
                     for connected_models in (
                         self.__get_wikidata_entity_locations(
-                            referenced_wikidata_entity
+                            model_same_as_wikidata_entity
                         ),
-                        self.__get_wikidata_entity_creators(referenced_wikidata_entity),
-                        self.__get_wikidata_entity_subjects(referenced_wikidata_entity),
+                        self.__get_wikidata_entity_creators(
+                            model_same_as_wikidata_entity
+                        ),
+                        self.__get_wikidata_entity_subjects(
+                            model_same_as_wikidata_entity
+                        ),
                     ):
                         for connected_model in connected_models:
                             assert type(connected_model) != WikibaseItem
-                        yield from connected_models
+                            yield connected_model
 
             if not enriched_model or not isinstance(model, StubModel):
                 # A StubModel is "replaced" by the Wikidata entity model
@@ -189,7 +195,7 @@ class WikidataEnricher:
 
     @staticmethod
     def __get_wikidata_entity_images(wikidata_entity: WikibaseItem) -> Iterable[Image]:
-        for value in wikidata_entity.direct_claim_values(WDT["P18"]):
+        for value in wikidata_entity.direct_claim_values(WDT.P18):
             assert isinstance(value, URIRef)
             yield SchemaImageObject.builder(uri=value).build()
 
