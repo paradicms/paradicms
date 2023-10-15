@@ -3,4 +3,6 @@ from paradicms_etl.models.stub.stub_model import StubModel
 
 
 class StubLocation(StubModel, Location):
-    pass
+    @property
+    def centroid(self) -> None:
+        return None
