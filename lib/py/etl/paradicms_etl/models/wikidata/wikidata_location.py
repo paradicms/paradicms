@@ -1,4 +1,5 @@
 import logging
+from typing import Any
 
 import pygeoconv.errors
 from rdflib import RDF, Literal, URIRef
@@ -92,9 +93,9 @@ class WikidataLocation(WikidataModel, Location):
             ):
                 return None
 
-            globe_coordinate_value: WikibaseGlobecoordinateValue = (
-                WikibaseGlobecoordinateValue.from_rdf(coordinate_location_value_type)
-            )  # type: ignore
+            globe_coordinate_value: Any = WikibaseGlobecoordinateValue.from_rdf(
+                coordinate_location_value_type
+            )
             return Location.Centroid(
                 latitude=globe_coordinate_value.geo_latitude,
                 longitude=globe_coordinate_value.geo_longitude,
