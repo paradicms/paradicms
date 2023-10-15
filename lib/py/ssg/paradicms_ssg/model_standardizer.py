@@ -1,5 +1,4 @@
 from collections.abc import Iterable
-from typing import TYPE_CHECKING
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
@@ -28,16 +27,30 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
-from paradicms_etl.utils.merge_same_as_models import merge_same_as_models
+from rdflib import BNode, Graph, Literal, URIRef
 
 from paradicms_ssg.models.app_configuration import AppConfiguration
 from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
 
-if TYPE_CHECKING:
-    from rdflib import URIRef
+
+def __copy_connected_subgraph(
+    *, from_subject: BNode | URIRef, source_graph: Graph, target_graph: Graph
+) -> None:
+    """
+    Starting from_subject, copy all connected triples.
+    """
+
+    for p, o in source_graph.predicate_objects(subject=from_subject):
+        target_graph.add((from_subject, p, o))
+        if isinstance(o, BNode | URIRef):
+            __copy_connected_subgraph(
+                from_subject=o, source_graph=source_graph, target_graph=target_graph
+            )
+        elif not isinstance(o, Literal):
+            raise TypeError(type(o))
 
 
-def model_standardizer(  # noqa: C901, PLR0912
+def model_standardizer(  # noqa: C901, PLR0912, PLR0915
     models: Iterable[Model],
 ) -> Iterable[ResourceBackedModel]:
     """
@@ -96,6 +109,28 @@ def model_standardizer(  # noqa: C901, PLR0912
         original_models_by_uri[original_model.uri] = original_model
         transformed_models_by_uri[transformed_model.uri] = transformed_model
 
-    # TODO: handle property copying from original to transformed
+    if property_uris:
+        for model_uri, original_model in original_models_by_uri.items():
+            if not isinstance(original_model, ResourceBackedModel):
+                continue
+            if not isinstance(original_model, Work):
+                continue
+            transformed_model = transformed_models_by_uri[model_uri]
+
+            for property_uri in property_uris:
+                for original_object in original_model.resource.graph.objects(
+                    subject=model_uri, predicate=property_uri
+                ):
+                    transformed_model.resource.graph.add(
+                        (model_uri, property_uri, original_object)
+                    )
+                    if isinstance(original_object, BNode | URIRef):
+                        __copy_connected_subgraph(
+                            from_subject=original_object,
+                            source_graph=original_model.resource.graph,
+                            target_graph=transformed_model.resource.graph,
+                        )
+                    elif not isinstance(original_object, Literal):
+                        raise TypeError(type(original_object))
 
     yield from transformed_models_by_uri.values()

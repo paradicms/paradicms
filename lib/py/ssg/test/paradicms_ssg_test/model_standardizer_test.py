@@ -29,7 +29,6 @@ from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
 from paradicms_ssg.model_standardizer import model_standardizer
-from rdflib.resource import Resource
 
 if TYPE_CHECKING:
     from rdflib import URIRef
@@ -136,15 +135,19 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
     for original_model, transformed_model in zip(
         original_models, transformed_models, strict=True
     ):
-        assert isinstance(original_model, ResourceBackedModel)
+        if not isinstance(original_model, Work) or not isinstance(
+            original_model, ResourceBackedModel
+        ):
+            continue
         assert isinstance(transformed_model, ResourceBackedModel)
         for property_uri in property_uris:
-            original_value = original_model.resource.value(property_uri)
-            if original_value is None:
-                continue
-            if isinstance(original_value, Resource):
-                raise NotImplementedError
-            transformed_value = transformed_model.resource.value(property_uri)
-            assert original_value == transformed_value
-            preserved_property = True
+            for original_object in original_model.resource.graph.objects(
+                subject=original_model.uri, predicate=property_uri
+            ):
+                assert (
+                    transformed_model.uri,
+                    property_uri,
+                    original_object,
+                ) in transformed_model.resource.graph
+                preserved_property = True
     assert preserved_property
