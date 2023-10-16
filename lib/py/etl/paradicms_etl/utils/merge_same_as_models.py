@@ -1,25 +1,30 @@
 import logging
 from collections.abc import Iterable
-
-from rdflib import URIRef
+from typing import TYPE_CHECKING
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.utils.clone_graph import clone_graph
 from paradicms_etl.utils.rewrite_graph_uris import rewrite_graph_uris
 
+if TYPE_CHECKING:
+    from rdflib import URIRef
+
 logger = logging.getLogger(__name__)
 
 
 def merge_same_as_models(  # noqa: PLR0912
-    models_by_uri: dict[URIRef, ResourceBackedModel]
+    models: Iterable[ResourceBackedModel],
 ) -> Iterable[ResourceBackedModel]:
     """
     Simple agglomerative algorithm for merging models that are sameAs each other.
     """
 
+    models_by_uri: dict[URIRef, ResourceBackedModel] = {}
+
     # Put each model in its own group
     model_groups_by_model_uri: dict[URIRef, dict[URIRef, ResourceBackedModel]] = {}
-    for model in models_by_uri.values():
+    for model in models:
+        models_by_uri[model.uri] = model
         model_groups_by_model_uri[model.uri] = {model.uri: model}
 
     # For each (this, sameAs, that), "pull" that's model group into "this's" model group and adjust the pointers

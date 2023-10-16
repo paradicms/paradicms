@@ -33,7 +33,7 @@ def target_model(target_model_uri: URIRef) -> ResourceBackedModel:
 
 
 def test_nop(target_model: ResourceBackedModel) -> None:
-    actual = tuple(merge_same_as_models({target_model.uri: target_model}))
+    actual = tuple(merge_same_as_models((target_model,)))
     assert len(actual) == 1
     assert isinstance(actual[0], ResourceBackedModel)
     assert id(actual[0]) == id(target_model)
@@ -42,11 +42,7 @@ def test_nop(target_model: ResourceBackedModel) -> None:
 def test_merge(
     source_model: ResourceBackedModel, target_model: ResourceBackedModel
 ) -> None:
-    actuals = tuple(
-        merge_same_as_models(
-            {source_model.uri: source_model, target_model.uri: target_model}
-        )
-    )
+    actuals = tuple(merge_same_as_models((source_model, target_model)))
     assert len(actuals) == 1
     actual = actuals[0]
     assert isinstance(actual, ResourceBackedModel)
