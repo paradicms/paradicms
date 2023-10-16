@@ -1,32 +1,32 @@
-import {datasetToJsonLd} from "@paradicms/rdf";
-import {DatasetCore} from "rdf-js";
-import {Memoize} from "typescript-memoize";
-import {Agent} from "./Agent";
-import {AppConfiguration} from "./AppConfiguration";
-import {Collection} from "./Collection";
-import {Concept} from "./Concept";
-import {Event} from "./Event";
-import {Image} from "./Image";
-import {License} from "./License";
-import {Location} from "./Location";
-import {Model} from "./Model";
-import {ModelReader} from "./ModelReader";
-import {ModelSet} from "./ModelSet";
-import {Organization} from "./Organization";
-import {Person} from "./Person";
-import {Property} from "./Property";
-import {PropertyGroup} from "./PropertyGroup";
-import {RightsStatement} from "./RightsStatement";
-import {Work} from "./Work";
-import {indexModelsByIri} from "./indexModelsByIri";
-import {indexModelsByKey} from "./indexModelsByKey";
-import {indexModelsByValues} from "./indexModelsByValues";
-import {sortModelsArray} from "./sortModelsArray";
-import {sortModelsMultimap} from "./sortModelsMultimap";
+import { datasetToJsonLd, getNamedRdfTypes } from "@paradicms/rdf";
+import { schema, time } from "@paradicms/vocabularies";
+import { Memoize } from "typescript-memoize";
+import { Agent } from "./Agent";
+import { AppConfiguration } from "./AppConfiguration";
+import { Collection } from "./Collection";
+import { Concept } from "./Concept";
+import { Event } from "./Event";
+import { Image } from "./Image";
+import { License } from "./License";
+import { Location } from "./Location";
+import { Model } from "./Model";
+import { ModelReader } from "./ModelReader";
+import { ModelSet } from "./ModelSet";
+import { Organization } from "./Organization";
+import { PartialDateTimeDescription } from "./PartialDateTimeDescription";
+import { Person } from "./Person";
+import { ResourceBackedModelParameters } from "./ResourceBackedModelParameters";
+import { RightsStatement } from "./RightsStatement";
+import { indexModelsByIri } from "./indexModelsByIri";
+import { indexModelsByKey } from "./indexModelsByKey";
+import { indexModelsByValues } from "./indexModelsByValues";
+import { OwlTimePartialDateTimeDescription } from "./owl-time/OwlTimePartialDateTimeDescription";
+import { SchemaTextObject } from "./schema/SchemaTextObject";
+import { sortModelsArray } from "./sortModelsArray";
+import { sortModelsMultimap } from "./sortModelsMultimap";
 
 export class MemModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
-
   agentByIri(agentIri: string): Agent | null {
     for (const index of [this.organizationsByIriIndex, this.peopleByIriIndex]) {
       const agent = index[agentIri];
@@ -174,6 +174,17 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.namedOrganizations);
   }
 
+  partialDateTimeDescriptionByIri(
+    parameters: ResourceBackedModelParameters
+  ): PartialDateTimeDescription | null {
+    for (const rdfType of getNamedRdfTypes({dataset: parameters.dataset, subject: parameters.identifier}) {
+      if (rdfType.equals(time.DateTimeDescription)) {
+        return new OwlTimePartialDateTimeDescription(parameters);
+      }
+    }
+    return null;
+  }
+
   @Memoize()
   private get peopleByIriIndex(): {[index: string]: Person} {
     return indexModelsByIri(this.namedPeople);
@@ -272,6 +283,15 @@ export class MemModelSet implements ModelSet {
   @Memoize()
   private get rightsStatementsByIriIndex(): {[index: string]: RightsStatement} {
     return indexModelsByIri(this.namedRightsStatements);
+  }
+
+  textByIri(parameters: ResourceBackedModelParameters): Text | null {
+    for (const rdfType of getNamedRdfTypes({dataset: parameters.dataset, subject: parameters.identifier}) {
+      if (rdfType.equals(schema.TextObject)) {
+        return new SchemaTextObject(parameters);
+      }
+    }
+    return null;
   }
 
   toJsonLd(): Promise<any> {
