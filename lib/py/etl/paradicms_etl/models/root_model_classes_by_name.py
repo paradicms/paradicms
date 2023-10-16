@@ -29,7 +29,6 @@ from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.stub.stub_location import StubLocation
 from paradicms_etl.models.stub.stub_person import StubPerson
 from paradicms_etl.models.stub.stub_work import StubWork
-from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.wikidata.wikidata_concept import WikidataConcept
 from paradicms_etl.models.wikidata.wikidata_location import WikidataLocation
