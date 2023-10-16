@@ -35,6 +35,20 @@ class SchemaDefinedTerm(SchemaModel, Concept):
         builder.set(SDO.name, name)
         return builder
 
+    @classmethod
+    def from_concept(cls, concept: Concept) -> SchemaDefinedTerm:
+        if isinstance(concept, SchemaDefinedTerm):
+            return concept
+
+        builder = cls.builder(name=concept.label, uri=concept.uri)
+        for type_uri in concept.type_uris:
+            if type_uri != concept.rdf_type_uri():
+                builder.add_type_uri(type_uri)
+        builder.copy_images(concept)
+        if concept.value != concept.uri:
+            builder.set_value(concept.value)
+        return builder.build()
+
     @property
     def label(self) -> str:
         return self._required_label
@@ -45,7 +59,7 @@ class SchemaDefinedTerm(SchemaModel, Concept):
 
     @property
     def value(self) -> Node:
-        value = self._resource.value(RDF.value)
+        value = self.resource.value(RDF.value)
         if value is None:
             return self.uri
         if isinstance(value, Resource):

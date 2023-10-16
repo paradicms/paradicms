@@ -13,8 +13,8 @@ from paradicms_etl.models.rights_statements_dot_org.rights_statements_dot_org_ri
 )
 
 
-@pytest.fixture
-def test_image() -> DcImage:
+@pytest.fixture(scope="session")
+def dc_image() -> DcImage:
     return (
         DcImage.builder(
             uri=URIRef("http://example.com/image"),
@@ -32,20 +32,20 @@ def test_image() -> DcImage:
     )
 
 
-def test_replace_copyable(test_image):
-    assert test_image.copyable
-    actual = test_image.replacer().set_copyable(False).build()
+def test_replace_copyable(dc_image: DcImage):
+    assert dc_image.copyable
+    actual = dc_image.replacer().set_copyable(False).build()
     assert not actual.copyable
 
 
-def test_replace_src(test_image):
-    assert test_image.src == "http://example.com/imagesrc"
-    actual = test_image.replacer().set_src("http://example.com/newsrc").build()
+def test_replace_src(dc_image: DcImage):
+    assert dc_image.src == "http://example.com/imagesrc"
+    actual = dc_image.replacer().set_src("http://example.com/newsrc").build()
     assert actual.src == "http://example.com/newsrc"
 
 
-def test_to_rdf(test_image):
-    expected = test_image
+def test_to_rdf(dc_image: DcImage):
+    expected = dc_image
 
     actual = DcImage.from_rdf(resource=expected.to_rdf(Graph()))
 

@@ -1,13 +1,13 @@
 import logging
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable, List, Optional, Set, Tuple
+from typing import TYPE_CHECKING
 
 from more_itertools import consume
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from rdflib import URIRef
 
 import paradicms_ssg.namespaces
 from paradicms_ssg.app_package import AppPackage
@@ -15,18 +15,21 @@ from paradicms_ssg.deployer import Deployer
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
 from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
-from paradicms_ssg.loaders.images_loader import ImagesLoader
+from paradicms_ssg.images_archiver import ImagesArchiver
 from paradicms_ssg.models.app_configuration import AppConfiguration
 
+if TYPE_CHECKING:
+    from rdflib import URIRef
 
-class AppLoader:
+
+class StaticSiteGenerator:
     """
     Loader that statically generates a website using one of the app implementations in app/.
 
     The loader:
     - Writes the input data to an rdf/turtle file
-    - Archives original images (via an ImageArchiver)
-    - Thumbnails images and archives them (via ImagesLoader)
+    - Archives original images (via an ImagesArchiver)
+    - Thumbnails images and archives them (via ImagesArchiver)
     - Calls npm/yarn to generate the site (via AppPackage)
     - Optionally deploys the generated site (via a Deployer)
 
@@ -41,14 +44,14 @@ class AppLoader:
         *,
         cache_dir_path: Path,
         pipeline_id: str,
-        client_api: Optional[str] = None,
-        deployer: Optional[Deployer] = None,
-        image_archiver: Optional[ImageArchiver] = None,
-        next_commands: Tuple[str, ...] = NEXT_COMMANDS_DEFAULT,
-        sleep_s_after_image_download: Optional[float] = None,
-        thumbnail_max_dimensions: Tuple[
+        client_api: str | None = None,
+        deployer: Deployer | None = None,
+        image_archiver: ImageArchiver | None = None,
+        next_commands: tuple[str, ...] = NEXT_COMMANDS_DEFAULT,
+        sleep_s_after_image_download: float | None = None,
+        thumbnail_max_dimensions: tuple[
             ImageDimensions, ...
-        ] = ImagesLoader.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
+        ] = ImagesArchiver.THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
     ):
         """
         :param cache_dir_path: directory in which to store cached data such as image thumbnails
@@ -61,9 +64,9 @@ class AppLoader:
         :param thumbnail_max_dimensions: maximum dimensions of image thumbnails to use
         """
 
-        self.__buffered_app_configuration: Optional[AppConfiguration] = None
-        self.__buffered_images: List[Image] = []
-        self.__buffered_other_models: List[Model] = []
+        self.__buffered_app_configuration: AppConfiguration | None = None
+        self.__buffered_images: list[Image] = []
+        self.__buffered_other_models: list[Model] = []
         self.__cache_dir_path = cache_dir_path
         self.__client_api = client_api
         self.__deployer = deployer
@@ -73,7 +76,7 @@ class AppLoader:
         self.__pipeline_id = pipeline_id
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
-        self.__thumbnail_uris: Set[URIRef] = set()
+        self.__thumbnail_uris: set[URIRef] = set()
 
     def __call__(self, *, flush: bool, models: Iterable[Model]):
         # Iterate over models once, buffering into different lists
@@ -129,8 +132,8 @@ class AppLoader:
             models.append(self.__buffered_app_configuration)
 
         if self.__buffered_images:
-            copyable_original_images: List[Image] = []
-            other_images: List[Image] = []
+            copyable_original_images: list[Image] = []
+            other_images: list[Image] = []
 
             for image in self.__buffered_images:
                 if image.copyable and (image.uri not in self.__thumbnail_uris):
@@ -143,7 +146,7 @@ class AppLoader:
                 len(copyable_original_images),
             )
             models.extend(
-                ImagesLoader(
+                ImagesArchiver(
                     image_archiver=image_archiver,
                     loaded_data_dir_path=self.__cache_dir_path / "images",
                     sleep_s_after_image_download=self.__sleep_s_after_image_download,

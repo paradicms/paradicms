@@ -1,6 +1,4 @@
-from typing import Tuple
-
-from rdflib import URIRef, SDO
+from rdflib import SDO, URIRef
 
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.models.schema.schema_thing_mixin import SchemaThingMixin
@@ -31,6 +29,6 @@ class SchemaModel(ResourceBackedModel, SchemaThingMixin):
         assert cls.__name__.startswith("Schema")
         return getattr(SDO, cls.__name__[len("Schema") :])
 
-    @property
-    def same_as_uris(self) -> Tuple[URIRef, ...]:
-        return tuple(self._values(SDO.sameAs, self._map_term_to_uri))
+    @classmethod
+    def same_as_property_uri(cls) -> URIRef:
+        return SDO.sameAs

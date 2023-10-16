@@ -1,5 +1,3 @@
-from typing import Type, Dict, Tuple
-
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.creative_commons.creative_commons_license import (
@@ -31,10 +29,13 @@ from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.stub.stub_location import StubLocation
 from paradicms_etl.models.stub.stub_person import StubPerson
 from paradicms_etl.models.stub.stub_work import StubWork
-from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
+from paradicms_etl.models.wikidata.wikidata_concept import WikidataConcept
+from paradicms_etl.models.wikidata.wikidata_location import WikidataLocation
+from paradicms_etl.models.wikidata.wikidata_person import WikidataPerson
+from paradicms_etl.models.wikidata.wikidata_work import WikidataWork
 
-__ROOT_MODEL_CLASSES: Tuple[Type[Model], ...] = (
+__ROOT_MODEL_CLASSES: tuple[type[Model], ...] = (
     CmsPropertyGroup,
     DcCollection,
     DcImage,
@@ -61,10 +62,13 @@ __ROOT_MODEL_CLASSES: Tuple[Type[Model], ...] = (
     StubLocation,
     StubPerson,
     StubWork,
-    WikibaseItem,
+    WikidataConcept,
+    WikidataLocation,
+    WikidataPerson,
+    WikidataWork,
     WikibaseProperty,
 )
 
-ROOT_MODEL_CLASSES_BY_NAME: Dict[str, Type[Model]] = {}
+ROOT_MODEL_CLASSES_BY_NAME: dict[str, type[Model]] = {}
 for __class in __ROOT_MODEL_CLASSES:
     ROOT_MODEL_CLASSES_BY_NAME[__class.__name__] = __class

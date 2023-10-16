@@ -1,16 +1,12 @@
-from typing import Tuple
+from rdflib import RDF, Graph, URIRef
 
-from rdflib import Graph, RDF, URIRef
-
-from paradicms_etl.models.wikibase.wikibase_property import (
-    WikibaseProperty,
-)
+from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.namespaces import WIKIBASE
 
 
 class WikibaseProperties:
     @staticmethod
-    def from_rdf(graph: Graph) -> Tuple[WikibaseProperty, ...]:
+    def from_rdf(graph: Graph) -> tuple[WikibaseProperty, ...]:
         """
         Return property definitions from the graph and return a tuple of them.
         """

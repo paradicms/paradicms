@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Optional, Tuple
 
-from rdflib import Literal, OWL, URIRef, Graph, BNode
+from rdflib import OWL, BNode, Graph, Literal, URIRef
 from rdflib.collection import Collection
 from rdflib.namespace import DCTERMS, RDF, RDFS
 from rdflib.resource import Resource

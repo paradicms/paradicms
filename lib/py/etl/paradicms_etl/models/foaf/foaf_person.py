@@ -1,6 +1,6 @@
 from typing import Optional
 
-from rdflib import URIRef, Graph
+from rdflib import Graph, URIRef
 from rdflib.namespace import FOAF
 
 from paradicms_etl.models.foaf.foaf_agent import FoafAgent
@@ -28,8 +28,16 @@ class FoafPerson(FoafAgent, Person):
         return builder
 
     @property
+    def family_name(self) -> str | None:
+        return self._optional_value(FOAF.familyName, self._map_term_to_str)
+
+    @property
+    def given_name(self) -> str | None:
+        return self._optional_value(FOAF.givenName, self._map_term_to_str)
+
+    @property
     def label(self) -> str:
         return super().label
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)

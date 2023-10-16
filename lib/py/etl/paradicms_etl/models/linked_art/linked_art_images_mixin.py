@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from typing import Tuple
 
 from rdflib import URIRef
 
@@ -24,9 +23,9 @@ class LinkedArtImagesMixin(LinkedArtModelMixin, ImagesMixin):
     #     )
 
     @property
-    def image_uris(self) -> Tuple[URIRef, ...]:
+    def image_uris(self) -> tuple[URIRef, ...]:
         # Currently (20230722) using images from IIIF manifests rather than Linked Art
-        raise NotImplementedError
+        return ()
         # image_uris: List[URIRef] = []
         # for representation in self.has_representation:
         #     if not isinstance(representation, LinkedArtVisualItem):

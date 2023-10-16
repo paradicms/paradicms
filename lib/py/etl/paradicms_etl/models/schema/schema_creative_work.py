@@ -1,15 +1,20 @@
-from typing import Any
+from __future__ import annotations
+
+from typing import TYPE_CHECKING, Any
 
 from rdflib import SDO, Graph, URIRef
-from rdflib.resource import Resource
 
 from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
 from paradicms_etl.models.schema.schema_model import SchemaModel
+from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
 
 
 class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
@@ -20,7 +25,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
     """
 
     class Builder(SchemaModel.Builder, SchemaCreativeWorkMixin.Builder, Work.Builder):
-        def build(self) -> "SchemaCreativeWork":
+        def build(self) -> SchemaCreativeWork:
             return SchemaCreativeWork(self._resource)
 
     def __init__(self, resource: Resource):
@@ -42,6 +47,25 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         return self._optional_value(SDO.encodingFormat, self._map_term_to_str)
 
     @classmethod
+    def from_work(cls, work: Work) -> SchemaCreativeWork:
+        if isinstance(work, SchemaCreativeWork):
+            return work
+
+        builder = cls.builder(name=work.label, uri=work.uri)
+
+        work_description = work.description
+        if isinstance(work_description, str):
+            builder.set_description(work_description)
+        elif isinstance(work_description, Text):
+            builder.set_description(SchemaTextObject.from_text(work_description))
+        elif work_description is not None:
+            raise TypeError(type(work_description))
+
+        builder.copy_images(work)
+
+        return builder.build()
+
+    @classmethod
     def json_ld_context(cls) -> dict[str, Any]:
         return safe_dict_update(
             SchemaModel.json_ld_context(),
@@ -53,7 +77,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         return self._required_label
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)
 
     @property
     def text(self) -> str | Text | None:

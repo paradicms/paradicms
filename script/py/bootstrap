@@ -5,4 +5,5 @@ set -e
 cd "$(dirname "$0")/../.."
 
 lib/py/etl/script/bootstrap
+lib/py/nlp/script/bootstrap
 lib/py/ssg/script/bootstrap

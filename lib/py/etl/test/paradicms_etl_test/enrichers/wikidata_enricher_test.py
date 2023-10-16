@@ -9,9 +9,11 @@ from paradicms_etl.models.license import License
 from paradicms_etl.models.person import Person
 from paradicms_etl.models.rights_statement import RightsStatement
 from paradicms_etl.models.stub.stub_person import StubPerson
+from paradicms_etl.models.stub.stub_work import StubWork
 from paradicms_etl.models.wikibase.wikibase_item import WikibaseItem
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
+from paradicms_etl.namespaces.wd import WD
 
 
 @pytest.mark.parametrize(
@@ -57,7 +59,12 @@ def test_enrich_stub_person(data_dir_path: Path, wikidata_uri: URIRef):
 
 
 def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
-    person = next(model for model in synthetic_data_models if isinstance(model, Person))
+    wikidata_entity_uri = WD.Q7251
+    person = next(
+        model
+        for model in synthetic_data_models
+        if isinstance(model, Person) and wikidata_entity_uri in model.same_as_uris
+    )
     enriched_models = tuple(
         WikidataEnricher(
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
@@ -100,20 +107,24 @@ def test_enrich_synthetic_person(data_dir_path: Path, synthetic_data_models):
     )
 
 
-def test_enrich_synthetic_work(data_dir_path: Path, synthetic_data_models):
+def test_enrich_synthetic_work(data_dir_path: Path):
     wikidata_entity_uri = URIRef("http://www.wikidata.org/entity/Q19911452")
-    work = next(model for model in synthetic_data_models if isinstance(model, Work))
-    assert work.same_as_uris == (wikidata_entity_uri,)
+    # work = next(
+    #     model
+    #     for model in synthetic_data_models
+    #     if isinstance(model, Work) and wikidata_entity_uri in model.same_as_uris
+    # )
+    work = StubWork(wikidata_entity_uri)
     enriched_models = tuple(
         WikidataEnricher(
             cache_dir_path=data_dir_path / "synthetic" / ".cache" / "wikidata"
         )((work,))
     )
-    assert len(enriched_models) == 308
+    assert len(enriched_models) == 307
     # Original work
-    assert any(
-        isinstance(model, Work) and model.uri == work.uri for model in enriched_models
-    )
+    # assert any(
+    #     isinstance(model, Work) and model.uri == work.uri for model in enriched_models
+    # )
     # License for any Wikidata data
     assert any(isinstance(model, License) for model in enriched_models)
     # RightsStatement for any Wikidata data

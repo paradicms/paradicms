@@ -21,6 +21,7 @@ inflector = "^3.1.0"
 more-itertools = "^9.1.0"
 beautifulsoup4 = "^4.12.2"
 dataclasses-json = "^0.5.13"
+pygeoconv = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
@@ -46,6 +47,8 @@ module = [
     "PIL",
     "PIL.Image",
     "pyformance",
+    "pygeoconv",
+    "pygeoconv.errors",
     "stringcase",
     "tqdm",
 ]
@@ -58,6 +61,7 @@ ignore = [
     "ANN102",  # missing-type-cls,
     "ANN204",  # Missing return type annotation for __init__
     "ANN401",  # Dynamically typed expressions not allowed
+    "C901",    # Too complex
     "COM812",  # Trailing comma missing
     "D",       # Missing docstrings
     "E501",    # Line too long

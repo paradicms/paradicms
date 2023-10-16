@@ -19,3 +19,7 @@ class CMS(DefinedNamespace):
     # Resources
     ImageData: URIRef
     PropertyGroup: URIRef
+    WikidataConcept: URIRef
+    WikidataLocation: URIRef
+    WikidataPerson: URIRef
+    WikidataWork: URIRef

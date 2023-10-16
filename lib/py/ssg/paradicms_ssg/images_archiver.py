@@ -1,28 +1,27 @@
 import logging
 import os.path
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Generator, Optional, Tuple
 from urllib.parse import quote
 
+from paradicms_etl.model import Model
+from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from pathvalidate import sanitize_filename
 from rdflib import URIRef
 from tqdm import tqdm
 
-from paradicms_etl.models.image import Image
-from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.image_file_cache import ImageFileCache
 from paradicms_ssg.utils.thumbnail_image import thumbnail_image
 
 
-class ImagesLoader:
+class ImagesArchiver:
     """
-    Loader that:
-    - Thumbnails images
-    - Archives original images and thumbnails
+    Archives original images and thumbnails
 
-    Separated from AppLoader for modularity and testability.
+    Separated from StaticSiteGenerator for modularity and testability.
     """
 
     class __ArchiveImageException(Exception):
@@ -40,8 +39,8 @@ class ImagesLoader:
         *,
         loaded_data_dir_path: Path,
         image_archiver: ImageArchiver,
-        sleep_s_after_image_download: Optional[float] = None,
-        thumbnail_max_dimensions: Tuple[
+        sleep_s_after_image_download: float | None = None,
+        thumbnail_max_dimensions: tuple[
             ImageDimensions, ...
         ] = THUMBNAIL_MAX_DIMENSIONS_DEFAULT,
     ):
@@ -79,7 +78,7 @@ class ImagesLoader:
         *,
         original_image: Image,
         original_image_file_path: Path,
-    ) -> Tuple[Image, ...]:
+    ) -> tuple[Image, ...]:
         if not self.__thumbnail_max_dimensions:
             return ()
 
@@ -136,7 +135,7 @@ class ImagesLoader:
         assert len(archived_thumbnail_images) == len(self.__thumbnail_max_dimensions)
         return tuple(archived_thumbnail_images)
 
-    def __call__(self, *, models, **kwds) -> Generator[Image, None, None]:
+    def __call__(self, *, models: Iterable[Model], **kwds) -> Iterable[Image]:
         """
         Archive an original image and its thumbnails.
 

@@ -1,13 +1,13 @@
-from typing import Union, Optional, Tuple
+from __future__ import annotations
 
-from rdflib import URIRef, Graph, SDO, Literal, XSD
+from rdflib import SDO, XSD, Graph, Literal, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.schema.schema_media_object_mixin import (
-    SchemaMediaObjectMixin,
-)
+from paradicms_etl.models.rights_mixin import RightsMixin
+from paradicms_etl.models.schema.schema_media_object_mixin import SchemaMediaObjectMixin
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.models.schema.schema_quantitative_value import (
     SchemaQuantitativeValue,
@@ -25,34 +25,34 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
     """
 
     class Builder(SchemaModel.Builder, SchemaMediaObjectMixin.Builder, Image.Builder):
-        def add_thumbnail(self, thumbnail: URIRef) -> "SchemaImageObject.Builder":
+        def add_thumbnail(self, thumbnail: URIRef) -> SchemaImageObject.Builder:
             self.add(SDO.thumbnail, thumbnail)
             return self
 
-        def build(self) -> "SchemaImageObject":
+        def build(self) -> SchemaImageObject:
             return SchemaImageObject(self._resource)
 
-        def copy_rights(self, other: Image) -> "SchemaImageObject.Builder":
+        def copy_rights(self, other: RightsMixin) -> SchemaImageObject.Builder:
             Image.Builder.copy_rights(self, other)
             return self
 
-        def set_caption(self, caption: str) -> "SchemaImageObject.Builder":
+        def set_caption(self, caption: str) -> SchemaImageObject.Builder:
             self.set(SDO.caption, caption)
             return self
 
-        def set_copyable(self, copyable: bool) -> "SchemaImageObject.Builder":
+        def set_copyable(self, copyable: bool) -> SchemaImageObject.Builder:
             self.set(CMS.imageCopyable, copyable)
             return self
 
         def set_encoding_format(
             self, encoding_format: str
-        ) -> "SchemaImageObject.Builder":
+        ) -> SchemaImageObject.Builder:
             SchemaMediaObjectMixin.Builder.set_encoding_format(self, encoding_format)
             return self
 
         def set_exact_dimensions(
             self, exact_dimensions: ImageDimensions
-        ) -> "SchemaImageObject.Builder":
+        ) -> SchemaImageObject.Builder:
             self.set(
                 SDO.height,
                 SchemaQuantitativeValue.builder(
@@ -77,7 +77,7 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
 
         def set_max_dimensions(
             self, max_dimensions: ImageDimensions
-        ) -> "SchemaImageObject.Builder":
+        ) -> SchemaImageObject.Builder:
             self.set(
                 SDO.height,
                 SchemaQuantitativeValue.builder(
@@ -101,12 +101,18 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
             return self
 
         def set_src(
-            self, src: Union[str, ImageData, Literal, URIRef]
-        ) -> "SchemaImageObject.Builder":
+            self, src: str | ImageData | Literal | URIRef
+        ) -> SchemaImageObject.Builder:
+            existing_src = SchemaImageObject(self._resource).src
+            if isinstance(existing_src, ImageData):
+                for triple in tuple(
+                    self._resource.graph.triples((existing_src.uri, None, None))
+                ):
+                    self._resource.graph.remove(triple)
             self.set(SDO.contentUrl, src)
             return self
 
-        def set_title(self, title: str) -> "SchemaImageObject.Builder":
+        def set_title(self, title: str) -> SchemaImageObject.Builder:
             return self.set_caption(title)
 
     @classmethod
@@ -114,13 +120,48 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         return cls.Builder(Graph().resource(uri))
 
     @property
-    def caption(self) -> Optional[str]:
+    def caption(self) -> str | None:
         return self._optional_value(SDO.caption, self._map_term_to_str)
 
     @property
     def copyable(self) -> bool:
         copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
+
+    @property
+    def exact_dimensions(self) -> ImageDimensions | None:
+        height_quantitative_value = self._optional_value(
+            SDO.height, self._map_term_to_quantitative_value
+        )
+        width_quantitative_value = self._optional_value(
+            SDO.width, self._map_term_to_quantitative_value
+        )
+        if (
+            height_quantitative_value is not None
+            and width_quantitative_value is not None
+        ):
+            height = height_quantitative_value.value
+            width = width_quantitative_value.value
+            if isinstance(height, int) and isinstance(width, int):
+                return ImageDimensions(height=height, width=width)
+        return None
+
+    @classmethod
+    def from_image(cls, image: Image) -> SchemaImageObject:
+        if isinstance(image, SchemaImageObject):
+            return image
+
+        builder = cls.builder(uri=image.uri)
+        builder.copy_rights(image)
+        if image.exact_dimensions is not None:
+            builder.set_exact_dimensions(image.exact_dimensions)
+        if image.label is not None:
+            builder.set_caption(image.label)
+        if image.max_dimensions is not None:
+            builder.set_exact_dimensions(image.max_dimensions)
+        if image.src is not None:
+            builder.set_src(image.src)
+        return builder.build()
 
     @classmethod
     def json_ld_context(cls):
@@ -143,24 +184,50 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
                 #     "@type": str(XSD.integer),
                 # },
                 # "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
-                "src": {"@id": str(CMS.imageSrc)},
+                # "src": {"@id": str(SDO.content)},
                 "thumbnail": {"@id": str(SDO.thumbnail), "@type": "@id"},
             },
         )
 
     @property
-    def label(self) -> Optional[str]:
+    def label(self) -> str | None:
         return self.caption
 
-    def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+    @staticmethod
+    def _map_term_to_quantitative_value(
+        term: Literal | Resource,
+    ) -> SchemaQuantitativeValue | None:
+        if not isinstance(term, Resource):
+            return None
+        return SchemaQuantitativeValue(term)
 
     @property
-    def src(self) -> Union[ImageData, str, URIRef, None]:
+    def max_dimensions(self) -> ImageDimensions | None:
+        height_quantitative_value = self._optional_value(
+            SDO.height, self._map_term_to_quantitative_value
+        )
+        width_quantitative_value = self._optional_value(
+            SDO.width, self._map_term_to_quantitative_value
+        )
+        if (
+            height_quantitative_value is not None
+            and width_quantitative_value is not None
+        ):
+            height = height_quantitative_value.max_value
+            width = width_quantitative_value.max_value
+            if isinstance(height, int) and isinstance(width, int):
+                return ImageDimensions(height=height, width=width)
+        return None
+
+    def replacer(self) -> Builder:
+        return self.Builder(self.resource)
+
+    @property
+    def src(self) -> ImageData | str | URIRef | None:
         return self._optional_value(  # type:ignore
             SDO.contentUrl, self._map_term_to_image_data_or_str_or_uri
         )
 
     @property
-    def thumbnail_uris(self) -> Tuple[URIRef, ...]:
+    def thumbnail_uris(self) -> tuple[URIRef, ...]:
         return tuple(self._values(SDO.thumbnail, self._map_term_to_uri))

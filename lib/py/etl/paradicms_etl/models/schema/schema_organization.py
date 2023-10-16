@@ -1,11 +1,15 @@
-from typing import Optional
+from __future__ import annotations
 
-from rdflib import URIRef, Graph, SDO
-from rdflib.resource import Resource
+from typing import TYPE_CHECKING
+
+from rdflib import SDO, Graph, URIRef
 
 from paradicms_etl.models.organization import Organization
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.utils.uuid_urn import uuid_urn
+
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
 
 
 class SchemaOrganization(SchemaModel, Organization):
@@ -14,7 +18,7 @@ class SchemaOrganization(SchemaModel, Organization):
     """
 
     class Builder(SchemaModel.Builder):
-        def build(self):
+        def build(self) -> SchemaOrganization:
             return SchemaOrganization(self._resource)
 
     def __init__(self, resource: Resource):
@@ -22,10 +26,19 @@ class SchemaOrganization(SchemaModel, Organization):
         self.label
 
     @classmethod
-    def builder(cls, *, name: str, uri: Optional[URIRef] = None) -> Builder:
+    def builder(cls, *, name: str, uri: URIRef | None = None) -> Builder:
         builder = cls.Builder(Graph().resource(uri if uri is not None else uuid_urn()))
         builder.set(SDO.name, name)
         return builder
+
+    @classmethod
+    def from_organization(cls, organization: Organization) -> SchemaOrganization:
+        if isinstance(organization, SchemaOrganization):
+            return organization
+
+        builder = cls.builder(name=organization.label, uri=organization.uri)
+        builder.copy_images(organization)
+        return builder.build()
 
     @property
     def label(self) -> str:

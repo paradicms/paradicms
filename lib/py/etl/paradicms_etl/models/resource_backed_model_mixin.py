@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import TypeVar, Union, Tuple, Callable, Optional, Generator, Any, Type
+from typing import Any, Callable, Generator, Optional, Tuple, Type, TypeVar, Union
 
-from rdflib import URIRef, Literal
+from rdflib import Literal, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.model import Model
@@ -90,7 +90,7 @@ class ResourceBackedModelMixin(ABC):
 
     @property
     @abstractmethod
-    def _resource(self) -> Resource:
+    def resource(self) -> Resource:
         pass
 
     @staticmethod

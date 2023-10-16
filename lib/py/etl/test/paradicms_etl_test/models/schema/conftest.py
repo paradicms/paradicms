@@ -113,8 +113,7 @@ def schema_thumbnail() -> SchemaImageObject:
 def schema_place() -> SchemaPlace:
     return (
         SchemaPlace.builder(uri=URIRef("http://example.com/place"))
-        .set_latitude(42.728104)
-        .set_longitude(-73.687576)
+        .set_centroid(SchemaPlace.Centroid(latitude=42.728104, longitude=-73.687576))
         .set_name("Test place")
         .build()
     )

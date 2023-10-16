@@ -1,6 +1,6 @@
 from typing import Tuple
 
-from rdflib import URIRef, DCTERMS
+from rdflib import DCTERMS, URIRef
 
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.images_mixin import ImagesMixin
@@ -25,8 +25,8 @@ class DcImagesMixin(ResourceBackedModelMixin, ImagesMixin):
     def image_uris(self) -> Tuple[URIRef, ...]:
         return tuple(
             subject
-            for subject in self._resource.graph.subjects(
-                object=self._resource.identifier, predicate=DCTERMS.source
+            for subject in self.resource.graph.subjects(
+                object=self.resource.identifier, predicate=DCTERMS.source
             )
             if isinstance(subject, URIRef)
         )

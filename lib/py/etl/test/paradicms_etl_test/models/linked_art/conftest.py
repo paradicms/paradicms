@@ -22,7 +22,7 @@ def getty_linked_art_human_made_object() -> LinkedArtHumanMadeObject:
                 "https://data.getty.edu/museum/collection/object/4d302ecd-f3a5-4e52-9e97-ca3ca8d5c9e6"
             )
         )
-    )
+    )  # type: ignore
 
 
 @pytest.fixture(scope="session")
@@ -47,4 +47,4 @@ def yale_linked_art_human_made_object() -> LinkedArtHumanMadeObject:
                 "https://lux.collections.yale.edu/data/object/25a33e3e-5ac3-4154-9d01-2cbbf87713ed"
             )
         )
-    )
+    )  # type: ignore

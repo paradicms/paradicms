@@ -1,20 +1,22 @@
-import logging
-from typing import Optional, Tuple, Union
+from __future__ import annotations
 
-from rdflib import Graph, Literal, RDF, RDFS, SKOS, URIRef, OWL
+import logging
+from typing import ClassVar
+
+from rdflib import OWL, RDF, RDFS, SKOS, Graph, Literal, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.resource_backed_model import (
     ResourceBackedModel,
     _StatementObject,
 )
-from paradicms_etl.namespaces import WIKIBASE, WDT, SDOHTTP, PROV
+from paradicms_etl.namespaces import PROV, SDOHTTP, WDT, WIKIBASE
 
 logger = logging.getLogger(__name__)
 
 
 class WikibaseItem(ResourceBackedModel):
-    __INCLUDE_PREDICATES = {
+    __INCLUDE_PREDICATES: ClassVar[set[URIRef]] = {
         OWL.sameAs,
         RDF.type,
         RDFS.label,
@@ -23,18 +25,20 @@ class WikibaseItem(ResourceBackedModel):
         SKOS.prefLabel,
     }
 
-    def __eq__(self, other):
+    __STATEMENT_PROPERTY_BASE_URI = "http://www.wikidata.org/prop/statement/"
+
+    def __eq__(self, other: object):
         if not isinstance(other, WikibaseItem):
             return False
         return self.uri == other.uri
 
     def direct_claim_values(
         self, direct_claim_uri: URIRef
-    ) -> Tuple[Union[Literal, URIRef], ...]:
+    ) -> tuple[Literal | URIRef, ...]:
         return tuple(self._values(direct_claim_uri, self.__map_term_to_literal_or_uri))
 
     @classmethod
-    def from_rdf(cls, resource: Resource) -> "WikibaseItem":
+    def from_rdf(cls, resource: Resource) -> WikibaseItem:
         """
         Parse a minimal version of a single WikibaseItem from the given resource's graph, rather than trying to
         retain it all.
@@ -54,7 +58,6 @@ class WikibaseItem(ResourceBackedModel):
                 ):
                     minimal_graph.add(article_triple)
 
-        STATEMENT_PROPERTY_BASE_URI = "http://www.wikidata.org/prop/statement/"
         for p, o in resource.graph.predicate_objects(subject=resource.identifier):
             if str(p).startswith(str(WDT)) or str(p).startswith(
                 "http://www.wikidata.org/prop/direct-normalized/"
@@ -78,7 +81,7 @@ class WikibaseItem(ResourceBackedModel):
                     elif str(statement_triple[1]).startswith(str(WIKIBASE)):
                         continue
                     elif str(statement_triple[1]).startswith(
-                        STATEMENT_PROPERTY_BASE_URI
+                        cls.__STATEMENT_PROPERTY_BASE_URI
                     ):
                         statement_property_triple = statement_triple
                         statement_value = statement_property_triple[2]
@@ -86,7 +89,7 @@ class WikibaseItem(ResourceBackedModel):
                             resource.graph.objects(
                                 predicate=WDT[
                                     str(statement_property_triple[1])[
-                                        len(STATEMENT_PROPERTY_BASE_URI) :
+                                        len(cls.__STATEMENT_PROPERTY_BASE_URI) :
                                     ]
                                 ],
                                 subject=resource.identifier,
@@ -136,22 +139,21 @@ class WikibaseItem(ResourceBackedModel):
         return cls(minimal_graph.resource(resource.identifier))
 
     @classmethod
-    def label_property_uri(cls) -> Optional[URIRef]:
+    def label_property_uri(cls) -> URIRef | None:
         return SKOS.prefLabel
 
     @staticmethod
     def __map_term_to_literal_or_uri(
         term: _StatementObject,
-    ) -> Union[Literal, URIRef, None]:
+    ) -> Literal | URIRef | None:
         if isinstance(term, Literal):
             return term
-        elif isinstance(term, Resource):
-            if isinstance(term.identifier, URIRef):
-                return term.identifier
+        if isinstance(term, Resource) and isinstance(term.identifier, URIRef):
+            return term.identifier
         return None
 
     @classmethod
-    def rdf_type_uri(cls):
+    def rdf_type_uri(cls) -> URIRef:
         return WIKIBASE.Item
 
     def to_type_rdf(
@@ -159,13 +161,13 @@ class WikibaseItem(ResourceBackedModel):
         *,
         graph: Graph,
         subclass_of_property_uri: URIRef,
-    ) -> "Resource":
+    ) -> Resource:
         for property_ in (
             OWL.sameAs,
             subclass_of_property_uri,
         ):
-            for triple in self._resource.graph.triples(
-                (self._resource.identifier, property_, None)
+            for triple in self.resource.graph.triples(
+                (self.resource.identifier, property_, None)
             ):
                 graph.add(triple)
-        return graph.resource(self._resource.identifier)
+        return graph.resource(self.resource.identifier)

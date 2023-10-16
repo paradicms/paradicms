@@ -9,15 +9,8 @@ from paradicms_ssg.utils.sha256_hash_file import sha256_hash_file
 
 
 class FsImageArchiver:
-    def __init__(
-        self,
-        *,
-        base_url: str,
-        root_directory_path: Path,
-        force_overwrite: bool = False,
-    ):
+    def __init__(self, *, base_url: str, root_directory_path: Path):
         self.__base_url = base_url.rstrip("/") + "/"
-        self.__force_overwrite = force_overwrite
         self.__root_directory_path = root_directory_path
 
     def __call__(self, *, image_file_path: Path) -> str:

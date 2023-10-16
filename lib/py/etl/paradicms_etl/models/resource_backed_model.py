@@ -111,6 +111,16 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
+    def _map_term_to_float(term: _StatementObject) -> float | None:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
+            if isinstance(py_value, float):
+                return py_value
+            if isinstance(py_value, int):
+                return float(py_value)
+        return None
+
+    @staticmethod
     def _map_term_to_image_data_or_str_or_uri(
         term: _StatementObject,
     ) -> ImageData | str | URIRef | None:
@@ -269,24 +279,28 @@ class ResourceBackedModel(Model):
         raise KeyError
 
     @property
-    def _resource(self) -> Resource:
+    def resource(self) -> Resource:
         return self.__resource
+
+    @classmethod
+    def same_as_property_uri(cls) -> URIRef:
+        return OWL.sameAs
 
     @property
     def same_as_uris(self) -> tuple[URIRef, ...]:
-        return tuple(self._values(OWL.sameAs, self._map_term_to_uri))
+        return tuple(self._values(self.same_as_property_uri(), self._map_term_to_uri))
 
     def to_rdf(self, graph: Graph) -> Resource:
         if isinstance(graph, ConjunctiveGraph):
-            context = graph.get_context(self._resource.identifier())
-            context += self._resource.graph
-            return context.resource(self._resource.identifier)
-        graph += self._resource.graph
-        return graph.resource(self._resource.identifier)
+            context = graph.get_context(self.resource.identifier())
+            context += self.resource.graph
+            return context.resource(self.resource.identifier)
+        graph += self.resource.graph
+        return graph.resource(self.resource.identifier)
 
     @property
     def uri(self) -> URIRef:
-        return self._resource.identifier
+        return self.resource.identifier
 
     def _values(
         self,

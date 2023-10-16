@@ -651,15 +651,17 @@ class SyntheticDataPipeline(Pipeline):
             elif work_i == 2:
                 work_builder.add_spatial(
                     SchemaPlace.builder()
-                    .set_latitude(42.728104)
-                    .set_longitude(-73.687576)
+                    .set_centroid(
+                        SchemaPlace.Centroid(latitude=42.728104, longitude=-73.687576)
+                    )
                     .build()
                 )
             elif work_i == 3:
                 named_location = (
                     SchemaPlace.builder(uri=URIRef(str(work_uri) + "Location"))
-                    .set_latitude(42.728104)
-                    .set_longitude(-73.687576)
+                    .set_centroid(
+                        SchemaPlace.Centroid(latitude=42.728104, longitude=-73.687576)
+                    )
                     .build()
                 )
                 # if work_i == 0:

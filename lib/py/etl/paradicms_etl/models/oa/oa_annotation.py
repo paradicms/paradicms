@@ -23,7 +23,7 @@ class OaAnnotation(ResourceBackedModel):
     @property
     def has_body(self) -> Model | None:
         for has_body_uri in self._values(OA.hasBody, self._map_term_to_uri):
-            body_resource: Resource = self._resource.graph.resource(has_body_uri)
+            body_resource: Resource = self.resource.graph.resource(has_body_uri)
             body_rdf_type = body_resource.value(RDF.type)
             if isinstance(body_rdf_type, Resource):
                 if body_rdf_type.identifier == DCMITYPE.Image:

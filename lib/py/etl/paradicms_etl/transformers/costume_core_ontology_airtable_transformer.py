@@ -1,20 +1,10 @@
 import logging
-from typing import (
-    Dict,
-    Tuple,
-    Iterable,
-    Union,
-    List,
-    Set,
-    Optional,
-    Any,
-    TypeVar,
-)
+from typing import Any, Dict, Iterable, List, Optional, Set, Tuple, TypeVar, Union
 from urllib.parse import quote_plus
 
 import PIL
 from inflector import Inflector
-from rdflib import URIRef, Literal
+from rdflib import Literal, URIRef
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
@@ -75,20 +65,50 @@ class CostumeCoreOntologyAirtableTransformer:
 
         self.__available_licenses_by_uri: Dict[URIRef, License] = {}
         self.__available_licenses_by_uri.update(CreativeCommonsLicenses.by_uri())
-        odc_by_license = (
-            DcLicenseDocument.builder(
-                title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
-                uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
-            )
-            .set_identifier(
-                "ODC-By",
-            )
-            .set_version(
-                version="1.0",
-            )
-            .build()
-        )
-        self.__available_licenses_by_uri[odc_by_license.uri] = odc_by_license  # type: ignore
+        for license_ in (
+            (
+                DcLicenseDocument.builder(
+                    title="CC BY-NC 3.0 AU DEED",
+                    uri=URIRef("https://creativecommons.org/licenses/by-nc/3.0/au"),
+                ).build()
+            ),
+            (
+                DcLicenseDocument.builder(
+                    title="GNU Free Documentation License 1.3",
+                    uri=URIRef("https://www.gnu.org/licenses/fdl-1.3.html"),
+                )
+                .set_identifier("FDL")
+                .set_version("1.3")
+                .build()
+            ),
+            (
+                DcLicenseDocument.builder(
+                    title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
+                    uri=URIRef("http://opendatacommons.org/licenses/by/1-0/"),
+                )
+                .set_identifier(
+                    "ODC-By",
+                )
+                .set_version(
+                    version="1.0",
+                )
+                .build()
+            ),
+            (
+                DcLicenseDocument.builder(
+                    title="Open Data Commons Attribution DcLicenseDocument (ODC-By) v1.0",
+                    uri=URIRef("https://opendatacommons.org/licenses/by/1-0/"),
+                )
+                .set_identifier(
+                    "ODC-By",
+                )
+                .set_version(
+                    version="1.0",
+                )
+                .build()
+            ),
+        ):
+            self.__available_licenses_by_uri[license_.uri] = license_  # type: ignore
 
         self.__available_rights_statements_by_uri = (
             RightsStatementsDotOrgRightsStatements.by_uri()

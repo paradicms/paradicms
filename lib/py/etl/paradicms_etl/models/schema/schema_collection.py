@@ -41,6 +41,17 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
         return builder
 
     @classmethod
+    def from_collection(cls, collection: Collection) -> SchemaCollection:
+        if isinstance(collection, SchemaCollection):
+            return collection
+
+        builder = cls.builder(name=collection.label, uri=collection.uri)
+        builder.copy_images(collection)
+        for work_uri in collection.work_uris:
+            builder.add_work(work_uri)
+        return builder.build()
+
+    @classmethod
     def json_ld_context(cls) -> dict[str, Any]:
         return safe_dict_update(
             SchemaModel.json_ld_context(),
@@ -52,7 +63,7 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
         return self._required_label
 
     def replacer(self) -> Builder:
-        return self.Builder(self._resource)
+        return self.Builder(self.resource)
 
     @property
     def work_uris(self) -> tuple[URIRef, ...]:

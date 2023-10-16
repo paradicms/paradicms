@@ -1,13 +1,11 @@
 import logging
-from typing import Optional, Dict, Type, Iterable
+from collections.abc import Iterable
 
-from rdflib import ConjunctiveGraph, RDF, URIRef
+from rdflib import RDF, ConjunctiveGraph, URIRef
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.models.root_model_classes_by_name import (
-    ROOT_MODEL_CLASSES_BY_NAME,
-)
+from paradicms_etl.models.root_model_classes_by_name import ROOT_MODEL_CLASSES_BY_NAME
 
 
 class RdfConjunctiveGraphTransformer:
@@ -18,12 +16,12 @@ class RdfConjunctiveGraphTransformer:
     def __init__(
         self,
         *,
-        root_model_classes_by_name: Optional[Dict[str, Type[Model]]] = None,
+        root_model_classes_by_name: dict[str, type[Model]] | None = None,
     ):
         self.__logger = logging.getLogger(__name__)
         if root_model_classes_by_name is None:
             root_model_classes_by_name = ROOT_MODEL_CLASSES_BY_NAME
-        self.__root_model_classes_by_rdf_type_uri: Dict[URIRef, Type[Model]] = {}
+        self.__root_model_classes_by_rdf_type_uri: dict[URIRef, type[Model]] = {}
         for (
             root_model_class_name,
             root_model_class,
@@ -55,7 +53,7 @@ class RdfConjunctiveGraphTransformer:
                 )
                 continue
 
-            root_model_class: Optional[Type[Model]] = None
+            root_model_class: type[Model] | None = None
             for root_model_rdf_type in root_model_rdf_types:
                 if not isinstance(root_model_rdf_type, URIRef):
                     continue

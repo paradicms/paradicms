@@ -1,15 +1,17 @@
-from typing import Optional
+from __future__ import annotations
 
-from rdflib import Graph, SDO
-from rdflib.resource import Resource
+from typing import TYPE_CHECKING
 
-from paradicms_etl.models.schema.schema_media_object_mixin import (
-    SchemaMediaObjectMixin,
-)
+from rdflib import SDO, Graph
+
+from paradicms_etl.models.schema.schema_media_object_mixin import SchemaMediaObjectMixin
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.uuid_urn import uuid_urn
+
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
 
 
 class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
@@ -21,7 +23,7 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
     """
 
     class Builder(SchemaModel.Builder, SchemaMediaObjectMixin.Builder, Text.Builder):
-        def build(self) -> "SchemaTextObject":
+        def build(self) -> SchemaTextObject:
             return SchemaTextObject(self._resource)
 
     def __init__(self, resource: Resource):
@@ -35,13 +37,21 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
         return builder
 
     @property
-    def caption(self) -> Optional[str]:
+    def caption(self) -> str | None:
         return self._optional_value(SDO.caption, self._map_term_to_str)
 
     @property
     def copyable(self) -> bool:
         copyable = self._optional_value(CMS.imageCopyable, self._map_term_to_bool)
         return copyable if copyable is not None else True
+
+    @classmethod
+    def from_text(cls, text: Text) -> SchemaTextObject:
+        if isinstance(text, SchemaTextObject):
+            return text
+        builder = cls.builder(text.value)
+        builder.copy_rights(text)
+        return builder.build()
 
     @property
     def text(self) -> str:
