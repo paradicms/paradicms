@@ -1,29 +1,34 @@
-import { datasetToJsonLd, getNamedRdfTypes } from "@paradicms/rdf";
-import { schema, time } from "@paradicms/vocabularies";
-import { Memoize } from "typescript-memoize";
-import { Agent } from "./Agent";
-import { AppConfiguration } from "./AppConfiguration";
-import { Collection } from "./Collection";
-import { Concept } from "./Concept";
-import { Event } from "./Event";
-import { Image } from "./Image";
-import { License } from "./License";
-import { Location } from "./Location";
-import { Model } from "./Model";
-import { ModelReader } from "./ModelReader";
-import { ModelSet } from "./ModelSet";
-import { Organization } from "./Organization";
-import { PartialDateTimeDescription } from "./PartialDateTimeDescription";
-import { Person } from "./Person";
-import { ResourceBackedModelParameters } from "./ResourceBackedModelParameters";
-import { RightsStatement } from "./RightsStatement";
-import { indexModelsByIri } from "./indexModelsByIri";
-import { indexModelsByKey } from "./indexModelsByKey";
-import { indexModelsByValues } from "./indexModelsByValues";
-import { OwlTimePartialDateTimeDescription } from "./owl-time/OwlTimePartialDateTimeDescription";
-import { SchemaTextObject } from "./schema/SchemaTextObject";
-import { sortModelsArray } from "./sortModelsArray";
-import { sortModelsMultimap } from "./sortModelsMultimap";
+import {datasetToJsonLd, getNamedRdfTypes} from "@paradicms/rdf";
+import {schema, time} from "@paradicms/vocabularies";
+import {DatasetCore} from "@rdfjs/types";
+import {Memoize} from "typescript-memoize";
+import {Agent} from "./Agent";
+import {AppConfiguration} from "./AppConfiguration";
+import {Collection} from "./Collection";
+import {Concept} from "./Concept";
+import {Event} from "./Event";
+import {Image} from "./Image";
+import {License} from "./License";
+import {Location} from "./Location";
+import {Model} from "./Model";
+import {ModelReader} from "./ModelReader";
+import {ModelSet} from "./ModelSet";
+import {Organization} from "./Organization";
+import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
+import {Person} from "./Person";
+import {Property} from "./Property";
+import {PropertyGroup} from "./PropertyGroup";
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+import {RightsStatement} from "./RightsStatement";
+import {Text} from "./Text";
+import {Work} from "./Work";
+import {indexModelsByIri} from "./indexModelsByIri";
+import {indexModelsByKey} from "./indexModelsByKey";
+import {indexModelsByValues} from "./indexModelsByValues";
+import {OwlTimePartialDateTimeDescription} from "./owl-time/OwlTimePartialDateTimeDescription";
+import {SchemaTextObject} from "./schema/SchemaTextObject";
+import {sortModelsArray} from "./sortModelsArray";
+import {sortModelsMultimap} from "./sortModelsMultimap";
 
 export class MemModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
@@ -177,7 +182,10 @@ export class MemModelSet implements ModelSet {
   partialDateTimeDescriptionByIri(
     parameters: ResourceBackedModelParameters
   ): PartialDateTimeDescription | null {
-    for (const rdfType of getNamedRdfTypes({dataset: parameters.dataset, subject: parameters.identifier}) {
+    for (const rdfType of getNamedRdfTypes({
+      dataset: parameters.dataset,
+      subject: parameters.identifier,
+    })) {
       if (rdfType.equals(time.DateTimeDescription)) {
         return new OwlTimePartialDateTimeDescription(parameters);
       }
@@ -286,7 +294,10 @@ export class MemModelSet implements ModelSet {
   }
 
   textByIri(parameters: ResourceBackedModelParameters): Text | null {
-    for (const rdfType of getNamedRdfTypes({dataset: parameters.dataset, subject: parameters.identifier}) {
+    for (const rdfType of getNamedRdfTypes({
+      dataset: parameters.dataset,
+      subject: parameters.identifier,
+    })) {
       if (rdfType.equals(schema.TextObject)) {
         return new SchemaTextObject(parameters);
       }
