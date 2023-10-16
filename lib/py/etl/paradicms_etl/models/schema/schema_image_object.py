@@ -6,6 +6,7 @@ from rdflib.resource import Resource
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
+from paradicms_etl.models.rights_mixin import RightsMixin
 from paradicms_etl.models.schema.schema_media_object_mixin import SchemaMediaObjectMixin
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.models.schema.schema_quantitative_value import (
@@ -31,7 +32,7 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         def build(self) -> SchemaImageObject:
             return SchemaImageObject(self._resource)
 
-        def copy_rights(self, other: Image) -> SchemaImageObject.Builder:
+        def copy_rights(self, other: RightsMixin) -> SchemaImageObject.Builder:
             Image.Builder.copy_rights(self, other)
             return self
 

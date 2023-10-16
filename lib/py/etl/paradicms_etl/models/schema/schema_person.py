@@ -59,6 +59,7 @@ class SchemaPerson(SchemaModel, Person):
             return person
 
         builder = cls.builder(name=person.label, uri=person.uri)
+        builder.copy_images(person)
         if person.family_name is not None:
             builder.set_family_name(person.family_name)
         if person.given_name is not None:

@@ -57,6 +57,7 @@ class SchemaProperty(SchemaModel, Property):
             return property_
 
         builder = cls.builder(name=property_.label, uri=property_.uri)
+        builder.copy_images(property_)
         if property_.filterable is not None:
             builder.set_filterable(property_.filterable)
         if property_.order is not None:

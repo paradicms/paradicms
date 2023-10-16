@@ -36,7 +36,9 @@ class SchemaOrganization(SchemaModel, Organization):
         if isinstance(organization, SchemaOrganization):
             return organization
 
-        return cls.builder(name=organization.label, uri=organization.uri).build()
+        builder = cls.builder(name=organization.label, uri=organization.uri)
+        builder.copy_images(organization)
+        return builder.build()
 
     @property
     def label(self) -> str:

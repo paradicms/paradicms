@@ -23,7 +23,7 @@ class RightsMixin(ABC):
             raise NotImplementedError
 
         @abstractmethod
-        def add_license(self, license: str | URIRef) -> RightsMixin.Builder:
+        def add_license(self, license_: str | URIRef) -> RightsMixin.Builder:
             raise NotImplementedError
 
         @abstractmethod
@@ -33,6 +33,19 @@ class RightsMixin(ABC):
         @abstractmethod
         def add_rights_statement(self, statement: str | URIRef) -> RightsMixin.Builder:
             raise NotImplementedError
+
+        def copy_rights(self, other: RightsMixin) -> RightsMixin.Builder:
+            for contributor in other.contributors:
+                self.add_contributor(contributor)
+            for creator in other.creators:
+                self.add_creator(creator)
+            for license_ in other.licenses:
+                self.add_license(license_)
+            for rights_holder in other.rights_holders:
+                self.add_rights_holder(rights_holder)
+            for rights_statement in other.rights_statements:
+                self.add_rights_statement(rights_statement)
+            return self
 
     @property
     @abstractmethod

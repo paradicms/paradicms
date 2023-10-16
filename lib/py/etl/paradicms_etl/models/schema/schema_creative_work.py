@@ -1,17 +1,20 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from rdflib import SDO, Graph, URIRef
-from rdflib.resource import Resource
 
 from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
 from paradicms_etl.models.schema.schema_model import SchemaModel
+from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
 
 
 class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
@@ -49,6 +52,17 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
             return work
 
         builder = cls.builder(name=work.label, uri=work.uri)
+
+        work_description = work.description
+        if isinstance(work_description, str):
+            builder.set_description(work_description)
+        elif isinstance(work_description, Text):
+            builder.set_description(SchemaTextObject.from_text(work_description))
+        elif work_description is not None:
+            raise TypeError(type(work_description))
+
+        builder.copy_images(work)
+
         return builder.build()
 
     @classmethod
