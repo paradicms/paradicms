@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING, Any
 
 from rdflib import SDO, Graph, URIRef
 
+from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
@@ -39,6 +40,10 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         return builder
 
     @property
+    def created(self) -> DateTimeUnion | None:
+        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)
+
+    @property
     def description(self) -> str | Text | None:
         return self._optional_value(SDO.description, self._map_term_to_str_or_text)  # type: ignore
 
@@ -53,6 +58,15 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
 
         builder = cls.builder(name=work.label, uri=work.uri)
 
+        for contributor in work.contributors:
+            builder.add_contributor(contributor)
+
+        if work.created is not None:
+            builder.set_date_created(work.created)
+
+        for creator in work.creators:
+            builder.add_creator(creator)
+
         work_description = work.description
         if isinstance(work_description, str):
             builder.set_description(work_description)
@@ -62,6 +76,12 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
             raise TypeError(type(work_description))
 
         builder.copy_images(work)
+
+        if work.modified is not None:
+            builder.set_date_modified(work.modified)
+
+        for subject in work.subjects:
+            builder.add_about(subject)
 
         return builder.build()
 
@@ -76,8 +96,16 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
     def label(self) -> str:
         return self._required_label
 
+    @property
+    def modified(self) -> DateTimeUnion | None:
+        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)
+
     def replacer(self) -> Builder:
         return self.Builder(self.resource)
+
+    @property
+    def subjects(self) -> tuple[str | URIRef, ...]:
+        return tuple(self._values(SDO.about, self._map_term_to_str_or_uri))
 
     @property
     def text(self) -> str | Text | None:

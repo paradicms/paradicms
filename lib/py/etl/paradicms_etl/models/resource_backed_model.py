@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from abc import abstractmethod
+from datetime import date, datetime
 from typing import TYPE_CHECKING, Any, TypeVar
 
 import rdflib.collection
@@ -15,6 +16,7 @@ from paradicms_etl.utils.clone_graph import clone_graph
 if TYPE_CHECKING:
     from collections.abc import Callable, Generator
 
+    from paradicms_etl.models.date_time_union import DateTimeUnion
     from paradicms_etl.models.image_data import ImageData
     from paradicms_etl.models.text import Text
 
@@ -108,6 +110,16 @@ class ResourceBackedModel(Model):
             py_value = term.toPython()
             if isinstance(py_value, bytes):
                 return py_value
+        return None
+
+    @staticmethod
+    def _map_term_to_date_time_union(term: _StatementObject) -> DateTimeUnion | None:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
+            if isinstance(py_value, date | datetime | str):
+                return py_value
+        elif isinstance(term, Resource):
+            raise NotImplementedError("support DateTimeDescription mapping")
         return None
 
     @staticmethod
