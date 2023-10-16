@@ -6,12 +6,14 @@ from urllib.parse import quote
 
 from rdflib import DCTERMS, SDO, Literal, URIRef
 
+from paradicms_etl.canonicalizer import canonicalizer
 from paradicms_etl.enrichers.enricher_factory import EnricherFactory
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
 from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.model import Model
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.collection import Collection
@@ -628,7 +630,7 @@ class SyntheticDataPipeline(Pipeline):
                 for contributor_i in range(2)
             ]
             for contributor in contributors:
-                work_builder.add_contributor(contributor)
+                work_builder.add_contributor(contributor.uri)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
@@ -725,15 +727,21 @@ class SyntheticDataPipeline(Pipeline):
         data_dir_path = root_dir_path / "data" / "synthetic"
 
         if loader is None:
-            rdf_file_path = data_dir_path / "synthetic_data.trig"
+            def canonicalized_loader(
+                *, flush: bool, models: Iterable[Model]
+            ) -> Iterable[Model]:
+                yield from RdfFileLoader(
+                    rdf_file_path=data_dir_path / "synthetic_data_canonical.trig",
+                )(flush=flush, models=canonicalizer(models))
 
             loader = CompositeLoader(
                 loaders=(
                     Excel2010Loader(
                         xlsx_file_path=data_dir_path / "synthetic_data.xlsx"
                     ),
+                    canonicalized_loader,
                     RdfFileLoader(
-                        rdf_file_path=rdf_file_path,
+                        rdf_file_path=data_dir_path / "synthetic_data_original.trig",
                     ),
                 )
             )

@@ -71,14 +71,14 @@ yarn build-lib
 ### TypeScript libraries and apps
 
 ```
-export DATA_FILE_PATHS="$PWD/data/synthetic/synthetic_data.trig"
+export DATA_FILE_PATHS="$PWD/data/synthetic/synthetic_data_canonical.trig"
 yarn build
 ```
 
 ### A single TypeScript app
 
 ```
-export DATA_FILE_PATHS="$PWD/data/synthetic/synthetic_data.trig"
+export DATA_FILE_PATHS="$PWD/data/synthetic/synthetic_data_canonical.trig"
 cd app/work-search
 yarn build
 ```

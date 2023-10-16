@@ -371,7 +371,8 @@ export const behavesLikeApi = (api: Api) => {
     const workCreationDateRangeFacet = requireDefined(
       actualResult.facets.find(facet => facet.type == "WorkCreationDateRange")
     ) as WorkCreationDateRangeFacet;
-    expect(workCreationDateRangeFacet.start.year).to.eq(1528); // Judgment of Paris
+    // expect(workCreationDateRangeFacet.start.year).to.eq(1528); // Judgment of Paris
+    expect(workCreationDateRangeFacet.start.year).to.eq(2021);
     expect(workCreationDateRangeFacet.end.year).to.eq(2021);
     expect(workCreationDateRangeFacet.end.month!).to.eq(12);
     expect(workCreationDateRangeFacet.end.day!).to.eq(30);

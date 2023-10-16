@@ -1,4 +1,7 @@
+import logging
 from collections.abc import Iterable
+
+from rdflib import BNode, Graph, Literal, URIRef
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
@@ -27,10 +30,8 @@ from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
-from rdflib import BNode, Graph, Literal, URIRef
 
-from paradicms_ssg.models.app_configuration import AppConfiguration
-from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
+logger = logging.getLogger(__name__)
 
 
 def __copy_connected_subgraph(
@@ -50,12 +51,11 @@ def __copy_connected_subgraph(
             raise TypeError(type(o))
 
 
-def model_standardizer(  # noqa: C901, PLR0912, PLR0915
+def canonicalizer(  # noqa: C901, PLR0912, PLR0915
     models: Iterable[Model],
 ) -> Iterable[ResourceBackedModel]:
     """
-    Transform all models to canonical representations expected by the static site generator,
-    and resolve sameAs connections.
+    Transform all models to canonical representations.
 
     For example, all non-SchemaCreativeWork Work's are transformed to SchemaCreativeWork.
     """
@@ -65,11 +65,7 @@ def model_standardizer(  # noqa: C901, PLR0912, PLR0915
     transformed_models_by_uri: dict[URIRef, ResourceBackedModel] = {}
     for original_model in models:
         transformed_model: Model
-        if isinstance(original_model, AppConfiguration):
-            if not isinstance(original_model, CmsAppConfiguration):
-                raise TypeError(type(original_model))
-            transformed_model = original_model
-        elif isinstance(original_model, Collection):
+        if isinstance(original_model, Collection):
             transformed_model = SchemaCollection.from_collection(original_model)
         elif isinstance(original_model, Concept):
             transformed_model = SchemaDefinedTerm.from_concept(original_model)
@@ -101,7 +97,14 @@ def model_standardizer(  # noqa: C901, PLR0912, PLR0915
         elif isinstance(original_model, Work):
             transformed_model = SchemaCreativeWork.from_work(original_model)
         else:
-            raise TypeError(type(original_model))
+            if not isinstance(original_model, ResourceBackedModel):
+                raise TypeError(type(original_model))
+
+            logger.info(
+                "unrecognized original model type %s, passing through canonicalization as-is",
+                type(original_model),
+            )
+            transformed_model = original_model
 
         assert transformed_model.label == original_model.label
         assert transformed_model.uri == original_model.uri
@@ -115,7 +118,11 @@ def model_standardizer(  # noqa: C901, PLR0912, PLR0915
                 continue
             if not isinstance(original_model, Work):
                 continue
+
             transformed_model = transformed_models_by_uri[model_uri]
+
+            if id(original_model) == id(transformed_model):
+                continue
 
             for property_uri in property_uris:
                 for original_object in original_model.resource.graph.objects(
