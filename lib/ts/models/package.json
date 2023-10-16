@@ -5,7 +5,6 @@
   "dependencies": {
     "@paradicms/rdf": "1.0.5",
     "@paradicms/vocabularies": "1.0.5",
-    "@paradicms/wikibase": "1.0.5",
     "@terraformer/wkt": "^2.2.0",
     "@types/terraformer__wkt": "^2.0.0",
     "dayjs": "1.10.7",
