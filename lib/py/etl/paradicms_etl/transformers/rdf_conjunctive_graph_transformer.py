@@ -1,6 +1,5 @@
 import logging
 from collections.abc import Iterable
-from typing import Dict, Optional, Type
 
 from rdflib import RDF, ConjunctiveGraph, URIRef
 
