@@ -8,6 +8,7 @@ from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.dc.dc_rights_statement import DcRightsStatement
 from paradicms_etl.models.event import Event
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.license import License
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.organization import Organization
@@ -26,6 +27,7 @@ from paradicms_etl.models.schema.schema_organization import SchemaOrganization
 from paradicms_etl.models.schema.schema_person import SchemaPerson
 from paradicms_etl.models.schema.schema_place import SchemaPlace
 from paradicms_etl.models.schema.schema_property import SchemaProperty
+from paradicms_etl.models.text import Text
 from paradicms_etl.models.wikibase.wikibase_property import WikibaseProperty
 from paradicms_etl.models.work import Work
 from paradicms_ssg.model_standardizer import model_standardizer
@@ -34,7 +36,7 @@ if TYPE_CHECKING:
     from rdflib import URIRef
 
 
-def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
+def test_call(synthetic_data_models: tuple[Model, ...]) -> None:  # noqa: C901
     original_models = tuple(
         original_model
         for original_model in synthetic_data_models
@@ -109,8 +111,20 @@ def test_call(synthetic_data_models: tuple[Model, ...]) -> None:
             assert isinstance(transformed_model, DcRightsStatement)
         elif isinstance(original_model, Work):
             assert isinstance(transformed_model, SchemaCreativeWork)
+            if isinstance(original_model.description, Text):
+                assert isinstance(transformed_model.description, Text)
+                assert (
+                    original_model.description.value
+                    == transformed_model.description.value
+                )
+            else:
+                assert original_model.description == transformed_model.description
         else:
             raise TypeError(type(original_model))
+
+        if isinstance(original_model, ImagesMixin):
+            assert isinstance(transformed_model, ImagesMixin)
+            assert original_model.image_uris == transformed_model.image_uris
 
         if isinstance(original_model, RightsMixin):
             assert isinstance(transformed_model, RightsMixin)
