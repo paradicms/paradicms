@@ -67,7 +67,6 @@ __ROOT_MODEL_CLASSES: tuple[type[Model], ...] = (
     WikidataLocation,
     WikidataPerson,
     WikidataWork,
-    WikibaseItem,
     WikibaseProperty,
 )
 
