@@ -1,9 +1,7 @@
 import {Term} from "@rdfjs/types";
 import {Concept} from "./Concept";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
-import {conceptFactories} from "./conceptFactories";
 import {LiteralConcept} from "./literal/LiteralConcept";
-import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
  * Map a term in a modelSet to a RightsStatement.
@@ -15,18 +13,8 @@ export const mapTermToConcept = (
   switch (term.termType) {
     case "Literal":
       return new LiteralConcept({literal: term});
-    case "NamedNode": {
-      const concept = modelParameters.modelSet.conceptByIri(term.value);
-      if (concept) {
-        return concept;
-      } else {
-        return mapTermToResourceBackedModel({
-          factories: conceptFactories,
-          modelParameters,
-          term,
-        });
-      }
-    }
+    case "NamedNode":
+      return modelParameters.modelSet.conceptByIri(term.value);
     default:
       return null;
   }
