@@ -1,14 +1,19 @@
 import {getRdfInstanceQuads} from "@paradicms/rdf";
 import {DatasetCore, NamedNode} from "@rdfjs/types";
-import {ModelSet} from "./ModelSet";
+import log from "loglevel";
 import * as RdfString from "rdf-string";
 import invariant from "ts-invariant";
-import {ModelIdentifier} from "./ModelIdentifier";
-import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
-import {PartialModelReader} from "./PartialModelReader";
-import {ResourceBackedModelFactory} from "./ResourceBackedModelFactory";
 import {Model} from "./Model";
-import log from "loglevel";
+import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
+import {ModelIdentifier} from "./ModelIdentifier";
+import {ModelSet} from "./ModelSet";
+import {PartialModelReader} from "./PartialModelReader";
+
+import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
+
+type ResourceBackedModelFactory<ResourceBackedModelT> = {
+  new (kwds: ResourceBackedModelParameters): ResourceBackedModelT;
+};
 
 export abstract class DatasetModelReader extends PartialModelReader {
   constructor(protected readonly dataset: DatasetCore) {
