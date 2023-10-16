@@ -50,7 +50,7 @@ export const filterWorks = (kwds: {
             event => event.type === "WorkCreation"
           );
           if (!workCreationEvent) {
-            return;
+            return !filter.end && !filter.start;
           }
           return testEventDateRangeFilter({
             event: workCreationEvent,
