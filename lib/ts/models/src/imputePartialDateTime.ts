@@ -1,7 +1,9 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import * as log from "loglevel";
 import invariant from "ts-invariant";
 import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
+dayjs.extend(utc);
 
 /**
  * Impute a Date from a partial date-time.
