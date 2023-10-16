@@ -2,12 +2,12 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from rdflib import DCMITYPE, XSD, Graph, Literal, URIRef
-from rdflib.namespace import DCTERMS
+from rdflib import DCMITYPE, DCTERMS, XSD, Graph, Literal, URIRef
 
 from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.dc.dc_rights_mixin import DcRightsMixin
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.namespaces import CMS, EXIF
 from paradicms_etl.utils.clone_graph import clone_graph
@@ -15,7 +15,6 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 if TYPE_CHECKING:
     from paradicms_etl.models.date_time_union import DateTimeUnion
-    from paradicms_etl.models.image_data import ImageData
 
 
 class DcImage(DcModel, DcRightsMixin, Image):
@@ -78,6 +77,13 @@ class DcImage(DcModel, DcRightsMixin, Image):
             return self
 
         def set_src(self, src: str | ImageData | Literal | URIRef) -> DcImage.Builder:
+            existing_src = DcImage(self._resource).src
+            if isinstance(existing_src, ImageData):
+                for triple in tuple(
+                    self._resource.graph.triples((existing_src.uri, None, None))
+                ):
+                    self._resource.graph.remove(triple)
+
             self.set(CMS.imageSrc, src)
             return self
 

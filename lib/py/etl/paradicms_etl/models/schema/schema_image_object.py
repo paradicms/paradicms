@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
-
 from rdflib import SDO, XSD, Graph, Literal, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.image import Image
+from paradicms_etl.models.image_data import ImageData
 from paradicms_etl.models.image_dimensions import ImageDimensions
 from paradicms_etl.models.schema.schema_media_object_mixin import SchemaMediaObjectMixin
 from paradicms_etl.models.schema.schema_model import SchemaModel
@@ -14,9 +13,6 @@ from paradicms_etl.models.schema.schema_quantitative_value import (
 )
 from paradicms_etl.namespaces import CMS
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-
-if TYPE_CHECKING:
-    from paradicms_etl.models.image_data import ImageData
 
 
 class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
@@ -106,6 +102,12 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
         def set_src(
             self, src: str | ImageData | Literal | URIRef
         ) -> SchemaImageObject.Builder:
+            existing_src = SchemaImageObject(self._resource).src
+            if isinstance(existing_src, ImageData):
+                for triple in tuple(
+                    self._resource.graph.triples((existing_src.uri, None, None))
+                ):
+                    self._resource.graph.remove(triple)
             self.set(SDO.contentUrl, src)
             return self
 
@@ -181,7 +183,7 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
                 #     "@type": str(XSD.integer),
                 # },
                 # "width": {"@id": str(EXIF.width), "@type": str(XSD.integer)},
-                "src": {"@id": str(CMS.imageSrc)},
+                # "src": {"@id": str(SDO.content)},
                 "thumbnail": {"@id": str(SDO.thumbnail), "@type": "@id"},
             },
         )
