@@ -162,8 +162,12 @@ export const facetizeWorks = (kwds: {
   const {filters, valueFacetValueThumbnailSelector, works} = kwds;
   const facets: WorksFacet[] = [];
   for (const filter of filters) {
+    console.time(`facetize on filter ${filter.type}`);
     switch (filter.type) {
       case "StringPropertyValue":
+        console.time(
+          `facetize on filter ${filter.type} with label ${filter.label}`
+        );
         facets.push({
           ...facetizeWorksByValue({
             valueFacetValueThumbnailSelector,
@@ -174,6 +178,9 @@ export const facetizeWorks = (kwds: {
           propertyIri: filter.propertyIri,
           type: "StringPropertyValue",
         });
+        console.timeEnd(
+          `facetize on filter ${filter.type} with label ${filter.label}`
+        );
         break;
       case "WorkCreationDateRange": {
         const facet = facetizeWorksByEventDateRange({
@@ -199,6 +206,7 @@ export const facetizeWorks = (kwds: {
         });
         break;
     }
+    console.timeEnd(`facetize on filter ${filter.type}`);
   }
   return facets;
 };
