@@ -1,5 +1,7 @@
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import {PartialDateTimeDescription} from "./PartialDateTimeDescription";
+dayjs.extend(utc);
 
 export abstract class PartialDateTimeDescriptionLabelMixin
   implements PartialDateTimeDescription {

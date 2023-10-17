@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 from abc import abstractmethod
+from datetime import date, datetime
 from typing import TYPE_CHECKING, Any, TypeVar
 
 import rdflib.collection
@@ -15,6 +16,7 @@ from paradicms_etl.utils.clone_graph import clone_graph
 if TYPE_CHECKING:
     from collections.abc import Callable, Generator
 
+    from paradicms_etl.models.date_time_union import DateTimeUnion
     from paradicms_etl.models.image_data import ImageData
     from paradicms_etl.models.text import Text
 
@@ -111,6 +113,22 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
+    def _map_term_to_date_time_union(term: _StatementObject) -> DateTimeUnion | None:
+        if isinstance(term, Literal):
+            py_value = term.toPython()
+            if isinstance(py_value, date | datetime | str):
+                return py_value
+        elif isinstance(term, Resource):
+            from paradicms_etl.models.owl_time.owl_time_date_time_description import (
+                OwlTimeDateTimeDescription,
+            )
+
+            return ResourceBackedModel._map_term_to_model(
+                model_class=OwlTimeDateTimeDescription, term=term
+            )
+        return None
+
+    @staticmethod
     def _map_term_to_float(term: _StatementObject) -> float | None:
         if isinstance(term, Literal):
             py_value = term.toPython()
@@ -147,12 +165,6 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_term_to_literal(term: _StatementObject) -> Any:
-        if isinstance(term, Literal):
-            return term.toPython()
-        return None
-
-    @staticmethod
     def _map_term_to_collection(
         term: _StatementObject,
     ) -> tuple[Node, ...] | None:
@@ -184,6 +196,22 @@ class ResourceBackedModel(Model):
     #             raise NotImplementedError(container_rdf_type.identifier)
     #
     #     return tuple(container_class(resource.graph, resource.identifier))
+
+    @staticmethod
+    def _map_term_to_literal(term: _StatementObject) -> Literal | None:
+        if isinstance(term, Literal):
+            return term
+        return None
+
+    @staticmethod
+    def _map_term_to_literal_or_uri(
+        term: _StatementObject,
+    ) -> Literal | URIRef | None:
+        if isinstance(term, Literal):
+            return term
+        if isinstance(term, Resource) and isinstance(term.identifier, URIRef):
+            return term.identifier
+        return None
 
     @staticmethod
     def _map_term_to_model(

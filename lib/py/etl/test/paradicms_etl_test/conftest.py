@@ -31,7 +31,7 @@ def synthetic_data_models() -> tuple[Model, ...]:
 
 @pytest.fixture(scope="session")
 def synthetic_data_rdf_file_path(data_dir_path: Path) -> Path:
-    return data_dir_path / "synthetic" / "synthetic_data.trig"
+    return data_dir_path / "synthetic" / "synthetic_data_raw.trig"
 
 
 @pytest.fixture(scope="session")

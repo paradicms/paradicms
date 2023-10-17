@@ -14,6 +14,8 @@ from paradicms_etl.utils.safe_dict_update import safe_dict_update
 if TYPE_CHECKING:
     from rdflib.resource import Resource
 
+    from paradicms_etl.models.text import Text
+
 
 class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
     """
@@ -40,13 +42,19 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
         builder.set(SDO.name, name)
         return builder
 
+    @property
+    def description(self) -> str | Text | None:
+        return self._optional_value(SDO.description, self._map_term_to_str_or_text)  # type: ignore
+
     @classmethod
     def from_collection(cls, collection: Collection) -> SchemaCollection:
         if isinstance(collection, SchemaCollection):
             return collection
 
         builder = cls.builder(name=collection.label, uri=collection.uri)
+        builder.copy_description(collection.description)
         builder.copy_images(collection)
+        builder.copy_same_as(collection)
         for work_uri in collection.work_uris:
             builder.add_work(work_uri)
         return builder.build()

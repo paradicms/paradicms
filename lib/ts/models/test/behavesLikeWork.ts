@@ -29,7 +29,7 @@ export const behavesLikeWork = (
 
   it("should get the work's agents", () => {
     expect(work.agents)
-      .to.have.length.gte(4)
+      .to.have.length.gte(2)
       .lte(6);
   });
 

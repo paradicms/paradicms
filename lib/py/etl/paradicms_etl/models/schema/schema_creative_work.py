@@ -8,13 +8,14 @@ from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
 from paradicms_etl.models.schema.schema_model import SchemaModel
-from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
-from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 if TYPE_CHECKING:
     from rdflib.resource import Resource
+
+    from paradicms_etl.models.date_time_union import DateTimeUnion
+    from paradicms_etl.models.text import Text
 
 
 class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
@@ -39,6 +40,10 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         return builder
 
     @property
+    def created(self) -> DateTimeUnion | None:
+        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)  # type: ignore
+
+    @property
     def description(self) -> str | Text | None:
         return self._optional_value(SDO.description, self._map_term_to_str_or_text)  # type: ignore
 
@@ -53,15 +58,25 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
 
         builder = cls.builder(name=work.label, uri=work.uri)
 
-        work_description = work.description
-        if isinstance(work_description, str):
-            builder.set_description(work_description)
-        elif isinstance(work_description, Text):
-            builder.set_description(SchemaTextObject.from_text(work_description))
-        elif work_description is not None:
-            raise TypeError(type(work_description))
+        for contributor in work.contributors:
+            builder.add_contributor(contributor)
 
+        if work.created is not None:
+            builder.set_date_created(work.created)
+
+        for creator in work.creators:
+            builder.add_creator(creator)
+
+        builder.copy_description(work.description)
         builder.copy_images(work)
+
+        if work.modified is not None:
+            builder.set_date_modified(work.modified)
+
+        builder.copy_same_as(work)
+
+        for subject in work.subjects:
+            builder.add_about(subject)
 
         return builder.build()
 
@@ -76,8 +91,20 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
     def label(self) -> str:
         return self._required_label
 
+    @property
+    def modified(self) -> DateTimeUnion | None:
+        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)  # type: ignore
+
     def replacer(self) -> Builder:
         return self.Builder(self.resource)
+
+    @property
+    def spatial(self) -> str | URIRef | None:
+        return self._optional_value(SDO.spatial, self._map_term_to_str_or_uri)
+
+    @property
+    def subjects(self) -> tuple[str | URIRef, ...]:
+        return tuple(self._values(SDO.about, self._map_term_to_str_or_uri))
 
     @property
     def text(self) -> str | Text | None:

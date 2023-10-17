@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from rdflib import DCMITYPE, DCTERMS, Graph, URIRef
 
+from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
 from paradicms_etl.models.dc.dc_model import DcModel
 from paradicms_etl.models.work import Work
@@ -63,6 +64,18 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
         return builder
 
     @property
+    def contributors(self) -> tuple[str | URIRef, ...]:
+        return tuple(self._values(DCTERMS.contributor, self._map_term_to_str_or_uri))
+
+    @property
+    def created(self) -> DateTimeUnion | None:
+        return self._optional_value(DCTERMS.created, self._map_term_to_date_time_union)  # type: ignore
+
+    @property
+    def creators(self) -> tuple[str | URIRef, ...]:
+        return tuple(self._values(DCTERMS.creator, self._map_term_to_str_or_uri))
+
+    @property
     def description(self) -> str | Text | None:
         return self._optional_value(DCTERMS.description, self._map_term_to_str_or_text)  # type: ignore
 
@@ -70,9 +83,21 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
     def label(self) -> str:
         return self._required_label
 
+    @property
+    def modified(self) -> DateTimeUnion | None:
+        return self._optional_value(DCTERMS.modified, self._map_term_to_date_time_union)  # type: ignore
+
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return DCMITYPE.PhysicalObject
 
     def replacer(self) -> Builder:
         return self.Builder(self.resource)
+
+    @property
+    def spatial(self) -> str | URIRef | None:
+        return self._optional_value(DCTERMS.spatial, self._map_term_to_str_or_uri)
+
+    @property
+    def subjects(self) -> tuple[str | URIRef, ...]:
+        return tuple(self._values(DCTERMS.subject, self._map_term_to_str_or_uri))

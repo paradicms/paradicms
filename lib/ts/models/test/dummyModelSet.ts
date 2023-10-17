@@ -11,10 +11,13 @@ import {
   Location,
   ModelSet,
   Organization,
+  PartialDateTimeDescription,
   Person,
   Property,
   PropertyGroup,
+  ResourceBackedModelParameters,
   RightsStatement,
+  Text,
   Work,
 } from "../src";
 
@@ -55,6 +58,11 @@ export const dummyModelSet: ModelSet = {
   organizationByIri(organizationIri: string): Organization | null {
     throw new EvalError("not implemented");
   },
+  partialDateTimeDescriptionByIri: function(
+    parameters: ResourceBackedModelParameters
+  ): PartialDateTimeDescription {
+    throw new Error("Function not implemented.");
+  },
   personByIri(personIri: string): Person | null {
     throw new EvalError("not implemented");
   },
@@ -78,6 +86,9 @@ export const dummyModelSet: ModelSet = {
   },
   rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
     throw new EvalError("not implemented");
+  },
+  textByIri: function(parameters: ResourceBackedModelParameters): Text {
+    throw new Error("Function not implemented.");
   },
   toJsonLd(): Promise<JsonLd> {
     throw new EvalError("not implemented");

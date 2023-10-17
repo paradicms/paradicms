@@ -2,8 +2,6 @@ import {Term} from "@rdfjs/types";
 import {Location} from "./Location";
 import {ResourceBackedModelParameters} from "./ResourceBackedModelParameters";
 import {LiteralLocation} from "./literal/LiteralLocation";
-import {locationFactories} from "./locationFactories";
-import {mapTermToResourceBackedModel} from "./mapTermToResourceBackedModel";
 
 /**
  * Map a term in a modelSet to a Location.
@@ -15,18 +13,8 @@ export const mapTermToLocation = (
   switch (term.termType) {
     case "Literal":
       return new LiteralLocation({literal: term});
-    case "NamedNode": {
-      const location = modelParameters.modelSet.locationByIri(term.value);
-      if (location) {
-        return location;
-      } else {
-        return mapTermToResourceBackedModel({
-          factories: locationFactories,
-          modelParameters,
-          term,
-        });
-      }
-    }
+    case "NamedNode":
+      return modelParameters.modelSet.locationByIri(term.value);
     default:
       return null;
   }

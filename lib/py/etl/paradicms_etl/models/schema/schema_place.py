@@ -55,6 +55,7 @@ class SchemaPlace(SchemaModel, Location):
             builder.set_centroid(location.centroid)
         if location.label is not None:
             builder.set_name(location.label)
+        builder.copy_same_as(location)
         return builder.build()
 
     @classmethod

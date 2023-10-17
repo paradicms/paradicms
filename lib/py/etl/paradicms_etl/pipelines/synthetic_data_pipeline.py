@@ -6,12 +6,13 @@ from urllib.parse import quote
 
 from rdflib import DCTERMS, SDO, Literal, URIRef
 
+from paradicms_etl.canonicalizer import canonicalizer
 from paradicms_etl.enrichers.enricher_factory import EnricherFactory
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
-from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
+from paradicms_etl.model import Model
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.collection import Collection
@@ -50,6 +51,7 @@ from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
 from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.utils.merge_same_as_models import merge_same_as_models
 
 
 class SyntheticDataPipeline(Pipeline):
@@ -374,17 +376,19 @@ class SyntheticDataPipeline(Pipeline):
                 collection_name = f"Collection{collection_i}"
                 collection_uri = URIRef(f"http://example.com/collection{collection_i}")
                 collection_builder: DcCollection.Builder | SchemaCollection.Builder
+                description_builder: DcText.Builder | SchemaTextObject.Builder
                 if collection_i % 2 == 0:
                     collection_builder = DcCollection.builder(
                         title=collection_name, uri=collection_uri
                     )
+                    description_builder = DcText.builder(self.__LOREM_IPSUM)
                 else:
                     collection_builder = SchemaCollection.builder(
                         name=collection_name,
                         uri=collection_uri,
                     )
+                    description_builder = SchemaTextObject.builder(self.__LOREM_IPSUM)
 
-                description_builder = DcText.builder(self.__LOREM_IPSUM)
                 description_builder.add_rights_holder(
                     f"{collection_name} description rights holder"
                 ).add_license(self.__DESCRIPTION_LICENSE.uri).add_rights_statement(
@@ -621,14 +625,14 @@ class SyntheticDataPipeline(Pipeline):
                     )
 
             # dcterms:contributor
-            contributors = [
-                FoafPerson.builder(
-                    name=f"{work_title} contributor {contributor_i}"
-                ).build()
-                for contributor_i in range(2)
-            ]
-            for contributor in contributors:
-                work_builder.add_contributor(contributor)
+            # contributors = [
+            #     FoafPerson.builder(
+            #         name=f"{work_title} contributor {contributor_i}"
+            #     ).build()
+            #     for contributor_i in range(2)
+            # ]
+            # for contributor in contributors:
+            #     work_builder.add_contributor(contributor.uri)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
@@ -725,15 +729,19 @@ class SyntheticDataPipeline(Pipeline):
         data_dir_path = root_dir_path / "data" / "synthetic"
 
         if loader is None:
-            rdf_file_path = data_dir_path / "synthetic_data.trig"
+
+            def canonicalized_loader(
+                *, flush: bool, models: Iterable[Model]
+            ) -> Iterable[Model]:
+                yield from RdfFileLoader(
+                    rdf_file_path=data_dir_path / "synthetic_data_ts.trig",
+                )(flush=flush, models=merge_same_as_models(canonicalizer(models)))
 
             loader = CompositeLoader(
                 loaders=(
-                    Excel2010Loader(
-                        xlsx_file_path=data_dir_path / "synthetic_data.xlsx"
-                    ),
+                    canonicalized_loader,
                     RdfFileLoader(
-                        rdf_file_path=rdf_file_path,
+                        rdf_file_path=data_dir_path / "synthetic_data_raw.trig",
                     ),
                 )
             )

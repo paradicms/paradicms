@@ -1,32 +1,36 @@
-from typing import Union
+from __future__ import annotations
 
-from rdflib import DCTERMS, URIRef, OWL, XSD
+from typing import TYPE_CHECKING
 
-from paradicms_etl.models.date_time_union import DateTimeUnion
+from rdflib import DCTERMS, OWL, XSD, URIRef
+
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
-from paradicms_etl.models.text import Text
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
+
+if TYPE_CHECKING:
+    from paradicms_etl.models.date_time_union import DateTimeUnion
+    from paradicms_etl.models.text import Text
 
 
 class DcModel(ResourceBackedModel):
     class Builder(ResourceBackedModel.Builder):
-        def add_same_as(self, same_as: URIRef) -> "DcModel.Builder":
+        def add_same_as(self, same_as: URIRef) -> DcModel.Builder:
             self.add(OWL.sameAs, same_as)
             return self
 
-        def set_created(self, created: DateTimeUnion) -> "DcModel.Builder":
+        def set_created(self, created: DateTimeUnion) -> DcModel.Builder:
             self.set(DCTERMS.created, created)
             return self
 
-        def set_description(self, description: Union[str, Text]) -> "DcModel.Builder":
+        def set_description(self, description: str | Text) -> DcModel.Builder:
             self.set(DCTERMS.description, description)
             return self
 
-        def set_modified(self, modified: DateTimeUnion) -> "DcModel.Builder":
+        def set_modified(self, modified: DateTimeUnion) -> DcModel.Builder:
             self.set(DCTERMS.modified, modified)
             return self
 
-        def set_title(self, title: str) -> "DcModel.Builder":
+        def set_title(self, title: str) -> DcModel.Builder:
             self.set(DCTERMS.title, title)
             return self
 

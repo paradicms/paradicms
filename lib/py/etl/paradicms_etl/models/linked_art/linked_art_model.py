@@ -37,10 +37,20 @@ class LinkedArtModel(ResourceBackedModel):
         from paradicms_etl.models.linked_art.linked_art_information_object import (
             LinkedArtInformationObject,
         )
+        from paradicms_etl.models.linked_art.linked_art_linguistic_appellation import (
+            LinkedArtLinguisticAppellation,
+        )
         from paradicms_etl.models.linked_art.linked_art_linguistic_object import (
             LinkedArtLinguisticObject,
         )
+        from paradicms_etl.models.linked_art.linked_art_person import LinkedArtPerson
+        from paradicms_etl.models.linked_art.linked_art_production import (
+            LinkedArtProduction,
+        )
         from paradicms_etl.models.linked_art.linked_art_right import LinkedArtRight
+        from paradicms_etl.models.linked_art.linked_art_time_span import (
+            LinkedArtTimeSpan,
+        )
         from paradicms_etl.models.linked_art.linked_art_visual_item import (
             LinkedArtVisualItem,
         )
@@ -48,8 +58,12 @@ class LinkedArtModel(ResourceBackedModel):
         for model_class in (
             LinkedArtDigitalObject,
             LinkedArtInformationObject,
+            LinkedArtLinguisticAppellation,
             LinkedArtLinguisticObject,
+            LinkedArtPerson,
+            LinkedArtProduction,
             LinkedArtRight,
+            LinkedArtTimeSpan,
             LinkedArtVisualItem,
         ):
             if value_type.identifier == model_class.rdf_type_uri():

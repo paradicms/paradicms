@@ -1,4 +1,4 @@
-from typing import Tuple, Union, Iterable, List, Optional
+from collections.abc import Iterable
 
 from more_itertools import flatten
 from rdflib import URIRef
@@ -6,46 +6,49 @@ from rdflib import URIRef
 from paradicms_etl.models.linked_art.linked_art_digital_object import (
     LinkedArtDigitalObject,
 )
+from paradicms_etl.models.linked_art.linked_art_has_symbolic_content_mixin import (
+    LinkedArtHasSymbolicContentMixin,
+)
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_right import LinkedArtRight
 from paradicms_etl.models.text import Text
 from paradicms_etl.namespaces import CRM, LA
 
 
-class LinkedArtLinguisticObject(LinkedArtModel, Text):
+class LinkedArtLinguisticObject(LinkedArtModel, LinkedArtHasSymbolicContentMixin, Text):
     class Builder(LinkedArtModel.Builder):
         pass
 
     @property
-    def contributors(self) -> Tuple[Union[str, URIRef], ...]:
+    def contributors(self) -> tuple[str | URIRef, ...]:
         return ()
 
     @property
-    def creators(self) -> Tuple[Union[str, URIRef], ...]:
+    def creators(self) -> tuple[str | URIRef, ...]:
         return ()
 
     @property
-    def digitally_carried_by(self) -> Optional[LinkedArtDigitalObject]:
+    def digitally_carried_by(self) -> LinkedArtDigitalObject | None:
         model = self._optional_value(
             LA.digitally_carried_by, self._map_term_to_linked_art_model
         )
         return model if isinstance(model, LinkedArtDigitalObject) else None
 
     @property
-    def licenses(self) -> Tuple[Union[str, URIRef], ...]:
+    def licenses(self) -> tuple[str | URIRef, ...]:
         return tuple(flatten(right.has_type for right in self.__is_subject_to))
 
     @property
-    def rights_holders(self) -> Tuple[Union[str, URIRef], ...]:
-        rights_holders: List[str] = []
-        for right in self.__is_subject_to:
-            for acknowledgment in right.is_subject_of:
-                if isinstance(acknowledgment, LinkedArtLinguisticObject):
-                    rights_holders.append(acknowledgment.value)
-        return tuple(rights_holders)
+    def rights_holders(self) -> tuple[str | URIRef, ...]:
+        return tuple(
+            acknowledgement.value
+            for right in self.__is_subject_to
+            for acknowledgement in right.is_subject_of
+            if isinstance(acknowledgement, LinkedArtLinguisticObject)
+        )
 
     @property
-    def rights_statements(self) -> Tuple[Union[str, URIRef], ...]:
+    def rights_statements(self) -> tuple[str | URIRef, ...]:
         return ()
 
     @property
@@ -64,6 +67,4 @@ class LinkedArtLinguisticObject(LinkedArtModel, Text):
 
     @property
     def value(self) -> str:
-        return self._required_value(
-            CRM.P190_has_symbolic_content, self._map_term_to_str
-        )
+        return self.has_symbolic_content[0].value

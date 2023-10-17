@@ -45,6 +45,7 @@ class SchemaDefinedTerm(SchemaModel, Concept):
             if type_uri != concept.rdf_type_uri():
                 builder.add_type_uri(type_uri)
         builder.copy_images(concept)
+        builder.copy_same_as(concept)
         if concept.value != concept.uri:
             builder.set_value(concept.value)
         return builder.build()

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Generator, Optional, Tuple, Type, TypeVar, Union
+from collections.abc import Callable, Generator
+from typing import Any, Tuple, TypeVar, Union
 
 from rdflib import Literal, URIRef
 from rdflib.resource import Resource
@@ -33,39 +34,51 @@ class ResourceBackedModelMixin(ABC):
     @abstractmethod
     def _map_term_to_image_data_or_str_or_uri(
         term: _StatementObject,
-    ) -> Union[ImageData, str, URIRef, None]:
+    ) -> ImageData | str | URIRef | None:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_term_to_int(term: _StatementObject) -> Optional[int]:
+    def _map_term_to_int(term: _StatementObject) -> int | None:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def _map_term_to_literal(term: _StatementObject) -> Literal | None:
+        raise NotImplementedError
+
+    @staticmethod
+    @abstractmethod
+    def _map_term_to_literal_or_uri(
+        term: _StatementObject,
+    ) -> Literal | URIRef | None:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
     def _map_term_to_model(
-        model_class: Type[_ModelT], term: _StatementObject
-    ) -> Optional[_ModelT]:
+        model_class: type[_ModelT], term: _StatementObject
+    ) -> _ModelT | None:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_term_to_str_or_uri(term: _StatementObject) -> Union[str, URIRef, None]:
+    def _map_term_to_str_or_uri(term: _StatementObject) -> str | URIRef | None:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_term_to_str_or_text(term: _StatementObject) -> Union[str, Text, None]:
+    def _map_term_to_str_or_text(term: _StatementObject) -> str | Text | None:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_term_to_str(term: _StatementObject) -> Optional[str]:
+    def _map_term_to_str(term: _StatementObject) -> str | None:
         raise NotImplementedError
 
     @staticmethod
     @abstractmethod
-    def _map_term_to_uri(term: _StatementObject) -> Optional[URIRef]:
+    def _map_term_to_uri(term: _StatementObject) -> URIRef | None:
         raise NotImplementedError
 
     @staticmethod
@@ -73,9 +86,9 @@ class ResourceBackedModelMixin(ABC):
     def _optional_value(
         p: _Predicates,
         mapper: Callable[
-            [_StatementObject], Union[_ValueT, None]
+            [_StatementObject], _ValueT | None
         ] = lambda value: value,  # type: ignore
-    ) -> Optional[_ValueT]:
+    ) -> _ValueT | None:
         raise NotImplementedError
 
     @staticmethod
@@ -83,7 +96,7 @@ class ResourceBackedModelMixin(ABC):
     def _required_value(
         p: _Predicates,
         mapper: Callable[
-            [_StatementObject], Union[_ValueT, None]
+            [_StatementObject], _ValueT | None
         ] = lambda value: value,  # type: ignore
     ) -> _ValueT:
         raise NotImplementedError
@@ -98,7 +111,7 @@ class ResourceBackedModelMixin(ABC):
     def _values(
         predicates: _Predicates,
         mapper: Callable[
-            [_StatementObject], Union[_ValueT, None]
+            [_StatementObject], _ValueT | None
         ] = lambda value: value,  # type: ignore
     ) -> Generator[_ValueT, None, None]:
         raise NotImplementedError
