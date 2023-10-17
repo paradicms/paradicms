@@ -4,18 +4,18 @@ from typing import TYPE_CHECKING, Any
 
 from rdflib import SDO, Graph, URIRef
 
-from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.schema.schema_creative_work_mixin import (
     SchemaCreativeWorkMixin,
 )
 from paradicms_etl.models.schema.schema_model import SchemaModel
-from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
-from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
 if TYPE_CHECKING:
     from rdflib.resource import Resource
+
+    from paradicms_etl.models.date_time_union import DateTimeUnion
+    from paradicms_etl.models.text import Text
 
 
 class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
