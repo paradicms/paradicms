@@ -623,14 +623,14 @@ class SyntheticDataPipeline(Pipeline):
                     )
 
             # dcterms:contributor
-            contributors = [
-                FoafPerson.builder(
-                    name=f"{work_title} contributor {contributor_i}"
-                ).build()
-                for contributor_i in range(2)
-            ]
-            for contributor in contributors:
-                work_builder.add_contributor(contributor.uri)
+            # contributors = [
+            #     FoafPerson.builder(
+            #         name=f"{work_title} contributor {contributor_i}"
+            #     ).build()
+            #     for contributor_i in range(2)
+            # ]
+            # for contributor in contributors:
+            #     work_builder.add_contributor(contributor.uri)
 
             # dcterms:creator
             creator_uris = [agents[(work_i + i) % len(agents)].uri for i in range(2, 4)]
