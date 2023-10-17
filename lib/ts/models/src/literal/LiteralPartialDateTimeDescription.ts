@@ -2,10 +2,12 @@ import {parseAnyDateTime} from "@paradicms/utilities";
 import {xsd} from "@paradicms/vocabularies";
 import {Literal} from "@rdfjs/types";
 import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 import {Mixin} from "ts-mixer";
 import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {PartialDateTimeDescriptionLabelMixin} from "../PartialDateTimeDescriptionLabelMixin";
 import {LiteralModel} from "./LiteralModel";
+dayjs.extend(utc);
 
 export class LiteralPartialDateTimeDescription
   extends Mixin(LiteralModel, PartialDateTimeDescriptionLabelMixin)
@@ -61,7 +63,7 @@ export class LiteralPartialDateTimeDescription
   private static fromXsdDateLiteral(
     literal: Literal
   ): LiteralPartialDateTimeDescription | null {
-    const parsed = dayjs(literal.value);
+    const parsed = dayjs.utc(literal.value);
     return new LiteralPartialDateTimeDescription({
       day: parsed.date(),
       label: null,
@@ -77,7 +79,7 @@ export class LiteralPartialDateTimeDescription
   private static fromXsdDateTimeLiteral(
     literal: Literal
   ): LiteralPartialDateTimeDescription | null {
-    const parsed = dayjs(literal.value);
+    const parsed = dayjs.utc(literal.value);
     return new LiteralPartialDateTimeDescription({
       day: parsed.date(),
       label: null, // Construct with the mixin label

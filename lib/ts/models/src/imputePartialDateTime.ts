@@ -52,6 +52,7 @@ export const imputePartialDateTime = (
   if (day == null) {
     invariant(ceil);
     day = dayjs()
+      .utc()
       .year(year)
       .month(month - 1)
       .daysInMonth();
