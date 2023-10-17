@@ -6,7 +6,7 @@ from paradicms_etl.models.work import Work
 
 
 class StubWork(StubModel, StubImagesMixin, Work):
-    class Builder:
+    class Builder(Work.Builder):
         pass
 
     @property
