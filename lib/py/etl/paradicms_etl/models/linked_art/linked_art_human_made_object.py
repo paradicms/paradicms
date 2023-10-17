@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from rdflib import URIRef
+
 from paradicms_etl.models.linked_art.linked_art_description_mixin import (
     LinkedArtDescriptionMixin,
 )
@@ -67,6 +69,10 @@ class LinkedArtHumanMadeObject(
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return CRM["E22_Human-Made_Object"]
+
+    @property
+    def spatial(self) -> None:
+        return None
 
     @property
     def subjects(self) -> tuple[str | URIRef, ...]:

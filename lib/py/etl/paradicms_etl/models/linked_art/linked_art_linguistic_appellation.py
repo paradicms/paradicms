@@ -8,6 +8,9 @@ from paradicms_etl.namespaces.crm import CRM
 
 
 class LinkedArtLinguisticAppellation(LinkedArtModel, LinkedArtHasSymbolicContentMixin):
+    class Builder(LinkedArtModel.Builder):
+        pass
+
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return CRM.E33_E41_Linguistic_Appellation

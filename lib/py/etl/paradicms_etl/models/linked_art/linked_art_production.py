@@ -8,6 +8,9 @@ from paradicms_etl.namespaces.crm import CRM
 
 
 class LinkedArtProduction(LinkedArtModel, Event):
+    class Builder(LinkedArtModel.Builder, Event.Builder):
+        pass
+
     @property
     def carried_out_by(self) -> tuple[LinkedArtPerson, ...]:
         return tuple(

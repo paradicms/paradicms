@@ -41,7 +41,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
 
     @property
     def created(self) -> DateTimeUnion | None:
-        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)
+        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)  # type: ignore
 
     @property
     def description(self) -> str | Text | None:
@@ -98,10 +98,14 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
 
     @property
     def modified(self) -> DateTimeUnion | None:
-        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)
+        return self._optional_value(SDO.dateCreated, self._map_term_to_date_time_union)  # type: ignore
 
     def replacer(self) -> Builder:
         return self.Builder(self.resource)
+
+    @property
+    def spatial(self) -> str | URIRef | None:
+        return self._optional_value(SDO.spatial, self._map_term_to_str_or_uri)
 
     @property
     def subjects(self) -> tuple[str | URIRef, ...]:

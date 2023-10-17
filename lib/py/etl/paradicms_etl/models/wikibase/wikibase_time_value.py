@@ -1,4 +1,4 @@
-from datetime import UTC, datetime
+from datetime import datetime
 
 from rdflib import URIRef  # type: ignore
 
@@ -63,7 +63,7 @@ class WikibaseTimeValue(ResourceBackedModel, DateTimeDescription):
         value = literal.toPython()
         assert isinstance(value, datetime)
         assert self.__time_time_zone == 0
-        return value.replace(tzinfo=UTC)
+        return value
 
     @property
     def year(self) -> int | None:

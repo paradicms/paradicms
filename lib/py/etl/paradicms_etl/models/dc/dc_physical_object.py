@@ -69,7 +69,7 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
 
     @property
     def created(self) -> DateTimeUnion | None:
-        return self._optional_value(DCTERMS.created, self._map_term_to_date_time_union)
+        return self._optional_value(DCTERMS.created, self._map_term_to_date_time_union)  # type: ignore
 
     @property
     def creators(self) -> tuple[str | URIRef, ...]:
@@ -85,7 +85,7 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
 
     @property
     def modified(self) -> DateTimeUnion | None:
-        return self._optional_value(DCTERMS.modified, self._map_term_to_date_time_union)
+        return self._optional_value(DCTERMS.modified, self._map_term_to_date_time_union)  # type: ignore
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

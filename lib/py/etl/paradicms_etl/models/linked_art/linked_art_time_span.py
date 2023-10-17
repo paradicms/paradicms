@@ -9,15 +9,18 @@ from paradicms_etl.namespaces.crm import CRM
 
 
 class LinkedArtTimeSpan(LinkedArtModel, LinkedArtIsIdentifiedByMixin):
+    class Builder(LinkedArtModel.Builder):
+        pass
+
     @property
     def begin_of_the_begin(self) -> DateTimeUnion | None:
-        return self._optional_value(
+        return self._optional_value(  # type: ignore
             CRM.P82a_begin_of_the_begin, self._map_term_to_date_time_union
         )
 
     @property
     def end_of_the_end(self) -> DateTimeUnion | None:
-        return self._optional_value(
+        return self._optional_value(  # type: ignore
             CRM.P82b_end_of_the_end, self._map_term_to_date_time_union
         )
 

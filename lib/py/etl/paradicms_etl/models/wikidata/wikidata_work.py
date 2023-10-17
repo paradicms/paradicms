@@ -16,6 +16,10 @@ class WikidataWork(WikidataModel, Work):
         pass
 
     @property
+    def contributors(self) -> tuple[str | URIRef, ...]:
+        return ()
+
+    @property
     def creators(self) -> tuple[URIRef, ...]:
         return tuple(self._values(WDT.P170, self._map_term_to_uri))
 
@@ -41,6 +45,10 @@ class WikidataWork(WikidataModel, Work):
     @property
     def label(self) -> str:
         return self._required_label
+
+    @property
+    def modified(self) -> DateTimeUnion | None:
+        return None
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

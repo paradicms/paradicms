@@ -6,6 +6,9 @@ from paradicms_etl.namespaces.crm import CRM
 
 
 class LinkedArtPerson(LinkedArtModel, Person):
+    class Builder(LinkedArtModel.Builder, Person.Builder):
+        pass
+
     def label(self) -> str:
         return self._required_label
 
