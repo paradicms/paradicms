@@ -1,7 +1,6 @@
-from typing import Tuple
+from __future__ import annotations
 
-from rdflib import DCMITYPE, Graph, URIRef
-from rdflib.namespace import DCTERMS
+from rdflib import DCMITYPE, DCTERMS, Graph, URIRef
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
@@ -10,12 +9,12 @@ from paradicms_etl.models.dc.dc_model import DcModel
 
 class DcCollection(DcModel, DcImagesMixin, Collection):
     class Builder(DcModel.Builder, DcImagesMixin.Builder, Collection.Builder):
-        def add_work(self, work: URIRef) -> "DcCollection.Builder":
+        def add_work(self, work: URIRef) -> DcCollection.Builder:
             # dcterms:hasPart is only supposed to be for sub-collections, hi-jacking it here
             self.add(DCTERMS.hasPart, work)
             return self
 
-        def build(self) -> "DcCollection":
+        def build(self) -> DcCollection:
             return DcCollection(self._resource)
 
     def __init__(self, *args, **kwds):
@@ -40,5 +39,5 @@ class DcCollection(DcModel, DcImagesMixin, Collection):
         return self.Builder(self.resource)
 
     @property
-    def work_uris(self) -> Tuple[URIRef, ...]:
+    def work_uris(self) -> tuple[URIRef, ...]:
         return tuple(self._values(DCTERMS.hasPart, self._map_term_to_uri))

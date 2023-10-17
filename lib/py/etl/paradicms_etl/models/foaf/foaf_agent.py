@@ -1,23 +1,29 @@
-from rdflib import FOAF, RDF, URIRef, OWL
-from rdflib.resource import Resource
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+
+from rdflib import FOAF, OWL, RDF, URIRef
 
 from paradicms_etl.models.agent import Agent
 from paradicms_etl.models.foaf.foaf_images_mixin import FoafImagesMixin
 from paradicms_etl.models.foaf.foaf_model import FoafModel
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
 
+if TYPE_CHECKING:
+    from rdflib.resource import Resource
+
 
 class FoafAgent(FoafModel, FoafImagesMixin, Agent):
     class Builder(FoafModel.Builder, FoafImagesMixin.Builder):
-        def add_homepage(self, homepage: URIRef) -> "FoafAgent.Builder":
+        def add_homepage(self, homepage: URIRef) -> FoafAgent.Builder:
             self.add(FOAF.homepage, homepage)
             return self
 
-        def add_page(self, page: URIRef) -> "FoafAgent.Builder":
+        def add_page(self, page: URIRef) -> FoafAgent.Builder:
             self.add(FOAF.page, page)
             return self
 
-        def add_same_as(self, same_as: URIRef) -> "FoafAgent.Builder":
+        def add_same_as(self, same_as: URIRef) -> FoafAgent.Builder:
             self.add(OWL.sameAs, same_as)
             return self
 
