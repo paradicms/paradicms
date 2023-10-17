@@ -119,7 +119,13 @@ class ResourceBackedModel(Model):
             if isinstance(py_value, date | datetime | str):
                 return py_value
         elif isinstance(term, Resource):
-            raise NotImplementedError("support DateTimeDescription mapping")
+            from paradicms_etl.models.owl_time.owl_time_date_time_description import (
+                OwlTimeDateTimeDescription,
+            )
+
+            return ResourceBackedModel._map_term_to_model(
+                model_class=OwlTimeDateTimeDescription, term=term
+            )
         return None
 
     @staticmethod

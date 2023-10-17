@@ -39,6 +39,5 @@ class LinkedArtImagesMixin(LinkedArtModelMixin, ImagesMixin):
         #         image_uris.append(representation.uri)
         # return tuple(image_uris)
 
-    @abstractmethod
     def replacer(self) -> Builder:
         raise NotImplementedError

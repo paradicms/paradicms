@@ -1,13 +1,14 @@
 from rdflib import URIRef
 
 from paradicms_etl.models.event import Event
+from paradicms_etl.models.linked_art.linked_art_images_mixin import LinkedArtImagesMixin
 from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 from paradicms_etl.models.linked_art.linked_art_person import LinkedArtPerson
 from paradicms_etl.models.linked_art.linked_art_time_span import LinkedArtTimeSpan
 from paradicms_etl.namespaces.crm import CRM
 
 
-class LinkedArtProduction(LinkedArtModel, Event):
+class LinkedArtProduction(LinkedArtModel, LinkedArtImagesMixin, Event):
     class Builder(LinkedArtModel.Builder, Event.Builder):
         pass
 

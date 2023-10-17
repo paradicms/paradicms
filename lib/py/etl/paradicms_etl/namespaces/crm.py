@@ -5,6 +5,7 @@ from rdflib.namespace import DefinedNamespace, Namespace
 class CRM(DefinedNamespace):
     # _fail = True
     _NS = Namespace("http://www.cidoc-crm.org/cidoc-crm/")
+    _warn = False
 
     # Properties
     P1_is_identified_by: URIRef
