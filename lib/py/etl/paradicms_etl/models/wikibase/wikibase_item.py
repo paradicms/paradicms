@@ -35,7 +35,7 @@ class WikibaseItem(ResourceBackedModel):
     def direct_claim_values(
         self, direct_claim_uri: URIRef
     ) -> tuple[Literal | URIRef, ...]:
-        return tuple(self._values(direct_claim_uri, self.__map_term_to_literal_or_uri))
+        return tuple(self._values(direct_claim_uri, self._map_term_to_literal_or_uri))
 
     @classmethod
     def from_rdf(cls, resource: Resource) -> WikibaseItem:
@@ -141,16 +141,6 @@ class WikibaseItem(ResourceBackedModel):
     @classmethod
     def label_property_uri(cls) -> URIRef | None:
         return SKOS.prefLabel
-
-    @staticmethod
-    def __map_term_to_literal_or_uri(
-        term: _StatementObject,
-    ) -> Literal | URIRef | None:
-        if isinstance(term, Literal):
-            return term
-        if isinstance(term, Resource) and isinstance(term.identifier, URIRef):
-            return term.identifier
-        return None
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:

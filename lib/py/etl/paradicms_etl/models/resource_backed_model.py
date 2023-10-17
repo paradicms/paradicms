@@ -159,12 +159,6 @@ class ResourceBackedModel(Model):
         return None
 
     @staticmethod
-    def _map_term_to_literal(term: _StatementObject) -> Any:
-        if isinstance(term, Literal):
-            return term.toPython()
-        return None
-
-    @staticmethod
     def _map_term_to_collection(
         term: _StatementObject,
     ) -> tuple[Node, ...] | None:
@@ -196,6 +190,22 @@ class ResourceBackedModel(Model):
     #             raise NotImplementedError(container_rdf_type.identifier)
     #
     #     return tuple(container_class(resource.graph, resource.identifier))
+
+    @staticmethod
+    def _map_term_to_literal(term: _StatementObject) -> Literal | None:
+        if isinstance(term, Literal):
+            return term
+        return None
+
+    @staticmethod
+    def _map_term_to_literal_or_uri(
+        term: _StatementObject,
+    ) -> Literal | URIRef | None:
+        if isinstance(term, Literal):
+            return term
+        if isinstance(term, Resource) and isinstance(term.identifier, URIRef):
+            return term.identifier
+        return None
 
     @staticmethod
     def _map_term_to_model(

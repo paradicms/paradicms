@@ -28,13 +28,21 @@ class SchemaQuantitativeValue(SchemaModel):
     @property
     def max_value(self) -> float | int | None:
         max_value = self._optional_value(SDO.maxValue, self._map_term_to_literal)
-        if max_value is None or isinstance(max_value, float | int):
+        if max_value is None:
             return max_value
+        else:
+            max_value_py = max_value.toPython()
+            if isinstance(max_value_py, float | int):
+                return max_value_py
         return None
 
     @property
     def value(self) -> float | int | None:
         value = self._optional_value(SDO.value, self._map_term_to_literal)
-        if value is None or isinstance(value, float | int):
+        if value is None:
             return value
+        else:
+            value_py = value.toPython()
+            if isinstance(value_py, float | int):
+                return value_py
         return None

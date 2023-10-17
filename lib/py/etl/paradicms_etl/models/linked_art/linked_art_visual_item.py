@@ -1,6 +1,4 @@
-from typing import Union, Optional
-
-from rdflib import URIRef, Graph
+from rdflib import Graph, URIRef
 
 from paradicms_etl.models.linked_art.linked_art_digital_object import (
     LinkedArtDigitalObject,
@@ -16,17 +14,17 @@ class LinkedArtVisualItem(LinkedArtModel):
             return LinkedArtVisualItem(self._resource)
 
         def set_digitally_shown_by(
-            self, digital_object: Union[LinkedArtDigitalObject, URIRef]
+            self, digital_object: LinkedArtDigitalObject | URIRef
         ) -> "LinkedArtVisualItem.Builder":
             self.set(LA.digitally_shown_by, digital_object)
             return self
 
     @classmethod
-    def builder(cls):
+    def builder(cls) -> Builder:
         return cls.Builder(Graph().resource(uuid_urn()))
 
     @property
-    def digitally_shown_by(self) -> Optional[LinkedArtDigitalObject]:
+    def digitally_shown_by(self) -> LinkedArtDigitalObject | None:
         model = self._optional_value(
             LA.digitally_shown_by, self._map_term_to_linked_art_model
         )
