@@ -279,11 +279,6 @@ export class ModelSetBuilder {
       return this;
     }
 
-    for (const dependency of model.dependencies) {
-      log.trace("adding model", model.key, "dependency", dependency.key);
-      this.addModel(dependency);
-    }
-
     return this;
   }
 

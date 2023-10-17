@@ -5,7 +5,6 @@ import {Event} from "../Event";
 import {EventDerivedDatesMixin} from "../EventDerivedDatesMixin";
 import {Image} from "../Image";
 import {Location} from "../Location";
-import {Model} from "../Model";
 import {ModelIdentifier} from "../ModelIdentifier";
 import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
@@ -37,10 +36,6 @@ export abstract class SyntheticEvent
   }
 
   abstract readonly agents: readonly Agent[];
-
-  get dependencies(): readonly Model[] {
-    return [];
-  }
 
   get identifiers(): readonly ModelIdentifier[] {
     return [];

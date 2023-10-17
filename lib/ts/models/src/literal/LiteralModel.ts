@@ -11,10 +11,6 @@ export class LiteralModel implements Model {
     this.literal = kwds.literal;
   }
 
-  get dependencies(): readonly Model[] {
-    return [];
-  }
-
   get identifiers(): readonly ModelIdentifier[] {
     return [];
   }

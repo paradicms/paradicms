@@ -23,10 +23,6 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     this.graph = kwds.graph;
   }
 
-  get dependencies(): readonly Model[] {
-    return [];
-  }
-
   override get identifier(): ModelIdentifier {
     return this._identifier as ModelIdentifier;
   }
