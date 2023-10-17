@@ -9,6 +9,8 @@ from paradicms_etl.models.images_mixin import ImagesMixin
 if TYPE_CHECKING:
     from rdflib import URIRef
 
+    from paradicms_etl.models.text import Text
+
 
 class Collection(Model, ImagesMixin):
     class Builder(ImagesMixin.Builder):
@@ -19,6 +21,11 @@ class Collection(Model, ImagesMixin):
         @abstractmethod
         def build(self) -> Collection:
             raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def description(self) -> str | Text | None:
+        raise NotImplementedError
 
     @property
     @abstractmethod

@@ -380,13 +380,14 @@ class SyntheticDataPipeline(Pipeline):
                     collection_builder = DcCollection.builder(
                         title=collection_name, uri=collection_uri
                     )
+                    description_builder = DcText.builder(self.__LOREM_IPSUM)
                 else:
                     collection_builder = SchemaCollection.builder(
                         name=collection_name,
                         uri=collection_uri,
                     )
+                    description_builder = SchemaTextObject.builder(self.__LOREM_IPSUM)
 
-                description_builder = DcText.builder(self.__LOREM_IPSUM)
                 description_builder.add_rights_holder(
                     f"{collection_name} description rights holder"
                 ).add_license(self.__DESCRIPTION_LICENSE.uri).add_rights_statement(

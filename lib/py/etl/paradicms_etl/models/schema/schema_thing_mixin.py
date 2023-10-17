@@ -6,10 +6,10 @@ from rdflib import SDO, URIRef
 
 from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
+from paradicms_etl.models.text import Text
 
 if TYPE_CHECKING:
     from paradicms_etl.model import Model
-    from paradicms_etl.models.text import Text
 
 
 class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
@@ -38,6 +38,19 @@ class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
 
         def add_url(self, url: URIRef) -> SchemaThingMixin.Builder:
             self.set(SDO.url, url)
+            return self
+
+        def copy_description(
+            self, description: str | Text | None
+        ) -> SchemaThingMixin.Builder:
+            from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
+
+            if isinstance(description, str):
+                self.set_description(description)
+            elif isinstance(description, Text):
+                self.set_description(SchemaTextObject.from_text(description))
+            elif description is not None:
+                raise TypeError(type(description))
             return self
 
         def copy_same_as(self, other: Model) -> SchemaThingMixin.Builder:

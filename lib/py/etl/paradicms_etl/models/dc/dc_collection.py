@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 from rdflib import DCMITYPE, DCTERMS, Graph, URIRef
 
 from paradicms_etl.models.collection import Collection
 from paradicms_etl.models.dc.dc_images_mixin import DcImagesMixin
 from paradicms_etl.models.dc.dc_model import DcModel
+
+if TYPE_CHECKING:
+    from paradicms_etl.models.text import Text
 
 
 class DcCollection(DcModel, DcImagesMixin, Collection):
@@ -26,6 +31,10 @@ class DcCollection(DcModel, DcImagesMixin, Collection):
         builder = cls.Builder(Graph().resource(uri))
         builder.set_title(title)
         return builder
+
+    @property
+    def description(self) -> str | Text | None:
+        return self._optional_value(DCTERMS.description, self._map_term_to_str_or_text)  # type: ignore
 
     @property
     def label(self) -> str:

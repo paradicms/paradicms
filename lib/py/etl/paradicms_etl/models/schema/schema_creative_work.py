@@ -67,14 +67,7 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         for creator in work.creators:
             builder.add_creator(creator)
 
-        work_description = work.description
-        if isinstance(work_description, str):
-            builder.set_description(work_description)
-        elif isinstance(work_description, Text):
-            builder.set_description(SchemaTextObject.from_text(work_description))
-        elif work_description is not None:
-            raise TypeError(type(work_description))
-
+        builder.copy_description(work.description)
         builder.copy_images(work)
 
         if work.modified is not None:
