@@ -18,9 +18,15 @@ export class DcLicenseDocument extends Mixin(ResourceBackedModel)
   }
 
   get requiresAttribution(): boolean {
-    return true;
+    switch (this.iri) {
+      case "http://creativecommons.org/publicdomain/mark/1.0/":
+      case "http://creativecommons.org/publicdomain/zero/1.0/":
+        return false;
+      default:
+        return true;
+    }
   }
-
+  
   @Memoize()
   get title(): string {
     return requireNonNull(
