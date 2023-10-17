@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Tuple, Union
+from typing import TYPE_CHECKING
 
 from rdflib import SKOS, Graph
 from rdflib.namespace import RDF

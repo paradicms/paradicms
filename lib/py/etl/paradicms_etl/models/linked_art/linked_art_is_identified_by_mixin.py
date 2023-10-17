@@ -1,13 +1,8 @@
-from typing import TYPE_CHECKING
-
 from paradicms_etl.models.linked_art.linked_art_linguistic_appellation import (
     LinkedArtLinguisticAppellation,
 )
 from paradicms_etl.models.linked_art.linked_art_model_mixin import LinkedArtModelMixin
 from paradicms_etl.namespaces.crm import CRM
-
-if TYPE_CHECKING:
-    from paradicms_etl.models.linked_art.linked_art_model import LinkedArtModel
 
 
 class LinkedArtIsIdentifiedByMixin(LinkedArtModelMixin):

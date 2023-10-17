@@ -2,8 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from rdflib import URIRef
-
 from paradicms_etl.models.linked_art.linked_art_description_mixin import (
     LinkedArtDescriptionMixin,
 )
@@ -16,7 +14,6 @@ from paradicms_etl.namespaces import CRM
 if TYPE_CHECKING:
     from rdflib import URIRef
 
-if TYPE_CHECKING:
     from paradicms_etl.models.date_time_union import DateTimeUnion
 
 

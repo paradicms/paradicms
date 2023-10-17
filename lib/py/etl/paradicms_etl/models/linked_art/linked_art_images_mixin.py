@@ -1,5 +1,3 @@
-from abc import abstractmethod
-
 from rdflib import URIRef
 
 from paradicms_etl.models.images_mixin import ImagesMixin

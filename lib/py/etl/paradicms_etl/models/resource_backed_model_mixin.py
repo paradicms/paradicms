@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from collections.abc import Callable, Generator
-from typing import Any, Optional, Tuple, Type, TypeVar, Union
+from typing import Any, Tuple, TypeVar, Union
 
 from rdflib import Literal, URIRef
 from rdflib.resource import Resource

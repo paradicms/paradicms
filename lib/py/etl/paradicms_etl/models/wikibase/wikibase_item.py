@@ -6,10 +6,7 @@ from typing import ClassVar
 from rdflib import OWL, RDF, RDFS, SKOS, Graph, Literal, URIRef
 from rdflib.resource import Resource
 
-from paradicms_etl.models.resource_backed_model import (
-    ResourceBackedModel,
-    _StatementObject,
-)
+from paradicms_etl.models.resource_backed_model import ResourceBackedModel
 from paradicms_etl.namespaces import PROV, SDOHTTP, WDT, WIKIBASE
 
 logger = logging.getLogger(__name__)
