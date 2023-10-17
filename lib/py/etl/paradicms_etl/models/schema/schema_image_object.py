@@ -161,6 +161,8 @@ class SchemaImageObject(SchemaModel, SchemaMediaObjectMixin, Image):
             builder.set_exact_dimensions(image.max_dimensions)
         if image.src is not None:
             builder.set_src(image.src)
+        for thumbnail_uri in image.thumbnail_uris:
+            builder.add_thumbnail(thumbnail_uri)
         return builder.build()
 
     @classmethod
