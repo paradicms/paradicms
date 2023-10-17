@@ -1,6 +1,5 @@
 from rdflib import URIRef
 
-from paradicms_etl.models.date_time_union import DateTimeUnion
 from paradicms_etl.models.stub.stub_images_mixin import StubImagesMixin
 from paradicms_etl.models.stub.stub_model import StubModel
 from paradicms_etl.models.work import Work
