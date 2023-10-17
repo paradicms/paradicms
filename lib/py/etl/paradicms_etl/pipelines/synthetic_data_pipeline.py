@@ -376,6 +376,7 @@ class SyntheticDataPipeline(Pipeline):
                 collection_name = f"Collection{collection_i}"
                 collection_uri = URIRef(f"http://example.com/collection{collection_i}")
                 collection_builder: DcCollection.Builder | SchemaCollection.Builder
+                description_builder: DcText.Builder | SchemaTextObject.Builder
                 if collection_i % 2 == 0:
                     collection_builder = DcCollection.builder(
                         title=collection_name, uri=collection_uri
