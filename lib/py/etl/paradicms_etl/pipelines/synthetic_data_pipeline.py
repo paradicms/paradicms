@@ -727,6 +727,7 @@ class SyntheticDataPipeline(Pipeline):
         data_dir_path = root_dir_path / "data" / "synthetic"
 
         if loader is None:
+
             def canonicalized_loader(
                 *, flush: bool, models: Iterable[Model]
             ) -> Iterable[Model]:
