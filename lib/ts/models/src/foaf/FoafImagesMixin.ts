@@ -13,8 +13,4 @@ export abstract class FoafImagesMixin extends ResourceBackedModelMixin
       mapTermToImage(this, term)
     );
   }
-
-  protected preMemoizeImages(): void {
-    this.images;
-  }
 }

@@ -52,11 +52,6 @@ export abstract class EventDerivedDatesMixin {
     return result.join(" - ");
   }
 
-  protected preMemoizeEventDerivedDates() {
-    this.displayDate;
-    this.sortDate;
-  }
-
   /**
    * Synthesize a date that can be used for sorting this event.
    *

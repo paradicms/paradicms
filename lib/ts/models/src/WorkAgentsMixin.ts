@@ -24,10 +24,6 @@ export abstract class WorkAgentsMixin {
     return result;
   }
 
-  protected preMemoizeWorkAgents(): void {
-    this.agents;
-  }
-
   abstract readonly contributors: readonly Agent[];
   abstract readonly creators: readonly Agent[];
 }

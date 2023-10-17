@@ -26,8 +26,4 @@ export abstract class WorkDisplayDateMixin {
   }
 
   abstract readonly events: readonly WorkEvent[];
-
-  protected preMemoizeWorkDisplayDate(): void {
-    this.displayDate;
-  }
 }

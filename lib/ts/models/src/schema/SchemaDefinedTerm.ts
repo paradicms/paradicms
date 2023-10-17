@@ -22,12 +22,6 @@ export class SchemaDefinedTerm extends Mixin(SchemaModel)
     return this.value.value;
   }
 
-  override preMemoize(): void {
-    super.preMemoize();
-    this.altLabels;
-    this.value;
-  }
-
   @Memoize()
   get value(): Literal | NamedNode {
     return (

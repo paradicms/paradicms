@@ -23,7 +23,5 @@ export class LiteralModel implements Model {
     return [];
   }
 
-  preMemoize(): void {}
-
   toRdf(addToDataset: DatasetCore) {}
 }

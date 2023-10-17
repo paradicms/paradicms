@@ -62,16 +62,6 @@ export class SchemaImageObject
     }
   }
 
-  override preMemoize(): void {
-    super.preMemoize();
-    this.preMemoizeMediaObject();
-    this.caption;
-    this.exactDimensions;
-    this.maxDimensions;
-    this.src;
-    this.thumbnails;
-  }
-
   @Memoize()
   get src(): string | null {
     const src = this.findAndMapObject(schema.contentUrl, term =>

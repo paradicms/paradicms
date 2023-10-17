@@ -19,12 +19,6 @@ export class SchemaCollection extends Mixin(
     return requireNonNull(super.name);
   }
 
-  override preMemoize() {
-    super.preMemoize();
-    this.preMemoizeCreativeWork();
-    this.works;
-  }
-
   @Memoize()
   get works(): readonly Work[] {
     return this.filterAndMapObjects(schema.hasPart, term => term.termType === "NamedNode" ? this.modelSet.workByIri(term.value) : null);

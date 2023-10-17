@@ -35,7 +35,6 @@ export interface ModelSet {
     parameters: ResourceBackedModelParameters
   ): PartialDateTimeDescription | null;
   personByIri(personIri: string): Person | null;
-  preMemoize(): void;
   readonly properties: readonly Property[];
   propertyByIri(propertyIri: string): Property | null;
   propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null;

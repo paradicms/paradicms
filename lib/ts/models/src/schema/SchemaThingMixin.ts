@@ -45,17 +45,6 @@ export abstract class SchemaThingMixin
     return this.findAndMapObject(schema.name, mapTermToString);
   }
 
-  protected preMemoizeThing(): void {
-    this.alternateNames;
-    this.description;
-    this.images;
-    this.name;
-    this.sameAsIdentifiers;
-    this.urls;
-    this.wikidataConceptIri;
-    this.wikipediaUrl;
-  }
-
   @Memoize()
   get sameAsIdentifiers(): readonly ModelIdentifier[] {
     return this.filterAndMapObjects(schema.sameAs, term => {

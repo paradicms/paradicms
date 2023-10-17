@@ -553,13 +553,6 @@ export class MemApi implements Api {
     });
   }
 
-  primeCaches(): Promise<void> {
-    return new Promise(resolve => {
-      this.modelSet.preMemoize();
-      resolve();
-    });
-  }
-
   private filterWorks(
     query: WorksQuery,
     works: readonly Work[]

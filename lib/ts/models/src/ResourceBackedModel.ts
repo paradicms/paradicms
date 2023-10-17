@@ -45,11 +45,6 @@ export abstract class ResourceBackedModel extends Resource implements Model {
     return modelIdentifiersToKey(this.identifiers);
   }
 
-  preMemoize(): void {
-    this.iris;
-    this.key;
-  }
-
   @Memoize()
   get propertyValues(): readonly PropertyValue[] {
     return this.modelSet.properties.flatMap(property => property.iris.flatMap(propertyIri => this.propertyValuesByProperty(property, propertyIri)));

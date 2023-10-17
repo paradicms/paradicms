@@ -46,16 +46,6 @@ export class SchemaProperty extends Mixin(SchemaModel)
     return this.findAndMapObject(cms.propertyOrder, mapTermToNumber) ?? 0;
   }
 
-  override preMemoize(): void {
-    super.preMemoize();
-    this.filterable;
-    this.hidden;
-    this.order;
-    this.range;
-    this.rangeValues;
-    this.searchable;
-  }
-
   @Memoize()
   get range(): NamedNode | null {
     return this.findAndMapObject(schema.rangeIncludes, term =>

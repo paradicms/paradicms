@@ -124,8 +124,4 @@ export class RestApiClient implements Api {
       ...otherProps,
     };
   }
-
-  primeCaches(): Promise<void> {
-    return new Promise(resolve => resolve());
-  }
 }

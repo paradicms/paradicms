@@ -66,9 +66,6 @@ export const dummyModelSet: ModelSet = {
   personByIri(personIri: string): Person | null {
     throw new EvalError("not implemented");
   },
-  preMemoize(): void {
-    throw new EvalError("not implemented");
-  },
   get propertyGroups(): readonly PropertyGroup[] {
     throw new EvalError("not implemented");
   },

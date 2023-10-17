@@ -76,9 +76,4 @@ export interface Api {
    * Get works matched by the query.
    */
   getWorks(kwds?: GetWorksOptions): Promise<GetWorksResult>;
-
-  /**
-   * Prime the API's caches.
-   */
-  primeCaches(): Promise<void>;
 }
