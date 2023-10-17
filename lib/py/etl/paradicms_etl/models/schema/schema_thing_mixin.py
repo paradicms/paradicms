@@ -1,13 +1,15 @@
 from __future__ import annotations
 
-from typing import Optional, Tuple, Union
+from typing import TYPE_CHECKING
 
 from rdflib import SDO, URIRef
 
-from paradicms_etl.model import Model
 from paradicms_etl.models.images_mixin import ImagesMixin
 from paradicms_etl.models.resource_backed_model_mixin import ResourceBackedModelMixin
-from paradicms_etl.models.text import Text
+
+if TYPE_CHECKING:
+    from paradicms_etl.model import Model
+    from paradicms_etl.models.text import Text
 
 
 class SchemaThingMixin(ResourceBackedModelMixin, ImagesMixin):
