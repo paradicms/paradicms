@@ -79,7 +79,7 @@ describe("ModelSetBuilder", () => {
       sut.addAgent(agent, {thumbnail: testThumbnailSelector});
     }
     const agentsModelSet = sut.build();
-    expect(modelSetAgentIris(agentsModelSet)).to.have.length(2);
+    expect(modelSetAgentIris(agentsModelSet)).to.have.length(3); // Two creators from the synthetic data, one from the sameAs
     // The WikidataPerson isn't counted because it doesn't have an unambiguous rdf:type
     expect(modelSetImageIris(agentsModelSet)).to.have.length(5); // One original image, one thumbnail per named agent + the sameAs agent image
     // for (const namedAgent of namedAgents) {
