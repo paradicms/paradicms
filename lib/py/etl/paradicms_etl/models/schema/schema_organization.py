@@ -38,6 +38,7 @@ class SchemaOrganization(SchemaModel, Organization):
 
         builder = cls.builder(name=organization.label, uri=organization.uri)
         builder.copy_images(organization)
+        builder.copy_same_as(organization)
         return builder.build()
 
     @property

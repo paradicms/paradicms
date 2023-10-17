@@ -47,6 +47,7 @@ class SchemaCollection(SchemaModel, SchemaCreativeWorkMixin, Collection):
 
         builder = cls.builder(name=collection.label, uri=collection.uri)
         builder.copy_images(collection)
+        builder.copy_same_as(collection)
         for work_uri in collection.work_uris:
             builder.add_work(work_uri)
         return builder.build()

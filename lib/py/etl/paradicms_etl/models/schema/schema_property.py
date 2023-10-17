@@ -64,6 +64,7 @@ class SchemaProperty(SchemaModel, Property):
             builder.set_order(property_.order)
         if property_.range is not None:
             builder.set_range(property_.range)
+        builder.copy_same_as(property_)
         if property_.searchable is not None:
             builder.set_searchable(property_.searchable)
         return builder.build()

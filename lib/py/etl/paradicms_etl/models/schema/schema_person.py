@@ -64,6 +64,7 @@ class SchemaPerson(SchemaModel, Person):
             builder.set_family_name(person.family_name)
         if person.given_name is not None:
             builder.set_given_name(person.given_name)
+        builder.copy_same_as(person)
         return builder.build()
 
     @property

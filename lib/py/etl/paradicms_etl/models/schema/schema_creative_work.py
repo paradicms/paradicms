@@ -80,6 +80,8 @@ class SchemaCreativeWork(SchemaModel, SchemaCreativeWorkMixin, Work):
         if work.modified is not None:
             builder.set_date_modified(work.modified)
 
+        builder.copy_same_as(work)
+
         for subject in work.subjects:
             builder.add_about(subject)
 
