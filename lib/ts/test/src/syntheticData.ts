@@ -7,5 +7,5 @@ require.extensions[".trig"] = function(module, filename) {
 };
 
 export const syntheticData: DatasetCore = trigStringToDatasetCore(
-  require("./synthetic_data_canonical.trig")
+  require("./synthetic_data_ts.trig")
 );

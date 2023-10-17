@@ -24,10 +24,10 @@
   "license": "GPL-3.0-only",
   "main": "dist/index.js",
   "scripts": {
-    "build": "copyfiles --error -u 1 src/synthetic_data_canonical.trig dist && tsc -b",
+    "build": "copyfiles --error -u 1 src/synthetic_data_ts.trig dist && tsc -b",
     "clean": "rimraf dist",
-    "rebuild": "rimraf dist && copyfiles --error -u 1 src/synthetic_data_canonical.trig dist && tsc -b",
-    "watch": "copyfiles --error -u 1 src/synthetic_data_canonical.trig dist && tsc -w --preserveWatchOutput"
+    "rebuild": "rimraf dist && copyfiles --error -u 1 src/synthetic_data_ts.trig dist && tsc -b",
+    "watch": "copyfiles --error -u 1 src/synthetic_data_ts.trig dist && tsc -w --preserveWatchOutput"
   },
   "types": "dist/index.d.ts",
   "version": "1.0.5"

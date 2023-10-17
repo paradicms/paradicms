@@ -11,7 +11,6 @@ from paradicms_etl.enrichers.enricher_factory import EnricherFactory
 from paradicms_etl.extractors.nop_extractor import nop_extractor
 from paradicms_etl.loader import Loader
 from paradicms_etl.loaders.composite_loader import CompositeLoader
-from paradicms_etl.loaders.excel_2010_loader import Excel2010Loader
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
 from paradicms_etl.models.agent import Agent
@@ -52,6 +51,7 @@ from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.skos.skos_concept import SkosConcept
 from paradicms_etl.models.work import Work
 from paradicms_etl.pipeline import Pipeline
+from paradicms_etl.utils.merge_same_as_models import merge_same_as_models
 
 
 class SyntheticDataPipeline(Pipeline):
@@ -732,17 +732,14 @@ class SyntheticDataPipeline(Pipeline):
                 *, flush: bool, models: Iterable[Model]
             ) -> Iterable[Model]:
                 yield from RdfFileLoader(
-                    rdf_file_path=data_dir_path / "synthetic_data_canonical.trig",
-                )(flush=flush, models=canonicalizer(models))
+                    rdf_file_path=data_dir_path / "synthetic_data_ts.trig",
+                )(flush=flush, models=merge_same_as_models(canonicalizer(models)))
 
             loader = CompositeLoader(
                 loaders=(
-                    Excel2010Loader(
-                        xlsx_file_path=data_dir_path / "synthetic_data.xlsx"
-                    ),
                     canonicalized_loader,
                     RdfFileLoader(
-                        rdf_file_path=data_dir_path / "synthetic_data_original.trig",
+                        rdf_file_path=data_dir_path / "synthetic_data_raw.trig",
                     ),
                 )
             )

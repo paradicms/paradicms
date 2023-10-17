@@ -4,7 +4,7 @@ set -e
 
 cd "$(dirname "$0")/../.."
 
-export DATA_FILE_PATHS=`realpath $PWD/data/synthetic/synthetic_data_canonical.trig`
+export DATA_FILE_PATHS=`realpath $PWD/data/synthetic/synthetic_data_ts.trig`
 export PATH=$PATH:$PWD/node_modules/.bin
 yarn clean
 yarn build

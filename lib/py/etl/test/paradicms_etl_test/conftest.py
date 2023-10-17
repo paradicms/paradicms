@@ -1,6 +1,7 @@
 from pathlib import Path
 
 import pytest
+
 from paradicms_etl.loaders.nop_loader import nop_loader
 from paradicms_etl.model import Model
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
@@ -30,7 +31,7 @@ def synthetic_data_models() -> tuple[Model, ...]:
 
 @pytest.fixture(scope="session")
 def synthetic_data_rdf_file_path(data_dir_path: Path) -> Path:
-    return data_dir_path / "synthetic" / "synthetic_data_original.trig"
+    return data_dir_path / "synthetic" / "synthetic_data_raw.trig"
 
 
 @pytest.fixture(scope="session")
