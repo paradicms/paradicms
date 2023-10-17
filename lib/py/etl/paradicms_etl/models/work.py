@@ -54,5 +54,10 @@ class Work(Model, ImagesMixin):
 
     @property
     @abstractmethod
+    def spatial(self) -> str | URIRef | None:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
     def subjects(self) -> tuple[str | URIRef, ...]:
         raise NotImplementedError

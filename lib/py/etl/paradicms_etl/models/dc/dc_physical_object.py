@@ -95,5 +95,9 @@ class DcPhysicalObject(DcModel, DcImagesMixin, Work):
         return self.Builder(self.resource)
 
     @property
+    def spatial(self) -> str | URIRef | None:
+        return self._optional_value(DCTERMS.spatial, self._map_term_to_str_or_uri)
+
+    @property
     def subjects(self) -> tuple[str | URIRef, ...]:
         return tuple(self._values(DCTERMS.subject, self._map_term_to_str_or_uri))
