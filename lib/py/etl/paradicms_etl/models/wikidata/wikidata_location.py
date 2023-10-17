@@ -22,7 +22,7 @@ class WikidataLocation(WikidataModel, Location):
     )
 
     @property
-    def centroid(self) -> Location.Centroid | None:
+    def centroid(self) -> Location.Centroid | None:  # noqa: PLR0911
         # Check P625 (coordinate location)
         coordinate_location_value: Literal | Resource | None = self._optional_value(
             WDT["P625"]

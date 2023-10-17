@@ -1,4 +1,6 @@
-from datetime import UTC, datetime  # type: ignore
+from datetime import UTC, datetime
+
+from rdflib import URIRef  # type: ignore
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -22,13 +24,13 @@ class WikibaseTimeValue(ResourceBackedModel, DateTimeDescription):
     def month(self) -> int | None:
         return self.__time_value.month if self.__time_precision >= 10 else None
 
+    @classmethod
+    def rdf_type_uri(cls) -> URIRef:
+        return WIKIBASE.TimeValue
+
     @property
     def second(self) -> int | None:
         return self.__time_value.second if self.__time_precision >= 14 else None
-
-    @property
-    def year(self) -> int | None:
-        return self.__time_value.year if self.__time_precision >= 9 else None
 
     @property
     def __time_precision(self) -> int:
@@ -62,3 +64,7 @@ class WikibaseTimeValue(ResourceBackedModel, DateTimeDescription):
         assert isinstance(value, datetime)
         assert self.__time_time_zone == 0
         return value.replace(tzinfo=UTC)
+
+    @property
+    def year(self) -> int | None:
+        return self.__time_value.year if self.__time_precision >= 9 else None
