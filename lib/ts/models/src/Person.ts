@@ -1,14 +1,9 @@
 import {ImagesMixin} from "./ImagesMixin";
 import {Model} from "./Model";
-import {SameAsMixin} from "./SameAsMixin";
 import {ThumbnailMixin} from "./ThumbnailMixin";
 import {Work} from "./Work";
 
-export interface Person
-  extends Model,
-    ImagesMixin,
-    SameAsMixin,
-    ThumbnailMixin {
+export interface Person extends Model, ImagesMixin, ThumbnailMixin {
   readonly familyName: string | null;
   readonly givenName: string | null;
   readonly homepage: string | null;
