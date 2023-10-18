@@ -7,17 +7,17 @@ import {
 } from "@paradicms/next";
 import {
   EventPage as DelegateEventPage,
-  eventPageEventJoinSelector,
   ModelSetJsonLdParser,
+  eventPageEventJoinSelector,
 } from "@paradicms/react-dom-components";
+import {requireNonNull} from "@paradicms/utilities";
 import {Layout} from "components/Layout";
+import {JsonLd} from "jsonld/jsonld-spec";
 import {GetStaticPaths, GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import {useRouter} from "next/router";
 import * as React from "react";
-import {requireNonNull} from "@paradicms/utilities";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
-import {JsonLd} from "jsonld/jsonld-spec";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -29,16 +29,16 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly configuration: JsonAppConfiguration | null;
-  readonly eventKey: string;
+  readonly eventIri: string;
   readonly modelSetJsonLd: JsonLd;
 }
 
 const EventPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "modelSetJsonLd"
-> & {readonly modelSet: ModelSet}> = ({eventKey, modelSet}) => {
+> & {readonly modelSet: ModelSet}> = ({eventIri, modelSet}) => {
   const configuration = modelSet.appConfiguration;
-  const event: Event = requireNonNull(modelSet.eventByKey(eventKey));
+  const event: Event = requireNonNull(modelSet.eventByIri(eventIri));
   const router = useRouter();
 
   return (
@@ -81,9 +81,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     fallback: false,
-    paths: (await api.getEventKeys()).modelKeys.map(eventKey => ({
+    paths: (await api.getEventIris()).modelIris.map(eventIri => ({
       params: {
-        eventKey: encodeFileName(eventKey),
+        eventIri: encodeFileName(eventIri),
       },
     })),
   };
@@ -94,20 +94,20 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const api = await getStaticApi();
 
-  const eventKey = decodeFileName(params!.eventKey as string);
+  const eventIri = decodeFileName(params!.eventIri as string);
 
   return {
     props: {
       configuration: await api.getAppConfiguration(),
-      eventKey,
+      eventIri,
       modelSetJsonLd: await (
         await api.getEvents({
           joinSelector: eventPageEventJoinSelector,
           query: {
             filters: [
               {
-                includeKeys: [eventKey],
-                type: "Key",
+                includeIris: [eventIri],
+                type: "Iri",
               },
             ],
           },
