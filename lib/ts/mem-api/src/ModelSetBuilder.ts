@@ -563,7 +563,7 @@ export class ModelSetBuilder {
       //   "ModelSetBuilder: trying to get thumbnail for",
       //   (image as any).constructor,
       //   JSON.stringify({
-      //     key: image.key,
+      //     key: modelToLoggableString(image),
       //     exactDimensions: image.exactDimensions,
       //     maxDimensions: image.maxDimensions,
       //   })

@@ -69,10 +69,7 @@ describe("ModelSetBuilder", () => {
 
   it("should get an agents subset (agents gallery)", () => {
     const work = completeModelSet.works[0];
-    console.info(work.key);
     const agents = work.agents.map(agent => agent.agent);
-    const namedAgents = agents.filter(agent => agent.iris.length > 0);
-    expect(namedAgents.length).to.be.lte(agents.length);
     for (const agent of agents) {
       sut.addAgent(agent, {thumbnail: testThumbnailSelector});
     }

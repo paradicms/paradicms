@@ -1,6 +1,6 @@
 import {expect} from "chai";
 
-export const expectModelKeysDeepEq = (
+export const expectModelIrisDeepEq = (
   actualModelKeys: readonly string[],
   expectedModelKeys: readonly string[]
 ) =>
