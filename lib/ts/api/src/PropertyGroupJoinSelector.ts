@@ -1,11 +1,11 @@
 import {ThumbnailSelector} from "@paradicms/models";
-import {PropertyJoinSelector} from "./PropertyJoinSelector";
-import {ImageJoinSelector} from "./ImageJoinSelector";
 import {Dictionary, Intersect, Optional, Record, Static} from "runtypes";
+import {ImageJoinSelector} from "./ImageJoinSelector";
+import {PropertyJoinSelector} from "./PropertyJoinSelector";
 
 export const PropertyGroupJoinSelector = Record({
   properties: Optional(PropertyJoinSelector),
-  propertiesByKey: Optional(Dictionary(PropertyJoinSelector)),
+  propertiesByIri: Optional(Dictionary(PropertyJoinSelector)),
   thumbnail: Optional(Intersect(ImageJoinSelector, ThumbnailSelector)),
 }).asReadonly();
 

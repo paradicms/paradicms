@@ -85,7 +85,7 @@ export class Worksheet {
     if (!currentFeatureSet) {
       return undefined;
     }
-    return currentFeatureSet.featureByKey(this.currentMark.featureKey);
+    return currentFeatureSet.featureByIri(this.currentMark.featureKey);
   }
 
   get currentFeatureSet(): WorksheetFeatureSet | undefined {

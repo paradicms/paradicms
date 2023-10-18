@@ -6,6 +6,7 @@ import {
   imputeDateRangeEndpoint,
 } from "@paradicms/api";
 import {Image, ThumbnailSelector, Work, WorkEvent} from "@paradicms/models";
+import {DataFactory} from "@paradicms/rdf";
 import {deleteUndefined} from "@paradicms/utilities";
 import invariant from "ts-invariant";
 import {MutableValueFacetValue} from "./MutableValueFacetValue";
@@ -173,7 +174,9 @@ export const facetizeWorks = (kwds: {
             valueFacetValueThumbnailSelector,
             works,
             getWorkValues: work =>
-              work.propertyValuesByPropertyIri(filter.propertyIri),
+              work.propertyValuesByPropertyIri(
+                DataFactory.namedNode(filter.propertyIri)
+              ),
           }),
           propertyIri: filter.propertyIri,
           type: "StringPropertyValue",

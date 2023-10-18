@@ -1,9 +1,10 @@
 import {LocationsFilter} from "@paradicms/api";
-import {filterModelsByKey} from "./filterModelsByKey";
 import {Point} from "@paradicms/models";
+import {NamedNode} from "@rdfjs/types";
+import {filterModelsByIri} from "./filterModelsByIri";
 
 export const filterLocations = <
-  LocationT extends {readonly centroid: Point | null; readonly key: string}
+  LocationT extends {readonly centroid: Point | null; readonly iri: NamedNode}
 >(kwds: {
   filters: readonly LocationsFilter[];
   locations: readonly LocationT[];
@@ -18,8 +19,8 @@ export const filterLocations = <
         );
         break;
       }
-      case "Key": {
-        filteredLocations = filterModelsByKey({
+      case "Iri": {
+        filteredLocations = filterModelsByIri({
           filter,
           models: filteredLocations,
         });

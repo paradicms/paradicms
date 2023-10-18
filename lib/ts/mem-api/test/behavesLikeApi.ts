@@ -68,7 +68,7 @@ export const behavesLikeApi = (api: Api) => {
       completeModelSet.events.length
     );
     expectModelKeysDeepEq(
-      actualResult.modelKeys,
+      actualResult.modelIris,
       completeModelSet.events.map(event => event.key)
     );
   });
@@ -113,7 +113,7 @@ export const behavesLikeApi = (api: Api) => {
 
   it("getPropertyGroupIris returns all property group keys (worksheet feature set edit)", async () => {
     const {
-      modelKeys: actualPropertyGroupKeys,
+      modelIris: actualPropertyGroupKeys,
       totalModelsCount: actualTotalPropertyGroupsCount,
     } = await api.getPropertyGroupIris();
     expect(actualTotalPropertyGroupsCount).to.eq(
@@ -159,7 +159,7 @@ export const behavesLikeApi = (api: Api) => {
       }
     }
 
-    return result.modelKeys.map(workAgentKey =>
+    return result.modelIris.map(workAgentKey =>
       requireNonNull(workAgentsByKey[workAgentKey])
     );
   };
@@ -204,7 +204,7 @@ export const behavesLikeApi = (api: Api) => {
       }
     }
 
-    return result.modelKeys.map(workEventIri =>
+    return result.modelIris.map(workEventIri =>
       requireDefined(workEventsByKey[workEventIri], workEventIri)
     );
   };
@@ -328,7 +328,7 @@ export const behavesLikeApi = (api: Api) => {
       expectedCollection.works.length
     );
     expectModelKeysDeepEq(
-      actualResult.modelKeys,
+      actualResult.modelIris,
       expectedCollection.works.map(work => work.key)
     );
   });

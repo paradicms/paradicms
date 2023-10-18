@@ -37,6 +37,7 @@ import {
   WorkEvent,
   WorkLocation,
 } from "@paradicms/models";
+import {DataFactory} from "@paradicms/rdf";
 import {requireNonNull} from "@paradicms/utilities";
 import {NamedNode} from "@rdfjs/types";
 import log from "loglevel";
@@ -49,7 +50,7 @@ import {filterLocations} from "./filterLocations";
 import {filterProperties} from "./filterProperties";
 import {filterPropertyGroups} from "./filterPropertyGroups";
 import {filterWorks} from "./filterWorks";
-import {getModelKeys} from "./getModelKeys";
+import {getModelIris} from "./getModelIris";
 import {getModels} from "./getModels";
 import {ModelSetBuilder} from "./ModelSetBuilder";
 import {sortAgents} from "./sortAgents";
@@ -89,7 +90,7 @@ export class MemApi implements Api {
   private readonly modelSet: ModelSet;
   // Index of work key -> keys of collections containing that work
   private readonly workCollectionIris: {
-    [index: string]: readonly NamedNode[];
+    [index: string]: readonly string[];
   };
 
   constructor(kwds: {readonly modelSet: ModelSet}) {
@@ -131,13 +132,13 @@ export class MemApi implements Api {
       }
     });
 
-    const workCollectionIris: {[index: string]: NamedNode[]} = {};
+    const workCollectionIris: {[index: string]: string[]} = {};
     for (const collection of kwds.modelSet.collections) {
       for (const work of collection.works) {
         if (!workCollectionIris[work.iri.value]) {
           workCollectionIris[work.iri.value] = [];
         }
-        workCollectionIris[work.iri.value].push(collection.iri);
+        workCollectionIris[work.iri.value].push(collection.iri.value);
       }
     }
     this.workCollectionIris = workCollectionIris;
@@ -184,7 +185,7 @@ export class MemApi implements Api {
       sort = defaultEventsSort,
     } = kwds ?? {};
 
-    return getModelKeys({
+    return getModelIris({
       allModels: this.modelSet.events,
       filterModels: events =>
         filterEvents({events, filters: query.filters ?? []}),
@@ -230,7 +231,7 @@ export class MemApi implements Api {
       query = {} as PropertyGroupsQuery,
     } = kwds ?? {};
 
-    return getModelKeys({
+    return getModelIris({
       allModels: this.modelSet.propertyGroups,
       filterModels: propertyGroups =>
         filterPropertyGroups({propertyGroups, filters: query.filters ?? []}),
@@ -314,12 +315,12 @@ export class MemApi implements Api {
       const workAgentsWithContext: {
         readonly label: string;
         readonly workAgent: WorkAgent;
-        readonly workKey: string;
+        readonly workIri: NamedNode;
       }[] = works.flatMap(work =>
         work.agents.map(workAgent => ({
           label: workAgent.agent.label,
           workAgent,
-          workKey: work.key,
+          workIri: work.iri,
         }))
       );
 
@@ -329,19 +330,19 @@ export class MemApi implements Api {
       const slicedWorkAgents = sortedWorkAgents.slice(offset, offset + limit);
 
       const slicedWorkAgentsModelSetBuilder = new ModelSetBuilder();
-      for (const workKey of new Set(
-        slicedWorkAgents.map(workAgent => workAgent.workKey)
+      for (const workIri of new Set(
+        slicedWorkAgents.map(workAgent => workAgent.workIri)
       )) {
         // Add all of a work's agents
         slicedWorkAgentsModelSetBuilder.addWork(
-          requireNonNull(this.modelSet.workByKey(workKey)),
+          requireNonNull(this.modelSet.workByIri(workIri)),
           {agents: joinSelector ?? {}}
         );
       }
 
       resolve({
-        modelKeys: slicedWorkAgents.map(
-          workAgent => workAgent.workAgent.agent.key
+        modelIris: slicedWorkAgents.map(
+          workAgent => workAgent.workAgent.agent.iri.value
         ),
         modelSet: slicedWorkAgentsModelSetBuilder.build(),
         totalModelsCount: workAgentsWithContext.length,
@@ -366,23 +367,23 @@ export class MemApi implements Api {
       const works = this.queryWorks(worksQuery);
 
       type WorkEventWithContext = {
-        readonly key: string;
         compareByDate(other: WorkEventWithContext): number;
+        readonly iri: NamedNode;
         readonly label: string;
         readonly sortDate: Date | null;
         readonly workEvent: WorkEvent;
-        readonly workKey: string;
+        readonly workIri: NamedNode;
       };
       const workEvents: WorkEventWithContext[] = works.flatMap(work =>
         work.events.map(workEvent => ({
           compareByDate(other: WorkEventWithContext): number {
             return workEvent.compareByDate(other.workEvent);
           },
-          key: workEvent.key,
+          iri: workEvent.iri,
           label: workEvent.label,
           sortDate: workEvent.sortDate,
           workEvent,
-          workKey: work.key,
+          workIri: work.iri,
         }))
       );
 
@@ -397,18 +398,18 @@ export class MemApi implements Api {
       const slicedWorkEvents = sortedWorkEvents.slice(offset, offset + limit);
 
       const slicedWorkEventsModelSetBuilder = new ModelSetBuilder();
-      for (const workKey of new Set(
-        slicedWorkEvents.map(workEvent => workEvent.workKey)
+      for (const workIri of new Set(
+        slicedWorkEvents.map(workEvent => workEvent.workIri)
       )) {
         // Add all of a work's events
         slicedWorkEventsModelSetBuilder.addWork(
-          requireNonNull(this.modelSet.workByKey(workKey)),
+          requireNonNull(this.modelSet.workByIri(workIri)),
           {events: joinSelector ?? {}}
         );
       }
 
       resolve({
-        modelKeys: slicedWorkEvents.map(workEvent => workEvent.key),
+        modelIris: slicedWorkEvents.map(workEvent => workEvent.iri.value),
         modelSet: slicedWorkEventsModelSetBuilder.build(),
         totalModelsCount: workEvents.length,
       });
@@ -423,7 +424,7 @@ export class MemApi implements Api {
       sort = defaultWorksSort,
     } = kwds ?? {};
 
-    return getModelKeys({
+    return getModelIris({
       allModels: this.searchWorks(query),
       filterModels: works => this.filterWorks(query, works),
       limit,
@@ -446,13 +447,13 @@ export class MemApi implements Api {
       const workLocationSummaries = works.flatMap(work => {
         const workLocationsWithContext: {
           readonly centroid: Point | null;
-          readonly key: string;
+          readonly iri: NamedNode;
           readonly workLocation: WorkLocation;
         }[] = [];
         if (work.location) {
           workLocationsWithContext.push({
             centroid: work.location.location.centroid,
-            key: work.location.location.key,
+            iri: work.location.location.iri,
             workLocation: work.location,
           });
         }
@@ -460,7 +461,7 @@ export class MemApi implements Api {
           if (event.workLocation) {
             workLocationsWithContext.push({
               centroid: event.workLocation.location.centroid,
-              key: event.workLocation.location.key,
+              iri: event.workLocation.location.iri,
               workLocation: event.workLocation,
             });
           }
@@ -546,7 +547,7 @@ export class MemApi implements Api {
       // );
 
       resolve({
-        modelKeys: slicedWorks.map(work => work.key),
+        modelIris: slicedWorks.map(work => work.iri.value),
         modelSet: slicedWorksModelSet,
         facets,
         totalModelsCount: filteredWorks.length,
@@ -562,14 +563,16 @@ export class MemApi implements Api {
 
     // Optimization: handle the special case of getting a single key from all works
     if (works.length === this.modelSet.works.length) {
-      if (filters.length === 1 && filters[0].type === "Key") {
+      if (filters.length === 1 && filters[0].type === "Iri") {
         const keyFilter = filters[0];
         if (
           !keyFilter.excludeIris &&
           keyFilter.includeIris &&
           keyFilter.includeIris.length === 1
         ) {
-          const work = this.modelSet.workByKey(keyFilter.includeIris[0]);
+          const work = this.modelSet.workByIri(
+            DataFactory.namedNode(keyFilter.includeIris[0])
+          );
           return work !== null ? [work] : [];
         }
       }
@@ -591,7 +594,9 @@ export class MemApi implements Api {
       // Anything matching the fulltext search
       return this.index
         .search(query.text)
-        .map(({ref}) => requireNonNull(this.modelSet.workByKey(ref)));
+        .map(({ref}) =>
+          requireNonNull(this.modelSet.workByIri(DataFactory.namedNode(ref)))
+        );
     } else {
       // All works
       return this.modelSet.works;

@@ -33,6 +33,8 @@ import {
 import {Store} from "@paradicms/rdf";
 import log from "loglevel";
 
+const modelToLoggableString = (model: Model): string => model.iri.value;
+
 /**
  * Build a ModelSet by adding models to it.
  *
@@ -48,27 +50,38 @@ export class ModelSetBuilder {
 
   addAgent(agent: Agent, joinSelector?: AgentJoinSelector): ModelSetBuilder {
     if (agent.type === "OtherAgent") {
-      log.debug("ModelSetBuilder: ignoring 'OtherAgent'", agent.key);
+      log.debug(
+        "ModelSetBuilder: ignoring 'OtherAgent'",
+        modelToLoggableString(agent)
+      );
       return this;
     }
 
-    log.debug("ModelSetBuilder: adding agent", agent.key);
+    log.debug("ModelSetBuilder: adding agent", modelToLoggableString(agent));
     this.addModel(agent);
 
     if (!joinSelector) {
-      log.debug("ModelSetBuilder: agent", agent.key, "has no join selector");
+      log.debug(
+        "ModelSetBuilder: agent",
+        modelToLoggableString(agent),
+        "has no join selector"
+      );
       return this;
     }
 
     if (joinSelector.thumbnail) {
-      log.debug("ModelSetBuilder: adding agent", agent.key, "thumbnail");
+      log.debug(
+        "ModelSetBuilder: adding agent",
+        modelToLoggableString(agent),
+        "thumbnail"
+      );
       this.addThumbnail(agent, joinSelector.thumbnail);
     }
 
     // if (joinSelector.works) {
-    //   log.debug("ModelSetBuilder: adding agent", agent.key, "works");
+    //   log.debug("ModelSetBuilder: adding agent", modelToLoggableString(agent), "works");
     //   for (const work of agent.works) {
-    //     log.debug("ModelSetBuilder: adding agent", agent.key, "work", work.key);
+    //     log.debug("ModelSetBuilder: adding agent", modelToLoggableString(agent), "work", modelToLoggableString(work));
     //     this.addWork(work, joinSelector.works);
     //   }
     // }
@@ -80,13 +93,16 @@ export class ModelSetBuilder {
     collection: Collection,
     joinSelector?: CollectionJoinSelector
   ): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding collection", collection.key);
+    log.debug(
+      "ModelSetBuilder: adding collection",
+      modelToLoggableString(collection)
+    );
     this.addModel(collection);
 
     if (!joinSelector) {
       log.debug(
         "ModelSetBuilder: collection",
-        collection.key,
+        modelToLoggableString(collection),
         "has no join selector"
       );
       return this;
@@ -96,7 +112,7 @@ export class ModelSetBuilder {
       if (collection.description) {
         log.debug(
           "ModelSetBuilder: adding collection",
-          collection.key,
+          modelToLoggableString(collection),
           "description rights"
         );
         this.addRights(joinSelector.description, collection.description);
@@ -106,22 +122,22 @@ export class ModelSetBuilder {
     if (joinSelector.thumbnail) {
       log.debug(
         "ModelSetBuilder: adding collection",
-        collection.key,
+        modelToLoggableString(collection),
         " thumbnail"
       );
       if (!this.addThumbnail(collection, joinSelector.thumbnail)) {
         log.debug(
           "ModelSetBuilder: collection",
-          collection.key,
+          modelToLoggableString(collection),
           "doesn't have its own thumbnail, adding a collection work thumbnail"
         );
         for (const work of collection.works) {
           if (this.addThumbnail(work, joinSelector.thumbnail)) {
             log.debug(
               "ModelSetBuilder: added work",
-              work.key,
+              modelToLoggableString(work),
               "thumbnail for collection",
-              collection.key
+              modelToLoggableString(collection)
             );
             break;
           }
@@ -130,13 +146,17 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.works) {
-      log.debug("ModelSetBuilder: adding collection", collection.key, "works");
+      log.debug(
+        "ModelSetBuilder: adding collection",
+        modelToLoggableString(collection),
+        "works"
+      );
       for (const work of collection.works) {
         log.debug(
           "ModelSetBuilder: adding collection",
-          collection.key,
+          modelToLoggableString(collection),
           "work",
-          work.key
+          modelToLoggableString(work)
         );
         this.addWork(work, joinSelector.works);
       }
@@ -149,20 +169,27 @@ export class ModelSetBuilder {
     concept: Concept,
     joinSelector?: PropertyValueJoinSelector
   ): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding concept", concept.key);
+    log.debug(
+      "ModelSetBuilder: adding concept",
+      modelToLoggableString(concept)
+    );
     this.addModel(concept);
 
     if (!joinSelector) {
       log.debug(
         "ModelSetBuilder: concept",
-        concept.key,
+        modelToLoggableString(concept),
         "has no join selector"
       );
       return this;
     }
 
     if (joinSelector.thumbnail) {
-      log.debug("ModelSetBuilder: adding concept", concept.key, "thumbnail");
+      log.debug(
+        "ModelSetBuilder: adding concept",
+        modelToLoggableString(concept),
+        "thumbnail"
+      );
       this.addThumbnail(concept, joinSelector.thumbnail);
     }
 
@@ -170,22 +197,30 @@ export class ModelSetBuilder {
   }
 
   addEvent(event: Event, joinSelector?: EventJoinSelector): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding event", event.key);
+    log.debug("ModelSetBuilder: adding event", modelToLoggableString(event));
     this.addModel(event);
 
     if (!joinSelector) {
-      log.debug("ModelSetBuilder: event", event.key, "has no join selector");
+      log.debug(
+        "ModelSetBuilder: event",
+        modelToLoggableString(event),
+        "has no join selector"
+      );
       return this;
     }
 
     if (joinSelector.agents) {
-      log.debug("ModelSetBuilder: adding event", event.key, "agents");
+      log.debug(
+        "ModelSetBuilder: adding event",
+        modelToLoggableString(event),
+        "agents"
+      );
       for (const agent of event.agents) {
         log.debug(
           "ModelSetBuilder: adding event",
-          event.key,
+          modelToLoggableString(event),
           "agent",
-          agent.key
+          modelToLoggableString(agent)
         );
         this.addAgent(agent, joinSelector.agents);
       }
@@ -195,7 +230,7 @@ export class ModelSetBuilder {
       if (event.description) {
         log.debug(
           "ModelSetBuilder: adding event",
-          event.key,
+          modelToLoggableString(event),
           "description rights"
         );
         this.addRights(joinSelector.description, event.description);
@@ -203,18 +238,26 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      log.debug("ModelSetBuilder: adding event", event.key, "thumbnail");
+      log.debug(
+        "ModelSetBuilder: adding event",
+        modelToLoggableString(event),
+        "thumbnail"
+      );
       this.addThumbnail(event, joinSelector.thumbnail);
     } else {
-      log.debug("ModelSetBuilder: not adding event", event.key, "thumbnail");
+      log.debug(
+        "ModelSetBuilder: not adding event",
+        modelToLoggableString(event),
+        "thumbnail"
+      );
     }
 
     if (joinSelector.location && event.location) {
       log.debug(
         "ModelSetBuilder: adding event",
-        event.key,
+        modelToLoggableString(event),
         "location",
-        event.location.key
+        modelToLoggableString(event.location)
       );
       this.addLocation(event.location);
     }
@@ -230,25 +273,31 @@ export class ModelSetBuilder {
   ): ModelSetBuilder {
     log.debug(
       "ModelSetBuilder: adding image",
-      image.key,
+      modelToLoggableString(image),
       "with join selector",
       JSON.stringify(joinSelector)
     );
     this.addModel(image);
     if (joinSelector) {
-      log.debug("adding image", image.key, "rights");
+      log.debug("adding image", modelToLoggableString(image), "rights");
       this.addRights(joinSelector, image);
     }
     return this;
   }
 
   addLicense(license: License): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding license", license.key);
+    log.debug(
+      "ModelSetBuilder: adding license",
+      modelToLoggableString(license)
+    );
     return this.addModel(license);
   }
 
   addLocation(location: Location): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding location", location.key);
+    log.debug(
+      "ModelSetBuilder: adding location",
+      modelToLoggableString(location)
+    );
     return this.addModel(location);
   }
 
@@ -270,7 +319,7 @@ export class ModelSetBuilder {
       // Otherwise the model is likely a blank node in another model's graph, don't add it
       log.debug(
         "tried to add a model that belongs to another model's graph:",
-        model.key
+        modelToLoggableString(model)
       );
       return this;
     }
@@ -282,26 +331,33 @@ export class ModelSetBuilder {
     property: Property,
     joinSelector?: PropertyJoinSelector
   ): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding property", property.key);
+    log.debug(
+      "ModelSetBuilder: adding property",
+      modelToLoggableString(property)
+    );
     this.addModel(property);
 
     if (!joinSelector) {
       log.debug(
         "ModelSetBuilder: property",
-        property.key,
+        modelToLoggableString(property),
         "has no join selector"
       );
       return this;
     }
 
     if (joinSelector.groups) {
-      log.debug("ModelSetBuilder: adding property", property.key, "groups");
+      log.debug(
+        "ModelSetBuilder: adding property",
+        modelToLoggableString(property),
+        "groups"
+      );
       for (const propertyGroup of property.groups) {
         log.debug(
           "ModelSetBuilder: adding property",
-          property.key,
+          modelToLoggableString(property),
           "group",
-          propertyGroup.key
+          modelToLoggableString(propertyGroup)
         );
         this.addPropertyGroup(propertyGroup, {});
       }
@@ -310,13 +366,13 @@ export class ModelSetBuilder {
     if (joinSelector.rangeValues) {
       log.debug(
         "ModelSetBuilder: adding property",
-        property.key,
+        modelToLoggableString(property),
         "range values"
       );
       for (const value of property.rangeValues) {
         log.debug(
           "ModelSetBuilder: adding property",
-          property.key,
+          modelToLoggableString(property),
           "range value",
           value.value
         );
@@ -325,7 +381,11 @@ export class ModelSetBuilder {
     }
 
     if (joinSelector.thumbnail) {
-      log.debug("ModelSetBuilder: adding property", property.key, "thumbnail");
+      log.debug(
+        "ModelSetBuilder: adding property",
+        modelToLoggableString(property),
+        "thumbnail"
+      );
       this.addThumbnail(property, joinSelector.thumbnail);
     }
 
@@ -336,28 +396,31 @@ export class ModelSetBuilder {
     propertyGroup: PropertyGroup,
     joinSelector?: PropertyGroupJoinSelector
   ): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding propertyGroup", propertyGroup.key);
+    log.debug(
+      "ModelSetBuilder: adding propertyGroup",
+      modelToLoggableString(propertyGroup)
+    );
     this.addModel(propertyGroup);
 
     if (!joinSelector) {
       log.debug(
         "ModelSetBuilder: property group",
-        propertyGroup.key,
+        modelToLoggableString(propertyGroup),
         "has no join selector"
       );
       return this;
     }
 
-    if (joinSelector.properties || joinSelector.propertiesByKey) {
+    if (joinSelector.properties || joinSelector.propertiesByIri) {
       log.debug(
         "ModelSetBuilder: adding property group",
-        propertyGroup.key,
+        modelToLoggableString(propertyGroup),
         "properties"
       );
       for (const property of propertyGroup.properties) {
         const propertyJoinSelector =
-          (joinSelector.propertiesByKey
-            ? joinSelector.propertiesByKey[property.key]
+          (joinSelector.propertiesByIri
+            ? joinSelector.propertiesByIri[property.iri.value]
             : undefined) ?? joinSelector.properties;
         if (!propertyJoinSelector) {
           continue;
@@ -365,9 +428,9 @@ export class ModelSetBuilder {
 
         log.debug(
           "ModelSetBuilder: adding property group",
-          propertyGroup.key,
+          modelToLoggableString(propertyGroup),
           "property",
-          property.key
+          modelToLoggableString(property)
         );
         this.addProperty(property, propertyJoinSelector);
       }
@@ -376,7 +439,7 @@ export class ModelSetBuilder {
     if (joinSelector.thumbnail) {
       log.debug(
         "ModelSetBuilder: adding property group",
-        propertyGroup.key,
+        modelToLoggableString(propertyGroup),
         "thumbnail"
       );
       this.addThumbnail(propertyGroup, joinSelector.thumbnail);
@@ -394,7 +457,7 @@ export class ModelSetBuilder {
     if (propertyValue.type === "Concept") {
       log.debug(
         "ModelSetBuilder: adding concept property value",
-        propertyValue.concept.key
+        modelToLoggableString(propertyValue.concept)
       );
       this.addConcept(propertyValue.concept, joinSelector);
     }
@@ -413,7 +476,7 @@ export class ModelSetBuilder {
         "ModelSetBuilder: adding property value",
         propertyValue.value,
         "property",
-        propertyValue.property.key
+        modelToLoggableString(propertyValue.property)
       );
       this.addProperty(propertyValue.property, {});
     }
@@ -424,7 +487,7 @@ export class ModelSetBuilder {
           "ModelSetBuilder: adding property value",
           propertyValue.value,
           "property group",
-          propertyGroup.key
+          modelToLoggableString(propertyGroup)
         );
         this.addPropertyGroup(propertyGroup, {});
       }
@@ -468,7 +531,10 @@ export class ModelSetBuilder {
   }
 
   addRightsStatement(rightsStatement: RightsStatement): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding rights statement", rightsStatement.key);
+    log.debug(
+      "ModelSetBuilder: adding rights statement",
+      modelToLoggableString(rightsStatement)
+    );
     return this.addModel(rightsStatement);
   }
 
@@ -486,8 +552,8 @@ export class ModelSetBuilder {
       "images to select thumbnails from:",
       JSON.stringify(
         imagesMixin.images.map(image => ({
-          key: image.key,
           exactDimensions: image.exactDimensions,
+          iri: image.iri.value,
           maxDimensions: image.maxDimensions,
         }))
       )
@@ -506,12 +572,15 @@ export class ModelSetBuilder {
       if (thumbnail) {
         log.debug(
           "ModelSetBuilder: adding original image",
-          image.key,
+          modelToLoggableString(image),
           "in order to add thumbnail",
-          thumbnail.key
+          modelToLoggableString(thumbnail)
         );
         this.addImage(image, selector); // Add the original image
-        log.debug("ModelSetBuilder: adding thumbnail", thumbnail.key);
+        log.debug(
+          "ModelSetBuilder: adding thumbnail",
+          modelToLoggableString(thumbnail)
+        );
         this.addImage(thumbnail, selector);
         return true;
       }
@@ -520,7 +589,7 @@ export class ModelSetBuilder {
       const image = imagesMixin.images[0];
       log.debug(
         "ModelSetBuilder: adding an original image",
-        image.key,
+        modelToLoggableString(image),
         "as a thumbnail"
       );
       this.addImage(image, selector);
@@ -534,21 +603,29 @@ export class ModelSetBuilder {
   }
 
   addWork(work: Work, joinSelector?: WorkJoinSelector): ModelSetBuilder {
-    log.debug("ModelSetBuilder: adding work", work.key);
-    // console.time("addWork " + work.key);
+    log.debug("ModelSetBuilder: adding work", modelToLoggableString(work));
+    // console.time("addWork " + modelToLoggableString(work));
 
-    // console.time("addWork addModel " + work.key);
+    // console.time("addWork addModel " + modelToLoggableString(work));
     this.addModel(work);
-    // console.timeEnd("addWork addModel " + work.key);
+    // console.timeEnd("addWork addModel " + modelToLoggableString(work));
 
     if (!joinSelector) {
-      log.debug("ModelSetBuilder: work", work.key, "has no join selector");
-      // console.timeEnd("addWork " + work.key);
+      log.debug(
+        "ModelSetBuilder: work",
+        modelToLoggableString(work),
+        "has no join selector"
+      );
+      // console.timeEnd("addWork " + modelToLoggableString(work));
       return this;
     }
 
-    log.debug("ModelSetBuilder: adding work", work.key, "rights");
-    // console.time("addWork agents " + work.key);
+    log.debug(
+      "ModelSetBuilder: adding work",
+      modelToLoggableString(work),
+      "rights"
+    );
+    // console.time("addWork agents " + modelToLoggableString(work));
     if (joinSelector.agents) {
       for (const agents of [work.contributors, work.creators]) {
         for (const agent of agents) {
@@ -556,68 +633,94 @@ export class ModelSetBuilder {
         }
       }
     }
-    // console.timeEnd("addWork agents " + work.key);
+    // console.timeEnd("addWork agents " + modelToLoggableString(work));
 
-    // console.time("addWork description " + work.key);
+    // console.time("addWork description " + modelToLoggableString(work));
     if (joinSelector.description) {
       if (work.description) {
         log.debug(
           "ModelSetBuilder: adding work",
-          work.key,
+          modelToLoggableString(work),
           "description rights"
         );
         this.addRights(joinSelector.description, work.description);
       }
     }
-    // console.timeEnd("addWork description " + work.key);
+    // console.timeEnd("addWork description " + modelToLoggableString(work));
 
-    // console.time("addWork events " + work.key);
+    // console.time("addWork events " + modelToLoggableString(work));
     if (joinSelector.events) {
-      log.debug("ModelSetBuilder: adding work", work.key, "events");
+      log.debug(
+        "ModelSetBuilder: adding work",
+        modelToLoggableString(work),
+        "events"
+      );
       for (const event of work.events) {
-        log.debug("ModelSetBuilder: adding work", work.key, "event", event.key);
+        log.debug(
+          "ModelSetBuilder: adding work",
+          modelToLoggableString(work),
+          "event",
+          modelToLoggableString(event)
+        );
         this.addEvent(event, joinSelector.events);
       }
     }
-    // console.timeEnd("addWork events " + work.key);
+    // console.timeEnd("addWork events " + modelToLoggableString(work));
 
-    // console.time("addWork images " + work.key);
+    // console.time("addWork images " + modelToLoggableString(work));
     if (joinSelector.images) {
-      log.debug("ModelSetBuilder: adding work", work.key, "images");
+      log.debug(
+        "ModelSetBuilder: adding work",
+        modelToLoggableString(work),
+        "images"
+      );
       for (const image of work.images) {
-        log.debug("ModelSetBuilder: adding work", work.key, "image", image.key);
+        log.debug(
+          "ModelSetBuilder: adding work",
+          modelToLoggableString(work),
+          "image",
+          modelToLoggableString(image)
+        );
         this.addImage(image, joinSelector.images);
       }
     } else if (joinSelector.thumbnail) {
-      log.debug("ModelSetBuilder: adding work", work.key, "thumbnail");
+      log.debug(
+        "ModelSetBuilder: adding work",
+        modelToLoggableString(work),
+        "thumbnail"
+      );
       this.addThumbnail(work, joinSelector.thumbnail);
     }
-    // console.timeEnd("addWork images " + work.key);
+    // console.timeEnd("addWork images " + modelToLoggableString(work));
 
-    // console.time("addWork location " + work.key);
+    // console.time("addWork location " + modelToLoggableString(work));
     if (joinSelector.location) {
       if (work.location) {
         log.debug(
           "ModelSetBuilder: adding work",
-          work.key,
+          modelToLoggableString(work),
           "location",
-          work.location.location.key
+          modelToLoggableString(work.location.location)
         );
         this.addLocation(work.location.location);
       }
     }
-    // console.timeEnd("addWork location " + work.key);
+    // console.timeEnd("addWork location " + modelToLoggableString(work));
 
-    // console.time("addWork property values " + work.key);
+    // console.time("addWork property values " + modelToLoggableString(work));
     if (joinSelector.propertyValues) {
-      log.debug("ModelSetBuilder: adding work", work.key, "property values");
+      log.debug(
+        "ModelSetBuilder: adding work",
+        modelToLoggableString(work),
+        "property values"
+      );
       for (const propertyValue of work.propertyValues) {
         this.addPropertyValue(propertyValue, joinSelector.propertyValues);
       }
     }
-    // console.timeEnd("addWork property values " + work.key);
+    // console.timeEnd("addWork property values " + modelToLoggableString(work));
 
-    // console.timeEnd("addWork " + work.key);
+    // console.timeEnd("addWork " + modelToLoggableString(work));
 
     return this;
   }

@@ -86,9 +86,9 @@ export class RestApiServer {
 
   // private sendGetModelKeysResult(
   //   res: NextApiResponse,
-  //   getModelKeysResult: GetModelKeysResult
+  //   getModelIrisResult: GetModelKeysResult
   // ): void {
-  //   res.status(200).json(getModelKeysResult);
+  //   res.status(200).json(getModelIrisResult);
   // }
 
   private async sendGetModelsResult(

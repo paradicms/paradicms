@@ -38,7 +38,7 @@ export const getExhibitionData = async (
           : [],
       },
     })
-  ).modelKeys;
+  ).modelIris;
 
   return {collection, collectionModelSet, workKeys};
 };
