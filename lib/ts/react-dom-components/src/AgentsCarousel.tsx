@@ -1,4 +1,5 @@
-import {imagePlaceholderSrc} from "@paradicms/models";
+import {Image, ThumbnailSelector, imagePlaceholderSrc} from "@paradicms/models";
+import {NamedNode} from "@rdfjs/types";
 import * as React from "react";
 import {useCallback, useState} from "react";
 import {
@@ -13,11 +14,10 @@ import {FontAwesomeCarouselControl} from "./FontAwesomeCarouselControl";
 import {RightsParagraph} from "./RightsParagraph";
 import {getNamedModelLinks} from "./getNamedModelLinks";
 import {imagesCarouselThumbnailSelector} from "./imagesCarouselThumbnailSelector";
-import {Image, ThumbnailSelector} from "@paradicms/models";
 
 export interface AgentsCarouselAgent {
   readonly homepage?: string | null;
-  readonly key: string;
+  readonly iri: NamedNode;
   readonly label: string;
   readonly role?: string | null;
   thumbnail(selector: ThumbnailSelector): Image | null;
@@ -115,7 +115,7 @@ export const AgentsCarousel: React.FunctionComponent<{
       {/*  onClickHandler={goToIndex}*/}
       {/*/>*/}
       {agents.map(agent => (
-        <CarouselItem key={agent.key}>{renderAgent(agent)}</CarouselItem>
+        <CarouselItem key={agent.iri.value}>{renderAgent(agent)}</CarouselItem>
       ))}
       <FontAwesomeCarouselControl
         direction="prev"

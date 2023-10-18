@@ -7,8 +7,12 @@ export const RightsStatementLink: React.FunctionComponent<{
   if (!rightsStatement) {
     return null;
   }
-  if (rightsStatement.iris.length !== 1) {
+  if (
+    rightsStatement.iri.value.startsWith("http://") ||
+    rightsStatement.iri.value.startsWith("https://")
+  ) {
+    return <a href={rightsStatement.iri.value}>{rightsStatement.label}</a>;
+  } else {
     return <span>{rightsStatement.label}</span>;
   }
-  return <a href={rightsStatement.iris[0]}>{rightsStatement.label}</a>;
 };

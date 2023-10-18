@@ -1,14 +1,15 @@
+import {faCalendarDays} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {imagePlaceholderSrc, Text} from "@paradicms/models";
-import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
+import {NamedNode} from "@rdfjs/types";
 import React from "react";
 import {
   VerticalTimeline,
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import {Card, CardBody, CardText, CardTitle} from "reactstrap";
+import {galleryThumbnailSelector} from "./galleryThumbnailSelector";
 import {RightsParagraph} from "./RightsParagraph";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCalendarDays} from "@fortawesome/free-solid-svg-icons";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "xx-small",
@@ -16,14 +17,14 @@ const RIGHTS_STYLE: React.CSSProperties = {
   marginTop: 0,
 };
 
-import {Image, ThumbnailSelector} from "@paradicms/models";
 import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
+import {Image, ThumbnailSelector} from "@paradicms/models";
 
 export interface EventsTimelineEvent {
   readonly description: Text | null;
   readonly displayDate: string | null;
   readonly icon?: IconDefinition;
-  readonly key: string;
+  readonly iri: NamedNode;
   readonly label: string;
   thumbnail(selector: ThumbnailSelector): Image | null;
 }
@@ -132,7 +133,7 @@ export const EventsTimeline: React.FunctionComponent<{
           date={event.displayDate ?? undefined}
           dateClassName="text-center"
           icon={<FontAwesomeIcon icon={event.icon ?? faCalendarDays} />}
-          key={event.key}
+          key={event.iri.value}
         >
           <EventCard
             getAbsoluteImageSrc={getAbsoluteImageSrc}

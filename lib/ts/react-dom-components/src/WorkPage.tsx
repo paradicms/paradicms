@@ -1,3 +1,4 @@
+import {WorkLocationSummary, summarizeWorkLocation} from "@paradicms/api";
 import {
   Image,
   Property,
@@ -5,7 +6,6 @@ import {
   Work,
   WorkAgent,
 } from "@paradicms/models";
-import {summarizeWorkLocation, WorkLocationSummary} from "@paradicms/api";
 import * as React from "react";
 import {useState} from "react";
 import {
@@ -25,8 +25,8 @@ import {ImagesCarousel} from "./ImagesCarousel";
 import {RightsParagraph} from "./RightsParagraph";
 import {WorkAgentsCarousel} from "./WorkAgentsCarousel";
 import {WorkEventsTimeline} from "./WorkEventsTimeline";
-import {getVisibleWorkProperties} from "./getVisibleWorkProperties";
 import {WorkPropertiesContainer} from "./WorkPropertiesContainer";
+import {getVisibleWorkProperties} from "./getVisibleWorkProperties";
 
 const RIGHTS_STYLE: React.CSSProperties = {
   fontSize: "x-small",
@@ -53,8 +53,8 @@ export const WorkPage: React.FunctionComponent<{
   const workAgents: WorkAgent[] = [];
   for (const workAgent of work.agents) {
     if (
-      !workAgents.find(
-        uniqueWorkAgent => uniqueWorkAgent.agent.key === workAgent.agent.key
+      !workAgents.find(uniqueWorkAgent =>
+        uniqueWorkAgent.agent.iri.equals(workAgent.agent.iri)
       )
     ) {
       workAgents.push(workAgent);

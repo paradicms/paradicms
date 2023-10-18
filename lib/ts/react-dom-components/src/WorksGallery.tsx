@@ -37,7 +37,7 @@ export const WorksGallery: React.FunctionComponent<{
           work={work}
         />
       ),
-      key: work.key,
+      key: work.iri.value,
     }))}
   />
 );

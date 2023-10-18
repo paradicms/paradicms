@@ -31,8 +31,8 @@ export const EventPage: React.FunctionComponent<{
   const eventAgents: Agent[] = [];
   for (const eventAgent of event.agents) {
     if (
-      !eventAgents.some(
-        uniqueEventAgent => uniqueEventAgent.key === eventAgent.key
+      !eventAgents.some(uniqueEventAgent =>
+        uniqueEventAgent.iri.equals(eventAgent.iri)
       )
     ) {
       eventAgents.push(eventAgent);

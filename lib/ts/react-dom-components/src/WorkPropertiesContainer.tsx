@@ -1,27 +1,27 @@
-import {WorkProperty} from "./WorkProperty";
-import React from "react";
-import {Col, Container, Row, Table} from "reactstrap";
 import {PropertyGroup} from "@paradicms/models";
 import {requireDefined} from "@paradicms/utilities";
+import React from "react";
+import {Col, Container, Row, Table} from "reactstrap";
+import {WorkProperty} from "./WorkProperty";
 
 const groupWorkProperties = (workProperties: readonly WorkProperty[]) => {
   const ungroupedWorkProperties: WorkProperty[] = [];
-  const workPropertiesByGroupKey: {[index: string]: WorkProperty[]} = {};
+  const workPropertiesByGroupIri: {[index: string]: WorkProperty[]} = {};
   for (const workProperty of workProperties) {
     if (workProperty.property.groups.length === 0) {
       ungroupedWorkProperties.push(workProperty);
     } else {
       for (const propertyGroup of workProperty.property.groups) {
-        if (!workPropertiesByGroupKey[propertyGroup.key]) {
-          workPropertiesByGroupKey[propertyGroup.key] = [];
+        if (!workPropertiesByGroupIri[propertyGroup.iri.value]) {
+          workPropertiesByGroupIri[propertyGroup.iri.value] = [];
         }
-        workPropertiesByGroupKey[propertyGroup.key].push(workProperty);
+        workPropertiesByGroupIri[propertyGroup.iri.value].push(workProperty);
       }
     }
   }
   return {
     ungroupedWorkProperties,
-    workPropertiesByGroupKey,
+    workPropertiesByGroupIri,
   };
 };
 
@@ -68,28 +68,28 @@ export const WorkPropertiesContainer: React.FunctionComponent<{
 }> = ({propertyGroups, workProperties}) => {
   const {
     ungroupedWorkProperties,
-    workPropertiesByGroupKey,
+    workPropertiesByGroupIri,
   } = groupWorkProperties(workProperties);
 
-  const propertyGroupsByKey = propertyGroups.reduce((map, propertyGroup) => {
-    map[propertyGroup.key] = propertyGroup;
+  const propertyGroupsByIri = propertyGroups.reduce((map, propertyGroup) => {
+    map[propertyGroup.iri.value] = propertyGroup;
     return map;
   }, {} as {[index: string]: PropertyGroup});
 
   return (
     <Container className="px-2" fluid>
-      {Object.keys(workPropertiesByGroupKey)
+      {Object.keys(workPropertiesByGroupIri)
         .sort((left, right) =>
-          requireDefined(propertyGroupsByKey[left]).label.localeCompare(
-            requireDefined(propertyGroupsByKey[right]).label
+          requireDefined(propertyGroupsByIri[left]).label.localeCompare(
+            requireDefined(propertyGroupsByIri[right]).label
           )
         )
-        .map(propertyGroupKey => (
-          <Row key={propertyGroupKey}>
+        .map(propertyGroupIri => (
+          <Row key={propertyGroupIri}>
             <Col className="px-0" xs={12}>
               <WorkPropertiesTable
                 propertyGroupLabel={
-                  requireDefined(propertyGroupsByKey[propertyGroupKey]).label
+                  requireDefined(propertyGroupsByIri[propertyGroupIri]).label
                 }
                 workProperties={workProperties}
               />
