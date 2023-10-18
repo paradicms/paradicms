@@ -3,6 +3,7 @@ import {
   defaultBootstrapStylesheetHref,
   getNamedModelLinks,
 } from "@paradicms/react-dom-components";
+import {NamedNode} from "@rdfjs/types";
 import {Hrefs} from "lib/Hrefs";
 import Head from "next/head";
 import Link from "next/link";
@@ -16,8 +17,8 @@ export const Layout: React.FunctionComponent<React.PropsWithChildren<{
   collection: {label: string} | null;
   configuration: JsonAppConfiguration | null;
   currentWork?: Work;
-  nextWork?: {readonly key: string};
-  previousWork?: {readonly key: string};
+  nextWork?: {readonly iri: NamedNode};
+  previousWork?: {readonly iri: NamedNode};
 }>> = ({
   collection,
   children,

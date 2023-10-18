@@ -6,6 +6,7 @@ import {
   getAbsoluteImageSrc,
   getStaticApi,
 } from "@paradicms/next";
+import {DataFactory} from "@paradicms/rdf";
 import {
   WorkPage as DelegateWorkPage,
   ModelSetJsonLdParser,
@@ -25,7 +26,6 @@ import * as React from "react";
 import {useCallback} from "react";
 import Hammer from "react-hammerjs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
-import invariant from "ts-invariant";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -38,10 +38,10 @@ const LocationsMap = dynamic<{
 interface StaticProps {
   readonly collection: {readonly label: string} | null;
   readonly configuration: JsonAppConfiguration | null;
-  readonly currentWorkKey: string;
+  readonly currentWorkIri: string;
   readonly currentWorkModelSetJsonLd: JsonLd;
-  readonly nextWorkKey: string | null;
-  readonly previousWorkKey: string | null;
+  readonly nextWorkIri: string | null;
+  readonly previousWorkIri: string | null;
 }
 
 const WorkPageImpl: React.FunctionComponent<Omit<
@@ -50,27 +50,35 @@ const WorkPageImpl: React.FunctionComponent<Omit<
 > & {readonly currentWorkModelSet: ModelSet}> = ({
   collection,
   configuration,
-  currentWorkKey,
+  currentWorkIri: currentWorkIriString,
   currentWorkModelSet,
-  nextWorkKey,
-  previousWorkKey,
+  nextWorkIri: nextWorkIriString,
+  previousWorkIri: previousWorkIriString,
 }) => {
+  const currentWorkIri = DataFactory.namedNode(currentWorkIriString);
+  const nextWorkIri = nextWorkIriString
+    ? DataFactory.namedNode(nextWorkIriString)
+    : null;
+  const previousWorkIri = previousWorkIriString
+    ? DataFactory.namedNode(previousWorkIriString)
+    : null;
+
   const currentWork = requireNonNull(
-    currentWorkModelSet.workByKey(currentWorkKey)
+    currentWorkModelSet.workByIri(currentWorkIri)
   );
   const router = useRouter();
 
   const onGoToNextWork = useCallback(() => {
-    if (nextWorkKey) {
-      router.push(Hrefs.work({key: nextWorkKey}));
+    if (nextWorkIri) {
+      router.push(Hrefs.work({iri: nextWorkIri}));
     }
-  }, [nextWorkKey, router]);
+  }, [nextWorkIri, router]);
 
   const onGoToPreviousWork = useCallback(() => {
-    if (previousWorkKey) {
-      router.push(Hrefs.work({key: previousWorkKey}));
+    if (previousWorkIri) {
+      router.push(Hrefs.work({iri: previousWorkIri}));
     }
-  }, [previousWorkKey, router]);
+  }, [previousWorkIri, router]);
 
   const onKeyDown = useCallback(
     (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -95,8 +103,8 @@ const WorkPageImpl: React.FunctionComponent<Omit<
       collection={collection}
       configuration={configuration}
       currentWork={currentWork}
-      nextWork={nextWorkKey ? {key: nextWorkKey} : undefined}
-      previousWork={previousWorkKey ? {key: previousWorkKey} : undefined}
+      nextWork={nextWorkIri ? {iri: nextWorkIri} : undefined}
+      previousWork={previousWorkIri ? {iri: previousWorkIri} : undefined}
     >
       <Hammer onSwipeLeft={onGoToPreviousWork} onSwipeRight={onGoToNextWork}>
         <div>
@@ -108,7 +116,7 @@ const WorkPageImpl: React.FunctionComponent<Omit<
               propertyGroups={currentWorkModelSet.propertyGroups}
               properties={currentWorkModelSet.properties}
               renderWorkLink={(work, children) => (
-                <Link href={Hrefs.work({key: currentWorkKey})}>{children}</Link>
+                <Link href={Hrefs.work({iri: currentWorkIri})}>{children}</Link>
               )}
               renderWorkLocationsMap={workLocations => (
                 <LocationsMap
@@ -145,14 +153,14 @@ export default WorkPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const api = await getStaticApi();
 
-  const paths: {params: {workKey: string}}[] = [];
+  const paths: {params: {workIri: string}}[] = [];
 
-  const {workKeys} = await getExhibitionData(api);
+  const {workIris} = await getExhibitionData(api);
 
-  for (const workKey of workKeys) {
+  for (const workIri of workIris) {
     paths.push({
       params: {
-        workKey: encodeFileName(workKey),
+        workIri: encodeFileName(workIri.value),
       },
     });
   }
@@ -168,17 +176,16 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{props: StaticProps}> => {
   const api = await getStaticApi();
 
-  const {collection, workKeys} = await getExhibitionData(api);
+  const {collection, workIris} = await getExhibitionData(api);
 
-  const currentWorkKey = decodeFileName(params!.workKey as string);
+  const currentWorkIri = decodeFileName(params!.workIri as string);
 
-  const currentWorkI = workKeys.findIndex(workKey => workKey == currentWorkKey);
+  const currentWorkI = workIris.findIndex(
+    workIri => workIri.value == currentWorkIri
+  );
   if (currentWorkI === -1) {
-    throw new EvalError(`current work ${currentWorkKey} not found among works`);
+    throw new EvalError(`current work ${currentWorkIri} not found among works`);
   }
-  const nextWorkKey =
-    currentWorkI + 1 < workKeys.length ? workKeys[currentWorkI + 1] : null;
-  const previousWorkKey = currentWorkI > 0 ? workKeys[currentWorkI - 1] : null;
 
   const currentWorkModelSet = (
     await api.getWorks({
@@ -187,30 +194,26 @@ export const getStaticProps: GetStaticProps = async ({
       query: {
         filters: [
           {
-            includeKeys: [currentWorkKey],
-            type: "Key",
+            includeIris: [currentWorkIri],
+            type: "Iri",
           },
         ],
       },
     })
   ).modelSet;
-  invariant(
-    currentWorkModelSet.works.length == 1,
-    currentWorkModelSet.works.length
-  );
-  invariant(
-    currentWorkModelSet.works[0].key === currentWorkKey,
-    currentWorkModelSet.works[0].key
-  );
 
   return {
     props: {
       collection: collection ? {label: collection.label} : null,
       configuration: await api.getAppConfiguration(),
-      currentWorkKey: currentWorkKey,
+      currentWorkIri: currentWorkIri,
       currentWorkModelSetJsonLd: await currentWorkModelSet.toJsonLd(),
-      nextWorkKey: nextWorkKey,
-      previousWorkKey: previousWorkKey,
+      nextWorkIri:
+        currentWorkI + 1 < workIris.length
+          ? workIris[currentWorkI + 1].value
+          : null,
+      previousWorkIri:
+        currentWorkI > 0 ? workIris[currentWorkI - 1].value : null,
     },
   };
 };

@@ -1,4 +1,6 @@
 import {Collection, ModelSet} from "@paradicms/models";
+import {DataFactory} from "@paradicms/rdf";
+import {NamedNode} from "@rdfjs/types";
 import {Api} from "index";
 
 export const getExhibitionData = async (
@@ -6,7 +8,7 @@ export const getExhibitionData = async (
 ): Promise<{
   readonly collection: Collection | null;
   readonly collectionModelSet: ModelSet;
-  readonly workKeys: readonly string[];
+  readonly workIris: readonly NamedNode[];
 }> => {
   const {modelSet: collectionModelSet} = await api.getCollections({
     limit: 1,
@@ -25,7 +27,7 @@ export const getExhibitionData = async (
       ? collectionModelSet.collections[0]
       : null;
 
-  const workKeys = (
+  const workIris = (
     await api.getWorkIris({
       query: {
         filters: collection
@@ -38,7 +40,7 @@ export const getExhibitionData = async (
           : [],
       },
     })
-  ).modelIris;
+  ).modelIris.map(iri => DataFactory.namedNode(iri));
 
-  return {collection, collectionModelSet, workKeys};
+  return {collection, collectionModelSet, workIris};
 };
