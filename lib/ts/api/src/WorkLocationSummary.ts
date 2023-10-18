@@ -7,7 +7,7 @@ const LocationSummary = Record({
 }).asReadonly();
 
 const WorkSummary = Record({
-  key: String,
+  iri: String,
   label: String,
 }).asReadonly();
 

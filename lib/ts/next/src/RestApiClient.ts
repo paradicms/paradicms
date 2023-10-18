@@ -1,16 +1,16 @@
 import {
   Api,
   GetCollectionsOptions,
-  GetEventKeysOptions,
+  GetEventIrisOptions,
   GetEventsOptions,
   GetModelKeysResult,
   GetModelsResult,
   GetPropertiesOptions,
-  GetPropertyGroupKeysOptions,
+  GetPropertyGroupIrisOptions,
   GetPropertyGroupsOptions,
   GetWorkAgentsOptions,
   GetWorkEventsOptions,
-  GetWorkKeysOptions,
+  GetWorkIrisOptions,
   GetWorkLocationsOptions,
   GetWorkLocationsResult,
   GetWorksOptions,
@@ -38,7 +38,7 @@ export class RestApiClient implements Api {
     return this.getModels("/collections", kwds);
   }
 
-  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetModelKeysResult> {
+  getEventIris(kwds?: GetEventIrisOptions): Promise<GetModelKeysResult> {
     return this.getModelKeys("/eventKeys", kwds);
   }
 
@@ -63,8 +63,8 @@ export class RestApiClient implements Api {
     return this.getModels("/properties", kwds);
   }
 
-  getPropertyGroupKeys(
-    kwds?: GetPropertyGroupKeysOptions
+  getPropertyGroupIris(
+    kwds?: GetPropertyGroupIrisOptions
   ): Promise<GetModelKeysResult> {
     return this.getModelKeys("/propertyGroupKeys", kwds);
   }
@@ -103,7 +103,7 @@ export class RestApiClient implements Api {
     return this.getModels("/workEvents", kwds);
   }
 
-  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetModelKeysResult> {
+  getWorkIris(kwds?: GetWorkIrisOptions): Promise<GetModelKeysResult> {
     return this.getModelKeys("/workKeys", kwds);
   }
 

@@ -61,9 +61,9 @@ export const behavesLikeApi = (api: Api) => {
     );
   });
 
-  it("getEventKeys returns a all event keys (timeline event pages)", async () => {
+  it("getEventIris returns a all event keys (timeline event pages)", async () => {
     expect(completeModelSet.events).not.to.be.empty;
-    const actualResult = await api.getEventKeys();
+    const actualResult = await api.getEventIris();
     expect(actualResult.totalModelsCount).to.be.eq(
       completeModelSet.events.length
     );
@@ -111,11 +111,11 @@ export const behavesLikeApi = (api: Api) => {
     expect(actualModelSet.events[0].key).to.eq(expectedEvent.key);
   });
 
-  it("getPropertyGroupKeys returns all property group keys (worksheet feature set edit)", async () => {
+  it("getPropertyGroupIris returns all property group keys (worksheet feature set edit)", async () => {
     const {
       modelKeys: actualPropertyGroupKeys,
       totalModelsCount: actualTotalPropertyGroupsCount,
-    } = await api.getPropertyGroupKeys();
+    } = await api.getPropertyGroupIris();
     expect(actualTotalPropertyGroupsCount).to.eq(
       completeModelSet.propertyGroups.length
     );
@@ -204,8 +204,8 @@ export const behavesLikeApi = (api: Api) => {
       }
     }
 
-    return result.modelKeys.map(workEventKey =>
-      requireDefined(workEventsByKey[workEventKey], workEventKey)
+    return result.modelKeys.map(workEventIri =>
+      requireDefined(workEventsByKey[workEventIri], workEventIri)
     );
   };
 
@@ -308,10 +308,10 @@ export const behavesLikeApi = (api: Api) => {
     }
   });
 
-  it("getWorkKeys returns a collection's work keys (multi-page-exhibition)", async () => {
+  it("getWorkIris returns a collection's work keys (multi-page-exhibition)", async () => {
     const expectedCollection = completeModelSet.collections[0];
     expect(expectedCollection.works).not.to.be.empty;
-    const actualResult = await api.getWorkKeys({
+    const actualResult = await api.getWorkIris({
       query: {
         filters: [
           {

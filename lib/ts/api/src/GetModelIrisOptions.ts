@@ -1,7 +1,7 @@
 import {Number, Optional, Record} from "runtypes";
 import {RuntypeBase} from "runtypes/lib/runtype";
 
-export const GetModelKeysOptions = <
+export const GetModelIrisOptions = <
   QueryT extends RuntypeBase,
   SortT extends RuntypeBase
 >(

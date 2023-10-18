@@ -1,15 +1,15 @@
 import {JsonAppConfiguration} from "@paradicms/models";
 import {GetCollectionsOptions} from "./GetCollectionsOptions";
-import {GetEventKeysOptions} from "./GetEventKeysOptions";
+import {GetEventIrisOptions} from "./GetEventIrisOptions";
 import {GetEventsOptions} from "./GetEventsOptions";
-import {GetModelKeysResult} from "./GetModelKeysResult";
+import {GetModelKeysResult} from "./GetModelIrisResult";
 import {GetModelsResult} from "./GetModelsResult";
 import {GetPropertiesOptions} from "./GetPropertiesOptions";
-import {GetPropertyGroupKeysOptions} from "./GetPropertyGroupKeysOptions";
+import {GetPropertyGroupIrisOptions} from "./GetPropertyGroupIrisOptions";
 import {GetPropertyGroupsOptions} from "./GetPropertyGroupsOptions";
 import {GetWorkAgentsOptions} from "./GetWorkAgentsOptions";
 import {GetWorkEventsOptions} from "./GetWorkEventsOptions";
-import {GetWorkKeysOptions} from "./GetWorkKeysOptions";
+import {GetWorkIrisOptions} from "./GetWorkIrisOptions";
 import {GetWorkLocationsOptions} from "./GetWorkLocationsOptions";
 import {GetWorkLocationsResult} from "./GetWorkLocationsResult";
 import {GetWorksOptions} from "./GetWorksOptions";
@@ -26,7 +26,7 @@ export interface Api {
   /**
    * Get event keys matched by the query.
    */
-  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetModelKeysResult>;
+  getEventIris(kwds?: GetEventIrisOptions): Promise<GetModelKeysResult>;
 
   /**
    * Get events matched by the query.
@@ -36,8 +36,8 @@ export interface Api {
   /**
    * Get property group keys matched by the query.
    */
-  getPropertyGroupKeys(
-    kwds?: GetPropertyGroupKeysOptions
+  getPropertyGroupIris(
+    kwds?: GetPropertyGroupIrisOptions
   ): Promise<GetModelKeysResult>;
 
   /**
@@ -61,9 +61,9 @@ export interface Api {
   getWorkEvents(kwds?: GetWorkEventsOptions): Promise<GetModelsResult>;
 
   /**
-   * Get the keys of works matched by the query.
+   * Get the IRIs of works matched by the query.
    */
-  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetModelKeysResult>;
+  getWorkIris(kwds?: GetWorkIrisOptions): Promise<GetModelKeysResult>;
 
   /**
    * Get locations associated with any of the works matched by the query.

@@ -6,16 +6,16 @@ import {
   defaultWorksSort,
   EventsQuery,
   GetCollectionsOptions,
-  GetEventKeysOptions,
+  GetEventIrisOptions,
   GetEventsOptions,
   GetModelKeysResult,
   GetModelsResult,
   GetPropertiesOptions,
-  GetPropertyGroupKeysOptions,
+  GetPropertyGroupIrisOptions,
   GetPropertyGroupsOptions,
   GetWorkAgentsOptions,
   GetWorkEventsOptions,
-  GetWorkKeysOptions,
+  GetWorkIrisOptions,
   GetWorkLocationsOptions,
   GetWorkLocationsResult,
   GetWorksOptions,
@@ -176,7 +176,7 @@ export class MemApi implements Api {
     });
   }
 
-  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetModelKeysResult> {
+  getEventIris(kwds?: GetEventIrisOptions): Promise<GetModelKeysResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
@@ -221,8 +221,8 @@ export class MemApi implements Api {
     });
   }
 
-  getPropertyGroupKeys(
-    kwds?: GetPropertyGroupKeysOptions
+  getPropertyGroupIris(
+    kwds?: GetPropertyGroupIrisOptions
   ): Promise<GetModelKeysResult> {
     const {
       limit = LIMIT_DEFAULT,
@@ -415,7 +415,7 @@ export class MemApi implements Api {
     });
   }
 
-  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetModelKeysResult> {
+  getWorkIris(kwds?: GetWorkIrisOptions): Promise<GetModelKeysResult> {
     const {
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,

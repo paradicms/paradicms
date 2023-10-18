@@ -1,6 +1,6 @@
 import {Work, WorkLocation} from "@paradicms/models";
-import {WorkLocationSummary} from "./WorkLocationSummary";
 import {deleteUndefined} from "@paradicms/utilities";
+import {WorkLocationSummary} from "./WorkLocationSummary";
 
 export const summarizeWorkLocation = (
   work: Work,
@@ -14,7 +14,7 @@ export const summarizeWorkLocation = (
     },
     role: workLocation.role,
     work: {
-      key: work.key,
+      iri: work.iri.value,
       label: work.label,
     },
   };

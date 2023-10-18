@@ -1,6 +1,6 @@
 import {Dictionary, Optional} from "runtypes";
 import {RuntypeBase} from "runtypes/lib/runtype";
-import {GetModelKeysOptions} from "./GetModelKeysOptions";
+import {GetModelIrisOptions} from "./GetModelIrisOptions";
 
 export const GetModelsOptions = <
   JoinSelectorT extends RuntypeBase,
@@ -11,7 +11,7 @@ export const GetModelsOptions = <
   query: QueryT,
   sort: SortT
 ) =>
-  GetModelKeysOptions(query, sort).extend({
+  GetModelIrisOptions(query, sort).extend({
     joinSelector: Optional(joinSelector),
     joinSelectorByIri: Optional(Dictionary(joinSelector)),
   });

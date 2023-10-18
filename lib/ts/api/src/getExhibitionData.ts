@@ -1,5 +1,5 @@
-import {Api} from "index";
 import {Collection, ModelSet} from "@paradicms/models";
+import {Api} from "index";
 
 export const getExhibitionData = async (
   api: Api
@@ -26,12 +26,12 @@ export const getExhibitionData = async (
       : null;
 
   const workKeys = (
-    await api.getWorkKeys({
+    await api.getWorkIris({
       query: {
         filters: collection
           ? [
               {
-                includeValues: [collection.key],
+                includeValues: [collection.iri.value],
                 type: "WorkCollectionValue",
               },
             ]
