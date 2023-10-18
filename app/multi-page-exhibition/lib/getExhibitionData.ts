@@ -1,7 +1,7 @@
+import {Api} from "@paradicms/api";
 import {Collection, ModelSet} from "@paradicms/models";
 import {DataFactory} from "@paradicms/rdf";
 import {NamedNode} from "@rdfjs/types";
-import {Api} from "index";
 
 export const getExhibitionData = async (
   api: Api

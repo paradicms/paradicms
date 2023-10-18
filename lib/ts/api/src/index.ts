@@ -65,6 +65,5 @@ export * from "./WorksSort";
 export * from "./defaultAgentsSort";
 export * from "./defaultEventsSort";
 export * from "./defaultWorksSort";
-export * from "./getExhibitionData";
 export * from "./imputeDateRangeEndpoint";
 export * from "./summarizeWorkLocation";

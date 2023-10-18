@@ -1,4 +1,3 @@
-import {getExhibitionData} from "@paradicms/api";
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {
   decodeFileName,
@@ -26,6 +25,7 @@ import * as React from "react";
 import {useCallback} from "react";
 import Hammer from "react-hammerjs";
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
+import {getExhibitionData} from "../../lib/getExhibitionData";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];

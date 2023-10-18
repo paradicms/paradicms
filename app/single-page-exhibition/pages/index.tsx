@@ -1,13 +1,17 @@
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {getAbsoluteImageSrc, getStaticApi} from "@paradicms/next";
+import {DataFactory} from "@paradicms/rdf";
 import {
-  defaultBootstrapStylesheetHref,
-  getWorkLocationIcon,
-  getWorkLocationLabel,
   ModelSetJsonLdParser,
   RightsParagraph,
   WorkPage,
+  defaultBootstrapStylesheetHref,
+  getWorkLocationIcon,
+  getWorkLocationLabel,
+  workPageWorkJoinSelector,
 } from "@paradicms/react-dom-components";
+import {requireNonNull} from "@paradicms/utilities";
+import {JsonLd} from "jsonld/jsonld-spec";
 import {GetStaticProps} from "next";
 import dynamic from "next/dynamic";
 import Head from "next/head";
@@ -15,10 +19,7 @@ import {useRouter} from "next/router";
 import * as React from "react";
 import {useMemo} from "react";
 import {Col, Container, Row} from "reactstrap";
-import {requireNonNull} from "@paradicms/utilities";
 import {LocationsMapLocation} from "../components/LocationsMap";
-import {JsonLd} from "jsonld/jsonld-spec";
-import {getExhibitionData} from "@paradicms/api";
 
 const LocationsMap = dynamic<{
   readonly locations: readonly LocationsMapLocation[];
@@ -30,26 +31,34 @@ const LocationsMap = dynamic<{
 
 interface StaticProps {
   readonly configuration: JsonAppConfiguration | null;
-  readonly collectionKey: string | null;
+  readonly collectionIri: string | null;
   readonly collectionModelSetJsonLd: JsonLd;
-  readonly workKeys: readonly string[];
+  readonly workIris: readonly string[];
+  readonly worksModelSetJsonLd: JsonLd;
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
-  "collectionModelSetJsonLd"
-> & {readonly collectionModelSet: ModelSet}> = ({
+  "collectionModelSetJsonLd" | "worksModelSetJsonLd"
+> & {
+  readonly collectionModelSet: ModelSet;
+  readonly worksModelSet: ModelSet;
+}> = ({
   configuration,
-  collectionKey,
+  collectionIri,
   collectionModelSet,
-  workKeys,
+  workIris,
+  worksModelSet,
 }) => {
   const pages: React.ReactElement[] = useMemo(() => {
-    const collection = collectionKey
-      ? collectionModelSet.collectionByKey(collectionKey)
+    const collection = collectionIri
+      ? collectionModelSet.collectionByIri(DataFactory.namedNode(collectionIri))
       : null;
-    const works = workKeys.map(workKey =>
-      requireNonNull(collectionModelSet.workByKey(workKey))
+    const works = workIris.map(workIri =>
+      requireNonNull(
+        worksModelSet.workByIri(DataFactory.namedNode(workIri)),
+        workIri
+      )
     );
     const pages: React.ReactElement[] = [];
 
@@ -160,12 +169,22 @@ const IndexPageImpl: React.FunctionComponent<Omit<
 
 const IndexPage: React.FunctionComponent<StaticProps> = ({
   collectionModelSetJsonLd,
+  worksModelSetJsonLd,
   ...otherProps
 }) => (
   <ModelSetJsonLdParser
     modelSetJsonLd={collectionModelSetJsonLd}
-    render={modelSet => (
-      <IndexPageImpl collectionModelSet={modelSet} {...otherProps} />
+    render={collectionModelSet => (
+      <ModelSetJsonLdParser
+        modelSetJsonLd={worksModelSetJsonLd}
+        render={worksModelSet => (
+          <IndexPageImpl
+            collectionModelSet={collectionModelSet}
+            worksModelSet={worksModelSet}
+            {...otherProps}
+          />
+        )}
+      />
     )}
   />
 );
@@ -177,16 +196,44 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const api = await getStaticApi();
 
-  const {collection, collectionModelSet, workKeys} = await getExhibitionData(
-    api
-  );
+  const {modelSet: collectionModelSet} = await api.getCollections({
+    limit: 1,
+    query: {
+      filters: [
+        {
+          exists: true,
+          type: "CollectionWorksExistence",
+        },
+      ],
+    },
+  });
+
+  const collection =
+    collectionModelSet.collections.length > 0
+      ? collectionModelSet.collections[0]
+      : null;
+
+  const works = await api.getWorks({
+    joinSelector: workPageWorkJoinSelector,
+    query: {
+      filters: collection
+        ? [
+            {
+              includeValues: [collection.iri.value],
+              type: "WorkCollectionValue",
+            },
+          ]
+        : [],
+    },
+  });
 
   return {
     props: {
       configuration: await api.getAppConfiguration(),
-      collectionKey: collection?.key ?? null,
+      collectionIri: collection?.iri.value ?? null,
       collectionModelSetJsonLd: await collectionModelSet.toJsonLd(),
-      workKeys,
+      worksModelSetJsonLd: await works.modelSet.toJsonLd(),
+      workIris: works.modelIris,
     },
   };
 };

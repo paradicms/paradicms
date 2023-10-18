@@ -1,4 +1,3 @@
-import {getExhibitionData} from "@paradicms/api";
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {getStaticApi} from "@paradicms/next";
 import {DataFactory} from "@paradicms/rdf";
@@ -14,6 +13,7 @@ import * as React from "react";
 import {Col, Container, Row} from "reactstrap";
 import invariant from "ts-invariant";
 import {Layout} from "../components/Layout";
+import {getExhibitionData} from "../lib/getExhibitionData";
 
 interface StaticProps {
   readonly collectionIri: string | null;
@@ -109,8 +109,8 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
     props: {
       configuration: await api.getAppConfiguration(),
       collectionIri: collection?.iri.value ?? null,
-      firstWorkIri: workIris[0].value,
       collectionModelSetJsonLd: await collectionModelSet.toJsonLd(),
+      firstWorkIri: workIris[0].value,
     },
   };
 };
