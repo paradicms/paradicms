@@ -1,8 +1,9 @@
+import {ModelSet} from "@paradicms/models";
+import {NamedNode} from "@rdfjs/types";
+import {Memoize} from "typescript-memoize";
+import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
 import {WorksheetFeatureSetDefinition} from "~/models/WorksheetFeatureSetDefinition";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
-import {WorksheetFeatureDefinition} from "~/models/WorksheetFeatureDefinition";
-import {ModelSet} from "@paradicms/models";
-import {Memoize} from "typescript-memoize";
 
 export class WorksheetDefinition {
   constructor(private readonly modelSet: ModelSet) {}
@@ -15,7 +16,7 @@ export class WorksheetDefinition {
   }
 
   @Memoize()
-  featureSetByIri(iri: string): WorksheetFeatureSetDefinition | null {
+  featureSetByIri(iri: NamedNode): WorksheetFeatureSetDefinition | null {
     const propertyGroup = this.modelSet.propertyGroupByIri(iri);
     return propertyGroup
       ? new WorksheetFeatureSetDefinition(propertyGroup)
@@ -29,7 +30,7 @@ export class WorksheetDefinition {
     );
   }
 
-  featureValueByIri(iri: string): WorksheetFeatureValueDefinition | null {
+  featureValueByIri(iri: NamedNode): WorksheetFeatureValueDefinition | null {
     return (
       this.featureValues.find(featureValue => featureValue.iri === iri) ?? null
     );

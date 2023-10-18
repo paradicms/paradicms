@@ -11,20 +11,13 @@ describe("MemModelSet", () => {
     const collections = sut.collections;
     expect(collections).to.have.length(2);
     for (const collection of collections) {
-      expect(sut.collectionByKey(collection.key)).to.eq(collection);
+      expect(sut.collectionByIri(collection.iri)).to.eq(collection);
       for (const work of collection.works) {
-        expect(sut.workByKey(work.key)).to.eq(work);
-        for (const workIri of work.iris) {
-          expect(sut.workByIri(workIri)).to.eq(work);
-        }
+        expect(sut.workByIri(work.iri)).to.eq(work);
 
-        if (work.iris.length === 1) {
-          expect(work.images).to.not.be.empty;
-          for (const image of work.images) {
-            for (const imageIri of image.iris) {
-              expect(sut.imageByIri(imageIri)).to.eq(image);
-            }
-          }
+        expect(work.images).to.not.be.empty;
+        for (const image of work.images) {
+          expect(sut.imageByIri(image.iri)).to.eq(image);
         }
       }
     }
@@ -34,12 +27,12 @@ describe("MemModelSet", () => {
     // );
     const concept = sut.concepts[0];
     expect(concept.value.value).to.eq(
-      sut.conceptByIri(concept.iris[0])!.value.value
+      sut.conceptByIri(concept.iri)!.value.value
     );
 
     expect(sut.events).to.not.be.empty;
     for (const event of sut.events) {
-      expect(sut.eventByKey(event.key)).not.to.be.null;
+      expect(sut.eventByIri(event.iri)).not.to.be.null;
     }
 
     expect(sut.properties).to.not.be.empty;
@@ -48,7 +41,7 @@ describe("MemModelSet", () => {
       if (property.filterable) {
         expect(property.rangeValues).to.not.be.empty;
       }
-      expect(sut.propertyByIri(property.iris[0])!.label).to.eq(property.label);
+      expect(sut.propertyByIri(property.iri)!.label).to.eq(property.label);
     }
 
     expect(sut.propertyGroups).to.not.be.empty;
@@ -57,29 +50,16 @@ describe("MemModelSet", () => {
     }
 
     for (const work of sut.works) {
-      // expect(work.contributors).to.not.be.empty;
-      expect(
-        work.contributors.every(contributor => contributor.iris[0] === null)
-      );
-      expect(
-        work.contributors.every(contributor => contributor.label.length > 0)
-      );
       expect(work.creators).to.not.be.empty;
-      const creator = work.creators.find(creator => creator.iris[0] !== null)!;
+      const creator = work.creators[0];
       expect(
         sut
-          .worksByAgentIri(creator.iris[0]!)
-          .some(agentWork => agentWork.iris[0] === work.iris[0])
+          .worksByAgentIri(creator.iri!)
+          .some(agentWork => agentWork.iri.equals(work.iri))
       ).to.be.true;
       expect(work.description).not.to.be.null;
       expect(work.description!.licenses).to.not.be.empty;
-      for (const license of work.description!.licenses) {
-        expect(license.iris[0]).to.not.be.empty;
-      }
       expect(work.description!.rightsStatements).to.not.be.empty;
-      for (const rightsStatement of work.description!.rightsStatements) {
-        expect(rightsStatement.iris[0]).to.not.be.empty;
-      }
       expect(work.images).to.not.be.empty;
     }
   });

@@ -100,7 +100,7 @@ export const behavesLikeApi = (api: Api) => {
       query: {
         filters: [
           {
-            includeKeys: [expectedEvent.key],
+            includeIris: [expectedEvent.key],
             type: "Key",
           },
         ],
@@ -459,7 +459,7 @@ export const behavesLikeApi = (api: Api) => {
         query: {
           filters: [
             {
-              includeKeys: [expectedWork.key],
+              includeIris: [expectedWork.key],
               type: "Key",
             },
           ],

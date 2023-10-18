@@ -9,7 +9,7 @@ import {mapTermToLocation} from "./mapTermToLocation";
  * Map a term in a modelSet to a WorkSubject.
  */
 export const mapTermToWorkSubject = (
-  modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
+  modelParameters: Omit<ResourceBackedModelParameters, "iri">,
   term: Term
 ): WorkSubject | null => {
   if (term.termType !== "NamedNode") {
@@ -24,7 +24,7 @@ export const mapTermToWorkSubject = (
         label: agent.label,
         thumbnail: selector => agent.thumbnail(selector),
         type: "Agent",
-        value: "Agent-" + agent.key,
+        value: "Agent-" + agent.iri.value,
       };
     }
   }
@@ -37,7 +37,7 @@ export const mapTermToWorkSubject = (
         label: concept.label,
         thumbnail: selector => concept.thumbnail(selector),
         type: "Concept",
-        value: "Concept-" + concept.key,
+        value: "Concept-" + concept.iri.value,
       };
     }
   }
@@ -47,10 +47,10 @@ export const mapTermToWorkSubject = (
     if (location) {
       return {
         location,
-        label: location.label ?? location.key,
+        label: location.label ?? location.iri.value,
         thumbnail: selector => null,
         type: "Location",
-        value: "Location-" + location.key,
+        value: "Location-" + location.iri.value,
       };
     }
   }

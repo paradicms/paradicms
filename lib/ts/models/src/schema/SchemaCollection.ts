@@ -21,6 +21,6 @@ export class SchemaCollection extends Mixin(
 
   @Memoize()
   get works(): readonly Work[] {
-    return this.filterAndMapObjects(schema.hasPart, term => term.termType === "NamedNode" ? this.modelSet.workByIri(term.value) : null);
+    return this.filterAndMapObjects(schema.hasPart, term => term.termType === "NamedNode" ? this.modelSet.workByIri(term) : null);
   }
 }

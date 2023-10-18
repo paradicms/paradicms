@@ -1,6 +1,6 @@
 import {datasetToJsonLd, getNamedRdfTypes} from "@paradicms/rdf";
 import {schema, time} from "@paradicms/vocabularies";
-import {DatasetCore} from "@rdfjs/types";
+import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
 import {Agent} from "./Agent";
 import {AppConfiguration} from "./AppConfiguration";
@@ -22,7 +22,6 @@ import {RightsStatement} from "./RightsStatement";
 import {Text} from "./Text";
 import {Work} from "./Work";
 import {indexModelsByIri} from "./indexModelsByIri";
-import {indexModelsByKey} from "./indexModelsByKey";
 import {indexModelsByValues} from "./indexModelsByValues";
 import {OwlTimePartialDateTimeDescription} from "./owl-time/OwlTimePartialDateTimeDescription";
 import {SchemaTextObject} from "./schema/SchemaTextObject";
@@ -31,9 +30,9 @@ import {sortModelsMultimap} from "./sortModelsMultimap";
 
 export class MemModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
-  agentByIri(agentIri: string): Agent | null {
+  agentByIri(agentIri: NamedNode): Agent | null {
     for (const index of [this.organizationsByIriIndex, this.peopleByIriIndex]) {
-      const agent = index[agentIri];
+      const agent = index[agentIri.value];
       if (agent) {
         return agent;
       }
@@ -53,16 +52,16 @@ export class MemModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readCollections({modelSet: this}));
   }
 
-  collectionByKey(collectionKey: string): Collection | null {
-    return this.modelByKey(this.collectionsByKeyIndex, collectionKey);
+  collectionByIri(collectionIri: NamedNode): Collection | null {
+    return this.modelByIri(this.collectionsByIriIndex, collectionIri);
   }
 
   @Memoize()
-  private get collectionsByKeyIndex(): {[index: string]: Collection} {
-    return indexModelsByKey(this.collections);
+  private get collectionsByIriIndex(): {[index: string]: Collection} {
+    return indexModelsByIri(this.collections);
   }
 
-  conceptByIri(conceptIri: string): Concept | null {
+  conceptByIri(conceptIri: NamedNode): Concept | null {
     return this.modelByIri(this.conceptsByIriIndex, conceptIri);
   }
 
@@ -76,8 +75,8 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.concepts);
   }
 
-  eventByKey(eventKey: string): Event | null {
-    return this.modelByKey(this.eventsByKeyIndex, eventKey);
+  eventByIri(eventIri: NamedNode): Event | null {
+    return this.modelByIri(this.eventsByIriIndex, eventIri);
   }
 
   @Memoize()
@@ -86,11 +85,11 @@ export class MemModelSet implements ModelSet {
   }
 
   @Memoize()
-  private get eventsByKeyIndex(): {[index: string]: Event} {
-    return indexModelsByKey(this.events);
+  private get eventsByIriIndex(): {[index: string]: Event} {
+    return indexModelsByIri(this.events);
   }
 
-  imageByIri(imageIri: string): Image | null {
+  imageByIri(imageIri: NamedNode): Image | null {
     return this.modelByIri(this.imagesByIriIndex, imageIri);
   }
 
@@ -104,7 +103,7 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.images);
   }
 
-  licenseByIri(licenseIri: string): License | null {
+  licenseByIri(licenseIri: NamedNode): License | null {
     return this.modelByIri(this.licensesByIriIndex, licenseIri);
   }
 
@@ -113,7 +112,7 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.namedLicenses);
   }
 
-  locationByIri(locationIri: string): Location | null {
+  locationByIri(locationIri: NamedNode): Location | null {
     return this.modelByIri(this.locationsByIriIndex, locationIri);
   }
 
@@ -124,16 +123,9 @@ export class MemModelSet implements ModelSet {
 
   private modelByIri<ModelT>(
     index: {[index: string]: ModelT},
-    iri: string
+    iri: NamedNode
   ): ModelT | null {
-    return index[iri] ?? null;
-  }
-
-  private modelByKey<ModelT>(
-    index: {[index: string]: ModelT},
-    key: string
-  ): ModelT | null {
-    return index[key] ?? null;
+    return index[iri.value] ?? null;
   }
 
   @Memoize()
@@ -169,7 +161,7 @@ export class MemModelSet implements ModelSet {
     );
   }
 
-  organizationByIri(organizationIri: string): Organization | null {
+  organizationByIri(organizationIri: NamedNode): Organization | null {
     return this.modelByIri(this.organizationsByIriIndex, organizationIri);
   }
 
@@ -183,7 +175,7 @@ export class MemModelSet implements ModelSet {
   ): PartialDateTimeDescription | null {
     for (const rdfType of getNamedRdfTypes({
       dataset: parameters.dataset,
-      subject: parameters.identifier,
+      subject: parameters.iri,
     })) {
       if (rdfType.equals(time.DateTimeDescription)) {
         return new OwlTimePartialDateTimeDescription(parameters);
@@ -197,7 +189,7 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.namedPeople);
   }
 
-  personByIri(personIri: string): Person | null {
+  personByIri(personIri: NamedNode): Person | null {
     return this.modelByIri(this.peopleByIriIndex, personIri);
   }
 
@@ -211,11 +203,11 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.properties);
   }
 
-  propertyByIri(propertyIri: string): Property | null {
+  propertyByIri(propertyIri: NamedNode): Property | null {
     return this.modelByIri(this.propertiesByIriIndex, propertyIri);
   }
 
-  propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null {
+  propertyGroupByIri(propertyGroupIri: NamedNode): PropertyGroup | null {
     return this.modelByIri(this.propertyGroupsByIriIndex, propertyGroupIri);
   }
 
@@ -231,22 +223,24 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.propertyGroups);
   }
 
-  propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[] {
-    return this.propertyGroupsByPropertyKeyIndex[propertyKey] ?? [];
+  propertyGroupsByPropertyIri(
+    propertyIri: NamedNode
+  ): readonly PropertyGroup[] {
+    return this.propertyGroupsByPropertyIriIndex[propertyIri.value] ?? [];
   }
 
   @Memoize()
-  private get propertyGroupsByPropertyKeyIndex(): {
+  private get propertyGroupsByPropertyIriIndex(): {
     [index: string]: readonly PropertyGroup[];
   } {
     return sortModelsMultimap(
       indexModelsByValues(this.propertyGroups, propertyGroup =>
-        propertyGroup.properties.map(property => property.key)
+        propertyGroup.properties.map(property => property.iri.value)
       )
     );
   }
 
-  rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
+  rightsStatementByIri(rightsStatementIri: NamedNode): RightsStatement | null {
     return this.modelByIri(this.rightsStatementsByIriIndex, rightsStatementIri);
   }
 
@@ -258,7 +252,7 @@ export class MemModelSet implements ModelSet {
   textByIri(parameters: ResourceBackedModelParameters): Text | null {
     for (const rdfType of getNamedRdfTypes({
       dataset: parameters.dataset,
-      subject: parameters.identifier,
+      subject: parameters.iri,
     })) {
       if (rdfType.equals(schema.TextObject)) {
         return new SchemaTextObject(parameters);
@@ -275,12 +269,8 @@ export class MemModelSet implements ModelSet {
     throw new EvalError("use model.toRdf to serialize");
   }
 
-  workByIri(workIri: string): Work | null {
+  workByIri(workIri: NamedNode): Work | null {
     return this.modelByIri(this.worksByIriIndex, workIri);
-  }
-
-  workByKey(workKey: string): Work | null {
-    return this.modelByKey(this.worksByKeyIndex, workKey);
   }
 
   @Memoize()
@@ -288,8 +278,8 @@ export class MemModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readWorks({modelSet: this}));
   }
 
-  worksByAgentIri(agentIri: string): readonly Work[] {
-    return this.worksByAgentIriIndex[agentIri] ?? [];
+  worksByAgentIri(agentIri: NamedNode): readonly Work[] {
+    return this.worksByAgentIriIndex[agentIri.value] ?? [];
   }
 
   @Memoize()
@@ -298,7 +288,7 @@ export class MemModelSet implements ModelSet {
   } {
     return sortModelsMultimap(
       indexModelsByValues(this.works, work =>
-        work.agents.flatMap(agent => agent.agent.iris)
+        work.agents.map(agent => agent.agent.iri.value)
       )
     );
   }
@@ -306,10 +296,5 @@ export class MemModelSet implements ModelSet {
   @Memoize()
   private get worksByIriIndex(): {[index: string]: Work} {
     return indexModelsByIri(this.works);
-  }
-
-  @Memoize()
-  private get worksByKeyIndex(): {[index: string]: Work} {
-    return indexModelsByKey(this.works);
   }
 }

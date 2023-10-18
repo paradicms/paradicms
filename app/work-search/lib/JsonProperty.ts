@@ -1,5 +1,5 @@
 export interface JsonProperty {
   readonly filterable: boolean;
-  readonly iris: readonly string[];
+  readonly iri: string;
   readonly label: string;
 }

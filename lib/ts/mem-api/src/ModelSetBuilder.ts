@@ -260,13 +260,9 @@ export class ModelSetBuilder {
     }
     const tempStoreGraphs = tempStore.getGraphs(null, null, null);
     if (
-      tempStoreGraphs.every(tempStoreGraph =>
-        model.identifiers.some(modelIdentifier =>
-          modelIdentifier.equals(tempStoreGraph)
-        )
-      )
+      tempStoreGraphs.every(tempStoreGraph => model.iri.equals(tempStoreGraph))
     ) {
-      // If the graphs in a model's RDF correspond to the model's identifiers, then add the model
+      // If the graphs in a model's RDF correspond to the model's IRI, then add the model
       for (const quad of tempStore) {
         this.store.add(quad);
       }

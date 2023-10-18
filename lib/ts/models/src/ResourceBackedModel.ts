@@ -1,56 +1,35 @@
-import { DataFactory, Resource } from "@paradicms/rdf";
-import { DatasetCore } from "@rdfjs/types";
+import { Resource } from "@paradicms/rdf";
+import { DatasetCore, NamedNode } from "@rdfjs/types";
 import { Memoize } from "typescript-memoize";
 import { Model } from "./Model";
-import { ModelGraphIdentifier } from "./ModelGraphIdentifier";
-import { ModelIdentifier } from "./ModelIdentifier";
 import { ModelSet } from "./ModelSet";
 import { Property } from "./Property";
 import { PropertyValue } from "./PropertyValue";
 import { ResourceBackedModelParameters } from "./ResourceBackedModelParameters";
 import { createPropertyValuesFromQuadObjects } from "./createPropertyValuesFromQuadObjects";
-import { modelIdentifiersToKey } from "./modelIdentifiersToKey";
 
 export abstract class ResourceBackedModel extends Resource implements Model {
   readonly dataset: DatasetCore;
-  readonly graph: ModelGraphIdentifier;
+  readonly graph: NamedNode;
   readonly modelSet: ModelSet;
 
   constructor(kwds: ResourceBackedModelParameters) {
-    super({identifier: kwds.identifier});
+    super({identifier: kwds.iri});
     this.dataset = kwds.dataset;
     this.modelSet = kwds.modelSet;
     this.graph = kwds.graph;
   }
 
-  override get identifier(): ModelIdentifier {
-    return this._identifier as ModelIdentifier;
-  }
-
-  get identifiers(): readonly ModelIdentifier[] {
-    return [this.identifier];
-  }
-
-  override get iri(): string {
-    return this.identifier.value;
-  }
-
-  @Memoize()
-  get iris(): readonly string[] {
-    return [this.iri];
-  }
-
-  @Memoize()
-  get key(): string {
-    return modelIdentifiersToKey(this.identifiers);
+  get iri(): NamedNode {
+    return this._identifier as NamedNode;
   }
 
   @Memoize()
   get propertyValues(): readonly PropertyValue[] {
-    return this.modelSet.properties.flatMap(property => property.iris.flatMap(propertyIri => this.propertyValuesByProperty(property, propertyIri)));
+    return this.modelSet.properties.flatMap(property => this.propertyValuesByProperty(property));
   }
 
-  private propertyValuesByProperty(property: Property, propertyIri: string): readonly PropertyValue[] {
+  private propertyValuesByProperty(property: Property): readonly PropertyValue[] {
     return createPropertyValuesFromQuadObjects({
       dataset: this.dataset,
       modelSet: this.modelSet,
@@ -58,7 +37,7 @@ export abstract class ResourceBackedModel extends Resource implements Model {
       quads: [...this.dataset
           .match(
               this.identifier,
-              DataFactory.namedNode(propertyIri),
+              property.iri,
               null,
               this.graph
           )]
@@ -66,12 +45,12 @@ export abstract class ResourceBackedModel extends Resource implements Model {
   }
 
   @Memoize()
-  propertyValuesByPropertyIri(propertyIri: string): readonly PropertyValue[] {
+  propertyValuesByPropertyIri(propertyIri: NamedNode): readonly PropertyValue[] {
     const property = this.modelSet.propertyByIri(propertyIri);
     if (!property) {
       return [];
     }
-    return this.propertyValuesByProperty(property, propertyIri);
+    return this.propertyValuesByProperty(property);
   }
 
   toRdf(addToDataset: DatasetCore) {

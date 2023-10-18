@@ -13,7 +13,7 @@ export class DcLicenseDocument extends Mixin(ResourceBackedModel)
   }
 
   get requiresAttribution(): boolean {
-    switch (this.iri) {
+    switch (this.iri.value) {
       case "http://creativecommons.org/publicdomain/mark/1.0/":
       case "http://creativecommons.org/publicdomain/zero/1.0/":
         return false;

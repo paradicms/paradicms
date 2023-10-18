@@ -38,6 +38,7 @@ import {
   WorkLocation,
 } from "@paradicms/models";
 import {requireNonNull} from "@paradicms/utilities";
+import {NamedNode} from "@rdfjs/types";
 import log from "loglevel";
 import lunr, {Index} from "lunr";
 import invariant from "ts-invariant";
@@ -72,12 +73,12 @@ const getJoinSelector = <JoinSelectorT, ModelT extends Model>(
   model: ModelT,
   kwds: {
     joinSelector: JoinSelectorT | null;
-    joinSelectorByKey: {[index: string]: JoinSelectorT} | null;
+    joinSelectorByIri: {[index: string]: JoinSelectorT} | null;
   }
 ): JoinSelectorT | undefined => {
-  const {joinSelector, joinSelectorByKey} = kwds;
-  if (joinSelectorByKey && joinSelectorByKey[model.key]) {
-    return joinSelectorByKey[model.key];
+  const {joinSelector, joinSelectorByIri} = kwds;
+  if (joinSelectorByIri && joinSelectorByIri[model.iri.value]) {
+    return joinSelectorByIri[model.iri.value];
   } else {
     return joinSelector ?? undefined;
   }
@@ -87,36 +88,36 @@ export class MemApi implements Api {
   private readonly index: Index;
   private readonly modelSet: ModelSet;
   // Index of work key -> keys of collections containing that work
-  private readonly workCollectionKeys: {
-    [index: string]: readonly string[];
+  private readonly workCollectionIris: {
+    [index: string]: readonly NamedNode[];
   };
 
   constructor(kwds: {readonly modelSet: ModelSet}) {
     this.modelSet = kwds.modelSet;
 
-    let searchablePropertyIris: string[];
+    let searchablePropertyIris: NamedNode[];
     if (kwds.modelSet.properties.length > 0) {
       searchablePropertyIris = kwds.modelSet.properties
         .filter(property => property.searchable)
-        .flatMap(property => property.iris);
+        .map(property => property.iri);
     } else {
       searchablePropertyIris = defaultProperties
         .filter(property => property.searchable)
-        .flatMap(property => property.iris);
+        .map(property => property.iri);
     }
 
     this.index = lunr(function() {
       const propertyFieldNamesByIri: {[index: string]: string} = {};
       for (const propertyIri of searchablePropertyIris) {
-        const fieldName = encodeLunrFieldName(propertyIri);
-        propertyFieldNamesByIri[propertyIri] = fieldName;
+        const fieldName = encodeLunrFieldName(propertyIri.value);
+        propertyFieldNamesByIri[propertyIri.value] = fieldName;
         this.field(fieldName);
       }
 
       for (const work of kwds.modelSet.works) {
-        const doc: any = {id: work.key};
+        const doc: any = {id: work.iri.value};
         for (const propertyIri of searchablePropertyIris) {
-          const fieldName = propertyFieldNamesByIri[propertyIri];
+          const fieldName = propertyFieldNamesByIri[propertyIri.value];
           if (!fieldName) {
             continue;
           }
@@ -130,16 +131,16 @@ export class MemApi implements Api {
       }
     });
 
-    const workCollectionKeys: {[index: string]: string[]} = {};
+    const workCollectionIris: {[index: string]: NamedNode[]} = {};
     for (const collection of kwds.modelSet.collections) {
       for (const work of collection.works) {
-        if (!workCollectionKeys[work.key]) {
-          workCollectionKeys[work.key] = [];
+        if (!workCollectionIris[work.iri.value]) {
+          workCollectionIris[work.iri.value] = [];
         }
-        workCollectionKeys[work.key].push(collection.key);
+        workCollectionIris[work.iri.value].push(collection.iri);
       }
     }
-    this.workCollectionKeys = workCollectionKeys;
+    this.workCollectionIris = workCollectionIris;
   }
 
   getAppConfiguration(): Promise<JsonAppConfiguration | null> {
@@ -149,7 +150,7 @@ export class MemApi implements Api {
   getCollections(kwds?: GetCollectionsOptions): Promise<GetModelsResult> {
     const {
       joinSelector = null,
-      joinSelectorByKey = null,
+      joinSelectorByIri = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as CollectionsQuery,
@@ -162,7 +163,7 @@ export class MemApi implements Api {
             collection,
             getJoinSelector(collection, {
               joinSelector,
-              joinSelectorByKey,
+              joinSelectorByIri,
             })
           )
         ),
@@ -196,7 +197,7 @@ export class MemApi implements Api {
   getEvents(kwds?: GetEventsOptions): Promise<GetModelsResult> {
     const {
       joinSelector = null,
-      joinSelectorByKey = null,
+      joinSelectorByIri = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as EventsQuery,
@@ -208,7 +209,7 @@ export class MemApi implements Api {
         events.forEach(event =>
           modelSetBuilder.addEvent(
             event,
-            getJoinSelector(event, {joinSelector, joinSelectorByKey})
+            getJoinSelector(event, {joinSelector, joinSelectorByIri})
           )
         ),
       allModels: this.modelSet.events,
@@ -244,7 +245,7 @@ export class MemApi implements Api {
   ): Promise<GetModelsResult> {
     const {
       joinSelector = null,
-      joinSelectorByKey = null,
+      joinSelectorByIri = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as PropertyGroupsQuery,
@@ -255,7 +256,7 @@ export class MemApi implements Api {
         propertyGroups.forEach(propertyGroup =>
           modelSetBuilder.addPropertyGroup(
             propertyGroup,
-            getJoinSelector(propertyGroup, {joinSelector, joinSelectorByKey})
+            getJoinSelector(propertyGroup, {joinSelector, joinSelectorByIri})
           )
         ),
       allModels: this.modelSet.propertyGroups,
@@ -272,7 +273,7 @@ export class MemApi implements Api {
   ): Promise<GetModelsResult> {
     const {
       joinSelector = null,
-      joinSelectorByKey = null,
+      joinSelectorByIri = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as PropertiesQuery,
@@ -283,7 +284,7 @@ export class MemApi implements Api {
         properties.forEach(property =>
           modelSetBuilder.addProperty(
             property,
-            getJoinSelector(property, {joinSelector, joinSelectorByKey})
+            getJoinSelector(property, {joinSelector, joinSelectorByIri})
           )
         ),
       allModels: this.modelSet.properties,
@@ -479,7 +480,7 @@ export class MemApi implements Api {
   getWorks(kwds?: GetWorksOptions): Promise<GetWorksResult> {
     const {
       joinSelector = null,
-      joinSelectorByKey = null,
+      joinSelectorByIri = null,
       limit = LIMIT_DEFAULT,
       offset = OFFSET_DEFAULT,
       query = {} as WorksQuery,
@@ -528,7 +529,7 @@ export class MemApi implements Api {
       for (const work of slicedWorks) {
         slicedWorksModelSetBuilder.addWork(
           work,
-          getJoinSelector(work, {joinSelector, joinSelectorByKey})
+          getJoinSelector(work, {joinSelector, joinSelectorByIri})
         );
       }
       const slicedWorksModelSet = slicedWorksModelSetBuilder.build();
@@ -564,11 +565,11 @@ export class MemApi implements Api {
       if (filters.length === 1 && filters[0].type === "Key") {
         const keyFilter = filters[0];
         if (
-          !keyFilter.excludeKeys &&
-          keyFilter.includeKeys &&
-          keyFilter.includeKeys.length === 1
+          !keyFilter.excludeIris &&
+          keyFilter.includeIris &&
+          keyFilter.includeIris.length === 1
         ) {
-          const work = this.modelSet.workByKey(keyFilter.includeKeys[0]);
+          const work = this.modelSet.workByKey(keyFilter.includeIris[0]);
           return work !== null ? [work] : [];
         }
       }
@@ -576,7 +577,7 @@ export class MemApi implements Api {
 
     return filterWorks({
       filters,
-      workCollectionKeys: this.workCollectionKeys,
+      workCollectionIris: this.workCollectionIris,
       works,
     });
   }

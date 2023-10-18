@@ -33,7 +33,7 @@ export class SchemaDefinedTerm extends Mixin(SchemaModel)
           default:
             return null;
         }
-      }) ?? this.identifier
+      }) ?? this.iri
     );
   }
 }

@@ -29,9 +29,7 @@ export class CmsPropertyGroup
   @Memoize()
   get properties(): readonly Property[] {
     return this.filterAndMapObjects(dcterms.hasPart, term =>
-      term.termType === "NamedNode"
-        ? this.modelSet.propertyByIri(term.value)
-        : null
+      term.termType === "NamedNode" ? this.modelSet.propertyByIri(term) : null
     );
   }
 }

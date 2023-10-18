@@ -1,3 +1,4 @@
+import {NamedNode} from "@rdfjs/types";
 import {Image} from "../Image";
 import {Location} from "../Location";
 import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
@@ -8,7 +9,7 @@ export interface SyntheticEventParameters {
   description: Text | null;
   endDate: PartialDateTimeDescription | null;
   images: readonly Image[];
-  key: string;
+  iri: NamedNode;
   label: string;
   location: Location | null;
   startDate: PartialDateTimeDescription | null;

@@ -1,44 +1,45 @@
 import {dcterms} from "@paradicms/vocabularies";
+import {NamedNode} from "@rdfjs/types";
 
 export const defaultProperties: readonly {
   readonly filterable: boolean;
-  readonly iris: readonly string[];
+  readonly iri: NamedNode;
   readonly label: string;
   readonly searchable: boolean;
 }[] = [
   {
     filterable: true,
-    iris: [dcterms.creator.value],
+    iri: dcterms.creator,
     label: "Creator",
     searchable: false,
   },
   {
     filterable: false,
-    iris: [dcterms.description.value],
+    iri: dcterms.description,
     label: "Description",
     searchable: true,
   },
   {
     filterable: true,
-    iris: [dcterms.medium.value],
+    iri: dcterms.medium,
     label: "Medium",
     searchable: false,
   },
   {
     filterable: true,
-    iris: [dcterms.subject.value],
+    iri: dcterms.subject,
     label: "Subject",
     searchable: false,
   },
   {
     filterable: false,
-    iris: [dcterms.title.value],
+    iri: dcterms.title,
     label: "Title",
     searchable: true,
   },
   {
     filterable: true,
-    iris: [dcterms.type.value],
+    iri: dcterms.type,
     label: "Type",
     searchable: false,
   },

@@ -25,7 +25,7 @@ export class SchemaProperty extends Mixin(SchemaModel)
   }
 
   get groups(): readonly PropertyGroup[] {
-    return this.modelSet.propertyGroupsByPropertyKey(this.key);
+    return this.modelSet.propertyGroupsByPropertyIri(this.iri);
   }
 
   @Memoize()

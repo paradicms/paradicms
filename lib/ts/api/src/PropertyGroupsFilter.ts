@@ -1,6 +1,6 @@
 import {Static, Union} from "runtypes";
-import {KeyFilter} from "./KeyFilter";
+import {IriFilter} from "./IriFilter";
 
-export const PropertyGroupsFilter = Union(KeyFilter);
+export const PropertyGroupsFilter = Union(IriFilter);
 
 export type PropertyGroupsFilter = Static<typeof PropertyGroupsFilter>;

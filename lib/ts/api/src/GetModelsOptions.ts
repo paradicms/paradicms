@@ -13,5 +13,5 @@ export const GetModelsOptions = <
 ) =>
   GetModelKeysOptions(query, sort).extend({
     joinSelector: Optional(joinSelector),
-    joinSelectorByKey: Optional(Dictionary(joinSelector)),
+    joinSelectorByIri: Optional(Dictionary(joinSelector)),
   });

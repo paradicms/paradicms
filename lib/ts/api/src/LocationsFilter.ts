@@ -1,9 +1,9 @@
 import {Static, Union} from "runtypes";
-import {KeyFilter} from "./KeyFilter";
+import {IriFilter} from "./IriFilter";
 import {LocationCentroidExistenceFilter} from "./LocationCentroidExistenceFilter";
 
 export const LocationsFilter = Union(
-  KeyFilter,
+  IriFilter,
   LocationCentroidExistenceFilter
 );
 

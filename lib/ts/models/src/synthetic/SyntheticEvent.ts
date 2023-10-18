@@ -1,11 +1,10 @@
-import {DatasetCore} from "@rdfjs/types";
+import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
 import {Event} from "../Event";
 import {EventDerivedDatesMixin} from "../EventDerivedDatesMixin";
 import {Image} from "../Image";
 import {Location} from "../Location";
-import {ModelIdentifier} from "../ModelIdentifier";
 import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {Text} from "../Text";
@@ -17,7 +16,7 @@ export abstract class SyntheticEvent
   readonly date: PartialDateTimeDescription | null;
   readonly description: Text | null;
   readonly endDate: PartialDateTimeDescription | null;
-  readonly key: string;
+  readonly iri: NamedNode;
   readonly images: readonly Image[];
   readonly label: string;
   readonly location: Location | null;
@@ -28,22 +27,14 @@ export abstract class SyntheticEvent
     this.date = kwds.date;
     this.description = kwds.description;
     this.endDate = kwds.endDate;
-    this.key = kwds.key;
     this.images = kwds.images;
+    this.iri = kwds.iri;
     this.label = kwds.label;
     this.location = kwds.location;
     this.startDate = kwds.startDate;
   }
 
   abstract readonly agents: readonly Agent[];
-
-  get identifiers(): readonly ModelIdentifier[] {
-    return [];
-  }
-
-  get iris(): readonly string[] {
-    return [];
-  }
 
   toRdf(addToDataset: DatasetCore): void {}
 }

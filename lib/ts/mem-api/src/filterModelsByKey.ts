@@ -1,16 +1,14 @@
-import {KeyFilter} from "@paradicms/api";
-
 export const filterModelsByKey = <ModelT extends {readonly key: string}>(kwds: {
-  filter: KeyFilter;
+  filter: IriFilter;
   models: readonly ModelT[];
 }): readonly ModelT[] => {
   const {filter, models} = kwds;
 
-  const excludeKeysSet: Set<string> = filter.excludeKeys
-    ? new Set(filter.excludeKeys)
+  const excludeKeysSet: Set<string> = filter.excludeIris
+    ? new Set(filter.excludeIris)
     : new Set();
-  const includeKeysSet: Set<string> = filter.includeKeys
-    ? new Set(filter.includeKeys)
+  const includeKeysSet: Set<string> = filter.includeIris
+    ? new Set(filter.includeIris)
     : new Set();
 
   return models.filter(model => {
