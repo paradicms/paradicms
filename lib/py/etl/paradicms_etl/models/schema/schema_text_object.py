@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rdflib import SDO, Graph
+from rdflib.resource import Resource
 
 from paradicms_etl.models.schema.schema_media_object_mixin import SchemaMediaObjectMixin
 from paradicms_etl.models.schema.schema_model import SchemaModel
@@ -56,6 +57,10 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
     @property
     def text(self) -> str:
         return self._required_value(SDO.text, self._map_term_to_str)
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        # Don't try to curate the RDF
+        return super().to_rdf(graph)
 
     @property
     def value(self) -> str:

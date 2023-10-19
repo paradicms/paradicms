@@ -3,6 +3,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from rdflib import SDO, XSD, Graph, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.location import Location
 from paradicms_etl.models.schema.schema_model import SchemaModel
@@ -67,3 +68,7 @@ class SchemaPlace(SchemaModel, Location):
                 "longitude": {"@id": str(SDO.longitude), "@type": str(XSD.decimal)},
             },
         )
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        # Don't try to curate the RDF
+        return super().to_rdf(graph)

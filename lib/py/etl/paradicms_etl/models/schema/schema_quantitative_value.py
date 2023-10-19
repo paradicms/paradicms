@@ -1,6 +1,7 @@
 from __future__ import annotations
 
-from rdflib import SDO, Graph, URIRef
+from rdflib import RDF, SDO, Graph, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.schema.schema_model import SchemaModel
 from paradicms_etl.utils.uuid_urn import uuid_urn
@@ -17,7 +18,7 @@ class SchemaQuantitativeValue(SchemaModel):
             self.set(SDO.maxValue, max_value)
             return self
 
-        def set_value(self, value: float | int) -> "SchemaQuantitativeValue.Builder":
+        def set_value(self, value: float | int) -> SchemaQuantitativeValue.Builder:
             self.set(SDO.value, value)
             return self
 
@@ -35,6 +36,12 @@ class SchemaQuantitativeValue(SchemaModel):
             if isinstance(max_value_py, float | int):
                 return max_value_py
         return None
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        for p in (RDF.type, SDO.maxValue, SDO.value):
+            for o in self.resource.graph.objects(subject=self.uri, predicate=p):
+                graph.add((self.uri, p, o))
+        return graph.resource(self.uri)
 
     @property
     def value(self) -> float | int | None:

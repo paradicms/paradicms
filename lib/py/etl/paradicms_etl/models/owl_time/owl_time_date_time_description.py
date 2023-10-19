@@ -1,7 +1,7 @@
 import datetime
-from typing import Optional
 
-from rdflib import Literal, XSD, Graph, URIRef
+from rdflib import RDF, XSD, Graph, Literal, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.date_time_description import DateTimeDescription
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
@@ -86,9 +86,23 @@ class OwlTimeDateTimeDescription(ResourceBackedModel, DateTimeDescription):
         )
 
     @classmethod
-    def label_property_uri(cls) -> Optional[URIRef]:
+    def label_property_uri(cls) -> URIRef | None:
         return None
 
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return TIME.DateTimeDescription
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        for p in (
+            RDF.type,
+            TIME.day,
+            TIME.hour,
+            TIME.minute,
+            TIME.month,
+            TIME.second,
+            TIME.year,
+        ):
+            for o in self.resource.graph.objects(subject=self.uri, predicate=p):
+                graph.add((self.uri, p, o))
+        return graph.resource(self.uri)

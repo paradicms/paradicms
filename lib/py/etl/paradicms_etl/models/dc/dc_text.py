@@ -1,4 +1,4 @@
-from rdflib import RDF, Graph, URIRef, DCMITYPE
+from rdflib import DCMITYPE, DCTERMS, RDF, Graph, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.models.dc.dc_model import DcModel
@@ -35,6 +35,20 @@ class DcText(DcModel, DcRightsMixin, Text):
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return DCMITYPE.Text
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        for p in (
+            RDF.type,
+            RDF.value,
+            DCTERMS.contributor,
+            DCTERMS.creator,
+            DCTERMS.license,
+            DCTERMS.rights,
+            DCTERMS.rightsHolder,
+        ):
+            for o in self.resource.graph.objects(subject=self.uri, predicate=p):
+                graph.add((self.uri, p, o))
+        return graph.resource(self.uri)
 
     @property
     def value(self) -> str:
