@@ -1,12 +1,10 @@
 import {dcterms} from "@paradicms/vocabularies";
-import {NamedNode} from "@rdfjs/types";
+import {Property} from "./Property";
 
-export const defaultProperties: readonly {
-  readonly filterable: boolean;
-  readonly iri: NamedNode;
-  readonly label: string;
-  readonly searchable: boolean;
-}[] = [
+export const defaultProperties: readonly Pick<
+  Property,
+  "filterable" | "iri" | "label" | "searchable"
+>[] = [
   {
     filterable: true,
     iri: dcterms.creator,

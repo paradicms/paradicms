@@ -104,7 +104,7 @@ export class RestApiClient implements Api {
   }
 
   getWorkIris(kwds?: GetWorkIrisOptions): Promise<GetModelKeysResult> {
-    return this.getModelIris("/workKeys", kwds);
+    return this.getModelIris("/workIris", kwds);
   }
 
   async getWorkLocations(

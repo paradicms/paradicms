@@ -1,5 +1,6 @@
-import {encodeFileName} from "@paradicms/next";
 import {WorksQuery} from "@paradicms/api";
+import {encodeFileName} from "@paradicms/next";
+import {NamedNode} from "@rdfjs/types";
 import * as qs from "qs";
 
 export class Hrefs {
@@ -15,7 +16,7 @@ export class Hrefs {
     );
   }
 
-  static work(work: {key: string}): string {
-    return `/work/${encodeFileName(work.key)}/`;
+  static work(work: {iri: NamedNode}): string {
+    return `/work/${encodeFileName(work.iri.value)}/`;
   }
 }

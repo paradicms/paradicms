@@ -5,6 +5,7 @@ import {
   getAbsoluteImageSrc,
   getStaticApi,
 } from "@paradicms/next";
+import {DataFactory} from "@paradicms/rdf";
 import {
   WorkPage as DelegateWorkPage,
   ModelSetJsonLdParser,
@@ -35,7 +36,7 @@ const LocationsMap = dynamic<{
 interface StaticProps {
   readonly collectionLabel: string | null;
   readonly configuration: JsonAppConfiguration | null;
-  readonly workKey: string;
+  readonly workIri: string;
   readonly workModelSetJsonLd: JsonLd;
 }
 
@@ -46,10 +47,12 @@ const WorkPageImpl: React.FunctionComponent<Omit<
   collectionLabel,
   configuration,
   workModelSet,
-  workKey,
+  workIri,
 }) => {
   const router = useRouter();
-  const work = requireNonNull(workModelSet.workByKey(workKey));
+  const work = requireNonNull(
+    workModelSet.workByIri(DataFactory.namedNode(workIri))
+  );
 
   return (
     <Layout
@@ -100,11 +103,11 @@ export default WorkPage;
 export const getStaticPaths: GetStaticPaths = async () => {
   const api = await getStaticApi();
 
-  const paths: {params: {workKey: string}}[] = [];
-  for (const workKey of (await api.getWorkKeys()).modelKeys) {
+  const paths: {params: {workIri: string}}[] = [];
+  for (const workIri of (await api.getWorkIris()).modelIris) {
     paths.push({
       params: {
-        workKey: encodeFileName(workKey),
+        workIri: encodeFileName(workIri),
       },
     });
   }
@@ -118,7 +121,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{props: StaticProps}> => {
-  const workKey = decodeFileName(params!.workKey as string);
+  const workIri = decodeFileName(params!.workIri as string);
 
   const api = await getStaticApi();
 
@@ -135,8 +138,8 @@ export const getStaticProps: GetStaticProps = async ({
       query: {
         filters: [
           {
-            includeKeys: [workKey],
-            type: "Key",
+            includeIris: [workIri],
+            type: "Iri",
           },
         ],
       },
@@ -147,7 +150,7 @@ export const getStaticProps: GetStaticProps = async ({
     props: {
       collectionLabel: collections.length === 1 ? collections[0].label : null,
       configuration: await api.getAppConfiguration(),
-      workKey,
+      workIri,
       workModelSetJsonLd: await workModelSet.toJsonLd(),
     },
   };

@@ -1,9 +1,11 @@
 import {StringPropertyValueFilter, WorksFilter} from "@paradicms/api";
-import {defaultProperties} from "@paradicms/models";
-import {JsonProperty} from "./JsonProperty";
+import {Property, defaultProperties} from "@paradicms/models";
 
 export const getDefaultWorksQueryFilters = (
-  properties: readonly JsonProperty[]
+  properties: readonly Pick<
+    Property,
+    "filterable" | "iri" | "label" | "searchable"
+  >[]
 ): WorksFilter[] => {
   const filters: WorksFilter[] = [];
 
@@ -25,7 +27,8 @@ export const getDefaultWorksQueryFilters = (
       filters.some(
         filter =>
           filter.type === "StringPropertyValue" &&
-          (filter as StringPropertyValueFilter).propertyIri === property.iri
+          (filter as StringPropertyValueFilter).propertyIri ===
+            property.iri.value
       )
     ) {
       // log.debug(
@@ -42,7 +45,7 @@ export const getDefaultWorksQueryFilters = (
     // );
     filters.push({
       label: property.label,
-      propertyIri: property.iri,
+      propertyIri: property.iri.value,
       type: "StringPropertyValue",
     } as StringPropertyValueFilter);
   }
