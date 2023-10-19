@@ -1,5 +1,5 @@
 import {ModelSet} from "@paradicms/models";
-import {getRdfInstanceQuads} from "@paradicms/rdf";
+import {DataFactory, getRdfInstanceQuads} from "@paradicms/rdf";
 import {requireNonNull} from "@paradicms/utilities";
 import {dcterms, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
@@ -69,10 +69,7 @@ describe("ModelSetBuilder", () => {
 
   it("should get an agents subset (agents gallery)", () => {
     const work = completeModelSet.works[0];
-    console.info(work.key);
     const agents = work.agents.map(agent => agent.agent);
-    const namedAgents = agents.filter(agent => agent.iris.length > 0);
-    expect(namedAgents.length).to.be.lte(agents.length);
     for (const agent of agents) {
       sut.addAgent(agent, {thumbnail: testThumbnailSelector});
     }
@@ -82,7 +79,7 @@ describe("ModelSetBuilder", () => {
     expect(modelSetImageIris(agentsModelSet)).to.have.length(5); // One original image, one thumbnail per named agent + the sameAs agent image
     // for (const namedAgent of namedAgents) {
     //   expect(
-    //     agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
+    //     agentsModelSet.imagesByDepictsIri(namedAgent.iri).length
     //   ).to.eq(1);
     // }
   });
@@ -168,7 +165,9 @@ describe("ModelSetBuilder", () => {
     const workModelSet = sut
       .addWork(
         requireNonNull(
-          completeModelSet.workByIri("http://example.com/collection0/work0")
+          completeModelSet.workByIri(
+            DataFactory.namedNode("http://example.com/collection0/work0")
+          )
         ),
         {
           agents: {
@@ -209,7 +208,9 @@ describe("ModelSetBuilder", () => {
     // );
     expectModelsDeepEq(workModelSet.works, [
       requireNonNull(
-        completeModelSet.workByIri("http://example.com/collection0/work0")
+        completeModelSet.workByIri(
+          DataFactory.namedNode("http://example.com/collection0/work0")
+        )
       ),
     ]);
     const subsetWork = workModelSet.works[0];
@@ -224,7 +225,7 @@ describe("ModelSetBuilder", () => {
     );
     expect(agentThumbnails).to.have.length(2);
 
-    expect(workModelSet.concepts).to.have.length(17);
+    expect(workModelSet.concepts).to.have.length(3);
 
     expect(subsetWork.description!.licenses).not.to.be.empty;
     expect(modelSetLicenseIris(workModelSet)).to.have.length(3);
@@ -251,7 +252,6 @@ describe("ModelSetBuilder", () => {
     );
 
     if (subsetWork.location) {
-      expect(subsetWork.location!.location.iris).to.not.be.empty;
       expect(subsetWork.location!.location.centroid!.latitude).not.to.be
         .undefined;
       expect(subsetWork.location!.location.centroid!.latitude).not.to.eq(0);

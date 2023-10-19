@@ -21,6 +21,7 @@ import {
   getStaticApi,
   useApi,
 } from "@paradicms/next";
+import {DataFactory} from "@paradicms/rdf";
 import {
   AgentsGallery,
   FilterControlsContainer,
@@ -41,6 +42,7 @@ import {
   useWorksQueryParam,
 } from "@paradicms/react-dom-hooks";
 import {calculatePageMax} from "@paradicms/utilities";
+import {NamedNode} from "@rdfjs/types";
 import {Layout} from "components/Layout";
 import equal from "fast-deep-equal";
 import log from "loglevel";
@@ -67,7 +69,6 @@ import {
 import {LocationsMapLocation} from "single-page-exhibition/components/LocationsMap";
 import {useQueryParam} from "use-query-params";
 import {Hrefs} from "../lib/Hrefs";
-import {JsonProperty} from "../lib/JsonProperty";
 import {getDefaultWorksQueryFilters} from "../lib/getDefaultWorksQueryFilters";
 import {workSearchWorkEventJoinSelector} from "../lib/workSearchWorkEventJoinSelector";
 import {workSearchWorkJoinSelector} from "../lib/workSearchWorkJoinSelector";
@@ -81,14 +82,14 @@ const LocationsMap = dynamic<{
 );
 
 interface GetWorkAgentsState {
-  readonly result: GetModelsResult & {modelKeysSet: Set<string>};
+  readonly result: GetModelsResult & {modelIrisSet: Set<string>};
   readonly worksQuery: WorksQuery;
   readonly workAgentsPage: number;
   readonly workAgentsSort: AgentsSort;
 }
 
 interface GetWorkEventsState {
-  readonly result: GetModelsResult & {modelKeysSet: Set<string>};
+  readonly result: GetModelsResult & {modelIrisSet: Set<string>};
   readonly worksQuery: WorksQuery;
   readonly workEventsPage: number;
   readonly workEventsSort: EventsSort;
@@ -110,7 +111,12 @@ interface StaticProps {
   readonly apiConfiguration: ApiConfiguration;
   readonly collectionLabel: string | null;
   readonly configuration: JsonAppConfiguration | null;
-  readonly properties: readonly JsonProperty[];
+  readonly properties: readonly {
+    readonly filterable: boolean;
+    readonly iri: string;
+    readonly label: string;
+    readonly searchable: boolean;
+  }[];
 }
 
 type TabKey = "workAgents" | "workEvents" | "workLocations" | "works";
@@ -136,7 +142,18 @@ const worksPageMax = (kwds: {
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "apiConfiguration"
->> = ({collectionLabel, configuration, properties}) => {
+>> = ({collectionLabel, configuration, properties: jsonProperties}) => {
+  const properties = React.useMemo(
+    () =>
+      jsonProperties.map(property => ({
+        filterable: property.filterable,
+        iri: DataFactory.namedNode(property.iri),
+        label: property.label,
+        searchable: property.searchable,
+      })),
+    [jsonProperties]
+  );
+
   const api = useApi();
   const router = useRouter();
 
@@ -258,7 +275,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
         setGetWorkAgentsState({
           result: {
             ...result,
-            modelKeysSet: new Set(result.modelKeys),
+            modelIrisSet: new Set(result.modelIris),
           },
           workAgentsPage,
           workAgentsSort,
@@ -299,7 +316,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       .then(result => {
         log.debug("getWorkEvents result:", result.totalModelsCount);
         setGetWorkEventsState({
-          result: {...result, modelKeysSet: new Set(result.modelKeys)},
+          result: {...result, modelIrisSet: new Set(result.modelIris)},
           workEventsPage,
           workEventsSort,
           worksQuery,
@@ -364,9 +381,10 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     },
   });
 
-  const renderWorkLink = (work: {key: string}, children: React.ReactNode) => (
-    <Link href={Hrefs.work(work)}>{children}</Link>
-  );
+  const renderWorkLink = (
+    work: {iri: NamedNode},
+    children: React.ReactNode
+  ) => <Link href={Hrefs.work(work)}>{children}</Link>;
 
   const tabs: {content: React.ReactNode; key: TabKey; title: string}[] = [];
   tabs.push({
@@ -470,7 +488,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       ),
     });
   }
-  if (getWorkAgentsState && getWorkAgentsState.result.modelKeys.length > 0) {
+  if (getWorkAgentsState && getWorkAgentsState.result.modelIris.length > 0) {
     tabs.push({
       key: "workAgents",
       title: "People",
@@ -489,7 +507,9 @@ const IndexPageImpl: React.FunctionComponent<Omit<
               agents={getWorkAgentsState.result.modelSet.works
                 .flatMap(work =>
                   work.agents.filter(agent =>
-                    getWorkAgentsState.result.modelKeysSet.has(agent.agent.key)
+                    getWorkAgentsState.result.modelIrisSet.has(
+                      agent.agent.iri.value
+                    )
                   )
                 )
                 .map(agent => agent.agent)}
@@ -521,7 +541,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
       ),
     });
   }
-  if (getWorkEventsState && getWorkEventsState.result.modelKeys.length > 0) {
+  if (getWorkEventsState && getWorkEventsState.result.modelIris.length > 0) {
     tabs.push({
       key: "workEvents",
       title: "Timeline",
@@ -540,7 +560,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
           workEvents={getWorkEventsState.result.modelSet.works.flatMap(work =>
             work.events
               .filter(workEvent =>
-                getWorkEventsState.result.modelKeysSet.has(workEvent.key)
+                getWorkEventsState.result.modelIrisSet.has(workEvent.iri.value)
               )
               .map(workEvent => ({work, workEvent}))
           )}
@@ -628,8 +648,9 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
       properties: (await api.getProperties()).modelSet.properties.map(
         property => ({
           filterable: property.filterable,
-          iris: property.iris,
+          iri: property.iri.value,
           label: property.label,
+          searchable: property.searchable,
         })
       ),
     },

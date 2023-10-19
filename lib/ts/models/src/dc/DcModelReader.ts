@@ -7,18 +7,18 @@ import { DcLicenseDocument } from "./DcLicenseDocument";
 import { DcRightsStatement } from "./DcRightsStatement";
 
 export class DcModelReader extends DatasetModelReader {
-    override readNamedLicenses(kwds: { modelSet: ModelSet }): readonly License[] {
-        return this.readNamedModels({
+    override readLicenses(kwds: { modelSet: ModelSet }): readonly License[] {
+        return this.readModels({
             class_: dcterms.LicenseDocument,
             factory: DcLicenseDocument,
             ...kwds,
         });
     }
 
-    override readNamedRightsStatements(kwds: {
+    override readRightsStatements(kwds: {
         modelSet: ModelSet;
     }): readonly RightsStatement[] {
-        return this.readNamedModels({
+        return this.readModels({
             class_: dcterms.RightsStatement,
             factory: DcRightsStatement,
             ...kwds,

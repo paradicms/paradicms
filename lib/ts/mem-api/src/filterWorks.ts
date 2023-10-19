@@ -5,21 +5,22 @@ import {
   WorksFilter,
 } from "@paradicms/api";
 import {Work} from "@paradicms/models";
-import {filterModelsByKey} from "./filterModelsByKey";
+import {DataFactory} from "@paradicms/rdf";
+import {filterModelsByIri} from "./filterModelsByIri";
 import {testEventDateRangeFilter} from "./testEventDateRangeFilter";
 import {testValueFilter} from "./testValueFilter";
 
 export const filterWorks = (kwds: {
   filters: readonly WorksFilter[];
-  workCollectionKeys: {[index: string]: readonly string[]};
+  workCollectionIris: {[index: string]: readonly string[]};
   works: readonly Work[];
 }): readonly Work[] => {
-  const {filters, workCollectionKeys, works} = kwds;
+  const {filters, workCollectionIris, works} = kwds;
   let filteredWorks = works;
   for (const filter of filters) {
     switch (filter.type) {
-      case "Key": {
-        filteredWorks = filterModelsByKey({filter, models: filteredWorks});
+      case "Iri": {
+        filteredWorks = filterModelsByIri({filter, models: filteredWorks});
         break;
       }
       case "StringPropertyValue": {
@@ -28,7 +29,9 @@ export const filterWorks = (kwds: {
             filter as StringPropertyValueFilter,
             work
               .propertyValuesByPropertyIri(
-                (filter as StringPropertyValueFilter).propertyIri
+                DataFactory.namedNode(
+                  (filter as StringPropertyValueFilter).propertyIri
+                )
               )
               .map(propertyValue => propertyValue.value)
           )
@@ -39,7 +42,7 @@ export const filterWorks = (kwds: {
         filteredWorks = filteredWorks.filter(work =>
           testValueFilter(
             filter as WorkCollectionValueFilter,
-            workCollectionKeys[work.key] ?? []
+            workCollectionIris[work.iri.value] ?? []
           )
         );
         break;

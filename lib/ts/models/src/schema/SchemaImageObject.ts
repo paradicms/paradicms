@@ -62,16 +62,6 @@ export class SchemaImageObject
     }
   }
 
-  override preMemoize(): void {
-    super.preMemoize();
-    this.preMemoizeMediaObject();
-    this.caption;
-    this.exactDimensions;
-    this.maxDimensions;
-    this.src;
-    this.thumbnails;
-  }
-
   @Memoize()
   get src(): string | null {
     const src = this.findAndMapObject(schema.contentUrl, term =>
@@ -80,10 +70,10 @@ export class SchemaImageObject
     if (src) {
       return src;
     } else if (
-      this.iri.startsWith("http://") ||
-      this.iri.startsWith("https://")
+      this.iri.value.startsWith("http://") ||
+      this.iri.value.startsWith("https://")
     ) {
-      return this.iri;
+      return this.iri.value;
     } else {
       return null;
     }
@@ -96,7 +86,7 @@ export class SchemaImageObject
     } else if (selectThumbnail([this], selector)) {
       log.debug(
           "using original image",
-          this.key,
+          this.iri.value,
           "as a thumbnail for",
           JSON.stringify(selector)
       );

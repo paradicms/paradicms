@@ -1,4 +1,4 @@
-import {DatasetCore} from "@rdfjs/types";
+import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {JsonLd} from "jsonld/jsonld-spec";
 import {
   Agent,
@@ -22,13 +22,13 @@ import {
 } from "../src";
 
 export const dummyModelSet: ModelSet = {
-  agentByIri(agentIri: string): Agent | null {
+  agentByIri(agentIri: NamedNode): Agent | null {
     throw new EvalError("not implemented");
   },
   get appConfiguration(): AppConfiguration | null {
     throw new EvalError("not implemented");
   },
-  collectionByKey(collectionKey: string): Collection | null {
+  collectionByIri(collectionIri: NamedNode): Collection | null {
     throw new EvalError("not implemented");
   },
   get collections(): readonly Collection[] {
@@ -37,25 +37,25 @@ export const dummyModelSet: ModelSet = {
   get concepts(): readonly Concept[] {
     throw new EvalError("not implemented");
   },
-  conceptByIri(conceptIri: string): Concept | null {
+  conceptByIri(conceptIri: NamedNode): Concept | null {
     throw new EvalError("not implemented");
   },
-  eventByKey(eventKey: string): Event | null {
+  eventByIri(eventIri: NamedNode): Event | null {
     throw new EvalError("not implemented");
   },
   get events(): readonly Event[] {
     throw new EvalError("not implemented");
   },
-  imageByIri(imageIri: string): Image | null {
+  imageByIri(imageIri: NamedNode): Image | null {
     throw new EvalError("not implemented");
   },
-  licenseByIri(licenseIri: string): License | null {
+  licenseByIri(licenseIri: NamedNode): License | null {
     throw new EvalError("not implemented");
   },
-  locationByIri(locationIri: string): Location | null {
+  locationByIri(locationIri: NamedNode): Location | null {
     throw new EvalError("not implemented");
   },
-  organizationByIri(organizationIri: string): Organization | null {
+  organizationByIri(organizationIri: NamedNode): Organization | null {
     throw new EvalError("not implemented");
   },
   partialDateTimeDescriptionByIri: function(
@@ -63,10 +63,7 @@ export const dummyModelSet: ModelSet = {
   ): PartialDateTimeDescription {
     throw new Error("Function not implemented.");
   },
-  personByIri(personIri: string): Person | null {
-    throw new EvalError("not implemented");
-  },
-  preMemoize(): void {
+  personByIri(personIri: NamedNode): Person | null {
     throw new EvalError("not implemented");
   },
   get propertyGroups(): readonly PropertyGroup[] {
@@ -75,16 +72,18 @@ export const dummyModelSet: ModelSet = {
   get properties(): readonly Property[] {
     throw new EvalError("not implemented");
   },
-  propertyByIri(propertyIri: string): Property | null {
+  propertyByIri(propertyIri: NamedNode): Property | null {
     throw new EvalError("not implemented");
   },
-  propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null {
+  propertyGroupByIri(propertyGroupIri: NamedNode): PropertyGroup | null {
     throw new EvalError("not implemented");
   },
-  propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[] {
+  propertyGroupsByPropertyIri(
+    propertyIri: NamedNode
+  ): readonly PropertyGroup[] {
     throw new EvalError("not implemented");
   },
-  rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
+  rightsStatementByIri(rightsStatementIri: NamedNode): RightsStatement | null {
     throw new EvalError("not implemented");
   },
   textByIri: function(parameters: ResourceBackedModelParameters): Text {
@@ -96,16 +95,13 @@ export const dummyModelSet: ModelSet = {
   toRdf(): DatasetCore {
     throw new EvalError("not implemented");
   },
-  workByIri(workIri: string): Work | null {
-    throw new EvalError("not implemented");
-  },
-  workByKey(workKey: string): Work | null {
+  workByIri(workIri: NamedNode): Work | null {
     throw new EvalError("not implemented");
   },
   get works(): readonly Work[] {
     throw new EvalError("not implemented");
   },
-  worksByAgentIri(agentIri: string): readonly Work[] {
+  worksByAgentIri(agentIri: NamedNode): readonly Work[] {
     throw new EvalError("not implemented");
   },
 };

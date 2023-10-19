@@ -1,9 +1,10 @@
 import {EventsFilter} from "@paradicms/api";
-import {filterModelsByKey} from "./filterModelsByKey";
+import {NamedNode} from "@rdfjs/types";
+import {filterModelsByIri} from "./filterModelsByIri";
 
 export const filterEvents = <
   EventT extends {
-    readonly key: string;
+    readonly iri: NamedNode;
     readonly sortDate: Date | null;
   }
 >(kwds: {
@@ -24,8 +25,8 @@ export const filterEvents = <
         }
         break;
       }
-      case "Key": {
-        filteredEvents = filterModelsByKey({filter, models: filteredEvents});
+      case "Iri": {
+        filteredEvents = filterModelsByIri({filter, models: filteredEvents});
         break;
       }
     }

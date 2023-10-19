@@ -8,16 +8,15 @@ describe("DcModelReader", () => {
   const sut = new DcModelReader(syntheticData);
 
   it("should read at least one named License", () => {
-    expect(sut.readNamedLicenses({modelSet: dummyModelSet})).to.not.be.empty;
+    expect(sut.readLicenses({modelSet: dummyModelSet})).to.not.be.empty;
   });
 
   it("should read at least one named RightsStatements", () => {
-    const rightsStatements = sut.readNamedRightsStatements({
+    const rightsStatements = sut.readRightsStatements({
       modelSet: dummyModelSet,
     });
     expect(rightsStatements).to.not.be.empty;
     for (const rightsStatement of rightsStatements) {
-      expect(rightsStatement.iris).not.to.be.empty;
       expect(rightsStatement.label).not.to.be.empty;
     }
   });

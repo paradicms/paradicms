@@ -1,2 +1,4 @@
-export const isWikidataConceptIri = (iri: string) =>
-  !!iri.match(/^https?:\/\/www\.wikidata\.org\/entity\//);
+import {NamedNode} from "@rdfjs/types";
+
+export const isWikidataConceptIri = (iri: NamedNode) =>
+  !!iri.value.match(/^https?:\/\/www\.wikidata\.org\/entity\//);

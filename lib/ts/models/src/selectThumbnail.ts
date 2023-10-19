@@ -1,6 +1,7 @@
+import {NamedNode} from "@rdfjs/types";
+import log from "loglevel";
 import {ImageDimensions} from "./ImageDimensions";
 import {ThumbnailSelector} from "./ThumbnailSelector";
-import log from "loglevel";
 
 /**
  * Select a thumbnail from an array of images, given target, minimum, and maximum dimensions.
@@ -13,7 +14,7 @@ import log from "loglevel";
 export const selectThumbnail = <
   ImageT extends {
     readonly exactDimensions: ImageDimensions | null;
-    readonly key: string;
+    readonly iri: NamedNode;
     readonly maxDimensions: ImageDimensions | null;
   }
 >(
@@ -75,7 +76,7 @@ export const selectThumbnail = <
       JSON.stringify(
         images.map(image => ({
           exactDimensions: image.exactDimensions,
-          key: image.key,
+          iri: image.iri.value,
           maxDimensions: image.maxDimensions,
         }))
       )

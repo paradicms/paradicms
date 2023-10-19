@@ -29,8 +29,8 @@ export const WorkEventsTimeline: React.FunctionComponent<{
           description: workEvent.description,
           displayDate: workEvent.displayDate,
           icon: getWorkEventIcon(workEvent),
+          iri: workEvent.iri,
           label: workEvent.label,
-          key: workEvent.key,
           thumbnail: selector => workEvent.thumbnail(selector),
           work: work,
         })

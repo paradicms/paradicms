@@ -1,14 +1,17 @@
+import {DataFactory} from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
 import {expect} from "chai";
 import {describe} from "mocha";
-import {testModelSet} from "../testModelSet";
-import {requireNonNull} from "@paradicms/utilities";
 import {SchemaDefinedTerm} from "../../src/schema/SchemaDefinedTerm";
 import {behavesLikeConcept} from "../behavesLikeConcept";
+import {testModelSet} from "../testModelSet";
 
 describe("SchemaDefinedTerm", () => {
   const concept = requireNonNull(
     testModelSet.conceptByIri(
-      "urn:paradicms:etl:pipeline:synthetic_data:concept:81"
+      DataFactory.namedNode(
+        "urn:paradicms:etl:pipeline:synthetic_data:concept:11"
+      )
     )
   );
 

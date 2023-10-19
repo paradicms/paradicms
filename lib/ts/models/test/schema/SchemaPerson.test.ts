@@ -1,13 +1,16 @@
+import {DataFactory} from "@paradicms/rdf";
+import {requireNonNull} from "@paradicms/utilities";
 import {expect} from "chai";
 import {describe} from "mocha";
-import {testModelSet} from "../testModelSet";
-import {requireNonNull} from "@paradicms/utilities";
 import {SchemaPerson} from "../../src/schema/SchemaPerson";
 import {behavesLikePerson} from "../behavesLikePerson";
+import {testModelSet} from "../testModelSet";
 
 describe("SchemaPerson", () => {
   const person = requireNonNull(
-    testModelSet.personByIri("http://example.com/person5")
+    testModelSet.personByIri(
+      DataFactory.namedNode("http://example.com/person5")
+    )
   );
 
   before(() => {

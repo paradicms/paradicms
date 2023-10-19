@@ -1,5 +1,15 @@
+import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
+import {getStaticApi} from "@paradicms/next";
+import {
+  ModelSetJsonLdParser,
+  galleryThumbnailSelector,
+} from "@paradicms/react-dom-components";
+import {JsonLd} from "jsonld/jsonld-spec";
+import {GetStaticProps} from "next";
+import Link from "next/link";
 import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
+import CopyToClipboard from "react-copy-to-clipboard";
 import {Button, Col, Container, Form, Input, Row, Table} from "reactstrap";
 import {Hrefs} from "~/Hrefs";
 import {GenericErrorHandler} from "~/components/GenericErrorHandler";
@@ -10,19 +20,9 @@ import {JsonLdStringWorksheetStateExporter} from "~/exporters/JsonLdStringWorksh
 import {JsonStringWorksheetStateExporter} from "~/exporters/JsonStringWorksheetStateExporter";
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {TextWorksheetStateExporter} from "~/exporters/TextWorksheetStateExporter";
-import {useWorksheet} from "~/hooks/useWorksheet";
-import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
+import {useWorksheet} from "~/hooks/useWorksheet";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {getStaticApi} from "@paradicms/next";
-import {GetStaticProps} from "next";
-import Link from "next/link";
-import CopyToClipboard from "react-copy-to-clipboard";
-import {JsonLd} from "jsonld/jsonld-spec";
-import {
-  galleryThumbnailSelector,
-  ModelSetJsonLdParser,
-} from "@paradicms/react-dom-components";
 
 const STRING_EXPORTERS: StringWorksheetStateExporter[] = [
   new TextWorksheetStateExporter(),
@@ -215,7 +215,7 @@ const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
                 return null;
               }
               return (
-                <React.Fragment key={featureSet.iri}>
+                <React.Fragment key={featureSet.iri.value}>
                   <h4 className="text-center">{featureSet.definition.label}</h4>
                   <Table className="table-bordered">
                     <thead>
@@ -227,13 +227,13 @@ const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
                     <tbody>
                       {featureSet.features.map(feature => {
                         return (
-                          <tr key={feature.iri}>
+                          <tr key={feature.iri.value}>
                             <td className="align-middle text-center w-25">
                               <Link
                                 className="btn btn-lg btn-secondary w-100"
                                 href={Hrefs.worksheetMark({
-                                  featureSetKey: featureSet.key,
-                                  featureKey: feature.key,
+                                  featureSetIri: featureSet.iri.value,
+                                  featureIri: feature.iri.value,
                                   review: false,
                                   mode: worksheet!.currentMark.mode,
                                   worksheetStateId: worksheet!.stateId,
@@ -248,7 +248,7 @@ const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
                                 .map(value => (
                                   <span
                                     className="border border-info d-inline-block h4 m-2 p-2"
-                                    key={value.iri}
+                                    key={value.iri.value}
                                     style={{borderWidth: "4px !important"}}
                                   >
                                     {value.definition.label}

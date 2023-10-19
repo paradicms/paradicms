@@ -51,10 +51,4 @@ export abstract class Resource {
   get identifier(): ResourceIdentifier {
     return this._identifier;
   }
-
-  get iri(): string | null {
-    return this.identifier.termType === "NamedNode"
-      ? this.identifier.value
-      : null;
-  }
 }

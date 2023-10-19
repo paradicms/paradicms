@@ -1,14 +1,17 @@
-import {describe} from "mocha";
-import {behavesLikeWork} from "../behavesLikeWork";
+import {DataFactory} from "@paradicms/rdf";
 import {requireNonNull} from "@paradicms/utilities";
-import {testModelSet} from "../testModelSet";
-import {SchemaCreativeWork} from "../../src/schema/SchemaCreativeWork";
-import {expect} from "chai";
 import {schema} from "@paradicms/vocabularies";
+import {expect} from "chai";
+import {describe} from "mocha";
+import {SchemaCreativeWork} from "../../src/schema/SchemaCreativeWork";
+import {behavesLikeWork} from "../behavesLikeWork";
+import {testModelSet} from "../testModelSet";
 
 describe("SchemaCreativeWork", () => {
   const work = requireNonNull(
-    testModelSet.workByIri("http://example.com/collection0/work3")
+    testModelSet.workByIri(
+      DataFactory.namedNode("http://example.com/collection0/work3")
+    )
   );
 
   before(() => {
@@ -17,7 +20,7 @@ describe("SchemaCreativeWork", () => {
 
   behavesLikeWork(work, {
     literalProperty: schema.name,
-    namedProperty: schema.spatial,
+    namedProperty: schema.about,
     textProperty: schema.description,
   });
 });

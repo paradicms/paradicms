@@ -1,6 +1,6 @@
 import {CollectionsFilter} from "@paradicms/api";
-import {filterModelsByKey} from "./filterModelsByKey";
 import {Collection} from "@paradicms/models";
+import {filterModelsByIri} from "./filterModelsByIri";
 
 export const filterCollections = (kwds: {
   collections: readonly Collection[];
@@ -24,8 +24,8 @@ export const filterCollections = (kwds: {
         }
         break;
       }
-      case "Key": {
-        filteredCollections = filterModelsByKey({
+      case "Iri": {
+        filteredCollections = filterModelsByIri({
           filter,
           models: filteredCollections,
         });

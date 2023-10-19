@@ -31,12 +31,6 @@ export class SchemaPerson extends Mixin(
     return requireNonNull(super.name);
   }
 
-  override preMemoize(): void {
-    super.preMemoize();
-    this.familyName;
-    this.givenName;
-  }
-
   readonly type: "Person" = "Person";
 
   get works() {

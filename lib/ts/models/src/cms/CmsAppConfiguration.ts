@@ -1,17 +1,13 @@
-import { mapTermToNumber, mapTermToString } from "@paradicms/rdf";
-import { configuration } from "@paradicms/vocabularies";
-import { AppConfiguration } from "../AppConfiguration";
-import { ResourceBackedModel } from "../ResourceBackedModel";
-import { JsonAppConfiguration } from "../json/JsonAppConfiguration";
+import {mapTermToNumber, mapTermToString} from "@paradicms/rdf";
+import {configuration} from "@paradicms/vocabularies";
+import {AppConfiguration} from "../AppConfiguration";
+import {ResourceBackedModel} from "../ResourceBackedModel";
+import {JsonAppConfiguration} from "../json/JsonAppConfiguration";
 
 export class CmsAppConfiguration extends ResourceBackedModel
   implements AppConfiguration {
   get objectsPerPage(): number | null {
     return this.findAndMapObject(configuration.objectsPerPage, mapTermToNumber);
-  }
-
-  override preMemoize(): void {
-    super.preMemoize();
   }
 
   get stylesheet(): string | null {

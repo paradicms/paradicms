@@ -1,3 +1,4 @@
+import {NamedNode} from "@rdfjs/types";
 import log from "loglevel";
 import {Memoize} from "typescript-memoize";
 import {Event} from "./Event";
@@ -6,7 +7,7 @@ import {imputePartialDateTime} from "./imputePartialDateTime";
 
 export abstract class EventDerivedDatesMixin {
   abstract readonly date: PartialDateTimeDescription | null;
-  abstract readonly key: string;
+  abstract readonly iri: NamedNode;
   abstract readonly endDate: PartialDateTimeDescription | null;
   abstract readonly startDate: PartialDateTimeDescription | null;
 
@@ -16,7 +17,7 @@ export abstract class EventDerivedDatesMixin {
 
     if (thisSortDate === null) {
       if (otherSortDate === null) {
-        return this.key.localeCompare(other.key);
+        return this.iri.value.localeCompare(other.iri.value);
       } else {
         return -1; // Events without dates are < events with dates.
       }
@@ -50,11 +51,6 @@ export abstract class EventDerivedDatesMixin {
     }
 
     return result.join(" - ");
-  }
-
-  protected preMemoizeEventDerivedDates() {
-    this.displayDate;
-    this.sortDate;
   }
 
   /**

@@ -3,21 +3,15 @@ import {
   mapTermToNumber,
   mapTermToString,
 } from "@paradicms/rdf";
-import { schema } from "@paradicms/vocabularies";
-import { Mixin } from "ts-mixer";
-import { Memoize } from "typescript-memoize";
-import { SchemaModel } from "./SchemaModel";
+import {schema} from "@paradicms/vocabularies";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {SchemaModel} from "./SchemaModel";
 
 export class SchemaQuantitativeValue extends Mixin(SchemaModel) {
   @Memoize()
   get maxValue(): number | null {
     return this.findAndMapObject(schema.maxValue, mapTermToNumber);
-  }
-
-  override preMemoize(): void {
-    super.preMemoize();
-    this.maxValue;
-    this.value;
   }
 
   @Memoize()

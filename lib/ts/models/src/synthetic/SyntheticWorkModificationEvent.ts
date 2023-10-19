@@ -1,3 +1,4 @@
+import {DataFactory} from "@paradicms/rdf";
 import {Mixin} from "ts-mixer";
 import {Agent} from "../Agent";
 import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
@@ -32,8 +33,12 @@ export class SyntheticWorkModificationEvent extends Mixin(SyntheticWorkEvent)
       description: work.description,
       endDate: null,
       images: work.images,
+      iri: DataFactory.namedNode(
+        `paradicms:synthetic:workModificationEvent:${encodeURIComponent(
+          work.iri.value
+        )}`
+      ),
       label: `Work modified: ${work.label}`,
-      key: `${work.key} modification`,
       location: null,
       startDate: null,
     });

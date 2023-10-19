@@ -1,11 +1,11 @@
-import {Model} from "@paradicms/models";
 import {GetModelKeysResult} from "@paradicms/api";
+import {Model} from "@paradicms/models";
 import invariant from "ts-invariant";
 
 /**
- * Code reused by most get*Keys implementations.
+ * Code reused by most get*Iris implementations.
  */
-export const getModelKeys = <ModelT extends Model>(kwds: {
+export const getModelIris = <ModelT extends Model>(kwds: {
   allModels: readonly ModelT[];
   filterModels: (models: readonly ModelT[]) => readonly ModelT[];
   limit: number;
@@ -26,7 +26,7 @@ export const getModelKeys = <ModelT extends Model>(kwds: {
     const slicedModels = sortedModels.slice(offset, offset + limit);
 
     resolve({
-      modelKeys: slicedModels.map(model => model.key),
+      modelIris: slicedModels.map(model => model.iri.value),
       totalModelsCount: filteredModels.length,
     });
   });

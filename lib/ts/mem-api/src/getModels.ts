@@ -1,5 +1,5 @@
-import {Model} from "@paradicms/models";
 import {GetModelsResult} from "@paradicms/api";
+import {Model} from "@paradicms/models";
 import invariant from "ts-invariant";
 import {ModelSetBuilder} from "./ModelSetBuilder";
 
@@ -41,7 +41,7 @@ export const getModels = <ModelT extends Model>(kwds: {
     addModelsToModelSet(slicedModels, modelSetBuilder);
 
     resolve({
-      modelKeys: slicedModels.map(model => model.key),
+      modelIris: slicedModels.map(model => model.iri.value),
       modelSet: modelSetBuilder.build(),
       totalModelsCount: filteredModels.length,
     });

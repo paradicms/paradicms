@@ -1,6 +1,5 @@
 import {dcmitype} from "@paradicms/vocabularies";
-import {DatasetCore, Literal, Quad_Graph, Term} from "@rdfjs/types";
-import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
+import {DatasetCore, Literal, NamedNode, Quad_Graph, Term} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
 import {Property} from "./Property";
 import {PropertyValue} from "./PropertyValue";
@@ -17,9 +16,13 @@ export const createPropertyValueFromTerm = (kwds: {
 }): PropertyValue | null => {
   const {dataset, modelSet, property, term, termGraph} = kwds;
 
-  const modelParameters: Omit<ResourceBackedModelParameters, "identifier"> = {
+  if (termGraph.termType !== "NamedNode") {
+    return null;
+  }
+
+  const modelParameters: Omit<ResourceBackedModelParameters, "iri"> = {
     dataset,
-    graph: termGraph as ModelGraphIdentifier, // Blank node must be in the same graph as the current node
+    graph: termGraph as NamedNode, // Blank node must be in the same graph as the current node
     modelSet,
   };
 
@@ -32,7 +35,7 @@ export const createPropertyValueFromTerm = (kwds: {
         label: agent.label,
         thumbnail: selector => agent.thumbnail(selector),
         type: "Agent",
-        value: agent.iris.length === 1 ? agent.iris[0] : agent.label,
+        value: agent.iri.value,
       };
     }
 
@@ -49,7 +52,7 @@ export const createPropertyValueFromTerm = (kwds: {
     }
 
     if (term.termType === "NamedNode") {
-      const concept = modelSet.conceptByIri(term.value);
+      const concept = modelSet.conceptByIri(term);
       if (concept) {
         return {
           concept,

@@ -4,8 +4,6 @@ import log from "loglevel";
 import * as RdfString from "rdf-string";
 import invariant from "ts-invariant";
 import {Model} from "./Model";
-import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
-import {ModelIdentifier} from "./ModelIdentifier";
 import {ModelSet} from "./ModelSet";
 import {PartialModelReader} from "./PartialModelReader";
 
@@ -21,10 +19,10 @@ export abstract class DatasetModelReader extends PartialModelReader {
   }
 
   protected checkModelGraph(kwds: {
-    modelGraph: ModelGraphIdentifier;
-    modelIdentifier: ModelIdentifier;
+    modelGraph: NamedNode;
+    modelIri: NamedNode;
   }): void {
-    const {modelGraph, modelIdentifier} = kwds;
+    const {modelGraph, modelIri: modelIdentifier} = kwds;
     if (!modelGraph.equals(modelIdentifier)) {
       const message = `expected graph (${RdfString.termToString(
         modelGraph
@@ -50,7 +48,6 @@ export abstract class DatasetModelReader extends PartialModelReader {
     subClassOfPredicate?: NamedNode;
   }): readonly ModelT[] {
     const models: ModelT[] = [];
-    // const namedModelIris: Set<string> = new Set<string>();
     for (const quad of getRdfInstanceQuads({
       class_: kwds.class_,
       dataset: this.dataset,
@@ -58,6 +55,12 @@ export abstract class DatasetModelReader extends PartialModelReader {
       instanceOfPredicate: kwds.instanceOfPredicate,
       subClassOfPredicate: kwds.subClassOfPredicate,
     }).values()) {
+      if (quad.graph.termType !== "NamedNode") {
+        continue;
+      }
+      if (quad.subject.termType !== "NamedNode") {
+        continue;
+      }
       if (!quad.subject.equals(quad.graph)) {
         log.trace(
           "found model",
@@ -68,26 +71,16 @@ export abstract class DatasetModelReader extends PartialModelReader {
         );
         continue;
       }
+
       models.push(
         new kwds.factory({
           dataset: this.dataset,
-          graph: quad.graph as ModelGraphIdentifier,
-          identifier: quad.subject as NamedNode,
+          graph: quad.graph as NamedNode,
+          iri: quad.subject as NamedNode,
           modelSet: kwds.modelSet,
         })
       );
     }
     return models;
-  }
-
-  protected readNamedModels<ModelT extends Model>(kwds: {
-    class_: NamedNode;
-    factory: ResourceBackedModelFactory<ModelT>;
-    modelSet: ModelSet;
-    includeSubclasses?: boolean;
-    instanceOfPredicate?: NamedNode;
-    subClassOfPredicate?: NamedNode;
-  }): readonly ModelT[] {
-    return this.readModels(kwds).filter(model => model.iris.length > 0);
   }
 }

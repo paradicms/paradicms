@@ -25,7 +25,7 @@ export class SchemaProperty extends Mixin(SchemaModel)
   }
 
   get groups(): readonly PropertyGroup[] {
-    return this.modelSet.propertyGroupsByPropertyKey(this.key);
+    return this.modelSet.propertyGroupsByPropertyIri(this.iri);
   }
 
   @Memoize()
@@ -44,16 +44,6 @@ export class SchemaProperty extends Mixin(SchemaModel)
   @Memoize()
   get order(): number {
     return this.findAndMapObject(cms.propertyOrder, mapTermToNumber) ?? 0;
-  }
-
-  override preMemoize(): void {
-    super.preMemoize();
-    this.filterable;
-    this.hidden;
-    this.order;
-    this.range;
-    this.rangeValues;
-    this.searchable;
   }
 
   @Memoize()

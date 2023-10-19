@@ -6,6 +6,7 @@ import {
   imputeDateRangeEndpoint,
 } from "@paradicms/api";
 import {Image, ThumbnailSelector, Work, WorkEvent} from "@paradicms/models";
+import {DataFactory} from "@paradicms/rdf";
 import {deleteUndefined} from "@paradicms/utilities";
 import invariant from "ts-invariant";
 import {MutableValueFacetValue} from "./MutableValueFacetValue";
@@ -162,25 +163,27 @@ export const facetizeWorks = (kwds: {
   const {filters, valueFacetValueThumbnailSelector, works} = kwds;
   const facets: WorksFacet[] = [];
   for (const filter of filters) {
-    console.time(`facetize on filter ${filter.type}`);
+    // console.time(`facetize on filter ${filter.type}`);
     switch (filter.type) {
       case "StringPropertyValue":
-        console.time(
-          `facetize on filter ${filter.type} with label ${filter.label}`
-        );
+        // console.time(
+        //   `facetize on filter ${filter.type} with label ${filter.label}`
+        // );
         facets.push({
           ...facetizeWorksByValue({
             valueFacetValueThumbnailSelector,
             works,
             getWorkValues: work =>
-              work.propertyValuesByPropertyIri(filter.propertyIri),
+              work.propertyValuesByPropertyIri(
+                DataFactory.namedNode(filter.propertyIri)
+              ),
           }),
           propertyIri: filter.propertyIri,
           type: "StringPropertyValue",
         });
-        console.timeEnd(
-          `facetize on filter ${filter.type} with label ${filter.label}`
-        );
+        // console.timeEnd(
+        //   `facetize on filter ${filter.type} with label ${filter.label}`
+        // );
         break;
       case "WorkCreationDateRange": {
         const facet = facetizeWorksByEventDateRange({
@@ -206,7 +209,7 @@ export const facetizeWorks = (kwds: {
         });
         break;
     }
-    console.timeEnd(`facetize on filter ${filter.type}`);
+    // console.timeEnd(`facetize on filter ${filter.type}`);
   }
   return facets;
 };

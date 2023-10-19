@@ -1,5 +1,4 @@
 import {Concept, Image, Text} from "@paradicms/models";
-import invariant from "ts-invariant";
 import {BlankNode, Literal, NamedNode} from "@rdfjs/types";
 
 export class WorksheetFeatureValueDefinition {
@@ -18,8 +17,7 @@ export class WorksheetFeatureValueDefinition {
   }
 
   get iri() {
-    invariant(this.concept.iris.length === 1, "concept has multiple IRIs");
-    return this.concept.iris[0];
+    return this.concept.iri;
   }
 
   get label(): string {

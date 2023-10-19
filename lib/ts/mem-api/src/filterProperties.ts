@@ -1,9 +1,10 @@
-import {filterModelsByKey} from "./filterModelsByKey";
 import {PropertiesFilter} from "@paradicms/api";
+import {NamedNode} from "@rdfjs/types";
+import {filterModelsByIri} from "./filterModelsByIri";
 
 export const filterProperties = <
   PropertyT extends {
-    readonly key: string;
+    readonly iri: NamedNode;
   }
 >(kwds: {
   properties: readonly PropertyT[];
@@ -13,8 +14,8 @@ export const filterProperties = <
   let filteredProperties = properties;
   for (const filter of filters) {
     switch (filter.type) {
-      case "Key": {
-        filteredProperties = filterModelsByKey({
+      case "Iri": {
+        filteredProperties = filterModelsByIri({
           filter,
           models: filteredProperties,
         });

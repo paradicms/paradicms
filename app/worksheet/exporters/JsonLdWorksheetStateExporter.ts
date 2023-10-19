@@ -1,8 +1,8 @@
-import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {WorksheetState} from "~/models/WorksheetState";
-import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 import {Hrefs} from "~/Hrefs";
+import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetMode} from "~/models/WorksheetMode";
+import {WorksheetState} from "~/models/WorksheetState";
 
 export class JsonLdWorksheetStateExporter
   implements WorksheetStateExporter<any> {
@@ -31,8 +31,8 @@ export class JsonLdWorksheetStateExporter
     context.cc = "https://w3id.org/costumeCore/ontology/";
     json["@context"] = context;
     let href = Hrefs.worksheetMark({
-      featureSetKey: null,
-      featureKey: null,
+      featureSetIri: null,
+      featureIri: null,
       mode: WorksheetMode.BEGINNER,
       review: false,
       worksheetStateId: worksheetState.id,

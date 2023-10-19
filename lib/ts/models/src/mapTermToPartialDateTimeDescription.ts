@@ -8,14 +8,14 @@ import {LiteralPartialDateTimeDescription} from "./literal/LiteralPartialDateTim
  * Map a term in a modelSet to a PartialDateTimeDescription.
  */
 export const mapTermToPartialDateTimeDescription = (
-  modelParameters: Omit<ResourceBackedModelParameters, "identifier">,
+  modelParameters: Omit<ResourceBackedModelParameters, "iri">,
   term: Term
 ): PartialDateTimeDescription | null => {
   switch (term.termType) {
     case "NamedNode":
       return modelParameters.modelSet.partialDateTimeDescriptionByIri({
         ...modelParameters,
-        identifier: term,
+        iri: term,
       });
     case "Literal":
       return LiteralPartialDateTimeDescription.fromLiteral(term);

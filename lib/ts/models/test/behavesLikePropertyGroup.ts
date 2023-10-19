@@ -1,8 +1,8 @@
 import {expect} from "chai";
-import {testModelSet} from "./testModelSet";
 import {it} from "mocha";
 import {PropertyGroup} from "../src/PropertyGroup";
-import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {behavesLikeModel} from "./behavesLikeModel";
+import {testModelSet} from "./testModelSet";
 
 export const behavesLikePropertyGroup = (propertyGroup: PropertyGroup) => {
   it("should get the label", () => {
@@ -15,5 +15,5 @@ export const behavesLikePropertyGroup = (propertyGroup: PropertyGroup) => {
     );
   });
 
-  behavesLikeNamedModel(propertyGroup);
+  behavesLikeModel(propertyGroup);
 };

@@ -1,11 +1,12 @@
 import {encodeFileName} from "@paradicms/next";
+import {NamedNode} from "@rdfjs/types";
 
 export class Hrefs {
   static get home(): string {
     return "/";
   }
 
-  static event(kwds: {key: string}): string {
-    return `/event/${encodeFileName(kwds.key)}/`;
+  static event(kwds: {iri: NamedNode}): string {
+    return `/event/${encodeFileName(kwds.iri.value)}/`;
   }
 }

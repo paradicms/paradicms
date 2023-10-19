@@ -1,3 +1,4 @@
+import {DataFactory} from "@paradicms/rdf";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetFeature} from "~/models/WorksheetFeature";
 import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
@@ -11,10 +12,10 @@ const isEqual = (
   leftMark: WorksheetMark,
   rightMark: WorksheetMark
 ): boolean => {
-  if (leftMark.featureSetKey !== rightMark.featureSetKey) {
+  if (leftMark.featureSetIri !== rightMark.featureSetIri) {
     return false;
   }
-  if (leftMark.featureKey !== rightMark.featureKey) {
+  if (leftMark.featureIri !== rightMark.featureIri) {
     return false;
   }
   if (leftMark.review !== rightMark.review) {
@@ -31,7 +32,6 @@ export class Worksheet {
   readonly definition: WorksheetDefinition;
   readonly featureSets: WorksheetFeatureSet[];
   private readonly featureSetsByIri: {[index: string]: WorksheetFeatureSet};
-  private readonly featureSetsByKey: {[index: string]: WorksheetFeatureSet};
   private marks: readonly WorksheetMark[];
   private readonly stateCtime: Date;
   readonly stateId: string;
@@ -54,7 +54,7 @@ export class Worksheet {
             definition: featureSetDefinition,
             initialState: initialState.featureSets?.find(
               featureSetState =>
-                featureSetState.uri === featureSetDefinition.iri
+                featureSetState.uri === featureSetDefinition.iri.value
             ),
           })
       )
@@ -62,11 +62,7 @@ export class Worksheet {
         left.definition.label.localeCompare(right.definition.label)
       );
     this.featureSetsByIri = this.featureSets.reduce((map, featureSet) => {
-      map[featureSet.iri] = featureSet;
-      return map;
-    }, {} as {[index: string]: WorksheetFeatureSet});
-    this.featureSetsByKey = this.featureSets.reduce((map, featureSet) => {
-      map[featureSet.key] = featureSet;
+      map[featureSet.iri.value] = featureSet;
       return map;
     }, {} as {[index: string]: WorksheetFeatureSet});
     this.stateCtime = initialState.ctime;
@@ -78,21 +74,23 @@ export class Worksheet {
   }
 
   get currentFeature(): WorksheetFeature | undefined {
-    if (!this.currentMark.featureKey) {
+    if (!this.currentMark.featureIri) {
       return undefined;
     }
     const currentFeatureSet = this.currentFeatureSet;
     if (!currentFeatureSet) {
       return undefined;
     }
-    return currentFeatureSet.featureByKey(this.currentMark.featureKey);
+    return currentFeatureSet.featureByIri(
+      DataFactory.namedNode(this.currentMark.featureIri)
+    );
   }
 
   get currentFeatureSet(): WorksheetFeatureSet | undefined {
-    if (!this.currentMark.featureSetKey) {
+    if (!this.currentMark.featureSetIri) {
       return undefined;
     }
-    return this.featureSetsByKey[this.currentMark.featureSetKey];
+    return this.featureSetsByIri[this.currentMark.featureSetIri];
   }
 
   get currentMarkIndex(): number {
@@ -142,8 +140,8 @@ export class Worksheet {
     // First state, always the worksheet start
     const worksheetStateId = state.id;
     marks.push({
-      featureSetKey: null,
-      featureKey: null,
+      featureSetIri: null,
+      featureIri: null,
       review: false,
       mode: this.currentMark.mode,
       worksheetStateId,
@@ -160,8 +158,8 @@ export class Worksheet {
 
         // Feature set start
         marks.push({
-          featureKey: null,
-          featureSetKey: featureSet.key,
+          featureIri: null,
+          featureSetIri: featureSet.iri.value,
           review: false,
           mode: this.currentMark.mode,
           worksheetStateId,
@@ -171,8 +169,8 @@ export class Worksheet {
           for (const feature of featureSet.features) {
             // Feature start is the same as review
             marks.push({
-              featureKey: feature.key,
-              featureSetKey: featureSet.key,
+              featureIri: feature.iri.value,
+              featureSetIri: featureSet.iri.value,
               review: false,
               mode: this.currentMark.mode,
               worksheetStateId,
@@ -181,8 +179,8 @@ export class Worksheet {
 
           // Feature set review
           marks.push({
-            featureSetKey: featureSet.key,
-            featureKey: null,
+            featureSetIri: featureSet.iri.value,
+            featureIri: null,
             review: true,
             mode: this.currentMark.mode,
             worksheetStateId,
@@ -193,8 +191,8 @@ export class Worksheet {
 
     // Worksheet review, always the last state
     marks.push({
-      featureSetKey: null,
-      featureKey: null,
+      featureSetIri: null,
+      featureIri: null,
       review: true,
       mode: this.currentMark.mode,
       worksheetStateId,

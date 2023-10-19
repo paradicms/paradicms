@@ -1,6 +1,6 @@
+import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
-import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 
 export class GoogleSheetsWorksheetStateExporter
   implements WorksheetStateExporter<string[][]> {
@@ -38,11 +38,11 @@ export class GoogleSheetsWorksheetStateExporter
     // Output all feature sets and values so they're represented in the CSV.
     for (const featureSetDefinition of worksheetDefinition.featureSets) {
       // Column for indicating the feature set is selecting
-      headerRow.push(featureSetDefinition.iri);
+      headerRow.push(featureSetDefinition.iri.value);
       // Columns for each (feature set, feature) combination
       // The cells under this column contain a list of selected feature values
       for (const featureIri of featureSetDefinition.featureIris) {
-        headerRow.push(featureSetDefinition.iri + "|" + featureIri);
+        headerRow.push(featureSetDefinition.iri.value + "|" + featureIri.value);
       }
     }
     rows.push(headerRow);

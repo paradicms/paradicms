@@ -1,43 +1,46 @@
 import {JsonAppConfiguration, ModelSet} from "@paradicms/models";
 import {getStaticApi} from "@paradicms/next";
+import {DataFactory} from "@paradicms/rdf";
 import {
   ModelSetJsonLdParser,
   RightsParagraph,
 } from "@paradicms/react-dom-components";
+import {JsonLd} from "jsonld/jsonld-spec";
 import {Hrefs} from "lib/Hrefs";
 import {GetStaticProps} from "next";
 import {useRouter} from "next/router";
 import * as React from "react";
 import {Col, Container, Row} from "reactstrap";
-import {Layout} from "../components/Layout";
-import {JsonLd} from "jsonld/jsonld-spec";
 import invariant from "ts-invariant";
-import {getExhibitionData} from "@paradicms/api";
+import {Layout} from "../components/Layout";
+import {getExhibitionData} from "../lib/getExhibitionData";
 
 interface StaticProps {
-  readonly configuration: JsonAppConfiguration | null;
-  readonly collectionKey: string | null;
+  readonly collectionIri: string | null;
   readonly collectionModelSetJsonLd: JsonLd;
-  readonly firstWorkKey: string;
+  readonly configuration: JsonAppConfiguration | null;
+  readonly firstWorkIri: string;
 }
 
 const IndexPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "collectionModelSetJsonLd"
 > & {readonly collectionModelSet: ModelSet}> = ({
-  collectionKey,
+  collectionIri,
   configuration,
-  firstWorkKey,
+  firstWorkIri: firstWorkIriString,
   collectionModelSet,
 }) => {
+  const firstWorkIri = DataFactory.namedNode(firstWorkIriString);
+
   const router = useRouter();
-  const collection = collectionKey
-    ? collectionModelSet.collectionByKey(collectionKey)
+  const collection = collectionIri
+    ? collectionModelSet.collectionByIri(DataFactory.namedNode(collectionIri))
     : null;
 
   React.useEffect(() => {
     if (!collection?.description) {
-      router.push(Hrefs.work({key: firstWorkKey}));
+      router.push(Hrefs.work({iri: firstWorkIri}));
     }
   }, []);
 
@@ -50,7 +53,7 @@ const IndexPageImpl: React.FunctionComponent<Omit<
     <Layout
       collection={collection}
       configuration={configuration}
-      nextWork={{key: firstWorkKey}}
+      nextWork={{iri: firstWorkIri}}
     >
       <Container fluid>
         <Row>
@@ -97,17 +100,17 @@ export const getStaticProps: GetStaticProps = async (): Promise<{
 }> => {
   const api = await getStaticApi();
 
-  const {collection, collectionModelSet, workKeys} = await getExhibitionData(
+  const {collection, collectionModelSet, workIris} = await getExhibitionData(
     api
   );
-  invariant(workKeys.length > 0, "must have at least one work");
+  invariant(workIris.length > 0, "must have at least one work");
 
   return {
     props: {
       configuration: await api.getAppConfiguration(),
-      collectionKey: collection?.key ?? null,
-      firstWorkKey: workKeys[0],
+      collectionIri: collection?.iri.value ?? null,
       collectionModelSetJsonLd: await collectionModelSet.toJsonLd(),
+      firstWorkIri: workIris[0].value,
     },
   };
 };

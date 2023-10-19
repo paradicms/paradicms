@@ -57,6 +57,10 @@ class SchemaTextObject(SchemaModel, SchemaMediaObjectMixin, Text):
     def text(self) -> str:
         return self._required_value(SDO.text, self._map_term_to_str)
 
+    def to_rdf(self, graph: Graph) -> Resource:
+        # Don't try to curate the RDF
+        return super().to_rdf(graph)
+
     @property
     def value(self) -> str:
         return self.text

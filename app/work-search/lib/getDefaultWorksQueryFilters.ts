@@ -1,9 +1,11 @@
 import {StringPropertyValueFilter, WorksFilter} from "@paradicms/api";
-import {defaultProperties} from "@paradicms/models";
-import {JsonProperty} from "./JsonProperty";
+import {Property, defaultProperties} from "@paradicms/models";
 
 export const getDefaultWorksQueryFilters = (
-  properties: readonly JsonProperty[]
+  properties: readonly Pick<
+    Property,
+    "filterable" | "iri" | "label" | "searchable"
+  >[]
 ): WorksFilter[] => {
   const filters: WorksFilter[] = [];
 
@@ -21,15 +23,12 @@ export const getDefaultWorksQueryFilters = (
     if (!property.filterable) {
       continue;
     }
-    if (property.iris.length !== 1) {
-      throw new EvalError("not implemented: properties with 0 or 2+ IRIs");
-    }
-    const propertyIri = property.iris[0];
     if (
       filters.some(
         filter =>
           filter.type === "StringPropertyValue" &&
-          (filter as StringPropertyValueFilter).propertyIri === propertyIri
+          (filter as StringPropertyValueFilter).propertyIri ===
+            property.iri.value
       )
     ) {
       // log.debug(
@@ -46,7 +45,7 @@ export const getDefaultWorksQueryFilters = (
     // );
     filters.push({
       label: property.label,
-      propertyIri,
+      propertyIri: property.iri.value,
       type: "StringPropertyValue",
     } as StringPropertyValueFilter);
   }

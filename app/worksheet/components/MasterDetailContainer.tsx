@@ -202,7 +202,7 @@ const ItemsGallery: React.FunctionComponent<{
         for (const image of images) {
           const thumbnail = image.thumbnail(galleryThumbnailSelector);
           if (thumbnail) {
-            thumbnailSrc = thumbnail.src ?? thumbnail.iris[0];
+            thumbnailSrc = thumbnail.src ?? thumbnail.iri.value;
             break;
           }
         }

@@ -12,12 +12,13 @@ import {
   WorkEvent,
   WorkLocation,
 } from "@paradicms/models";
+import {DataFactory} from "@paradicms/rdf";
 import {syntheticData} from "@paradicms/test";
 import {requireDefined, requireNonNull} from "@paradicms/utilities";
 import {dcterms} from "@paradicms/vocabularies";
 import {expect} from "chai";
 import {it} from "mocha";
-import {expectModelKeysDeepEq} from "./expectModelKeysDeepEq";
+import {expectModelIrisDeepEq} from "./expectModelIrisDeepEq";
 import {expectModelsDeepEq} from "./expectModelsDeepEq";
 import {testThumbnailSelector} from "./testThumbnailSelector";
 
@@ -61,15 +62,15 @@ export const behavesLikeApi = (api: Api) => {
     );
   });
 
-  it("getEventKeys returns a all event keys (timeline event pages)", async () => {
+  it("getEventIris returns a all event keys (timeline event pages)", async () => {
     expect(completeModelSet.events).not.to.be.empty;
-    const actualResult = await api.getEventKeys();
+    const actualResult = await api.getEventIris();
     expect(actualResult.totalModelsCount).to.be.eq(
       completeModelSet.events.length
     );
-    expectModelKeysDeepEq(
-      actualResult.modelKeys,
-      completeModelSet.events.map(event => event.key)
+    expectModelIrisDeepEq(
+      actualResult.modelIris,
+      completeModelSet.events.map(event => event.iri.value)
     );
   });
 
@@ -100,28 +101,30 @@ export const behavesLikeApi = (api: Api) => {
       query: {
         filters: [
           {
-            includeKeys: [expectedEvent.key],
-            type: "Key",
+            includeIris: [expectedEvent.iri.value],
+            type: "Iri",
           },
         ],
       },
     });
     expect(actualTotalEventsCount).to.eq(1);
     expect(actualModelSet.events).to.have.length(1);
-    expect(actualModelSet.events[0].key).to.eq(expectedEvent.key);
+    expect(actualModelSet.events[0].iri.value).to.eq(expectedEvent.iri.value);
   });
 
-  it("getPropertyGroupKeys returns all property group keys (worksheet feature set edit)", async () => {
+  it("getPropertyGroupIris returns all property group keys (worksheet feature set edit)", async () => {
     const {
-      modelKeys: actualPropertyGroupKeys,
+      modelIris: actualPropertyGroupKeys,
       totalModelsCount: actualTotalPropertyGroupsCount,
-    } = await api.getPropertyGroupKeys();
+    } = await api.getPropertyGroupIris();
     expect(actualTotalPropertyGroupsCount).to.eq(
       completeModelSet.propertyGroups.length
     );
-    expectModelKeysDeepEq(
+    expectModelIrisDeepEq(
       actualPropertyGroupKeys,
-      completeModelSet.propertyGroups.map(propertyGroup => propertyGroup.key)
+      completeModelSet.propertyGroups.map(
+        propertyGroup => propertyGroup.iri.value
+      )
     );
   });
 
@@ -151,16 +154,16 @@ export const behavesLikeApi = (api: Api) => {
   });
 
   const getWorkAgents = (result: GetModelsResult): readonly WorkAgent[] => {
-    const workAgentsByKey: {[index: string]: WorkAgent} = {};
+    const workAgentsByIri: {[index: string]: WorkAgent} = {};
     for (const work of result.modelSet.works) {
       for (const workAgent of work.agents) {
-        // expect(workAgentsByKey[workAgent.agent.key]).to.be.undefined;
-        workAgentsByKey[workAgent.agent.key] = workAgent;
+        // expect(workAgentsByIri[workAgent.agent.iri.value]).to.be.undefined;
+        workAgentsByIri[workAgent.agent.iri.value] = workAgent;
       }
     }
 
-    return result.modelKeys.map(workAgentKey =>
-      requireNonNull(workAgentsByKey[workAgentKey])
+    return result.modelIris.map(workAgentIri =>
+      requireNonNull(workAgentsByIri[workAgentIri])
     );
   };
 
@@ -196,16 +199,16 @@ export const behavesLikeApi = (api: Api) => {
   });
 
   const getWorkEvents = (result: GetModelsResult) => {
-    const workEventsByKey: {[index: string]: WorkEvent} = {};
+    const workEventsByIri: {[index: string]: WorkEvent} = {};
     for (const work of result.modelSet.works) {
       for (const workEvent of work.events) {
-        expect(workEventsByKey[workEvent.key]).to.be.undefined;
-        workEventsByKey[workEvent.key] = workEvent;
+        expect(workEventsByIri[workEvent.iri.value]).to.be.undefined;
+        workEventsByIri[workEvent.iri.value] = workEvent;
       }
     }
 
-    return result.modelKeys.map(workEventKey =>
-      requireDefined(workEventsByKey[workEventKey], workEventKey)
+    return result.modelIris.map(workEventIri =>
+      requireDefined(workEventsByIri[workEventIri], workEventIri)
     );
   };
 
@@ -287,7 +290,7 @@ export const behavesLikeApi = (api: Api) => {
       const expectResultWorkLocation = (expectedWorkLocation: WorkLocation) => {
         const resultWorkLocation = actualResult.workLocations.find(
           resultWorkLocation =>
-            resultWorkLocation.work.key === work.key &&
+            resultWorkLocation.work.iri === work.iri.value &&
             resultWorkLocation.location.centroid!.latitude ===
               expectedWorkLocation.location.centroid!.latitude &&
             resultWorkLocation.location.centroid!.longitude ===
@@ -308,14 +311,14 @@ export const behavesLikeApi = (api: Api) => {
     }
   });
 
-  it("getWorkKeys returns a collection's work keys (multi-page-exhibition)", async () => {
+  it("getWorkIris returns a collection's work keys (multi-page-exhibition)", async () => {
     const expectedCollection = completeModelSet.collections[0];
     expect(expectedCollection.works).not.to.be.empty;
-    const actualResult = await api.getWorkKeys({
+    const actualResult = await api.getWorkIris({
       query: {
         filters: [
           {
-            includeValues: [expectedCollection.key],
+            includeValues: [expectedCollection.iri.value],
             type: "WorkCollectionValue",
           },
         ],
@@ -327,9 +330,9 @@ export const behavesLikeApi = (api: Api) => {
     expect(actualResult.totalModelsCount).to.eq(
       expectedCollection.works.length
     );
-    expectModelKeysDeepEq(
-      actualResult.modelKeys,
-      expectedCollection.works.map(work => work.key)
+    expectModelIrisDeepEq(
+      actualResult.modelIris,
+      expectedCollection.works.map(work => work.iri.value)
     );
   });
 
@@ -338,8 +341,8 @@ export const behavesLikeApi = (api: Api) => {
       query: {
         filters: [
           {
-            label: "Publisher",
-            propertyIri: dcterms.publisher.value,
+            label: "Subject",
+            propertyIri: dcterms.subject.value,
             type: "StringPropertyValue",
           },
           {
@@ -428,14 +431,14 @@ export const behavesLikeApi = (api: Api) => {
   });
 
   it("getWorks sorts by label", async () => {
-    const allWorkKeys = (
+    const allWorkIris = (
       await api.getWorks({
         offset: 0,
         limit: 4,
       })
-    ).modelSet.works.map(work => work.key);
+    ).modelSet.works.map(work => work.iri.value);
 
-    const sortedWorkKeys = (
+    const sortedWorkIris = (
       await api.getWorks({
         offset: 0,
         limit: 4,
@@ -444,9 +447,9 @@ export const behavesLikeApi = (api: Api) => {
           property: "label",
         },
       })
-    ).modelSet.works.map(work => work.key);
+    ).modelSet.works.map(work => work.iri.value);
 
-    expect(sortedWorkKeys).not.to.deep.eq(allWorkKeys);
+    expect(sortedWorkIris).not.to.deep.eq(allWorkIris);
   });
 
   it("getWorks return a single work by key (multi-page-exhibition work page)", async () => {
@@ -459,8 +462,8 @@ export const behavesLikeApi = (api: Api) => {
         query: {
           filters: [
             {
-              includeKeys: [expectedWork.key],
-              type: "Key",
+              includeIris: [expectedWork.iri.value],
+              type: "Iri",
             },
           ],
         },
@@ -468,15 +471,14 @@ export const behavesLikeApi = (api: Api) => {
     ).modelSet.works;
 
     expect(actualWorks).to.have.length(1);
-    expect(actualWorks[0].key).to.eq(expectedWork.key);
+    expect(actualWorks[0].iri.value).to.eq(expectedWork.iri.value);
   });
 
   it("getWorks filters by a string property", async () => {
     const filterableStringProperty = requireDefined(
       completeModelSet.properties.find(property => property.filterable)
     );
-    expect(filterableStringProperty.iris).to.have.length(1);
-    const stringPropertyIri = filterableStringProperty.iris[0];
+    const stringPropertyIri = filterableStringProperty.iri;
 
     const stringPropertyValues = completeModelSet.works.flatMap(work =>
       work.propertyValuesByPropertyIri(stringPropertyIri)
@@ -503,7 +505,7 @@ export const behavesLikeApi = (api: Api) => {
             {
               includeValues: [includeStringPropertyValue.value],
               label: "Include string property value",
-              propertyIri: filterableStringProperty.iris[0],
+              propertyIri: filterableStringProperty.iri.value,
               type: "StringPropertyValue",
             },
           ],
@@ -516,7 +518,6 @@ export const behavesLikeApi = (api: Api) => {
 
   it("getWorks filters by collection", async () => {
     const collection = completeModelSet.collections[0];
-    expect(collection.iris).to.have.length(1);
     const expectedWorks = collection.works;
     expect(expectedWorks).not.to.be.empty;
 
@@ -525,7 +526,7 @@ export const behavesLikeApi = (api: Api) => {
         query: {
           filters: [
             {
-              includeValues: [collection.key],
+              includeValues: [collection.iri.value],
               type: "WorkCollectionValue",
             },
           ],
@@ -537,7 +538,9 @@ export const behavesLikeApi = (api: Api) => {
   });
 
   it("getWorks filters by creation date", async () => {
-    const expectedWorkIri = "http://example.com/collection0/work2";
+    const expectedWorkIri = DataFactory.namedNode(
+      "http://example.com/collection0/work2"
+    );
     const expectedWork = requireNonNull(
       completeModelSet.workByIri(expectedWorkIri)
     );
@@ -573,8 +576,7 @@ export const behavesLikeApi = (api: Api) => {
 
     expect(actualWorks).to.have.length(1);
     const actualWork = actualWorks[0];
-    expect(actualWork.iris).to.have.length(1);
-    expect(actualWork.iris[0]).to.eq(expectedWorkIri);
+    expect(actualWork.iri.value).to.eq(expectedWorkIri.value);
   });
 
   it("getWorks filters by subject", async () => {

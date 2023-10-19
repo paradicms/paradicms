@@ -1,6 +1,7 @@
-import {DatasetCore, Literal} from "@rdfjs/types";
+import {DataFactory} from "@paradicms/rdf";
+import {DatasetCore, Literal, NamedNode} from "@rdfjs/types";
+import {Memoize} from "typescript-memoize";
 import {Model} from "../Model";
-import {ModelIdentifier} from "../ModelIdentifier";
 
 export class LiteralModel implements Model {
   protected readonly literal: Literal;
@@ -11,23 +12,12 @@ export class LiteralModel implements Model {
     this.literal = kwds.literal;
   }
 
-  get dependencies(): readonly Model[] {
-    return [];
+  @Memoize()
+  get iri(): NamedNode {
+    return DataFactory.namedNode(
+      `urn:paradicms:literal:${encodeURIComponent(this.literal.value)}`
+    );
   }
-
-  get identifiers(): readonly ModelIdentifier[] {
-    return [];
-  }
-
-  get key(): string {
-    return `|${this.literal.termType}-${this.literal.value}|`;
-  }
-
-  get iris(): readonly string[] {
-    return [];
-  }
-
-  preMemoize(): void {}
 
   toRdf(addToDataset: DatasetCore) {}
 }

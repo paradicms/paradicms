@@ -1,16 +1,16 @@
 import {
   Api,
   GetCollectionsOptions,
-  GetEventKeysOptions,
+  GetEventIrisOptions,
   GetEventsOptions,
   GetModelKeysResult,
   GetModelsResult,
   GetPropertiesOptions,
-  GetPropertyGroupKeysOptions,
+  GetPropertyGroupIrisOptions,
   GetPropertyGroupsOptions,
   GetWorkAgentsOptions,
   GetWorkEventsOptions,
-  GetWorkKeysOptions,
+  GetWorkIrisOptions,
   GetWorkLocationsOptions,
   GetWorkLocationsResult,
   GetWorksOptions,
@@ -38,8 +38,8 @@ export class RestApiClient implements Api {
     return this.getModels("/collections", kwds);
   }
 
-  getEventKeys(kwds?: GetEventKeysOptions): Promise<GetModelKeysResult> {
-    return this.getModelKeys("/eventKeys", kwds);
+  getEventIris(kwds?: GetEventIrisOptions): Promise<GetModelKeysResult> {
+    return this.getModelIris("/eventKeys", kwds);
   }
 
   getEvents(kwds?: GetEventsOptions): Promise<GetModelsResult> {
@@ -63,17 +63,17 @@ export class RestApiClient implements Api {
     return this.getModels("/properties", kwds);
   }
 
-  getPropertyGroupKeys(
-    kwds?: GetPropertyGroupKeysOptions
+  getPropertyGroupIris(
+    kwds?: GetPropertyGroupIrisOptions
   ): Promise<GetModelKeysResult> {
-    return this.getModelKeys("/propertyGroupKeys", kwds);
+    return this.getModelIris("/propertyGroupKeys", kwds);
   }
 
   getPropertyGroups(kwds?: GetPropertyGroupsOptions): Promise<GetModelsResult> {
     return this.getModels("/propertyGroups", kwds);
   }
 
-  private async getModelKeys(
+  private async getModelIris(
     url: string,
     options?: any
   ): Promise<GetModelKeysResult> {
@@ -103,8 +103,8 @@ export class RestApiClient implements Api {
     return this.getModels("/workEvents", kwds);
   }
 
-  getWorkKeys(kwds?: GetWorkKeysOptions): Promise<GetModelKeysResult> {
-    return this.getModelKeys("/workKeys", kwds);
+  getWorkIris(kwds?: GetWorkIrisOptions): Promise<GetModelKeysResult> {
+    return this.getModelIris("/workIris", kwds);
   }
 
   async getWorkLocations(
@@ -123,9 +123,5 @@ export class RestApiClient implements Api {
       modelSet: await ModelSetFactory.fromJsonLd(modelSetJsonLd as any),
       ...otherProps,
     };
-  }
-
-  primeCaches(): Promise<void> {
-    return new Promise(resolve => resolve());
   }
 }

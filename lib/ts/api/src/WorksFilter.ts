@@ -1,12 +1,12 @@
 import {Static, Union} from "runtypes";
-import {KeyFilter} from "./KeyFilter";
+import {IriFilter} from "./IriFilter";
 import {StringPropertyValueFilter} from "./StringPropertyValueFilter";
 import {WorkCollectionValueFilter} from "./WorkCollectionValueFilter";
 import {WorkCreationDateRangeFilter} from "./WorkCreationDateRangeFilter";
 import {WorkSubjectValueFilter} from "./WorkSubjectValueFilter";
 
 export const WorksFilter = Union(
-  KeyFilter,
+  IriFilter,
   StringPropertyValueFilter,
   WorkCollectionValueFilter,
   WorkCreationDateRangeFilter,

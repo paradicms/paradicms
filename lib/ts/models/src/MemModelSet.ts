@@ -1,6 +1,6 @@
 import {datasetToJsonLd, getNamedRdfTypes} from "@paradicms/rdf";
 import {schema, time} from "@paradicms/vocabularies";
-import {DatasetCore} from "@rdfjs/types";
+import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {Memoize} from "typescript-memoize";
 import {Agent} from "./Agent";
 import {AppConfiguration} from "./AppConfiguration";
@@ -10,7 +10,6 @@ import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
-import {Model} from "./Model";
 import {ModelReader} from "./ModelReader";
 import {ModelSet} from "./ModelSet";
 import {Organization} from "./Organization";
@@ -23,7 +22,6 @@ import {RightsStatement} from "./RightsStatement";
 import {Text} from "./Text";
 import {Work} from "./Work";
 import {indexModelsByIri} from "./indexModelsByIri";
-import {indexModelsByKey} from "./indexModelsByKey";
 import {indexModelsByValues} from "./indexModelsByValues";
 import {OwlTimePartialDateTimeDescription} from "./owl-time/OwlTimePartialDateTimeDescription";
 import {SchemaTextObject} from "./schema/SchemaTextObject";
@@ -32,9 +30,9 @@ import {sortModelsMultimap} from "./sortModelsMultimap";
 
 export class MemModelSet implements ModelSet {
   constructor(private readonly modelReader: ModelReader) {}
-  agentByIri(agentIri: string): Agent | null {
+  agentByIri(agentIri: NamedNode): Agent | null {
     for (const index of [this.organizationsByIriIndex, this.peopleByIriIndex]) {
-      const agent = index[agentIri];
+      const agent = index[agentIri.value];
       if (agent) {
         return agent;
       }
@@ -54,16 +52,16 @@ export class MemModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readCollections({modelSet: this}));
   }
 
-  collectionByKey(collectionKey: string): Collection | null {
-    return this.modelByKey(this.collectionsByKeyIndex, collectionKey);
+  collectionByIri(collectionIri: NamedNode): Collection | null {
+    return this.modelByIri(this.collectionsByIriIndex, collectionIri);
   }
 
   @Memoize()
-  private get collectionsByKeyIndex(): {[index: string]: Collection} {
-    return indexModelsByKey(this.collections);
+  private get collectionsByIriIndex(): {[index: string]: Collection} {
+    return indexModelsByIri(this.collections);
   }
 
-  conceptByIri(conceptIri: string): Concept | null {
+  conceptByIri(conceptIri: NamedNode): Concept | null {
     return this.modelByIri(this.conceptsByIriIndex, conceptIri);
   }
 
@@ -77,8 +75,8 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.concepts);
   }
 
-  eventByKey(eventKey: string): Event | null {
-    return this.modelByKey(this.eventsByKeyIndex, eventKey);
+  eventByIri(eventIri: NamedNode): Event | null {
+    return this.modelByIri(this.eventsByIriIndex, eventIri);
   }
 
   @Memoize()
@@ -87,11 +85,11 @@ export class MemModelSet implements ModelSet {
   }
 
   @Memoize()
-  private get eventsByKeyIndex(): {[index: string]: Event} {
-    return indexModelsByKey(this.events);
+  private get eventsByIriIndex(): {[index: string]: Event} {
+    return indexModelsByIri(this.events);
   }
 
-  imageByIri(imageIri: string): Image | null {
+  imageByIri(imageIri: NamedNode): Image | null {
     return this.modelByIri(this.imagesByIriIndex, imageIri);
   }
 
@@ -105,78 +103,55 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.images);
   }
 
-  licenseByIri(licenseIri: string): License | null {
+  licenseByIri(licenseIri: NamedNode): License | null {
     return this.modelByIri(this.licensesByIriIndex, licenseIri);
   }
 
   @Memoize()
-  private get licensesByIriIndex(): {[index: string]: License} {
-    return indexModelsByIri(this.namedLicenses);
+  private get licenses(): readonly License[] {
+    return sortModelsArray(this.modelReader.readLicenses({modelSet: this}));
   }
 
-  locationByIri(locationIri: string): Location | null {
+  @Memoize()
+  private get licensesByIriIndex(): {[index: string]: License} {
+    return indexModelsByIri(this.licenses);
+  }
+
+  locationByIri(locationIri: NamedNode): Location | null {
     return this.modelByIri(this.locationsByIriIndex, locationIri);
   }
 
   @Memoize()
+  private get locations(): readonly Location[] {
+    return sortModelsArray(this.modelReader.readLocations({modelSet: this}));
+  }
+
+  @Memoize()
   private get locationsByIriIndex(): {[index: string]: Location} {
-    return indexModelsByIri(this.namedLocations);
+    return indexModelsByIri(this.locations);
   }
 
   private modelByIri<ModelT>(
     index: {[index: string]: ModelT},
-    iri: string
+    iri: NamedNode
   ): ModelT | null {
-    return index[iri] ?? null;
+    return index[iri.value] ?? null;
   }
 
-  private modelByKey<ModelT>(
-    index: {[index: string]: ModelT},
-    key: string
-  ): ModelT | null {
-    return index[key] ?? null;
-  }
-
-  @Memoize()
-  private get namedLicenses(): readonly License[] {
-    return sortModelsArray(
-      this.modelReader.readNamedLicenses({modelSet: this})
-    );
-  }
-
-  @Memoize()
-  private get namedLocations(): readonly Location[] {
-    return sortModelsArray(
-      this.modelReader.readNamedLocations({modelSet: this})
-    );
-  }
-
-  @Memoize()
-  private get namedOrganizations(): readonly Organization[] {
-    return sortModelsArray(
-      this.modelReader.readNamedOrganizations({modelSet: this})
-    );
-  }
-
-  @Memoize()
-  private get namedPeople(): readonly Person[] {
-    return sortModelsArray(this.modelReader.readNamedPeople({modelSet: this}));
-  }
-
-  @Memoize()
-  private get namedRightsStatements(): readonly RightsStatement[] {
-    return sortModelsArray(
-      this.modelReader.readNamedRightsStatements({modelSet: this})
-    );
-  }
-
-  organizationByIri(organizationIri: string): Organization | null {
+  organizationByIri(organizationIri: NamedNode): Organization | null {
     return this.modelByIri(this.organizationsByIriIndex, organizationIri);
   }
 
   @Memoize()
+  private get organizations(): readonly Organization[] {
+    return sortModelsArray(
+      this.modelReader.readOrganizations({modelSet: this})
+    );
+  }
+
+  @Memoize()
   private get organizationsByIriIndex(): {[index: string]: Organization} {
-    return indexModelsByIri(this.namedOrganizations);
+    return indexModelsByIri(this.organizations);
   }
 
   partialDateTimeDescriptionByIri(
@@ -184,7 +159,7 @@ export class MemModelSet implements ModelSet {
   ): PartialDateTimeDescription | null {
     for (const rdfType of getNamedRdfTypes({
       dataset: parameters.dataset,
-      subject: parameters.identifier,
+      subject: parameters.iri,
     })) {
       if (rdfType.equals(time.DateTimeDescription)) {
         return new OwlTimePartialDateTimeDescription(parameters);
@@ -194,49 +169,17 @@ export class MemModelSet implements ModelSet {
   }
 
   @Memoize()
+  private get people(): readonly Person[] {
+    return sortModelsArray(this.modelReader.readPeople({modelSet: this}));
+  }
+
+  @Memoize()
   private get peopleByIriIndex(): {[index: string]: Person} {
-    return indexModelsByIri(this.namedPeople);
+    return indexModelsByIri(this.people);
   }
 
-  personByIri(personIri: string): Person | null {
+  personByIri(personIri: NamedNode): Person | null {
     return this.modelByIri(this.peopleByIriIndex, personIri);
-  }
-
-  preMemoize(): void {
-    const preMemoizeModels = (models: readonly Model[]): void => {
-      for (const model of models) {
-        model.preMemoize();
-      }
-    };
-
-    this.appConfiguration;
-    preMemoizeModels(this.collections);
-    this.collectionsByKeyIndex;
-    preMemoizeModels(this.concepts);
-    this.conceptsByIriIndex;
-    preMemoizeModels(this.events);
-    this.eventsByKeyIndex;
-    preMemoizeModels(this.images);
-    this.imagesByIriIndex;
-    this.licensesByIriIndex;
-    this.locationsByIriIndex;
-    preMemoizeModels(this.namedLicenses);
-    preMemoizeModels(this.namedLocations);
-    preMemoizeModels(this.namedOrganizations);
-    preMemoizeModels(this.namedPeople);
-    preMemoizeModels(this.namedRightsStatements);
-    this.organizationsByIriIndex;
-    this.peopleByIriIndex;
-    preMemoizeModels(this.properties);
-    this.propertiesByIriIndex;
-    preMemoizeModels(this.propertyGroups);
-    this.propertyGroupsByIriIndex;
-    this.propertyGroupsByPropertyKeyIndex;
-    this.rightsStatementsByIriIndex;
-    preMemoizeModels(this.works);
-    this.worksByAgentIriIndex;
-    this.worksByIriIndex;
-    this.worksByKeyIndex;
   }
 
   @Memoize()
@@ -249,11 +192,11 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.properties);
   }
 
-  propertyByIri(propertyIri: string): Property | null {
+  propertyByIri(propertyIri: NamedNode): Property | null {
     return this.modelByIri(this.propertiesByIriIndex, propertyIri);
   }
 
-  propertyGroupByIri(propertyGroupIri: string): PropertyGroup | null {
+  propertyGroupByIri(propertyGroupIri: NamedNode): PropertyGroup | null {
     return this.modelByIri(this.propertyGroupsByIriIndex, propertyGroupIri);
   }
 
@@ -269,34 +212,43 @@ export class MemModelSet implements ModelSet {
     return indexModelsByIri(this.propertyGroups);
   }
 
-  propertyGroupsByPropertyKey(propertyKey: string): readonly PropertyGroup[] {
-    return this.propertyGroupsByPropertyKeyIndex[propertyKey] ?? [];
+  propertyGroupsByPropertyIri(
+    propertyIri: NamedNode
+  ): readonly PropertyGroup[] {
+    return this.propertyGroupsByPropertyIriIndex[propertyIri.value] ?? [];
   }
 
   @Memoize()
-  private get propertyGroupsByPropertyKeyIndex(): {
+  private get propertyGroupsByPropertyIriIndex(): {
     [index: string]: readonly PropertyGroup[];
   } {
     return sortModelsMultimap(
       indexModelsByValues(this.propertyGroups, propertyGroup =>
-        propertyGroup.properties.map(property => property.key)
+        propertyGroup.properties.map(property => property.iri.value)
       )
     );
   }
 
-  rightsStatementByIri(rightsStatementIri: string): RightsStatement | null {
+  rightsStatementByIri(rightsStatementIri: NamedNode): RightsStatement | null {
     return this.modelByIri(this.rightsStatementsByIriIndex, rightsStatementIri);
   }
 
   @Memoize()
+  private get rightsStatements(): readonly RightsStatement[] {
+    return sortModelsArray(
+      this.modelReader.readRightsStatements({modelSet: this})
+    );
+  }
+
+  @Memoize()
   private get rightsStatementsByIriIndex(): {[index: string]: RightsStatement} {
-    return indexModelsByIri(this.namedRightsStatements);
+    return indexModelsByIri(this.rightsStatements);
   }
 
   textByIri(parameters: ResourceBackedModelParameters): Text | null {
     for (const rdfType of getNamedRdfTypes({
       dataset: parameters.dataset,
-      subject: parameters.identifier,
+      subject: parameters.iri,
     })) {
       if (rdfType.equals(schema.TextObject)) {
         return new SchemaTextObject(parameters);
@@ -313,12 +265,8 @@ export class MemModelSet implements ModelSet {
     throw new EvalError("use model.toRdf to serialize");
   }
 
-  workByIri(workIri: string): Work | null {
+  workByIri(workIri: NamedNode): Work | null {
     return this.modelByIri(this.worksByIriIndex, workIri);
-  }
-
-  workByKey(workKey: string): Work | null {
-    return this.modelByKey(this.worksByKeyIndex, workKey);
   }
 
   @Memoize()
@@ -326,8 +274,8 @@ export class MemModelSet implements ModelSet {
     return sortModelsArray(this.modelReader.readWorks({modelSet: this}));
   }
 
-  worksByAgentIri(agentIri: string): readonly Work[] {
-    return this.worksByAgentIriIndex[agentIri] ?? [];
+  worksByAgentIri(agentIri: NamedNode): readonly Work[] {
+    return this.worksByAgentIriIndex[agentIri.value] ?? [];
   }
 
   @Memoize()
@@ -336,7 +284,7 @@ export class MemModelSet implements ModelSet {
   } {
     return sortModelsMultimap(
       indexModelsByValues(this.works, work =>
-        work.agents.flatMap(agent => agent.agent.iris)
+        work.agents.map(agent => agent.agent.iri.value)
       )
     );
   }
@@ -344,10 +292,5 @@ export class MemModelSet implements ModelSet {
   @Memoize()
   private get worksByIriIndex(): {[index: string]: Work} {
     return indexModelsByIri(this.works);
-  }
-
-  @Memoize()
-  private get worksByKeyIndex(): {[index: string]: Work} {
-    return indexModelsByKey(this.works);
   }
 }

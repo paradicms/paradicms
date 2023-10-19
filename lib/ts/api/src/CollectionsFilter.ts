@@ -1,10 +1,10 @@
 import {Static, Union} from "runtypes";
 import {CollectionWorksExistenceFilter} from "./CollectionWorksExistenceFilter";
-import {KeyFilter} from "./KeyFilter";
+import {IriFilter} from "./IriFilter";
 
 export const CollectionsFilter = Union(
   CollectionWorksExistenceFilter,
-  KeyFilter
+  IriFilter
 );
 
 export type CollectionsFilter = Static<typeof CollectionsFilter>;

@@ -4,7 +4,6 @@ import {Mixin} from "ts-mixer";
 import {Memoize} from "typescript-memoize";
 import {Image} from "../Image";
 import {ImagesMixin} from "../ImagesMixin";
-import {ModelIdentifier} from "../ModelIdentifier";
 import {ResourceBackedModelMixin} from "../ResourceBackedModelMixin";
 import {SomeImageThumbnailMixin} from "../SomeImageThumbnailMixin";
 import {Text} from "../Text";
@@ -45,30 +44,6 @@ export abstract class SchemaThingMixin
     return this.findAndMapObject(schema.name, mapTermToString);
   }
 
-  protected preMemoizeThing(): void {
-    this.alternateNames;
-    this.description;
-    this.images;
-    this.name;
-    this.sameAsIdentifiers;
-    this.urls;
-    this.wikidataConceptIri;
-    this.wikipediaUrl;
-  }
-
-  @Memoize()
-  get sameAsIdentifiers(): readonly ModelIdentifier[] {
-    return this.filterAndMapObjects(schema.sameAs, term => {
-      switch (term.termType) {
-        case "BlankNode":
-        case "NamedNode":
-          return term as ModelIdentifier;
-        default:
-          return null;
-      }
-    });
-  }
-
   @Memoize()
   get urls(): readonly string[] {
     return this.filterAndMapObjects(schema.url, term =>
@@ -80,7 +55,7 @@ export abstract class SchemaThingMixin
   get wikidataConceptIri(): string | null {
     for (const p of [schema.sameAs, schema.url]) {
       const wikidataConceptIri = this.findAndMapObject(p, term =>
-        term.termType === "NamedNode" && isWikidataConceptIri(term.value)
+        term.termType === "NamedNode" && isWikidataConceptIri(term)
           ? term.value
           : null
       );

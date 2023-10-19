@@ -1,7 +1,7 @@
 import {expect} from "chai";
-import {Concept} from "../src";
 import {it} from "mocha";
-import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {Concept} from "../src";
+import {behavesLikeModel} from "./behavesLikeModel";
 
 export const behavesLikeConcept = (concept: Concept) => {
   it("should get the label", () => {
@@ -21,5 +21,5 @@ export const behavesLikeConcept = (concept: Concept) => {
       .not.be.null;
   });
 
-  behavesLikeNamedModel(concept);
+  behavesLikeModel(concept);
 };

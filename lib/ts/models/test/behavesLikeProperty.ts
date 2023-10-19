@@ -1,8 +1,8 @@
 import {expect} from "chai";
-import {testModelSet} from "./testModelSet";
-import {Property} from "../src";
 import {it} from "mocha";
-import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {Property} from "../src";
+import {behavesLikeModel} from "./behavesLikeModel";
+import {testModelSet} from "./testModelSet";
 
 export const behavesLikeProperty = (property: Property) => {
   const sut = testModelSet.properties.find(property => property.filterable)!;
@@ -19,5 +19,5 @@ export const behavesLikeProperty = (property: Property) => {
     expect(sut.rangeValues).to.not.be.empty;
   });
 
-  behavesLikeNamedModel(property);
+  behavesLikeModel(property);
 };

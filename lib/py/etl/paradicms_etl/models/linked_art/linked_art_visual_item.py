@@ -1,4 +1,5 @@
 from rdflib import Graph, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.linked_art.linked_art_digital_object import (
     LinkedArtDigitalObject,
@@ -33,3 +34,7 @@ class LinkedArtVisualItem(LinkedArtModel):
     @classmethod
     def rdf_type_uri(cls) -> URIRef:
         return CRM.E36_Visual_Item
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        # Don't try to curate the RDF
+        return super().to_rdf(graph)

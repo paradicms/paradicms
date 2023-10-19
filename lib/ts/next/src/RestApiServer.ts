@@ -24,9 +24,7 @@ export class RestApiServer {
   private constructor(private readonly api: Api) {}
 
   static async create(): Promise<RestApiServer> {
-    const api = await getStaticApi();
-    await api.primeCaches();
-    return new RestApiServer(api);
+    return new RestApiServer(await getStaticApi());
   }
 
   async getWorkAgents(
@@ -88,9 +86,9 @@ export class RestApiServer {
 
   // private sendGetModelKeysResult(
   //   res: NextApiResponse,
-  //   getModelKeysResult: GetModelKeysResult
+  //   getModelIrisResult: GetModelKeysResult
   // ): void {
-  //   res.status(200).json(getModelKeysResult);
+  //   res.status(200).json(getModelIrisResult);
   // }
 
   private async sendGetModelsResult(

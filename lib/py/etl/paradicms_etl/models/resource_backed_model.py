@@ -48,6 +48,10 @@ class ResourceBackedModel(Model):
                     # raise ValueError(
                     #     f"adding non-urn:uuid model {o.uri} to {self.__resource.identifier}'s graph"
                     # )
+                if o.to_rdf.__func__ is ResourceBackedModel.to_rdf:  # type: ignore
+                    raise ValueError(
+                        f"can't add a nested model (type: {type(o)}) that doesn't override to_rdf to curate itself out of a larger graph"
+                    )
                 self._resource.add(p, o.to_rdf(graph=self._resource.graph))
             elif isinstance(o, Node | Resource):
                 self._resource.add(p, o)

@@ -1,5 +1,6 @@
 import logging
-from typing import Any, Dict, Iterable, List, Optional, Set, Tuple, TypeVar, Union
+from collections.abc import Iterable
+from typing import TYPE_CHECKING, Any, TypeVar
 from urllib.parse import quote_plus
 
 import PIL
@@ -18,7 +19,6 @@ from paradicms_etl.models.creative_commons.creative_commons_licenses import (
 from paradicms_etl.models.dc.dc_license_document import DcLicenseDocument
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
-from paradicms_etl.models.license import License
 from paradicms_etl.models.property import Property
 from paradicms_etl.models.property_group import PropertyGroup
 from paradicms_etl.models.rights_mixin import RightsMixin
@@ -34,6 +34,9 @@ from paradicms_etl.models.schema.schema_text_object import SchemaTextObject
 from paradicms_etl.models.text import Text
 from paradicms_etl.models.work import Work
 from paradicms_etl.namespaces import COCO
+
+if TYPE_CHECKING:
+    from paradicms_etl.models.license import License
 
 _RightsMixinBuilderT = TypeVar("_RightsMixinBuilderT", bound=RightsMixin.Builder)
 
@@ -58,12 +61,12 @@ class CostumeCoreOntologyAirtableTransformer:
     def __init__(
         self,
         *,
-        ontology_version: Optional[str] = None,
+        ontology_version: str | None = None,
     ):
         self.__logger = logging.getLogger(__name__)
         self.__ontology_version = ontology_version
 
-        self.__available_licenses_by_uri: Dict[URIRef, License] = {}
+        self.__available_licenses_by_uri: dict[URIRef, License] = {}
         self.__available_licenses_by_uri.update(CreativeCommonsLicenses.by_uri())
         for license_ in (
             (
@@ -114,8 +117,8 @@ class CostumeCoreOntologyAirtableTransformer:
             RightsStatementsDotOrgRightsStatements.by_uri()
         )
         # Track which licenses and rights statements we want to yield as we see references to them
-        self.__referenced_license_uris: Set[URIRef] = set()
-        self.__referenced_rights_statement_uris: Set[URIRef] = set()
+        self.__referenced_license_uris: set[URIRef] = set()
+        self.__referenced_rights_statement_uris: set[URIRef] = set()
 
     @staticmethod
     def __feature_range_uri(feature_record) -> URIRef:
@@ -145,7 +148,7 @@ class CostumeCoreOntologyAirtableTransformer:
             )
         )
 
-    def __call__(self, *, base: Dict[str, Any], records_by_table: Dict[str, Tuple]) -> Iterable[Model]:  # type: ignore
+    def __call__(self, *, base: dict[str, Any], records_by_table: dict[str, tuple]) -> Iterable[Model]:  # type: ignore
         costume_core_ontology_builder = CostumeCoreOntology.builder()
         if self.__ontology_version is not None:
             costume_core_ontology_builder.set_version(self.__ontology_version)
@@ -176,7 +179,7 @@ class CostumeCoreOntologyAirtableTransformer:
         #     if "Nickname" in record["fields"]
         # )
         variant_term_records = tuple(records_by_table["AAT_variant_terms"])
-        variant_term_records_by_feature_value_id: Dict[str, List[Any]] = {}
+        variant_term_records_by_feature_value_id: dict[str, list[Any]] = {}
         for variant_term_record in variant_term_records:
             assert len(variant_term_record["fields"]["feature_values_id"]) == 1
             variant_term_records_by_feature_value_id.setdefault(
@@ -186,10 +189,10 @@ class CostumeCoreOntologyAirtableTransformer:
         # Track the outputs of various transformations to use in other transformatios
 
         # Feature values
-        costume_core_ontology_terms_by_feature: Dict[
-            str, List[CostumeCoreOntology.Term]
+        costume_core_ontology_terms_by_feature: dict[
+            str, list[CostumeCoreOntology.Term]
         ] = {}
-        works_by_feature_record_id: Dict[str, List[Work]] = {}
+        works_by_feature_record_id: dict[str, list[Work]] = {}
         for feature_value_record in feature_value_records:
             feature_value_record_fields = feature_value_record["fields"]
             feature_value_id = feature_value_record_fields["id"]
@@ -256,7 +259,7 @@ class CostumeCoreOntologyAirtableTransformer:
                         ).append(feature_value_model)
 
         # Features
-        properties_by_feature_record_id: Dict[str, Property] = {}
+        properties_by_feature_record_id: dict[str, Property] = {}
         for feature_record in feature_records:
             feature_record_fields = feature_record["fields"]
 
@@ -296,7 +299,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
         # Feature sets
         for feature_set_record in feature_set_records:
-            feature_set_properties: List[Property] = []
+            feature_set_properties: list[Property] = []
             for feature_set_feature_record_id in feature_set_record["fields"].get(
                 "features", []
             ):
@@ -333,8 +336,8 @@ class CostumeCoreOntologyAirtableTransformer:
             yield self.__available_rights_statements_by_uri[rights_statement_uri]
 
     def __transform_description_fields_to_text(
-        self, *, record_fields: Dict[str, Union[str, List[str], None]]
-    ) -> Optional[Text]:
+        self, *, record_fields: dict[str, str | list[str] | None]
+    ) -> Text | None:
         description_text_en = record_fields.get("description_text_en")
         if not description_text_en:
             return None
@@ -347,8 +350,8 @@ class CostumeCoreOntologyAirtableTransformer:
 
     @staticmethod
     def __transform_feature_record_to_collection(
-        feature_record, feature_works: Tuple[Work, ...]
-    ) -> Optional[Collection]:
+        feature_record, feature_works: tuple[Work, ...]
+    ) -> Collection | None:
         fields = feature_record["fields"]
         if not fields.get("feature_values_labels", []):
             # Don't yield Collections that won't have any associated Works
@@ -364,8 +367,8 @@ class CostumeCoreOntologyAirtableTransformer:
     @staticmethod
     def __transform_feature_record_to_costume_core_ontology_predicate(
         *,
-        costume_core_ontology_terms_by_feature: Dict[
-            str, List[CostumeCoreOntology.Term]
+        costume_core_ontology_terms_by_feature: dict[
+            str, list[CostumeCoreOntology.Term]
         ],
         feature_record,
     ) -> CostumeCoreOntology.Predicate:
@@ -382,7 +385,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_record_to_property(
         self, *, feature_image_records, feature_record
-    ) -> Iterable[Union[Image, Property]]:
+    ) -> Iterable[Image | Property]:
         fields = feature_record["fields"]
 
         feature_uri = URIRef(fields["URI"])
@@ -424,10 +427,10 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_set_record_to_property_group(
         self,
-        feature_set_properties: Tuple[Property, ...],
+        feature_set_properties: tuple[Property, ...],
         feature_set_record,
         image_records_by_id,
-    ) -> Iterable[Union[Image, PropertyGroup]]:
+    ) -> Iterable[Image | PropertyGroup]:
         feature_set_uri = self.__feature_set_uri(feature_set_record)
 
         property_group_builder = CmsPropertyGroup.builder(
@@ -463,7 +466,7 @@ class CostumeCoreOntologyAirtableTransformer:
         feature_value_image_records,
         feature_value_record,
         variant_term_records_by_feature_value_id,
-    ) -> Iterable[Union[Concept, Image]]:
+    ) -> Iterable[Concept | Image]:
         fields = feature_value_record["fields"]
         id_ = feature_value_record["id"]
 
@@ -548,7 +551,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_value_record_to_costume_core_ontology_term(
         self, *, feature_records, feature_value_record
-    ) -> Optional[CostumeCoreOntology.Term]:
+    ) -> CostumeCoreOntology.Term | None:
         fields = feature_value_record["fields"]
 
         description_text_en = fields.get("description_text_en")
@@ -591,7 +594,7 @@ class CostumeCoreOntologyAirtableTransformer:
 
     def __transform_feature_value_record_to_work(
         self, *, feature_value_image_records, feature_value_record
-    ) -> Iterable[Union[Image, Work]]:
+    ) -> Iterable[Image | Work]:
         fields = feature_value_record["fields"]
 
         work_builder = SchemaCreativeWork.builder(
@@ -680,9 +683,9 @@ class CostumeCoreOntologyAirtableTransformer:
 
     @staticmethod
     def __transform_rights_fields_to_costume_core_rights(
-        *, key_prefix: str, record_fields: Dict[str, Union[str, List[str], None]]
+        *, key_prefix: str, record_fields: dict[str, str | list[str] | None]
     ) -> CostumeCoreOntology.Rights:
-        def get_first_list_element(list_: Union[str, List[str], None]):
+        def get_first_list_element(list_: str | list[str] | None):
             if list_ is None:
                 return None
             if not isinstance(list_, list):
@@ -713,13 +716,13 @@ class CostumeCoreOntologyAirtableTransformer:
         *,
         key_prefix: str,
         model_builder: _RightsMixinBuilderT,
-        record_fields: Dict[str, Union[str, List[str], None]],
+        record_fields: dict[str, str | list[str] | None],
     ) -> _RightsMixinBuilderT:
         """
         Utility function to transform a prefixed subset of fields into a Rights model.
         """
 
-        def get_first_list_element(list_: Union[str, List[str], None]):
+        def get_first_list_element(list_: str | list[str] | None):
             if list_ is None:
                 return None
             if not isinstance(list_, list):
@@ -731,8 +734,8 @@ class CostumeCoreOntologyAirtableTransformer:
             get_first_list_element(record_fields.get(f"{key_prefix}_rights_author"))
         )
 
-        license_uri: Optional[URIRef] = None
-        rights_statement_uri: Optional[URIRef] = None
+        license_uri: URIRef | None = None
+        rights_statement_uri: URIRef | None = None
 
         license_uri_str = get_first_list_element(
             record_fields.get(f"{key_prefix}_rights_license")

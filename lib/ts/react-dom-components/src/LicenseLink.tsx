@@ -7,8 +7,12 @@ export const LicenseLink: React.FunctionComponent<{
   if (!license) {
     return null;
   }
-  if (license.iris.length !== 1) {
+  if (
+    license.iri.value.startsWith("http://") ||
+    license.iri.value.startsWith("https://")
+  ) {
+    return <a href={license.iri.value}>{license.label}</a>;
+  } else {
     return <span>{license.label}</span>;
   }
-  return <a href={license.iris[0]}>{license.label}</a>;
 };

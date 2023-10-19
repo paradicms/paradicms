@@ -1,7 +1,9 @@
+import {DataFactory} from "@paradicms/rdf";
+import {NamedNode} from "@rdfjs/types";
+import log from "loglevel";
 import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
-import log from "loglevel";
 
 export class CsvWorksheetStateExporter
   implements WorksheetStateExporter<string[][]> {
@@ -13,7 +15,10 @@ export class CsvWorksheetStateExporter
   ): string[][] {
     const rows: string[][] = [];
 
-    const featureHeader = (featureSetIri: string, featureIri: string) => {
+    const featureHeader = (
+      featureSetIri: NamedNode,
+      featureIri: NamedNode
+    ): string | undefined => {
       if (worksheetStates.length === 1) {
         const worksheetState = worksheetStates[0];
         if (
@@ -21,7 +26,7 @@ export class CsvWorksheetStateExporter
           worksheetState.featureSets.length === 1
         ) {
           // # 318: don't prefix CSV header names if there is only one feature set defined in all worksheets
-          return featureIri;
+          return featureIri.value;
         }
       }
 
@@ -32,7 +37,7 @@ export class CsvWorksheetStateExporter
         return undefined;
       }
       // const featureDefinition = worksheetDefinition.features.find((featureDefinition) => featureDefinition.id.equals(featureId))!;
-      return featureSetDefinition.label + "|" + featureIri;
+      return featureSetDefinition.label + "|" + featureIri.value;
     };
 
     const headerRow = ["id", "ctime", "mtime", "description", "workType"];
@@ -67,7 +72,7 @@ export class CsvWorksheetStateExporter
       for (const featureSetState of worksheetState.featureSets ?? []) {
         const featureSetDefinition = worksheetDefinition.featureSets.find(
           featureSetDefinition =>
-            featureSetDefinition.iri === featureSetState.uri
+            featureSetDefinition.iri.value === featureSetState.uri
         );
         if (featureSetDefinition) {
           workType.push(featureSetDefinition.label);
@@ -83,7 +88,10 @@ export class CsvWorksheetStateExporter
             continue;
           }
 
-          const header = featureHeader(featureSetState.uri, featureState.uri);
+          const header = featureHeader(
+            DataFactory.namedNode(featureSetState.uri),
+            DataFactory.namedNode(featureState.uri)
+          );
           if (!header) {
             log.warn(
               "feature set + feature not present in definition? skipping: " +
@@ -111,7 +119,7 @@ export class CsvWorksheetStateExporter
               continue;
             }
             const featureValueDefinition = worksheetDefinition.featureValueByIri(
-              featureValueState.uri
+              DataFactory.namedNode(featureValueState.uri)
             );
             if (!featureValueDefinition) {
               log.warn(

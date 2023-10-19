@@ -9,7 +9,7 @@ export const WorkAgentsCarousel: React.FunctionComponent<{
   <AgentsCarousel
     agents={workAgents.map(workAgent => ({
       homepage: workAgent.agent.homepage,
-      key: workAgent.agent.key,
+      iri: workAgent.agent.iri,
       label: workAgent.agent.label,
       role: workAgent.role,
       thumbnail: selector => workAgent.agent.thumbnail(selector),

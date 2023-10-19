@@ -1,4 +1,7 @@
+import {JsonAppConfiguration} from "@paradicms/models";
 import classnames from "classnames";
+import Link from "next/link";
+import {useRouter} from "next/router";
 import * as React from "react";
 import {Dispatch, ReactNode, useCallback, useState} from "react";
 import Hammer from "react-hammerjs";
@@ -21,9 +24,6 @@ import {Headline} from "~/components/Headline";
 import {WorksheetReducerAction} from "~/hooks/useWorksheet";
 import {Worksheet} from "~/models/Worksheet";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import {JsonAppConfiguration} from "@paradicms/models";
-import {useRouter} from "next/router";
-import Link from "next/link";
 
 export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithChildren<{
   configuration: JsonAppConfiguration | null;
@@ -91,8 +91,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
       <BreadcrumbItem active={!worksheet.currentFeature} key="feature-set-mark">
         <Link
           href={Hrefs.worksheetMark({
-            featureSetKey: worksheet.currentFeatureSet.key,
-            featureKey: null,
+            featureSetIri: worksheet.currentFeatureSet.iri.value,
+            featureIri: null,
             mode: worksheet.currentMark.mode,
             review: false,
             worksheetStateId: worksheet.stateId,
@@ -108,8 +108,8 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
       <BreadcrumbItem active={true} key="feature-mark">
         <Link
           href={Hrefs.worksheetMark({
-            featureSetKey: worksheet.currentFeatureSet!.key,
-            featureKey: worksheet.currentFeature.key,
+            featureSetIri: worksheet.currentFeatureSet!.iri.value,
+            featureIri: worksheet.currentFeature.iri.value,
             mode: worksheet.currentMark.mode,
             review: false,
             worksheetStateId: worksheet.stateId,

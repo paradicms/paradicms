@@ -13,7 +13,7 @@ export class WorksheetFeatureValue {
     this.selected = !!kwds.initialState?.selected;
   }
 
-  get iri(): string {
+  get iri() {
     return this.definition.iri;
   }
 
@@ -23,7 +23,7 @@ export class WorksheetFeatureValue {
 
   get state(): WorksheetFeatureValueState | undefined {
     return this.selected
-      ? {selected: this.selected, uri: this.definition.iri}
+      ? {selected: this.selected, uri: this.definition.iri.value}
       : undefined;
   }
 

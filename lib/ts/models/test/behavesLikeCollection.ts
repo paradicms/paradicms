@@ -1,7 +1,7 @@
-import {Collection, Text} from "../src";
-import {it} from "mocha";
 import {expect} from "chai";
-import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {it} from "mocha";
+import {Collection, Text} from "../src";
+import {behavesLikeModel} from "./behavesLikeModel";
 
 export const behavesLikeCollection = (collection: Collection) => {
   it("should get the collection's description", () => {
@@ -18,5 +18,5 @@ export const behavesLikeCollection = (collection: Collection) => {
     expect(collection.works).not.to.be.empty;
   });
 
-  behavesLikeNamedModel(collection);
+  behavesLikeModel(collection);
 };

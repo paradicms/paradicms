@@ -1,5 +1,4 @@
 import {Property} from "@paradicms/models";
-import invariant from "ts-invariant";
 import {Memoize} from "typescript-memoize";
 import {WorksheetFeatureValueDefinition} from "~/models/WorksheetFeatureValueDefinition";
 
@@ -15,12 +14,7 @@ export class WorksheetFeatureDefinition {
   }
 
   get iri() {
-    invariant(this.property.iris.length === 1, "property has multiple IRIs");
-    return this.property.iris[0];
-  }
-
-  get key() {
-    return this.property.key;
+    return this.property.iri;
   }
 
   get label() {

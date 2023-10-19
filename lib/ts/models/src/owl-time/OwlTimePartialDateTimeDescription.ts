@@ -1,11 +1,11 @@
-import { mapTermToNumber } from "@paradicms/rdf";
-import { time, xsd } from "@paradicms/vocabularies";
-import { Literal } from "@rdfjs/types";
-import { Mixin } from "ts-mixer";
-import { Memoize } from "typescript-memoize";
-import { PartialDateTimeDescription } from "../PartialDateTimeDescription";
-import { PartialDateTimeDescriptionLabelMixin } from "../PartialDateTimeDescriptionLabelMixin";
-import { ResourceBackedModel } from "../ResourceBackedModel";
+import {mapTermToNumber} from "@paradicms/rdf";
+import {time, xsd} from "@paradicms/vocabularies";
+import {Literal} from "@rdfjs/types";
+import {Mixin} from "ts-mixer";
+import {Memoize} from "typescript-memoize";
+import {PartialDateTimeDescription} from "../PartialDateTimeDescription";
+import {PartialDateTimeDescriptionLabelMixin} from "../PartialDateTimeDescriptionLabelMixin";
+import {ResourceBackedModel} from "../ResourceBackedModel";
 
 export class OwlTimePartialDateTimeDescription
   extends Mixin(ResourceBackedModel, PartialDateTimeDescriptionLabelMixin)
@@ -80,16 +80,6 @@ export class OwlTimePartialDateTimeDescription
         return null;
       }
     });
-  }
-
-  override preMemoize() {
-    super.preMemoize();
-    this.day;
-    this.hour;
-    this.minute;
-    this.month;
-    this.second;
-    this.year;
   }
 
   /**

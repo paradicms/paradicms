@@ -1,11 +1,9 @@
-import {DatasetCore} from "@rdfjs/types";
+import {DatasetCore, NamedNode} from "@rdfjs/types";
 import {ModelSet} from "./ModelSet";
-import {ModelIdentifier} from "./ModelIdentifier";
-import {ModelGraphIdentifier} from "./ModelGraphIdentifier";
 
 export interface ResourceBackedModelParameters {
   dataset: DatasetCore;
-  graph: ModelGraphIdentifier;
-  identifier: ModelIdentifier;
+  graph: NamedNode;
+  iri: NamedNode;
   modelSet: ModelSet;
 }
