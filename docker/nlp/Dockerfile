@@ -7,7 +7,7 @@ COPY ./lib/py/nlp /paradicms/lib/py/nlp
 
 # Install Python packages
 RUN cd /paradicms/lib/py/etl && pip3 install . && \
-    cd /paradicms/lib/py/ssg && pip3 install .
+    cd /paradicms/lib/py/nlp && pip3 install .
 
 # Download NLTK data
 RUN python -m nltk.downloader wordnet && python -m nltk.downloader omw && python -m nltk.downloader stopwords
