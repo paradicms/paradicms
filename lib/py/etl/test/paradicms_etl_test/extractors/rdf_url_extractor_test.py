@@ -1,9 +1,8 @@
 import os
 
 import pytest
-from rdflib import ConjunctiveGraph, Graph, URIRef
-
 from paradicms_etl.extractors.rdf_url_extractor import RdfUrlExtractor
+from rdflib import ConjunctiveGraph, URIRef
 
 
 @pytest.mark.skipif("CI" in os.environ, reason="don't connect to Wikidata in CI")

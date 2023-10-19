@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from rdflib import ConjunctiveGraph, Graph
+from rdflib import ConjunctiveGraph
 
 
 class RdfFileExtractor:
