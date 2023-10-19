@@ -6,21 +6,36 @@ on:
   workflow_dispatch:
 jobs:
   build-push-etl-docker-image:
-    name: Build and push ETL Docker image
+    name: Build and push etl Docker image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v1
+      - uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build etl Docker image
-        uses: docker/build-push-action@v2
+      - uses: docker/build-push-action@v2
         with:
           context: .
           file: ./docker/etl/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository_owner }}/etl:latest
+  build-push-ssg-docker-image:
+    name: Build and push ssg Docker image
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./docker/ssg/Dockerfile
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/ssg:latest
