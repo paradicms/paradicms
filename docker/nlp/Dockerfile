@@ -1,4 +1,5 @@
-FROM python:3.10-slim
+FROM python:3.10
+# Can't use -slim because we need gcc
 
 RUN apt-get update && apt-get install -y libpoppler-cpp-dev
 
