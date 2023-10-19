@@ -1,3 +1,13 @@
+import {PropertyGroupJoinSelector, PropertyJoinSelector} from "@paradicms/api";
+import {ModelSet} from "@paradicms/models";
+import {decodeFileName, encodeFileName, getStaticApi} from "@paradicms/next";
+import {
+  ModelSetJsonLdParser,
+  galleryThumbnailSelector,
+} from "@paradicms/react-dom-components";
+import {JsonLd} from "jsonld/jsonld-spec";
+import {GetStaticPaths, GetStaticProps} from "next";
+import {useRouter} from "next/router";
 import * as React from "react";
 import {useMemo} from "react";
 import {Hrefs} from "~/Hrefs";
@@ -5,24 +15,14 @@ import {GenericErrorHandler} from "~/components/GenericErrorHandler";
 import {MasterDetailContainer} from "~/components/MasterDetailContainer";
 import {Spinner} from "~/components/Spinner";
 import {WorksheetNavigationFrame} from "~/components/WorksheetNavigationFrame";
-import {useWorksheet} from "~/hooks/useWorksheet";
-import {WorksheetMode} from "~/models/WorksheetMode";
-import {decodeFileName, encodeFileName, getStaticApi} from "@paradicms/next";
-import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {GetStaticPaths, GetStaticProps} from "next";
-import {ModelSet} from "@paradicms/models";
 import {useRouteWorksheetMark} from "~/hooks/useRouteWorksheetMark";
-import {useRouter} from "next/router";
-import {
-  galleryThumbnailSelector,
-  ModelSetJsonLdParser,
-} from "@paradicms/react-dom-components";
-import {JsonLd} from "jsonld/jsonld-spec";
-import {PropertyGroupJoinSelector, PropertyJoinSelector} from "@paradicms/api";
+import {useWorksheet} from "~/hooks/useWorksheet";
+import {WorksheetDefinition} from "~/models/WorksheetDefinition";
+import {WorksheetMode} from "~/models/WorksheetMode";
 
 interface StaticProps {
-  readonly featureSetKey: string;
-  readonly featureKey: string;
+  readonly featureSetIri: string;
+  readonly featureIri: string;
   readonly modelSetJsonLd: JsonLd;
 }
 
@@ -30,14 +30,14 @@ const WorksheetFeatureEditPageImpl: React.FunctionComponent<Omit<
   StaticProps,
   "modelSetJsonLd"
 > & {readonly modelSet: ModelSet}> = ({
-  featureSetKey,
-  featureKey,
+  featureSetIri,
+  featureIri,
   modelSet,
 }) => {
   const configuration = modelSet.appConfiguration;
   const routeWorksheetMark = useRouteWorksheetMark({
-    featureSetKey,
-    featureKey,
+    featureSetIri,
+    featureIri,
     review: false,
   });
   const router = useRouter();
@@ -64,7 +64,7 @@ const WorksheetFeatureEditPageImpl: React.FunctionComponent<Omit<
     router.push(
       Hrefs.worksheetMark({
         ...worksheet.currentMark,
-        featureKey: null,
+        featureIri: null,
       })
     );
     return null;
@@ -137,13 +137,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
     ).modelSet
   );
 
-  const paths: {params: {featureSetKey: string; featureKey: string}}[] = [];
+  const paths: {params: {featureSetIri: string; featureIri: string}}[] = [];
   for (const featureSet of worksheetDefinition.featureSets) {
     for (const feature of featureSet.features) {
       paths.push({
         params: {
-          featureSetKey: encodeFileName(featureSet.key),
-          featureKey: encodeFileName(feature.key),
+          featureSetIri: encodeFileName(featureSet.iri.value),
+          featureIri: encodeFileName(feature.iri.value),
         },
       });
     }
@@ -162,14 +162,14 @@ export const getStaticProps: GetStaticProps = async ({
 }): Promise<{
   props: StaticProps;
 }> => {
-  const featureSetKey = decodeFileName(params!.featureSetKey as string);
-  const featureKey = decodeFileName(params!.featureKey as string);
+  const featureSetIri = decodeFileName(params!.featureSetIri as string);
+  const featureIri = decodeFileName(params!.featureIri as string);
 
   const api = await getStaticApi();
 
   // Get feature values for the feature we're editing
   const thisFeatureJoinSelector: {[index: string]: PropertyJoinSelector} = {};
-  thisFeatureJoinSelector[featureKey] = {
+  thisFeatureJoinSelector[featureIri] = {
     rangeValues: {
       thumbnail: galleryThumbnailSelector,
     },
@@ -180,9 +180,9 @@ export const getStaticProps: GetStaticProps = async ({
   const thisFeatureSetJoinSelector: {
     [index: string]: PropertyGroupJoinSelector;
   } = {};
-  thisFeatureSetJoinSelector[featureSetKey] = {
+  thisFeatureSetJoinSelector[featureSetIri] = {
     properties: {rangeValues: {}},
-    propertiesByKey: thisFeatureJoinSelector,
+    propertiesByIri: thisFeatureJoinSelector,
   };
 
   // Only get features in feature sets we're not editing/reviewing
@@ -194,14 +194,14 @@ export const getStaticProps: GetStaticProps = async ({
   const modelSet = (
     await api.getPropertyGroups({
       joinSelector: otherFeatureSetsJoinSelector,
-      joinSelectorByKey: thisFeatureSetJoinSelector,
+      joinSelectorByIri: thisFeatureSetJoinSelector,
     })
   ).modelSet;
 
   return {
     props: {
-      featureSetKey,
-      featureKey,
+      featureSetIri,
+      featureIri,
       modelSetJsonLd: await modelSet.toJsonLd(),
     },
   };

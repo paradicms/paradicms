@@ -11,10 +11,10 @@ const isEqual = (
   leftMark: WorksheetMark,
   rightMark: WorksheetMark
 ): boolean => {
-  if (leftMark.featureSetKey !== rightMark.featureSetKey) {
+  if (leftMark.featureSetIri !== rightMark.featureSetIri) {
     return false;
   }
-  if (leftMark.featureKey !== rightMark.featureKey) {
+  if (leftMark.featureIri !== rightMark.featureIri) {
     return false;
   }
   if (leftMark.review !== rightMark.review) {
@@ -78,21 +78,21 @@ export class Worksheet {
   }
 
   get currentFeature(): WorksheetFeature | undefined {
-    if (!this.currentMark.featureKey) {
+    if (!this.currentMark.featureIri) {
       return undefined;
     }
     const currentFeatureSet = this.currentFeatureSet;
     if (!currentFeatureSet) {
       return undefined;
     }
-    return currentFeatureSet.featureByIri(this.currentMark.featureKey);
+    return currentFeatureSet.featureByIri(this.currentMark.featureIri);
   }
 
   get currentFeatureSet(): WorksheetFeatureSet | undefined {
-    if (!this.currentMark.featureSetKey) {
+    if (!this.currentMark.featureSetIri) {
       return undefined;
     }
-    return this.featureSetsByKey[this.currentMark.featureSetKey];
+    return this.featureSetsByKey[this.currentMark.featureSetIri];
   }
 
   get currentMarkIndex(): number {
@@ -142,8 +142,8 @@ export class Worksheet {
     // First state, always the worksheet start
     const worksheetStateId = state.id;
     marks.push({
-      featureSetKey: null,
-      featureKey: null,
+      featureSetIri: null,
+      featureIri: null,
       review: false,
       mode: this.currentMark.mode,
       worksheetStateId,
@@ -160,8 +160,8 @@ export class Worksheet {
 
         // Feature set start
         marks.push({
-          featureKey: null,
-          featureSetKey: featureSet.key,
+          featureIri: null,
+          featureSetIri: featureSet.key,
           review: false,
           mode: this.currentMark.mode,
           worksheetStateId,
@@ -171,8 +171,8 @@ export class Worksheet {
           for (const feature of featureSet.features) {
             // Feature start is the same as review
             marks.push({
-              featureKey: feature.key,
-              featureSetKey: featureSet.key,
+              featureIri: feature.key,
+              featureSetIri: featureSet.key,
               review: false,
               mode: this.currentMark.mode,
               worksheetStateId,
@@ -181,8 +181,8 @@ export class Worksheet {
 
           // Feature set review
           marks.push({
-            featureSetKey: featureSet.key,
-            featureKey: null,
+            featureSetIri: featureSet.key,
+            featureIri: null,
             review: true,
             mode: this.currentMark.mode,
             worksheetStateId,
@@ -193,8 +193,8 @@ export class Worksheet {
 
     // Worksheet review, always the last state
     marks.push({
-      featureSetKey: null,
-      featureKey: null,
+      featureSetIri: null,
+      featureIri: null,
       review: true,
       mode: this.currentMark.mode,
       worksheetStateId,

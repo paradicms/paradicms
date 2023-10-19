@@ -1,6 +1,6 @@
-import {WorksheetMark} from "~/models/WorksheetMark";
 import {encodeFileName} from "@paradicms/next";
 import qs from "qs";
+import {WorksheetMark} from "~/models/WorksheetMark";
 import {WorksheetMode} from "~/models/WorksheetMode";
 
 export class Hrefs {
@@ -34,10 +34,10 @@ export class Hrefs {
 
   static worksheetMark(mark: WorksheetMark) {
     let href = "/worksheet/";
-    if (mark.featureSetKey) {
-      href += "featureSet/" + encodeFileName(mark.featureSetKey) + "/";
-      if (mark.featureKey) {
-        href += "feature/" + encodeFileName(mark.featureKey) + "/";
+    if (mark.featureSetIri) {
+      href += "featureSet/" + encodeFileName(mark.featureSetIri) + "/";
+      if (mark.featureIri) {
+        href += "feature/" + encodeFileName(mark.featureIri) + "/";
       }
     }
     href += mark.review ? "review" : "edit";

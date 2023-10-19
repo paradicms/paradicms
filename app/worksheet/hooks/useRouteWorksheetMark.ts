@@ -1,11 +1,11 @@
+import log from "loglevel";
 import {StringParam, useQueryParam} from "use-query-params";
 import {WorksheetMark} from "~/models/WorksheetMark";
 import {WorksheetMode} from "~/models/WorksheetMode";
-import log from "loglevel";
 
 export const useRouteWorksheetMark = (kwds: {
-  featureSetKey?: string;
-  featureKey?: string;
+  featureSetIri?: string;
+  featureIri?: string;
   review: boolean;
 }): WorksheetMark | null => {
   if (typeof window === "undefined") {
@@ -14,7 +14,7 @@ export const useRouteWorksheetMark = (kwds: {
   }
   // log.info("window is defined");
 
-  const {featureSetKey, featureKey, review} = kwds;
+  const {featureSetIri, featureIri, review} = kwds;
 
   const [modeString] = useQueryParam<string | null | undefined>(
     "mode",
@@ -44,8 +44,8 @@ export const useRouteWorksheetMark = (kwds: {
 
   return {
     mode,
-    featureSetKey: featureSetKey ?? null,
-    featureKey: featureKey ?? null,
+    featureSetIri: featureSetIri ?? null,
+    featureIri: featureIri ?? null,
     review: review,
     worksheetStateId,
   };
