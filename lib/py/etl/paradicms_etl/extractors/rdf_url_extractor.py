@@ -21,8 +21,10 @@ class RdfUrlExtractor:
 
     def __call__(self, *, force: bool, **kwds):
         return RdfFileExtractor(
-            rdf_file_path=self.__file_cache.get_file(
-                self.__rdf_url,
-                force_download=force,
+            rdf_file_paths=(
+                self.__file_cache.get_file(
+                    self.__rdf_url,
+                    force_download=force,
+                ),
             )
         )()

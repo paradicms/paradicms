@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TypeVar
 from urllib.parse import urlparse
 
-from rdflib import OWL, Graph, URIRef
+from rdflib import OWL, ConjunctiveGraph, Graph, URIRef
 
 from paradicms_etl.deduplicator import Deduplicator
 from paradicms_etl.extractors.rdf_url_extractor import RdfUrlExtractor
@@ -180,10 +180,15 @@ class WikidataEnricher:
         if cached_wikidata_entity_graph is not None:
             return cached_wikidata_entity_graph
 
-        graph = RdfUrlExtractor(
+        conjunctive_graph: ConjunctiveGraph = RdfUrlExtractor(
             cache_dir_path=self.__cache_dir_path,
             rdf_url=URIRef(str(wikidata_entity_uri) + ".ttl"),
-        )(force=False)["graph"]
+        )(force=False)["conjunctive_graph"]
+        conjunctive_graph_contexts: tuple[Graph, ...] = tuple(
+            conjunctive_graph.contexts()
+        )
+        assert len(conjunctive_graph_contexts) == 1
+        graph = conjunctive_graph_contexts[0]
         wikidata_entity_graph = self.__cached_wikidata_entity_graphs_by_uri[
             wikidata_entity_uri
         ] = self.__WikidataEntityGraph(

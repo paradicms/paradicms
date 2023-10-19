@@ -1,7 +1,7 @@
 import os
 
 import pytest
-from rdflib import URIRef, Graph, ConjunctiveGraph
+from rdflib import ConjunctiveGraph, Graph, URIRef
 
 from paradicms_etl.extractors.rdf_url_extractor import RdfUrlExtractor
 
@@ -14,7 +14,8 @@ def test_extract(tmp_path):
     )
     extract_result = sut(force=False)
     assert len(extract_result) == 1
-    graph = extract_result["graph"]
-    assert isinstance(graph, Graph)
-    assert not isinstance(graph, ConjunctiveGraph)
-    assert len(graph)
+    conjunctive_graph = extract_result["conjunctive_graph"]
+    assert isinstance(conjunctive_graph, ConjunctiveGraph)
+    contexts = tuple(conjunctive_graph.contexts())
+    assert len(contexts) == 1
+    assert len(contexts[0])

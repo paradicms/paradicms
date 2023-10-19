@@ -22,7 +22,9 @@ def test_transform(
     root_model_classes_by_name["PropertyGroup"] = CmsPropertyGroup
     for transformed_model in RdfConjunctiveGraphTransformer(
         root_model_classes_by_name=root_model_classes_by_name
-    )(**RdfFileExtractor(rdf_file_path=synthetic_data_rdf_file_path)()):
+    )(
+        **RdfFileExtractor(rdf_file_paths=(synthetic_data_rdf_file_path,))()  # type: ignore
+    ):
         synthetic_data_model = remaining_synthetic_data_models_by_uri.pop(
             transformed_model.uri
         )

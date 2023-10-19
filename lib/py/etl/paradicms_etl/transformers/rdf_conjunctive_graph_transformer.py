@@ -41,8 +41,8 @@ class RdfConjunctiveGraphTransformer:
                 root_model_class.rdf_type_uri()
             ] = root_model_class
 
-    def __call__(self, *, graph: ConjunctiveGraph) -> Iterable[Model]:
-        for graph_context in graph.contexts():
+    def __call__(self, *, conjunctive_graph: ConjunctiveGraph) -> Iterable[Model]:
+        for graph_context in conjunctive_graph.contexts():
             root_model_rdf_types = tuple(
                 graph_context.objects(graph_context.identifier, RDF.type)
             )
