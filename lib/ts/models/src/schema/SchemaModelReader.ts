@@ -41,15 +41,15 @@ export class SchemaModelReader extends DatasetModelReader {
         return this.readModels<Image>({class_: schema.ImageObject, factory: SchemaImageObject, modelSet: kwds.modelSet})
     }
 
-    override readNamedLocations(kwds: { modelSet: ModelSet }): readonly Location[] {
+    override readLocations(kwds: { modelSet: ModelSet }): readonly Location[] {
         return this.readModels<Location>({class_: schema.Place, factory: SchemaPlace, modelSet: kwds.modelSet})
     }
 
-    override readNamedOrganizations(kwds: { modelSet: ModelSet }): readonly Organization[] {
+    override readOrganizations(kwds: { modelSet: ModelSet }): readonly Organization[] {
         return this.readModels<Organization>({class_: schema.Organization, factory: SchemaOrganization, modelSet: kwds.modelSet})
     }
 
-    override readNamedPeople(kwds: { modelSet: ModelSet }): readonly Person[] {
+    override readPeople(kwds: { modelSet: ModelSet }): readonly Person[] {
         return this.readModels<Person>({class_: schema.Person, factory: SchemaPerson, modelSet: kwds.modelSet})
     }
 

@@ -5,6 +5,7 @@ import {
   getAbsoluteImageSrc,
   getStaticApi,
 } from "@paradicms/next";
+import {DataFactory} from "@paradicms/rdf";
 import {
   EventPage as DelegateEventPage,
   ModelSetJsonLdParser,
@@ -38,7 +39,9 @@ const EventPageImpl: React.FunctionComponent<Omit<
   "modelSetJsonLd"
 > & {readonly modelSet: ModelSet}> = ({eventIri, modelSet}) => {
   const configuration = modelSet.appConfiguration;
-  const event: Event = requireNonNull(modelSet.eventByIri(eventIri));
+  const event: Event = requireNonNull(
+    modelSet.eventByIri(DataFactory.namedNode(eventIri))
+  );
   const router = useRouter();
 
   return (

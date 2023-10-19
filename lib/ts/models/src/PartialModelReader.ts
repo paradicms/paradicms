@@ -1,17 +1,17 @@
-import {ModelReader} from "./ModelReader";
 import {AppConfiguration} from "./AppConfiguration";
-import {ModelSet} from "./ModelSet";
 import {Collection} from "./Collection";
 import {Concept} from "./Concept";
 import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
+import {ModelReader} from "./ModelReader";
+import {ModelSet} from "./ModelSet";
 import {Organization} from "./Organization";
 import {Person} from "./Person";
-import {RightsStatement} from "./RightsStatement";
 import {Property} from "./Property";
 import {PropertyGroup} from "./PropertyGroup";
+import {RightsStatement} from "./RightsStatement";
 import {Work} from "./Work";
 
 /**
@@ -38,25 +38,23 @@ export class PartialModelReader implements ModelReader {
     return [];
   }
 
-  readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
+  readLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
     return [];
   }
 
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
+  readLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
     return [];
   }
 
-  readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
+  readOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
     return [];
   }
 
-  readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
+  readPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
     return [];
   }
 
-  readNamedRightsStatements(kwds: {
-    modelSet: ModelSet;
-  }): readonly RightsStatement[] {
+  readRightsStatements(kwds: {modelSet: ModelSet}): readonly RightsStatement[] {
     return [];
   }
 

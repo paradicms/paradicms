@@ -108,8 +108,13 @@ export class MemModelSet implements ModelSet {
   }
 
   @Memoize()
+  private get licenses(): readonly License[] {
+    return sortModelsArray(this.modelReader.readLicenses({modelSet: this}));
+  }
+
+  @Memoize()
   private get licensesByIriIndex(): {[index: string]: License} {
-    return indexModelsByIri(this.namedLicenses);
+    return indexModelsByIri(this.licenses);
   }
 
   locationByIri(locationIri: NamedNode): Location | null {
@@ -117,8 +122,13 @@ export class MemModelSet implements ModelSet {
   }
 
   @Memoize()
+  private get locations(): readonly Location[] {
+    return sortModelsArray(this.modelReader.readLocations({modelSet: this}));
+  }
+
+  @Memoize()
   private get locationsByIriIndex(): {[index: string]: Location} {
-    return indexModelsByIri(this.namedLocations);
+    return indexModelsByIri(this.locations);
   }
 
   private modelByIri<ModelT>(
@@ -128,46 +138,20 @@ export class MemModelSet implements ModelSet {
     return index[iri.value] ?? null;
   }
 
-  @Memoize()
-  private get namedLicenses(): readonly License[] {
-    return sortModelsArray(
-      this.modelReader.readNamedLicenses({modelSet: this})
-    );
-  }
-
-  @Memoize()
-  private get namedLocations(): readonly Location[] {
-    return sortModelsArray(
-      this.modelReader.readNamedLocations({modelSet: this})
-    );
-  }
-
-  @Memoize()
-  private get namedOrganizations(): readonly Organization[] {
-    return sortModelsArray(
-      this.modelReader.readNamedOrganizations({modelSet: this})
-    );
-  }
-
-  @Memoize()
-  private get namedPeople(): readonly Person[] {
-    return sortModelsArray(this.modelReader.readNamedPeople({modelSet: this}));
-  }
-
-  @Memoize()
-  private get namedRightsStatements(): readonly RightsStatement[] {
-    return sortModelsArray(
-      this.modelReader.readNamedRightsStatements({modelSet: this})
-    );
-  }
-
   organizationByIri(organizationIri: NamedNode): Organization | null {
     return this.modelByIri(this.organizationsByIriIndex, organizationIri);
   }
 
   @Memoize()
+  private get organizations(): readonly Organization[] {
+    return sortModelsArray(
+      this.modelReader.readOrganizations({modelSet: this})
+    );
+  }
+
+  @Memoize()
   private get organizationsByIriIndex(): {[index: string]: Organization} {
-    return indexModelsByIri(this.namedOrganizations);
+    return indexModelsByIri(this.organizations);
   }
 
   partialDateTimeDescriptionByIri(
@@ -185,8 +169,13 @@ export class MemModelSet implements ModelSet {
   }
 
   @Memoize()
+  private get people(): readonly Person[] {
+    return sortModelsArray(this.modelReader.readPeople({modelSet: this}));
+  }
+
+  @Memoize()
   private get peopleByIriIndex(): {[index: string]: Person} {
-    return indexModelsByIri(this.namedPeople);
+    return indexModelsByIri(this.people);
   }
 
   personByIri(personIri: NamedNode): Person | null {
@@ -245,8 +234,15 @@ export class MemModelSet implements ModelSet {
   }
 
   @Memoize()
+  private get rightsStatements(): readonly RightsStatement[] {
+    return sortModelsArray(
+      this.modelReader.readRightsStatements({modelSet: this})
+    );
+  }
+
+  @Memoize()
   private get rightsStatementsByIriIndex(): {[index: string]: RightsStatement} {
-    return indexModelsByIri(this.namedRightsStatements);
+    return indexModelsByIri(this.rightsStatements);
   }
 
   textByIri(parameters: ResourceBackedModelParameters): Text | null {

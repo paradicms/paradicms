@@ -1,5 +1,5 @@
 import {ModelSet} from "@paradicms/models";
-import {getRdfInstanceQuads} from "@paradicms/rdf";
+import {DataFactory, getRdfInstanceQuads} from "@paradicms/rdf";
 import {requireNonNull} from "@paradicms/utilities";
 import {dcterms, schema} from "@paradicms/vocabularies";
 import {NamedNode} from "@rdfjs/types";
@@ -165,7 +165,9 @@ describe("ModelSetBuilder", () => {
     const workModelSet = sut
       .addWork(
         requireNonNull(
-          completeModelSet.workByIri("http://example.com/collection0/work0")
+          completeModelSet.workByIri(
+            DataFactory.namedNode("http://example.com/collection0/work0")
+          )
         ),
         {
           agents: {
@@ -206,7 +208,9 @@ describe("ModelSetBuilder", () => {
     // );
     expectModelsDeepEq(workModelSet.works, [
       requireNonNull(
-        completeModelSet.workByIri("http://example.com/collection0/work0")
+        completeModelSet.workByIri(
+          DataFactory.namedNode("http://example.com/collection0/work0")
+        )
       ),
     ]);
     const subsetWork = workModelSet.works[0];
@@ -221,7 +225,7 @@ describe("ModelSetBuilder", () => {
     );
     expect(agentThumbnails).to.have.length(2);
 
-    expect(workModelSet.concepts).to.have.length(17);
+    expect(workModelSet.concepts).to.have.length(3);
 
     expect(subsetWork.description!.licenses).not.to.be.empty;
     expect(modelSetLicenseIris(workModelSet)).to.have.length(3);
@@ -248,7 +252,6 @@ describe("ModelSetBuilder", () => {
     );
 
     if (subsetWork.location) {
-      expect(subsetWork.location!.location.iris).to.not.be.empty;
       expect(subsetWork.location!.location.centroid!.latitude).not.to.be
         .undefined;
       expect(subsetWork.location!.location.centroid!.latitude).not.to.eq(0);

@@ -3,7 +3,7 @@ import {expect} from "chai";
 import {it} from "mocha";
 import {Text, Work, WorkCreationEvent} from "../src";
 import {behavesLikeImagesMixin} from "./behavesLikeImagesMixin";
-import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {behavesLikeModel} from "./behavesLikeModel";
 import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
 import {behavesLikeThumbnailMixin} from "./behavesLikeThumbnailMixin";
 
@@ -51,7 +51,7 @@ export const behavesLikeWork = (
 
   it("should get the work's property values (literal)", () => {
     const propertyValues = work.propertyValuesByPropertyIri(
-      options.literalProperty.value
+      options.literalProperty
     );
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
@@ -60,7 +60,7 @@ export const behavesLikeWork = (
 
   it("should get the work's property values (named)", () => {
     const propertyValues = work.propertyValuesByPropertyIri(
-      options.namedProperty.value
+      options.namedProperty
     );
     expect(propertyValues).to.have.length(2);
     // const propertyValue = propertyValues[0];
@@ -71,7 +71,7 @@ export const behavesLikeWork = (
 
   it("should get the work's property values (Text)", () => {
     const propertyValues = work.propertyValuesByPropertyIri(
-      options.textProperty.value
+      options.textProperty
     );
     expect(propertyValues).to.have.length(1);
     const propertyValue = propertyValues[0];
@@ -85,7 +85,7 @@ export const behavesLikeWork = (
     }
   });
 
-  behavesLikeNamedModel(work);
+  behavesLikeModel(work);
   behavesLikeImagesMixin(work);
   behavesLikeThumbnailMixin(work);
 };

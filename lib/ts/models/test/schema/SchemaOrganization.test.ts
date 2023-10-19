@@ -1,13 +1,16 @@
-import {describe} from "mocha";
-import {behavesLikeOrganization} from "../behavesLikeOrganization";
+import {DataFactory} from "@paradicms/rdf";
 import {requireNonNull} from "@paradicms/utilities";
 import {expect} from "chai";
-import {testModelSet} from "../testModelSet";
+import {describe} from "mocha";
 import {SchemaOrganization} from "../../src/schema/SchemaOrganization";
+import {behavesLikeOrganization} from "../behavesLikeOrganization";
+import {testModelSet} from "../testModelSet";
 
 describe("SchemaOrganization", () => {
   const organization = requireNonNull(
-    testModelSet.organizationByIri("http://example.com/organization3")
+    testModelSet.organizationByIri(
+      DataFactory.namedNode("http://example.com/organization3")
+    )
   );
 
   before(() => {

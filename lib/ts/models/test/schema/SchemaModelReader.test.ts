@@ -1,8 +1,8 @@
 import {syntheticData} from "@paradicms/test";
 import {expect} from "chai";
-import {dummyModelSet} from "../dummyModelSet";
 import {describe} from "mocha";
 import {SchemaModelReader} from "../../src/schema/SchemaModelReader";
+import {dummyModelSet} from "../dummyModelSet";
 
 describe("SchemaModelReader", () => {
   const sut = new SchemaModelReader(syntheticData);
@@ -24,16 +24,15 @@ describe("SchemaModelReader", () => {
   });
 
   it("should read at least one Location", () => {
-    expect(sut.readNamedLocations({modelSet: dummyModelSet})).not.to.be.empty;
+    expect(sut.readLocations({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
   it("should read at least one Organization", () => {
-    expect(sut.readNamedOrganizations({modelSet: dummyModelSet})).not.to.be
-      .empty;
+    expect(sut.readOrganizations({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
   it("should read at least one Person", () => {
-    expect(sut.readNamedPeople({modelSet: dummyModelSet})).not.to.be.empty;
+    expect(sut.readPeople({modelSet: dummyModelSet})).not.to.be.empty;
   });
 
   it("should read at least one Property", () => {

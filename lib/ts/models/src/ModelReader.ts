@@ -19,13 +19,11 @@ export interface ModelReader {
   readConcepts(kwds: {modelSet: ModelSet}): readonly Concept[];
   readEvents(kwds: {modelSet: ModelSet}): readonly Event[];
   readImages(kwds: {modelSet: ModelSet}): readonly Image[];
-  readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[];
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[];
-  readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[];
-  readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[];
-  readNamedRightsStatements(kwds: {
-    modelSet: ModelSet;
-  }): readonly RightsStatement[];
+  readLicenses(kwds: {modelSet: ModelSet}): readonly License[];
+  readLocations(kwds: {modelSet: ModelSet}): readonly Location[];
+  readOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[];
+  readPeople(kwds: {modelSet: ModelSet}): readonly Person[];
+  readRightsStatements(kwds: {modelSet: ModelSet}): readonly RightsStatement[];
   readProperties(kwds: {modelSet: ModelSet}): readonly Property[];
   readPropertyGroups(kwds: {modelSet: ModelSet}): readonly PropertyGroup[];
   readWorks(kwds: {modelSet: ModelSet}): readonly Work[];

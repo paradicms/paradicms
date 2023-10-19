@@ -1,7 +1,7 @@
 import {expect} from "chai";
-import {Image, ImageDimensions, imagePlaceholderSrc} from "../src";
 import {it} from "mocha";
-import {behavesLikeNamedModel} from "./behavesLikeNamedModel";
+import {Image, ImageDimensions, imagePlaceholderSrc} from "../src";
+import {behavesLikeModel} from "./behavesLikeModel";
 import {behavesLikeRightsMixin} from "./behavesLikeRightsMixin";
 
 export const behavesLikeOriginalImage = (image: Image) => {
@@ -56,7 +56,7 @@ export const behavesLikeOriginalImage = (image: Image) => {
       .true;
   });
 
-  behavesLikeNamedModel(image);
+  behavesLikeModel(image);
   behavesLikeRightsMixin(image, {
     requireLicense: true,
     requireRightsHolders: true,

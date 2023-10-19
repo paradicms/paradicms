@@ -98,9 +98,6 @@ export const dummyModelSet: ModelSet = {
   workByIri(workIri: NamedNode): Work | null {
     throw new EvalError("not implemented");
   },
-  workByIri(workIri: NamedNode): Work | null {
-    throw new EvalError("not implemented");
-  },
   get works(): readonly Work[] {
     throw new EvalError("not implemented");
   },

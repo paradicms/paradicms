@@ -341,8 +341,8 @@ export const behavesLikeApi = (api: Api) => {
       query: {
         filters: [
           {
-            label: "Publisher",
-            propertyIri: dcterms.publisher.value,
+            label: "Subject",
+            propertyIri: dcterms.subject.value,
             type: "StringPropertyValue",
           },
           {

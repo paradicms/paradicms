@@ -105,6 +105,18 @@ class SyntheticDataPipeline(Pipeline):
                 label="Schema Subject",
                 uri=SDO.about,
             ),
+            # One searchable Text schema property
+            __Property(
+                label="Schema Description",
+                searchable=True,
+                uri=SDO.description,
+            ),
+            # One searchable literal schema property
+            __Property(
+                label="Schema Name",
+                searchable=True,
+                uri=SDO.name,
+            ),
         )
 
         def __init__(  # noqa: PLR0913

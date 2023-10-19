@@ -5,14 +5,14 @@ import {Event} from "./Event";
 import {Image} from "./Image";
 import {License} from "./License";
 import {Location} from "./Location";
-import {Organization} from "./Organization";
-import {Person} from "./Person";
-import {RightsStatement} from "./RightsStatement";
-import {Property} from "./Property";
-import {PropertyGroup} from "./PropertyGroup";
-import {Work} from "./Work";
 import {ModelReader} from "./ModelReader";
 import {ModelSet} from "./ModelSet";
+import {Organization} from "./Organization";
+import {Person} from "./Person";
+import {Property} from "./Property";
+import {PropertyGroup} from "./PropertyGroup";
+import {RightsStatement} from "./RightsStatement";
+import {Work} from "./Work";
 
 /**
  * ModelReader implementation that simply concatenates the outputs of other ModelReader implementations.
@@ -54,35 +54,33 @@ export class ConcatenatingModelReader implements ModelReader {
     );
   }
 
-  readNamedLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
+  readLicenses(kwds: {modelSet: ModelSet}): readonly License[] {
     return this.modelReaders.flatMap(modelReader =>
-      modelReader.readNamedLicenses(kwds)
+      modelReader.readLicenses(kwds)
     );
   }
 
-  readNamedLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
+  readLocations(kwds: {modelSet: ModelSet}): readonly Location[] {
     return this.modelReaders.flatMap(modelReader =>
-      modelReader.readNamedLocations(kwds)
+      modelReader.readLocations(kwds)
     );
   }
 
-  readNamedOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
+  readOrganizations(kwds: {modelSet: ModelSet}): readonly Organization[] {
     return this.modelReaders.flatMap(modelReader =>
-      modelReader.readNamedOrganizations(kwds)
+      modelReader.readOrganizations(kwds)
     );
   }
 
-  readNamedPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
+  readPeople(kwds: {modelSet: ModelSet}): readonly Person[] {
     return this.modelReaders.flatMap(modelReader =>
-      modelReader.readNamedPeople(kwds)
+      modelReader.readPeople(kwds)
     );
   }
 
-  readNamedRightsStatements(kwds: {
-    modelSet: ModelSet;
-  }): readonly RightsStatement[] {
+  readRightsStatements(kwds: {modelSet: ModelSet}): readonly RightsStatement[] {
     return this.modelReaders.flatMap(modelReader =>
-      modelReader.readNamedRightsStatements(kwds)
+      modelReader.readRightsStatements(kwds)
     );
   }
 
