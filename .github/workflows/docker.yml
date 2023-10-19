@@ -16,9 +16,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - run: |
-          pip install -qqq poetry
-          cd lib/py/etl && poetry export -f requirements.txt -o requirements.txt --without-hashes
       - name: Build etl Docker image
         uses: docker/build-push-action@v2
         with:
