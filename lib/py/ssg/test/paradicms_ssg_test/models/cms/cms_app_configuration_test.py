@@ -1,11 +1,10 @@
 from pathlib import Path
 
 import pytest
-from rdflib import Graph, RDF
+from paradicms_etl.models.cms.cms_app_configuration import CmsAppConfiguration
+from paradicms_etl.namespaces import CONFIGURATION
+from rdflib import RDF, Graph
 from rdflib.resource import Resource
-
-from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
-from paradicms_ssg.namespaces import CONFIGURATION
 
 
 @pytest.fixture

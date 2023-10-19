@@ -1,21 +1,19 @@
 from pathlib import Path
-from typing import Tuple
 
 import pytest
 from more_itertools import consume
 from paradicms_etl.extractors.excel_2010_extractor import Excel2010Extractor
 from paradicms_etl.model import Model
+from paradicms_etl.models.app_configuration import AppConfiguration
+from paradicms_etl.models.cms.cms_app_configuration import CmsAppConfiguration
 from paradicms_etl.models.image import Image
+from paradicms_etl.namespaces import CONFIGURATION
 from paradicms_etl.pipeline import Pipeline
 from paradicms_etl.pipelines.synthetic_data_pipeline import SyntheticDataPipeline
 from paradicms_etl.transformers.spreadsheet_transformer import SpreadsheetTransformer
 from paradicms_etl.utils.uuid_urn import uuid_urn
-from rdflib import RDF, Graph, Literal
-
-from paradicms_ssg.models.app_configuration import AppConfiguration
-from paradicms_ssg.models.cms.cms_app_configuration import CmsAppConfiguration
-from paradicms_ssg.namespaces import CONFIGURATION
 from paradicms_ssg.static_site_generator import StaticSiteGenerator
+from rdflib import RDF, Graph, Literal
 
 from .image_archivers.nop_image_archiver import NopImageArchiver
 

@@ -6,17 +6,16 @@ from typing import TYPE_CHECKING
 from more_itertools import consume
 from paradicms_etl.loaders.rdf_file_loader import RdfFileLoader
 from paradicms_etl.model import Model
+from paradicms_etl.models.app_configuration import AppConfiguration
 from paradicms_etl.models.image import Image
 from paradicms_etl.models.image_dimensions import ImageDimensions
 
-import paradicms_ssg.namespaces
 from paradicms_ssg.app_package import AppPackage
 from paradicms_ssg.deployer import Deployer
 from paradicms_ssg.deployers.fs_deployer import FsDeployer
 from paradicms_ssg.image_archiver import ImageArchiver
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
 from paradicms_ssg.images_archiver import ImagesArchiver
-from paradicms_ssg.models.app_configuration import AppConfiguration
 
 if TYPE_CHECKING:
     from rdflib import URIRef
@@ -168,7 +167,6 @@ class StaticSiteGenerator:
         if models:
             loaded_data_file_path = app_package.app_dir_path / "public" / "data.trig"
             data_loader = RdfFileLoader(
-                additional_namespace_modules=(paradicms_ssg.namespaces,),
                 rdf_file_path=loaded_data_file_path,
             )
             consume(data_loader(flush=True, models=models))

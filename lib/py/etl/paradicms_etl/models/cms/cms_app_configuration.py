@@ -1,12 +1,12 @@
 from pathlib import Path
 from typing import Optional
 
-from rdflib import Graph, RDF, URIRef
+from rdflib import RDF, Graph, URIRef
 
+from paradicms_etl.models.app_configuration import AppConfiguration
 from paradicms_etl.models.resource_backed_model import ResourceBackedModel
+from paradicms_etl.namespaces import CONFIGURATION
 from paradicms_etl.utils.safe_dict_update import safe_dict_update
-from paradicms_ssg.models.app_configuration import AppConfiguration
-from paradicms_ssg.namespaces import CONFIGURATION
 
 
 class CmsAppConfiguration(ResourceBackedModel, AppConfiguration):
