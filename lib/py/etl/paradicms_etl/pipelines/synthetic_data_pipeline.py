@@ -87,86 +87,23 @@ class SyntheticDataPipeline(Pipeline):
                 )
 
         __PROPERTIES = (
-            # __Property(
-            #     label="Cultural context",
-            #     uri=VRA.culturalContext,
-            #     values=tuple(f"Cultural context {i}" for i in range(10)),
-            # ),
-            __Property(
-                label="DC Description",
-                searchable=True,
-                uri=DCTERMS.description,
-            ),
-            __Property(
-                filterable=True,
-                label="DC Extent",
-                uri=DCTERMS.extent,
-            ),
-            __Property(
-                filterable=True,
-                label="DC Language",
-                uri=DCTERMS.language,
-            ),
-            # __Property(
-            #     label="Material",
-            #     uri=VRA.material,
-            #     values=tuple(f"Material {i}" for i in range(10)),
-            # ),
-            __Property(
-                filterable=True,
-                label="DC Medium",
-                uri=DCTERMS.medium,
-            ),
-            __Property(
-                filterable=True,
-                label="DC Publisher",
-                uri=DCTERMS.publisher,
-            ),
-            __Property(
-                filterable=True,
-                label="Source",
-                uri=DCTERMS.source,
-            ),
-            __Property(
-                filterable=True,
-                label="DC Spatial",
-                uri=DCTERMS.spatial,
-            ),
+            # One filterable DC property
             __Property(
                 filterable=True,
                 label="DC Subject",
                 uri=DCTERMS.subject,
             ),
-            # __Property(
-            #     label="Technique",
-            #     uri=VRA.technique,
-            #     values=tuple(f"Technique {i}" for i in range(10)),
-            # ),
+            # One searchable DC property
             __Property(
                 label="DC Title",
                 searchable=True,
                 uri=DCTERMS.title,
             ),
-            __Property(
-                filterable=True,
-                label="DC Type",
-                uri=DCTERMS.type,
-            ),
+            # One filterable schema property
             __Property(
                 filterable=True,
                 label="Schema Subject",
                 uri=SDO.about,
-            ),
-            __Property(
-                label="Schema Description",
-                searchable=True,
-                uri=SDO.description,
-            ),
-            __Property(label="Schema Name", searchable=True, uri=SDO.name),
-            __Property(
-                filterable=True,
-                label="Schema Spatial",
-                uri=SDO.spatial,
             ),
         )
 
