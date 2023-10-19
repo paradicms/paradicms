@@ -3,6 +3,7 @@
 !/data/costume_core_ontology/cache/
 !/data/synthetic/
 **/dist/
+/docker/
 /.git/
 /.github/
 /.idea/
@@ -17,6 +18,8 @@
 **/public/img/archive/
 **/__pycache__/
 **/.pytest_cache/
+/README.md
+**/script/
 **/test/
 !/lib/ts/test
 lib/ts/test/dist/
