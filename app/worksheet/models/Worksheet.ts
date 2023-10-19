@@ -1,3 +1,4 @@
+import {DataFactory} from "@paradicms/rdf";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetFeature} from "~/models/WorksheetFeature";
 import {WorksheetFeatureSet} from "~/models/WorksheetFeatureSet";
@@ -31,7 +32,6 @@ export class Worksheet {
   readonly definition: WorksheetDefinition;
   readonly featureSets: WorksheetFeatureSet[];
   private readonly featureSetsByIri: {[index: string]: WorksheetFeatureSet};
-  private readonly featureSetsByKey: {[index: string]: WorksheetFeatureSet};
   private marks: readonly WorksheetMark[];
   private readonly stateCtime: Date;
   readonly stateId: string;
@@ -54,7 +54,7 @@ export class Worksheet {
             definition: featureSetDefinition,
             initialState: initialState.featureSets?.find(
               featureSetState =>
-                featureSetState.uri === featureSetDefinition.iri
+                featureSetState.uri === featureSetDefinition.iri.value
             ),
           })
       )
@@ -62,11 +62,7 @@ export class Worksheet {
         left.definition.label.localeCompare(right.definition.label)
       );
     this.featureSetsByIri = this.featureSets.reduce((map, featureSet) => {
-      map[featureSet.iri] = featureSet;
-      return map;
-    }, {} as {[index: string]: WorksheetFeatureSet});
-    this.featureSetsByKey = this.featureSets.reduce((map, featureSet) => {
-      map[featureSet.key] = featureSet;
+      map[featureSet.iri.value] = featureSet;
       return map;
     }, {} as {[index: string]: WorksheetFeatureSet});
     this.stateCtime = initialState.ctime;
@@ -85,14 +81,16 @@ export class Worksheet {
     if (!currentFeatureSet) {
       return undefined;
     }
-    return currentFeatureSet.featureByIri(this.currentMark.featureIri);
+    return currentFeatureSet.featureByIri(
+      DataFactory.namedNode(this.currentMark.featureIri)
+    );
   }
 
   get currentFeatureSet(): WorksheetFeatureSet | undefined {
     if (!this.currentMark.featureSetIri) {
       return undefined;
     }
-    return this.featureSetsByKey[this.currentMark.featureSetIri];
+    return this.featureSetsByIri[this.currentMark.featureSetIri];
   }
 
   get currentMarkIndex(): number {
@@ -161,7 +159,7 @@ export class Worksheet {
         // Feature set start
         marks.push({
           featureIri: null,
-          featureSetIri: featureSet.key,
+          featureSetIri: featureSet.iri.value,
           review: false,
           mode: this.currentMark.mode,
           worksheetStateId,
@@ -171,8 +169,8 @@ export class Worksheet {
           for (const feature of featureSet.features) {
             // Feature start is the same as review
             marks.push({
-              featureIri: feature.key,
-              featureSetIri: featureSet.key,
+              featureIri: feature.iri.value,
+              featureSetIri: featureSet.iri.value,
               review: false,
               mode: this.currentMark.mode,
               worksheetStateId,
@@ -181,7 +179,7 @@ export class Worksheet {
 
           // Feature set review
           marks.push({
-            featureSetIri: featureSet.key,
+            featureSetIri: featureSet.iri.value,
             featureIri: null,
             review: true,
             mode: this.currentMark.mode,

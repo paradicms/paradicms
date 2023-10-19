@@ -1,3 +1,4 @@
+import {DataFactory} from "@paradicms/rdf";
 import {StringWorksheetStateExporter} from "~/exporters/StringWorksheetStateExporter";
 import {WorksheetDefinition} from "~/models/WorksheetDefinition";
 import {WorksheetState} from "~/models/WorksheetState";
@@ -15,7 +16,7 @@ export class TextWorksheetStateExporter
       }
       for (const featureSetState of worksheetState.featureSets ?? []) {
         const featureSetDefinition = worksheetDefinition.featureSetByIri(
-          featureSetState.uri
+          DataFactory.namedNode(featureSetState.uri)
         );
         if (!featureSetDefinition) {
           continue;
@@ -27,7 +28,7 @@ export class TextWorksheetStateExporter
             .map(value => value.uri)
             .flatMap(selectedFeatureValueIri => {
               const featureValueDefinition = worksheetDefinition.featureValueByIri(
-                selectedFeatureValueIri
+                DataFactory.namedNode(selectedFeatureValueIri)
               );
               if (featureValueDefinition) {
                 return [featureValueDefinition.label];

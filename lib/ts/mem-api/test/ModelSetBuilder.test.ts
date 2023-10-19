@@ -79,7 +79,7 @@ describe("ModelSetBuilder", () => {
     expect(modelSetImageIris(agentsModelSet)).to.have.length(5); // One original image, one thumbnail per named agent + the sameAs agent image
     // for (const namedAgent of namedAgents) {
     //   expect(
-    //     agentsModelSet.imagesByDepictsIri(namedAgent.iris[0]).length
+    //     agentsModelSet.imagesByDepictsIri(namedAgent.iri).length
     //   ).to.eq(1);
     // }
   });

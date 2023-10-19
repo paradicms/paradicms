@@ -28,7 +28,7 @@ export class WorksheetFeatureSet {
       )
       .sort((left, right) => left.definition.order - right.definition.order);
     this.featuresByIri = this.features.reduce((map, feature) => {
-      map[feature.key] = feature;
+      map[feature.iri.value] = feature;
       return map;
     }, {} as {[index: string]: WorksheetFeature});
     this.selected = !!initialState;

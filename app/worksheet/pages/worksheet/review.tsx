@@ -227,13 +227,13 @@ const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
                     <tbody>
                       {featureSet.features.map(feature => {
                         return (
-                          <tr key={feature.iri}>
+                          <tr key={feature.iri.value}>
                             <td className="align-middle text-center w-25">
                               <Link
                                 className="btn btn-lg btn-secondary w-100"
                                 href={Hrefs.worksheetMark({
                                   featureSetIri: featureSet.iri.value,
-                                  featureIri: feature.key,
+                                  featureIri: feature.iri.value,
                                   review: false,
                                   mode: worksheet!.currentMark.mode,
                                   worksheetStateId: worksheet!.stateId,
@@ -248,7 +248,7 @@ const WorksheetReviewPageImpl: React.FunctionComponent<Omit<
                                 .map(value => (
                                   <span
                                     className="border border-info d-inline-block h4 m-2 p-2"
-                                    key={value.iri}
+                                    key={value.iri.value}
                                     style={{borderWidth: "4px !important"}}
                                   >
                                     {value.definition.label}

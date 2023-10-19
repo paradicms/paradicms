@@ -147,7 +147,7 @@ const WorksheetFeatureSetEditPageImpl: React.FunctionComponent<Omit<
                 router.push(
                   Hrefs.worksheetMark({
                     featureSetIri: featureSet.iri.value,
-                    featureIri: feature.key,
+                    featureIri: feature.iri.value,
                     review: false,
                     mode: worksheet!.currentMark.mode,
                     worksheetStateId: worksheet!.stateId,

@@ -26,7 +26,7 @@ export class CsvWorksheetStateExporter
           worksheetState.featureSets.length === 1
         ) {
           // # 318: don't prefix CSV header names if there is only one feature set defined in all worksheets
-          return featureIri;
+          return featureIri.value;
         }
       }
 

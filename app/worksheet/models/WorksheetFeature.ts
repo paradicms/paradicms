@@ -20,7 +20,8 @@ export class WorksheetFeature {
           new WorksheetFeatureValue({
             definition: valueDefinition,
             initialState: initialState?.values?.find(
-              featureValueState => featureValueState.uri === valueDefinition.iri
+              featureValueState =>
+                featureValueState.uri === valueDefinition.iri.value
             ),
           })
       )
@@ -29,12 +30,8 @@ export class WorksheetFeature {
       );
   }
 
-  get iri(): string {
+  get iri() {
     return this.definition.iri;
-  }
-
-  get key(): string {
-    return this.definition.key;
   }
 
   get state(): WorksheetFeatureState | undefined {
@@ -48,7 +45,7 @@ export class WorksheetFeature {
     return valueStates.length > 0 || this.text
       ? {
           text: this.text,
-          uri: this.definition.iri,
+          uri: this.definition.iri.value,
           values: valueStates.length > 0 ? valueStates : undefined,
         }
       : undefined;
