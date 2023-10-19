@@ -1,4 +1,6 @@
 from paradicms_etl.model import Model
+from paradicms_etl.models.app_configuration import AppConfiguration
+from paradicms_etl.models.cms.cms_app_configuration import CmsAppConfiguration
 from paradicms_etl.models.cms.cms_property_group import CmsPropertyGroup
 from paradicms_etl.models.creative_commons.creative_commons_license import (
     CreativeCommonsLicense,
@@ -36,6 +38,7 @@ from paradicms_etl.models.wikidata.wikidata_person import WikidataPerson
 from paradicms_etl.models.wikidata.wikidata_work import WikidataWork
 
 __ROOT_MODEL_CLASSES: tuple[type[Model], ...] = (
+    CmsAppConfiguration,
     CmsPropertyGroup,
     DcCollection,
     DcImage,
@@ -72,3 +75,4 @@ __ROOT_MODEL_CLASSES: tuple[type[Model], ...] = (
 ROOT_MODEL_CLASSES_BY_NAME: dict[str, type[Model]] = {}
 for __class in __ROOT_MODEL_CLASSES:
     ROOT_MODEL_CLASSES_BY_NAME[__class.__name__] = __class
+ROOT_MODEL_CLASSES_BY_NAME[AppConfiguration.__name__] = CmsAppConfiguration
