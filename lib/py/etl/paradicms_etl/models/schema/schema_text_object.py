@@ -3,7 +3,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 
 from rdflib import SDO, Graph
-from rdflib.resource import Resource
 
 from paradicms_etl.models.schema.schema_media_object_mixin import SchemaMediaObjectMixin
 from paradicms_etl.models.schema.schema_model import SchemaModel
