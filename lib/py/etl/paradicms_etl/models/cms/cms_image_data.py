@@ -4,6 +4,7 @@ from typing import Any, Optional
 
 from PIL import Image
 from rdflib import DCTERMS, RDF, XSD, Graph, Literal, URIRef
+from rdflib.resource import Resource
 
 from paradicms_etl.models.cms.cms_model import CmsModel
 from paradicms_etl.models.image_data import ImageData
@@ -57,6 +58,16 @@ class CmsImageData(CmsModel, ImageData):
                 "@value": b64encode(self._value).decode("ascii"),
             },
         }
+
+    def to_rdf(self, graph: Graph) -> Resource:
+        for p in (
+            DCTERMS.format,
+            RDF.type,
+            RDF.value,
+        ):
+            for o in self.resource.graph.objects(subject=self.uri, predicate=p):
+                graph.add((self.uri, p, o))
+        return graph.resource(self.uri)
 
     @property
     def _value(self) -> bytes:
