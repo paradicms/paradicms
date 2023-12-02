@@ -1,6 +1,7 @@
 import {faInfoCircle, faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Image, Text, imagePlaceholderSrc} from "@paradicms/models";
+import {getAbsoluteImageSrc} from "@paradicms/next";
 import {
   ImagesCarousel,
   RightsParagraph,
@@ -76,13 +77,16 @@ const ItemDetailCard: React.FunctionComponent<{
   onClose: () => void;
 }> = ({item, onClose}) => {
   const rows: React.ReactElement[] = [];
+  const router = useRouter();
 
   if (item.images.length > 0) {
     rows.push(
       <Row key={"row" + rows.length.toString()}>
         <Col className="p-0 text-center" xs={12}>
           <ImagesCarousel
-            getAbsoluteImageSrc={relativeImageSrc => relativeImageSrc}
+            getAbsoluteImageSrc={relativeImageSrc =>
+              getAbsoluteImageSrc(relativeImageSrc, router)
+            }
             originalImages={item.images}
           />
         </Col>
@@ -184,87 +188,93 @@ const ItemDetailCard: React.FunctionComponent<{
       </CardBody>
     </Card>
   );
-  return <div>{item.label}</div>;
 };
 
 const ItemsGallery: React.FunctionComponent<{
   items: readonly Item[];
   setDetailItem: (item: Item) => void;
-}> = ({items, setDetailItem}) => (
-  <Container fluid>
-    <Row>
-      {items.map((item, itemI) => {
-        const {onToggleSelected, images, selected, label} = item;
+}> = ({items, setDetailItem}) => {
+  const router = useRouter();
+  return (
+    <Container fluid>
+      <Row>
+        {items.map((item, itemI) => {
+          const {onToggleSelected, images, selected, label} = item;
 
-        let thumbnailSrc: string = imagePlaceholderSrc(
-          galleryThumbnailSelector.targetDimensions
-        );
-        for (const image of images) {
-          const thumbnail = image.thumbnail(galleryThumbnailSelector);
-          if (thumbnail) {
-            thumbnailSrc = thumbnail.src ?? thumbnail.iri.value;
-            break;
+          let thumbnailSrc: string = imagePlaceholderSrc(
+            galleryThumbnailSelector.targetDimensions
+          );
+          for (const image of images) {
+            const thumbnail = image.thumbnail(galleryThumbnailSelector);
+            if (thumbnail) {
+              thumbnailSrc = getAbsoluteImageSrc(
+                thumbnail.src ?? thumbnail.iri.value,
+                router
+              );
+              break;
+            }
           }
-        }
 
-        return (
-          <Card
-            className={classnames({
-              "border-info": selected,
-              "mb-4": true,
-              "me-4": true,
-            })}
-            key={itemI}
-            style={{
-              borderWidth: "8px",
-              maxWidth: galleryThumbnailSelector.targetDimensions.width + 40,
-              minHeight: galleryThumbnailSelector.targetDimensions.height,
-            }}
-          >
-            <CardHeader className="px-0 mt-2 text-center w-100">
-              <Button
-                active={!!selected}
-                className="w-50"
-                color="primary"
-                onClick={onToggleSelected}
-                style={{cursor: "pointer", textDecoration: "none"}}
-              >
-                {label}
-              </Button>
-            </CardHeader>
-            <CardBody className="pb-0 px-0 text-center w-100">
-              <div className="d-flex flex-column h-100 justify-content-center">
-                <a onClick={onToggleSelected}>
-                  <img
-                    className="rounded"
-                    src={thumbnailSrc}
-                    style={{
-                      cursor: "pointer",
-                      maxHeight:
-                        galleryThumbnailSelector.targetDimensions.height,
-                      maxWidth: galleryThumbnailSelector.targetDimensions.width,
-                    }}
-                  />
-                </a>
-                <div className="mb-2">
-                  <a
-                    onClick={() => setDetailItem(item)}
-                    style={{cursor: "pointer"}}
-                  >
-                    <FontAwesomeIcon
-                      icon={faInfoCircle}
-                      style={{height: "16px", width: "16px"}}
+          return (
+            <Card
+              className={classnames({
+                "border-info": selected,
+                "mb-4": true,
+                "me-4": true,
+              })}
+              key={itemI}
+              style={{
+                borderWidth: "8px",
+                maxWidth: galleryThumbnailSelector.targetDimensions.width + 40,
+                minHeight: galleryThumbnailSelector.targetDimensions.height,
+              }}
+            >
+              <CardHeader className="px-0 mt-2 text-center w-100">
+                <Button
+                  active={!!selected}
+                  className="w-50"
+                  color="primary"
+                  onClick={onToggleSelected}
+                  style={{cursor: "pointer", textDecoration: "none"}}
+                >
+                  {label}
+                </Button>
+              </CardHeader>
+              <CardBody className="pb-0 px-0 text-center w-100">
+                <div className="d-flex flex-column h-100 justify-content-center">
+                  <a onClick={onToggleSelected}>
+                    <img
+                      className="rounded"
+                      src={thumbnailSrc}
+                      style={{
+                        cursor: "pointer",
+                        maxHeight:
+                          galleryThumbnailSelector.targetDimensions.height,
+                        maxWidth:
+                          galleryThumbnailSelector.targetDimensions.width,
+                      }}
                     />
                   </a>
+                  <div className="mb-2">
+                    <a
+                      onClick={() => setDetailItem(item)}
+                      style={{cursor: "pointer"}}
+                    >
+                      <FontAwesomeIcon
+                        icon={faInfoCircle}
+                        style={{height: "16px", width: "16px"}}
+                      />
+                    </a>
+                  </div>
                 </div>
-              </div>
-            </CardBody>
-          </Card>
-        );
-      })}
-    </Row>
-  </Container>
-);
+              </CardBody>
+            </Card>
+          );
+        })}
+      </Row>
+    </Container>
+  );
+};
 
 const ItemsTable: React.FunctionComponent<{
   items: readonly Item[];
