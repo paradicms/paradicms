@@ -42,7 +42,7 @@ class StaticSiteGenerator:
         self,
         *,
         cache_dir_path: Path,
-        pipeline_id: str,
+        base_url_path: str | None = None,
         client_api: str | None = None,
         deployer: Deployer | None = None,
         image_archiver: ImageArchiver | None = None,
@@ -58,11 +58,11 @@ class StaticSiteGenerator:
         :param deployer: optional deployer implementation; if not specified, defaults to a file system deployer that writes to the loaded data directory
         :param image_archiver: optional image archiver implementation; if not specified, defaults to a file system archiver that writes to Next's public/ directory
         :param next_commands: Next.js commands to execute
-        :param pipeline_id: pipeline identifier
         :param sleep_s_after_image_download: sleep this number of seconds after downloading each image, to avoid triggering denial of service mechanisms
         :param thumbnail_max_dimensions: maximum dimensions of image thumbnails to use
         """
 
+        self.__base_url_path = base_url_path if base_url_path is not None else "/"
         self.__buffered_app_configuration: AppConfiguration | None = None
         self.__buffered_images: list[Image] = []
         self.__buffered_other_models: list[Model] = []
@@ -72,7 +72,6 @@ class StaticSiteGenerator:
         self.__image_archiver = image_archiver
         self.__logger = logging.getLogger(__name__)
         self.__next_commands = next_commands
-        self.__pipeline_id = pipeline_id
         self.__sleep_s_after_image_download = sleep_s_after_image_download
         self.__thumbnail_max_dimensions = thumbnail_max_dimensions
         self.__thumbnail_uris: set[URIRef] = set()
@@ -117,8 +116,7 @@ class StaticSiteGenerator:
         if image_archiver is None:
             # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
             image_archiver = FsImageArchiver(
-                # base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
-                base_url="/img/archive/",
+                base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
                 root_directory_path=app_package.app_dir_path
                 / "public"
                 / "img"

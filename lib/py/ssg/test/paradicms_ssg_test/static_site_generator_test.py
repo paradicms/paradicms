@@ -46,7 +46,6 @@ def test_load_minimal(app: str, synthetic_data_models: tuple[Model, ...], tmp_pa
     app_loader = StaticSiteGenerator(
         image_archiver=NopImageArchiver(),
         cache_dir_path=cache_dir_path,
-        pipeline_id=SyntheticDataPipeline.ID,
     )
 
     original_images = []
@@ -108,7 +107,6 @@ def test_load_excel_2010_test_data(
             loader=StaticSiteGenerator(
                 image_archiver=NopImageArchiver(),
                 cache_dir_path=cache_dir_path,
-                pipeline_id=SyntheticDataPipeline.ID,
             ),
             transformer=SpreadsheetTransformer(pipeline_id=pipeline_id),
         )()
