@@ -42,7 +42,6 @@ class StaticSiteGenerator:
         self,
         *,
         cache_dir_path: Path,
-        base_url_path: str | None = None,
         client_api: str | None = None,
         deployer: Deployer | None = None,
         image_archiver: ImageArchiver | None = None,
@@ -62,7 +61,6 @@ class StaticSiteGenerator:
         :param thumbnail_max_dimensions: maximum dimensions of image thumbnails to use
         """
 
-        self.__base_url_path = base_url_path if base_url_path is not None else "/"
         self.__buffered_app_configuration: AppConfiguration | None = None
         self.__buffered_images: list[Image] = []
         self.__buffered_other_models: list[Model] = []
@@ -116,7 +114,8 @@ class StaticSiteGenerator:
         if image_archiver is None:
             # If no image archiver specified, "archive" copies of images to the Next.js public/ directory, which contains static assets.
             image_archiver = FsImageArchiver(
-                base_url=f"{self.__base_url_path.rstrip('/')}/img/archive/",
+                # Don't add NEXT_BASE_PATH here, will add it in the client
+                base_url="/img/archive/",
                 root_directory_path=app_package.app_dir_path
                 / "public"
                 / "img"
