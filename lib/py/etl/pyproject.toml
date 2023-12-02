@@ -2,7 +2,7 @@
 name = "paradicms-etl"
 version = "0.0.1"
 description = "Paradicms Extract-Transform-Load (ETL) library"
-authors = ["Minor Gordon <info@paradicms.org>"]
+authors = ["Minor Gordon <mail@minorgordon.net>"]
 license = "GPLv3"
 
 [tool.poetry.dependencies]

@@ -1,4 +1,4 @@
-@prefix : <http://www.paradicms.org/ns/configuration#> .
+@prefix : <http://paradicms.github.io/ns/configuration#> .
 
 <http://example.com/appConfiguration> a :AppConfiguration;
   :app "single-page-exhibition" ;
