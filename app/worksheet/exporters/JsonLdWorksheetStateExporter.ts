@@ -40,7 +40,7 @@ export class JsonLdWorksheetStateExporter
     if (href.endsWith("/edit")) {
       href = href.substring(0, href.length - 4);
     }
-    json["@id"] = "https://dressdiscover.org" + href;
+    json["@id"] = "https://paradicms.github.io" + href;
     for (const featureSetState of worksheetState.featureSets ?? []) {
       for (const featureState of featureSetState.features ?? []) {
         const selectedFeatureValueIris = (featureState.values ?? [])
