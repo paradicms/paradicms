@@ -182,6 +182,7 @@ class WikidataEnricher:
 
         conjunctive_graph: ConjunctiveGraph = RdfUrlExtractor(
             cache_dir_path=self.__cache_dir_path,
+            cached_file_extension=".ttl",
             rdf_url=URIRef(str(wikidata_entity_uri) + ".ttl"),
         )(force=False)["conjunctive_graph"]
         conjunctive_graph_contexts: tuple[Graph, ...] = tuple(
