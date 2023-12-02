@@ -20,6 +20,8 @@ if TYPE_CHECKING:
     from paradicms_etl.models.image_data import ImageData
     from paradicms_etl.models.text import Text
 
+logger = logging.getLogger(__name__)
+
 _ModelT = TypeVar("_ModelT", bound=Model)
 _Predicates = URIRef | tuple[URIRef, ...]
 _StatementObject = Literal | Resource
@@ -40,7 +42,7 @@ class ResourceBackedModel(Model):
                 if not str(o.uri).lower().startswith("urn:uuid:") and not str(
                     o.uri
                 ).lower().startswith("urn:paradicms:"):
-                    logging.getLogger(__name__).warning(
+                    logger.warning(
                         "adding non-urn: model %s to model %s's graph",
                         o.uri,
                         self.__resource.identifier,
@@ -224,8 +226,12 @@ class ResourceBackedModel(Model):
         if not isinstance(term, Resource):
             return None
         resource: Resource = term
+        if not isinstance(resource.identifier, URIRef):
+            logger.warning("tried to map non-URI term to a model")
+            return None
         value_type = resource.value(RDF.type)
         if not isinstance(value_type, Resource):
+            logger.warning("term %s rdf:type is not a Resource", term.identifier)
             return None
         if value_type.identifier == model_class.rdf_type_uri():
             return model_class.from_rdf(resource)  # type: ignore
