@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from typing import Optional
-from urllib.request import urlopen, Request
+from urllib.request import Request, urlopen
 
 from pathvalidate import sanitize_filename
 
@@ -50,7 +50,7 @@ def download_file(
         Request(
             str(from_url),
             headers={
-                "User-Agent": "paradicms/1.0.0 (https://paradicms.org; info@paradicms.org)"
+                "User-Agent": "paradicms/1.0.0 (https://paradicms.github.io; info@paradicms.github.io)"
             },
         )
     ) as open_from_url:

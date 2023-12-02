@@ -2,15 +2,14 @@ from pathlib import Path
 from urllib.request import urlretrieve
 
 import PIL
-from rdflib import URIRef
-
 from paradicms_etl.models.cms.cms_image_data import CmsImageData
 from paradicms_etl.models.schema.schema_image_object import SchemaImageObject
 from paradicms_ssg.image_file_cache import (
     ImageFileCache,
 )
+from rdflib import URIRef
 
-PLACEHOLDER_IMAGE_URL = "https://paradicms.org/img/placeholder/1000x1000.png"
+PLACEHOLDER_IMAGE_URL = "https://paradicms.github.io/img/placeholder/1000x1000.png"
 
 
 def test_cache_image_data(test_image_file_path: Path, tmp_path: Path):

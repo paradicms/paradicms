@@ -4,7 +4,7 @@ from rdflib.namespace import DefinedNamespace, Namespace
 
 class CONFIGURATION(DefinedNamespace):
     _fail = True
-    _NS = Namespace("http://www.paradicms.org/ns/configuration#")
+    _NS = Namespace("http://paradicms.github.io/ns/configuration#")
 
     # Properties
     app: URIRef

@@ -2,32 +2,38 @@ import namespace, {NamespaceBuilder} from "@rdfjs/namespace";
 import {NamedNode} from "@rdfjs/types";
 
 interface Configuration {
-  "": NamedNode<"http://www.paradicms.org/ns/configuration#">;
+  "": NamedNode<"http://paradicms.github.io/ns/configuration#">;
 
   // Properties
-  filterable: NamedNode<"http://www.paradicms.org/ns/configuration#filterable">;
-  hidden: NamedNode<"http://www.paradicms.org/ns/configuration#hidden">;
-  label: NamedNode<"http://www.paradicms.org/ns/configuration#label">;
+  filterable: NamedNode<
+    "http://paradicms.github.io/ns/configuration#filterable"
+  >;
+  hidden: NamedNode<"http://paradicms.github.io/ns/configuration#hidden">;
+  label: NamedNode<"http://paradicms.github.io/ns/configuration#label">;
   objectsPerPage: NamedNode<
-    "http://www.paradicms.org/ns/configuration#objectsPerPage"
+    "http://paradicms.github.io/ns/configuration#objectsPerPage"
   >;
-  predicate: NamedNode<"http://www.paradicms.org/ns/configuration#predicate">;
-  searchable: NamedNode<"http://www.paradicms.org/ns/configuration#searchable">;
+  predicate: NamedNode<"http://paradicms.github.io/ns/configuration#predicate">;
+  searchable: NamedNode<
+    "http://paradicms.github.io/ns/configuration#searchable"
+  >;
   stylesheet: NamedNode<
-    "http://www.paradicms.org/ns/configuration#stylesheetHref"
+    "http://paradicms.github.io/ns/configuration#stylesheetHref"
   >;
-  title: NamedNode<"http://www.paradicms.org/ns/configuration#searchable">;
+  title: NamedNode<"http://paradicms.github.io/ns/configuration#searchable">;
   workProperty: NamedNode<
-    "http://www.paradicms.org/ns/configuration#workProperty"
+    "http://paradicms.github.io/ns/configuration#workProperty"
   >;
 
   // Resources
   AppConfiguration: NamedNode<
-    "http://www.paradicms.org/ns/configuration#AppConfiguration"
+    "http://paradicms.github.io/ns/configuration#AppConfiguration"
   >;
 }
 
-const builder = namespace("http://www.paradicms.org/ns/configuration#") as any;
+const builder = namespace(
+  "http://paradicms.github.io/ns/configuration#"
+) as any;
 export const strict = builder as NamespaceBuilder<keyof Configuration> &
   Configuration;
 export const loose = builder as NamespaceBuilder & Configuration;

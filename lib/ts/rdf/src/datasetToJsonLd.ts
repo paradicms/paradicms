@@ -1,5 +1,3 @@
-import {DatasetCore} from "@rdfjs/types";
-import * as jsonld from "jsonld";
 import {
   cc,
   cms,
@@ -24,6 +22,8 @@ import {
   wikibase,
   xsd,
 } from "@paradicms/vocabularies";
+import {DatasetCore} from "@rdfjs/types";
+import * as jsonld from "jsonld";
 import {JsonLd} from "jsonld/jsonld-spec";
 
 export const datasetToJsonLd = async (
@@ -39,7 +39,7 @@ export const datasetToJsonLd = async (
   //   JSON.stringify(jsonLd).length
   // );
   const compactJsonLd = await jsonld.compact(jsonLd, {
-    bnode: "http://paradicms.org/bnode/",
+    bnode: "http://paradicms.github.io/bnode/",
     cc: cc[""].value,
     cclicenses: "http://creativecommons.org/licenses/",
     cclicensess: "https://creativecommons.org/licenses/",

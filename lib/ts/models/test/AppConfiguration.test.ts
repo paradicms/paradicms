@@ -1,8 +1,8 @@
 import {expect} from "chai";
+import {describe} from "mocha";
 import {AppConfiguration} from "../src";
 import {ModelSetFactory} from "../src/ModelSetFactory";
 import {testAppConfigurationData} from "./testAppConfigurationData";
-import {describe} from "mocha";
 
 describe("AppConfiguration", () => {
   let jsonLdAppConfiguration: AppConfiguration;
@@ -26,7 +26,7 @@ describe("AppConfiguration", () => {
   // it("should have a JSON-LD equivalent", async () => {
   //   const json = {
   //     "@context": {
-  //       "@vocab": "http://www.paradicms.org/ns/configuration#",
+  //       "@vocab": "http://paradicms.github.io/ns/configuration#",
   //     },
   //     "@type": "AppConfiguration",
   //     stylesheet: "https://minorgordon.net/minorgordon.net.css",

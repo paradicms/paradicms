@@ -253,7 +253,9 @@ class SyntheticDataPipeline(Pipeline):
                     height=1000, width=1000
                 )
                 original_image_rights_holder = f"{original_image_title} rights holder"
-                original_image_src = "https://paradicms.org/img/synthetic/1000x1000.png"
+                original_image_src = (
+                    "https://paradicms.github.io/img/synthetic/1000x1000.png"
+                )
                 original_image_uri = URIRef(str(base_uri) + f":Image{image_i}")
 
                 original_image_builder: DcImage.Builder | SchemaImageObject.Builder
@@ -301,11 +303,11 @@ class SyntheticDataPipeline(Pipeline):
                         )
                         .copy_rights(original_image_builder.build())
                         .set_caption(
-                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                            f"{text_prparadicms.github.ioimage_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                         )
                         .set_exact_dimensions(thumbnail_dimensions)
                         .set_src(
-                            f"https://paradicms.org/img/synthetic/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
+                            f"https://paradicms.github.io/img/synthetic/{thumbnail_dimensions.width}x{thumbnail_dimensions.height}.png"
                         )
                         .build()
                     )

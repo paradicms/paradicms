@@ -108,7 +108,7 @@ class FileCache:
             Request(
                 str(file_url),
                 headers={
-                    "User-Agent": "paradicms/1.0.0 (https://paradicms.org; info@paradicms.org)"
+                    "User-Agent": "paradicms/1.0.0 (https://paradicms.github.io; info@paradicms.github.io)"
                 },
             ),
             context=self.__ssl_context,

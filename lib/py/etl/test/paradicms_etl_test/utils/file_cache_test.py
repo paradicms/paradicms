@@ -1,10 +1,9 @@
 from urllib.error import HTTPError
 
+from paradicms_etl.utils.file_cache import FileCache
 from rdflib import URIRef
 
-from paradicms_etl.utils.file_cache import FileCache
-
-PLACEHOLDER_IMAGE_URL = "https://paradicms.org/img/placeholder/1000x1000.png"
+PLACEHOLDER_IMAGE_URL = "https://paradicms.github.io/img/placeholder/1000x1000.png"
 
 
 def test_get_file_404(tmp_path):

@@ -7,4 +7,4 @@ def skolemize(graph: Graph) -> Graph:
     :return: the skolemized Graph
     """
 
-    return graph.skolemize(authority="http://paradicms.org", basepath="/bnode/")
+    return graph.skolemize(authority="http://paradicms.github.io", basepath="/bnode/")

@@ -1,7 +1,6 @@
-from rdflib import URIRef
-
 from paradicms_etl.utils.file_cache import FileCache
 from paradicms_ssg.image_archivers.fs_image_archiver import FsImageArchiver
+from rdflib import URIRef
 
 
 def test_archive_image(tmp_path):
@@ -16,7 +15,7 @@ def test_archive_image(tmp_path):
 
     archived_url = sut(
         image_file_path=image_cache.get_file(
-            URIRef("https://paradicms.org/img/placeholder/1000x1000.png")
+            URIRef("https://paradicms.github.io/img/placeholder/1000x1000.png")
         )
     )
     assert archived_url

@@ -4,7 +4,7 @@ from rdflib.namespace import DefinedNamespace, Namespace
 
 class CMS(DefinedNamespace):
     _fail = True
-    _NS = Namespace("http://www.paradicms.org/ns/cms#")
+    _NS = Namespace("http://paradicms.github.io/ns/cms#")
 
     # Properties
     imageCopyable: URIRef

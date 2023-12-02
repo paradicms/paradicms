@@ -52,8 +52,8 @@ export const behavesLikeOriginalImage = (image: Image) => {
 
   it("should get the src", () => {
     expect(image.src).not.to.be.null;
-    expect(image.src!.startsWith("https://paradicms.org/img/synthetic/")).to.be
-      .true;
+    expect(image.src!.startsWith("https://paradicms.github.io/img/synthetic/"))
+      .to.be.true;
   });
 
   behavesLikeModel(image);

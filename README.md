@@ -4,7 +4,7 @@ This [monorepo](https://en.wikipedia.org/wiki/Monorepo) contains mot of the code
 
 ## Getting started
 
-For documentation on how to use Paradicms, see the [Paradicms website](https://paradicms.org/).
+For documentation on how to use Paradicms, see the [Paradicms website](https://paradicms.github.io/).
 
 For developer documentation, read on.
 
@@ -14,9 +14,9 @@ For developer documentation, read on.
 
 The code in this repository is organized into three areas:
 
-* `app/`: [Paradicms app](https://paradicms.org/docs/introduction/apps) implementations
-* `lib/py/`: Python libraries, which are primarily used by [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions)
-  * `lib/py/etl`: code for transforming data from various sources (Airtable, Omeka, spreadsheets, et al.) into one of the [logical data models](https://paradicms.org/docs/reference/logical-data-models/) supported by Paradicms
+* `app/`: [Paradicms app](https://paradicms.github.io/docs/introduction/apps) implementations
+* `lib/py/`: Python libraries, which are primarily used by [Paradicms GitHub Actions](https://paradicms.github.io/docs/reference/github-actions)
+  * `lib/py/etl`: code for transforming data from various sources (Airtable, Omeka, spreadsheets, et al.) into one of the [logical data models](https://paradicms.github.io/docs/reference/logical-data-models/) supported by Paradicms
   * `lib/py/ssg`: code for statically generating websites (apps) from data adhering to one of the logical data models
 * `lib/ts`: TypeScript libraries used by app implementations
 
@@ -129,7 +129,7 @@ Merges to the default branch trigger a GitHub Actions workflow that:
 * builds a single Docker image from the `Dockerfile` in the root of the repository and
 * pushes the image to the GitHub Container registry for the organization
 
-[This Docker image](https://github.com/paradicms/paradicms/pkgs/container/paradicms) is the working environment for the [Paradicms GitHub Actions](https://paradicms.org/docs/reference/github-actions). It contains:
+[This Docker image](https://github.com/paradicms/paradicms/pkgs/container/paradicms) is the working environment for the [Paradicms GitHub Actions](https://paradicms.github.io/docs/reference/github-actions). It contains:
 * Python libraries and their dependencies installed in the image's system Python interpreter
 * TypeScript libraries and their dependencies
 * Ready-to-build Paradicms apps
