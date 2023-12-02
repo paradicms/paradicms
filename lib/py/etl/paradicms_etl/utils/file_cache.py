@@ -107,9 +107,7 @@ class FileCache:
         with urlopen(  # noqa: S310
             Request(
                 str(file_url),
-                headers={
-                    "User-Agent": "paradicms/1.0.0 (https://paradicms.github.io; info@paradicms.github.io)"
-                },
+                headers={"User-Agent": "paradicms/1.0.0 (https://paradicms.github.io)"},
             ),
             context=self.__ssl_context,
         ) as open_file_url:

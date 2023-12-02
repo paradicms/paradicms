@@ -49,9 +49,7 @@ def download_file(
     with urlopen(
         Request(
             str(from_url),
-            headers={
-                "User-Agent": "paradicms/1.0.0 (https://paradicms.github.io; info@paradicms.github.io)"
-            },
+            headers={"User-Agent": "paradicms/1.0.0 (https://paradicms.github.io)"},
         )
     ) as open_from_url:
         to_file_path.unlink(missing_ok=True)

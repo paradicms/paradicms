@@ -303,7 +303,7 @@ class SyntheticDataPipeline(Pipeline):
                         )
                         .copy_rights(original_image_builder.build())
                         .set_caption(
-                            f"{text_prparadicms.github.ioimage_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
+                            f"{text_prefix} image {image_i} thumbnail {thumbnail_dimensions.width}x{thumbnail_dimensions.height}"
                         )
                         .set_exact_dimensions(thumbnail_dimensions)
                         .set_src(
