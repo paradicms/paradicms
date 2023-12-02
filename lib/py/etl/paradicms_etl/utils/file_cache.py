@@ -6,7 +6,7 @@ from pathlib import Path
 from shutil import copyfileobj
 from ssl import SSLContext
 from time import sleep
-from typing import Any, Dict, Optional
+from typing import Any
 from urllib.request import Request, urlopen
 
 from pathvalidate import sanitize_filename
@@ -19,8 +19,8 @@ class FileCache:
         *,
         # atomic_download: bool = False,
         cache_dir_path: Path,
-        sleep_s_after_download: Optional[float] = None,
-        ssl_context: Optional[SSLContext] = None,
+        sleep_s_after_download: float | None = None,
+        ssl_context: SSLContext | None = None,
     ):
         """
         :param cache_dir_path: directory where files from URLs can be cached
@@ -104,7 +104,7 @@ class FileCache:
         #         "moved %s (from %s) to %s", temp_file_path, file_url, cached_file_path
         #     )
         # else:
-        with urlopen(
+        with urlopen(  # noqa: S310
             Request(
                 str(file_url),
                 headers={
@@ -113,9 +113,7 @@ class FileCache:
             ),
             context=self.__ssl_context,
         ) as open_file_url:
-            open_file_headers_dict = {
-                key: value for key, value in open_file_url.headers.items()
-            }
+            open_file_headers_dict = dict(open_file_url.headers.items())
             cached_file_path = get_cached_file_path(open_file_headers_dict)
             cached_file_path.unlink(missing_ok=True)
             file_cache_dir_path.mkdir(exist_ok=True, parents=True)
