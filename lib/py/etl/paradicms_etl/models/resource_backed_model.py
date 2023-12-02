@@ -235,6 +235,11 @@ class ResourceBackedModel(Model):
             return None
         if value_type.identifier == model_class.rdf_type_uri():
             return model_class.from_rdf(resource)  # type: ignore
+        logger.debug(
+            "term %s did not map to expected model class RDF type %s",
+            term.identifier,
+            model_class.rdf_type_uri(),
+        )
         return None
 
     @staticmethod
