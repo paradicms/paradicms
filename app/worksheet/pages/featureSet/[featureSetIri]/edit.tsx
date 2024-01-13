@@ -88,7 +88,7 @@ const WorksheetFeatureSetEditPageImpl: React.FunctionComponent<Omit<
   const router = useRouter();
   const routeWorksheetMark = useRouteWorksheetMark({
     featureSetIri,
-    review: false,
+    review: router.pathname.endsWith("/review"),
   });
   const worksheetDefinition = useMemo(() => new WorksheetDefinition(modelSet), [
     modelSet,
