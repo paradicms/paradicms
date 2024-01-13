@@ -157,6 +157,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 class StaticProps {}
 
+const MINIMIZE_MODEL_SET = false; // See note below
+
 export const getStaticProps: GetStaticProps = async ({
   params,
 }): Promise<{
@@ -167,36 +169,54 @@ export const getStaticProps: GetStaticProps = async ({
 
   const api = await getStaticApi();
 
-  // Get feature values for the feature we're editing
-  const thisFeatureJoinSelector: {[index: string]: PropertyJoinSelector} = {};
-  thisFeatureJoinSelector[featureIri] = {
-    rangeValues: {
-      thumbnail: galleryThumbnailSelector,
-    },
-  };
+  let modelSet: ModelSet;
+  if (MINIMIZE_MODEL_SET) {
+    // Get feature values for the feature we're editing
+    const thisFeatureJoinSelector: {[index: string]: PropertyJoinSelector} = {};
+    thisFeatureJoinSelector[featureIri] = {
+      rangeValues: {
+        thumbnail: galleryThumbnailSelector,
+      },
+    };
 
-  // Get the other features in the feature set
-  // We need these to build out the progress bar.
-  const thisFeatureSetJoinSelector: {
-    [index: string]: PropertyGroupJoinSelector;
-  } = {};
-  thisFeatureSetJoinSelector[featureSetIri] = {
-    properties: {rangeValues: {}},
-    propertiesByIri: thisFeatureJoinSelector,
-  };
+    // Get the other features in the feature set
+    // We need these to build out the progress bar.
+    const thisFeatureSetJoinSelector: {
+      [index: string]: PropertyGroupJoinSelector;
+    } = {};
+    thisFeatureSetJoinSelector[featureSetIri] = {
+      properties: {rangeValues: {}},
+      propertiesByIri: thisFeatureJoinSelector,
+    };
 
-  // Only get features in feature sets we're not editing/reviewing
-  // We need these to build out the progress bar
-  const otherFeatureSetsJoinSelector: PropertyGroupJoinSelector = {
-    properties: {rangeValues: {}},
-  };
+    // Only get features in feature sets we're not editing/reviewing
+    // We need these to build out the progress bar
+    const otherFeatureSetsJoinSelector: PropertyGroupJoinSelector = {
+      properties: {rangeValues: {}},
+    };
 
-  const modelSet = (
-    await api.getPropertyGroups({
-      joinSelector: otherFeatureSetsJoinSelector,
-      joinSelectorByIri: thisFeatureSetJoinSelector,
-    })
-  ).modelSet;
+    modelSet = (
+      await api.getPropertyGroups({
+        joinSelector: otherFeatureSetsJoinSelector,
+        joinSelectorByIri: thisFeatureSetJoinSelector,
+      })
+    ).modelSet;
+  } else {
+    // Get features and feature values for all feature sets
+    // Current versions of Next.js have issues getting the correct data when the URL structure doesn't change.
+    // Just include everything instead.
+    modelSet = (
+      await api.getPropertyGroups({
+        joinSelector: {
+          properties: {
+            rangeValues: {
+              thumbnail: galleryThumbnailSelector,
+            },
+          },
+        },
+      })
+    ).modelSet;
+  }
 
   return {
     props: {
