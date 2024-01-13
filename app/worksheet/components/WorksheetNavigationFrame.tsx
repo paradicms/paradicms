@@ -56,21 +56,18 @@ export const WorksheetNavigationFrame: React.FunctionComponent<React.PropsWithCh
   }, [router, worksheet]);
 
   const onClickNextButton = useCallback(() => {
-    worksheet.save().then(() => {
-      // In current versions of Next, router.push to a URL with the same structure as the current one doesn't
-      // get the right data.
-      // router.push(Hrefs.worksheetMark(worksheet.nextMark))
-      // Force a page refresh instead.
-      window.location.href = Hrefs.worksheetMark(worksheet.nextMark);
-    }, setException);
+    worksheet
+      .save()
+      .then(
+        () => router.push(Hrefs.worksheetMark(worksheet.nextMark)),
+        setException
+      );
   }, [router, worksheet]);
 
   const onClickPreviousButton = useCallback(() => {
     worksheet.save().then(() => {
       if (worksheet.currentMarkIndex > 0) {
-        // See note above re: router.push.
-        // router.push(Hrefs.worksheetMark(worksheet.previousMark));
-        window.location.href = Hrefs.worksheetMark(worksheet.previousMark);
+        router.push(Hrefs.worksheetMark(worksheet.previousMark));
       } else {
         router.push(Hrefs.index);
       }
