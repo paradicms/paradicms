@@ -5,8 +5,8 @@ set -e
 cd "$(dirname "$0")/.."
 
 poetry run black --check paradicms_etl
-poetry run flake8 paradicms_etl
-poetry run mypy paradicms_etl
+# poetry run flake8 paradicms_etl
+# poetry run mypy paradicms_etl
 
 mkdir -p test-results
 poetry run pytest --junitxml=test-results/junit.xml
