@@ -1,5 +1,4 @@
 import logging
-from typing import Optional
 
 from rdflib import Graph, URIRef
 from rdflib.resource import Resource
