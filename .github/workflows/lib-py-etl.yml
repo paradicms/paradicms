@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12.x"
       - name: Install Poetry
@@ -20,7 +20,7 @@ jobs:
           virtualenvs-in-project: true
       - name: Load cached venv
         id: cached-poetry-dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: lib/py/etl/.venv
           key: venv-v2-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/etl/poetry.lock') }}-v2

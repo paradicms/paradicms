@@ -25,7 +25,7 @@ jobs:
           cache: "yarn"
           node-version: 16
       - name: Cache Next.js cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: app/*/.next/cache
           key: ${{ runner.OS }}-next
