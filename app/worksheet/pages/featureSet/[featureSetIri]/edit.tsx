@@ -44,8 +44,8 @@ const WorksheetFeatureSelectsTable: React.FunctionComponent<{
                       featureValue.unselect();
                     }
                     for (const option of options) {
-                      const featureValue = feature.values.find(
-                        value => value.iri === option.value
+                      const featureValue = feature.values.find(value =>
+                        value.iri.equals(option.value)
                       )!;
                       featureValue.select();
                     }

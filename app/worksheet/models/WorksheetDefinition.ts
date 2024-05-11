@@ -32,7 +32,8 @@ export class WorksheetDefinition {
 
   featureValueByIri(iri: NamedNode): WorksheetFeatureValueDefinition | null {
     return (
-      this.featureValues.find(featureValue => featureValue.iri === iri) ?? null
+      this.featureValues.find(featureValue => featureValue.iri.equals(iri)) ??
+      null
     );
   }
 
