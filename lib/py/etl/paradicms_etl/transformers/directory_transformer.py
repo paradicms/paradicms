@@ -1,7 +1,7 @@
 import json
 import logging
 from logging import Logger
-from typing import Dict, Optional, Tuple, Type, List, Set, Iterable
+from typing import Dict, Iterable, List, Optional, Set, Tuple, Type
 
 import yaml
 from rdflib import URIRef
@@ -180,13 +180,15 @@ class DirectoryTransformer:
             for transformed_models_by_id in self.__transformed_models_by_class.values():
                 yield from transformed_models_by_id.values()
 
-        def __root_model_class_by_alias(self, model_class: str):
+        def __root_model_class_by_alias(self, model_class: str) -> type[Model]:
             return self.__root_model_classes_by_alias[model_class]
 
-        def __root_model_class_by_type(self, model_class: Type[Model]):
+        def __root_model_class_by_type(self, model_class: Type[Model]) -> type[Model]:
             return self.__root_model_classes_by_alias[model_class.__name__]
 
-        def __root_model_classes_by_interface_type(self, model_interface):
+        def __root_model_classes_by_interface_type(
+            self, model_interface
+        ) -> tuple[type[Model], ...]:
             root_model_classes: Set[Type[Model]] = set()
             for root_model_class in self.__root_model_classes_by_alias.values():
                 if issubclass(root_model_class, model_interface):
@@ -194,7 +196,7 @@ class DirectoryTransformer:
             return tuple(root_model_classes)
 
         def __transform_collection_metadata_file_entries(self) -> None:
-            transformed_collections_by_id: Dict[str, Collection] = {}
+            transformed_collections_by_id: dict[str, Collection] = {}
             for (
                 collection_root_model_class
             ) in self.__root_model_classes_by_interface_type(Collection):
@@ -378,7 +380,7 @@ class DirectoryTransformer:
 
         def __transform_work_metadata_file_entries(
             self,
-        ):
+        ) -> None:
             for work_root_model_class in self.__root_model_classes_by_interface_type(
                 Work
             ):
@@ -388,7 +390,7 @@ class DirectoryTransformer:
                     work_root_model_class, tuple()
                 ):
                     try:
-                        work: Work = self.__transform_metadata_file_entry_to_model(
+                        work: Work = self.__transform_metadata_file_entry_to_model(  # type: ignore
                             metadata_file_entry
                         )
                     except ValueError as e:

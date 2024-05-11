@@ -2,7 +2,7 @@ import importlib
 from inspect import isclass, isfunction
 from pathlib import Path
 from types import ModuleType
-from typing import Optional, List
+from typing import List, Optional
 
 from stringcase import pascalcase
 
@@ -49,7 +49,7 @@ class EnricherFactory:
     @staticmethod
     def enricher_by_name(enricher_name: str, *, cache_dir_path: Path) -> Enricher:
         enricher_module_qnames = [enricher_name]
-        for project in ("etl", "nlp", "ssg"):
+        for project in ("etl", "ssg"):
             for enricher_name_suffix in ("", "_enricher"):
                 enricher_module_qnames.append(
                     f"paradicms_{project}.enrichers.{enricher_name}{enricher_name_suffix}"

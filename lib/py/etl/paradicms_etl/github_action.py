@@ -41,7 +41,6 @@ class GitHubAction(ABC):
         )
 
         @classmethod
-        @property
         def fields_yaml(cls) -> dict[str, dict[str, Any]]:
             fields_yaml: dict[str, dict[str, Any]] = {}
             for field in dataclasses.fields(cls):
@@ -90,9 +89,11 @@ class GitHubAction(ABC):
                 raise TypeError(field.type)
             arg_parser.add_argument(
                 arg_name,
-                default=field.default
-                if id(field.default) != id(GitHubAction.Inputs.REQUIRED)
-                else None,
+                default=(
+                    field.default
+                    if id(field.default) != id(GitHubAction.Inputs.REQUIRED)
+                    else None
+                ),
                 env_var="INPUT_" + field.name.upper(),
                 required=id(field.default) == id(GitHubAction.Inputs.REQUIRED),
             )
@@ -106,7 +107,7 @@ class GitHubAction(ABC):
                 "icon": "loader",
             },
             "description": cls.__doc__.strip(),
-            "inputs": inputs_class.fields_yaml,
+            "inputs": inputs_class.fields_yaml(),
             "name": cls.__doc__.strip(),
             "runs": {"image": "Dockerfile", "using": "docker"},
         }

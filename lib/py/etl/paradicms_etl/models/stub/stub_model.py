@@ -1,7 +1,6 @@
 import logging
-from typing import Optional
 
-from rdflib import URIRef, Graph
+from rdflib import Graph, URIRef
 from rdflib.resource import Resource
 
 from paradicms_etl.model import Model
@@ -26,7 +25,8 @@ class StubModel(Model):
     def from_rdf(cls, resource: Resource):
         raise NotImplementedError(cls.__name__)
 
-    def label(self) -> Optional[str]:
+    @property
+    def label(self) -> str | None:
         return None
 
     @classmethod

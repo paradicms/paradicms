@@ -135,10 +135,11 @@ class SyntheticDataPipeline(Pipeline):
             self.__freestanding_works = freestanding_works
             self.__works_per_collection = works_per_collection
 
-        def __call__(self):
+        def __call__(self) -> Iterable[Model]:
             yield from self.__generate_properties()
 
             concepts_by_value: dict[str, Concept] = {}
+            model: Model
             for model in self.__generate_concepts():
                 yield model
                 if isinstance(model, Concept):
@@ -180,7 +181,9 @@ class SyntheticDataPipeline(Pipeline):
                     f"http://example.com/organization{organization_i}"
                 )
 
-                organization_builder: FoafOrganization.Builder | SchemaOrganization.Builder
+                organization_builder: (
+                    FoafOrganization.Builder | SchemaOrganization.Builder
+                )
                 if organization_i % 2 == 0:
                     organization_builder = FoafOrganization.builder(
                         name=organization_name, uri=organization_uri

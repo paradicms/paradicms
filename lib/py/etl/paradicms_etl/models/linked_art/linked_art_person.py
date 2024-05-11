@@ -18,6 +18,7 @@ class LinkedArtPerson(LinkedArtModel, LinkedArtImagesMixin, Person):
     def given_name(self) -> None:
         return None
 
+    @property
     def label(self) -> str:
         return self._required_label
 

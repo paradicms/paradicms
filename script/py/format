@@ -5,5 +5,4 @@ set -e
 cd "$(dirname "$0")/../.."
 
 lib/py/etl/script/format
-lib/py/nlp/script/format
 lib/py/ssg/script/format
