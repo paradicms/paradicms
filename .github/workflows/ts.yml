@@ -23,7 +23,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: "yarn"
-          node-version: 16
+          node-version: 20
       - name: Cache Next.js cache
         uses: actions/cache@v4
         with:

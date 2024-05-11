@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 COPY ./data /paradicms/data
 COPY ./lib/py/etl /paradicms/lib/py/etl
