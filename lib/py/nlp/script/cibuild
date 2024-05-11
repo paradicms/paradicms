@@ -1,9 +1,0 @@
-#!/bin/bash
-
-set -e
-
-cd "$(dirname "$0")/.."
-
-poetry run black --check paradicms_nlp
-poetry run flake8 paradicms_nlp
-poetry run mypy paradicms_nlp
