@@ -6,7 +6,7 @@ authors = ["Minor G. <minorg@server.fake>"]
 license = "GPLv3"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
+python = "^3.12"
 boto3 = "1.16.11"
 
 [tool.poetry.dev-dependencies]
