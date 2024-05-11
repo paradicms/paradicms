@@ -3,7 +3,7 @@ from enum import Enum
 from pathlib import Path
 from typing import Iterable, Tuple
 
-from rdflib import URIRef, RDF
+from rdflib import RDF, URIRef
 
 from paradicms_etl.model import Model
 from paradicms_etl.models.iiif.iiif_presentation_api_v2_manifest import (
@@ -97,7 +97,6 @@ class GettyEnricher:
         self.__logger.warning(
             "entity %s is not associated with an IIIF manifest", getty_entity.uri
         )
-        return ()
 
     def _get_getty_object_entity(self, getty_entity_uri: URIRef) -> Iterable[Model]:
         resource = get_json_ld_resource(

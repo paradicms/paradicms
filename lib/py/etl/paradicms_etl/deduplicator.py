@@ -51,7 +51,7 @@ class Deduplicator:
         def str_lines(self) -> tuple[str, ...]:
             return tuple(sorted(self.graph.serialize(format="nt").split("\n")))  # type: ignore
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._logger = logging.getLogger(__name__)
         self.__seen_models: dict[
             type[Model], dict[URIRef, list[Deduplicator._ModelWrapper]]

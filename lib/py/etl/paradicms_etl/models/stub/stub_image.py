@@ -13,6 +13,7 @@ class StubImage(StubModel, StubRightsMixin, Image):
     def exact_dimensions(self) -> ImageDimensions | None:
         return None
 
+    @property
     def copyable(self) -> bool:
         raise NotImplementedError(self.__class__.__name__)
 

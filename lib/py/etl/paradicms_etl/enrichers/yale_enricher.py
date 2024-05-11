@@ -104,7 +104,6 @@ class YaleEnricher:
         self.__logger.warning(
             "entity %s is not associated with an IIIF manifest", yale_entity.uri
         )
-        return ()
 
     def _get_yale_object_entity(self, yale_entity_uri: URIRef) -> Iterable[Model]:
         resource = get_json_ld_resource(
