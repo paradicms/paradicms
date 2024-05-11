@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: lib/py/etl/.venv
-          key: venv-v2-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/etl/poetry.lock') }}-v2
+          key: venv-v3-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/etl/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: lib/py/etl/script/bootstrap

@@ -24,7 +24,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: lib/py/ssg/.venv
-          key: venv-v2-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/ssg/poetry.lock') }}
+          key: venv-v3-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('lib/py/ssg/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: lib/py/ssg/script/bootstrap
