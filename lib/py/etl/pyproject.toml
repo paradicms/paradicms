@@ -6,7 +6,7 @@ authors = ["Minor Gordon <mail@minorgordon.net>"]
 license = "GPLv3"
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
+python = "^3.12"
 ConfigArgParse = "^1.5.3"
 markdown-it-py = { extras = ["plugins"], version = "^2.0.1" }
 pathvalidate = "^2.5.0"
@@ -20,8 +20,8 @@ openpyxl = "^3.1.1"
 inflector = "^3.1.0"
 more-itertools = "^9.1.0"
 beautifulsoup4 = "^4.12.2"
-dataclasses-json = "^0.5.13"
 pygeoconv = "^1.0.1"
+dataclasses-json = "^0.6.6"
 
 [tool.poetry.dev-dependencies]
 black = "^22.3.0"
