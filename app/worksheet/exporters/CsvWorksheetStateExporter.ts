@@ -36,8 +36,11 @@ export class CsvWorksheetStateExporter
       if (!featureSetDefinition) {
         return undefined;
       }
-      // const featureDefinition = worksheetDefinition.features.find((featureDefinition) => featureDefinition.id.equals(featureId))!;
-      return featureSetDefinition.label + "|" + featureIri.value;
+      const featureDefinition = worksheetDefinition.features.find((featureDefinition) => featureDefinition.iri.equals(featureIri))!;
+      if (!featureDefinition) {
+        return undefined;
+      }
+      return featureSetDefinition.label + "|" + featureDefinition.label;
     };
 
     const headerRow = ["id", "ctime", "mtime", "description", "workType"];
