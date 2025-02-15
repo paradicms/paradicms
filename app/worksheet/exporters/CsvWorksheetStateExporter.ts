@@ -1,9 +1,9 @@
-import {DataFactory} from "@paradicms/rdf";
-import {NamedNode} from "@rdfjs/types";
+import { DataFactory } from "@paradicms/rdf";
+import { NamedNode } from "@rdfjs/types";
 import log from "loglevel";
-import {WorksheetStateExporter} from "~/exporters/WorksheetStateExporter";
-import {WorksheetDefinition} from "~/models/WorksheetDefinition";
-import {WorksheetState} from "~/models/WorksheetState";
+import { WorksheetStateExporter } from "~/exporters/WorksheetStateExporter";
+import { WorksheetDefinition } from "~/models/WorksheetDefinition";
+import { WorksheetState } from "~/models/WorksheetState";
 
 export class CsvWorksheetStateExporter
   implements WorksheetStateExporter<string[][]> {
@@ -128,13 +128,13 @@ export class CsvWorksheetStateExporter
               );
               continue;
             }
-            values.push(featureValueDefinition.value.value);
+            values.push(featureValueDefinition.label);
           }
-          dataRow[dataRowIndex] = values.join(";");
+          dataRow[dataRowIndex] = values.join("|");
         }
       }
 
-      dataRow[4] = workType.join(";");
+      dataRow[4] = workType.join("|");
 
       rows.push(dataRow);
     }
